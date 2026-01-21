@@ -1,17 +1,16 @@
-<script setup lang="ts">
-import type { NuxtError } from '#app'
-
+<script lang="ts" setup>
 defineProps<{
-  error: NuxtError
+  error: {
+    statusCode?: number
+    message?: string
+  }
 }>()
 </script>
 
 <template>
-  <UApp>
-    <UError :error />
-  </UApp>
-  <!-- <div>
-    <h1>{{ error.status }}</h1>
-    <NuxtLink to="/">Go back home</NuxtLink>
-  </div> -->
+  <div>
+    <h1>Error</h1>
+    <p>{{ error?.statusCode }}</p>
+    <p>{{ error?.message }}</p>
+  </div>
 </template>
