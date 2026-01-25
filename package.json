@@ -24,7 +24,7 @@
     "@nuxt/eslint": "latest",
     "@nuxt/image": "^2.0.0",
     "@nuxt/ui": "^4.4.0",
-    "@types/node": "^24.10.7",
+    "@types/node": "^25.0.10",
     "@typescript-eslint/eslint-plugin": "^8.53.1",
     "@typescript-eslint/parser": "^8.53.1",
     "eslint": "^9.39.2",
@@ -32,12 +32,12 @@
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-vue": "^10.7.0",
     "nuxt": "^4.3.0",
-    "prettier": "^3.8.0",
+    "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "vue": "latest",
-    "vue-tsc": "^3.2.2"
+    "vue-tsc": "^3.2.3"
   },
   "browserslist": [
     "> 0.5%",
