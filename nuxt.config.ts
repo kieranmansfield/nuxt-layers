@@ -4,19 +4,33 @@ export default defineNuxtConfig({
     name: 'core',
   },
 
-  modules: ['@nuxt/eslint', '@nuxt/ui'],
-  css: [
-    '#layers/core/app/assets/css/main.css',
-    // '#layers/core/app/assets/css/reset.css'
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/ui',
+    // '@nuxt/image'
+    '@vueuse/nuxt',
+    '@nuxtjs/device',
+    '@vite-pwa/nuxt',
   ],
+  css: ['#layers/core/app/assets/css/main.css'],
 
   plugins: [
+    '#layers/core/app/plugins/init.ts',
     '#layers/core/app/plugins/error-handler.ts',
+    '#layers/core/app/plugins/feature-detection.client.ts',
     '#layers/core/app/plugins/loading.client.ts',
   ],
 
   devtools: {
     enabled: true,
+
+    vscode: {
+      enabled: true,
+    },
+  },
+
+  future: {
+    compatibilityVersion: 4,
   },
 
   compatibilityDate: '2026-01-24',
@@ -26,9 +40,47 @@ export default defineNuxtConfig({
     strict: true,
   },
 
-  // vite: {
-  //   build: {
-  //     target: 'es2020',
-  //   },
-  // },
+  vite: {
+    build: {
+      target: 'es2020',
+    },
+  },
+
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'Core Layer App',
+      short_name: 'Core Layer',
+      description: 'Foundation layer for Nuxt applications',
+      theme_color: '#ffffff',
+      background_color: '#ffffff',
+      display: 'standalone',
+      start_url: '/',
+      icons: [
+        {
+          src: '/icon-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+        },
+        {
+          src: '/icon-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+        },
+      ],
+    },
+    workbox: {
+      navigateFallback: '/',
+      // More specific glob patterns to avoid warnings
+      globPatterns: ['**/*.{js,css,html}'],
+      // Don't precache everything in dev mode
+      globIgnores: ['**/node_modules/**/*'],
+    },
+    devOptions: {
+      enabled: true, // Enable in development for testing
+      type: 'module',
+      // Suppress warnings in dev mode
+      suppressWarnings: true,
+    },
+  },
 })

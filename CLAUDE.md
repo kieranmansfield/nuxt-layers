@@ -52,7 +52,7 @@ layer-core/
 │   │   ├── useScreen.ts               # Screen size/orientation
 │   │   ├── useNetworkInfo.ts          # Network speed/status
 │   │   ├── useRendering.ts            # Render mode detection
-│   │   ├── usePWA.ts                  # PWA state & install
+│   │   ├── usePWAInfo.ts                  # PWA state & install
 │   │   ├── useCache.ts                # Cache management
 │   │   └── useLoading.ts              # Loading state
 │   ├── components/
@@ -165,7 +165,7 @@ const {
   install,            // Trigger install prompt
   needRefresh,        // Update available?
   updateServiceWorker // Install update
-} = usePWA()
+} = usePWAInfo()
 ```
 
 **Cache Management:**
@@ -457,7 +457,7 @@ const {
   install, 
   needRefresh, 
   updateServiceWorker 
-} = usePWA()
+} = usePWAInfo()
 </script>
 
 <template>
