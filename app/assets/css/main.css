@@ -1,6 +1,8 @@
-  :root {
-    color-scheme: light dark;
-  }
+:root {
+  color-scheme: light dark;
+  background-color: light-dark(white, black);
+  color: light-dark(black, white);
+}
 
 @import 'tailwindcss';
 @import '@nuxt/ui';
