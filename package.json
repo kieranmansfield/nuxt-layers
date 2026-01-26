@@ -43,7 +43,7 @@
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "vue": "latest",
-    "vue-tsc": "^3.2.3"
+    "vue-tsc": "^3.2.4"
   },
   "browserslist": [
     "> 0.5%",
