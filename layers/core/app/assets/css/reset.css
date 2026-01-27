@@ -1,0 +1,180 @@
+@layer base {
+  /* -------------------------
+     Box Model
+  -------------------------- */
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* -------------------------
+     Root & HTML
+  -------------------------- */
+
+  :root {
+    color-scheme: light dark;
+    interpolate-size: allow-keywords;
+  }
+
+  html {
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    scrollbar-gutter: stable;
+  }
+
+  /* Only enable smooth scrolling if user hasn't requested reduced motion */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* -------------------------
+     Body & Typography
+  -------------------------- */
+
+  /* Remove default margin in favour of better control in authored CSS */
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd {
+    margin-block-end: 0;
+  }
+
+  body {
+    min-height: 100dvh;
+    line-height: 1.5;
+  }
+
+  /* Set shorter line heights on headings and interactive elements */
+  h1,
+  h2,
+  h3,
+  h4,
+  button,
+  input,
+  label {
+    line-height: 1.1;
+  }
+
+  /* Balance text wrapping on headings */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+
+  /* Pretty text wrapping for paragraphs */
+  @supports (text-wrap: pretty) {
+    p {
+      text-wrap: pretty;
+    }
+  }
+
+  /* -------------------------
+     Forms
+  -------------------------- */
+
+  /* Inherit fonts for inputs and buttons */
+  input,
+  button,
+  textarea,
+  select {
+    font-family: inherit;
+    font-size: inherit;
+    margin: 0;
+  }
+
+  @supports (field-sizing: content) {
+    input,
+    textarea,
+    select {
+      field-sizing: content;
+    }
+  }
+
+  /* Make sure textareas without a rows attribute are not tiny */
+  textarea:not([rows]) {
+    min-height: 10em;
+  }
+
+  /* -------------------------
+     Lists & Links
+  -------------------------- */
+
+  /* Remove list styles on ul, ol elements with a list role */
+  ul[role='list'],
+  ol[role='list'] {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  /* A elements that don't have a class get default styles */
+  a:not([class]) {
+    text-decoration-skip-ink: auto;
+    color: currentColor;
+  }
+
+  /* -------------------------
+     Media
+  -------------------------- */
+
+  /* Make images easier to work with */
+  img,
+  picture {
+    max-width: 100%;
+    display: block;
+  }
+
+  video {
+    max-width: 100%;
+    display: block;
+  }
+
+  /* -------------------------
+     Accessibility
+  -------------------------- */
+
+  /* Anything that has been anchored to should have extra scroll margin */
+  :target {
+    scroll-margin-block: 5ex;
+  }
+
+  /* -------------------------
+     Tables
+  -------------------------- */
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  caption {
+    text-align: left;
+  }
+
+  /* -------------------------
+     Misc
+  -------------------------- */
+
+  hr {
+    border: none;
+    height: 1px;
+  }
+
+  fieldset {
+    border: none;
+    padding: 0;
+  }
+}

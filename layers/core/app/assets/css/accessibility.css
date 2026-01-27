@@ -1,0 +1,117 @@
+@layer base {
+  /* -------------------------
+     Motion & Animation
+  -------------------------- */
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* -------------------------
+     Focus Management
+  -------------------------- */
+
+  :focus-visible {
+    outline: 2px solid #3b82f6; /* Fallback */
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* -------------------------
+     Skip Links
+  -------------------------- */
+
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+
+  /* -------------------------
+     Screen Reader Only
+  -------------------------- */
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sr-only-focusable:focus,
+  .sr-only-focusable:active {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* -------------------------
+     High Contrast Mode
+  -------------------------- */
+
+  @media (prefers-contrast: more) {
+    :focus-visible {
+      outline-width: 3px;
+      outline-offset: 3px;
+    }
+  }
+
+  /* Windows High Contrast Mode - forced colors */
+  @media (forced-colors: active) {
+    :focus-visible {
+      outline: 2px solid CanvasText;
+    }
+  }
+
+  /* -------------------------
+     Font Scaling
+  -------------------------- */
+
+  /* Support browser text scaling without breaking layout */
+  @media (min-width: 768px) {
+    html {
+      font-size: clamp(1rem, 0.9rem + 0.25vw, 1.125rem);
+    }
+  }
+
+  /* -------------------------
+     Interactive Target Sizes
+  -------------------------- */
+
+  /* Ensure touch targets are at least 44x44px (WCAG 2.5.5) */
+  button,
+  a,
+  [role='button'],
+  [role='link'] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
