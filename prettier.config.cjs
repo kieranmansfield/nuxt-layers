@@ -5,19 +5,14 @@ module.exports = {
   trailingComma: 'es5',
   printWidth: 100,
   tabWidth: 2,
-  // plugins: ['prettier-plugin-tailwindcss'],
+
+  plugins: [
+    'prettier-plugin-tailwindcss',
+    'prettier-plugin-tailwind-styled-components',
+    'prettier-plugin-organize-attributes',
+    'prettier-plugin-css-order',
+    '@ianvs/prettier-plugin-sort-imports',
+  ],
   // tailwindConfig: './tailwind.config.js',
   ignorePath: '.prettierignore',
-
-  // tailwindAttributes: ['class', 'ui'],
-  // tailwindFunctions: ['tw'],
-
-  // tailwindcss: {
-  //   classRegex: [
-  //     // Match :ui object
-  //     /:ui\s*=\s*{([^}]*)}/g,
-  //     // Inside each key, match classes
-  //     /(\w+)\s*:\s*['"`]([^'"`]+)['"`]/g,
-  //   ],
-  // },
 }

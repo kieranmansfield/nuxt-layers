@@ -9,6 +9,7 @@ package-lock.json
 framework
 dist
 .DS_Store
+.turbo
 
 # Yarn
 .yarn/cache
