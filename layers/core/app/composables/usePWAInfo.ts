@@ -1,4 +1,4 @@
-import { ref, computed, onMounted, watch, readonly } from 'vue'
+import { computed, onMounted, readonly, ref, watch } from 'vue'
 
 /**
  * PWA composable for managing Progressive Web App functionality

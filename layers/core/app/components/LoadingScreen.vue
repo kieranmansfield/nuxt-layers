@@ -91,27 +91,29 @@ watch(
 }
 
 #loading-screen {
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100vh;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100vh;
 }
 
 .loading-container {
   display: grid;
+  container-type: size;
   width: 100%;
   height: 100vh;
-  container-type: size;
 }
 
 .loading-progress {
   place-self: center;
-  text-align: center;
+  font-weight: 900;
+  font-stretch: ultra-expanded;
+  font-size: clamp(3rem, 35cqw + 1rem, 18rem);
   font-family:
     system-ui,
     -apple-system,
@@ -121,13 +123,11 @@ watch(
     'Helvetica Neue',
     Arial,
     sans-serif;
-  font-size: clamp(3rem, 35cqw + 1rem, 18rem);
-  font-weight: 900;
-  font-stretch: ultra-expanded;
-  text-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  text-shadow: 0 0 20px rgb(0 0 0 / 0.3);
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .loading-progress {
     place-self: end start;
     padding: 2rem;

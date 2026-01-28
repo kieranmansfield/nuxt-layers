@@ -20,7 +20,7 @@ export function safeJsonParse<T>(json: string, fallback: T): T {
  */
 export function debounce<T extends (...args: any[]) => any>(
   fn: T,
-  delay: number,
+  delay: number
 ): (...args: Parameters<T>) => void {
   let timeoutId: ReturnType<typeof setTimeout>
 
@@ -35,7 +35,7 @@ export function debounce<T extends (...args: any[]) => any>(
  */
 export function throttle<T extends (...args: any[]) => any>(
   fn: T,
-  limit: number,
+  limit: number
 ): (...args: Parameters<T>) => void {
   let inThrottle: boolean
 
@@ -64,7 +64,7 @@ export async function retry<T>(
     maxAttempts?: number
     delay?: number
     backoff?: number
-  } = {},
+  } = {}
 ): Promise<T> {
   const { maxAttempts = 3, delay = 1000, backoff = 2 } = options
 
@@ -198,14 +198,17 @@ export function removeEmpty<T extends Record<string, any>>(obj: T): Partial<T> {
  * Group array items by key
  */
 export function groupBy<T>(array: T[], key: keyof T): Record<string, T[]> {
-  return array.reduce((result, item) => {
-    const groupKey = String(item[key])
-    if (!result[groupKey]) {
-      result[groupKey] = []
-    }
-    result[groupKey].push(item)
-    return result
-  }, {} as Record<string, T[]>)
+  return array.reduce(
+    (result, item) => {
+      const groupKey = String(item[key])
+      if (!result[groupKey]) {
+        result[groupKey] = []
+      }
+      result[groupKey].push(item)
+      return result
+    },
+    {} as Record<string, T[]>
+  )
 }
 
 /**
@@ -213,7 +216,7 @@ export function groupBy<T>(array: T[], key: keyof T): Record<string, T[]> {
  */
 export function pick<T extends Record<string, any>, K extends keyof T>(
   obj: T,
-  keys: K[],
+  keys: K[]
 ): Pick<T, K> {
   const result = {} as Pick<T, K>
 
@@ -231,7 +234,7 @@ export function pick<T extends Record<string, any>, K extends keyof T>(
  */
 export function omit<T extends Record<string, any>, K extends keyof T>(
   obj: T,
-  keys: K[],
+  keys: K[]
 ): Omit<T, K> {
   const result = { ...obj }
 

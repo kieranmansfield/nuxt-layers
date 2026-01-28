@@ -11,15 +11,7 @@ import { computed } from 'vue'
  * @returns Network state and connection information
  */
 export function useNetworkInfo() {
-  const {
-    isOnline,
-    offlineAt,
-    downlink,
-    downlinkMax,
-    effectiveType,
-    saveData,
-    type,
-  } = useNetwork()
+  const { isOnline, offlineAt, downlink, downlinkMax, effectiveType, saveData, type } = useNetwork()
 
   /**
    * Connection is slow (2G or slower)
@@ -36,10 +28,7 @@ export function useNetworkInfo() {
    * Connection is fast (4G or better)
    */
   const isFast = computed(() => {
-    return (
-      effectiveType.value === '4g' ||
-      (downlink.value !== undefined && downlink.value > 5)
-    )
+    return effectiveType.value === '4g' || (downlink.value !== undefined && downlink.value > 5)
   })
 
   /**
@@ -67,14 +56,12 @@ export function useNetworkInfo() {
   /**
    * Connection quality description
    */
-  const connectionQuality = computed<'excellent' | 'good' | 'poor' | 'offline'>(
-    () => {
-      if (!isOnline.value) return 'offline'
-      if (isFast.value) return 'excellent'
-      if (isSlow.value) return 'poor'
-      return 'good'
-    },
-  )
+  const connectionQuality = computed<'excellent' | 'good' | 'poor' | 'offline'>(() => {
+    if (!isOnline.value) return 'offline'
+    if (isFast.value) return 'excellent'
+    if (isSlow.value) return 'poor'
+    return 'good'
+  })
 
   return {
     // Raw network state (from VueUse)

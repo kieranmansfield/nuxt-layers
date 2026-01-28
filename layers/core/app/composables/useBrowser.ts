@@ -32,8 +32,7 @@ function parseBrowserInfo(): BrowserInfo {
   else if (ua.includes('Mac')) os = 'macos'
   else if (ua.includes('Linux')) os = 'linux'
   else if (ua.includes('Android')) os = 'android'
-  else if (ua.includes('iOS') || ua.includes('iPhone') || ua.includes('iPad'))
-    os = 'ios'
+  else if (ua.includes('iOS') || ua.includes('iPhone') || ua.includes('iPad')) os = 'ios'
 
   // Detect browser (order matters - check most specific first)
   if (ua.includes('Edg/')) {

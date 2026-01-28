@@ -1,12 +1,12 @@
 // composables/useFeatures.ts
 import {
+  usePreferredContrast,
   usePreferredDark,
   usePreferredReducedMotion,
-  usePreferredContrast,
   useSessionStorage,
 } from '@vueuse/core'
-import { computed, watch } from 'vue'
 import type { FeatureDetection } from '#layers/core/app/types/detection'
+import { computed, watch } from 'vue'
 
 /**
  * Check if CSS feature is supported
@@ -142,8 +142,8 @@ function applyFeatureClasses(features: FeatureDetection) {
 
   // Remove old classes first
   const htmlClasses = document.documentElement.classList
-  const classesToRemove = Array.from(htmlClasses).filter(cls =>
-    cls.startsWith('supports-') || cls.startsWith('no-') || cls.startsWith('has-')
+  const classesToRemove = Array.from(htmlClasses).filter(
+    (cls) => cls.startsWith('supports-') || cls.startsWith('no-') || cls.startsWith('has-')
   )
   htmlClasses.remove(...classesToRemove)
 
@@ -152,14 +152,10 @@ function applyFeatureClasses(features: FeatureDetection) {
   // CSS features
   classes.push(features.grid ? 'supports-grid' : 'no-grid')
   classes.push(features.subgrid ? 'supports-subgrid' : 'no-subgrid')
-  classes.push(
-    features.containerQueries ? 'supports-container-queries' : 'no-container-queries',
-  )
+  classes.push(features.containerQueries ? 'supports-container-queries' : 'no-container-queries')
   classes.push(features.has ? 'supports-has' : 'no-has')
   classes.push(features.aspectRatio ? 'supports-aspect-ratio' : 'no-aspect-ratio')
-  classes.push(
-    features.backdropFilter ? 'supports-backdrop-filter' : 'no-backdrop-filter',
-  )
+  classes.push(features.backdropFilter ? 'supports-backdrop-filter' : 'no-backdrop-filter')
 
   // JS APIs
   if (features.intersectionObserver) classes.push('has-intersection-observer')
@@ -216,26 +212,31 @@ export function useFeatures() {
     applyFeatureClasses(features.value)
 
     // Watch for changes and reapply classes
-    watch(features, (newFeatures) => {
-      applyFeatureClasses(newFeatures)
-    }, { deep: true })
+    watch(
+      features,
+      (newFeatures) => {
+        applyFeatureClasses(newFeatures)
+      },
+      { deep: true }
+    )
 
     // Detect image formats asynchronously
-    Promise.all([
-      checkImageFormat('webp'),
-      checkImageFormat('avif'),
-    ]).then(([webp, avif]) => {
+    Promise.all([checkImageFormat('webp'), checkImageFormat('avif')]).then(([webp, avif]) => {
       features.value.webp = webp
       features.value.avif = avif
     })
   }
 
   // Update user preference flags reactively
-  watch([prefersDark, prefersReducedMotion, prefersContrast], () => {
-    features.value.darkMode = prefersDark.value
-    features.value.reducedMotion = prefersReducedMotion.value === 'reduce'
-    features.value.highContrast = prefersContrast.value === 'more'
-  }, { immediate: true })
+  watch(
+    [prefersDark, prefersReducedMotion, prefersContrast],
+    () => {
+      features.value.darkMode = prefersDark.value
+      features.value.reducedMotion = prefersReducedMotion.value === 'reduce'
+      features.value.highContrast = prefersContrast.value === 'more'
+    },
+    { immediate: true }
+  )
 
   // Return individual feature flags as computed refs
   return {

@@ -1,6 +1,5 @@
 // composables/useScreen.ts
-import { useBreakpoints, useScreenOrientation } from '@vueuse/core'
-import { breakpointsTailwind } from '@vueuse/core'
+import { breakpointsTailwind, useBreakpoints, useScreenOrientation } from '@vueuse/core'
 import { computed } from 'vue'
 
 /**
@@ -30,15 +29,13 @@ export function useScreen() {
   const isExtraLargeDesktop = breakpoints.greaterOrEqual('2xl') // >= 1536px
 
   // Current breakpoint name
-  const breakpoint = computed<'mobile' | 'tablet' | 'desktop' | 'xl' | '2xl'>(
-    () => {
-      if (isExtraLargeDesktop.value) return '2xl'
-      if (isLargeDesktop.value) return 'xl'
-      if (isDesktop.value) return 'desktop'
-      if (isTablet.value) return 'tablet'
-      return 'mobile'
-    },
-  )
+  const breakpoint = computed<'mobile' | 'tablet' | 'desktop' | 'xl' | '2xl'>(() => {
+    if (isExtraLargeDesktop.value) return '2xl'
+    if (isLargeDesktop.value) return 'xl'
+    if (isDesktop.value) return 'desktop'
+    if (isTablet.value) return 'tablet'
+    return 'mobile'
+  })
 
   // Orientation helpers
   const isPortrait = computed(() => orientation.value === 'portrait-primary')

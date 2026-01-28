@@ -1,5 +1,18 @@
 <script setup lang="ts">
-const { grid, subgrid, containerQueries, has, aspectRatio, backdropFilter, webp, avif, intersectionObserver, resizeObserver, serviceWorker, webGL } = useFeatures()
+const {
+  grid,
+  subgrid,
+  containerQueries,
+  has,
+  aspectRatio,
+  backdropFilter,
+  webp,
+  avif,
+  intersectionObserver,
+  resizeObserver,
+  serviceWorker,
+  webGL,
+} = useFeatures()
 const { isMobile, isTablet, isDesktop } = useDevice()
 const { isOnline, effectiveType, saveData, connectionQuality, isSlow, isFast } = useNetworkInfo()
 const { mode, isHydrated, isClient, isServer } = useRendering()
@@ -18,9 +31,7 @@ useSeoMeta({
         <!-- Header -->
         <div class="text-center">
           <h1 class="text-4xl font-bold mb-2">Core Layer Diagnostics</h1>
-          <p class="text-gray-500 dark:text-gray-400">
-            Feature detection and system information
-          </p>
+          <p class="text-gray-500 dark:text-gray-400">Feature detection and system information</p>
         </div>
 
         <!-- CSS Features -->
@@ -147,7 +158,7 @@ useSeoMeta({
                   'text-green-500': connectionQuality === 'excellent',
                   'text-yellow-500': connectionQuality === 'good',
                   'text-red-500': connectionQuality === 'poor',
-                  'text-gray-500': connectionQuality === 'offline'
+                  'text-gray-500': connectionQuality === 'offline',
                 }"
               >
                 {{ connectionQuality }}

@@ -59,7 +59,7 @@ const handleError = (error: unknown) => {
 
     <!-- Error slot: custom error UI or default -->
     <template #error="{ error, clearError }">
-      <slot name="error" :error="error" :clear-error="clearError">
+      <slot name="error" :error :clear-error>
         <!-- Default error UI -->
         <div
           class="rounded-lg border border-[var(--ui-border-error)] bg-[var(--ui-bg-error)]/10 p-4"
