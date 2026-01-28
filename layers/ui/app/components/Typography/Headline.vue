@@ -1,19 +1,18 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { useColor } from '#layers/ui/app/composables/color'
+import { useTypography } from '#layers/ui/app/composables/typography'
+import type { UiColors } from '#layers/ui/app/types/colors'
 import type {
+  FontLeading,
+  FontSlant,
+  FontTracking,
   FontWeight,
   FontWidth,
-  FontSlant,
-  FontLeading,
-  FontTracking,
   TextAlign,
   TextTransform,
 } from '#layers/ui/app/types/typography'
-import type { UiColors } from '#layers/ui/app/types/colors'
-import { useTypography } from '#layers/ui/app/composables/typography'
-import { useColor } from '#layers/ui/app/composables/color'
+import { computed } from 'vue'
 
-// eslint-disable-next-line vue/define-macros-order
 const props = withDefaults(
   defineProps<{
     level?: 1 | 2 | 3 | 4 | 5 | 6

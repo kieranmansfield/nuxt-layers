@@ -71,6 +71,8 @@ const vueRules = {
   //   'error',
   //   { order: ['defineProps', 'defineEmits', 'defineExpose', 'withDefaults'] },
   // ],
+
+  'vue/no-duplicate-attr-inheritance': 'off',
 }
 
 export default [

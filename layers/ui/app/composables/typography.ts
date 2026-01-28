@@ -1,13 +1,13 @@
-import { computed } from 'vue'
 import type {
-  FontWeight,
-  FontSlant,
-  FontWidth,
   FontLeading,
+  FontSlant,
   FontTracking,
+  FontWeight,
+  FontWidth,
   TextAlign,
   TextTransform,
 } from '#layers/ui/app/types/typography'
+import { computed } from 'vue'
 
 type AxisValue = string | number | undefined
 

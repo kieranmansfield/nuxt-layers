@@ -1,11 +1,11 @@
-import { computed } from 'vue'
-import type { ResponsiveSizes, PictureProps, UsePictureReturn } from '#layers/ui/app/types/media'
 import {
   BREAKPOINT_VALUES,
   DEVICE_BREAKPOINT_VALUES,
   PHONE_BREAKPOINT_VALUES,
   TABLET_BREAKPOINT_VALUES,
 } from '#layers/ui/app/types/breakpoints'
+import type { PictureProps, ResponsiveSizes, UsePictureReturn } from '#layers/ui/app/types/media'
+import { computed } from 'vue'
 
 /**
  * Convert ResponsiveSizes object to CSS sizes attribute string

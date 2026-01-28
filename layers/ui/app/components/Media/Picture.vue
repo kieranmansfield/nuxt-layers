@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/define-macros-order -->
 <script lang="ts" setup>
-import type { PictureProps } from '#layers/ui/app/types/media'
 import { usePicture } from '#layers/ui/app/composables/picture'
+import type { PictureProps } from '#layers/ui/app/types/media'
 
 const props = withDefaults(defineProps<PictureProps>(), {
   loading: 'lazy',

@@ -1,21 +1,20 @@
 <!-- eslint-disable vue/require-default-prop -->
 <!-- eslint-disable vue/no-unused-properties -->
 <script lang="ts" setup>
+import { useColor } from '#layers/ui/app/composables/color'
+import { useTypography } from '#layers/ui/app/composables/typography'
+import type { UiColors } from '#layers/ui/app/types/colors'
 import type {
-  TypographyTag,
+  FontLeading,
+  FontSlant,
+  FontTracking,
   FontWeight,
   FontWidth,
-  FontSlant,
-  FontLeading,
-  FontTracking,
   TextAlign,
   TextTransform,
+  TypographyTag,
 } from '#layers/ui/app/types/typography'
-import type { UiColors } from '#layers/ui/app/types/colors'
-import { useTypography } from '#layers/ui/app/composables/typography'
-import { useColor } from '#layers/ui/app/composables/color'
 
-// eslint-disable-next-line vue/define-macros-order
 const props = withDefaults(
   defineProps<{
     tag?: TypographyTag

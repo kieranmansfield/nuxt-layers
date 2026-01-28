@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import type { UiColors } from '#layers/ui/app/types/colors'
 import { useColor } from '#layers/ui/app/composables/color'
+import type { UiColors } from '#layers/ui/app/types/colors'
 
-// eslint-disable-next-line vue/define-macros-order
 const props = withDefaults(
   defineProps<{
     language?: string

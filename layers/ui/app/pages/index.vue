@@ -9,11 +9,7 @@ const umainRef = ref()
     <UContainer class="py-12 space-y-12">
       <!-- Header Section -->
       <div class="space-y-4">
-        <SiteTitle
-          site-title="UI Layer"
-          tag="h1"
-          title-variant="default"
-        />
+        <SiteTitle site-title="UI Layer" tag="h1" title-variant="default" />
         <Typography
           tag="p"
           weight="font-normal"
@@ -21,8 +17,8 @@ const umainRef = ref()
           color="muted"
           class="text-lg"
         >
-          A unified, typed design system for Nuxt applications. This layer provides
-          typography, colors, media handling, and reusable UI primitives.
+          A unified, typed design system for Nuxt applications. This layer provides typography,
+          colors, media handling, and reusable UI primitives.
         </Typography>
       </div>
 
@@ -34,81 +30,81 @@ const umainRef = ref()
 
         <div class="space-y-4">
           <div class="space-y-2">
-            <TypographyHeadline :level="1">
-              Headline Level 1
-            </TypographyHeadline>
-            <TypographyHeadline :level="2">
-              Headline Level 2
-            </TypographyHeadline>
-            <TypographyHeadline :level="3">
-              Headline Level 3
-            </TypographyHeadline>
-            <TypographyHeadline :level="4">
-              Headline Level 4
-            </TypographyHeadline>
+            <TypographyHeadline :level="1"> Headline Level 1 </TypographyHeadline>
+            <TypographyHeadline :level="2"> Headline Level 2 </TypographyHeadline>
+            <TypographyHeadline :level="3"> Headline Level 3 </TypographyHeadline>
+            <TypographyHeadline :level="4"> Headline Level 4 </TypographyHeadline>
           </div>
 
-          <Typography
-            tag="p"
-            leading="leading-relaxed"
-          >
-            The Typography component provides full control over font weight, width, slant,
-            leading, tracking, alignment, and text transformation through typed props.
+          <Typography tag="p" leading="leading-relaxed">
+            The Typography component provides full control over font weight, width, slant, leading,
+            tracking, alignment, and text transformation through typed props.
           </Typography>
 
           <TypographyCodeBlock language="typescript" color="muted">
-&lt;Typography
-  weight="font-bold"
-  leading="leading-tight"
-  tracking="tracking-tight"
-&gt;
-  Fully typed typography
-&lt;/Typography&gt;</TypographyCodeBlock>
+            &lt;Typography weight="font-bold" leading="leading-tight" tracking="tracking-tight" &gt;
+            Fully typed typography &lt;/Typography&gt;</TypographyCodeBlock
+          >
         </div>
       </section>
 
       <!-- Color System Section -->
       <section class="space-y-6">
-        <TypographyHeadline :level="2" color="highlighted">
-          Color System
-        </TypographyHeadline>
+        <TypographyHeadline :level="2" color="highlighted"> Color System </TypographyHeadline>
 
         <div class="space-y-4">
           <div>
-            <Typography tag="h3" weight="font-semibold" class="mb-2">
-              Semantic Colors
-            </Typography>
+            <Typography tag="h3" weight="font-semibold" class="mb-2"> Semantic Colors </Typography>
             <div class="flex flex-wrap gap-2">
-              <Typography color="dimmed" class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded">
+              <Typography
+                color="dimmed"
+                class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded"
+              >
                 Dimmed
               </Typography>
-              <Typography color="muted" class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded">
+              <Typography
+                color="muted"
+                class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded"
+              >
                 Muted
               </Typography>
-              <Typography color="toned" class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded">
+              <Typography
+                color="toned"
+                class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded"
+              >
                 Toned
               </Typography>
-              <Typography color="highlighted" class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded">
+              <Typography
+                color="highlighted"
+                class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded"
+              >
                 Highlighted
               </Typography>
             </div>
           </div>
 
           <div>
-            <Typography tag="h3" weight="font-semibold" class="mb-2">
-              Status Colors
-            </Typography>
+            <Typography tag="h3" weight="font-semibold" class="mb-2"> Status Colors </Typography>
             <div class="flex flex-wrap gap-2">
               <Typography color="info" class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded">
                 Info
               </Typography>
-              <Typography color="success" class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded">
+              <Typography
+                color="success"
+                class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded"
+              >
                 Success
               </Typography>
-              <Typography color="warning" class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded">
+              <Typography
+                color="warning"
+                class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded"
+              >
                 Warning
               </Typography>
-              <Typography color="error" class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded">
+              <Typography
+                color="error"
+                class="px-3 py-2 bg-neutral-100 dark:bg-neutral-800 rounded"
+              >
                 Error
               </Typography>
             </div>
@@ -125,9 +121,7 @@ const umainRef = ref()
         <div class="grid md:grid-cols-2 gap-6">
           <UCard>
             <template #header>
-              <TypographyHeadline :level="3">
-                Typography
-              </TypographyHeadline>
+              <TypographyHeadline :level="3"> Typography </TypographyHeadline>
             </template>
             <div class="space-y-2">
               <Typography tag="p" color="muted" leading="leading-relaxed">
@@ -144,9 +138,7 @@ const umainRef = ref()
 
           <UCard>
             <template #header>
-              <TypographyHeadline :level="3">
-                Links
-              </TypographyHeadline>
+              <TypographyHeadline :level="3"> Links </TypographyHeadline>
             </template>
             <div class="space-y-2">
               <Typography tag="p" color="muted" leading="leading-relaxed">
@@ -162,9 +154,7 @@ const umainRef = ref()
 
           <UCard>
             <template #header>
-              <TypographyHeadline :level="3">
-                Media
-              </TypographyHeadline>
+              <TypographyHeadline :level="3"> Media </TypographyHeadline>
             </template>
             <div class="space-y-2">
               <Typography tag="p" color="muted" leading="leading-relaxed">
@@ -181,9 +171,7 @@ const umainRef = ref()
 
           <UCard>
             <template #header>
-              <TypographyHeadline :level="3">
-                Branding
-              </TypographyHeadline>
+              <TypographyHeadline :level="3"> Branding </TypographyHeadline>
             </template>
             <div class="space-y-2">
               <Typography tag="p" color="muted" leading="leading-relaxed">
@@ -201,47 +189,39 @@ const umainRef = ref()
 
       <!-- Quote Example -->
       <section class="space-y-6">
-        <TypographyHeadline :level="2" color="highlighted">
-          Quote Block
-        </TypographyHeadline>
+        <TypographyHeadline :level="2" color="highlighted"> Quote Block </TypographyHeadline>
 
         <TypographyQuoteBlock color="muted" class="border-l-4 border-primary pl-4 italic">
-          A unified, typed design system that provides consistency across projects
-          while maintaining flexibility for customization.
+          A unified, typed design system that provides consistency across projects while maintaining
+          flexibility for customization.
         </TypographyQuoteBlock>
       </section>
 
       <!-- Features List -->
       <section class="space-y-6">
-        <TypographyHeadline :level="2" color="highlighted">
-          Key Features
-        </TypographyHeadline>
+        <TypographyHeadline :level="2" color="highlighted"> Key Features </TypographyHeadline>
 
         <div class="grid md:grid-cols-3 gap-4">
           <div class="space-y-2">
-            <Typography weight="font-semibold" color="primary">
-              Fully Typed
-            </Typography>
+            <Typography weight="font-semibold" color="primary"> Fully Typed </Typography>
             <Typography tag="p" color="muted" leading="leading-relaxed" class="text-sm">
-              Complete TypeScript coverage with semantic types for typography, colors, and breakpoints
+              Complete TypeScript coverage with semantic types for typography, colors, and
+              breakpoints
             </Typography>
           </div>
 
           <div class="space-y-2">
-            <Typography weight="font-semibold" color="primary">
-              Composable First
-            </Typography>
+            <Typography weight="font-semibold" color="primary"> Composable First </Typography>
             <Typography tag="p" color="muted" leading="leading-relaxed" class="text-sm">
               Built on Vue composables (useTypography, useColor, usePicture) for maximum reusability
             </Typography>
           </div>
 
           <div class="space-y-2">
-            <Typography weight="font-semibold" color="primary">
-              Responsive Ready
-            </Typography>
+            <Typography weight="font-semibold" color="primary"> Responsive Ready </Typography>
             <Typography tag="p" color="muted" leading="leading-relaxed" class="text-sm">
-              Comprehensive breakpoint system supporting Tailwind, device, phone, and tablet breakpoints
+              Comprehensive breakpoint system supporting Tailwind, device, phone, and tablet
+              breakpoints
             </Typography>
           </div>
         </div>
