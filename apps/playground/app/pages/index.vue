@@ -23,11 +23,11 @@ const layers = [
   },
   {
     name: 'Layout',
-    description: 'Layout components and page structures',
+    description: 'Swiss Grid system, sections, and page components',
     loaded: true,
     icon: 'i-lucide-layout',
-    to: undefined,
-    features: ['Coming Soon'],
+    to: '/layout',
+    features: ['18-Column Grid', 'Hero Section', 'Split Section', 'Gallery Section', 'Page Container', 'Grid Debug'],
   },
 ]
 </script>
