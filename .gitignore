@@ -23,3 +23,11 @@ dist
 
 # JetBrains/WebStorm
 .idea/
+
+# Generated JS files (IDE artifacts)
+*.vue.js
+**/app/composables/*.js
+**/app/plugins/*.js
+**/app/utils/*.js
+**/app/components/**/*.js
+**/app.config.js
