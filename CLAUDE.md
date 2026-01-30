@@ -45,6 +45,23 @@ nuxt-layers/
 - **Vitest** for unit tests, **Playwright/Cypress** for E2E
 - **Changesets** for versioning
 
+## Git Subtree Layers
+
+The `core`, `ui`, and `layout` layers are managed as git subtrees from separate repositories. To push changes back to their upstream repos:
+
+```bash
+# Push changes to upstream (replace <layer> with core, ui, or layout)
+git subtree push --prefix=layers/<layer> <remote-url> main
+
+# Example: Push layout layer changes
+git subtree push --prefix=layers/layout https://github.com/kieranmansfield/ui-layout-layer.git main
+
+# Pull updates from upstream
+git subtree pull --prefix=layers/<layer> <remote-url> main --squash
+```
+
+**Note:** Always commit your changes to the monorepo first, then push to upstream if needed.
+
 ## Path-Based Rules
 
 Detailed coding conventions are in `.claude/rules/`:
