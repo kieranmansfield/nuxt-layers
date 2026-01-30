@@ -1,5 +1,5 @@
 {
-  "name": "apps-playground",
+  "name": "playground",
   "type": "module",
   "private": true,
   "scripts": {

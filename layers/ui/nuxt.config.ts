@@ -4,6 +4,9 @@ export default defineNuxtConfig({
     name: 'ui',
   },
 
+  // Only extend core when running standalone dev (via dev:ui script)
+  extends: process.env.UI_STANDALONE ? ['../core'] : [],
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',

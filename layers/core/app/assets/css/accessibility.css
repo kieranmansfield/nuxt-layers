@@ -1,26 +1,30 @@
 @layer base {
   /* -------------------------
      Motion & Animation
+     - Respect reduced-motion preferences without killing all motion
   -------------------------- */
-
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
-      animation-duration: 0.01ms !important;
+      animation-duration: 0.01s !important; /* effectively minimal, preserves transitions for essential elements */
       animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
+      transition-duration: 0.01s !important;
       scroll-behavior: auto !important;
+    }
+
+    /* Optionally, you can leave essential animations like focus/feedback intact */
+    .essential-animation {
+      animation-duration: revert !important;
+      transition-duration: revert !important;
     }
   }
 
   /* -------------------------
      Focus Management
   -------------------------- */
-
   :focus-visible {
-    outline: 2px solid #3b82f6; /* Fallback */
-    outline: 2px solid currentColor;
+    outline: 2px solid #3b82f6; /* Tailwind blue fallback */
     outline-offset: 2px;
   }
 
@@ -31,36 +35,36 @@
   /* -------------------------
      Skip Links
   -------------------------- */
-
   .skip-link {
     position: absolute;
     top: -40px;
     left: 0;
-    background: #000;
-    color: #fff;
-    padding: 8px;
-    text-decoration: none;
     z-index: 100;
+    background: #000;
+    padding: 0.5rem;
+    color: #fff;
+    font-size: 0.875rem; /* Tailwind text-sm fallback */
+    text-decoration: none;
   }
 
   .skip-link:focus {
     top: 0;
+    box-shadow: 0 0 0 3px #3b82f6;
   }
 
   /* -------------------------
      Screen Reader Only
   -------------------------- */
-
   .sr-only {
     position: absolute;
+    margin: -1px;
+    padding: 0;
     width: 1px;
     height: 1px;
-    padding: 0;
-    margin: -1px;
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
     border-width: 0;
+    white-space: nowrap;
   }
 
   .sr-only-focusable:focus,
@@ -76,7 +80,6 @@
   /* -------------------------
      High Contrast Mode
   -------------------------- */
-
   @media (prefers-contrast: more) {
     :focus-visible {
       outline-width: 3px;
@@ -84,7 +87,6 @@
     }
   }
 
-  /* Windows High Contrast Mode - forced colors */
   @media (forced-colors: active) {
     :focus-visible {
       outline: 2px solid CanvasText;
@@ -93,9 +95,8 @@
 
   /* -------------------------
      Font Scaling
+     - responsive root font size
   -------------------------- */
-
-  /* Support browser text scaling without breaking layout */
   @media (min-width: 768px) {
     html {
       font-size: clamp(1rem, 0.9rem + 0.25vw, 1.125rem);
@@ -104,14 +105,16 @@
 
   /* -------------------------
      Interactive Target Sizes
+     - WCAG 2.5.5 minimum 44x44px
   -------------------------- */
-
-  /* Ensure touch targets are at least 44x44px (WCAG 2.5.5) */
   button,
   a,
   [role='button'],
   [role='link'] {
-    min-height: 44px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     min-width: 44px;
+    min-height: 44px;
   }
 }

@@ -37,34 +37,6 @@ nuxt-layers/
 
 **Nuxt Layers Pattern:** Each layer in `layers/` is an independent package that can be composed into Nuxt apps. Layers extend the app with components, composables, utilities, and configuration.
 
-## Code Style
-
-- **No semicolons**, single quotes, ES5 trailing commas
-- **Max line length:** 100 characters
-- **Vue script blocks:** Must use `lang="ts"`
-- **Component names:** PascalCase in templates
-- **Vue block order:** `<script>` → `<template>` → `<style>`
-
-### Vue Macros
-
-Use type-based declarations with destructuring:
-
-```vue
-<script setup lang="ts">
-// Correct: type-based with destructuring
-const { title, count = 0 } = defineProps<{
-  title: string
-  count?: number
-}>()
-
-const emit = defineEmits<{
-  update: [value: string]
-}>()
-</script>
-```
-
-Macro ordering: `defineProps` → `defineEmits` → `defineExpose` → `withDefaults`
-
 ## Tech Stack
 
 - **Nuxt 4** / Vue 3 / TypeScript 5.9
@@ -72,3 +44,10 @@ Macro ordering: `defineProps` → `defineEmits` → `defineExpose` → `withDefa
 - **Turbo** for monorepo task running
 - **Vitest** for unit tests, **Playwright/Cypress** for E2E
 - **Changesets** for versioning
+
+## Path-Based Rules
+
+Detailed coding conventions are in `.claude/rules/`:
+- `vue-components.md` - Vue SFC patterns (applies to `**/*.vue`)
+- `nuxt-layers.md` - Layer development (applies to `layers/**/*`)
+- `typescript.md` - TypeScript conventions (applies to `**/*.ts`, `**/*.tsx`)

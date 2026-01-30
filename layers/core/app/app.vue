@@ -3,7 +3,7 @@ const config = useAppConfig()
 const coreLayer = config.coreLayer as { loading?: { enabled?: boolean } } | undefined
 const loadingEnabled = coreLayer?.loading?.enabled !== false
 
-console.log('[app.vue] loadingEnabled:', loadingEnabled)
+// console.log('[app.vue] loadingEnabled:', loadingEnabled)
 </script>
 
 <template>
