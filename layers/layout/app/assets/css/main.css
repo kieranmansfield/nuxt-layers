@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+@config '#layers/layout/tailwind.config.js';
+
+@import '#layers/layout/app/assets/css/layout/grids.css';
