@@ -30,6 +30,7 @@ withDefaults(defineProps<Props>(), {
 .section-bleed {
   --bleed: var(--grid-padding, clamp(1rem, 2.5vw, 2rem));
   --gap: var(--grid-gap, clamp(0.75rem, 1.5vw, 1.5rem));
+
   margin-inline: calc(-1 * var(--bleed));
   margin-block: calc(-0.5 * var(--gap));
   width: calc(100% + 2 * var(--bleed));

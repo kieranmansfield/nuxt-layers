@@ -29,15 +29,15 @@ const sampleCode = `function useScreen() {
 </script>
 
 <template>
-  <div class="min-h-screen p-8">
+  <div class="min-h-screen bg-default text-default p-8">
     <UContainer>
       <div class="space-y-12">
         <!-- Header -->
         <div class="flex items-center gap-4">
           <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" />
           <div>
-            <h1 class="text-3xl font-bold">UI Layer</h1>
-            <p class="text-gray-500 dark:text-gray-400">Typography, colors, and media components</p>
+            <h1 class="text-3xl font-bold text-highlighted">UI Layer</h1>
+            <p class="text-muted">Typography, colors, and media components</p>
           </div>
         </div>
 

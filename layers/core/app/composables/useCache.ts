@@ -1,6 +1,6 @@
+/* eslint-disable no-console */
 // composables/useCache.ts
 import { useOnline } from '@vueuse/core'
-import { computed, ref } from 'vue'
 
 /**
  * Cache management composable for PWA

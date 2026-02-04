@@ -10,10 +10,5 @@
     "build": "UI_STANDALONE=true nuxi build",
     "generate": "UI_STANDALONE=true nuxi generate",
     "preview": "nuxt preview .playground"
-  },
-  "browserslist": [
-    "> 0.5%",
-    "last 2 versions",
-    "not dead"
-  ]
+  }
 }

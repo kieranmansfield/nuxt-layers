@@ -4,8 +4,6 @@
   color-scheme: light dark;
 } */
 
-
-
 @import 'tailwindcss';
 @import '@nuxt/ui';
 

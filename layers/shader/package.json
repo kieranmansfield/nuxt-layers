@@ -1,0 +1,17 @@
+{
+  "name": "@nuxt-layers/shader",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "dependencies": {
+    "@tresjs/cientos": "^5.2.5",
+    "@tresjs/core": "^5.3.3",
+    "@tresjs/nuxt": "^5.1.7",
+    "@tresjs/post-processing": "^3.2.5",
+    "@vueuse/core": "^13.1.0",
+    "three": "^0.182.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.182.0"
+  }
+}

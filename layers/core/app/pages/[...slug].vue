@@ -116,10 +116,10 @@ if (import.meta.server) {
         <UEmpty :icon :title :description size="xl">
           <!-- Show attempted path -->
           <template v-if="config.showPath !== false" #description>
-            <p class="mb-2 text-[var(--ui-text-muted)]">
+            <p class="mb-2 text-muted">
               {{ description }}
             </p>
-            <code class="rounded bg-[var(--ui-bg-elevated)] px-2 py-1 text-sm">
+            <code class="rounded bg-elevated px-2 py-1 text-sm">
               {{ attemptedPath }}
             </code>
           </template>

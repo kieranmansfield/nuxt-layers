@@ -1,0 +1,7 @@
+{
+  "extends": "../../apps/playground/tsconfig.json",
+  "compilerOptions": {
+    "strict": true
+  },
+  "include": ["app/composables/**/*.ts", "app/components/**/*.vue"]
+}

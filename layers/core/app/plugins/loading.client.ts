@@ -27,27 +27,27 @@ export default defineNuxtPlugin((nuxtApp) => {
   const config = useAppConfig()
   const coreLayer = config.coreLayer as CoreLayerConfig | undefined
 
-  console.log('[Loading Plugin] Config:', coreLayer?.loading)
+  // console.log('[Loading Plugin] Config:', coreLayer?.loading)
 
   // Check if loading is enabled
   if (coreLayer?.loading?.enabled === false) {
-    console.log('[Loading Plugin] Disabled')
+    // console.log('[Loading Plugin] Disabled')
     return // Disabled, skip initialization
   }
 
   const { startLoading, stopLoading } = useLoading()
 
-  console.log('[Loading Plugin] Starting loading...')
+  // console.log('[Loading Plugin] Starting loading...')
   // Start loading immediately on plugin load
   startLoading()
 
   // Stop loading when app is fully mounted
   nuxtApp.hook('app:mounted', () => {
-    console.log('[Loading Plugin] App mounted, will stop in 500ms')
+    // console.log('[Loading Plugin] App mounted, will stop in 500ms')
     // Add a small delay to ensure LoadingScreen component has mounted
     // and is visible before we stop loading
     setTimeout(() => {
-      console.log('[Loading Plugin] Stopping loading now')
+      // console.log('[Loading Plugin] Stopping loading now')
       stopLoading()
     }, 500) // 500ms delay to ensure component is visible
   })

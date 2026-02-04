@@ -1,13 +1,15 @@
-import { fileURLToPath } from 'node:url'
-
 // Layer configuration
-const AVAILABLE_LAYERS = ['core', 'ui', 'layout'] as const
+const AVAILABLE_LAYERS = ['core', 'ui', 'layout', 'motion', 'shader', 'forms', 'theme'] as const
 type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
 const LAYER_PATHS: Record<LayerName, string> = {
   core: '../../layers/core',
   ui: '../../layers/ui',
   layout: '../../layers/layout',
+  motion: '../../layers/motion',
+  shader: '../../layers/shader',
+  forms: '../../layers/forms',
+  theme: '../../layers/theme',
 }
 
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included
@@ -15,6 +17,10 @@ const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
   core: [],
   ui: ['core'], // ui depends on core
   layout: ['core'], // layout depends on core
+  motion: ['core'], // motion depends on core
+  shader: ['core'], // shader depends on core
+  forms: ['core'], // forms depends on core
+  theme: ['core'],
 }
 
 /**
@@ -66,6 +72,16 @@ export default defineNuxtConfig({
       server: {
         watch: {
           usePolling: true,
+        },
+      },
+      optimizeDeps: {
+        force: true, // Force re-bundling deps on every start
+      },
+    },
+    nitro: {
+      devStorage: {
+        cache: {
+          driver: 'memory', // Use memory storage instead of filesystem cache
         },
       },
     },

@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
 /**
  * PageContainer - Unified page wrapper component

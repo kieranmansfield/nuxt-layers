@@ -11,7 +11,6 @@ import type {
   TextAlign,
   TextTransform,
 } from '#layers/ui/app/types/typography'
-import { computed } from 'vue'
 
 const props = withDefaults(
   defineProps<{

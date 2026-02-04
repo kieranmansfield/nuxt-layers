@@ -1,6 +1,6 @@
-import { ref } from 'vue'
-import type { Ref } from 'vue'
 import { useElementHover, useElementVisibility, useScroll } from '@vueuse/core'
+// eslint-disable-next-line no-restricted-imports
+import type { Ref } from 'vue'
 
 /**
  * Composable for handling element animations and transitions
@@ -23,7 +23,7 @@ export function useMotion(target?: Ref<HTMLElement | null>) {
     const scrollResult = useScroll(target)
     scroll.value = {
       x: scrollResult.x.value,
-      y: scrollResult.y.value
+      y: scrollResult.y.value,
     }
   }
 

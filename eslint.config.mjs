@@ -4,6 +4,7 @@ import typescript from '@typescript-eslint/eslint-plugin'
 import typescriptParser from '@typescript-eslint/parser'
 import compat from 'eslint-plugin-compat'
 import prettier from 'eslint-plugin-prettier'
+import unusedImports from 'eslint-plugin-unused-imports'
 import vue from 'eslint-plugin-vue'
 
 const globalIgnores = [
@@ -75,6 +76,32 @@ const vueRules = {
   'vue/no-duplicate-attr-inheritance': 'off',
 }
 
+const nuxtAutoImportRules = {
+  'no-restricted-imports': [
+    'error',
+    {
+      paths: [
+        {
+          name: 'vue',
+          message: 'Vue APIs are auto-imported by Nuxt. Remove this import.',
+        },
+        {
+          name: '#imports',
+          message: 'Already auto-imported by Nuxt.',
+        },
+        {
+          name: '#components',
+          message: 'Components are auto-imported by Nuxt.',
+        },
+      ],
+      patterns: ['@/components/**', '~/components/**'],
+    },
+  ],
+  'unused-imports/no-unused-imports': 'error',
+  'no-unused-vars': 'off',
+  '@typescript-eslint/no-unused-vars': 'off',
+}
+
 export default [
   // Global ignores
   {
@@ -96,11 +123,15 @@ export default [
       '@typescript-eslint': typescript,
       prettier,
       compat,
+      'unused-imports': unusedImports,
     },
     settings: {
       browsers: ['>0.5%', 'last 2 versions', 'not dead', 'not op_mini all'],
     },
-    rules: sharedRules,
+    rules: {
+      ...sharedRules,
+      ...nuxtAutoImportRules,
+    },
   },
 
   // JavaScript files
@@ -115,11 +146,15 @@ export default [
       '@typescript-eslint': typescript,
       prettier,
       compat,
+      'unused-imports': unusedImports,
     },
     settings: {
       browsers: ['>0.5%', 'last 2 versions', 'not dead', 'not op_mini all'],
     },
-    rules: sharedRules,
+    rules: {
+      ...sharedRules,
+      ...nuxtAutoImportRules,
+    },
   },
 
   // Vue recommended configs
@@ -147,6 +182,7 @@ export default [
       '@typescript-eslint': typescript,
       prettier,
       compat,
+      'unused-imports': unusedImports,
     },
     settings: {
       browsers: ['>0.5%', 'last 2 versions', 'not dead', 'not op_mini all'],
@@ -154,6 +190,7 @@ export default [
     rules: {
       ...sharedRules,
       ...vueRules,
+      ...nuxtAutoImportRules,
     },
   },
 

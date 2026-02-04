@@ -55,7 +55,7 @@ const columnSpan = computed(() => {
 </script>
 
 <template>
-  <LayoutSection :full-height="fullHeight">
+  <LayoutSection :full-height>
     <LayoutGridItem
       v-for="(item, index) in items"
       :key="index"

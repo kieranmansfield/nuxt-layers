@@ -15,6 +15,7 @@ export function useGsap() {
 
   return {
     gsap: nuxtApp.$gsap as unknown as typeof import('gsap').gsap,
-    ScrollTrigger: nuxtApp.$ScrollTrigger as unknown as typeof import('gsap/ScrollTrigger').ScrollTrigger,
+    ScrollTrigger:
+      nuxtApp.$ScrollTrigger as unknown as typeof import('gsap/ScrollTrigger').ScrollTrigger,
   }
 }

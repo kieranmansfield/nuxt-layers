@@ -1,0 +1,1 @@
+// Aurora gradient layer

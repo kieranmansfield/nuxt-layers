@@ -111,18 +111,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         })
       }
 
-      // Test PWA composable (from @vite-pwa/nuxt)
-      const pwa = usePWA()
-
-      if (isDev && pwa) {
-        // eslint-disable-next-line no-console
-        console.log('[Core Layer] PWA status:', {
-          installed: pwa.isPWAInstalled,
-          canInstall: pwa.showInstallPrompt,
-          swActivated: pwa.swActivated,
-          offlineReady: pwa.offlineReady,
-        })
-      }
+      // PWA composable is only available in production
+      // Use usePWAInfo() from core layer for PWA status
     }
 
     // Test rendering mode detection (works on both server and client)

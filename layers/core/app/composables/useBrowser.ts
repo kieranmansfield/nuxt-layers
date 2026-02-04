@@ -1,5 +1,4 @@
 // composables/useBrowser.ts
-import { computed, ref } from 'vue'
 
 interface BrowserInfo {
   name: string

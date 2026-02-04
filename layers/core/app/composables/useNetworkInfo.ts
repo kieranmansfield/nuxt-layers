@@ -1,6 +1,5 @@
 // composables/useNetworkInfo.ts
 import { useNetwork } from '@vueuse/core'
-import { computed } from 'vue'
 
 /**
  * Network information composable

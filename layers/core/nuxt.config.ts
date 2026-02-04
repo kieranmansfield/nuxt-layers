@@ -4,14 +4,21 @@ export default defineNuxtConfig({
     name: 'core',
   },
 
+  alias: {
+    '#layers/core': import.meta.dirname,
+  },
+
+  // Base modules (always loaded)
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
     // '@nuxt/image'
     '@vueuse/nuxt',
     '@nuxtjs/device',
-    '@vite-pwa/nuxt',
+    // PWA module - only in production
+    ...(process.env.NODE_ENV === 'production' ? ['@vite-pwa/nuxt'] : []),
   ],
+
   css: ['#layers/core/app/assets/css/main.css'],
 
   plugins: [
@@ -27,6 +34,11 @@ export default defineNuxtConfig({
     vscode: {
       enabled: true,
     },
+  },
+
+  // Force light mode for consistent appearance
+  colorMode: {
+    preference: 'light',
   },
 
   future: {
@@ -46,38 +58,25 @@ export default defineNuxtConfig({
     },
   },
 
-  pwa: {
-    registerType: 'autoUpdate',
-    manifest: {
-      name: 'Core Layer App',
-      short_name: 'Core Layer',
-      description: 'Foundation layer for Nuxt applications',
-      theme_color: '#ffffff',
-      background_color: '#ffffff',
-      display: 'standalone',
-      start_url: '/',
-      // icons: [
-      //   {
-      //     src: '/icon-192x192.png',
-      //     sizes: '192x192',
-      //     type: 'image/png',
-      //   },
-      //   {
-      //     src: '/icon-512x512.png',
-      //     sizes: '512x512',
-      //     type: 'image/png',
-      //   },
-      // ],
-    },
-    workbox: {
-      navigateFallback: '/',
-      globPatterns: ['**/*.{js,css,html}'],
-      globIgnores: ['**/node_modules/**/*'],
-    },
-    devOptions: {
-      enabled: true,
-      type: 'module',
-      suppressWarnings: true,
-    },
-  },
+  // PWA configuration (only applied when module is loaded in production)
+  // pwa:
+  //   process.env.NODE_ENV === 'production'
+  //     ? {
+  //         registerType: 'autoUpdate',
+  //         manifest: {
+  //           name: 'Core Layer App',
+  //           short_name: 'Core Layer',
+  //           description: 'Foundation layer for Nuxt applications',
+  //           theme_color: '#ffffff',
+  //           background_color: '#ffffff',
+  //           display: 'standalone',
+  //           start_url: '/',
+  //         },
+  //         workbox: {
+  //           navigateFallback: '/',
+  //           globPatterns: ['**/*.{js,css,html}'],
+  //           globIgnores: ['**/node_modules/**/*'],
+  //         },
+  //       }
+  //     : undefined,
 })

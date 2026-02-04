@@ -1,5 +1,4 @@
 import type { ColorUsage, UiColors } from '#layers/ui/app/types/colors'
-import { computed } from 'vue'
 
 const colorMap: Record<UiColors, string> = {
   // Semantic

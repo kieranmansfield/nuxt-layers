@@ -31,6 +31,7 @@ nuxt-layers/
 ├── layers/
 │   ├── core/              # Core layer (base utilities)
 │   ├── layout/            # Layout components layer
+│   ├── motion/            # Motion and animation layer
 │   └── ui/                # UI components layer
 └── packages/              # Shared utilities (placeholder)
 ```
@@ -47,10 +48,10 @@ nuxt-layers/
 
 ## Git Subtree Layers
 
-The `core`, `ui`, and `layout` layers are managed as git subtrees from separate repositories. To push changes back to their upstream repos:
+The `core`, `ui`, `layout`, and `motion` layers are managed as git subtrees from separate repositories. To push changes back to their upstream repos:
 
 ```bash
-# Push changes to upstream (replace <layer> with core, ui, or layout)
+# Push changes to upstream (replace <layer> with core, ui, layout, or motion)
 git subtree push --prefix=layers/<layer> <remote-url> main
 
 # Example: Push layout layer changes

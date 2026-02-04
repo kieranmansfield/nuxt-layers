@@ -1,0 +1,19 @@
+{
+  "name": "content",
+  "type": "module",
+  "version": "0.0.1",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi dev .playground",
+    "dev:content": "CONTENT_STANDALONE=true nuxi dev",
+    "dev:prepare": "nuxt prepare .playground",
+    "build": "CONTENT_STANDALONE=true nuxi build",
+    "generate": "CONTENT_STANDALONE=true nuxi generate",
+    "preview": "nuxt preview .playground"
+  },
+  "devDependencies": {
+    "@nuxt/content": "^3.11.0",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.25.1"
+  }
+}

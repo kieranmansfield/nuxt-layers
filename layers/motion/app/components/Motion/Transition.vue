@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-
 // Props
 const props = withDefaults(
   defineProps<{
@@ -62,10 +60,7 @@ const leave = (el: Element, done: () => void) => {
 </script>
 
 <template>
-  <div
-    :class="['motion-transition', transitionClass, { 'is-visible': isVisible }]"
-    :style="style"
-  >
+  <div class="motion-transition" :class="[transitionClass, { 'is-visible': isVisible }]" :style>
     <slot />
   </div>
 </template>

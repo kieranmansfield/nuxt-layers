@@ -42,16 +42,8 @@ const {
 } = useScreen()
 
 // Network info
-const {
-  isOnline,
-  effectiveType,
-  saveData,
-  connectionQuality,
-  isSlow,
-  isFast,
-  isCellular,
-  isWiFi,
-} = useNetworkInfo()
+const { isOnline, effectiveType, saveData, connectionQuality, isSlow, isFast, isCellular, isWiFi } =
+  useNetworkInfo()
 
 // Feature detection
 const {
@@ -86,14 +78,18 @@ const showLoadingDemo = ref(false)
 async function runLoadingDemo() {
   showLoadingDemo.value = true
   startLoading()
-  await new Promise(resolve => setTimeout(resolve, 3000))
+  await new Promise((resolve) => setTimeout(resolve, 3000))
   stopLoading()
-  await new Promise(resolve => setTimeout(resolve, 500))
+  await new Promise((resolve) => setTimeout(resolve, 500))
   showLoadingDemo.value = false
 }
 
 // Device detection from @nuxtjs/device
-const { isMobile: deviceIsMobile, isTablet: deviceIsTablet, isDesktop: deviceIsDesktop } = useDevice()
+const {
+  isMobile: deviceIsMobile,
+  isTablet: deviceIsTablet,
+  isDesktop: deviceIsDesktop,
+} = useDevice()
 
 // Feature lists for v-for (typed to avoid key inference issues)
 const cssFeatures = computed(() => [
@@ -131,15 +127,15 @@ async function handleUpdate() {
 </script>
 
 <template>
-  <div class="min-h-screen p-8">
+  <div class="min-h-screen bg-default text-default p-8">
     <UContainer>
       <div class="space-y-8">
         <!-- Header -->
         <div class="flex items-center gap-4">
           <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" />
           <div>
-            <h1 class="text-3xl font-bold">Core Layer</h1>
-            <p class="text-gray-500 dark:text-gray-400">Foundation utilities and composables</p>
+            <h1 class="text-3xl font-bold text-highlighted">Core Layer</h1>
+            <p class="text-muted">Foundation utilities and composables</p>
           </div>
         </div>
 
@@ -156,7 +152,9 @@ async function handleUpdate() {
           <div class="grid gap-6 md:grid-cols-2">
             <!-- Browser Info -->
             <div class="space-y-3">
-              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">Browser Info</h3>
+              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                Browser Info
+              </h3>
               <div class="space-y-2">
                 <div class="flex justify-between">
                   <span class="text-gray-600 dark:text-gray-400">Name</span>
@@ -179,7 +177,9 @@ async function handleUpdate() {
 
             <!-- Flags -->
             <div class="space-y-3">
-              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">Detection Flags</h3>
+              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                Detection Flags
+              </h3>
               <div class="flex flex-wrap gap-2">
                 <UBadge v-if="isChrome" color="success">Chrome</UBadge>
                 <UBadge v-if="isSafari" color="success">Safari</UBadge>
@@ -205,7 +205,9 @@ async function handleUpdate() {
               <UIcon name="i-lucide-monitor" class="text-primary" />
               <h2 class="text-xl font-semibold">useScreen()</h2>
             </div>
-            <p class="text-sm text-gray-500 mt-1">Screen dimensions, breakpoints, and orientation</p>
+            <p class="text-sm text-gray-500 mt-1">
+              Screen dimensions, breakpoints, and orientation
+            </p>
           </template>
 
           <div class="grid gap-6 md:grid-cols-3">
@@ -243,10 +245,18 @@ async function handleUpdate() {
                   <UBadge color="primary">{{ breakpoint }}</UBadge>
                 </div>
                 <div class="flex flex-wrap gap-1.5 pt-2">
-                  <UBadge :color="isMobile ? 'success' : 'neutral'" variant="subtle" size="xs">Mobile</UBadge>
-                  <UBadge :color="isTablet ? 'success' : 'neutral'" variant="subtle" size="xs">Tablet</UBadge>
-                  <UBadge :color="isDesktop ? 'success' : 'neutral'" variant="subtle" size="xs">Desktop</UBadge>
-                  <UBadge :color="isLargeDesktop ? 'success' : 'neutral'" variant="subtle" size="xs">Large</UBadge>
+                  <UBadge :color="isMobile ? 'success' : 'neutral'" variant="subtle" size="xs"
+                    >Mobile</UBadge
+                  >
+                  <UBadge :color="isTablet ? 'success' : 'neutral'" variant="subtle" size="xs"
+                    >Tablet</UBadge
+                  >
+                  <UBadge :color="isDesktop ? 'success' : 'neutral'" variant="subtle" size="xs"
+                    >Desktop</UBadge
+                  >
+                  <UBadge :color="isLargeDesktop ? 'success' : 'neutral'" variant="subtle" size="xs"
+                    >Large</UBadge
+                  >
                 </div>
               </div>
             </div>
@@ -260,8 +270,12 @@ async function handleUpdate() {
                   <span class="font-mono text-sm">{{ orientation || 'N/A' }}</span>
                 </div>
                 <div class="flex gap-2 pt-2">
-                  <UBadge :color="isPortrait ? 'success' : 'neutral'" variant="subtle" size="xs">Portrait</UBadge>
-                  <UBadge :color="isLandscape ? 'success' : 'neutral'" variant="subtle" size="xs">Landscape</UBadge>
+                  <UBadge :color="isPortrait ? 'success' : 'neutral'" variant="subtle" size="xs"
+                    >Portrait</UBadge
+                  >
+                  <UBadge :color="isLandscape ? 'success' : 'neutral'" variant="subtle" size="xs"
+                    >Landscape</UBadge
+                  >
                 </div>
               </div>
             </div>
@@ -281,7 +295,9 @@ async function handleUpdate() {
           <div class="grid gap-6 md:grid-cols-2">
             <!-- Status -->
             <div class="space-y-3">
-              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">Connection Status</h3>
+              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                Connection Status
+              </h3>
               <div class="space-y-2">
                 <div class="flex justify-between items-center">
                   <span class="text-gray-600 dark:text-gray-400">Online</span>
@@ -296,9 +312,15 @@ async function handleUpdate() {
                 <div class="flex justify-between items-center">
                   <span class="text-gray-600 dark:text-gray-400">Quality</span>
                   <UBadge
-                    :color="connectionQuality === 'excellent' ? 'success' :
-                           connectionQuality === 'good' ? 'warning' :
-                           connectionQuality === 'poor' ? 'error' : 'neutral'"
+                    :color="
+                      connectionQuality === 'excellent'
+                        ? 'success'
+                        : connectionQuality === 'good'
+                          ? 'warning'
+                          : connectionQuality === 'poor'
+                            ? 'error'
+                            : 'neutral'
+                    "
                   >
                     {{ connectionQuality }}
                   </UBadge>
@@ -308,7 +330,9 @@ async function handleUpdate() {
 
             <!-- Flags -->
             <div class="space-y-3">
-              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">Network Flags</h3>
+              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                Network Flags
+              </h3>
               <div class="flex flex-wrap gap-2">
                 <UBadge v-if="isFast" color="success">Fast</UBadge>
                 <UBadge v-if="isSlow" color="error">Slow</UBadge>
@@ -333,9 +357,15 @@ async function handleUpdate() {
           <div class="grid gap-6 md:grid-cols-3">
             <!-- CSS Features -->
             <div class="space-y-3">
-              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">CSS Features</h3>
+              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                CSS Features
+              </h3>
               <div class="space-y-1.5">
-                <div v-for="feature in cssFeatures" :key="feature.name" class="flex items-center gap-2 text-sm">
+                <div
+                  v-for="feature in cssFeatures"
+                  :key="feature.name"
+                  class="flex items-center gap-2 text-sm"
+                >
                   <UIcon
                     :name="feature.supported ? 'i-lucide-check' : 'i-lucide-x'"
                     :class="feature.supported ? 'text-green-500' : 'text-red-500'"
@@ -347,7 +377,9 @@ async function handleUpdate() {
 
             <!-- JS APIs -->
             <div class="space-y-3">
-              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">JavaScript APIs</h3>
+              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                JavaScript APIs
+              </h3>
               <div class="space-y-1.5">
                 <div v-for="api in jsApis" :key="api.name" class="flex items-center gap-2 text-sm">
                   <UIcon
@@ -361,9 +393,15 @@ async function handleUpdate() {
 
             <!-- User Preferences & Formats -->
             <div class="space-y-3">
-              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">Preferences & Formats</h3>
+              <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                Preferences & Formats
+              </h3>
               <div class="space-y-1.5">
-                <div v-for="pref in userPreferences" :key="pref.name" class="flex items-center gap-2 text-sm">
+                <div
+                  v-for="pref in userPreferences"
+                  :key="pref.name"
+                  class="flex items-center gap-2 text-sm"
+                >
                   <UIcon
                     :name="pref.active ? 'i-lucide-check' : 'i-lucide-x'"
                     :class="pref.active ? 'text-green-500' : 'text-gray-400'"
@@ -382,7 +420,9 @@ async function handleUpdate() {
               <UIcon name="i-lucide-smartphone" class="text-primary" />
               <h2 class="text-xl font-semibold">useDevice()</h2>
             </div>
-            <p class="text-sm text-gray-500 mt-1">Server-side device detection via @nuxtjs/device</p>
+            <p class="text-sm text-gray-500 mt-1">
+              Server-side device detection via @nuxtjs/device
+            </p>
           </template>
 
           <div class="flex gap-4">
@@ -457,9 +497,7 @@ async function handleUpdate() {
               </div>
 
               <div class="flex gap-2 pt-2">
-                <UButton v-if="canInstall" size="xs" @click="handleInstall">
-                  Install App
-                </UButton>
+                <UButton v-if="canInstall" size="xs" @click="handleInstall"> Install App </UButton>
                 <UButton v-if="needRefresh" size="xs" variant="soft" @click="handleUpdate">
                   Update
                 </UButton>
@@ -496,7 +534,10 @@ async function handleUpdate() {
               <ul class="list-disc list-inside mt-2 space-y-1">
                 <li>Simulated progress (0-90% auto, then waits)</li>
                 <li>Shared singleton state across components</li>
-                <li><code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">withLoading(fn)</code> wrapper for async functions</li>
+                <li>
+                  <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">withLoading(fn)</code>
+                  wrapper for async functions
+                </li>
               </ul>
             </div>
           </div>
@@ -507,9 +548,7 @@ async function handleUpdate() {
           <UButton to="/diagnostics" variant="outline" icon="i-lucide-activity">
             Full Diagnostics
           </UButton>
-          <UButton to="/ui" icon="i-lucide-arrow-right">
-            UI Layer Demo
-          </UButton>
+          <UButton to="/ui" icon="i-lucide-arrow-right"> UI Layer Demo </UButton>
         </div>
       </div>
     </UContainer>

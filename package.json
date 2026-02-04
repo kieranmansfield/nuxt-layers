@@ -8,6 +8,7 @@
     "dev:core": "PLAYGROUND_LAYERS=core pnpm -F playground dev",
     "dev:ui": "PLAYGROUND_LAYERS=core,ui pnpm -F playground dev",
     "dev:layout": "PLAYGROUND_LAYERS=core,ui,layout pnpm -F playground dev",
+    "dev:motion": "PLAYGROUND_LAYERS=core,motion pnpm -F playground dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
@@ -39,7 +40,8 @@
     "layer:rebuild:core": "pnpm build:core && pnpm layer:generate:core && pnpm layer:core",
     "layer:rebuild:ui": "pnpm build:ui && pnpm layer:generate:ui && pnpm layer:ui",
     "layer:rebuild:layout": "pnpm build:layout && pnpm layer:generate:layout && pnpm layer:layout",
-    "layer:rebuild:motion": "pnpm build:motion && pnpm layer:generate:motion && pnpm layer:motion"
+    "layer:rebuild:motion": "pnpm build:motion && pnpm layer:generate:motion && pnpm layer:motion",
+    "browserlist": "npx update-browserslist-db@latest"
   },
   "keywords": [],
   "author": "Kieran Mansfield",
@@ -63,20 +65,24 @@
     "@nuxt/ui": "latest",
     "@nuxtjs/device": "^4.0.0",
     "@perplex-digital/stylelint-config": "^17.2.0",
+    "@pinia/nuxt": "^0.11.3",
     "@types/node": "^25.1.0",
     "@typescript-eslint/eslint-plugin": "^8.54.0",
     "@typescript-eslint/parser": "^8.54.0",
     "@vueuse/core": "^14.1.0",
     "@vueuse/nuxt": "^14.1.0",
+    "browserslist": "^4.28.1",
     "changesets": "^1.0.2",
     "cypress": "^15.9.0",
     "depcheck": "^1.4.7",
     "eslint": "^9.39.2",
     "eslint-plugin-compat": "^6.1.0",
     "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-unused-imports": "^4.3.0",
     "eslint-plugin-vue": "^10.7.0",
     "npm-check-updates": "^19.3.2",
     "nuxt": "latest",
+    "pinia": "^3.0.4",
     "playwright": "^1.58.0",
     "postcss-html": "^1.8.1",
     "prettier": "^3.8.1",
@@ -84,7 +90,7 @@
     "prettier-plugin-organize-attributes": "^1.0.0",
     "prettier-plugin-tailwind-styled-components": "^2.0.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "stylelint": "^17.0.0",
+    "stylelint": "^17.1.0",
     "stylelint-config-recommended-vue": "^1.6.1",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-config-standard-vue": "^1.0.0",
@@ -100,8 +106,9 @@
     "vue-tsc": "^3.2.4"
   },
   "browserslist": [
-    "> 0.5%",
-    "last 2 versions",
-    "not dead"
+    "last 2 Chrome major versions",
+    "last 2 Firefox major versions",
+    "last 2 Safari major versions",
+    "last 2 Edge major versions"
   ]
 }

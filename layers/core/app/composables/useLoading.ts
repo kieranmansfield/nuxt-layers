@@ -1,5 +1,4 @@
 // composables/useLoading.ts
-import type { Ref } from 'vue'
 
 interface LoadingState {
   isLoading: Ref<boolean>

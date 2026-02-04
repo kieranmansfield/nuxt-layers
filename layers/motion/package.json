@@ -10,15 +10,8 @@
     "build": "nuxt build .playground",
     "preview": "nuxt preview .playground"
   },
-  "browserslist": [
-    "> 0.5%",
-    "last 2 versions",
-    "not dead"
-  ],
   "dependencies": {
-    "@vueuse/motion": "^2.2.6",
     "gsap": "^3.12.7",
-    "lenis": "^1.2.3",
-    "locomotive-scroll": "^5.0.0-beta.21"
+    "locomotive-scroll": "^5.0.0"
   }
 }

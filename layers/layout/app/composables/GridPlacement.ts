@@ -10,7 +10,6 @@
  * @example
  * const { style } = useGridPlacement({ colStart: 2, colSpan: 10 })
  */
-import type { MaybeRefOrGetter } from 'vue'
 
 interface GridPlacement {
   colStart?: number

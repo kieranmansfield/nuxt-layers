@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted, useSlots } from 'vue'
-
 // Props
 const props = withDefaults(
   defineProps<{
@@ -36,10 +34,13 @@ onMounted(() => {
   setTimeout(() => {
     items.value.forEach((item, index) => {
       if (item) {
-        setTimeout(() => {
-          animatedItems.value[index] = true
-          item.classList.add(`animate-${props.animation}`, 'animated')
-        }, props.initialDelay + index * props.staggerDelay)
+        setTimeout(
+          () => {
+            animatedItems.value[index] = true
+            item.classList.add(`animate-${props.animation}`, 'animated')
+          },
+          props.initialDelay + index * props.staggerDelay
+        )
       }
     })
   }, 100)
@@ -58,14 +59,15 @@ onMounted(() => {
 </template>
 
 <style scoped>
+/* stylelint-disable selector-pseudo-class-no-unknown */
 .motion-staggered :deep(.animated) {
-  opacity: 1;
   transform: translateY(0);
+  opacity: 1;
 }
 
 .motion-staggered :deep(*) {
-  opacity: 0;
   transform: translateY(20px);
+  opacity: 0;
   transition: all 0.3s ease-out;
 }
 </style>

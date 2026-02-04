@@ -1,6 +1,5 @@
 // composables/useScreen.ts
 import { breakpointsTailwind, useBreakpoints, useScreenOrientation } from '@vueuse/core'
-import { computed } from 'vue'
 
 /**
  * Screen size and orientation composable

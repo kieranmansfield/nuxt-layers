@@ -7,6 +7,10 @@ export default defineNuxtConfig({
   // Only extend core when running standalone dev (via dev:ui script)
   extends: process.env.UI_STANDALONE ? ['../core'] : [],
 
+  alias: {
+    '#layers/ui': import.meta.dirname,
+  },
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',

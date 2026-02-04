@@ -19,11 +19,6 @@
     "nuxtupdate": "npx nuxi@latest upgrade --dedupe --force",
     "nuxiupgrade": "npx nuxi upgrade"
   },
-  "browserslist": [
-    "> 0.5%",
-    "last 2 versions",
-    "not dead"
-  ],
   "devDependencies": {
     "@vite-pwa/nuxt": "^1.1.0"
   }

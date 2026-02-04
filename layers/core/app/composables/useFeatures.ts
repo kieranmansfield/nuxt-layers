@@ -6,7 +6,6 @@ import {
   useSessionStorage,
 } from '@vueuse/core'
 import type { FeatureDetection } from '#layers/core/app/types/detection'
-import { computed, watch } from 'vue'
 
 /**
  * Check if CSS feature is supported

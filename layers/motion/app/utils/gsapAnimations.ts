@@ -18,7 +18,13 @@ export function createFadeIn(
     toggleActions?: string
   }
 ) {
-  const { duration = 1, delay = 0, y = 30, start = 'top 85%', toggleActions = 'play none none none' } = options ?? {}
+  const {
+    duration = 1,
+    delay = 0,
+    y = 30,
+    start = 'top 85%',
+    toggleActions = 'play none none none',
+  } = options ?? {}
 
   gsap.set(target, { opacity: 0, y })
 

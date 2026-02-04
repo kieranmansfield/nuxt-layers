@@ -1,5 +1,4 @@
 // composables/useRendering.ts
-import { computed } from 'vue'
 
 type RenderMode = 'ssr' | 'ssg' | 'csr' | 'hybrid'
 

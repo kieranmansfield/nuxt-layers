@@ -5,20 +5,20 @@
 
 /* Transition classes */
 .transition-default {
-  transition-property: all;
   transition-duration: 300ms;
+  transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .transition-fade {
-  transition-property: opacity;
   transition-duration: 300ms;
+  transition-property: opacity;
   transition-timing-function: ease-out;
 }
 
 .transition-slide {
-  transition-property: transform, opacity;
   transition-duration: 300ms;
+  transition-property: transform, opacity;
   transition-timing-function: ease-out;
 }
 
