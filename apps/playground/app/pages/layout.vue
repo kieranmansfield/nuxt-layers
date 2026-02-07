@@ -4,6 +4,10 @@ useSeoMeta({
   description: 'Demonstrating the Layout layer grid system, sections, and page components',
 })
 
+const { setPageAccent } = useThemePreferences()
+setPageAccent('amber')
+onUnmounted(() => setPageAccent(null))
+
 // Sample gallery items
 const galleryItems = [
   { id: 1, title: 'Item 1', color: 'bg-blue-500' },

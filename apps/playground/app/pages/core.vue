@@ -4,6 +4,10 @@ useSeoMeta({
   description: 'Demonstrating the core layer utilities and composables',
 })
 
+const { setPageAccent } = useThemePreferences()
+setPageAccent('blue')
+onUnmounted(() => setPageAccent(null))
+
 // Browser detection
 const {
   name: browserName,

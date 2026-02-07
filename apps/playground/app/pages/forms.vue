@@ -7,6 +7,10 @@ useSeoMeta({
   description: 'Config-driven form fields with Zod validation and type inference',
 })
 
+const { setPageAccent } = useThemePreferences()
+setPageAccent('cyan')
+onUnmounted(() => setPageAccent(null))
+
 // Field types for demo
 const fieldTypes = [
   { type: 'text', description: 'Basic text input' },

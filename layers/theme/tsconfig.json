@@ -3,5 +3,5 @@
   "compilerOptions": {
     "strict": true
   },
-  "include": ["app/composables/**/*.ts", "app/components/**/*.vue"]
+  "include": ["app/composables/**/*.ts", "app/components/**/*.vue", "app/types/**/*.ts"]
 }

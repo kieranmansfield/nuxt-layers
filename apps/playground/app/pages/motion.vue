@@ -5,6 +5,10 @@ useSeoMeta({
   description: 'GSAP animations + Locomotive Scroll demos',
 })
 
+const { setPageAccent } = useThemePreferences()
+setPageAccent('emerald')
+onUnmounted(() => setPageAccent(null))
+
 const { gsap, ScrollTrigger } = useGsap()
 const { scrollTo, scrollToTop, velocity, progress } = useSmoothScroll()
 

@@ -4,26 +4,16 @@ export default defineNuxtConfig({
     name: 'content',
   },
 
-  // Only extend core when running standalone dev (via dev:ui script)
-  extends: process.env.UI_STANDALONE ? ['../core'] : [],
+  // Only extend core when running standalone dev (via dev:content script)
+  extends: process.env.CONTENT_STANDALONE ? ['../core'] : [],
 
   alias: {
     '#layers/content': import.meta.dirname,
   },
 
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/ui',
-    // '@nuxt/image'
+  modules: ['@nuxt/ui', '@nuxt/content'],
 
-    '@nuxt/content',
-  ],
-
-  // css: ['#layers/content/app/assets/css/main.css'],
-
-  // devtools: {
-  //   enabled: true,
-  // },
+  css: ['#layers/content/app/assets/css/main.css'],
 
   compatibilityDate: '2026-01-24',
 
@@ -31,10 +21,4 @@ export default defineNuxtConfig({
     typeCheck: true,
     strict: true,
   },
-
-  // vite: {
-  //   build: {
-  //     target: 'es2020',
-  //   },
-  // },
 })

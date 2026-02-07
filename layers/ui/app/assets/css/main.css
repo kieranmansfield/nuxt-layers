@@ -1,6 +1,3 @@
-@import 'tailwindcss';
-@import '@nuxt/ui';
-
 :root {
   background-color: var(--ui-bg);
   color: var(--ui-text);

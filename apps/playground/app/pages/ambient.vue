@@ -19,6 +19,10 @@ useSeoMeta({
   description: 'Beautiful TSL-powered ambient backgrounds using WebGPU',
 })
 
+const { setPageAccent } = useThemePreferences()
+setPageAccent('emerald')
+onUnmounted(() => setPageAccent(null))
+
 type PresetType = 'aurora' | 'nebula' | 'flow' | 'gradientMesh' | 'ocean'
 
 const activePreset = ref<PresetType>('aurora')
@@ -317,16 +321,7 @@ watch(mouseInteraction, (val) => {
                 <!-- Toggle -->
                 <div class="flex items-center justify-between pt-2">
                   <span class="text-xs text-gray-400">Mouse Interaction</span>
-                  <button
-                    class="w-10 h-5 rounded-full transition-colors relative"
-                    :class="[mouseInteraction ? 'bg-violet-500' : 'bg-gray-600']"
-                    @click="mouseInteraction = !mouseInteraction"
-                  >
-                    <span
-                      class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                      :class="[mouseInteraction ? 'translate-x-5' : 'translate-x-0.5']"
-                    />
-                  </button>
+                  <USwitch v-model="mouseInteraction" />
                 </div>
               </div>
             </div>

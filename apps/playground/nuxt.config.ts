@@ -1,5 +1,5 @@
 // Layer configuration
-const AVAILABLE_LAYERS = ['core', 'ui', 'layout', 'motion', 'shader', 'forms', 'theme'] as const
+const AVAILABLE_LAYERS = ['core', 'ui', 'layout', 'motion', 'shader', 'forms', 'theme', 'content'] as const
 type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
 const LAYER_PATHS: Record<LayerName, string> = {
@@ -10,6 +10,7 @@ const LAYER_PATHS: Record<LayerName, string> = {
   shader: '../../layers/shader',
   forms: '../../layers/forms',
   theme: '../../layers/theme',
+  content: '../../layers/content',
 }
 
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included
@@ -21,6 +22,7 @@ const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
   shader: ['core'], // shader depends on core
   forms: ['core'], // forms depends on core
   theme: ['core'],
+  content: ['core'],
 }
 
 /**

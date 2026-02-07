@@ -1,18 +1,7 @@
-/* :root {
-  background-color: light-dark(white, black);
-  color: light-dark(black, white);
-  color-scheme: light dark;
-} */
-
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
 @config '#layers/core/tailwind.config.js';
 
-@import '#layers/core/app/assets/css/reset.css';
-@import '#layers/core/app/assets/css/accessibility.css';
-
 @import '#layers/core/app/assets/css/layout.css';
 @import '#layers/core/app/assets/css/base.css';
-@import '#layers/core/app/assets/css/forms.css';
-@import '#layers/core/app/assets/css/utilities.css';

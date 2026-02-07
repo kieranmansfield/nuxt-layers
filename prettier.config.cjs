@@ -12,6 +12,7 @@ module.exports = {
     'prettier-plugin-organize-attributes',
     'prettier-plugin-css-order',
     '@ianvs/prettier-plugin-sort-imports',
+    'prettier-plugin-glsl',
   ],
   // tailwindConfig: './tailwind.config.js',
   ignorePath: '.prettierignore',

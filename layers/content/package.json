@@ -15,5 +15,8 @@
     "@nuxt/content": "^3.11.0",
     "zod": "^3.25.76",
     "zod-to-json-schema": "^3.25.1"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.6.2"
   }
 }

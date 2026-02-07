@@ -4,6 +4,10 @@ useSeoMeta({
   description: 'Comprehensive guide to Locomotive Scroll v5 features and usage',
 })
 
+const { setPageAccent } = useThemePreferences()
+setPageAccent('emerald')
+onUnmounted(() => setPageAccent(null))
+
 const { scrollTo, scrollToTop, velocity, progress, direction, scrollY } = useSmoothScroll()
 
 // Derived state for display

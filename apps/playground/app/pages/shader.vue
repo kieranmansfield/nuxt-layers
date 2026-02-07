@@ -4,6 +4,10 @@ useSeoMeta({
   description: 'TSL shader utilities - noise, SDF, lighting, tonemapping, patterns & effects',
 })
 
+const { setPageAccent } = useThemePreferences()
+setPageAccent('violet')
+onUnmounted(() => setPageAccent(null))
+
 // Demo state
 type DemoCategory =
   | 'overview'
@@ -671,32 +675,12 @@ const totalNewFunctions = computed(() => {
                   <!-- Toggles -->
                   <div class="flex items-center justify-between pt-2">
                     <span class="text-xs text-gray-400">Mouse Interaction</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[noiseControls.mouseInteraction ? 'bg-violet-500' : 'bg-gray-600']"
-                      @click="noiseControls.mouseInteraction = !noiseControls.mouseInteraction"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[
-                          noiseControls.mouseInteraction ? 'translate-x-5' : 'translate-x-0.5',
-                        ]"
-                      />
-                    </button>
+                    <USwitch v-model="noiseControls.mouseInteraction" />
                   </div>
 
                   <div class="flex items-center justify-between">
                     <span class="text-xs text-gray-400">Enable Zoom/Pan</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[noiseControls.enableZoom ? 'bg-violet-500' : 'bg-gray-600']"
-                      @click="noiseControls.enableZoom = !noiseControls.enableZoom"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[noiseControls.enableZoom ? 'translate-x-5' : 'translate-x-0.5']"
-                      />
-                    </button>
+                    <USwitch v-model="noiseControls.enableZoom" />
                   </div>
                 </div>
               </div>
@@ -832,32 +816,12 @@ const totalNewFunctions = computed(() => {
                   <!-- Toggles -->
                   <div class="flex items-center justify-between pt-2">
                     <span class="text-xs text-gray-400">Mouse Interaction</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[sdfControls.mouseInteraction ? 'bg-cyan-500' : 'bg-gray-600']"
-                      @click="sdfControls.mouseInteraction = !sdfControls.mouseInteraction"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[
-                          sdfControls.mouseInteraction ? 'translate-x-5' : 'translate-x-0.5',
-                        ]"
-                      />
-                    </button>
+                    <USwitch v-model="sdfControls.mouseInteraction" />
                   </div>
 
                   <div class="flex items-center justify-between">
                     <span class="text-xs text-gray-400">Enable Zoom/Pan</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[sdfControls.enableZoom ? 'bg-cyan-500' : 'bg-gray-600']"
-                      @click="sdfControls.enableZoom = !sdfControls.enableZoom"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[sdfControls.enableZoom ? 'translate-x-5' : 'translate-x-0.5']"
-                      />
-                    </button>
+                    <USwitch v-model="sdfControls.enableZoom" />
                   </div>
                 </div>
               </div>
@@ -972,34 +936,12 @@ const totalNewFunctions = computed(() => {
 
                   <div class="flex items-center justify-between pt-2">
                     <span class="text-xs text-gray-400">Mouse Interaction</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[lightingControls.mouseInteraction ? 'bg-pink-500' : 'bg-gray-600']"
-                      @click="
-                        lightingControls.mouseInteraction = !lightingControls.mouseInteraction
-                      "
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[
-                          lightingControls.mouseInteraction ? 'translate-x-5' : 'translate-x-0.5',
-                        ]"
-                      />
-                    </button>
+                    <USwitch v-model="lightingControls.mouseInteraction" />
                   </div>
 
                   <div class="flex items-center justify-between">
                     <span class="text-xs text-gray-400">Enable Zoom/Pan</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[lightingControls.enableZoom ? 'bg-pink-500' : 'bg-gray-600']"
-                      @click="lightingControls.enableZoom = !lightingControls.enableZoom"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[lightingControls.enableZoom ? 'translate-x-5' : 'translate-x-0.5']"
-                      />
-                    </button>
+                    <USwitch v-model="lightingControls.enableZoom" />
                   </div>
                 </div>
               </div>
@@ -1121,40 +1063,12 @@ const totalNewFunctions = computed(() => {
                   <!-- Toggles -->
                   <div class="flex items-center justify-between pt-2">
                     <span class="text-xs text-gray-400">Mouse Interaction</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[
-                        tonemappingControls.mouseInteraction ? 'bg-amber-500' : 'bg-gray-600',
-                      ]"
-                      @click="
-                        tonemappingControls.mouseInteraction = !tonemappingControls.mouseInteraction
-                      "
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[
-                          tonemappingControls.mouseInteraction
-                            ? 'translate-x-5'
-                            : 'translate-x-0.5',
-                        ]"
-                      />
-                    </button>
+                    <USwitch v-model="tonemappingControls.mouseInteraction" />
                   </div>
 
                   <div class="flex items-center justify-between">
                     <span class="text-xs text-gray-400">Enable Zoom/Pan</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[tonemappingControls.enableZoom ? 'bg-amber-500' : 'bg-gray-600']"
-                      @click="tonemappingControls.enableZoom = !tonemappingControls.enableZoom"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[
-                          tonemappingControls.enableZoom ? 'translate-x-5' : 'translate-x-0.5',
-                        ]"
-                      />
-                    </button>
+                    <USwitch v-model="tonemappingControls.enableZoom" />
                   </div>
                 </div>
               </div>
@@ -1272,32 +1186,12 @@ const totalNewFunctions = computed(() => {
                   <!-- Toggles -->
                   <div class="flex items-center justify-between pt-2">
                     <span class="text-xs text-gray-400">Mouse Interaction</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[patternControls.mouseInteraction ? 'bg-emerald-500' : 'bg-gray-600']"
-                      @click="patternControls.mouseInteraction = !patternControls.mouseInteraction"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[
-                          patternControls.mouseInteraction ? 'translate-x-5' : 'translate-x-0.5',
-                        ]"
-                      />
-                    </button>
+                    <USwitch v-model="patternControls.mouseInteraction" />
                   </div>
 
                   <div class="flex items-center justify-between">
                     <span class="text-xs text-gray-400">Enable Zoom/Pan</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[patternControls.enableZoom ? 'bg-emerald-500' : 'bg-gray-600']"
-                      @click="patternControls.enableZoom = !patternControls.enableZoom"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[patternControls.enableZoom ? 'translate-x-5' : 'translate-x-0.5']"
-                      />
-                    </button>
+                    <USwitch v-model="patternControls.enableZoom" />
                   </div>
                 </div>
               </div>
@@ -1442,44 +1336,17 @@ const totalNewFunctions = computed(() => {
                   <!-- Toggle switches -->
                   <div class="flex items-center justify-between pt-2">
                     <span class="text-xs text-gray-400">Mouse Ripple</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[effectControls.mouseRipple ? 'bg-pink-500' : 'bg-gray-600']"
-                      @click="effectControls.mouseRipple = !effectControls.mouseRipple"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[effectControls.mouseRipple ? 'translate-x-5' : 'translate-x-0.5']"
-                      />
-                    </button>
+                    <USwitch v-model="effectControls.mouseRipple" />
                   </div>
 
                   <div class="flex items-center justify-between">
                     <span class="text-xs text-gray-400">Vignette</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[effectControls.vignette ? 'bg-pink-500' : 'bg-gray-600']"
-                      @click="effectControls.vignette = !effectControls.vignette"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[effectControls.vignette ? 'translate-x-5' : 'translate-x-0.5']"
-                      />
-                    </button>
+                    <USwitch v-model="effectControls.vignette" />
                   </div>
 
                   <div class="flex items-center justify-between">
                     <span class="text-xs text-gray-400">Enable Zoom/Pan</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[effectControls.enableZoom ? 'bg-pink-500' : 'bg-gray-600']"
-                      @click="effectControls.enableZoom = !effectControls.enableZoom"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[effectControls.enableZoom ? 'translate-x-5' : 'translate-x-0.5']"
-                      />
-                    </button>
+                    <USwitch v-model="effectControls.enableZoom" />
                   </div>
                 </div>
               </div>
@@ -1568,32 +1435,12 @@ const totalNewFunctions = computed(() => {
                   <!-- Toggles -->
                   <div class="flex items-center justify-between pt-2">
                     <span class="text-xs text-gray-400">Mouse Interaction</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[mathControls.mouseInteraction ? 'bg-violet-500' : 'bg-gray-600']"
-                      @click="mathControls.mouseInteraction = !mathControls.mouseInteraction"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[
-                          mathControls.mouseInteraction ? 'translate-x-5' : 'translate-x-0.5',
-                        ]"
-                      />
-                    </button>
+                    <USwitch v-model="mathControls.mouseInteraction" />
                   </div>
 
                   <div class="flex items-center justify-between">
                     <span class="text-xs text-gray-400">Enable Zoom/Pan</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[mathControls.enableZoom ? 'bg-violet-500' : 'bg-gray-600']"
-                      @click="mathControls.enableZoom = !mathControls.enableZoom"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[mathControls.enableZoom ? 'translate-x-5' : 'translate-x-0.5']"
-                      />
-                    </button>
+                    <USwitch v-model="mathControls.enableZoom" />
                   </div>
                 </div>
               </div>
@@ -1760,44 +1607,17 @@ const totalNewFunctions = computed(() => {
                   <!-- Toggle switches -->
                   <div class="flex items-center justify-between pt-2">
                     <span class="text-xs text-gray-400">Mouse Ripple</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[uvControls.mouseRipple ? 'bg-violet-500' : 'bg-gray-600']"
-                      @click="uvControls.mouseRipple = !uvControls.mouseRipple"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[uvControls.mouseRipple ? 'translate-x-5' : 'translate-x-0.5']"
-                      />
-                    </button>
+                    <USwitch v-model="uvControls.mouseRipple" />
                   </div>
 
                   <div class="flex items-center justify-between">
                     <span class="text-xs text-gray-400">Vignette</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[uvControls.vignette ? 'bg-violet-500' : 'bg-gray-600']"
-                      @click="uvControls.vignette = !uvControls.vignette"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[uvControls.vignette ? 'translate-x-5' : 'translate-x-0.5']"
-                      />
-                    </button>
+                    <USwitch v-model="uvControls.vignette" />
                   </div>
 
                   <div class="flex items-center justify-between">
                     <span class="text-xs text-gray-400">Enable Zoom/Pan</span>
-                    <button
-                      class="w-10 h-5 rounded-full transition-colors relative"
-                      :class="[uvControls.enableZoom ? 'bg-violet-500' : 'bg-gray-600']"
-                      @click="uvControls.enableZoom = !uvControls.enableZoom"
-                    >
-                      <span
-                        class="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform"
-                        :class="[uvControls.enableZoom ? 'translate-x-5' : 'translate-x-0.5']"
-                      />
-                    </button>
+                    <USwitch v-model="uvControls.enableZoom" />
                   </div>
                 </div>
               </div>

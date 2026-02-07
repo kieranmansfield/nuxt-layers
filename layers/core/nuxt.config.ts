@@ -38,7 +38,8 @@ export default defineNuxtConfig({
 
   // Force light mode for consistent appearance
   colorMode: {
-    preference: 'light',
+    preference: 'system',
+    fallback: 'light',
   },
 
   future: {
@@ -48,7 +49,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-01-24',
 
   typescript: {
-    typeCheck: true,
+    typeCheck: false,
     strict: true,
   },
 

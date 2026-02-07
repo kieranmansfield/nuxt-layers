@@ -6,6 +6,10 @@ useSeoMeta({
   description: 'Demonstrating the UI layer typography, colors, and media components',
 })
 
+const { setPageAccent } = useThemePreferences()
+setPageAccent('pink')
+onUnmounted(() => setPageAccent(null))
+
 // Color tokens for demo
 const semanticColors: UiColors[] = ['dimmed', 'muted', 'toned', 'default', 'highlighted', 'inverted']
 // Status colors that UBadge supports
