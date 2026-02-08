@@ -1,7 +1,7 @@
 {
   "name": "kmcom-nuxt-layers",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "scripts": {
     "dev": "pnpm -F playground dev",
@@ -54,7 +54,7 @@
   ],
   "peerDependencies": {
     "nuxt": "^4.0.0",
-    "@nuxt/ui": "^1.0.0",
+    "@nuxt/ui": "^4.0.0",
     "pinia": "^3.0.0",
     "@vueuse/nuxt": "^14.0.0"
   },
