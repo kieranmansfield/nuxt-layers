@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    '@nuxt/eslint',
+    ...(process.env.NODE_ENV !== 'production' ? ['@nuxt/eslint'] : []),
     '@nuxt/ui',
     // '@nuxt/image'
   ],

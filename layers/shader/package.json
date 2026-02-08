@@ -1,5 +1,5 @@
 {
-  "name": "@nuxt-layers/shader",
+  "name": "kmcom-layer-shader",
   "version": "0.0.1",
   "type": "module",
   "main": "./nuxt.config.ts",

@@ -10,7 +10,7 @@ export default defineNuxtConfig({
 
   // Base modules (always loaded)
   modules: [
-    '@nuxt/eslint',
+    ...(process.env.NODE_ENV !== 'production' ? ['@nuxt/eslint'] : []),
     '@nuxt/ui',
     // '@nuxt/image'
     '@vueuse/nuxt',

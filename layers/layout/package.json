@@ -1,8 +1,7 @@
 {
-  "name": "layout",
+  "name": "kmcom-layer-layout",
   "type": "module",
   "version": "0.0.1",
-  "private": true,
   "main": "./nuxt.config.ts",
   "scripts": {
     "dev": "nuxi dev .playground",

@@ -1,0 +1,27 @@
+# Build artifacts
+**/.nuxt
+**/.output
+**/.data
+
+# Playground apps
+**/.playground
+apps/
+
+# Dependencies
+**/node_modules
+
+# Config/tooling
+.claude/
+.cursor/
+.vscode/
+turbo.json
+pnpm-workspace.yaml
+pnpm-lock.yaml
+tsconfig.json
+.eslintrc*
+.prettierrc*
+.stylelintrc*
+.commitlintrc*
+.gitignore
+CLAUDE.md
+packages/
