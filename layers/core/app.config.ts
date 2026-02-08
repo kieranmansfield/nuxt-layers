@@ -182,3 +182,12 @@ declare module '@nuxt/schema' {
     }
   }
 }
+
+declare module '@nuxt/schema' {
+  interface AppConfigInput {
+    coreLayer?: {
+      /** Project name */
+      name?: string
+    }
+  }
+}

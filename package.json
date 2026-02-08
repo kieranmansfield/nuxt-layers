@@ -1,6 +1,6 @@
 {
-  "name": "nuxt-layers",
-  "private": true,
+  "name": "@kieranmansfield/nuxt-layers",
+  "private": false,
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -52,6 +52,12 @@
     "apps/*",
     "packages/*"
   ],
+  "peerDependencies": {
+    "nuxt": "^4.0.0",
+    "@nuxt/ui": "^1.0.0",
+    "pinia": "^3.0.0",
+    "@vueuse/nuxt": "^14.0.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^20.4.1",
     "@commitlint/config-conventional": "^20.4.1",

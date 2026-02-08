@@ -1,10 +1,10 @@
 export default defineAppConfig({
-  contentLayer: {},
+  formsLayer: {},
 })
 
 declare module '@nuxt/schema' {
   interface AppConfigInput {
-    contentLayer?: {
+    formsLayer?: {
       /** Project name */
       name?: string
     }

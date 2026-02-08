@@ -19,3 +19,12 @@ export default defineAppConfig({
     },
   },
 })
+
+declare module '@nuxt/schema' {
+  interface AppConfigInput {
+    motionLayer?: {
+      /** Project name */
+      name?: string
+    }
+  }
+}

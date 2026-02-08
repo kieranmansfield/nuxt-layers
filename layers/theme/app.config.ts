@@ -1,4 +1,6 @@
-export default defineAppConfig({})
+export default defineAppConfig({
+  themeLayer: {},
+})
 
 declare module '@nuxt/schema' {
   interface AppConfigInput {

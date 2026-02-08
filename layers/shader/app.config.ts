@@ -7,3 +7,12 @@ export default defineAppConfig({
     toneMapping: 'aces' as 'aces' | 'reinhard' | 'cineon' | 'linear',
   },
 })
+
+declare module '@nuxt/schema' {
+  interface AppConfigInput {
+    shaderLayer?: {
+      /** Project name */
+      name?: string
+    }
+  }
+}
