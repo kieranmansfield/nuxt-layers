@@ -1,7 +1,7 @@
 {
-  "name": "kieranmansfield/nuxt-layers",
+  "name": "kmcom-nuxt-layers",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "scripts": {
     "dev": "pnpm -F playground dev",
