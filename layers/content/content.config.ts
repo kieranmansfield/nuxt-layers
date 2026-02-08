@@ -46,6 +46,24 @@ export default defineContentConfig({
         year: z.number().optional(),
         url: z.string().optional(),
         featured: z.boolean().default(false),
+        colors: z
+          .array(
+            z.object({
+              name: z.string(),
+              value: z.string(),
+              usage: z.string().optional(),
+            })
+          )
+          .default([]),
+        typography: z
+          .array(
+            z.object({
+              name: z.string(),
+              weights: z.array(z.string()).default([]),
+              usage: z.string().optional(),
+            })
+          )
+          .default([]),
       }),
     }),
     gallery: defineCollection({
@@ -61,6 +79,9 @@ export default defineContentConfig({
               alt: z.string(),
               width: z.number().optional(),
               height: z.number().optional(),
+              caption: z.string().optional(),
+              title: z.string().optional(),
+              ambient: z.boolean().default(false),
             })
           )
           .default([]),

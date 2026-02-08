@@ -180,6 +180,104 @@ const sampleCode = `function useScreen() {
               </Typography>
             </TypographyQuoteBlock>
           </UCard>
+
+          <!-- TextStroke -->
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-pen-tool" class="text-primary" />
+                <h3 class="text-xl font-semibold">TextStroke</h3>
+              </div>
+              <p class="text-sm text-gray-500 mt-1">SVG-based text stroke for crisp outlines at any size</p>
+            </template>
+
+            <div class="space-y-8">
+              <!-- Outline only -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Outline Only</h4>
+                <div class="text-7xl font-bold">
+                  <TypographyTextStroke text="Outline" :stroke-width="2" />
+                </div>
+              </div>
+
+              <!-- Fill + Stroke -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Fill + Stroke</h4>
+                <div class="text-7xl font-bold text-primary">
+                  <TypographyTextStroke
+                    text="Filled"
+                    :stroke-width="3"
+                    stroke-color="var(--ui-text)"
+                    fill="currentColor"
+                  />
+                </div>
+              </div>
+
+              <!-- Stroke widths -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Stroke Widths</h4>
+                <div class="space-y-2">
+                  <div class="text-5xl font-bold">
+                    <TypographyTextStroke text="1px stroke" :stroke-width="1" />
+                  </div>
+                  <div class="text-5xl font-bold">
+                    <TypographyTextStroke text="2px stroke" :stroke-width="2" />
+                  </div>
+                  <div class="text-5xl font-bold">
+                    <TypographyTextStroke text="4px stroke" :stroke-width="4" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Colors -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Colors</h4>
+                <div class="flex flex-wrap gap-6">
+                  <div class="text-5xl font-bold">
+                    <TypographyTextStroke text="Red" :stroke-width="2" stroke-color="red" />
+                  </div>
+                  <div class="text-5xl font-bold">
+                    <TypographyTextStroke text="Blue" :stroke-width="2" stroke-color="blue" />
+                  </div>
+                  <div class="text-5xl font-bold">
+                    <TypographyTextStroke text="Multi" :stroke-width="2" stroke-color="purple" fill="gold" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sizes -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Sizes (inherited)</h4>
+                <div class="space-y-2">
+                  <div class="text-2xl font-semibold">
+                    <TypographyTextStroke text="text-2xl" :stroke-width="1" />
+                  </div>
+                  <div class="text-5xl font-bold">
+                    <TypographyTextStroke text="text-5xl" :stroke-width="2" />
+                  </div>
+                  <div class="text-8xl font-black">
+                    <TypographyTextStroke text="text-8xl" :stroke-width="3" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Inside Headline -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Inside Headline</h4>
+                <TypographyHeadline :level="1">
+                  <TypographyTextStroke text="Headline Stroke" tag="span" :stroke-width="2" />
+                </TypographyHeadline>
+              </div>
+            </div>
+
+            <template #footer>
+              <TypographyCodeBlock language="vue" class="text-sm">
+                {{ `<h1 class="text-8xl font-bold">
+  <TypographyTextStroke text="Hello" :stroke-width="2" stroke-color="red" />
+</h1>` }}
+              </TypographyCodeBlock>
+            </template>
+          </UCard>
         </section>
 
         <!-- Color System Section -->
@@ -255,6 +353,90 @@ const sampleCode = `function useScreen() {
                 </div>
               </div>
             </div>
+          </UCard>
+        </section>
+
+        <!-- Link Group Section -->
+        <section class="space-y-8">
+          <div>
+            <h2 class="text-2xl font-bold mb-2">Link Group</h2>
+            <p class="text-gray-500">Hover one item to dim the rest — works with any direct children</p>
+          </div>
+
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-mouse-pointer-click" class="text-primary" />
+                <h3 class="text-xl font-semibold">LinksGroup</h3>
+              </div>
+              <p class="text-sm text-gray-500 mt-1">Wraps children in a hover-to-focus group with configurable dim opacity and transition duration</p>
+            </template>
+
+            <div class="space-y-8">
+              <!-- Nav Links -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Navigation Links</h4>
+                <LinksGroup class="flex gap-6">
+                  <a href="#" class="text-lg font-medium text-highlighted">Home</a>
+                  <a href="#" class="text-lg font-medium text-highlighted">About</a>
+                  <a href="#" class="text-lg font-medium text-highlighted">Work</a>
+                  <a href="#" class="text-lg font-medium text-highlighted">Blog</a>
+                  <a href="#" class="text-lg font-medium text-highlighted">Contact</a>
+                </LinksGroup>
+              </div>
+
+              <!-- Buttons -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Buttons</h4>
+                <LinksGroup class="flex gap-3">
+                  <UButton variant="solid">Primary</UButton>
+                  <UButton variant="outline">Outline</UButton>
+                  <UButton variant="soft">Soft</UButton>
+                  <UButton variant="ghost">Ghost</UButton>
+                </LinksGroup>
+              </div>
+
+              <!-- Cards Grid -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Card Grid</h4>
+                <LinksGroup class="grid grid-cols-3 gap-4" :duration="300">
+                  <div class="p-6 rounded-lg border border-default bg-elevated text-center">
+                    <UIcon name="i-lucide-code" class="text-2xl text-primary mb-2" />
+                    <p class="font-medium">Development</p>
+                  </div>
+                  <div class="p-6 rounded-lg border border-default bg-elevated text-center">
+                    <UIcon name="i-lucide-palette" class="text-2xl text-primary mb-2" />
+                    <p class="font-medium">Design</p>
+                  </div>
+                  <div class="p-6 rounded-lg border border-default bg-elevated text-center">
+                    <UIcon name="i-lucide-rocket" class="text-2xl text-primary mb-2" />
+                    <p class="font-medium">Deploy</p>
+                  </div>
+                </LinksGroup>
+              </div>
+
+              <!-- Custom Opacity -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Custom Dim (0.1)</h4>
+                <LinksGroup class="flex gap-4" :dim-opacity="0.1">
+                  <span class="text-3xl">&#x1F680;</span>
+                  <span class="text-3xl">&#x1F4A1;</span>
+                  <span class="text-3xl">&#x2B50;</span>
+                  <span class="text-3xl">&#x1F525;</span>
+                  <span class="text-3xl">&#x1F308;</span>
+                </LinksGroup>
+              </div>
+            </div>
+
+            <template #footer>
+              <TypographyCodeBlock language="vue" class="text-sm">
+                {{ `<LinksGroup class="flex gap-6">
+  <a href="/home">Home</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+</LinksGroup>` }}
+              </TypographyCodeBlock>
+            </template>
           </UCard>
         </section>
 

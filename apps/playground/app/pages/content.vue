@@ -124,6 +124,39 @@ const { data: page } = await useContentPage('/')
           <GalleryGrid />
         </section>
 
+        <!-- Studio Section -->
+        <UCard>
+          <template #header>
+            <div class="flex items-center gap-2">
+              <UIcon name="i-lucide-monitor" class="text-primary" />
+              <h2 class="text-xl font-semibold">Nuxt Studio</h2>
+            </div>
+          </template>
+
+          <div class="space-y-3 text-sm">
+            <p>
+              The content layer includes optional <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">nuxt-studio</code> integration.
+              When installed, it provides a visual editing interface at
+              <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">/_studio</code> for all content collections.
+            </p>
+            <p>
+              Studio auto-discovers your collections (blog, portfolio, gallery) and lets editors
+              create and modify content visually — including MDC components like callouts, tabs, and cards.
+            </p>
+            <p class="text-muted">
+              Studio is an optional peer dependency — the layer works without it installed.
+            </p>
+          </div>
+
+          <template #footer>
+            <div class="flex gap-3">
+              <UButton to="/_studio" variant="soft" icon="i-lucide-external-link" target="_blank">
+                Open Studio
+              </UButton>
+            </div>
+          </template>
+        </UCard>
+
         <!-- Architecture Note -->
         <UCard>
           <template #header>
@@ -144,6 +177,10 @@ const { data: page } = await useContentPage('/')
               All detail components extend <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">NuxtContentDetail</code> which handles
               data fetching, SEO meta, surround navigation, and table of contents. List components wrap
               <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">NuxtContentList</code> for consistent loading and empty states.
+            </p>
+            <p>
+              Markdown content supports Nuxt UI's MDC prose components — callouts, tabs, card groups, steps, and code groups
+              — which render automatically in both the app and Studio editor.
             </p>
           </div>
         </UCard>

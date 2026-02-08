@@ -20,6 +20,6 @@
     "nuxiupgrade": "npx nuxi upgrade"
   },
   "devDependencies": {
-    "@vite-pwa/nuxt": "^1.1.0"
+    "@vite-pwa/nuxt": "^1.1.1"
   }
 }

@@ -1,3 +1,10 @@
+// Conditionally load nuxt-studio if installed (optional peer dependency)
+const studioModule: string[] = []
+try {
+  await import('nuxt-studio')
+  studioModule.push('nuxt-studio')
+} catch {}
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   $meta: {
@@ -11,7 +18,7 @@ export default defineNuxtConfig({
     '#layers/content': import.meta.dirname,
   },
 
-  modules: ['@nuxt/ui', '@nuxt/content'],
+  modules: ['@nuxt/ui', '@nuxt/content', ...studioModule],
 
   css: ['#layers/content/app/assets/css/main.css'],
 

@@ -7,3 +7,4 @@
 export * from './detection'
 export * from './runtime-config'
 export * from './loading'
+export * from './scroll-guard'

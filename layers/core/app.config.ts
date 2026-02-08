@@ -53,6 +53,22 @@ export default defineAppConfig({
       // External error service token/key
       externalToken: '',
     },
+
+    // Horizontal scroll guard configuration
+    scrollGuard: {
+      // Master toggle - set to false to disable completely
+      enabled: true,
+      // CSS selectors for elements allowed to overflow intentionally
+      excludeSelectors: ['.carousel', '.overflow-intent'],
+      // Enable automatic clamping of overflowing elements
+      strict: true,
+      // Duration (ms) for element width clamp animations
+      transitionDuration: 200,
+      // Debounce delay (ms) for resize re-scans
+      resizeDebounce: 150,
+      // Temporarily highlight overflowing elements with a red outline
+      debug: false,
+    },
   },
 })
 
@@ -146,6 +162,22 @@ declare module '@nuxt/schema' {
         externalUrl?: string
         /** External error service token/key */
         externalToken?: string
+      }
+
+      /** Horizontal scroll guard configuration */
+      scrollGuard?: {
+        /** Master toggle — set to false to disable completely */
+        enabled?: boolean
+        /** CSS selectors for elements allowed to overflow intentionally */
+        excludeSelectors?: string[]
+        /** Enable automatic clamping of overflowing elements */
+        strict?: boolean
+        /** Duration (ms) for element width clamp animations */
+        transitionDuration?: number
+        /** Debounce delay (ms) for resize re-scans */
+        resizeDebounce?: number
+        /** Temporarily highlight overflowing elements with a red outline */
+        debug?: boolean
       }
     }
   }

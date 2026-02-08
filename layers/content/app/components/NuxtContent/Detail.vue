@@ -4,10 +4,12 @@ const {
   collection,
   slug,
   notFoundMessage = 'Content not found',
+  hideToc = false,
 } = defineProps<{
   collection: string
   slug: string
   notFoundMessage?: string
+  hideToc?: boolean
 }>()
 
 const { data: item, status } = await useCollectionItem(collection, slug)
@@ -42,7 +44,7 @@ useSeoMeta({
         <NuxtContentSurround :surround="surround as any" />
       </UPageBody>
 
-      <template #right>
+      <template v-if="!hideToc" #right>
         <NuxtContentToc :links="item.body?.toc?.links" />
       </template>
     </UPage>

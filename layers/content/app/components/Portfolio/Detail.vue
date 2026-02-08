@@ -5,7 +5,7 @@ const { slug } = defineProps<{
 </script>
 
 <template>
-  <NuxtContentDetail collection="portfolio" :slug not-found-message="Portfolio item not found">
+  <NuxtContentDetail collection="portfolio" :slug not-found-message="Portfolio item not found" hide-toc>
     <template #headline="{ item }">
       <div class="flex flex-wrap items-center gap-2">
         <UBadge v-if="item.client" color="primary" variant="subtle">
@@ -34,6 +34,16 @@ const { slug } = defineProps<{
 
     <template #before-content="{ item }">
       <img v-if="item.image" :src="item.image" :alt="item.title" class="w-full rounded-lg mb-8" />
+    </template>
+
+    <template #after-content="{ item }">
+      <template v-if="item.colors?.length || item.typography?.length">
+        <USeparator class="my-8" />
+        <div class="space-y-8">
+          <PortfolioColorPalette v-if="item.colors?.length" :colors="item.colors" />
+          <PortfolioTypography v-if="item.typography?.length" :typography="item.typography" />
+        </div>
+      </template>
     </template>
   </NuxtContentDetail>
 </template>

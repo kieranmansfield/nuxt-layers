@@ -19,11 +19,15 @@ export default defineContentConfig({
         description: z.string().optional(),
         date: z.string(),
         image: z.string().optional(),
-        authors: z.array(z.object({
-          name: z.string(),
-          avatar: z.string().optional(),
-          url: z.string().optional(),
-        })).default([]),
+        authors: z
+          .array(
+            z.object({
+              name: z.string(),
+              avatar: z.string().optional(),
+              url: z.string().optional(),
+            })
+          )
+          .default([]),
         tags: z.array(z.string()).default([]),
         badge: z.string().optional(),
         draft: z.boolean().default(false),
@@ -42,6 +46,24 @@ export default defineContentConfig({
         year: z.number().optional(),
         url: z.string().optional(),
         featured: z.boolean().default(false),
+        colors: z
+          .array(
+            z.object({
+              name: z.string(),
+              value: z.string(),
+              usage: z.string().optional(),
+            })
+          )
+          .default([]),
+        typography: z
+          .array(
+            z.object({
+              name: z.string(),
+              weights: z.array(z.string()).default([]),
+              usage: z.string().optional(),
+            })
+          )
+          .default([]),
       }),
     }),
     gallery: defineCollection({
@@ -50,12 +72,19 @@ export default defineContentConfig({
       schema: z.object({
         title: z.string(),
         description: z.string().optional(),
-        images: z.array(z.object({
-          src: z.string(),
-          alt: z.string(),
-          width: z.number().optional(),
-          height: z.number().optional(),
-        })).default([]),
+        images: z
+          .array(
+            z.object({
+              src: z.string(),
+              alt: z.string(),
+              width: z.number().optional(),
+              height: z.number().optional(),
+              caption: z.string().optional(),
+              title: z.string().optional(),
+              ambient: z.boolean().default(false),
+            })
+          )
+          .default([]),
         tags: z.array(z.string()).default([]),
         date: z.string().optional(),
       }),

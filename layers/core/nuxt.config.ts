@@ -26,6 +26,7 @@ export default defineNuxtConfig({
     '#layers/core/app/plugins/error-handler.ts',
     '#layers/core/app/plugins/feature-detection.client.ts',
     '#layers/core/app/plugins/loading.client.ts',
+    '#layers/core/app/plugins/scroll-guard.client.ts',
   ],
 
   devtools: {

@@ -9,6 +9,21 @@ export interface GalleryImage {
   alt: string
   width?: number
   height?: number
+  caption?: string
+  title?: string
+  ambient?: boolean
+}
+
+export interface PortfolioColor {
+  name: string
+  value: string
+  usage?: string
+}
+
+export interface PortfolioFont {
+  name: string
+  weights: string[]
+  usage?: string
 }
 
 export interface ContentPage {
@@ -38,6 +53,8 @@ export interface PortfolioItem {
   year?: number
   url?: string
   featured: boolean
+  colors: PortfolioColor[]
+  typography: PortfolioFont[]
 }
 
 export interface GalleryItem {

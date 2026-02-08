@@ -31,18 +31,38 @@ function openLightbox(images: { src: string; alt: string; width?: number; height
       <template v-if="item.images?.length">
         <USeparator class="my-8" />
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <button
+          <div
             v-for="(img, idx) in item.images"
             :key="img.src"
-            class="overflow-hidden rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
-            @click="openLightbox(item.images, idx)"
+            class="overflow-hidden rounded-lg group relative"
           >
-            <img
-              :src="img.src"
-              :alt="img.alt"
-              class="w-full h-48 object-cover"
-            />
-          </button>
+            <NuxtLink
+              :to="`/gallery/${slug}/${idx}`"
+              class="block relative overflow-hidden"
+            >
+              <img
+                :src="img.src"
+                :alt="img.alt"
+                class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span class="text-white font-semibold text-sm text-center px-3">
+                  {{ img.title || img.alt }}
+                </span>
+              </div>
+            </NuxtLink>
+            <button
+              class="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5 cursor-pointer"
+              @click.stop="openLightbox(item.images, idx)"
+            >
+              <UIcon name="i-lucide-expand" class="size-4" />
+            </button>
+            <div v-if="img.caption" class="p-2">
+              <p class="text-xs text-muted line-clamp-1">
+                {{ img.caption }}
+              </p>
+            </div>
+          </div>
         </div>
       </template>
 

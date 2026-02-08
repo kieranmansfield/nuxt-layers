@@ -21,26 +21,72 @@ Nuxt layers provide a powerful way to organize and share code across projects.
 
 Each layer is an independent, composable package:
 
-- **Core** — Foundation utilities and detection
-- **UI** — Typography, colors, and media components
-- **Content** — Collections, composables, and rendering
-- **Layout** — Grid systems and page structure
+::card-group
+
+::card
+---
+title: Core
+icon: i-lucide-box
+---
+Foundation utilities and device detection.
+::
+
+::card
+---
+title: UI
+icon: i-lucide-palette
+---
+Typography, colors, and media components.
+::
+
+::card
+---
+title: Content
+icon: i-lucide-file-text
+---
+Collections, composables, and rendering.
+::
+
+::card
+---
+title: Layout
+icon: i-lucide-layout
+---
+Grid systems and page structure.
+::
+
+::
 
 ### Layer Dependencies
 
+::note
 Layers can depend on each other. The content layer extends core for base utilities while using UI components for rendering.
+::
 
-```ts
-// nuxt.config.ts
+::code-group
+
+```ts [Content Layer]
+// layers/content/nuxt.config.ts
 export default defineNuxtConfig({
   extends: ['../core'],
   modules: ['@nuxt/ui', '@nuxt/content'],
 })
 ```
 
+```ts [App Config]
+// nuxt.config.ts
+export default defineNuxtConfig({
+  extends: ['./layers/core', './layers/content'],
+})
+```
+
+::
+
 ## Composable Pattern
 
-All data fetching is wrapped in thin composables:
+::tip
+All data fetching is wrapped in thin composables to keep components clean and focused on presentation.
+::
 
 ```ts
 export function useBlogPosts(options = {}) {
@@ -51,5 +97,3 @@ export function useBlogPosts(options = {}) {
   })
 }
 ```
-
-This keeps components clean and focused on presentation.
