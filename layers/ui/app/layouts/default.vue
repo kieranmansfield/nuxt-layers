@@ -1,4 +1,11 @@
 <!-- eslint-disable vue/no-multiple-template-root -->
 <template>
-  <slot />
+  <MastScroller>
+    <MastHeader />
+    <MastMain>
+      <slot />
+    </MastMain>
+    <LazyMastFooter />
+    <LayoutGridDebug />
+  </MastScroller>
 </template>
