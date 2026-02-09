@@ -5,7 +5,7 @@
     <MastMain>
       <slot />
     </MastMain>
-    <LazyMastFooter />
+    <MastFooter />
     <LayoutGridDebug />
   </MastScroller>
 </template>
