@@ -57,7 +57,7 @@ export default defineAppConfig({
     // Horizontal scroll guard configuration
     scrollGuard: {
       // Master toggle - set to false to disable completely
-      enabled: true,
+      enabled: false,
       // CSS selectors for elements allowed to overflow intentionally
       excludeSelectors: ['.carousel', '.overflow-intent'],
       // Enable automatic clamping of overflowing elements
