@@ -7,6 +7,7 @@ import { Color } from 'three'
 import {
   abs,
   clamp,
+  cos,
   float,
   floor,
   fract,

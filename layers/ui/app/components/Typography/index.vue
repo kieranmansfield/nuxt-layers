@@ -6,6 +6,7 @@ import { useTypography } from '#layers/ui/app/composables/typography'
 import type { UiColors } from '#layers/ui/app/types/colors'
 import type {
   FontLeading,
+  FontSize,
   FontSlant,
   FontTracking,
   FontWeight,
@@ -26,6 +27,7 @@ const props = withDefaults(
     align?: TextAlign
     transform?: TextTransform
     color?: UiColors
+    size?: FontSize
   }>(),
   {
     tag: 'p',
@@ -36,6 +38,7 @@ const props = withDefaults(
     tracking: 'tracking-normal',
     align: 'left',
     transform: 'none',
+    size: 'base',
   }
 )
 const { classes } = useTypography(props)

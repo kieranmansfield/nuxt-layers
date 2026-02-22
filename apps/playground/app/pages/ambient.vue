@@ -1,18 +1,9 @@
 <script setup lang="ts">
-import {
-  createAuroraMaterial,
-  createFlowMaterial,
-  createGradientMeshMaterial,
-  createNebulaMaterial,
-  createOceanMaterial,
-  type AmbientMaterialResult,
-} from '#layers/shader/app/composables/useAmbientMaterials'
-import * as THREE from 'three'
+import type { Component } from 'vue'
+import ShaderRuntime from '#layers/shader/app/components/Shader/Runtime.client.vue'
+import ShaderHost from '#layers/shader/app/components/Shader/Host.client.vue'
 
-// Explicitly import WebGPUCanvas since auto-import isn't resolving it
-const WebGPUCanvas = defineAsyncComponent(
-  () => import('#layers/shader/app/components/WebGPUCanvas.client.vue')
-)
+definePageMeta({ ssr: false })
 
 useSeoMeta({
   title: 'Ambient Backgrounds',
@@ -29,139 +20,50 @@ const activePreset = ref<PresetType>('aurora')
 const speed = ref(1.0)
 const intensity = ref(1.0)
 const mouseInteraction = ref(true)
-const mouseX = ref(0.5)
-const mouseY = ref(0.5)
-const isWebGPUSupported = ref(false)
-const isReady = ref(false)
 
-// Scene references
-let scene: THREE.Scene | null = null
-let mesh: THREE.Mesh | null = null
-let currentUniforms: AmbientMaterialResult['uniforms'] | null = null
+// Map preset IDs to lazy-loaded components
+const presetComponents: Record<PresetType, Component> = {
+  aurora: defineAsyncComponent(() => import('#layers/shader/app/components/Preset/Aurora.client.vue')),
+  nebula: defineAsyncComponent(() => import('#layers/shader/app/components/Preset/Nebula.client.vue')),
+  flow: defineAsyncComponent(() => import('#layers/shader/app/components/Preset/Flow.client.vue')),
+  gradientMesh: defineAsyncComponent(() => import('#layers/shader/app/components/Preset/GradientMesh.client.vue')),
+  ocean: defineAsyncComponent(() => import('#layers/shader/app/components/Preset/Ocean.client.vue')),
+}
+
+const currentPresetComponent = computed(() => presetComponents[activePreset.value])
 
 const presets = [
   {
-    id: 'aurora',
+    id: 'aurora' as PresetType,
     name: 'Aurora Borealis',
     description: 'Northern lights with flowing curtains',
     colors: ['#0a0a20', '#00ff87', '#60efff'],
   },
   {
-    id: 'nebula',
+    id: 'nebula' as PresetType,
     name: 'Cosmic Nebula',
     description: 'Deep space clouds with stars',
     colors: ['#1a0a2e', '#ff6b6b', '#4ecdc4', '#ffe66d'],
   },
   {
-    id: 'flow',
+    id: 'flow' as PresetType,
     name: 'Organic Flow',
     description: 'Domain-warped flowing patterns',
     colors: ['#134e5e', '#71b280', '#e8d5b7', '#fc5c7d'],
   },
   {
-    id: 'gradientMesh',
+    id: 'gradientMesh' as PresetType,
     name: 'Gradient Mesh',
     description: 'Smooth animated color blobs',
     colors: ['#667eea', '#764ba2', '#f093fb', '#f5576c'],
   },
   {
-    id: 'ocean',
+    id: 'ocean' as PresetType,
     name: 'Deep Ocean',
     description: 'Underwater caustics and waves',
     colors: ['#0a1628', '#1e3a5f', '#7ec8e3'],
   },
 ]
-
-function handleMouseMove(e: MouseEvent, element: HTMLElement) {
-  if (!mouseInteraction.value || !currentUniforms) return
-  const rect = element.getBoundingClientRect()
-  mouseX.value = (e.clientX - rect.left) / rect.width
-  mouseY.value = 1 - (e.clientY - rect.top) / rect.height
-
-  // Update uniforms (TSL uniform nodes use .value)
-  if (currentUniforms.mouseX) currentUniforms.mouseX.value = mouseX.value
-  if (currentUniforms.mouseY) currentUniforms.mouseY.value = mouseY.value
-}
-
-async function onCanvasReady({
-  scene: s,
-  camera,
-  renderer,
-}: {
-  scene: THREE.Scene
-  camera: THREE.Camera
-  renderer: any
-}) {
-  scene = s
-  isReady.value = true
-  isWebGPUSupported.value = true
-
-  // Create mesh with plane geometry
-  const geometry = new THREE.PlaneGeometry(2, 2)
-  mesh = new THREE.Mesh(geometry)
-  scene.add(mesh)
-
-  // Load initial material
-  updateMaterial()
-}
-
-function updateMaterial() {
-  if (!mesh) return
-
-  const options = {
-    speed: speed.value,
-    intensity: intensity.value,
-    mouseInteraction: mouseInteraction.value,
-  }
-
-  let result: AmbientMaterialResult
-
-  switch (activePreset.value) {
-    case 'aurora':
-      result = createAuroraMaterial(options)
-      break
-    case 'nebula':
-      result = createNebulaMaterial(options)
-      break
-    case 'flow':
-      result = createFlowMaterial(options)
-      break
-    case 'gradientMesh':
-      result = createGradientMeshMaterial(options)
-      break
-    case 'ocean':
-      result = createOceanMaterial(options)
-      break
-    default:
-      result = createAuroraMaterial(options)
-  }
-
-  // Dispose old material
-  if (mesh.material && typeof (mesh.material as any).dispose === 'function') {
-    ;(mesh.material as any).dispose()
-  }
-
-  mesh.material = result.material
-  currentUniforms = result.uniforms
-}
-
-// Watch for preset changes
-watch(activePreset, updateMaterial)
-
-// Watch for control changes and update uniforms
-watch(speed, (val) => {
-  if (currentUniforms?.speed) currentUniforms.speed.value = val
-})
-
-watch(intensity, (val) => {
-  if (currentUniforms?.intensity) currentUniforms.intensity.value = val
-})
-
-watch(mouseInteraction, (val) => {
-  if (currentUniforms?.mouseStrength) {
-    currentUniforms.mouseStrength.value = val ? 0.5 : 0
-  }
-})
 </script>
 
 <template>
@@ -176,8 +78,7 @@ watch(mouseInteraction, (val) => {
         <div class="flex items-center gap-4 mb-6">
           <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" class="text-gray-400" />
           <UBadge color="primary" variant="subtle">Ambient Backgrounds</UBadge>
-          <UBadge v-if="isWebGPUSupported" color="success" variant="subtle">WebGPU</UBadge>
-          <UBadge v-else color="warning" variant="subtle">WebGL Fallback</UBadge>
+          <UBadge color="success" variant="subtle">WebGPU + TresJS</UBadge>
         </div>
 
         <h1 class="text-4xl md:text-5xl font-black mb-4">
@@ -200,33 +101,29 @@ watch(mouseInteraction, (val) => {
         <div class="grid lg:grid-cols-3 gap-8">
           <!-- Preview Canvas -->
           <div class="lg:col-span-2">
-            <div
-              class="aspect-video bg-gray-900 rounded-2xl overflow-hidden relative"
-              @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
-            >
-              <ClientOnly>
-                <WebGPUCanvas clear-color="#000000" @ready="onCanvasReady" />
-
-                <template #fallback>
-                  <div class="absolute inset-0 flex items-center justify-center bg-gray-900">
-                    <div class="text-center">
-                      <div
-                        class="w-12 h-12 border-2 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"
-                      />
-                      <p class="text-gray-400">Loading WebGPU...</p>
-                    </div>
-                  </div>
-                </template>
-              </ClientOnly>
+            <div class="aspect-video bg-gray-900 rounded-2xl overflow-hidden relative">
+              <ShaderRuntime
+                :speed="speed"
+                :mouse-smoothing="0.1"
+              >
+                <ShaderHost
+                  :preset="currentPresetComponent"
+                  :transition-duration="1.0"
+                  :preset-props="{ speed, intensity, mouseInteraction }"
+                  clear-color="#000000"
+                  :fixed="false"
+                  pointer-events="auto"
+                  :z-index="0"
+                /></ShaderRuntime>
 
               <!-- Overlay info -->
               <div
-                class="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded-lg text-sm"
+                class="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded-lg text-sm pointer-events-none"
               >
                 {{ mouseInteraction ? 'Move mouse to interact' : 'Mouse disabled' }}
               </div>
 
-              <div class="absolute bottom-4 right-4 flex gap-2">
+              <div class="absolute bottom-4 right-4 flex gap-2 pointer-events-none">
                 <span class="bg-black/60 backdrop-blur px-2 py-1 rounded text-xs">
                   {{ activePreset }}
                 </span>
@@ -244,7 +141,7 @@ watch(mouseInteraction, (val) => {
                     ? 'bg-violet-600/20 border-violet-500'
                     : 'bg-gray-800/50 border-gray-700 hover:border-gray-600',
                 ]"
-                @click="activePreset = preset.id as PresetType"
+                @click="activePreset = preset.id"
               >
                 <!-- Color preview -->
                 <div class="flex gap-1 mb-2">
@@ -353,7 +250,7 @@ watch(mouseInteraction, (val) => {
             >
               <p class="mb-2">
                 <strong class="text-gray-400">Note:</strong> These backgrounds use TSL (Three.js
-                Shading Language) which requires WebGPU.
+                Shading Language) with TresJS components and WebGPU.
               </p>
               <p>
                 WebGPU is supported in Chrome 113+, Edge 113+, and Firefox Nightly with flags
@@ -371,7 +268,7 @@ watch(mouseInteraction, (val) => {
         <div class="flex flex-col md:flex-row gap-6 items-center justify-between">
           <div>
             <h2 class="text-xl font-bold mb-1">Ambient Backgrounds</h2>
-            <p class="text-gray-400 text-sm">TSL-powered procedural graphics</p>
+            <p class="text-gray-400 text-sm">TSL-powered procedural graphics via TresJS</p>
           </div>
           <div class="flex gap-4">
             <UButton to="/shader" variant="outline">

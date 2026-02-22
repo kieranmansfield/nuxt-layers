@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "skills": {
+    "document-writer": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "6c43c17a5e70cfdc3ba93780b41b95300090d46c827ce5617495a50187d9d6ad"
+    },
+    "nuxt": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "13182b475f624586d706d05e8d18d81ac37e5b0f731ceb79107982f9ad474931"
+    },
+    "nuxt-content": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "f9e98a08ad16ca128043867f8656b27cf39a09172bbcfbba4b88b9f86797d14e"
+    },
+    "nuxt-modules": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "628065a8cf5cab196853ff5ef5538d3a7ff553293dde146380ec1b57f33def48"
+    },
+    "nuxt-seo": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "bffc66809f3a21055d2fd39d0bfa32eefdc681d2e93f4613fc3360addb3d3677"
+    },
+    "nuxt-ui": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "2abcc38cf1c4a65b11fea3a0a5673897073c09aeea8009e7055074ff30ddb607"
+    },
+    "nuxthub": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "09691e4e19e41f40e01fe8a5efaa9d08cf54b06cc80cf430808a9f056d20b1df"
+    },
+    "pnpm": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "831177aaae4d6497688935c3d853e369dde1d6fbfbf0d4ed6381078968f5e3d0"
+    },
+    "tresjs": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "3ef19720f18ac2af115325a9950e369be2cf3e22ead5e4c025f86b7d5108d436"
+    },
+    "ts-library": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "7ac21ad7aafba419c6adac201eb299049b20b1353ba4e989e7e8d66b908391f9"
+    },
+    "tsdown": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "667c8404c4919c84f2db78726bcdc54c43854baf9dd85d3717b79883e66fbe41"
+    },
+    "vite": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "f6b076920b1a2d8300dd2a2a66962e40c35102231b74af7d336cf47b999ba4a3"
+    },
+    "vitest": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "94cf55e745eb225fa549c7eced5913f77d8af8616953f610c098b318de6b7992"
+    },
+    "vue": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "db16f1d73f2221c7a0f7e013d884297302fd78eb0186bf16a546ef5735d2dd46"
+    },
+    "vueuse": {
+      "source": "onmax/nuxt-skills",
+      "sourceType": "github",
+      "computedHash": "64cfff86853a73f068f988f710bb84be705fec10a76901fda65b05603391153c"
+    }
+  }
+}

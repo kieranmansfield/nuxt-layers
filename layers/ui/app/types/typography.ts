@@ -40,6 +40,27 @@ export type FontWeight =
   | FontWeightNumber
 
 /* ======================================================
+   Font Size
+   - Supports Tailwind utilities
+   ====================================================== */
+
+export type FontSize =
+  | 'xs'
+  | 'sm'
+  | 'base'
+  | 'lg'
+  | 'xl'
+  | '2xl'
+  | '3xl'
+  | '4xl'
+  | '5xl'
+  | '6xl'
+  | '7xl'
+  | '8xl'
+  | '9xl'
+  | number
+
+/* ======================================================
    Font Width
    - Semantic abstraction over wdth axis
    ====================================================== */
@@ -99,6 +120,7 @@ export type TextTransform = 'none' | 'uppercase' | 'lowercase' | 'capitalize'
 export interface TypographyProps {
   as?: keyof HTMLElementTagNameMap
   weight?: FontWeight
+  size?: FontSize
   width?: FontWidth
   slant?: FontSlant
   leading?: FontLeading

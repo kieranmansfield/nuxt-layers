@@ -1,11 +1,14 @@
 <script lang="ts" setup>
+defineOptions({ inheritAttrs: false })
 import { useColor } from '#layers/ui/app/composables/color'
 import type { UiColors } from '#layers/ui/app/types/colors'
+import type { FontSize } from '#layers/ui/app/types/typography'
 
 const props = withDefaults(
   defineProps<{
     language?: string
     color?: UiColors
+    size?: FontSize
     class?: string
   }>(),
   {
@@ -21,13 +24,13 @@ const colorClass = useColor(props.color, 'text')
   <Typography
     tag="pre"
     v-bind="$attrs"
+    :size="props.size"
     class="overflow-x-auto"
     :class="[props.class]"
     :data-language="props.language"
   >
     <Typography
       tag="code"
-      v-bind="$attrs"
       class="font-mono"
       :class="[colorClass, props.language ? `language-${props.language}` : '']"
     >

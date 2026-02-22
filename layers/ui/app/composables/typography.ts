@@ -1,5 +1,6 @@
 import type {
   FontLeading,
+  FontSize,
   FontSlant,
   FontTracking,
   FontWeight,
@@ -39,6 +40,7 @@ export function useTypography(props: {
   tracking?: FontTracking
   align?: TextAlign
   transform?: TextTransform
+  size?: FontSize
 }) {
   const classes = computed(() =>
     [
@@ -64,6 +66,12 @@ export function useTypography(props: {
         prefix: 'tracking',
         fallback: 'tracking-normal',
       }),
+
+      props.size
+        ? typeof props.size === 'number'
+          ? `text-[${props.size}]`
+          : `text-${props.size}`
+        : '',
 
       props.align ? `text-${props.align}` : '',
 

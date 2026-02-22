@@ -1,9 +1,11 @@
 <script lang="ts" setup>
+defineOptions({ inheritAttrs: false })
 import { useColor } from '#layers/ui/app/composables/color'
 import { useTypography } from '#layers/ui/app/composables/typography'
 import type { UiColors } from '#layers/ui/app/types/colors'
 import type {
   FontLeading,
+  FontSize,
   FontSlant,
   FontTracking,
   FontWeight,
@@ -23,6 +25,7 @@ const props = withDefaults(
     align?: TextAlign
     transform?: TextTransform
     color?: UiColors
+    size?: FontSize
     class?: string
   }>(),
   {
@@ -40,6 +43,8 @@ const props = withDefaults(
 const tag = computed(() => `h${props.level}` as const)
 
 const sizeClass = computed(() => {
+  if (props.size) return null
+
   const sizes: Record<number, string> = {
     1: 'text-4xl sm:text-5xl',
     2: 'text-3xl sm:text-4xl',
@@ -65,6 +70,7 @@ const colorClass = useColor(props.color, 'text')
     :tracking="props.tracking"
     :align="props.align"
     :transform="props.transform"
+    :size="props.size"
     :class="[sizeClass, classes, colorClass, props.class]"
     v-bind="$attrs"
   >

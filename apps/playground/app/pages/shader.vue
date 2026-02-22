@@ -1,4 +1,6 @@
 <script setup lang="ts">
+definePageMeta({ ssr: false })
+
 useSeoMeta({
   title: 'Shader Layer Demo',
   description: 'TSL shader utilities - noise, SDF, lighting, tonemapping, patterns & effects',
