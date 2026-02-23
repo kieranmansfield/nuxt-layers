@@ -94,17 +94,27 @@ const getDefaultValue = <T,>(value: T | ResponsiveValue<T> | undefined, defaultV
   return value as T
 }
 
+const getResponsiveValue = <T,>(
+  value: T | ResponsiveValue<T> | undefined,
+  breakpoint: 'md' | 'lg',
+): T | undefined => {
+  if (value === undefined) return undefined
+  if (typeof value === 'object' && value !== null && 'default' in value) {
+    return value[breakpoint]
+  }
+  return undefined
+}
+
 const style = computed(() => {
   const styles: Record<string, string> = {}
 
-  // Grid placement - use computed merged values
   const colStartVal = getDefaultValue(colStart.value, undefined)
   const colSpanVal = getDefaultValue(colSpan.value, 1)
   const rowStartVal = getDefaultValue(rowStart.value, undefined)
   const rowSpanVal = getDefaultValue(rowSpan.value, 1)
 
   if (bleed) {
-    // Bleed overrides column positioning
+    // Bleed is non-responsive — keep as direct inline style
     if (bleed === 'both') {
       styles.gridColumn = '1 / -1'
     } else if (bleed === 'left') {
@@ -112,19 +122,40 @@ const style = computed(() => {
     } else if (bleed === 'right') {
       styles.gridColumn = `${colStartVal ?? 'auto'} / -1`
     }
+    styles.gridRow = `${rowStartVal ?? 'auto'} / span ${rowSpanVal}`
   } else {
-    styles.gridColumn = `${colStartVal ?? 'auto'} / span ${colSpanVal}`
+    // Set CSS custom properties instead of grid-column/grid-row directly.
+    // The <style> block below reads these vars and applies them at each breakpoint,
+    // which correctly cascades without inline-style specificity conflicts.
+    styles['--_cs'] = String(colStartVal ?? 'auto')
+    styles['--_ce'] = String(colSpanVal)
+    styles['--_rs'] = String(rowStartVal ?? 'auto')
+    styles['--_re'] = String(rowSpanVal)
+
+    const mdColStart = getResponsiveValue(colStart.value, 'md')
+    const lgColStart = getResponsiveValue(colStart.value, 'lg')
+    const mdColSpan = getResponsiveValue(colSpan.value, 'md')
+    const lgColSpan = getResponsiveValue(colSpan.value, 'lg')
+    const mdRowStart = getResponsiveValue(rowStart.value, 'md')
+    const lgRowStart = getResponsiveValue(rowStart.value, 'lg')
+    const mdRowSpan = getResponsiveValue(rowSpan.value, 'md')
+    const lgRowSpan = getResponsiveValue(rowSpan.value, 'lg')
+
+    if (mdColStart !== undefined) styles['--_md-cs'] = String(mdColStart)
+    if (lgColStart !== undefined) styles['--_lg-cs'] = String(lgColStart)
+    if (mdColSpan !== undefined) styles['--_md-ce'] = String(mdColSpan)
+    if (lgColSpan !== undefined) styles['--_lg-ce'] = String(lgColSpan)
+    if (mdRowStart !== undefined) styles['--_md-rs'] = String(mdRowStart)
+    if (lgRowStart !== undefined) styles['--_lg-rs'] = String(lgRowStart)
+    if (mdRowSpan !== undefined) styles['--_md-re'] = String(mdRowSpan)
+    if (lgRowSpan !== undefined) styles['--_lg-re'] = String(lgRowSpan)
   }
 
-  styles.gridRow = `${rowStartVal ?? 'auto'} / span ${rowSpanVal}`
-
-  // Content alignment - make this element a grid container to center its children
+  // Content alignment
   if (align || justify) {
     styles.display = 'grid'
     styles.width = '100%'
     styles.height = '100%'
-    // Use place-items to control how children fill the cell
-    // align controls vertical, justify controls horizontal
     styles.placeItems = `${align ?? 'stretch'} ${justify ?? 'stretch'}`
   }
 
@@ -135,36 +166,9 @@ const style = computed(() => {
   return styles
 })
 
-const getResponsiveClasses = <T,>(
-  value: T | ResponsiveValue<T> | undefined,
-  classGenerator: (val: T) => string
-): string[] => {
-  if (value === undefined) return []
-  if (typeof value === 'object' && value !== null && 'default' in value) {
-    const classes: string[] = []
-    if (value.md !== undefined) classes.push(`md:${classGenerator(value.md)}`)
-    if (value.lg !== undefined) classes.push(`lg:${classGenerator(value.lg)}`)
-    return classes
-  }
-  return []
-}
-
 const classes = computed(() => {
-  const classList: string[] = ['@container', '@container/item']
+  const classList: string[] = ['gi-placed', '@container', '@container/item']
 
-  // Responsive column start - use merged values
-  classList.push(...getResponsiveClasses(colStart.value, (val) => `col-start-${val}`))
-
-  // Responsive column span
-  classList.push(...getResponsiveClasses(colSpan.value, (val) => `col-span-${val}`))
-
-  // Responsive row start
-  classList.push(...getResponsiveClasses(rowStart.value, (val) => `row-start-${val}`))
-
-  // Responsive row span
-  classList.push(...getResponsiveClasses(rowSpan.value, (val) => `row-span-${val}`))
-
-  // Aspect ratio
   if (aspect) {
     classList.push(aspectClasses[aspect])
   }
@@ -178,3 +182,24 @@ const classes = computed(() => {
     <slot />
   </component>
 </template>
+
+<style>
+.gi-placed {
+  grid-column: var(--_cs, auto) / span var(--_ce, 1);
+  grid-row: var(--_rs, auto) / span var(--_re, 1);
+}
+
+@media (width >= 48rem) {
+  .gi-placed {
+    grid-column: var(--_md-cs, var(--_cs, auto)) / span var(--_md-ce, var(--_ce, 1));
+    grid-row: var(--_md-rs, var(--_rs, auto)) / span var(--_md-re, var(--_re, 1));
+  }
+}
+
+@media (width >= 80rem) {
+  .gi-placed {
+    grid-column: var(--_lg-cs, var(--_md-cs, var(--_cs, auto))) / span var(--_lg-ce, var(--_md-ce, var(--_ce, 1)));
+    grid-row: var(--_lg-rs, var(--_md-rs, var(--_rs, auto))) / span var(--_lg-re, var(--_md-re, var(--_re, 1)));
+  }
+}
+</style>
