@@ -7,7 +7,7 @@ import type {
   FontWidth,
   TextAlign,
   TextTransform,
-} from '#layers/ui/app/types/typography'
+} from '../types/typography'
 
 type AxisValue = string | number | undefined
 

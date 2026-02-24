@@ -3,8 +3,8 @@ import {
   DEVICE_BREAKPOINT_VALUES,
   PHONE_BREAKPOINT_VALUES,
   TABLET_BREAKPOINT_VALUES,
-} from '#layers/ui/app/types/breakpoints'
-import type { PictureProps, ResponsiveSizes, UsePictureReturn } from '#layers/ui/app/types/media'
+} from '../types/breakpoints'
+import type { PictureProps, ResponsiveSizes, UsePictureReturn } from '../types/media'
 
 /**
  * Convert ResponsiveSizes object to CSS sizes attribute string

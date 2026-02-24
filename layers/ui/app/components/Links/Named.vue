@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useColor } from '#layers/ui/app/composables/color'
-import type { UiColors } from '#layers/ui/app/types/colors'
+import { useColor } from '../../composables/color'
+import type { UiColors } from '../../types/colors'
 
 const props = withDefaults(
   defineProps<{

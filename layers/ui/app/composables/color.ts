@@ -1,4 +1,4 @@
-import type { ColorUsage, UiColors } from '#layers/ui/app/types/colors'
+import type { ColorUsage, UiColors } from '../types/colors'
 
 const colorMap: Record<UiColors, string> = {
   // Semantic

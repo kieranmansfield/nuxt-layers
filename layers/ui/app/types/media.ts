@@ -29,7 +29,7 @@ export type {
   PhoneBreakpoint,
   TabletBreakpoint,
   DeviceOrientation,
-} from '#layers/ui/app/types/breakpoints'
+} from './breakpoints'
 
 /**
  * Responsive sizes configuration

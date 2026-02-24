@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { splitSpaces } from '#layers/ui/app/utils/regex'
+import { splitSpaces } from '../../utils/regex'
 
 defineProps<{
   siteTitle: string

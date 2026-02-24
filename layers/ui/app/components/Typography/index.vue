@@ -1,9 +1,9 @@
 <!-- eslint-disable vue/require-default-prop -->
 <!-- eslint-disable vue/no-unused-properties -->
 <script lang="ts" setup>
-import { useColor } from '#layers/ui/app/composables/color'
-import { useTypography } from '#layers/ui/app/composables/typography'
-import type { UiColors } from '#layers/ui/app/types/colors'
+import { useColor } from '../../composables/color'
+import { useTypography } from '../../composables/typography'
+import type { UiColors } from '../../types/colors'
 import type {
   FontLeading,
   FontSize,
@@ -14,7 +14,7 @@ import type {
   TextAlign,
   TextTransform,
   TypographyTag,
-} from '#layers/ui/app/types/typography'
+} from '../../types/typography'
 
 const props = withDefaults(
   defineProps<{
