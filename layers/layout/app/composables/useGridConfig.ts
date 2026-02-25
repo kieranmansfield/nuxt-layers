@@ -13,6 +13,9 @@ export function useGridConfig() {
   const appConfig = useAppConfig() as LayoutLayerConfig
   const gridConfig = computed(() => appConfig.layoutLayer?.ui?.grid)
 
+  /** True when the Swiss Grid system is active (default). Set `layoutLayer.ui.grid.enabled = false` to opt out. */
+  const isEnabled = computed(() => gridConfig.value?.enabled ?? true)
+
   const getPreset = (name: string): GridPresetsItem | undefined => {
     const presets = gridConfig.value?.presets
     if (!presets) return undefined
@@ -23,5 +26,6 @@ export function useGridConfig() {
     config: gridConfig,
     getPreset,
     layers: computed(() => gridConfig.value?.layers),
+    isEnabled,
   }
 }

@@ -1,186 +1,169 @@
-# Claude Layered UI Starter Template Documentation
+# Layout Layer
 
-This document outlines the structure, purpose, and implementation instructions for all layers in the `ui-primitives-layer` and the broader Nuxt Starter Template project. It is intended as a comprehensive reference for maintaining and extending the system.
+Swiss Grid System for Nuxt 4 applications. Provides a 6/12/18-column responsive grid using CSS subgrid, along with page, section, and grid item components.
 
 ---
 
-## 1. Layer Overview
-
-### 1.1 UI Primitives Layer
-
-The `ui-primitives-layer` contains the foundational components, types, and composables for all UI elements. This layer is fully reusable across multiple projects.
-
-**Purpose:**
-
-- Provide a consistent, typed design system.
-- Encapsulate typography, color, media, and basic UI primitives.
-- Enable easy extension and theming.
-
-**Structure:**
+## Layer Structure
 
 ```
-ui-primitives-layer/
-├── components/
-│   ├── Typography/
-│   │   ├── index.vue           # Base Typography component
-│   │   ├── Headline.vue        # Wrapper for h1-h6 with default heading styles
-│   │   ├── CodeBlock.vue       # Preformatted code block with font-mono and optional language
-│   │   └── QuoteBlock.vue      # Semantic blockquote wrapper
-│   ├── Links/
-│   │   └── Named.vue           # <ULink> wrapper enforcing named routes
-│   └── Media/
-│       └── Picture.vue         # <NuxtPicture> wrapper for images with webp/jpg fallback
-├── composables/
-│   ├── useTypography.ts        # Normalizes typography axes (weight, slant, width, leading, tracking, align, transform)
-│   ├── color.ts (useColor)     # Generic color composable mapping UiColors to Tailwind/Nuxt UI classes
-│   ├── useTextColor.ts         # Optional thin wrapper around useColor(type='text')
-│   └── usePicture.ts           # Returns computed props for <NuxtPicture>
-└── types/
-    ├── typography.ts          # Typography axis types and props
-    └── colors.ts               # Semantic, status, custom, and base colors + ColorUsage type
+layers/layout/
+├── app/
+│   ├── assets/css/
+│   │   ├── layout/grids.css     # mastmain, basesection, prose-rhythm utilities
+│   │   └── main.css             # entry point
+│   ├── components/Layout/
+│   │   ├── Grid/
+│   │   │   ├── Item.vue         # LayoutGridItem — positioned grid child
+│   │   │   └── Debug.vue        # LayoutGridDebug — Cmd+G column overlay
+│   │   ├── Page/
+│   │   │   ├── index.vue        # LayoutPage — canonical page wrapper (NEW)
+│   │   │   ├── Container.vue    # LayoutPageContainer — legacy, kept for compat
+│   │   │   └── Header.vue       # LayoutPageHeader — title + description block
+│   │   └── Section/
+│   │       ├── index.vue        # LayoutSection — full-viewport subgrid section
+│   │       ├── Hero.vue         # LayoutSectionHero — background/content/footer slots
+│   │       ├── Gallery.vue      # LayoutSectionGallery — auto-placing collection grid
+│   │       └── Split.vue        # LayoutSectionSplit — 50/50 two-column layout
+│   ├── composables/
+│   │   └── useGridConfig.ts     # Access grid config + isEnabled + getPreset()
+│   └── types/
+│       └── layouts.ts           # GridConfig, GridPresetsItem, ResponsiveValue, etc.
+├── app.config.ts                # Grid config + Nuxt UI component theming
+├── nuxt.config.ts               # Layer meta, alias, CSS import
+├── GRID_SYSTEM.md               # Full reference documentation
+└── GRID_IMPLEMENTATION.md       # Step-by-step implementation guide
 ```
 
-### 1.2 Other Potential Layers (for future expansion)
+---
 
-- **Grid / Layout Layer**
-  - Handles containers, breakpoints, spacing, grid systems.
-  - Will define: `--container-*`, `--breakpoint-*`, `--spacing-*` variables.
+## Core Concepts
 
-- **Feature Layer**
-  - Encapsulates domain-specific components such as `PortfolioItem`, `BlogPostCard`, `GalleryItem`.
-  - Can leverage primitives for styling and typography.
+### CSS Utilities (grids.css)
 
-- **Theme Layer**
-  - Optionally manage light/dark themes.
-  - Could map `UiColors` dynamically to CSS variables.
+| Utility | Applied to | Purpose |
+|---|---|---|
+| `mastmain` | Page root (`<main>`) | Defines 6/12/18 column grid with clamp gaps |
+| `basesection` | `LayoutSection` | Subgrid section, inherits parent column lines, 12 rows = 100vh |
+| `prose-rhythm` | Text containers | 0.25rem baseline grid for typography |
+
+### Responsive breakpoints
+
+| Viewport | Width | Columns |
+|---|---|---|
+| Mobile | < 768px | 6 |
+| Tablet | ≥ 768px | 12 |
+| Desktop | ≥ 1280px | 18 |
 
 ---
 
-## 2. Components
+## Canonical Page API
 
-### 2.1 Typography
+Always use `<LayoutPage>` for new pages:
 
-**index.vue (Typography Base Component)**
+```vue
+<template>
+  <LayoutPage title="Page Title" description="SEO description">
+    <LayoutSection>
+      <LayoutGridItem preset="centered">
+        <!-- content -->
+      </LayoutGridItem>
+    </LayoutSection>
+  </LayoutPage>
+</template>
+```
 
-- Props: `tag`, `weight`, `width`, `slant`, `leading`, `tracking`, `align`, `transform`.
-- Uses `useTypography` to generate class string.
-- Default tag: `p`
-
-**Headline.vue**
-
-- Props: `level` (1-6), optional `color`.
-- Maps `level` → HTML `h1-h6` tag.
-- Uses `Typography` component with default heading styles (`weight-bold`, `leading-tight`, `tracking-tight`).
-- Optional `color` prop uses `useColor` composable.
-
-**CodeBlock.vue**
-
-- Semantic `<pre><code>` wrapper.
-- Default `font-mono`, `overflow-x-auto`.
-- Optional `language` prop → `language-xxx` class for Prism syntax highlighting.
-- Optional `color` prop uses `useColor(type='text')`.
-
-**QuoteBlock.vue**
-
-- Semantic `<blockquote>` wrapper.
-- Relies on `Typography` defaults.
-- `$attrs` forwards any classes or IDs.
-- Optional `color` prop uses `useColor(type='text')` if desired.
-
-### 2.2 Links
-
-**Named.vue**
-
-- Wrapper around `<ULink>` from Nuxt UI.
-- Enforces named routes rather than `to="/"` strings.
-- Supports optional color via `useColor(type='text')`.
-
-### 2.3 Media
-
-**Picture.vue**
-
-- Wrapper for `<NuxtPicture>`.
-- Accepts `src`, `alt`, `width`, `height`, `sizes`, `priority`, `class`.
-- Optionally uses `usePicture` composable for computed props and responsive defaults.
+`LayoutPage` wraps content in `<main class="mastmain">`, handles `useHead()`, and renders `LayoutGridDebug` automatically.
 
 ---
 
-## 3. Composables
+## Feature Flag
 
-### 3.1 Typography
-
-**useTypography.ts**
-
-- Accepts typography axes: `weight`, `width`, `slant`, `leading`, `tracking`, `align`, `transform`.
-- Computes Tailwind/Nuxt UI classes.
-- Handles numeric and string values (`FontWeightNumber`, `FontLeadingNumber`).
-
-### 3.2 Color
-
-**color.ts / useColor**
-
-- Accepts: `color: UiColors`, `type: ColorUsage ('text' | 'bg' | 'border')`
-- Returns computed Tailwind/Nuxt UI class string: `${type}-${colorName}`.
-- Fully reactive.
-- Can be extended to `useTextColor`, `useBgColor`, `useBorderColor`.
-
-### 3.3 Picture
-
-**usePicture.ts**
-
-- Computes props for `<NuxtPicture>`: responsive sizes, fallback format, priority, optional classes.
-
----
-
-## 4. Types
-
-### 4.1 Typography Types (`typography.ts`)
+The Swiss Grid can be disabled via `app.config.ts`:
 
 ```ts
-export type FontWeightNumber = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
-export type FontWeight = 'font-thin' | ... | number
-export type FontWidth = 'normal' | 'condensed' | 'expanded'
-export type FontSlant = 'normal' | 'italic' | 'oblique'
-export type FontLeading = 'leading-none' | ... | number
-export type FontTracking = 'tracking-tighter' | ... | number
-export type TextAlign = 'left' | 'center' | 'right' | 'justify'
-export type TextTransform = 'none' | 'uppercase' | 'lowercase' | 'capitalize'
+export default defineAppConfig({
+  layoutLayer: {
+    ui: {
+      grid: {
+        enabled: false,  // LayoutPage falls back to UMain > UPage > UPageBody
+      },
+    },
+  },
+})
 ```
 
-### 4.2 Color Types (`colors.ts`)
+Read in components via `useGridConfig().isEnabled`.
 
+---
+
+## Nuxt UI Integration (app.config.ts)
+
+The layer configures Nuxt UI components to align with the grid:
+
+- **`ui.header.container`** — removes max-width, uses clamp-based gutters matching the grid
+- **`ui.page`** — `root` is a subgrid participant; `left`/`center`/`right` slots map to cols 1–4, 5–14, 15–18
+- **`ui.pageBody`** — strips opinionated padding
+- **`ui.pageGrid`** / **`ui.pageColumns`** — inherit subgrid column lines
+
+---
+
+## Component Quick Reference
+
+### LayoutPage (index.vue)
+- **Props:** `title` (req), `description`, `showHeader` (default: false)
+- **Fragment component** — no wrapper element. `mastmain` lives on `MastMain` in the default layout; do NOT add a second one here
+- **Handles:** `useHead()` SEO, `provide('pageTitle', title)`, optional `LayoutPageHeader` section
+- **Do NOT add `LayoutGridDebug`** — the default layout already owns that
+
+### LayoutSection
+- **Props:** `fullHeight`, `fullWidth`, `tag`
+- **CSS:** `basesection` (subgrid, 12 rows)
+
+### LayoutGridItem
+- **Props:** `preset`, `colStart`, `colSpan`, `rowStart`, `rowSpan`, `align`, `justify`, `layer`, `bleed`, `aspect`, `as`
+- **Responsive values:** `{ default: 6, md: 10, lg: 12 }`
+- **Layers:** `back`(0) `mid`(10) `front`(20) `top`(30)
+- **Presets:** hero, centered, fullWidth, sidebar, content, splitLeft, splitRight, quarterLeft, threeQuarterRight, halfTop, halfBottom
+
+### LayoutSectionHero
+- **Slots:** `#background` (layer back), default (layer mid), `#footer` (layer mid)
+
+### LayoutSectionSplit
+- **Props:** `fullHeight`, `reverse`
+- **Slots:** `#left`, `#right`
+
+### LayoutSectionGallery
+- **Props:** `items` (req), `columns` (2/3/4/6, default 3), `itemRowSpan` (default 4)
+- **Slot:** `#item="{ item, index }"`
+
+### useGridConfig()
 ```ts
-export type ColorUsage = 'text' | 'bg' | 'border'
-export type UiSemanticColor = 'dimmed' | 'muted' | 'toned' | 'default' | 'highlighted' | 'inverted'
-export type UiStatusColor = 'info' | 'success' | 'warning' | 'error'
-export type UiDefaultNuxtUiColors = 'primary' | 'neutral'
-export type UiCustomColors = 'secondary' | 'accent'
-export type UiBaseColor = 'black' | 'white'
-export type UiColors = UiSemanticColor | UiStatusColor | UiDefaultNuxtUiColors | UiCustomColors | UiBaseColor
+const { config, getPreset, isEnabled, layers } = useGridConfig()
 ```
 
 ---
 
-## 5. Development / Maintenance Guidelines
+## Development Guidelines
 
-- All primitives should rely on composables (`useTypography`, `useColor`, `usePicture`) instead of duplicating logic.
-- Use `$attrs` for forwarding classes, IDs, ARIA attributes, etc.
-- Defaults should be sensible — only expose props if users will realistically override them.
-- Centralize semantic mappings — e.g., color → class mapping lives in `useColor`.
-- Extend in feature layers, not in primitives — e.g., gallery or portfolio-specific components can wrap these primitives.
-- Consistency — always use `UiColors` and `ColorUsage` for new components.
-- Testing — verify classes computed by `useTypography` and `useColor` produce the correct Tailwind class strings.
-
----
-
-## 6. Next Steps
-
-- Integrate `color` prop into `Headline.vue`, `Text.vue`, `QuoteBlock.vue`, and `CodeBlock.vue`.
-- Implement optional background (`bgColor`) and border (`borderColor`) props for primitives.
-- Finish remaining primitives: `Named.vue` links and `Picture.vue` fully responsive wrapper.
-- Add documentation/examples for all primitives.
-- Optionally implement theming (dark/light mode) and dynamic colors based on Nuxt config.
+- Use `LayoutPage` as the root of every page — not raw divs or `PageContainer`
+- Never duplicate grid column/gap definitions — `mastmain` is the single source of truth; sections inherit via subgrid
+- Use `layer` prop instead of raw z-index numbers
+- Prefer presets over custom `colStart`/`colSpan` for common layouts
+- The `enabled` flag controls `LayoutPage` only — `LayoutSection` / `LayoutGridItem` are always available
+- Consuming apps can override any `ui.*` config in their own `app.config.ts`
+- `PageContainer.vue` is kept for backwards compatibility; do not remove it
 
 ---
 
-This document serves as the single source of truth for the primitives layer and provides clear guidance for extending and maintaining the UI system.
+## Key Files
+
+| Task | File |
+|---|---|
+| Canonical page wrapper | `app/components/Layout/Page/index.vue` |
+| Grid CSS utilities | `app/assets/css/layout/grids.css` |
+| Grid config + Nuxt UI theming | `app.config.ts` |
+| TypeScript types | `app/types/layouts.ts` |
+| Config composable | `app/composables/useGridConfig.ts` |
+| Step-by-step guide | `GRID_IMPLEMENTATION.md` |
+| Full reference | `GRID_SYSTEM.md` |

@@ -8,9 +8,11 @@
 4. [Core Concepts](#core-concepts)
 5. [Components Reference](#components-reference)
 6. [Configuration & Customization](#configuration--customization)
-7. [Using with Nuxt Layers](#using-with-nuxt-layers)
-8. [Examples](#examples)
-9. [Best Practices](#best-practices)
+7. [Feature Flag](#feature-flag)
+8. [Nuxt UI Integration](#nuxt-ui-integration)
+9. [Using with Nuxt Layers](#using-with-nuxt-layers)
+10. [Examples](#examples)
+11. [Best Practices](#best-practices)
 
 ---
 
@@ -58,11 +60,14 @@ Traditional grid systems require duplicating grid definitions at every level. **
 ### Component Hierarchy
 
 ```
-MastMain (root grid container)
-  └── LayoutSection (subgrid, 12 rows)
-       └── LayoutGridItem (positioned on inherited grid lines)
-            └── Your Content
+Default layout (MastMain → <div class="mastmain"> — root grid container)
+  └── LayoutPage (fragment — SEO only, no wrapper element)
+       └── LayoutSection (subgrid, 12 rows, basesection)
+            └── LayoutGridItem (positioned on inherited grid lines)
+                 └── Your Content
 ```
+
+> **Important:** `mastmain` lives on `MastMain` at the layout level — not on `LayoutPage`. Adding a second `mastmain` inside the first would nest grids and break alignment.
 
 ### CSS Utilities
 
@@ -280,37 +285,146 @@ Pre-configured hero section with slots for background, main content, and footer.
 
 ---
 
-### `<PageContainer>`
+### `<LayoutPage>` _(canonical)_
 
-**File**: `app/components/Layout/Page/Container.vue`
+**File**: `app/components/Layout/Page/index.vue`
 
-Unified page wrapper integrating Swiss Grid or Nuxt UI's `<UPage>` layout.
+The canonical page wrapper. Use this for all new pages.
 
 **Props**:
-- `title: string` - Page title (required, sets `<title>` and header)
+- `title: string` - Page title (required, sets `<title>` and OG tags)
 - `description?: string` - Meta description for SEO
-- `showHeader?: boolean` - Show visible page header (default: `true`)
-- `headerPreset?: string` - Grid preset for header (default: `'centered'`)
-- `layout?: 'grid' | 'upage'` - Layout mode (default: `'grid'`)
+- `showHeader?: boolean` - Render a `LayoutPageHeader` block (default: `false`)
+
+**Behaviour**:
+- When `layoutLayer.ui.grid.enabled` is `true` (default): renders `<main class="mastmain">` as the grid root
+- When `enabled` is `false`: falls back to `<UMain><UPage><UPageBody>` standard Nuxt UI layout
+- Always calls `useHead()` and `provide('pageTitle', title)`
+- Always renders `LayoutGridDebug` (toggle with Cmd+G)
 
 **Example**:
 ```vue
-<PageContainer
-  title="About Us"
-  description="Learn about our company"
-  header-preset="hero"
->
+<LayoutPage title="About Us" description="Learn about our company" :show-header="true">
+  <LayoutSectionHero>
+    <h1>Welcome</h1>
+  </LayoutSectionHero>
+
   <LayoutSection>
     <LayoutGridItem preset="centered">
       <p>Page content</p>
     </LayoutGridItem>
   </LayoutSection>
-</PageContainer>
+</LayoutPage>
 ```
 
 ---
 
+### `<PageContainer>` _(legacy)_
+
+**File**: `app/components/Layout/Page/Container.vue`
+
+Kept for backwards compatibility. Use `LayoutPage` for new pages.
+
+**Props**:
+- `title: string` - Page title (required)
+- `description?: string` - Meta description
+- `showHeader?: boolean` - Show visible header (default: `true`)
+- `headerPreset?: string` - Grid preset for header (default: `'centered'`)
+- `layout?: 'grid' | 'upage'` - Layout mode (default: `'grid'`)
+
+---
+
 ## Configuration & Customization
+
+### Feature Flag
+
+Set `layoutLayer.ui.grid.enabled = false` in your `app.config.ts` to disable the Swiss Grid system. `LayoutPage` will fall back to a standard `UMain > UPage > UPageBody` structure.
+
+```ts
+export default defineAppConfig({
+  layoutLayer: {
+    ui: {
+      grid: {
+        enabled: false,
+      },
+    },
+  },
+})
+```
+
+When disabled, `LayoutSection` and `LayoutGridItem` remain available as standalone components — the flag only controls `LayoutPage`'s outer wrapper.
+
+The `isEnabled` value is also exposed by `useGridConfig()`:
+
+```ts
+const { isEnabled } = useGridConfig()
+// isEnabled.value === true  → swiss grid active
+// isEnabled.value === false → standard layout
+```
+
+---
+
+## Nuxt UI Integration
+
+The layout layer configures Nuxt UI's header and page components to align with the Swiss Grid system. These overrides are applied automatically via the layer's `app.config.ts`.
+
+### UHeader
+
+`UHeader`'s inner container is set to full-viewport width with gutters that match the grid's `clamp`-based padding:
+
+```ts
+ui: {
+  header: {
+    container: 'max-w-full px-[clamp(1rem,2.5vw,2rem)]',
+  },
+}
+```
+
+This removes the default max-width cap and aligns the header edge-padding with the grid's outer gutters.
+
+### UPage
+
+`UPage` is configured as a CSS subgrid participant. Its `left`, `center`, and `right` slots map to specific column ranges on the 18-column grid:
+
+| Slot | Columns (desktop) | Use for |
+|---|---|---|
+| `left` | 1–4 | Navigation sidebar |
+| `center` | 5–14 | Main content |
+| `right` | 15–18 | Table of contents / aside |
+
+```vue
+<!-- Documentation layout example -->
+<LayoutPage title="Docs">
+  <LayoutSection>
+    <UPage>
+      <template #left>
+        <UPageAside><nav>...</nav></UPageAside>
+      </template>
+      <UPageBody>
+        <ContentRenderer :value="page" />
+      </UPageBody>
+      <template #right>
+        <UContentToc :links="page.body.toc.links" />
+      </template>
+    </UPage>
+  </LayoutSection>
+</LayoutPage>
+```
+
+### UPageGrid / UPageColumns
+
+Both are configured to inherit subgrid column lines and the grid's gap:
+
+```ts
+ui: {
+  pageGrid:    { base: 'col-span-full grid grid-cols-subgrid gap-[clamp(0.75rem,1.5vw,1.5rem)]' },
+  pageColumns: { base: 'col-span-full grid grid-cols-subgrid' },
+}
+```
+
+The consuming app can override any of these by declaring its own `ui.*` in `app.config.ts`.
+
+---
 
 ### App Config (`app.config.ts`)
 
@@ -321,6 +435,9 @@ export default defineAppConfig({
   layoutLayer: {
     ui: {
       grid: {
+        // Feature flag (default: true)
+        enabled: true,
+
         // Core settings
         columns: { default: 6, md: 12, lg: 18 },
         rowsPerSection: 12,
@@ -391,6 +508,7 @@ export interface GridPresetsItem {
 }
 
 export interface GridConfig {
+  enabled?: boolean             // feature flag — defaults to true
   columns: ResponsiveValue<number>
   rowsPerSection: number
   rhythm: string

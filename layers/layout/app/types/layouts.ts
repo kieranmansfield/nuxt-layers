@@ -29,6 +29,8 @@ export interface GridPresets {
 }
 
 export interface GridConfig {
+  /** Set to false to disable the Swiss Grid system and fall back to standard Nuxt UI layout */
+  enabled?: boolean
   columns: ResponsiveValue<number>
   rowsPerSection: number
   rhythm: string

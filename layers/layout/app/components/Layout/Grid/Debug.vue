@@ -34,22 +34,35 @@ const handleKeydown = (event: KeyboardEvent) => {
   }
 }
 
+// Track column count in JS so v-for renders the correct number of divs.
+// Mirrors the same breakpoints as mastmain (48rem = 768px, 80rem = 1280px).
+const cols = ref(6)
+
+const updateCols = () => {
+  if (window.matchMedia('(min-width: 80rem)').matches) cols.value = 18
+  else if (window.matchMedia('(min-width: 48rem)').matches) cols.value = 12
+  else cols.value = 6
+}
+
 onMounted(() => {
+  updateCols()
+  window.addEventListener('resize', updateCols)
   window.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
+  window.removeEventListener('resize', updateCols)
   window.removeEventListener('keydown', handleKeydown)
 })
 
-// Use CSS variables to match the responsive grid
+// Do NOT set --grid-cols here as an inline style — that would override the
+// CSS media queries in <style scoped> below. Let CSS own the variable.
 const style = computed(() => ({
   display: 'grid',
-  gridTemplateColumns: 'repeat(var(--grid-cols, 6), 1fr)',
+  gridTemplateColumns: `repeat(${cols.value}, 1fr)`,
   gap,
-  paddingInline: 'var(--grid-padding, clamp(1rem, 2.5vw, 2rem))',
+  paddingInline: 'clamp(1rem, 2.5vw, 2rem)',
   pointerEvents: 'none' as const,
-  '--grid-cols': '6',
 }))
 
 defineExpose({ toggle })
@@ -58,22 +71,8 @@ defineExpose({ toggle })
 <template>
   <Teleport to="body">
     <div v-if="visible" :style class="grid-debug z-9999 fixed inset-0" aria-hidden="true">
-      <div v-for="i in 18" :key="i" :style="{ backgroundColor: color }" class="h-full" />
+      <div v-for="i in cols" :key="i" :style="{ backgroundColor: color }" class="h-full" />
     </div>
   </Teleport>
 </template>
 
-<style scoped>
-/* Match responsive breakpoints from mastmain */
-@media (width >= 48rem) {
-  .grid-debug {
-    --grid-cols: 12;
-  }
-}
-
-@media (width >= 80rem) {
-  .grid-debug {
-    --grid-cols: 18;
-  }
-}
-</style>

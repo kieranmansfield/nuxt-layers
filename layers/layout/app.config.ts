@@ -1,8 +1,58 @@
 export default defineAppConfig({
+  /**
+   * Nuxt UI component theming — aligned to the Swiss Grid System.
+   *
+   * UHeader: removes the default max-width container so it spans the full
+   * viewport width, using clamp-based gutters that match the grid padding.
+   *
+   * UPage / UPage* components: participate as subgrid members so their
+   * columns align to the inherited mastmain grid lines.
+   *
+   * These overrides are additive and safe when the swiss grid is disabled —
+   * col-span-full / grid-cols-subgrid have no effect outside a grid context.
+   * The consuming app can override any of these via its own app.config.ts.
+   */
+  ui: {
+    header: {
+      container: 'max-w-full px-[clamp(1rem,2.5vw,2rem)]',
+    },
+
+    // UPage: transparent subgrid participant; left/center/right slots map
+    // to named column ranges on the 18-column grid (sidebar 4, content 10,
+    // right sidebar 4; all col-start values are explicit to avoid overlap)
+    page: {
+      root: 'col-span-full grid grid-cols-subgrid',
+      left: 'col-span-4',
+      center: 'col-start-5 col-span-10',
+      right: 'col-start-15 col-span-4',
+    },
+
+    // UPageBody: no opinionated padding — the grid and sections own spacing
+    pageBody: {
+      base: '',
+    },
+
+    // UPageGrid: inherits subgrid column lines; gap matches grid gap clamp
+    pageGrid: {
+      base: 'col-span-full grid grid-cols-subgrid gap-[clamp(0.75rem,1.5vw,1.5rem)]',
+    },
+
+    // UPageColumns: inherits subgrid column lines
+    pageColumns: {
+      base: 'col-span-full grid grid-cols-subgrid',
+    },
+  },
+
   layoutLayer: {
     ui: {
       // Swiss Grid System Configuration
       grid: {
+        /**
+         * Set to false to disable the Swiss Grid system.
+         * LayoutPage will fall back to a standard UMain > UPage layout.
+         */
+        enabled: true,
+
         // Core settings
         columns: { default: 6, md: 12, lg: 18 },
         rowsPerSection: 12,

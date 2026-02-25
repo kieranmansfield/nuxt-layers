@@ -177,7 +177,15 @@ export default defineNuxtConfig({
       dedupe: ['vue', '@vue/runtime-core', '@vue/runtime-dom', '@vue/reactivity', '@vue/shared', 'three'],
     },
     optimizeDeps: {
+      // slugify is CJS-only. Pre-bundling it here ensures Vite converts it to
+      // ESM before any request hits it. Without this (or if force:true discards
+      // the cache before the bundle is ready) the browser gets the raw CJS file
+      // and throws "does not provide an export named 'default'".
       include: ['slugify'],
+    },
+    ssr: {
+      // Also bundle slugify for SSR — @nuxt/content uses it server-side.
+      noExternal: ['slugify'],
     },
   },
 
@@ -189,7 +197,13 @@ export default defineNuxtConfig({
         },
       },
       optimizeDeps: {
-        force: true, // Force re-bundling deps on every start
+        // Keep slugify in include alongside force so the CJS→ESM conversion
+        // is always re-run when the cache is cleared.
+        include: ['slugify'],
+        // Removed force:true — it clears the dep cache on every start which
+        // causes slugify to be served as a raw CJS file while Vite is still
+        // re-optimising. Run `nuxt dev --force` manually when you need a
+        // fresh dep scan.
       },
     },
     nitro: {
