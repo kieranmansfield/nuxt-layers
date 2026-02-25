@@ -1,5 +1,5 @@
 <script lang="ts">
-import { cloneVNode, defineComponent, Fragment, h, ref, type VNode } from 'vue'
+// import { cloneVNode, defineComponent, Fragment, h, ref, type VNode } from 'vue'
 
 export default defineComponent({
   inheritAttrs: false,
@@ -13,25 +13,32 @@ export default defineComponent({
 
     return () => {
       const children = (slots.default?.() ?? [])
-        .flatMap(node => node.type === Fragment ? (node.children as VNode[]) : [node])
-        .filter(node => typeof node.type === 'string' || typeof node.type === 'object')
+        .flatMap((node) => (node.type === Fragment ? (node.children as VNode[]) : [node]))
+        .filter((node) => typeof node.type === 'string' || typeof node.type === 'object')
 
       const styledChildren = children.map((vnode, index) =>
         cloneVNode(vnode, {
-          onMouseenter: () => { hoveredIndex.value = index },
+          onMouseenter: () => {
+            hoveredIndex.value = index
+          },
           style: {
-            opacity: hoveredIndex.value !== null && hoveredIndex.value !== index
-              ? props.dimOpacity
-              : 1,
+            opacity:
+              hoveredIndex.value !== null && hoveredIndex.value !== index ? props.dimOpacity : 1,
             transition: `opacity ${props.duration}ms ease-out`,
           },
-        }),
+        })
       )
 
-      return h(props.tag, {
-        ...attrs,
-        onMouseleave: () => { hoveredIndex.value = null },
-      }, styledChildren)
+      return h(
+        props.tag,
+        {
+          ...attrs,
+          onMouseleave: () => {
+            hoveredIndex.value = null
+          },
+        },
+        styledChildren
+      )
     }
   },
 })

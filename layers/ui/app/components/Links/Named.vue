@@ -3,6 +3,7 @@ import { useColor } from '../../composables/color'
 import type { UiColors } from '../../types/colors'
 
 const props = withDefaults(
+  // eslint-disable-next-line vue/define-props-destructuring
   defineProps<{
     name: string
     params?: Record<string, string>

@@ -60,7 +60,7 @@ export default defineConfigWithVueTs(
       // '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       'prefer-const': 'error',
       'no-var': 'error',
-      'compat/compat': 'warn',
+      // 'compat/compat': 'warn',
 
       // Disable formatting rules that conflict with Prettier
       'vue/max-attributes-per-line': 'off',
