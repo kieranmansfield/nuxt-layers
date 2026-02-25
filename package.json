@@ -1,7 +1,7 @@
 {
   "name": "kmcom-nuxt-layers",
   "private": false,
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "Composable Nuxt 4 layers for building scalable Vue applications",
   "files": [
     "layers/*/nuxt.config.ts",
@@ -76,7 +76,7 @@
     "better-sqlite3": "^12.0.0",
     "gsap": "^3.12.0",
     "locomotive-scroll": "^5.0.0",
-    "nuxt": "^4.0.0",
+    "nuxt": "^4.3.1",
     "nuxt-studio": "^1.0.0",
     "pinia": "^3.0.0",
     "tailwindcss": "^4.2.1",
