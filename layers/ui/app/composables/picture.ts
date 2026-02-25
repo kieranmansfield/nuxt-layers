@@ -1,3 +1,4 @@
+import type { MaybeRefOrGetter } from 'vue'
 import {
   BREAKPOINT_VALUES,
   DEVICE_BREAKPOINT_VALUES,
@@ -111,32 +112,21 @@ function responsiveSizesToString(sizes: ResponsiveSizes): string {
  *
  * @example
  * ```ts
- * const { sizesString, computedFormat, imgAttrs } = usePicture(props)
+ * const { sizesString, computedFormat } = usePicture(() => sizes, () => format)
  * ```
  */
-export function usePicture(props: Partial<PictureProps>): UsePictureReturn {
-  /**
-   * Compute sizes attribute string
-   * Handles both string and ResponsiveSizes object formats
-   */
+export function usePicture(
+  sizes: MaybeRefOrGetter<PictureProps['sizes']>,
+  format?: MaybeRefOrGetter<PictureProps['format']>
+): UsePictureReturn {
   const sizesString = computed(() => {
-    if (!props.sizes) {
-      return '100vw' // Default to full viewport width
-    }
-
-    if (typeof props.sizes === 'string') {
-      return props.sizes
-    }
-
-    return responsiveSizesToString(props.sizes)
+    const s = toValue(sizes)
+    if (!s) return '100vw'
+    if (typeof s === 'string') return s
+    return responsiveSizesToString(s)
   })
 
-  /**
-   * Compute format string with fallback
-   */
-  const computedFormat = computed(() => {
-    return props.format ?? 'webp'
-  })
+  const computedFormat = computed(() => toValue(format) ?? 'webp')
 
   return {
     sizesString,

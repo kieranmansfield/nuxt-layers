@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
 /**
  * PageContainer - Unified page wrapper component
@@ -39,12 +38,6 @@
  * </PageContainer>
  */
 
-const props = withDefaults(defineProps<Props>(), {
-  showHeader: true,
-  headerPreset: 'centered',
-  layout: 'grid',
-})
-
 interface Props {
   title: string
   description?: string
@@ -53,20 +46,28 @@ interface Props {
   layout?: 'grid' | 'upage'
 }
 
+const {
+  title,
+  description,
+  showHeader = true,
+  headerPreset = 'centered',
+  layout = 'grid',
+} = defineProps<Props>()
+
 // Set page metadata for SEO and browser tab
 useHead({
-  title: props.title,
-  meta: props.description
+  title,
+  meta: description
     ? [
-        { name: 'description', content: props.description },
-        { property: 'og:title', content: props.title },
-        { property: 'og:description', content: props.description },
+        { name: 'description', content: description },
+        { property: 'og:title', content: title },
+        { property: 'og:description', content: description },
       ]
     : undefined,
 })
 
 // Provide title to child components (e.g., for breadcrumbs, schema.org)
-provide('pageTitle', props.title)
+provide('pageTitle', title)
 </script>
 
 <template>

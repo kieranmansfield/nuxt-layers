@@ -2,23 +2,20 @@
 import { useColor } from '../../composables/color'
 import type { UiColors } from '../../types/colors'
 
-const props = withDefaults(
-  // eslint-disable-next-line vue/define-props-destructuring
-  defineProps<{
-    name: string
-    params?: Record<string, string>
-    query?: Record<string, string>
-    variant?: string
-    color?: UiColors
-  }>(),
-  {
-    params: undefined,
-    query: undefined,
-    variant: undefined,
-    color: undefined,
-  }
-)
-const colorClass = useColor(props.color, 'text')
+const {
+  name,
+  params = undefined,
+  query = undefined,
+  variant = undefined,
+  color = undefined,
+} = defineProps<{
+  name: string
+  params?: Record<string, string>
+  query?: Record<string, string>
+  variant?: string
+  color?: UiColors
+}>()
+const colorClass = useColor(color, 'text')
 </script>
 
 <template>

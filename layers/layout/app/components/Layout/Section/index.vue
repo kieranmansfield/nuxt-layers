@@ -14,10 +14,7 @@ interface Props {
   fullWidth?: boolean
 }
 
-withDefaults(defineProps<Props>(), {
-  fullHeight: false,
-  fullWidth: false,
-})
+const { fullHeight = false, fullWidth = false } = defineProps<Props>()
 </script>
 
 <template>

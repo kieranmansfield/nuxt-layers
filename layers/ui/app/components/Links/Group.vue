@@ -1,5 +1,6 @@
 <script lang="ts">
-// import { cloneVNode, defineComponent, Fragment, h, ref, type VNode } from 'vue'
+// eslint-disable-next-line no-restricted-imports
+import { cloneVNode, defineComponent, Fragment, h, ref, type VNode } from 'vue'
 
 export default defineComponent({
   inheritAttrs: false,

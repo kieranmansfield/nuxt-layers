@@ -34,11 +34,11 @@ interface Props {
   componentName?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  showDetails: true,
-  message: 'Something went wrong in this section.',
-  componentName: 'Unknown',
-})
+const {
+  showDetails = true,
+  message = 'Something went wrong in this section.',
+  componentName = 'Unknown',
+} = defineProps<Props>()
 
 const { logError } = useErrorLog()
 
@@ -46,7 +46,7 @@ const { logError } = useErrorLog()
 const handleError = (error: unknown) => {
   // Log error with context
   logError(error, {
-    component: props.componentName,
+    component: componentName,
     info: 'Error caught by ErrorBoundary',
   })
 }

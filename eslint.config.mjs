@@ -122,6 +122,10 @@ export default defineConfigWithVueTs(
       'vue/prop-name-casing': ['error', 'camelCase'],
       'vue/custom-event-name-casing': ['error', 'camelCase'],
       'vue/no-unused-properties': ['error', { groups: ['props', 'data', 'computed', 'methods'] }],
+      'vue/define-macros-order': [
+        'error',
+        { order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots'] },
+      ],
       'vue/define-props-destructuring': 'error',
       'vue/prefer-use-template-ref': 'error',
       'vue/max-template-depth': ['error', { maxDepth: 8 }],
