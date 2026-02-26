@@ -1,4 +1,6 @@
 <script setup lang="ts">
+definePageMeta({ layout: 'grid' })
+
 const { setPageAccent } = useThemePreferences()
 setPageAccent('amber')
 onUnmounted(() => setPageAccent(null))
@@ -68,9 +70,9 @@ const galleryItems = [
                     </p>
                   </div>
                   <div class="p-4 bg-elevated rounded-lg">
-                    <h4 class="font-medium mb-2">Feature Flag Aware</h4>
+                    <h4 class="font-medium mb-2">Mode Aware</h4>
                     <p class="text-sm text-muted">
-                      Reads layoutLayer.ui.grid.enabled — falls back to UMain+UPage when false
+                      Reads layoutLayer.ui.grid.mode — falls back to UMain+UPage when 'disabled'
                     </p>
                   </div>
                   <div class="p-4 bg-elevated rounded-lg">
@@ -134,30 +136,140 @@ const galleryItems = [
               </div>
             </UCard>
 
-            <!-- Feature Flag -->
+            <!-- Mode -->
             <UCard>
               <template #header>
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-toggle-left" class="text-primary" />
-                  <h3 class="text-xl font-semibold">Feature Flag</h3>
+                  <h3 class="text-xl font-semibold">Layout Mode</h3>
                 </div>
                 <p class="text-sm text-muted mt-1">
-                  Disable the Swiss Grid system and fall back to standard Nuxt UI layout
+                  Switch between Swiss Grid, fluid container-query grid, or disabled fallback
                 </p>
               </template>
 
-              <pre
-                class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
-              ><code>// app.config.ts — disable swiss grid
+              <div class="space-y-4">
+                <div class="grid gap-3 sm:grid-cols-3">
+                  <div class="p-3 bg-elevated rounded-lg">
+                    <div class="font-mono text-sm text-primary">'swiss'</div>
+                    <p class="text-xs text-muted mt-1">Default. 6/12/18-column subgrid.</p>
+                  </div>
+                  <div class="p-3 bg-elevated rounded-lg">
+                    <div class="font-mono text-sm text-primary">'fluid'</div>
+                    <p class="text-xs text-muted mt-1">Container-query auto-fit grid.</p>
+                  </div>
+                  <div class="p-3 bg-elevated rounded-lg">
+                    <div class="font-mono text-sm text-primary">'disabled'</div>
+                    <p class="text-xs text-muted mt-1">Falls back to UMain > UPage.</p>
+                  </div>
+                </div>
+
+                <pre
+                  class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                ><code>// app.config.ts
 export default defineAppConfig({
   layoutLayer: {
     ui: {
       grid: {
-        enabled: false, // LayoutPage renders UMain > UPage > UPageBody
+        mode: 'fluid', // 'swiss' | 'fluid' | 'disabled'
+        // enabled: false is still supported (maps to mode: 'disabled')
       },
     },
   },
 })</code></pre>
+
+                <pre
+                  class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                ><code>// Read in components
+const { mode, isEnabled } = useGridConfig()</code></pre>
+              </div>
+            </UCard>
+
+            <!-- LayoutMain -->
+            <UCard>
+              <template #header>
+                <div class="flex items-center gap-2">
+                  <UIcon name="i-lucide-box" class="text-primary" />
+                  <h3 class="text-xl font-semibold">LayoutMain</h3>
+                  <UBadge color="primary" size="sm">New</UBadge>
+                </div>
+                <p class="text-sm text-muted mt-1">
+                  The grid root element — renders <code class="font-mono text-xs">&lt;main class="mastmain"&gt;</code> and owns the stacking context. Drops the class when <code class="font-mono text-xs">mode: 'disabled'</code>.
+                </p>
+              </template>
+
+              <div class="space-y-4">
+                <div>
+                  <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">Props</h4>
+                  <table class="w-full text-sm">
+                    <thead>
+                      <tr class="border-b border-default">
+                        <th class="text-left py-2 px-3">Prop</th>
+                        <th class="text-left py-2 px-3">Type</th>
+                        <th class="text-left py-2 px-3">Default</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-default">
+                      <tr>
+                        <td class="py-2 px-3 font-mono text-xs">tag</td>
+                        <td class="py-2 px-3 font-mono text-xs">string</td>
+                        <td class="py-2 px-3 font-mono text-xs">'main'</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <pre
+                  class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                ><code>&lt;!-- default.vue layout --&gt;
+&lt;LayoutMain&gt;
+  &lt;NuxtPage /&gt;
+  &lt;LayoutGridDebug /&gt;
+&lt;/LayoutMain&gt;</code></pre>
+              </div>
+            </UCard>
+
+            <!-- LayoutContainer -->
+            <UCard>
+              <template #header>
+                <div class="flex items-center gap-2">
+                  <UIcon name="i-lucide-align-center-horizontal" class="text-primary" />
+                  <h3 class="text-xl font-semibold">LayoutContainer</h3>
+                  <UBadge color="primary" size="sm">New</UBadge>
+                </div>
+                <p class="text-sm text-muted mt-1">
+                  Constrains content to a max-width and centres it within the grid.
+                </p>
+              </template>
+
+              <div class="space-y-4">
+                <div class="grid gap-3 sm:grid-cols-2">
+                  <div class="p-3 bg-elevated rounded-lg">
+                    <div class="font-mono text-sm text-primary">'content'</div>
+                    <p class="text-xs text-muted mt-1">max-width: 65ch — prose and articles</p>
+                  </div>
+                  <div class="p-3 bg-elevated rounded-lg">
+                    <div class="font-mono text-sm text-primary">'wide'</div>
+                    <p class="text-xs text-muted mt-1">max-width: 90rem — cards, media (default)</p>
+                  </div>
+                  <div class="p-3 bg-elevated rounded-lg">
+                    <div class="font-mono text-sm text-primary">'fluid'</div>
+                    <p class="text-xs text-muted mt-1">max-width: 100% — fills grid padding</p>
+                  </div>
+                  <div class="p-3 bg-elevated rounded-lg">
+                    <div class="font-mono text-sm text-primary">'full'</div>
+                    <p class="text-xs text-muted mt-1">100vw — escapes gutters, true full-bleed</p>
+                  </div>
+                </div>
+
+                <pre
+                  class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                ><code>&lt;LayoutGridItem preset="fullWidth"&gt;
+  &lt;LayoutContainer size="content"&gt;
+    &lt;p&gt;Prose constrained to ~65 characters.&lt;/p&gt;
+  &lt;/LayoutContainer&gt;
+&lt;/LayoutGridItem&gt;</code></pre>
+              </div>
             </UCard>
 
             <!-- PageContainer (legacy) -->
@@ -287,7 +399,7 @@ export default defineAppConfig({
                         <tr>
                           <td class="py-2 px-3 font-mono text-xs">layer</td>
                           <td class="py-2 px-3 font-mono text-xs">'back' | 'mid' | 'front' | 'top'</td>
-                          <td class="py-2 px-3">Z-index layer (0, 10, 20, 30)</td>
+                          <td class="py-2 px-3">Grid stacking layer (0 / 10 / 20 / 30)</td>
                         </tr>
                         <tr>
                           <td class="py-2 px-3 font-mono text-xs">bleed</td>
@@ -558,6 +670,130 @@ ui: {
     &lt;/UPage&gt;
   &lt;/LayoutSection&gt;
 &lt;/LayoutPage&gt;</code></pre>
+              </div>
+            </UCard>
+          </section>
+
+          <!-- Z-Index System -->
+          <section class="space-y-8">
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Z-Index System</h2>
+              <p class="text-muted">Semantic stacking layers — read via <code class="font-mono text-sm">useGridConfig().useZIndex(layer)</code></p>
+            </div>
+
+            <UCard>
+              <template #header>
+                <div class="flex items-center gap-2">
+                  <UIcon name="i-lucide-layers" class="text-primary" />
+                  <h3 class="text-xl font-semibold">Stacking Layers</h3>
+                </div>
+                <p class="text-sm text-muted mt-1">
+                  Named values from <code class="font-mono text-xs">layoutLayer.ui.grid.layers</code> — override any in app.config.ts
+                </p>
+              </template>
+
+              <div class="space-y-4">
+                <div class="grid gap-2 sm:grid-cols-2">
+                  <div
+                    v-for="({ value, description }, name) in {
+                      back:     { value: 0,   description: 'Content at rest' },
+                      mid:      { value: 10,  description: 'Standard interactive content' },
+                      front:    { value: 20,  description: 'Elevated / sticky elements' },
+                      top:      { value: 30,  description: 'Page-level overlays' },
+                      header:   { value: 100, description: 'Site header / nav bar' },
+                      dropdown: { value: 200, description: 'Dropdown menus, popovers' },
+                      overlay:  { value: 300, description: 'Overlay backdrops' },
+                      modal:    { value: 400, description: 'Modal dialogs' },
+                      toast:    { value: 500, description: 'Toast notifications' },
+                    }"
+                    :key="name"
+                    class="flex items-center justify-between p-3 bg-elevated rounded-lg"
+                  >
+                    <div>
+                      <span class="font-mono text-sm text-primary">{{ name }}</span>
+                      <p class="text-xs text-muted">{{ description }}</p>
+                    </div>
+                    <UBadge color="neutral" variant="subtle" size="xs">{{ value }}</UBadge>
+                  </div>
+                </div>
+
+                <pre
+                  class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                ><code>const { useZIndex } = useGridConfig()
+
+// Returns the configured z-index number for that layer
+const zModal   = useZIndex('modal')   // → 400
+const zToast   = useZIndex('toast')   // → 500
+const zHeader  = useZIndex('header')  // → 100</code></pre>
+              </div>
+            </UCard>
+          </section>
+
+          <!-- Fluid Mode -->
+          <section class="space-y-8">
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Fluid Mode</h2>
+              <p class="text-muted">Container-query auto-fit grid utilities — active when <code class="font-mono text-sm">mode: 'fluid'</code></p>
+            </div>
+
+            <UCard>
+              <template #header>
+                <div class="flex items-center gap-2">
+                  <UIcon name="i-lucide-grid-2x2" class="text-primary" />
+                  <h3 class="text-xl font-semibold">fluid-grid utilities</h3>
+                </div>
+                <p class="text-sm text-muted mt-1">
+                  Auto-fit columns that respond to the container width, not the viewport
+                </p>
+              </template>
+
+              <div class="space-y-4">
+                <div class="grid gap-3 sm:grid-cols-2">
+                  <div class="p-3 bg-elevated rounded-lg">
+                    <div class="font-mono text-sm text-primary">fluid-grid</div>
+                    <p class="text-xs text-muted mt-1">auto-fit, min <code class="font-mono">--fluid-col-min</code> (default 16rem)</p>
+                  </div>
+                  <div class="p-3 bg-elevated rounded-lg">
+                    <div class="font-mono text-sm text-primary">fluid-grid-2</div>
+                    <p class="text-xs text-muted mt-1">2 cols ≥ 30rem container</p>
+                  </div>
+                  <div class="p-3 bg-elevated rounded-lg">
+                    <div class="font-mono text-sm text-primary">fluid-grid-3</div>
+                    <p class="text-xs text-muted mt-1">3 cols ≥ 44rem container</p>
+                  </div>
+                  <div class="p-3 bg-elevated rounded-lg">
+                    <div class="font-mono text-sm text-primary">fluid-grid-4</div>
+                    <p class="text-xs text-muted mt-1">4 cols ≥ 52rem container</p>
+                  </div>
+                </div>
+
+                <!-- Live demo -->
+                <div>
+                  <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                    Live demo — fluid-grid-3 (resize the window)
+                  </h4>
+                  <div class="fluid-grid-3 [container-type:inline-size]">
+                    <div
+                      v-for="n in 6"
+                      :key="n"
+                      class="bg-primary/10 rounded-lg p-6 flex items-center justify-center font-mono text-sm text-primary"
+                    >
+                      {{ n }}
+                    </div>
+                  </div>
+                </div>
+
+                <pre
+                  class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                ><code>&lt;!-- Custom min-width override --&gt;
+&lt;div class="fluid-grid" style="--fluid-col-min: 20rem"&gt;
+  &lt;div v-for="item in items" :key="item.id"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Named column variant --&gt;
+&lt;div class="fluid-grid-3"&gt;
+  &lt;div v-for="item in items" :key="item.id"&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
               </div>
             </UCard>
           </section>

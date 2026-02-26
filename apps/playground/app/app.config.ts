@@ -6,5 +6,8 @@ export default defineAppConfig({
       // Master toggle - set to false to disable completely
       enabled: false,
     },
+    scrollGuard: {
+      enabled: false,
+    },
   },
 })

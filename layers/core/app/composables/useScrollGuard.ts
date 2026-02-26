@@ -96,8 +96,8 @@ function guard() {
   const html = document.documentElement
   const body = document.body
 
-  html.style.overflowX = 'hidden'
-  body.style.overflowX = 'hidden'
+  html.style.overflowX = 'clip'
+  body.style.overflowX = 'clip'
   body.style.maxWidth = '100vw'
 
   if (!opts.strict) return

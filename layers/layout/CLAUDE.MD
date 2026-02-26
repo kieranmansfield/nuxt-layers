@@ -1,6 +1,8 @@
 # Layout Layer
 
-Swiss Grid System for Nuxt 4 applications. Provides a 6/12/18-column responsive grid using CSS subgrid, along with page, section, and grid item components.
+Swiss Grid System for Nuxt 4 applications. Responsive 6/12/18-column CSS subgrid with page structure components, mode switching, and fluid layout utilities.
+
+Full documentation: `docs/LAYOUT.md` in the monorepo root.
 
 ---
 
@@ -10,149 +12,131 @@ Swiss Grid System for Nuxt 4 applications. Provides a 6/12/18-column responsive 
 layers/layout/
 ├── app/
 │   ├── assets/css/
-│   │   ├── layout/grids.css     # mastmain, basesection, prose-rhythm utilities
-│   │   └── main.css             # entry point
+│   │   ├── layout/
+│   │   │   ├── grids.css              # .mastmain, .basesection, prose-rhythm utilities
+│   │   │   └── modes/
+│   │   │       └── fluid.css          # .fluid-grid, .layout-container-* utilities
+│   │   └── main.css                   # entry point (imports grids.css + fluid.css)
 │   ├── components/Layout/
+│   │   ├── Main.vue                   # LayoutMain — <main class="mastmain"> wrapper
+│   │   ├── Container.vue              # LayoutContainer — content/wide/fluid/full sizing
 │   │   ├── Grid/
-│   │   │   ├── Item.vue         # LayoutGridItem — positioned grid child
-│   │   │   └── Debug.vue        # LayoutGridDebug — Cmd+G column overlay
+│   │   │   ├── Item.vue               # LayoutGridItem — positioned grid child
+│   │   │   └── Debug.vue              # LayoutGridDebug — Cmd+G column overlay
 │   │   ├── Page/
-│   │   │   ├── index.vue        # LayoutPage — canonical page wrapper (NEW)
-│   │   │   ├── Container.vue    # LayoutPageContainer — legacy, kept for compat
-│   │   │   └── Header.vue       # LayoutPageHeader — title + description block
+│   │   │   ├── index.vue              # LayoutPage — fragment: SEO + optional header
+│   │   │   ├── Container.vue          # LayoutPageContainer — legacy, kept for compat
+│   │   │   └── Header.vue             # LayoutPageHeader — title + description block
 │   │   └── Section/
-│   │       ├── index.vue        # LayoutSection — full-viewport subgrid section
-│   │       ├── Hero.vue         # LayoutSectionHero — background/content/footer slots
-│   │       ├── Gallery.vue      # LayoutSectionGallery — auto-placing collection grid
-│   │       └── Split.vue        # LayoutSectionSplit — 50/50 two-column layout
+│   │       ├── index.vue              # LayoutSection — full-viewport subgrid section
+│   │       ├── Hero.vue               # LayoutSectionHero — background/content/footer slots
+│   │       ├── Gallery.vue            # LayoutSectionGallery — auto-placing grid
+│   │       └── Split.vue              # LayoutSectionSplit — 50/50 two-column layout
 │   ├── composables/
-│   │   └── useGridConfig.ts     # Access grid config + isEnabled + getPreset()
+│   │   └── useGridConfig.ts           # config, isEnabled, mode, layers, getPreset, useZIndex
 │   └── types/
-│       └── layouts.ts           # GridConfig, GridPresetsItem, ResponsiveValue, etc.
-├── app.config.ts                # Grid config + Nuxt UI component theming
-├── nuxt.config.ts               # Layer meta, alias, CSS import
-├── GRID_SYSTEM.md               # Full reference documentation
-└── GRID_IMPLEMENTATION.md       # Step-by-step implementation guide
+│       └── layouts.ts                 # GridConfig, GridMode, GridLayers, GridPresetsItem, etc.
+├── app.config.ts                      # Config defaults + Nuxt UI component theming
+├── nuxt.config.ts                     # Layer meta, alias (#layers/layout), CSS import
+└── CLAUDE.md                          # This file
 ```
 
 ---
 
-## Core Concepts
+## Core Concept
 
-### CSS Utilities (grids.css)
+The grid is a single `display: grid` on `<main>` (`.mastmain`). Sections and items participate via CSS `subgrid` — they inherit the parent's column and row lines. No JS is involved in the grid itself.
 
-| Utility | Applied to | Purpose |
-|---|---|---|
-| `mastmain` | Page root (`<main>`) | Defines 6/12/18 column grid with clamp gaps |
-| `basesection` | `LayoutSection` | Subgrid section, inherits parent column lines, 12 rows = 100vh |
-| `prose-rhythm` | Text containers | 0.25rem baseline grid for typography |
-
-### Responsive breakpoints
-
-| Viewport | Width | Columns |
-|---|---|---|
-| Mobile | < 768px | 6 |
-| Tablet | ≥ 768px | 12 |
-| Desktop | ≥ 1280px | 18 |
+```
+LayoutMain (<main class="mastmain">)        ← defines the grid
+  LayoutSection (<section class="basesection">)  ← subgrid, 12 rows = 100vh
+    LayoutGridItem                               ← positioned via inline style
+```
 
 ---
 
-## Canonical Page API
+## Playground Setup
 
-Always use `<LayoutPage>` for new pages:
+`LayoutPage` is a fragment component — it provides no grid wrapper. You need:
 
+**`layouts/grid.vue`:**
 ```vue
 <template>
-  <LayoutPage title="Page Title" description="SEO description">
-    <LayoutSection>
-      <LayoutGridItem preset="centered">
-        <!-- content -->
-      </LayoutGridItem>
-    </LayoutSection>
-  </LayoutPage>
+  <LayoutMain>
+    <slot />
+    <LayoutGridDebug />
+  </LayoutMain>
 </template>
 ```
 
-`LayoutPage` wraps content in `<main class="mastmain">`, handles `useHead()`, and renders `LayoutGridDebug` automatically.
-
----
-
-## Feature Flag
-
-The Swiss Grid can be disabled via `app.config.ts`:
-
-```ts
-export default defineAppConfig({
-  layoutLayer: {
-    ui: {
-      grid: {
-        enabled: false,  // LayoutPage falls back to UMain > UPage > UPageBody
-      },
-    },
-  },
-})
+**In each page using the grid:**
+```vue
+<script setup lang="ts">
+definePageMeta({ layout: 'grid' })
+</script>
 ```
 
-Read in components via `useGridConfig().isEnabled`.
-
 ---
 
-## Nuxt UI Integration (app.config.ts)
+## Mode System
 
-The layer configures Nuxt UI components to align with the grid:
+```ts
+// app.config.ts
+layoutLayer.ui.grid.mode: 'swiss' | 'fluid' | 'disabled'
+```
 
-- **`ui.header.container`** — removes max-width, uses clamp-based gutters matching the grid
-- **`ui.page`** — `root` is a subgrid participant; `left`/`center`/`right` slots map to cols 1–4, 5–14, 15–18
-- **`ui.pageBody`** — strips opinionated padding
-- **`ui.pageGrid`** / **`ui.pageColumns`** — inherit subgrid column lines
+- `'swiss'` — default, full subgrid
+- `'fluid'` — container-query auto-fit grid
+- `'disabled'` — plain `<main>`, no grid CSS
 
 ---
 
 ## Component Quick Reference
 
-### LayoutPage (index.vue)
-- **Props:** `title` (req), `description`, `showHeader` (default: false)
-- **Fragment component** — no wrapper element. `mastmain` lives on `MastMain` in the default layout; do NOT add a second one here
-- **Handles:** `useHead()` SEO, `provide('pageTitle', title)`, optional `LayoutPageHeader` section
-- **Do NOT add `LayoutGridDebug`** — the default layout already owns that
+### `LayoutMain` — `<main class="mastmain">`
+- **Props:** `tag` (default `'main'`)
+- Renders plain `<main>` when `mode === 'disabled'`
 
-### LayoutSection
+### `LayoutContainer` — width constraint
+- **Props:** `size` (`'content' | 'wide' | 'fluid' | 'full'`, default `'wide'`), `tag`
+- Maps to `.layout-container-*` CSS classes
+
+### `LayoutPage` — fragment: SEO + optional header
+- **Props:** `title` (req), `description`, `showHeader`
+- Fragment component — no wrapper element
+
+### `LayoutSection` — subgrid section (12 rows = 100vh)
 - **Props:** `fullHeight`, `fullWidth`, `tag`
-- **CSS:** `basesection` (subgrid, 12 rows)
 
-### LayoutGridItem
-- **Props:** `preset`, `colStart`, `colSpan`, `rowStart`, `rowSpan`, `align`, `justify`, `layer`, `bleed`, `aspect`, `as`
-- **Responsive values:** `{ default: 6, md: 10, lg: 12 }`
-- **Layers:** `back`(0) `mid`(10) `front`(20) `top`(30)
+### `LayoutGridItem` — positioned grid child
+- **Props:** `preset`, `colStart`, `colSpan`, `rowStart`, `rowSpan`, `layer`, `align`, `justify`, `bleed`, `as`
 - **Presets:** hero, centered, fullWidth, sidebar, content, splitLeft, splitRight, quarterLeft, threeQuarterRight, halfTop, halfBottom
-
-### LayoutSectionHero
-- **Slots:** `#background` (layer back), default (layer mid), `#footer` (layer mid)
-
-### LayoutSectionSplit
-- **Props:** `fullHeight`, `reverse`
-- **Slots:** `#left`, `#right`
-
-### LayoutSectionGallery
-- **Props:** `items` (req), `columns` (2/3/4/6, default 3), `itemRowSpan` (default 4)
-- **Slot:** `#item="{ item, index }"`
-
-### useGridConfig()
-```ts
-const { config, getPreset, isEnabled, layers } = useGridConfig()
-```
+- **Layers (z-index):** `back`(0) `mid`(10) `front`(20) `top`(30) `header`(100) `dropdown`(200) `overlay`(300) `modal`(400) `toast`(500)
 
 ---
 
-## Development Guidelines
+## useGridConfig()
 
-- Use `LayoutPage` as the root of every page — not raw divs or `PageContainer`
-- Never duplicate grid column/gap definitions — `mastmain` is the single source of truth; sections inherit via subgrid
-- Use `layer` prop instead of raw z-index numbers
-- Prefer presets over custom `colStart`/`colSpan` for common layouts
-- The `enabled` flag controls `LayoutPage` only — `LayoutSection` / `LayoutGridItem` are always available
-- Consuming apps can override any `ui.*` config in their own `app.config.ts`
-- `PageContainer.vue` is kept for backwards compatibility; do not remove it
+```ts
+const { config, getPreset, isEnabled, mode, layers, useZIndex } = useGridConfig()
+```
+
+| Return | Description |
+|---|---|
+| `config` | Raw `GridConfig` from app.config |
+| `isEnabled` | `true` when `mode !== 'disabled'` |
+| `mode` | `'swiss' \| 'fluid' \| 'disabled'` |
+| `layers` | All z-index values |
+| `getPreset(name)` | Look up preset by name |
+| `useZIndex(layer)` | Get z-index value: `useZIndex('modal')` → 400 |
+
+---
+
+## CSS Critical Notes
+
+1. **Never use `@utility` in CSS files loaded via Nuxt `css: []`** — it bypasses the TW4 pipeline and the class never exists. Use plain `.class-name {}` selectors only.
+
+2. **Use `overflow-x: clip`, never `overflow-x: hidden`** — `hidden` forces `overflow-y: auto` on the same element, creating an unintended scroll container and making `window.scrollY` always 0.
 
 ---
 
@@ -160,10 +144,11 @@ const { config, getPreset, isEnabled, layers } = useGridConfig()
 
 | Task | File |
 |---|---|
-| Canonical page wrapper | `app/components/Layout/Page/index.vue` |
-| Grid CSS utilities | `app/assets/css/layout/grids.css` |
-| Grid config + Nuxt UI theming | `app.config.ts` |
+| Grid CSS | `app/assets/css/layout/grids.css` |
+| Fluid / container CSS | `app/assets/css/layout/modes/fluid.css` |
+| Config + Nuxt UI theming | `app.config.ts` |
 | TypeScript types | `app/types/layouts.ts` |
 | Config composable | `app/composables/useGridConfig.ts` |
-| Step-by-step guide | `GRID_IMPLEMENTATION.md` |
-| Full reference | `GRID_SYSTEM.md` |
+| Grid wrapper component | `app/components/Layout/Main.vue` |
+| Container component | `app/components/Layout/Container.vue` |
+| Full reference docs | `../../docs/LAYOUT.md` |

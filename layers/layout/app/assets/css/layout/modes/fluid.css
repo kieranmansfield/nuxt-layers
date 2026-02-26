@@ -1,0 +1,100 @@
+/**
+ * Fluid Mode — Container-Query Based Grid Utilities
+ *
+ * These utilities complement .mastmain/.basesection and are safe to use
+ * alongside them — they only take effect when their class is applied.
+ *
+ * Design goals:
+ * - Auto-fit columns that respond to their *container* width, not the viewport
+ * - No fixed breakpoints — layout adapts continuously
+ * - Consistent gap matching the base grid gap custom property
+ */
+
+/**
+ * .fluid-grid — auto-fit grid that fills its container.
+ *
+ * Columns shrink no smaller than --fluid-col-min (default 16rem / 256px).
+ * Use `--fluid-col-min` to tune the minimum column width per-instance.
+ *
+ * @example
+ * <div class="fluid-grid" style="--fluid-col-min: 20rem">…</div>
+ */
+.fluid-grid {
+  --fluid-col-min: 16rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--fluid-col-min), 1fr));
+  gap: var(--grid-gap, clamp(0.75rem, 1.5vw, 1.5rem));
+}
+
+/**
+ * .fluid-grid-2 through .fluid-grid-4 — named column-count variants.
+ *
+ * These use container queries so the number of columns degrades gracefully
+ * when the container is too narrow.
+ */
+.fluid-grid-2 {
+  --fluid-col-min: 14rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--fluid-col-min), 1fr));
+  gap: var(--grid-gap, clamp(0.75rem, 1.5vw, 1.5rem));
+
+  @container (width >= 30rem) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.fluid-grid-3 {
+  --fluid-col-min: 14rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--fluid-col-min), 1fr));
+  gap: var(--grid-gap, clamp(0.75rem, 1.5vw, 1.5rem));
+
+  @container (width >= 44rem) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.fluid-grid-4 {
+  --fluid-col-min: 12rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--fluid-col-min), 1fr));
+  gap: var(--grid-gap, clamp(0.75rem, 1.5vw, 1.5rem));
+
+  @container (width >= 52rem) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/**
+ * LayoutContainer size utilities
+ *
+ * Used by the <LayoutContainer> component. Each class constrains the element
+ * width and centres it within its parent.
+ */
+.layout-container-content {
+  max-width: 65ch;
+  width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+.layout-container-wide {
+  max-width: 90rem;
+  width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+.layout-container-fluid {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.layout-container-full {
+  /* Escape parent padding to reach the viewport edge */
+  width: 100vw;
+  max-width: 100vw;
+  margin-inline: calc(var(--grid-padding, clamp(1rem, 2.5vw, 2rem)) * -1);
+  box-sizing: border-box;
+}

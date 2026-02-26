@@ -5,13 +5,13 @@
  * Uses CSS subgrid for precise alignment across layout hierarchy.
  *
  * Hierarchy:
- *   MastMain (mastmain utility)
- *   └── BaseSection (basesection utility, uses subgrid)
+ *   MastMain (.mastmain)
+ *   └── BaseSection (.basesection, uses subgrid)
  *       └── BaseGridItem (positioned via inline grid-column/grid-row)
  */
 
 /**
- * mastmain - Root grid container with responsive density
+ * .mastmain - Root grid container with responsive density
  *
  * Creates responsive grid:
  * - Mobile: 6 columns (default)
@@ -20,7 +20,7 @@
  *
  * Each row height is calculated to fit 12 rows per viewport.
  */
-@utility mastmain {
+.mastmain {
   --grid-cols: 6;
   --grid-rows-per-section: 12;
   --grid-gap: clamp(0.75rem, 1.5vw, 1.5rem);
@@ -36,7 +36,7 @@
   grid-auto-rows: var(--grid-row-height);
   gap: var(--grid-gap);
   padding-inline: var(--grid-padding); /* Outer gutters on left/right */
-  overflow-x: hidden;
+  overflow-x: clip; /* clip without creating a scroll container (overflow-x:hidden would force overflow-y:auto) */
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -58,12 +58,12 @@
 }
 
 /**
- * basesection - Full-viewport section using subgrid
+ * .basesection - Full-viewport section using subgrid
  *
  * Inherits parent's grid lines via subgrid.
  * Spans 12 rows (1 viewport height).
  */
-@utility basesection {
+.basesection {
   container-type: inline-size;
   container-name: section;
   grid-column: 1 / -1;
@@ -100,59 +100,59 @@
  */
 
 /* Line height utilities */
-@utility leading-rhythm-4 {
+.leading-rhythm-4 {
   --rhythm: 0.25rem;
   line-height: calc(var(--rhythm) * 4); /* 1rem */
 }
 
-@utility leading-rhythm-5 {
+.leading-rhythm-5 {
   --rhythm: 0.25rem;
   line-height: calc(var(--rhythm) * 5); /* 1.25rem */
 }
 
-@utility leading-rhythm-6 {
+.leading-rhythm-6 {
   --rhythm: 0.25rem;
   line-height: calc(var(--rhythm) * 6); /* 1.5rem */
 }
 
-@utility leading-rhythm-7 {
+.leading-rhythm-7 {
   --rhythm: 0.25rem;
   line-height: calc(var(--rhythm) * 7); /* 1.75rem */
 }
 
-@utility leading-rhythm-8 {
+.leading-rhythm-8 {
   --rhythm: 0.25rem;
   line-height: calc(var(--rhythm) * 8); /* 2rem */
 }
 
 /* Vertical spacing utilities */
-@utility space-rhythm-1 {
+.space-rhythm-1 {
   --rhythm: 0.25rem;
   margin-block: var(--rhythm); /* 0.25rem */
 }
 
-@utility space-rhythm-2 {
+.space-rhythm-2 {
   --rhythm: 0.25rem;
   margin-block: calc(var(--rhythm) * 2); /* 0.5rem */
 }
 
-@utility space-rhythm-4 {
+.space-rhythm-4 {
   --rhythm: 0.25rem;
   margin-block: calc(var(--rhythm) * 4); /* 1rem */
 }
 
-@utility space-rhythm-6 {
+.space-rhythm-6 {
   --rhythm: 0.25rem;
   margin-block: calc(var(--rhythm) * 6); /* 1.5rem */
 }
 
-@utility space-rhythm-8 {
+.space-rhythm-8 {
   --rhythm: 0.25rem;
   margin-block: calc(var(--rhythm) * 8); /* 2rem */
 }
 
 /* Prose container - auto-applies rhythm to children */
-@utility prose-rhythm {
+.prose-rhythm {
   --rhythm: 0.25rem;
 
   & > * + * {

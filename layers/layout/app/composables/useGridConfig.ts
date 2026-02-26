@@ -1,4 +1,4 @@
-import type { GridConfig, GridPresetsItem } from '#layers/layout/app/types/layouts'
+import type { GridConfig, GridLayers, GridMode, GridPresetsItem } from '#layers/layout/app/types/layouts'
 
 interface LayoutLayerConfig {
   layoutLayer?: {
@@ -13,8 +13,19 @@ export function useGridConfig() {
   const appConfig = useAppConfig() as LayoutLayerConfig
   const gridConfig = computed(() => appConfig.layoutLayer?.ui?.grid)
 
-  /** True when the Swiss Grid system is active (default). Set `layoutLayer.ui.grid.enabled = false` to opt out. */
-  const isEnabled = computed(() => gridConfig.value?.enabled ?? true)
+  /**
+   * Resolved layout mode. Derives from `mode` field first, then falls back to
+   * the legacy `enabled` boolean for backwards compatibility.
+   */
+  const mode = computed<GridMode>(() => {
+    const cfg = gridConfig.value
+    if (!cfg) return 'swiss'
+    if (cfg.mode) return cfg.mode
+    return cfg.enabled === false ? 'disabled' : 'swiss'
+  })
+
+  /** True when the Swiss Grid system is active. */
+  const isEnabled = computed(() => mode.value !== 'disabled')
 
   const getPreset = (name: string): GridPresetsItem | undefined => {
     const presets = gridConfig.value?.presets
@@ -22,10 +33,22 @@ export function useGridConfig() {
     return presets[name as keyof typeof presets]
   }
 
+  /**
+   * Returns the z-index value for a named stacking layer.
+   *
+   * @example
+   * const zModal = useZIndex('modal') // → 400
+   */
+  const useZIndex = (layer: keyof GridLayers): number => {
+    return gridConfig.value?.layers?.[layer] ?? 0
+  }
+
   return {
     config: gridConfig,
     getPreset,
     layers: computed(() => gridConfig.value?.layers),
     isEnabled,
+    mode,
+    useZIndex,
   }
 }

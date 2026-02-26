@@ -48,8 +48,16 @@ export default defineAppConfig({
       // Swiss Grid System Configuration
       grid: {
         /**
-         * Set to false to disable the Swiss Grid system.
-         * LayoutPage will fall back to a standard UMain > UPage layout.
+         * Layout mode.
+         * - 'swiss'    — Swiss Grid System (default)
+         * - 'fluid'    — Container-query based auto-fit grid
+         * - 'disabled' — Falls back to standard UMain > UPage layout
+         */
+        mode: 'swiss',
+
+        /**
+         * @deprecated Use mode: 'disabled' instead. Kept for backwards compatibility.
+         * When false, acts as mode: 'disabled'.
          */
         enabled: true,
 
@@ -60,10 +68,17 @@ export default defineAppConfig({
 
         // Z-index layers
         layers: {
+          // Base layers (swiss grid stacking)
           back: 0,
           mid: 10,
           front: 20,
           top: 30,
+          // UI stacking layers
+          header: 100,
+          dropdown: 200,
+          overlay: 300,
+          modal: 400,
+          toast: 500,
         },
 
         // Preset layouts for common patterns

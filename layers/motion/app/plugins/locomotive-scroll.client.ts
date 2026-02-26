@@ -10,7 +10,6 @@ export interface ScrollState {
 }
 
 export default defineNuxtPlugin(() => {
-  // Reactive scroll state that will be updated via scrollCallback
   const scrollState = reactive<ScrollState>({
     scroll: 0,
     limit: 0,
@@ -19,30 +18,51 @@ export default defineNuxtPlugin(() => {
     progress: 0,
   })
 
-  // Create Locomotive Scroll instance
-  const locomotiveScroll = new LocomotiveScroll({
-    // Lenis options passthrough (LS5 is built on Lenis)
-    lenisOptions: {
-      lerp: 0.1,
-      smoothWheel: true,
-      wheelMultiplier: 1,
-    },
-    // Scroll callback for reactive state updates and GSAP sync
-    scrollCallback: ({ scroll, limit, velocity, direction, progress }) => {
-      scrollState.scroll = scroll
-      scrollState.limit = limit
-      scrollState.velocity = velocity
-      scrollState.direction = direction
-      scrollState.progress = progress
+  let instance: LocomotiveScroll | null = null
 
-      // Sync ScrollTrigger with Locomotive Scroll
-      ScrollTrigger.update()
-    },
+  function init() {
+    if (instance) return
+    instance = new LocomotiveScroll({
+      lenisOptions: {
+        lerp: 0.1,
+        smoothWheel: true,
+        wheelMultiplier: 1,
+      },
+      scrollCallback: ({ scroll, limit, velocity, direction, progress }) => {
+        scrollState.scroll = scroll
+        scrollState.limit = limit
+        scrollState.velocity = velocity
+        scrollState.direction = direction
+        scrollState.progress = progress
+        ScrollTrigger.update()
+      },
+    })
+  }
+
+  function destroy() {
+    instance?.destroy()
+    instance = null
+  }
+
+  const router = useRouter()
+
+  // Only active on the locomotive-scroll route
+  addRouteMiddleware((to, from) => {
+    if (to.path === '/locomotive-scroll') {
+      nextTick(init)
+    } else if (from?.path === '/locomotive-scroll') {
+      destroy()
+    }
   })
+
+  // Activate immediately if already on that route (e.g. hard refresh)
+  if (router.currentRoute.value.path === '/locomotive-scroll') {
+    init()
+  }
 
   return {
     provide: {
-      locomotiveScroll,
+      locomotiveScroll: readonly(instance),
       scrollState,
     },
   }
