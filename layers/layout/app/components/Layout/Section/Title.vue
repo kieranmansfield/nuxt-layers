@@ -9,7 +9,7 @@
  * @prop {string} description - Optional page description
  *
  * @example
- * <LayoutPageHeader
+ * <LayoutSectionTitle
  *   title="About Us"
  *   description="Learn about our company and mission"
  * />
@@ -24,12 +24,10 @@ defineProps<Props>()
 </script>
 
 <template>
-  <!-- <div class="prose-rhythm text-center">
+  <LayoutGridItem class="prose-rhythm text-center" align="start" justify="center">
     <h1 class="text-5xl font-bold">{{ title }}</h1>
     <p v-if="description" class="text-xl text-gray-600 dark:text-gray-400">
       {{ description }}
     </p>
-  </div> -->
-
-  <UPageHeader :title :description />
+  </LayoutGridItem>
 </template>
