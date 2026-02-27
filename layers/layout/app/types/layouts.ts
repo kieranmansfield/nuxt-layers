@@ -32,8 +32,8 @@ export type GridDensity = 'compact' | 'normal' | 'relaxed'
 export type GridMode = 'swiss' | 'fluid' | 'disabled'
 
 export interface GridPresetsItem {
-  colStart: number | ResponsiveValue<number>
-  colSpan: number | ResponsiveValue<number>
+  colStart?: number | ResponsiveValue<number>
+  colSpan: number | 'full' | ResponsiveValue<number>
   rowStart?: number | ResponsiveValue<number>
   rowSpan?: number
   /** Container size applied to the item's content */
@@ -42,15 +42,13 @@ export interface GridPresetsItem {
   gap?: string
   /** Vertical rhythm density for this preset */
   density?: GridDensity
+  /** Vertical alignment (align-self) */
+  align?: 'start' | 'center' | 'end' | 'stretch'
+  /** Horizontal alignment (justify-self) */
+  justify?: 'start' | 'center' | 'end' | 'stretch'
 }
 
-export interface GridPresets {
-  hero: GridPresetsItem
-  centered: GridPresetsItem
-  fullWidth: GridPresetsItem
-  sidebar: GridPresetsItem
-  content: GridPresetsItem
-}
+export type GridPresets = Record<string, GridPresetsItem>
 
 export interface GridConfig {
   /**

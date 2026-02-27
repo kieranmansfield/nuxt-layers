@@ -7,7 +7,7 @@
  *
  * @prop {string} as - HTML element to render (default: 'div')
  * @prop {number | ResponsiveValue} colStart - Starting column (1-18)
- * @prop {number | ResponsiveValue} colSpan - Number of columns to span (default: 1)
+ * @prop {ColSpanValue | ResponsiveValue} colSpan - Columns to span (default: 'full')
  * @prop {number | ResponsiveValue} rowStart - Starting row (1-12)
  * @prop {number | ResponsiveValue} rowSpan - Number of rows to span (default: 1)
  * @prop {Alignment} align - Vertical alignment (align-self): start, center, end, stretch
@@ -29,6 +29,7 @@
  * </BaseGridItem>
  */
 
+type ColSpanValue = number | 'full'
 type Alignment = 'start' | 'center' | 'end' | 'stretch'
 type LayerName = 'back' | 'mid' | 'front' | 'top'
 type BleedDirection = 'left' | 'right' | 'both'
@@ -44,7 +45,7 @@ interface Props {
   preset?: string
   as?: string
   colStart?: number | ResponsiveValue<number>
-  colSpan?: number | ResponsiveValue<number>
+  colSpan?: ColSpanValue | ResponsiveValue<number>
   rowStart?: number | ResponsiveValue<number>
   rowSpan?: number | ResponsiveValue<number>
   align?: Alignment
@@ -57,17 +58,21 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const { as = 'div', preset, align, justify, z, layer, bleed, aspect } = props
+const { as = 'div' } = props
 
 // Get preset configuration if preset prop is provided
 const { getPreset } = useGridConfig()
-const presetConfig = computed(() => (preset ? getPreset(preset) : undefined))
+const presetConfig = computed(() => (props.preset ? getPreset(props.preset) : undefined))
 
 // Merge preset values with explicit props (explicit props take precedence)
 const colStart = computed(() => props.colStart ?? presetConfig.value?.colStart)
-const colSpan = computed(() => props.colSpan ?? presetConfig.value?.colSpan ?? 1)
+const colSpan = computed(() => props.colSpan ?? presetConfig.value?.colSpan ?? 'full')
 const rowStart = computed(() => props.rowStart ?? presetConfig.value?.rowStart)
 const rowSpan = computed(() => props.rowSpan ?? presetConfig.value?.rowSpan ?? 1)
+
+// Preset-aware alignment computed refs
+const align = computed(() => props.align ?? presetConfig.value?.align)
+const justify = computed(() => props.justify ?? presetConfig.value?.justify)
 
 const layerZIndex: Record<LayerName, number> = {
   back: 0,
@@ -109,20 +114,39 @@ const style = computed(() => {
   const styles: Record<string, string> = {}
 
   const colStartVal = getDefaultValue(colStart.value, undefined)
-  const colSpanVal = getDefaultValue(colSpan.value, 1)
+  const colSpanVal = getDefaultValue(colSpan.value as ColSpanValue | ResponsiveValue<number> | undefined, 'full' as ColSpanValue)
   const rowStartVal = getDefaultValue(rowStart.value, undefined)
   const rowSpanVal = getDefaultValue(rowSpan.value, 1)
 
-  if (bleed) {
-    // Bleed is non-responsive — keep as direct inline style
-    if (bleed === 'both') {
+  if (props.bleed) {
+    if (props.bleed === 'both') {
       styles.gridColumn = '1 / -1'
-    } else if (bleed === 'left') {
-      styles.gridColumn = `1 / span ${colSpanVal}`
-    } else if (bleed === 'right') {
+      styles.marginInline = 'calc(-1 * var(--grid-padding))'
+    } else if (props.bleed === 'left') {
+      const spanNum = typeof colSpanVal === 'number' ? colSpanVal : undefined
+      styles.gridColumn = spanNum ? `1 / span ${spanNum}` : '1 / -1'
+      styles.marginInlineStart = 'calc(-1 * var(--grid-padding))'
+    } else if (props.bleed === 'right') {
       styles.gridColumn = `${colStartVal ?? 'auto'} / -1`
+      styles.marginInlineEnd = 'calc(-1 * var(--grid-padding))'
     }
     styles.gridRow = `${rowStartVal ?? 'auto'} / span ${rowSpanVal}`
+  } else if (colSpanVal === 'full') {
+    // 'full' span: use inline gridColumn directly (no CSS var approach needed)
+    styles.gridColumn = `${colStartVal ?? 1} / -1`
+    // Still set row vars for responsive row support
+    styles['--_rs'] = String(rowStartVal ?? 'auto')
+    styles['--_re'] = String(rowSpanVal)
+
+    const mdRowStart = getResponsiveValue(rowStart.value, 'md')
+    const lgRowStart = getResponsiveValue(rowStart.value, 'lg')
+    const mdRowSpan = getResponsiveValue(rowSpan.value, 'md')
+    const lgRowSpan = getResponsiveValue(rowSpan.value, 'lg')
+
+    if (mdRowStart !== undefined) styles['--_md-rs'] = String(mdRowStart)
+    if (lgRowStart !== undefined) styles['--_lg-rs'] = String(lgRowStart)
+    if (mdRowSpan !== undefined) styles['--_md-re'] = String(mdRowSpan)
+    if (lgRowSpan !== undefined) styles['--_lg-re'] = String(lgRowSpan)
   } else {
     // Set CSS custom properties instead of grid-column/grid-row directly.
     // The <style> block below reads these vars and applies them at each breakpoint,
@@ -134,8 +158,8 @@ const style = computed(() => {
 
     const mdColStart = getResponsiveValue(colStart.value, 'md')
     const lgColStart = getResponsiveValue(colStart.value, 'lg')
-    const mdColSpan = getResponsiveValue(colSpan.value, 'md')
-    const lgColSpan = getResponsiveValue(colSpan.value, 'lg')
+    const mdColSpan = getResponsiveValue(colSpan.value as ResponsiveValue<number> | undefined, 'md')
+    const lgColSpan = getResponsiveValue(colSpan.value as ResponsiveValue<number> | undefined, 'lg')
     const mdRowStart = getResponsiveValue(rowStart.value, 'md')
     const lgRowStart = getResponsiveValue(rowStart.value, 'lg')
     const mdRowSpan = getResponsiveValue(rowSpan.value, 'md')
@@ -152,15 +176,15 @@ const style = computed(() => {
   }
 
   // Content alignment
-  if (align || justify) {
+  if (align.value || justify.value) {
     styles.display = 'grid'
     styles.width = '100%'
     styles.height = '100%'
-    styles.placeItems = `${align ?? 'stretch'} ${justify ?? 'stretch'}`
+    styles.placeItems = `${align.value ?? 'stretch'} ${justify.value ?? 'stretch'}`
   }
 
   // Z-index
-  const zIndex = z ?? (layer ? layerZIndex[layer] : undefined)
+  const zIndex = props.z ?? (props.layer ? layerZIndex[props.layer] : undefined)
   if (zIndex !== undefined) styles.zIndex = String(zIndex)
 
   return styles
@@ -169,8 +193,8 @@ const style = computed(() => {
 const classes = computed(() => {
   const classList: string[] = ['gi-placed', '@container', '@container/item']
 
-  if (aspect) {
-    classList.push(aspectClasses[aspect])
+  if (props.aspect) {
+    classList.push(aspectClasses[props.aspect])
   }
 
   return classList.join(' ')

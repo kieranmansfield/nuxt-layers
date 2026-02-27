@@ -46,17 +46,17 @@ export default defineNuxtPlugin(() => {
 
   const router = useRouter()
 
-  // Only active on the locomotive-scroll route
+  const SMOOTH_SCROLL_ROUTES = ['/locomotive-scroll', '/layout-stacking', '/layout-blind-reveal']
+
   addRouteMiddleware((to, from) => {
-    if (to.path === '/locomotive-scroll') {
+    if (SMOOTH_SCROLL_ROUTES.includes(to.path)) {
       nextTick(init)
-    } else if (from?.path === '/locomotive-scroll') {
+    } else if (from?.path && SMOOTH_SCROLL_ROUTES.includes(from.path)) {
       destroy()
     }
   })
 
-  // Activate immediately if already on that route (e.g. hard refresh)
-  if (router.currentRoute.value.path === '/locomotive-scroll') {
+  if (SMOOTH_SCROLL_ROUTES.includes(router.currentRoute.value.path)) {
     init()
   }
 

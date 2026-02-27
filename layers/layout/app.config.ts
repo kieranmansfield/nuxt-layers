@@ -83,20 +83,36 @@ export default defineAppConfig({
 
         // Preset layouts for common patterns
         presets: {
-          hero: {
+          // Full-viewport hero: full width, all 12 rows
+          hero: { colSpan: 'full', rowSpan: 12 },
+
+          // Centered content column (equal margins both sides)
+          // lg: 3 + 12 + 3 = 18 ✓  |  md: 1 + 10 + 1 = 12 ✓
+          centered: {
             colStart: { default: 1, md: 2, lg: 4 },
             colSpan: { default: 6, md: 10, lg: 12 },
             rowSpan: 12,
           },
-          centered: {
-            colStart: { default: 1, md: 2, lg: 5 },
-            colSpan: { default: 6, md: 10, lg: 10 },
-            rowSpan: 12,
+
+          // Full width (all columns, no bleed)
+          fullWidth: { colSpan: 'full' },
+
+          // Narrow prose column (tighter reading width)
+          // lg: 4 + 10 + 4 = 18 ✓  |  md: 2 + 8 + 2 = 12 ✓
+          prose: {
+            colStart: { default: 1, md: 3, lg: 5 },
+            colSpan: { default: 6, md: 8, lg: 10 },
           },
-          fullWidth: {
-            colStart: 1,
-            colSpan: { default: 6, md: 12, lg: 18 },
+
+          // Wide content (generous width, minimal margins)
+          // lg: 1 + 16 + 1 = 18 ✓  |  md: 1 + 10 + 1 = 12 ✓
+          wide: {
+            colStart: { default: 1, md: 2, lg: 2 },
+            colSpan: { default: 6, md: 10, lg: 16 },
           },
+
+          // Sidebar + content pair (use together)
+          // sidebar: cols 1-4 (lg) | content: cols 5-18 (14 cols) → 4+14=18 ✓
           sidebar: {
             colStart: { default: 1, md: 1, lg: 1 },
             colSpan: { default: 6, md: 4, lg: 4 },
@@ -106,7 +122,8 @@ export default defineAppConfig({
             colSpan: { default: 6, md: 8, lg: 14 },
           },
 
-          // 50/50 vertical split (stacks on mobile)
+          // 50/50 vertical splits (stack on mobile)
+          // lg: 9+9=18 ✓  |  md: 6+6=12 ✓
           splitLeft: {
             colStart: 1,
             colSpan: { default: 6, md: 6, lg: 9 },
@@ -118,7 +135,8 @@ export default defineAppConfig({
             rowSpan: 12,
           },
 
-          // 25/75 split (stacks on mobile)
+          // 25/75 vertical splits (stack on mobile)
+          // lg: 5+13=18 ✓  |  md: 3+9=12 ✓
           quarterLeft: {
             colStart: 1,
             colSpan: { default: 6, md: 3, lg: 5 },
@@ -130,18 +148,29 @@ export default defineAppConfig({
             rowSpan: 12,
           },
 
-          // Horizontal 50/50 split (100vw × 50vh each)
-          halfTop: {
+          // 75/25 vertical splits (stack on mobile)
+          // lg: 13+5=18 ✓  |  md: 9+3=12 ✓
+          threeQuarterLeft: {
             colStart: 1,
-            colSpan: { default: 6, md: 12, lg: 18 },
-            rowStart: 1,
-            rowSpan: 6,
+            colSpan: { default: 6, md: 9, lg: 13 },
+            rowSpan: 12,
           },
-          halfBottom: {
-            colStart: 1,
-            colSpan: { default: 6, md: 12, lg: 18 },
-            rowStart: 7,
-            rowSpan: 6,
+          quarterRight: {
+            colStart: { default: 1, md: 10, lg: 14 },
+            colSpan: { default: 6, md: 3, lg: 5 },
+            rowSpan: 12,
+          },
+
+          // Horizontal 50/50 stacks (100vw × 50vh each)
+          halfTop: { colSpan: 'full', rowStart: 1, rowSpan: 6 },
+          halfBottom: { colSpan: 'full', rowStart: 7, rowSpan: 6 },
+
+          // Super centered: full-width, full-height, content perfectly centered
+          superCentered: {
+            colSpan: 'full',
+            rowSpan: 12,
+            align: 'center',
+            justify: 'center',
           },
         },
       },
