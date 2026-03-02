@@ -4,7 +4,7 @@ useSeoMeta({
   description: 'Comprehensive guide to Locomotive Scroll v5 features and usage',
 })
 
-const { setPageAccent } = useThemePreferences()
+const { setPageAccent } = useAccentColor()
 setPageAccent('emerald')
 onUnmounted(() => setPageAccent(null))
 

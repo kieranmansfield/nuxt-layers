@@ -3,7 +3,7 @@ import type { Context } from 'gsap'
 
 definePageMeta({ layout: 'grid' })
 
-const { setPageAccent } = useThemePreferences()
+const { setPageAccent } = useAccentColor()
 setPageAccent('amber')
 onUnmounted(() => setPageAccent(null))
 

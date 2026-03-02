@@ -1,47 +1,55 @@
 /*
  * Theme Layer CSS
  *
- * Accent colors are handled via appConfig.ui.colors.primary at runtime.
- * The [data-theme] attribute provides a CSS hook for custom styling.
- * Preference classes are applied to <html> by useThemePreferences.
+ * Dark mode targets data-theme-mode="dark" on <html> (set by Nuxt Color Mode
+ * via colorMode.dataValue = 'theme-mode').
+ * Accessibility attributes are applied to <html> by the individual composables.
  */
 
+/* --- Dark mode variant --- */
+@custom-variant dark (&:where([data-theme-mode="dark"], [data-theme-mode="dark"] *));
+
 /* --- Reduced Motion --- */
-.reduce-motion *,
-.reduce-motion *::before,
-.reduce-motion *::after {
+[data-theme-motion="reduced"] *,
+[data-theme-motion="reduced"] *::before,
+[data-theme-motion="reduced"] *::after {
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;
   scroll-behavior: auto !important;
 }
 
-/* --- Reduced Transparency --- */
-/* Replace semi-transparent backgrounds with solid equivalents */
-.reduce-transparency {
-  --ui-bg-elevated: var(--ui-bg);
+[data-theme-motion="reduced"] {
+  --duration-base: 0ms;
 }
 
-.reduce-transparency :where([class*='backdrop-blur']) {
+/* --- Reduced Transparency --- */
+[data-theme-transparency="reduced"] {
+  --ui-bg-elevated: var(--ui-bg);
+  --opacity-glass: 1;
+  --backdrop-blur: 0px;
+}
+
+[data-theme-transparency="reduced"] :where([class*='backdrop-blur']) {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
 
-.reduce-transparency :where([class*='bg-default/'], [class*='bg-elevated/']) {
+[data-theme-transparency="reduced"] :where([class*='bg-default/'], [class*='bg-elevated/']) {
   background-color: var(--ui-bg-elevated) !important;
 }
 
 /* --- High Contrast --- */
-.high-contrast {
+[data-theme-contrast="high"] {
   --ui-border: var(--ui-border-accented);
 }
 
-.high-contrast :where(button, a, [role='button']) {
+[data-theme-contrast="high"] :where(button, a, [role='button']) {
   outline-width: 2px;
 }
 
-.high-contrast .text-muted,
-.high-contrast .text-dimmed {
+[data-theme-contrast="high"] .text-muted,
+[data-theme-contrast="high"] .text-dimmed {
   opacity: 1;
   filter: contrast(1.25);
 }

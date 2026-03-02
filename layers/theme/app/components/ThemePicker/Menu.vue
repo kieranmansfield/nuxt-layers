@@ -9,7 +9,7 @@ const {
   effectiveHighContrast,
   effectiveReducedMotion,
   effectiveReducedTransparency,
-} = useThemePreferences()
+} = useTheme()
 
 const contrastModel = computed({
   get: () => effectiveHighContrast.value,

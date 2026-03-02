@@ -4,7 +4,7 @@ useSeoMeta({
   description: 'Complete reference for the v-gsap directive with live examples and copyable code',
 })
 
-const { setPageAccent } = useThemePreferences()
+const { setPageAccent } = useAccentColor()
 setPageAccent('violet')
 onUnmounted(() => setPageAccent(null))
 
