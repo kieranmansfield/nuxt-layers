@@ -24,14 +24,21 @@ const state = reactive<Partial<FormState>>({
 })
 
 const toast = useToast()
+const isLoading = ref(false)
 
 async function onSubmit(event: FormSubmitEvent<FormState>) {
-  toast.add({
-    title: 'Success',
-    description: 'The form has been submitted.',
-    color: 'success',
-  })
-  emit('submit', event.data)
+  isLoading.value = true
+  try {
+    await $fetch('/api/contact', { method: 'POST', body: event.data })
+    toast.add({ title: 'Message sent!', description: 'Thanks for reaching out.', color: 'success' })
+    emit('submit', event.data)
+  }
+  catch {
+    toast.add({ title: 'Something went wrong', description: 'Please try again later.', color: 'error' })
+  }
+  finally {
+    isLoading.value = false
+  }
 }
 
 async function onError() {
@@ -73,6 +80,8 @@ async function onError() {
       class="w-full"
     />
 
-    <UButton type="submit" size="xl"> Submit </UButton>
+    <UButton type="submit" size="xl" :loading="isLoading" :disabled="isLoading">
+      Submit
+    </UButton>
   </UForm>
 </template>

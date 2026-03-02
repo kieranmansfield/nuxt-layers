@@ -75,6 +75,40 @@ function onContactSubmit() {
   }, 3000)
 }
 
+// Email integration
+interface EmailStatus {
+  configured: boolean
+  emailFrom: string | null
+  emailTo: string | null
+}
+
+const { data: emailStatus } = useFetch<EmailStatus>('/api/forms/status')
+
+const testEmailLoading = ref(false)
+const testEmailResult = ref<{ success: boolean; error?: string } | null>(null)
+
+async function sendTestEmail() {
+  testEmailLoading.value = true
+  testEmailResult.value = null
+  try {
+    await $fetch('/api/contact', {
+      method: 'POST',
+      body: {
+        name: 'Test User',
+        email: 'test@example.com',
+        message: 'This is a test message from the playground to verify Resend integration.',
+      },
+    })
+    testEmailResult.value = { success: true }
+  }
+  catch (err: any) {
+    testEmailResult.value = { success: false, error: err.statusMessage || 'Send failed' }
+  }
+  finally {
+    testEmailLoading.value = false
+  }
+}
+
 // Code samples
 const fieldConfigCode = `// config/fields.ts
 export const fieldConfigs = {
@@ -484,7 +518,8 @@ type FormState = z.infer<typeof schema>`
                 <h3 class="text-xl font-semibold">Contact Form</h3>
               </div>
               <p class="text-sm text-gray-500 mt-1">
-                Pre-built form component with name, email, and message fields
+                Validates client-side with Zod then POSTs to <code>/api/contact</code> — sends a
+                real email via Resend
               </p>
             </template>
 
@@ -505,7 +540,7 @@ type FormState = z.infer<typeof schema>`
                     <div class="flex items-center gap-2">
                       <UIcon name="i-lucide-check-circle" class="text-green-600" />
                       <span class="font-medium text-green-800 dark:text-green-200">
-                        Form submitted successfully!
+                        Email sent via Resend!
                       </span>
                     </div>
                   </div>
@@ -544,10 +579,151 @@ type FormState = z.infer<typeof schema>`
                   <div class="flex items-start gap-3">
                     <UIcon name="i-lucide-check" class="text-green-500 mt-0.5" />
                     <div>
+                      <span class="font-medium">Sends real email</span>
+                      <p class="text-sm text-gray-500">Resend API via <code>/api/contact</code></p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <UIcon name="i-lucide-check" class="text-green-500 mt-0.5" />
+                    <div>
                       <span class="font-medium">Type-safe state</span>
                       <p class="text-sm text-gray-500">Full TypeScript inference</p>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </UCard>
+        </section>
+
+        <!-- Email Integration -->
+        <section class="space-y-6">
+          <div>
+            <h2 class="text-2xl font-bold mb-2">Email Integration</h2>
+            <p class="text-gray-500">
+              Real email delivery via Resend — configure with runtime environment variables
+            </p>
+          </div>
+
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-send" class="text-primary" />
+                <h3 class="text-xl font-semibold">Resend Configuration</h3>
+              </div>
+              <p class="text-sm text-gray-500 mt-1">
+                Current status of the forms layer environment variables
+              </p>
+            </template>
+
+            <div class="space-y-6">
+              <!-- Config status -->
+              <div class="grid gap-4 md:grid-cols-3">
+                <div
+                  class="p-4 rounded-lg border"
+                  :class="
+                    emailStatus?.configured
+                      ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800'
+                      : 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
+                  "
+                >
+                  <div class="flex items-center gap-2 mb-2">
+                    <UIcon
+                      :name="
+                        emailStatus?.configured ? 'i-lucide-check-circle' : 'i-lucide-x-circle'
+                      "
+                      :class="emailStatus?.configured ? 'text-green-600' : 'text-red-500'"
+                    />
+                    <span class="text-xs font-mono font-medium">RESEND_API_KEY</span>
+                  </div>
+                  <UBadge
+                    :color="emailStatus?.configured ? 'success' : 'error'"
+                    variant="subtle"
+                    size="xs"
+                  >
+                    {{ emailStatus?.configured ? 'Configured' : 'Not set' }}
+                  </UBadge>
+                </div>
+
+                <div
+                  class="p-4 rounded-lg border bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                >
+                  <div class="flex items-center gap-2 mb-2">
+                    <UIcon name="i-lucide-mail" class="text-primary" />
+                    <span class="text-xs font-mono font-medium">EMAIL_FROM</span>
+                  </div>
+                  <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
+                    {{ emailStatus?.emailFrom || '—' }}
+                  </p>
+                </div>
+
+                <div
+                  class="p-4 rounded-lg border bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                >
+                  <div class="flex items-center gap-2 mb-2">
+                    <UIcon name="i-lucide-inbox" class="text-primary" />
+                    <span class="text-xs font-mono font-medium">EMAIL_TO</span>
+                  </div>
+                  <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
+                    {{ emailStatus?.emailTo || '—' }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Test send -->
+              <div class="flex items-center gap-4">
+                <UButton
+                  icon="i-lucide-send"
+                  :loading="testEmailLoading"
+                  :disabled="!emailStatus?.configured || testEmailLoading"
+                  @click="sendTestEmail"
+                >
+                  Send Test Email
+                </UButton>
+                <Transition
+                  enter-active-class="transition-opacity duration-300"
+                  leave-active-class="transition-opacity duration-300"
+                  enter-from-class="opacity-0"
+                  leave-to-class="opacity-0"
+                >
+                  <div v-if="testEmailResult" class="flex items-center gap-2">
+                    <UIcon
+                      :name="
+                        testEmailResult.success
+                          ? 'i-lucide-check-circle'
+                          : 'i-lucide-x-circle'
+                      "
+                      :class="testEmailResult.success ? 'text-green-600' : 'text-red-500'"
+                    />
+                    <span
+                      class="text-sm font-medium"
+                      :class="
+                        testEmailResult.success
+                          ? 'text-green-700 dark:text-green-300'
+                          : 'text-red-600 dark:text-red-400'
+                      "
+                    >
+                      {{
+                        testEmailResult.success
+                          ? `Sent to ${emailStatus?.emailTo}`
+                          : testEmailResult.error
+                      }}
+                    </span>
+                  </div>
+                </Transition>
+              </div>
+
+              <!-- Env var reference -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">
+                  Environment Variables
+                </h4>
+                <div
+                  class="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-xs overflow-x-auto"
+                >
+                  <pre>NUXT_FORMS_LAYER_RESEND_API_KEY=re_xxxx
+NUXT_FORMS_LAYER_EMAIL_FROM=contact@yourdomain.com
+NUXT_FORMS_LAYER_EMAIL_TO=you@example.com</pre>
                 </div>
               </div>
             </div>
