@@ -44,16 +44,6 @@ const props = withDefaults(
 const { progress } = useSmoothScroll()
 
 const percentage = computed(() => Math.round(progress.value * 100))
-
-// For circular progress
-const radius = computed(() => (props.size - props.strokeWidth) / 2)
-const circumference = computed(() => 2 * Math.PI * radius.value)
-const strokeDasharray = computed(
-  () => `${progress.value * circumference.value} ${circumference.value}`
-)
-
-// Generate gradient ID
-const gradientId = `scroll-progress-gradient-${Math.random().toString(36).slice(2, 9)}`
 </script>
 
 <template>
@@ -77,51 +67,13 @@ const gradientId = `scroll-progress-gradient-${Math.random().toString(36).slice(
   </div>
 
   <!-- Circular Progress -->
-  <div
+  <ProgressCircular
     v-else
-    class="motion-scroll-progress-circular relative inline-flex items-center justify-center"
-  >
-    <svg :width="size" :height="size" class="-rotate-90" :viewBox="`0 0 ${size} ${size}`">
-      <!-- Background circle -->
-      <circle
-        :cx="size / 2"
-        :cy="size / 2"
-        :r="radius"
-        fill="none"
-        :stroke="bgColor"
-        :stroke-width
-      />
-      <!-- Progress circle -->
-      <circle
-        :cx="size / 2"
-        :cy="size / 2"
-        :r="radius"
-        fill="none"
-        :stroke="`url(#${gradientId})`"
-        :stroke-width
-        stroke-linecap="round"
-        :stroke-dasharray
-        class="transition-[stroke-dasharray] duration-100"
-      />
-      <defs>
-        <linearGradient :id="gradientId" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" :style="`stop-color: ${colors[0]}`" />
-          <stop offset="50%" :style="`stop-color: ${colors[1]}`" />
-          <stop offset="100%" :style="`stop-color: ${colors[2]}`" />
-        </linearGradient>
-      </defs>
-    </svg>
-    <span
-      v-if="showPercentage"
-      class="absolute inset-0 flex items-center justify-center text-2xl font-bold tabular-nums"
-    >
-      {{ percentage }}%
-    </span>
-  </div>
+    :progress="progress"
+    :size
+    :stroke-width="strokeWidth"
+    :show-percentage="showPercentage"
+    :colors
+    :bg-color="bgColor"
+  />
 </template>
-
-<style scoped>
-.tabular-nums {
-  font-variant-numeric: tabular-nums;
-}
-</style>

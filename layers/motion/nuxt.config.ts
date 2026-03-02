@@ -8,6 +8,12 @@ export default defineNuxtConfig({
     '#layers/motion': import.meta.dirname,
   },
 
+  modules: ['v-gsap-nuxt'],
+
+  vgsap: {
+    composable: true,
+  },
+
   css: ['#layers/motion/app/assets/css/main.css'],
 
   compatibilityDate: '2026-01-30',

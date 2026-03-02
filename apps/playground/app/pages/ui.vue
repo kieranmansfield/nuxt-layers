@@ -20,6 +20,10 @@ const brandColors = ['primary', 'secondary', 'neutral'] as const
 const customColors: UiColors[] = ['accent']
 const baseColors: UiColors[] = ['black', 'white']
 
+// Progress interactive demo
+const circularSlider = ref(50)
+const circularProgress = computed(() => circularSlider.value / 100)
+
 // Typography weight demos
 const fontWeights = ['font-thin', 'font-light', 'font-normal', 'font-medium', 'font-semibold', 'font-bold', 'font-black'] as const
 
@@ -638,6 +642,149 @@ const sampleCode = `function useScreen() {
                 </div>
               </div>
             </div>
+          </UCard>
+        </section>
+
+        <!-- Progress Section -->
+        <section class="space-y-8">
+          <div>
+            <h2 class="text-2xl font-bold mb-2">Progress Components</h2>
+            <p class="text-gray-500">Circular ring and linear bar progress indicators</p>
+          </div>
+
+          <!-- ProgressCircular -->
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-loader-circle" class="text-primary" />
+                <h3 class="text-xl font-semibold">ProgressCircular</h3>
+              </div>
+              <p class="text-sm text-gray-500 mt-1">SVG ring with gradient stroke — pass any 0–1 value</p>
+            </template>
+
+            <div class="space-y-8">
+              <!-- Static values -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-4">Static values</h4>
+                <div class="flex flex-wrap gap-8 items-center">
+                  <div class="flex flex-col items-center gap-2">
+                    <ProgressCircular :progress="0.25" />
+                    <span class="text-xs text-gray-500">:progress="0.25"</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-2">
+                    <ProgressCircular :progress="0.5" />
+                    <span class="text-xs text-gray-500">:progress="0.5"</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-2">
+                    <ProgressCircular :progress="0.75" />
+                    <span class="text-xs text-gray-500">:progress="0.75"</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-2">
+                    <ProgressCircular :progress="1" />
+                    <span class="text-xs text-gray-500">:progress="1"</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sizes -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-4">Sizes</h4>
+                <div class="flex flex-wrap gap-8 items-end">
+                  <div class="flex flex-col items-center gap-2">
+                    <ProgressCircular :progress="0.6" :size="64" :stroke-width="5" />
+                    <span class="text-xs text-gray-500">:size="64"</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-2">
+                    <ProgressCircular :progress="0.6" />
+                    <span class="text-xs text-gray-500">:size="120" (default)</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-2">
+                    <ProgressCircular :progress="0.6" :size="180" :stroke-width="12" />
+                    <span class="text-xs text-gray-500">:size="180"</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- No percentage -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-4">Without label</h4>
+                <ProgressCircular :progress="0.7" :show-percentage="false" />
+              </div>
+
+              <!-- Interactive -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-4">Interactive</h4>
+                <div class="flex flex-col items-start gap-4">
+                  <ProgressCircular :progress="circularProgress" />
+                  <URange v-model="circularSlider" :min="0" :max="100" class="w-64" />
+                  <span class="text-xs text-gray-500">{{ circularSlider }}%</span>
+                </div>
+              </div>
+            </div>
+
+            <template #footer>
+              <TypographyCodeBlock language="vue" class="text-sm">
+                {{ `<ProgressCircular :progress="0.5" />
+<ProgressCircular :progress="0.75" :size="180" :stroke-width="12" />
+<ProgressCircular :progress="1" :show-percentage="false" />` }}
+              </TypographyCodeBlock>
+            </template>
+          </UCard>
+
+          <!-- ProgressBar -->
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-minus" class="text-primary" />
+                <h3 class="text-xl font-semibold">ProgressBar</h3>
+              </div>
+              <p class="text-sm text-gray-500 mt-1">Wraps Nuxt UI's UProgress — pass a 0–1 value, null for indeterminate</p>
+            </template>
+
+            <div class="space-y-6">
+              <!-- Static values -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Static values</h4>
+                <div class="space-y-4">
+                  <div class="space-y-1">
+                    <span class="text-xs text-gray-500">:progress="0.3"</span>
+                    <ProgressBar :progress="0.3" />
+                  </div>
+                  <div class="space-y-1">
+                    <span class="text-xs text-gray-500">:progress="0.6"</span>
+                    <ProgressBar :progress="0.6" />
+                  </div>
+                  <div class="space-y-1">
+                    <span class="text-xs text-gray-500">:progress="1"</span>
+                    <ProgressBar :progress="1" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Colors -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Colors</h4>
+                <div class="space-y-3">
+                  <ProgressBar :progress="0.6" color="primary" />
+                  <ProgressBar :progress="0.6" color="success" />
+                  <ProgressBar :progress="0.6" color="warning" />
+                  <ProgressBar :progress="0.6" color="error" />
+                </div>
+              </div>
+
+              <!-- Indeterminate -->
+              <div>
+                <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">Indeterminate (:progress="null")</h4>
+                <ProgressBar :progress="null" animation="carousel" />
+              </div>
+            </div>
+
+            <template #footer>
+              <TypographyCodeBlock language="vue" class="text-sm">
+                {{ `<ProgressBar :progress="0.6" color="success" />
+<ProgressBar :progress="null" animation="carousel" />` }}
+              </TypographyCodeBlock>
+            </template>
           </UCard>
         </section>
 

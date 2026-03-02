@@ -37,6 +37,7 @@ const layers = [
       'Responsive Images',
       'Headline Components',
       'Code Blocks',
+      'Progress Components',
     ],
     borderColor: 'border-pink-500/30',
     bgColor: 'bg-pink-500/5',

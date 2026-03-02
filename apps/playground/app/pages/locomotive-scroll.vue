@@ -503,7 +503,7 @@ const { progress } = useSmoothScroll()
               </p>
 
               <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <MotionScrollLink to="0" :duration="1.5" as="span" class="block">
+                <MotionScrollLink :to="0" :duration="1.5" as="span" class="block">
                   <UButton size="lg" block>
                     <UIcon name="i-lucide-arrow-up" class="mr-2" />
                     Top
@@ -708,7 +708,7 @@ const { progress } = useSmoothScroll()
               <UIcon name="i-lucide-arrow-left" class="mr-2" />
               Motion Demo
             </UButton>
-            <MotionScrollLink to="0" :duration="2" as="span">
+            <MotionScrollLink :to="0" :duration="2" as="span">
               <UButton size="lg">
                 <UIcon name="i-lucide-arrow-up" class="mr-2" />
                 Back to Top

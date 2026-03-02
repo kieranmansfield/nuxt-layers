@@ -18,72 +18,28 @@ const props = withDefaults(
      */
     duration?: number
     /**
-     * Trigger on scroll
-     */
-    scrollTrigger?: boolean
-    /**
      * Start position for scroll trigger
      */
     start?: string
   }>(),
-  {
-    type: 'chars',
-    stagger: 0.03,
-    duration: 0.8,
-    scrollTrigger: true,
-    start: 'top 80%',
-  }
+  { type: 'chars', stagger: 0.03, duration: 0.8, start: 'top 80%' }
 )
 
-const { gsap } = useGsap()
-const containerRef = ref<HTMLElement | null>(null)
-
-const splitContent = computed(() => {
-  if (props.type === 'chars') {
-    return props.text.split('').map((char) => (char === ' ' ? '\u00A0' : char))
-  } else if (props.type === 'words') {
-    return props.text.split(' ')
-  }
-  return [props.text]
-})
-
-onMounted(() => {
-  if (!containerRef.value) return
-
-  const elements = containerRef.value.querySelectorAll('.reveal-item')
-
-  const animationConfig: gsap.TweenVars = {
-    y: 40,
-    opacity: 0,
-    rotateX: -90,
-    duration: props.duration,
-    stagger: props.stagger,
-    ease: 'power3.out',
-  }
-
-  if (props.scrollTrigger) {
-    animationConfig.scrollTrigger = {
-      trigger: containerRef.value,
-      start: props.start,
-      toggleActions: 'play none none none',
-    }
-  }
-
-  gsap.from(elements, animationConfig)
-})
+const animBinding = computed(() => ({
+  y: 40,
+  opacity: 0,
+  rotateX: -90,
+  stagger: props.stagger,
+  duration: props.duration,
+  ease: 'power3.out',
+  start: props.start,
+}))
 </script>
 
 <template>
-  <span ref="containerRef" class="motion-text-reveal">
-    <span
-      v-for="(item, index) in splitContent"
-      :key="index"
-      class="reveal-item"
-      :class="{ 'mr-[0.25em]': type === 'words' && index < splitContent.length - 1 }"
-    >
-      {{ item }}
-    </span>
-  </span>
+  <span v-if="type === 'chars'" v-gsap.whenVisible.once.splitText.chars.from="animBinding" class="motion-text-reveal">{{ text }}</span>
+  <span v-else-if="type === 'words'" v-gsap.whenVisible.once.splitText.words.from="animBinding" class="motion-text-reveal">{{ text }}</span>
+  <span v-else v-gsap.whenVisible.once.splitText.lines.from="animBinding" class="motion-text-reveal">{{ text }}</span>
 </template>
 
 <style scoped>
@@ -91,11 +47,5 @@ onMounted(() => {
   display: inline-flex;
   flex-wrap: wrap;
   perspective: 1000px;
-}
-
-.reveal-item {
-  display: inline-block;
-  transform-origin: center bottom;
-  will-change: transform, opacity;
 }
 </style>

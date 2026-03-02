@@ -296,6 +296,9 @@ importers:
       locomotive-scroll:
         specifier: ^5.0.0
         version: 5.0.1(@nuxt/kit@4.3.1(magicast@0.5.2))(react@19.2.4)(vue@3.5.28(typescript@5.9.3))
+      v-gsap-nuxt:
+        specifier: latest
+        version: 1.5.12(magicast@0.5.2)
 
   layers/shader:
     dependencies:
@@ -8883,6 +8886,9 @@ packages:
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
+
+  v-gsap-nuxt@1.5.12:
+    resolution: {integrity: sha512-ojOnvUPZGvFpFfpHUO37EgQjtfHwLs7ASqBqIjkZB5p6JwI0FH9VaprDJy8s5ZQAC/tKeWHEn6YFoyjw/git2Q==}
 
   vaul-vue@0.4.1:
     resolution: {integrity: sha512-A6jOWOZX5yvyo1qMn7IveoWN91mJI5L3BUKsIwkg6qrTGgHs1Sb1JF/vyLJgnbN1rH4OOOxFbtqL9A46bOyGUQ==}
@@ -19589,6 +19595,14 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   uuid@8.3.2: {}
+
+  v-gsap-nuxt@1.5.12(magicast@0.5.2):
+    dependencies:
+      '@nuxt/kit': 3.21.1(magicast@0.5.2)
+      defu: 6.1.4
+      gsap: 3.14.2
+    transitivePeerDependencies:
+      - magicast
 
   vaul-vue@0.4.1(reka-ui@2.8.2(vue@3.5.28(typescript@5.9.3)))(vue@3.5.28(typescript@5.9.3)):
     dependencies:

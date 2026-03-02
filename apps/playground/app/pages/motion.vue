@@ -13,8 +13,6 @@ const { gsap, ScrollTrigger } = useGsap()
 const { scrollTo, scrollToTop, velocity, progress } = useSmoothScroll()
 
 // Refs for animations
-const heroTextRef = ref<HTMLElement | null>(null)
-const scrollTriggerBox = ref<HTMLElement | null>(null)
 const parallaxSection = ref<HTMLElement | null>(null)
 const parallaxDeep = ref<HTMLElement | null>(null)
 const parallaxBg = ref<HTMLElement | null>(null)
@@ -28,13 +26,6 @@ const scrubProgress = ref<HTMLElement | null>(null)
 const velocityText = ref<HTMLElement | null>(null)
 const horizontalSection = ref<HTMLElement | null>(null)
 const horizontalTrack = ref<HTMLElement | null>(null)
-const staggeredCards = ref<HTMLElement | null>(null)
-
-// Declarative parallax section refs
-const declParallaxSection = ref<HTMLElement | null>(null)
-const declParallaxBg = ref<HTMLElement | null>(null)
-const declParallaxBlur = ref<HTMLElement | null>(null)
-const declParallaxContent = ref<HTMLElement | null>(null)
 
 // State
 const reducedMotion = ref(false)
@@ -43,53 +34,6 @@ onMounted(() => {
   // Check reduced motion preference
   if (import.meta.client) {
     reducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  }
-
-  // Hero text animation
-  if (heroTextRef.value) {
-    gsap.from(heroTextRef.value.querySelectorAll('.hero-word'), {
-      y: 100,
-      opacity: 0,
-      rotateX: -80,
-      stagger: 0.1,
-      duration: 1.2,
-      ease: 'power3.out',
-    })
-  }
-
-  // Staggered cards
-  if (staggeredCards.value) {
-    const cards = staggeredCards.value.querySelectorAll('.stagger-card')
-    gsap.from(cards, {
-      scrollTrigger: {
-        trigger: staggeredCards.value,
-        start: 'top 80%',
-        toggleActions: 'play none none reverse',
-      },
-      y: 50,
-      opacity: 0,
-      scale: 0.9,
-      duration: 0.6,
-      stagger: 0.1,
-      ease: 'power3.out',
-    })
-  }
-
-  // Large scroll trigger box
-  if (scrollTriggerBox.value) {
-    gsap.from(scrollTriggerBox.value, {
-      scrollTrigger: {
-        trigger: scrollTriggerBox.value,
-        start: 'top 85%',
-        end: 'top 20%',
-        toggleActions: 'play none none reverse',
-      },
-      y: 100,
-      opacity: 0,
-      scale: 0.8,
-      duration: 1,
-      ease: 'power3.out',
-    })
   }
 
   // Parallax effect - multiple layers at different speeds
@@ -241,41 +185,6 @@ onMounted(() => {
     })
   }
 
-  // Declarative parallax section (GSAP-based since data-scroll needs LS5 config)
-  if (declParallaxSection.value) {
-    const declTrigger = {
-      trigger: declParallaxSection.value,
-      start: 'top bottom',
-      end: 'bottom top',
-      scrub: 0.5,
-    }
-
-    if (declParallaxBg.value) {
-      gsap.to(declParallaxBg.value, {
-        scrollTrigger: declTrigger,
-        y: -100,
-        scale: 1.1,
-        ease: 'none',
-      })
-    }
-
-    if (declParallaxBlur.value) {
-      gsap.to(declParallaxBlur.value, {
-        scrollTrigger: declTrigger,
-        y: 80,
-        scale: 1.2,
-        ease: 'none',
-      })
-    }
-
-    if (declParallaxContent.value) {
-      gsap.to(declParallaxContent.value, {
-        scrollTrigger: declTrigger,
-        y: -40,
-        ease: 'none',
-      })
-    }
-  }
 })
 
 function scrollToSection(selector: string) {
@@ -296,12 +205,17 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
 
       <div class="text-center z-10 px-4">
         <h1
-          ref="heroTextRef"
           class="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white mb-8 perspective-1000"
         >
-          <span class="hero-word inline-block">MOTION</span>
+          <span
+            class="hero-word inline-block"
+            v-gsap.from="{ y: 100, opacity: 0, rotateX: -80, duration: 1.2, ease: 'power3.out' }"
+          >MOTION</span>
           <br />
-          <span class="hero-word inline-block text-primary">LAYER</span>
+          <span
+            class="hero-word inline-block text-primary"
+            v-gsap.delay-100.from="{ y: 100, opacity: 0, rotateX: -80, duration: 1.2, ease: 'power3.out' }"
+          >LAYER</span>
         </h1>
         <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
           GSAP + Locomotive Scroll v5. Parallax, pinning, scrub animations, and velocity-based
@@ -310,6 +224,14 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
         <div class="flex flex-wrap gap-4 justify-center">
           <UButton size="lg" @click="scrollToSection('#demos')"> View Demos </UButton>
           <UButton size="lg" variant="outline" to="/"> Back Home </UButton>
+          <UButton size="lg" variant="ghost" to="/gsap">
+            <UIcon name="i-lucide-zap" class="mr-2" />
+            GSAP Guide
+          </UButton>
+          <UButton size="lg" variant="ghost" to="/locomotive-scroll">
+            <UIcon name="i-lucide-train" class="mr-2" />
+            Locomotive Scroll
+          </UButton>
         </div>
       </div>
 
@@ -360,8 +282,8 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
         <div class="mb-32">
           <h3 class="text-2xl font-bold text-white mb-8 text-center">Scroll Trigger</h3>
           <div
-            ref="scrollTriggerBox"
             class="h-[50vh] min-h-[400px] bg-linear-to-br from-blue-600 via-purple-600 to-pink-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-purple-500/25"
+            v-gsap.whenVisible.once.from="{ y: 100, opacity: 0, scale: 0.8, duration: 1, ease: 'power3.out' }"
           >
             <div class="text-center text-white p-8">
               <UIcon name="i-lucide-sparkles" class="text-6xl mb-4" />
@@ -374,7 +296,10 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
         <!-- Staggered Cards -->
         <div class="mb-32">
           <h3 class="text-2xl font-bold text-white mb-8 text-center">Staggered Animation</h3>
-          <div ref="staggeredCards" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div
+            class="grid grid-cols-2 md:grid-cols-4 gap-4"
+            v-gsap.whenVisible.once.stagger.from="{ y: 50, opacity: 0, scale: 0.9, duration: 0.6, stagger: 0.1, ease: 'power3.out' }"
+          >
             <div
               v-for="i in 8"
               :key="i"
@@ -583,7 +508,7 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
     </section>
 
     <!-- GSAP Parallax Demo Section -->
-    <section ref="declParallaxSection" class="py-32 bg-gray-900 overflow-hidden">
+    <section class="py-32 bg-gray-900 overflow-hidden">
       <UContainer>
         <div class="text-center mb-16">
           <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">GSAP Parallax</h2>
@@ -593,7 +518,7 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
         <div class="relative h-[60vh] flex items-center justify-center">
           <!-- Slow background text -->
           <div
-            ref="declParallaxBg"
+            v-gsap.parallax.slower-3
             class="absolute text-[20vw] font-black text-gray-800/30 select-none"
           >
             SCROLL
@@ -601,12 +526,12 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
 
           <!-- Foreground blur -->
           <div
-            ref="declParallaxBlur"
+            v-gsap.parallax.faster-2
             class="absolute w-48 h-48 bg-primary/30 rounded-full blur-3xl"
           />
 
           <!-- Center content -->
-          <div ref="declParallaxContent" class="relative z-10 text-center">
+          <div v-gsap.parallax.slower-5 class="relative z-10 text-center">
             <p class="text-2xl md:text-3xl text-white font-bold mb-4">
               Layers move at different speeds
             </p>
@@ -820,7 +745,15 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
             <h2 class="text-2xl font-bold text-white mb-2">Motion Layer</h2>
             <p class="text-gray-400">GSAP + Locomotive Scroll for professional animations</p>
           </div>
-          <div class="flex gap-4">
+          <div class="flex flex-wrap gap-4">
+            <UButton variant="ghost" to="/gsap">
+              <UIcon name="i-lucide-zap" class="mr-2" />
+              GSAP Guide
+            </UButton>
+            <UButton variant="ghost" to="/locomotive-scroll">
+              <UIcon name="i-lucide-train" class="mr-2" />
+              Locomotive Scroll
+            </UButton>
             <UButton variant="outline" @click="scrollToTop({ duration: 2 })"> Back to Top </UButton>
             <UButton to="/"> Home </UButton>
           </div>
