@@ -6,7 +6,7 @@ useSeoMeta({
   description: 'Demonstrating the UI layer typography, colors, and media components',
 })
 
-const { setPageAccent } = useThemePreferences()
+const { setPageAccent } = useAccentColor()
 setPageAccent('pink')
 onUnmounted(() => setPageAccent(null))
 

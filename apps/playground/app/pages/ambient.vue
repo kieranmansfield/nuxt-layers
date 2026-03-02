@@ -10,7 +10,7 @@ useSeoMeta({
   description: 'Beautiful TSL-powered ambient backgrounds using WebGPU',
 })
 
-const { setPageAccent } = useThemePreferences()
+const { setPageAccent } = useAccentColor()
 setPageAccent('emerald')
 onUnmounted(() => setPageAccent(null))
 

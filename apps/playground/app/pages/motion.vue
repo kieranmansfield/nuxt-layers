@@ -5,7 +5,7 @@ useSeoMeta({
   description: 'GSAP animations + Locomotive Scroll demos',
 })
 
-const { setPageAccent } = useThemePreferences()
+const { setPageAccent } = useAccentColor()
 setPageAccent('emerald')
 onUnmounted(() => setPageAccent(null))
 

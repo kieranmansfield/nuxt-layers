@@ -6,7 +6,7 @@ useSeoMeta({
   description: 'TSL shader utilities - noise, SDF, lighting, tonemapping, patterns & effects',
 })
 
-const { setPageAccent } = useThemePreferences()
+const { setPageAccent } = useAccentColor()
 setPageAccent('violet')
 onUnmounted(() => setPageAccent(null))
 

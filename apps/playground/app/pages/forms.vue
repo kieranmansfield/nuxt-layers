@@ -7,7 +7,7 @@ useSeoMeta({
   description: 'Config-driven form fields with Zod validation and type inference',
 })
 
-const { setPageAccent } = useThemePreferences()
+const { setPageAccent } = useAccentColor()
 setPageAccent('cyan')
 onUnmounted(() => setPageAccent(null))
 

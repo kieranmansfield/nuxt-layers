@@ -26,6 +26,10 @@ export type AccentColor =
 
 export type PreferenceOverride = 'system' | 'on' | 'off'
 
+export type ThemeContrast = 'high' | 'standard'
+export type ThemeMotion = 'reduced' | 'full'
+export type ThemeTransparency = 'reduced' | 'full'
+
 export interface ThemePreferences {
   accent: AccentColor
   contrast: PreferenceOverride

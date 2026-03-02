@@ -2,7 +2,7 @@
 import type { AccentColor } from '#layers/theme/app/types/theme'
 
 const appConfig = useAppConfig()
-const { activeAccent, setAccent } = useThemePreferences()
+const { activeAccent, setAccent } = useAccentColor()
 
 const accents = computed(
   () => (appConfig as any).themeLayer?.accents as AccentColor[] ?? [],

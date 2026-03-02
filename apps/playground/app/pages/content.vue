@@ -4,7 +4,7 @@ useSeoMeta({
   description: 'Demonstrating the content layer with blog, portfolio, and gallery collections',
 })
 
-const { setPageAccent } = useThemePreferences()
+const { setPageAccent } = useAccentColor()
 setPageAccent('red')
 onUnmounted(() => setPageAccent(null))
 

@@ -12,10 +12,17 @@ export default defineNuxtConfig({
 
   plugins: ['#layers/theme/app/plugins/theme.client.ts'],
 
+  colorMode: {
+    dataValue: 'theme-mode',
+    storageKey: 'theme-mode',
+  },
+
   appConfig: {
     ui: {
       colors: {
         primary: 'blue',
+        secondary: 'indigo',
+        info: 'sky',
       },
     },
     themeLayer: {

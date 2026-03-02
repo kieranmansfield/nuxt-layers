@@ -4,7 +4,7 @@ useSeoMeta({
   description: 'Demonstrating the core layer utilities and composables',
 })
 
-const { setPageAccent } = useThemePreferences()
+const { setPageAccent } = useAccentColor()
 setPageAccent('blue')
 onUnmounted(() => setPageAccent(null))
 
