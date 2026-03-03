@@ -1,13 +1,10 @@
 /*
  * Theme Layer CSS
  *
- * Dark mode targets data-theme-mode="dark" on <html> (set by Nuxt Color Mode
- * via colorMode.dataValue = 'theme-mode').
  * Accessibility attributes are applied to <html> by the individual composables.
+ * The dark mode @custom-variant lives in core/main.css so it is defined in the
+ * same Tailwind pass as all utility generation (avoids HMR regeneration shift).
  */
-
-/* --- Dark mode variant --- */
-@custom-variant dark (&:where([data-theme-mode="dark"], [data-theme-mode="dark"] *));
 
 /* --- Reduced Motion --- */
 [data-theme-motion="reduced"] *,

@@ -1,3 +1,4 @@
+import type { Ref } from 'vue'
 import type LocomotiveScroll from 'locomotive-scroll'
 
 interface ScrollToOptions {
@@ -23,9 +24,9 @@ interface ScrollToOptions {
 export function useSmoothScroll() {
   const nuxtApp = useNuxtApp()
 
-  // Get the Locomotive Scroll instance and reactive state from the plugin
+  // Get the Locomotive Scroll instance from the reactive ref provided by the plugin
   const locomotiveScroll = computed<LocomotiveScroll | undefined>(
-    () => nuxtApp.$locomotiveScroll as LocomotiveScroll | undefined
+    () => (nuxtApp.$locomotiveScroll as Ref<LocomotiveScroll | null>)?.value ?? undefined
   )
 
   // Reactive scroll state from the plugin

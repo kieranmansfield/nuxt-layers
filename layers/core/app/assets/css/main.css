@@ -1,3 +1,8 @@
+/* Define dark variant before Tailwind generates utilities so the selector
+   is established in a single pass, preventing a Tailwind v4 CSS regeneration
+   and the resulting HMR layout shift on first load. */
+@custom-variant dark (&:where([data-theme-mode="dark"], [data-theme-mode="dark"] *));
+
 @import 'tailwindcss';
 @import '@nuxt/ui';
 

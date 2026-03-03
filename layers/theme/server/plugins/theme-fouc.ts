@@ -11,13 +11,16 @@ import type { DefaultColors } from 'tailwindcss/types/generated/colors'
  *
  * 2. A blocking `<script>` that reads localStorage and restores all
  *    `data-theme-*` attributes on `<html>` before first paint:
- *    - `data-theme-colour` from `theme-colour`
+ *    - `data-theme-colour` from `theme-colour` (defaults to 'blue')
  *    - `data-theme-contrast` from `theme-contrast`
  *    - `data-theme-motion` from `theme-motion`
  *    - `data-theme-transparency` from `theme-transparency`
+ *    - `data-theme-mode` from `theme-mode` (raw string, not JSON — set by Nuxt Color Mode)
  *
- * Color mode (`data-theme-mode`) is handled by Nuxt Color Mode's own
- * cookie/localStorage restore mechanism.
+ * Our script runs before CSS link tags (via head.unshift), so setting data-theme-mode
+ * here prevents the dark-mode FOUC that would otherwise occur when Nuxt Color Mode's
+ * script runs after stylesheets have downloaded. Nuxt Color Mode's script will then
+ * set the same value again — this is idempotent and safe.
  */
 
 const ACCENTS = [
@@ -90,7 +93,7 @@ function buildAccentCSS(): string {
       }
     }
 
-    css += `[data-theme-colour="${accent}"]{${vars}}`
+    css += `html[data-theme-colour="${accent}"]{${vars}}`
   }
   return css
 }
@@ -100,17 +103,32 @@ const accentCSS = buildAccentCSS()
 // Blocking init script — restores data-* attributes from localStorage before first paint.
 // Written as a self-invoking function to avoid polluting the global scope.
 // JSON.parse handles the quoted string that useLocalStorage writes.
+// Note: theme-mode is stored as a raw string by Nuxt Color Mode (no JSON.stringify).
 const initScript = `(function(){
   try{
     var h=document.documentElement;
     var c=localStorage.getItem('theme-colour');
-    if(c){h.setAttribute('data-theme-colour',JSON.parse(c))}
+    h.setAttribute('data-theme-colour',c?JSON.parse(c):'blue')
     var ct=localStorage.getItem('theme-contrast');
-    if(ct){var cv=JSON.parse(ct);h.setAttribute('data-theme-contrast',cv==='on'?'high':'standard')}
+    var ctv=ct?JSON.parse(ct):'system';
+    if(ctv==='on'){h.setAttribute('data-theme-contrast','high')}
+    else if(ctv==='off'){h.setAttribute('data-theme-contrast','standard')}
+    else{h.setAttribute('data-theme-contrast',(window.matchMedia&&window.matchMedia('(prefers-contrast:more)').matches)?'high':'standard')}
     var m=localStorage.getItem('theme-motion');
-    if(m){var mv=JSON.parse(m);h.setAttribute('data-theme-motion',mv==='on'?'reduced':'full')}
+    var mv=m?JSON.parse(m):'system';
+    if(mv==='on'){h.setAttribute('data-theme-motion','reduced')}
+    else if(mv==='off'){h.setAttribute('data-theme-motion','full')}
+    else{h.setAttribute('data-theme-motion',(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches)?'reduced':'full')}
     var t=localStorage.getItem('theme-transparency');
-    if(t){var tv=JSON.parse(t);h.setAttribute('data-theme-transparency',tv==='on'?'reduced':'full')}
+    var tv=t?JSON.parse(t):'system';
+    if(tv==='on'){h.setAttribute('data-theme-transparency','reduced')}
+    else if(tv==='off'){h.setAttribute('data-theme-transparency','full')}
+    else{h.setAttribute('data-theme-transparency',(window.matchMedia&&window.matchMedia('(prefers-reduced-transparency:reduce)').matches)?'reduced':'full')}
+    var dm=localStorage.getItem('theme-mode');
+    var dmv=dm||'system';
+    if(dmv==='dark'){h.setAttribute('data-theme-mode','dark')}
+    else if(dmv==='light'){h.setAttribute('data-theme-mode','light')}
+    else{h.setAttribute('data-theme-mode',(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light')}
   }catch(e){}
 })()`.replace(/\n\s*/g, '')
 

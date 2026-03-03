@@ -13,16 +13,20 @@ convention inside each layer:
 ```
 layers/<name>/
 ├── app/
+│   ├── app.config.ts    # App config defaults + declare module augmentation ← MUST be here
 │   ├── components/      # Auto-imported Vue components
 │   ├── composables/     # Auto-imported composables
 │   └── types/           # TypeScript types (not auto-imported)
 ├── server/
 │   ├── api/             # Nitro API routes (auto-registered)
 │   └── utils/           # Nitro server utilities (auto-imported in server/)
-├── app.config.ts        # App config defaults + declare module augmentation
 ├── nuxt.config.ts       # Layer config: alias, runtimeConfig, modules, etc.
 └── package.json
 ```
+
+**IMPORTANT**: `app.config.ts` belongs inside `app/`, NOT at the layer root.
+Nuxt 4 resolves `app.config.ts` from `srcDir` (the `app/` directory), not from the layer root.
+Placing it at the layer root silently ignores it — `useAppConfig()` returns `undefined` for that namespace.
 
 ## All Layers
 
@@ -71,10 +75,10 @@ Layers can include Nitro server extensions. Files are auto-registered by Nuxt:
 ## App Config Augmentation
 
 Each layer that adds `app.config.ts` defaults must also augment the `@nuxt/schema` types in the
-same file:
+same file. The file MUST be at `layers/<name>/app/app.config.ts` (inside `srcDir`):
 
 ```ts
-// layers/<name>/app.config.ts
+// layers/<name>/app/app.config.ts
 export default defineAppConfig({ myLayer: { ... } })
 
 declare module '@nuxt/schema' {

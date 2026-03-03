@@ -18,11 +18,11 @@ export default defineNuxtPlugin(() => {
     progress: 0,
   })
 
-  let instance: LocomotiveScroll | null = null
+  const instance = shallowRef<LocomotiveScroll | null>(null)
 
   function init() {
-    if (instance) return
-    instance = new LocomotiveScroll({
+    if (instance.value) return
+    instance.value = new LocomotiveScroll({
       lenisOptions: {
         lerp: 0.1,
         smoothWheel: true,
@@ -40,8 +40,8 @@ export default defineNuxtPlugin(() => {
   }
 
   function destroy() {
-    instance?.destroy()
-    instance = null
+    instance.value?.destroy()
+    instance.value = null
   }
 
   const router = useRouter()
@@ -62,7 +62,7 @@ export default defineNuxtPlugin(() => {
 
   return {
     provide: {
-      locomotiveScroll: readonly(instance),
+      locomotiveScroll: instance,
       scrollState,
     },
   }
