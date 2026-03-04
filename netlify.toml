@@ -1,0 +1,6 @@
+[build]
+  command = "pnpm deploy:netlify"
+  publish = "apps/playground/.output/public"
+
+[build.environment]
+  NODE_VERSION = "20"

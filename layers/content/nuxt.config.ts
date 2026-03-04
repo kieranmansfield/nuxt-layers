@@ -1,9 +1,11 @@
-// Conditionally load nuxt-studio if installed (optional peer dependency)
+// Conditionally load nuxt-studio if installed (optional peer dependency) and in development
 const studioModule: string[] = []
-try {
-  await import('nuxt-studio')
-  studioModule.push('nuxt-studio')
-} catch {}
+if (process.env.NODE_ENV === 'development') {
+  try {
+    await import('nuxt-studio')
+    studioModule.push('nuxt-studio')
+  } catch {}
+}
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
