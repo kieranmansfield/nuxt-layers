@@ -22,6 +22,12 @@ export default defineNuxtConfig({
 
   modules: ['@nuxt/ui', '@nuxt/content', ...studioModule],
 
+  // Configure @nuxt/content for production/Netlify builds
+  content: {
+    // Disable local database for production builds to avoid better-sqlite3 native module issues
+    database: process.env.NETLIFY || process.env.NODE_ENV === 'production' ? false : {},
+  },
+
   css: ['#layers/content/app/assets/css/main.css'],
 
   compatibilityDate: '2026-01-24',

@@ -1,8 +1,9 @@
 [build]
-  command = "cd apps/playground && pnpm build"
+  command = "cd apps/playground && NETLIFY=true pnpm build"
   publish = "apps/playground/.output/public"
 
 [build.environment]
   NODE_VERSION = "20"
   PNPM_HOME = ".pnpm"
   PNPM_FLAGS = "--shamefully-hoist"
+  NITRO_PRERENDER = "true"
