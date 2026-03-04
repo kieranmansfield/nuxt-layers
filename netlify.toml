@@ -7,3 +7,4 @@
   PNPM_HOME = ".pnpm"
   PNPM_FLAGS = "--shamefully-hoist"
   NITRO_PRERENDER = "true"
+  NPM_CONFIG_BUILD_FROM_SOURCE = "true"
