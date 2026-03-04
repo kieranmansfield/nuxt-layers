@@ -4,3 +4,5 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  PNPM_HOME = ".pnpm"
+  PNPM_FLAGS = "--shamefully-hoist"
