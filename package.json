@@ -51,7 +51,7 @@
     "layer:rebuild:layout": "pnpm build:layout && pnpm layer:generate:layout && pnpm layer:layout",
     "layer:rebuild:motion": "pnpm build:motion && pnpm layer:generate:motion && pnpm layer:motion",
     "browserlist": "npx update-browserslist-db@latest",
-    "deploy:netlify": "pnpm -F playground build"
+    "deploy": "pnpm -F playground build"
   },
   "keywords": [],
   "author": "Kieran Mansfield",
