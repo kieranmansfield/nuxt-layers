@@ -11,7 +11,8 @@
  */
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useAppConfig()
-  const isDev = import.meta.dev
+  // const isDev = import.meta.dev
+  const isDev = process.env.NODE_ENV === 'development' ? true : false
 
   // ============================================================
   // 1. Log initialization (dev only)

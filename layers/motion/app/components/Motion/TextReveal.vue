@@ -37,9 +37,24 @@ const animBinding = computed(() => ({
 </script>
 
 <template>
-  <span v-if="type === 'chars'" v-gsap.whenVisible.once.splitText.chars.from="animBinding" class="motion-text-reveal">{{ text }}</span>
-  <span v-else-if="type === 'words'" v-gsap.whenVisible.once.splitText.words.from="animBinding" class="motion-text-reveal">{{ text }}</span>
-  <span v-else v-gsap.whenVisible.once.splitText.lines.from="animBinding" class="motion-text-reveal">{{ text }}</span>
+  <span
+    v-if="type === 'chars'"
+    v-gsap.whenVisible.once.splitText.chars.from="animBinding"
+    class="motion-text-reveal"
+    >{{ text }}</span
+  >
+  <span
+    v-else-if="type === 'words'"
+    v-gsap.whenVisible.once.splitText.words.from="animBinding"
+    class="motion-text-reveal"
+    >{{ text }}</span
+  >
+  <span
+    v-else
+    v-gsap.whenVisible.once.splitText.lines.from="animBinding"
+    class="motion-text-reveal"
+    >{{ text }}</span
+  >
 </template>
 
 <style scoped>

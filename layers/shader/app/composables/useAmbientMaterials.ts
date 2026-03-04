@@ -277,6 +277,156 @@ export function createGradientMeshColorNode(uniforms: AmbientUniforms): any {
   })()
 }
 
+export interface ThemeColorUniforms {
+  color1: any   // TSL uniform node wrapping a THREE.Color
+  color2: any
+  color3: any
+  color4: any
+}
+
+export function createThemeGradientColorNode(
+  uniforms: AmbientUniforms,
+  colors: ThemeColorUniforms,
+): any {
+  const { speed: uSpeed, intensity: uIntensity,
+          mouseX: uMouseX, mouseY: uMouseY, mouseStrength: uMouseStrength } = uniforms
+
+  return Fn(() => {
+    const t = mul(time, uSpeed, 0.2)
+    const uvCoord = uv()
+
+    // Gentle UV shift for p2-p4 area
+    const mouseOffset = vec2(
+      mul(sub(uMouseX, 0.5), uMouseStrength, 0.05),
+      mul(sub(uMouseY, 0.5), uMouseStrength, 0.05),
+    )
+    const adjustedUV = add(uvCoord, mouseOffset)
+
+    // p1 attracted toward mouse cursor
+    const p1Base = vec2(add(0.2, mul(sin(mul(t, 0.5)), 0.15)), add(0.3, mul(sin(add(mul(t, 0.4), 1.57)), 0.15)))
+    const mousePos = vec2(uMouseX, uMouseY)
+    const p1 = mix(p1Base, mousePos, mul(uMouseStrength, 0.5))
+
+    const p2 = vec2(add(0.8, mul(sin(add(mul(t, 0.6), 1.57)), 0.1)), add(0.2, mul(sin(mul(t, 0.5)), 0.1)))
+    const p3 = vec2(add(0.3, mul(sin(mul(t, 0.7)), 0.15)),           add(0.8, mul(sin(add(mul(t, 0.3), 1.57)), 0.1)))
+    const p4 = vec2(add(0.7, mul(sin(add(mul(t, 0.4), 1.57)), 0.15)), add(0.7, mul(sin(mul(t, 0.6)), 0.15)))
+
+    const nm1 = simplexNoise2D(add(mul(adjustedUV, 3.0), mul(t, 0.3))).mul(0.5).add(0.5)
+    const nm2 = simplexNoise2D(add(mul(adjustedUV, 4.5), mul(t, -0.2), 8.0)).mul(0.5).add(0.5)
+    const nm3 = fbm2D(add(adjustedUV, mul(t, 0.1)), { octaves: 3, frequency: 2.0 }).mul(0.5).add(0.5)
+    const nm4 = simplexNoise2D(add(mul(adjustedUV, 7.0), mul(t, 0.5))).mul(0.5).add(0.5)
+
+    const d1 = mul(sub(1.0, smoothstep(0.0, 0.7, length(sub(adjustedUV, p1)))), add(0.7, mul(nm1, 0.3)))
+    const d2 = mul(sub(1.0, smoothstep(0.0, 0.7, length(sub(adjustedUV, p2)))), add(0.7, mul(nm2, 0.3)))
+    const d3 = mul(sub(1.0, smoothstep(0.0, 0.7, length(sub(adjustedUV, p3)))), add(0.7, mul(nm3, 0.3)))
+    const d4 = mul(sub(1.0, smoothstep(0.0, 0.7, length(sub(adjustedUV, p4)))), add(0.7, mul(nm4, 0.3)))
+
+    let colorNode = mul(colors.color1, d1)
+    colorNode = add(colorNode, mul(colors.color2, d2))
+    colorNode = add(colorNode, mul(colors.color3, d3))
+    colorNode = add(colorNode, mul(colors.color4, d4))
+
+    // Normalise first, then vignette, then intensity
+    const totalWeight = add(d1, d2, d3, d4, 0.01)
+    colorNode = colorNode.div(totalWeight)
+
+    const dist = length(sub(uvCoord, 0.5))
+    colorNode = mul(colorNode, sub(1.0, mul(dist, 0.25)))
+    colorNode = mul(colorNode, uIntensity)
+
+    return colorNode
+  })()
+}
+
+export function createThemeFlowColorNode(
+  uniforms: AmbientUniforms,
+  colors: ThemeColorUniforms,
+): any {
+  const { speed: uSpeed, intensity: uIntensity, mouseX: uMouseX, mouseY: uMouseY, mouseStrength: uMouseStrength } = uniforms
+
+  return Fn(() => {
+    const t = mul(time, uSpeed, 0.15)
+    const uvCoord = uv()
+
+    const mouseOffset = vec2(
+      mul(sub(uMouseX, 0.5), uMouseStrength, 0.3),
+      mul(sub(uMouseY, 0.5), uMouseStrength, 0.3),
+    )
+
+    const warpCoarse1 = simplexNoise2D(add(mul(uvCoord, 1.5), t))
+    const warpCoarse2 = simplexNoise2D(add(mul(uvCoord, 1.5), mul(t, -0.5), 7.0))
+    const warpedUV1 = add(uvCoord, mul(vec2(warpCoarse1, warpCoarse2), 0.25), mouseOffset)
+
+    const warpMed1 = simplexNoise2D(add(mul(warpedUV1, 3.0), mul(t, 0.7)))
+    const warpMed2 = simplexNoise2D(add(mul(warpedUV1, 3.0), mul(t, -0.3), 15.0))
+    const warpedUV2 = add(warpedUV1, mul(vec2(warpMed1, warpMed2), 0.12))
+
+    const warpFine1 = simplexNoise2D(add(mul(warpedUV2, 5.0), mul(t, 1.2)))
+    const warpFine2 = simplexNoise2D(add(mul(warpedUV2, 5.0), mul(t, -0.8), 25.0))
+    const warpedUV = add(warpedUV2, mul(vec2(warpFine1, warpFine2), 0.05))
+
+    const n1 = fbm2D(warpedUV, { octaves: 5, frequency: 2.0 }).mul(0.5).add(0.5)
+    const n2 = ridgedFbm2d(warpedUV, { octaves: 4, frequency: 1.5 })
+
+    let colorNode = mix(colors.color1, colors.color2, n1)
+    colorNode = mix(colorNode, colors.color3, mul(n2, 0.5))
+
+    const iridescence = mix(colors.color3, colors.color4, add(mul(n1, 0.6), mul(n2, 0.4)))
+    colorNode = mix(colorNode, iridescence, 0.3)
+    colorNode = mix(colorNode, colors.color4, mul(smoothstep(0.6, 0.9, n2), 0.25))
+
+    const brightness = add(0.85, mul(0.15, sin(add(mul(n1, 6.28), t))))
+    colorNode = mul(colorNode, brightness, uIntensity)
+
+    const dist = length(sub(uvCoord, 0.5))
+    colorNode = mul(colorNode, sub(1.0, mul(dist, 0.3)))
+
+    return colorNode
+  })()
+}
+
+export function createThemeAuroraColorNode(
+  uniforms: AmbientUniforms,
+  colors: ThemeColorUniforms,
+): any {
+  const { speed: uSpeed, intensity: uIntensity, mouseX: uMouseX, mouseY: uMouseY, mouseStrength: uMouseStrength } = uniforms
+
+  return Fn(() => {
+    const t = mul(time, uSpeed, 0.2)
+    const uvCoord = uv()
+
+    const mouseOffset = vec2(
+      mul(sub(uMouseX, 0.5), uMouseStrength),
+      mul(sub(uMouseY, 0.5), uMouseStrength),
+    )
+
+    const curtainCoord = add(
+      vec2(mul(uvCoord.x, 3.0), mul(uvCoord.y, 0.5)),
+      vec2(t, mul(t, 0.3)),
+      mouseOffset,
+    )
+
+    const curtain1 = simplexNoise2D(curtainCoord).mul(0.5).add(0.5)
+    const curtain2 = simplexNoise2D(add(mul(curtainCoord, 1.5), vec2(mul(t, -0.2), 5.0))).mul(0.5).add(0.5)
+    const curtain3 = simplexNoise2D(add(mul(curtainCoord, 0.7), vec2(mul(t, 0.4), 12.0))).mul(0.5).add(0.5)
+    const detail = fbm2D(curtainCoord, { octaves: 4, frequency: 2.0 }).mul(0.5).add(0.5)
+    const curtain = mul(add(mul(curtain1, 0.4), mul(curtain2, 0.25), mul(curtain3, 0.2), mul(detail, 0.15)), 1.0)
+
+    const fade = mul(pow(sub(1.0, uvCoord.y), 1.2), smoothstep(0.0, 0.3, uvCoord.y))
+    const aurora = mul(smoothstep(0.2, 0.8, mul(curtain, fade)), uIntensity)
+
+    const shimmer = simplexNoise2D(add(mul(curtainCoord, 8.0), mul(t, 3.0))).mul(0.5).add(0.5)
+
+    const colorDriver = add(mul(curtain2, 0.6), mul(curtain3, 0.4))
+    const auroraColor = mix(colors.color1, colors.color2, colorDriver)
+
+    const skyColor = mul(colors.color1, 0.04)
+    const shimmerColor = mul(colors.color3, mul(shimmer, mul(aurora, 0.15)))
+
+    return add(mix(skyColor, auroraColor, aurora), shimmerColor)
+  })()
+}
+
 export function createOceanColorNode(uniforms: AmbientUniforms): any {
   const { speed: uSpeed, intensity: uIntensity, mouseX: uMouseX, mouseY: uMouseY, mouseStrength: uMouseStrength } = uniforms
 

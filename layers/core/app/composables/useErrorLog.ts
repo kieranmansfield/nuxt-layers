@@ -75,7 +75,7 @@ export function useErrorLog() {
     }
 
     // Console logging (development only by default)
-    if (config.value.logToConsole && import.meta.dev) {
+    if (config.value.logToConsole && import.meta.dev && process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-console
       console.group('🔴 Error Logged')
       // eslint-disable-next-line no-console
@@ -100,7 +100,9 @@ export function useErrorLog() {
 
     if (!externalUrl) {
       // eslint-disable-next-line no-console
-      console.warn('Error logging enabled but no externalUrl configured')
+      process.env.NODE_ENV === 'development'
+        ? console.warn('Error logging enabled but no externalUrl configured')
+        : ''
       return
     }
 
@@ -124,7 +126,9 @@ export function useErrorLog() {
       // Don't let logging errors crash the app
       if (import.meta.dev) {
         // eslint-disable-next-line no-console
-        console.error('Failed to send error to external service:', loggingError)
+        process.env.NODE_ENV === 'development'
+          ? console.error('Failed to send error to external service:', loggingError)
+          : ''
       }
     }
   }
@@ -135,7 +139,7 @@ export function useErrorLog() {
   const logWarning = (message: string, context?: ErrorContext) => {
     if (config.value.logToConsole && import.meta.dev) {
       // eslint-disable-next-line no-console
-      console.warn('⚠️  Warning:', message, context)
+      process.env.NODE_ENV === 'development' ? console.warn('⚠️  Warning:', message, context) : ''
     }
   }
 
@@ -145,7 +149,7 @@ export function useErrorLog() {
   const logInfo = (message: string, data?: unknown) => {
     if (config.value.logToConsole && import.meta.dev) {
       // eslint-disable-next-line no-console
-      console.log('ℹ️  Info:', message, data)
+      process.env.NODE_ENV === 'development' ? console.log('ℹ️  Info:', message, data) : ''
     }
   }
 

@@ -118,6 +118,12 @@ async function init() {
   planeMesh = new Mesh(geometry, props.material ?? new MeshBasicMaterial({ color: 0x000000 }))
   scene.add(planeMesh)
 
+  // Pre-compile the shader pipeline asynchronously before starting the render loop.
+  // Without this, the first render() call uses device.createRenderPipeline() which
+  // blocks the main thread for 1-5s on first visit (cold WebGPU pipeline cache).
+  // compileAsync() uses device.createRenderPipelineAsync() instead, which is non-blocking.
+  await renderer.compileAsync(scene, camera)
+
   initialized = true
   emit('ready', renderer)
   animate()

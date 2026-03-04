@@ -1,7 +1,7 @@
 // composables/useScrollGuard.ts
 
-import { debounce } from '#layers/core/app/utils/helpers'
 import type { ScrollGuardConfig } from '#layers/core/app/types/scroll-guard'
+import { debounce } from '#layers/core/app/utils/helpers'
 
 /**
  * Original inline styles stored per element so we can restore them on disable
@@ -198,7 +198,9 @@ export function useScrollGuard() {
 
     // Resolve config: explicit arg → app.config → defaults
     const appConfig = useAppConfig()
-    const configFromApp = (appConfig.coreLayer as { scrollGuard?: Partial<ScrollGuardConfig> } | undefined)?.scrollGuard
+    const configFromApp = (
+      appConfig.coreLayer as { scrollGuard?: Partial<ScrollGuardConfig> } | undefined
+    )?.scrollGuard
 
     opts = {
       enabled: true,

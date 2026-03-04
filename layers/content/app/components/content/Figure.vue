@@ -17,13 +17,7 @@ const {
 
 <template>
   <figure class="my-6">
-    <img
-      :src="src"
-      :alt="alt"
-      :width="width"
-      :height="height"
-      class="w-full rounded-lg"
-    />
+    <img :src="src" :alt="alt" :width="width" :height="height" class="w-full rounded-lg" />
     <figcaption v-if="caption" class="mt-2 text-center text-sm text-muted italic">
       {{ caption }}
     </figcaption>

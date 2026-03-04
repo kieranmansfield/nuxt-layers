@@ -40,10 +40,7 @@ const sizeClass: Record<GridContainerSize, string> = {
 </script>
 
 <template>
-  <component
-    :is="tag"
-    :class="sizeClass[size]"
-  >
+  <component :is="tag" :class="sizeClass[size]">
     <slot />
   </component>
 </template>

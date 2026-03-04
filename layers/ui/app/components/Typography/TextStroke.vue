@@ -35,7 +35,9 @@ const effectiveStrokeWidth = computed(() =>
     v-bind="$attrs"
   >
     <!-- Sizer: transparent text for natural sizing + selectable -->
-    <span class="text-stroke-sizer text-transparent whitespace-nowrap" aria-hidden="true">{{ text }}</span>
+    <span class="text-stroke-sizer text-transparent whitespace-nowrap" aria-hidden="true">{{
+      text
+    }}</span>
 
     <!-- Visual SVG stroke -->
     <svg
@@ -50,18 +52,16 @@ const effectiveStrokeWidth = computed(() =>
       <defs v-if="fill === 'none'">
         <mask :id="`stroke-mask-${id}`">
           <rect x="-9999" y="-9999" width="99999" height="99999" fill="white" />
-          <text
-            x="0" y="0"
-            dominant-baseline="text-before-edge"
-            fill="black"
-            style="font: inherit"
-          >{{ text }}</text>
+          <text x="0" y="0" dominant-baseline="text-before-edge" fill="black" style="font: inherit">
+            {{ text }}
+          </text>
         </mask>
       </defs>
 
       <text
         v-if="fill === 'none'"
-        x="0" y="0"
+        x="0"
+        y="0"
         dominant-baseline="text-before-edge"
         fill="none"
         :stroke="strokeColor"
@@ -70,12 +70,15 @@ const effectiveStrokeWidth = computed(() =>
         vector-effect="non-scaling-stroke"
         :mask="`url(#stroke-mask-${id})`"
         style="font: inherit"
-      >{{ text }}</text>
+      >
+        {{ text }}
+      </text>
 
       <!-- Fill+stroke mode: paint-order renders stroke behind fill -->
       <text
         v-else
-        x="0" y="0"
+        x="0"
+        y="0"
         dominant-baseline="text-before-edge"
         :fill="fill"
         :stroke="strokeColor"
@@ -84,24 +87,23 @@ const effectiveStrokeWidth = computed(() =>
         vector-effect="non-scaling-stroke"
         paint-order="stroke"
         style="font: inherit"
-      >{{ text }}</text>
+      >
+        {{ text }}
+      </text>
     </svg>
 
     <!-- Accessible label for screen readers -->
-    <span
-      :id="`stroke-text-${id}`"
-      class="sr-only"
-    >{{ text }}</span>
+    <span :id="`stroke-text-${id}`" class="sr-only">{{ text }}</span>
   </component>
 </template>
 
 <style scoped>
-
 @media (forced-colors: active) {
   .text-stroke-sizer {
     visibility: visible;
     color: CanvasText;
   }
+
   .text-stroke-svg {
     display: none;
   }

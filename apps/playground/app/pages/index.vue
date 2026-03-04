@@ -1,9 +1,4 @@
 <script setup lang="ts">
-useSeoMeta({
-  title: 'Nuxt Layers Playground',
-  description: 'Testing the layers architecture',
-})
-
 const layers = [
   {
     name: 'Core',
@@ -81,6 +76,27 @@ const layers = [
       'VueUse Motion',
       'Transition Components',
       'Staggered Animations',
+      'Scrollytelling',
+    ],
+    borderColor: 'border-emerald-500/30',
+    bgColor: 'bg-emerald-500/5',
+    iconBg: 'bg-emerald-500/10',
+    iconColor: 'text-emerald-500',
+    buttonClass: 'bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20',
+  },
+  {
+    name: 'Scrollytelling',
+    description: 'Scroll-driven narratives: scenes, steps, pinned sections, horizontal tracks',
+    loaded: true,
+    icon: 'i-lucide-book-open-text',
+    to: '/scrollytelling',
+    features: [
+      'ScrollScene',
+      'ScrollStep',
+      'PinnedSection',
+      'HorizontalScroll',
+      'useSectionProgress',
+      'useScrollSteps',
     ],
     borderColor: 'border-emerald-500/30',
     bgColor: 'bg-emerald-500/5',
@@ -101,6 +117,25 @@ const layers = [
       'Fresnel Effects',
       'Post-Processing',
       'WebGPU Support',
+    ],
+    borderColor: 'border-violet-500/30',
+    bgColor: 'bg-violet-500/5',
+    iconBg: 'bg-violet-500/10',
+    iconColor: 'text-violet-500',
+    buttonClass: 'bg-violet-500/10 text-violet-500 hover:bg-violet-500/20',
+  },
+  {
+    name: 'Shader Gradient',
+    description: 'Animated 4-point gradient mesh driven by live theme colours',
+    loaded: true,
+    icon: 'i-lucide-wand-sparkles',
+    to: '/shader-gradient',
+    features: [
+      'Theme-Driven Colors',
+      'Smooth Crossfade',
+      'Mouse Interaction',
+      'Speed Control',
+      'Intensity Control',
     ],
     borderColor: 'border-violet-500/30',
     bgColor: 'bg-violet-500/5',
@@ -155,107 +190,111 @@ const layers = [
     buttonClass: 'bg-red-300/10 text-red-300 hover:bg-red-300/20',
   },
 ]
+
+definePageMeta({ layout: 'grid' })
 </script>
 
 <!--    -->
 
 <template>
-  <div class="min-h-screen p-8">
-    <UContainer>
-      <div class="space-y-12">
-        <!-- Header -->
-        <div class="text-center space-y-4">
-          <h1 class="text-4xl sm:text-5xl font-bold text-highlighted">Nuxt Layers Playground</h1>
-          <p class="text-lg text-muted max-w-2xl mx-auto">
-            Explore the features of each layer in this monorepo architecture demo
-          </p>
-        </div>
-
-        <!-- Layer Cards -->
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <div
-            v-for="layer in layers"
-            :key="layer.name"
-            class="rounded-xl border-2 p-5"
-            :class="[layer.borderColor, layer.bgColor]"
-          >
-            <div class="flex flex-col h-full">
-              <!-- Header -->
-              <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center gap-3">
-                  <div
-                    class="w-10 h-10 rounded-lg flex items-center justify-center"
-                    :class="[layer.iconBg]"
-                  >
-                    <UIcon :name="layer.icon" class="text-xl" :class="[layer.iconColor]" />
-                  </div>
-                  <div>
-                    <h2 class="font-semibold text-lg text-highlighted">
-                      {{ layer.name }}
-                    </h2>
-                    <UBadge
-                      :color="layer.loaded ? 'success' : 'neutral'"
-                      variant="subtle"
-                      size="xs"
+  <LayoutPageContainer
+    title="Nuxt Layers Playground"
+    description="Explore the features of each layer in this monorepo architecture demo"
+    :show-header="false"
+  >
+    <LayoutSection>
+      <LayoutGridItem preset="centered">
+        <div class="space-y-8 pb-8">
+          <LayoutPageHeader
+            title="Nuxt Layers Playground"
+            description="Explore the features of each layer in this monorepo architecture demo"
+          />
+          <!-- Layer Cards -->
+          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div
+              v-for="layer in layers"
+              :key="layer.name"
+              class="rounded-xl border-2 p-5"
+              :class="[layer.borderColor, layer.bgColor]"
+            >
+              <div class="flex flex-col h-full">
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center gap-3">
+                    <div
+                      class="w-10 h-10 rounded-lg flex items-center justify-center"
+                      :class="[layer.iconBg]"
                     >
-                      {{ layer.loaded ? 'Loaded' : 'Not configured' }}
-                    </UBadge>
+                      <UIcon :name="layer.icon" class="text-xl" :class="[layer.iconColor]" />
+                    </div>
+                    <div>
+                      <h2 class="font-semibold text-lg text-highlighted">
+                        {{ layer.name }}
+                      </h2>
+                      <UBadge
+                        :color="layer.loaded ? 'success' : 'neutral'"
+                        variant="subtle"
+                        size="xs"
+                      >
+                        {{ layer.loaded ? 'Loaded' : 'Not configured' }}
+                      </UBadge>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Description -->
-              <p class="text-sm text-muted mb-4">
-                {{ layer.description }}
-              </p>
+                <!-- Description -->
+                <p class="text-sm text-muted mb-4">
+                  {{ layer.description }}
+                </p>
 
-              <!-- Features -->
-              <div class="flex flex-wrap gap-1.5 mb-4 grow">
-                <UBadge
-                  v-for="feature in layer.features"
-                  :key="feature"
-                  variant="subtle"
-                  color="neutral"
-                  size="xs"
-                >
-                  {{ feature }}
-                </UBadge>
-              </div>
+                <!-- Features -->
+                <div class="flex flex-wrap gap-1.5 mb-4 grow">
+                  <UBadge
+                    v-for="feature in layer.features"
+                    :key="feature"
+                    variant="subtle"
+                    color="neutral"
+                    size="xs"
+                  >
+                    {{ feature }}
+                  </UBadge>
+                </div>
 
-              <!-- Action - always at bottom -->
-              <div class="mt-auto pt-4">
-                <NuxtLink
-                  v-if="layer.to"
-                  :to="layer.to"
-                  class="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg font-medium transition-colors"
-                  :class="[layer.buttonClass]"
-                >
-                  Explore {{ layer.name }}
-                  <UIcon name="i-lucide-arrow-right" class="text-sm" />
-                </NuxtLink>
-                <UButton v-else variant="soft" color="neutral" block disabled>
-                  Coming Soon
-                </UButton>
+                <!-- Action - always at bottom -->
+                <div class="mt-auto pt-4">
+                  <NuxtLink
+                    v-if="layer.to"
+                    :to="layer.to"
+                    class="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg font-medium transition-colors"
+                    :class="[layer.buttonClass]"
+                  >
+                    Explore {{ layer.name }}
+                    <UIcon name="i-lucide-arrow-right" class="text-sm" />
+                  </NuxtLink>
+                  <UButton v-else variant="soft" color="neutral" block disabled>
+                    Coming Soon
+                  </UButton>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Quick Links -->
-        <div class="flex flex-wrap gap-4 justify-center pt-4">
-          <UButton to="/diagnostics" variant="outline" icon="i-lucide-activity">
-            System Diagnostics
-          </UButton>
-          <UButton
-            href="https://github.com/your-org/nuxt-layers"
-            target="_blank"
-            variant="outline"
-            icon="i-lucide-github"
-          >
-            View Source
-          </UButton>
+          <!-- Quick Links -->
+          <div class="flex flex-wrap gap-4 justify-center pt-4">
+            <UButton to="/diagnostics" variant="outline" icon="i-lucide-activity">
+              System Diagnostics
+            </UButton>
+            <UButton
+              href="https://github.com/your-org/nuxt-layers"
+              target="_blank"
+              variant="outline"
+              icon="i-lucide-github"
+            >
+              View Source
+            </UButton>
+          </div>
         </div>
-      </div>
-    </UContainer>
-  </div>
+      </LayoutGridItem>
+    </LayoutSection>
+  </LayoutPageContainer>
 </template>

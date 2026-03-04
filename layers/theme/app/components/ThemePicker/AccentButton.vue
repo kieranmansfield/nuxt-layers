@@ -40,8 +40,8 @@ const bgStyle = computed(() => ({
     class="size-8 rounded-full ring-1 ring-offset-2 transition-shadow duration-200"
     :class="[
       active
-        ? 'ring-2 ring-primary ring-offset-[var(--ui-bg)] shadow-lg'
-        : 'ring-transparent hover:ring-muted ring-offset-[var(--ui-bg)] hover:shadow-md',
+        ? 'ring-2 ring-primary ring-offset-bg shadow-lg'
+        : 'ring-transparent hover:ring-muted ring-offset-bg hover:shadow-md',
     ]"
     :style="bgStyle"
     :aria-label="`Set accent color to ${color}`"

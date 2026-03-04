@@ -27,10 +27,7 @@ const { mode } = useGridConfig()
 </script>
 
 <template>
-  <component
-    :is="tag"
-    :class="mode !== 'disabled' ? 'mastmain' : undefined"
-  >
+  <component :is="tag" :class="mode !== 'disabled' ? 'mastmain' : undefined">
     <slot />
   </component>
 </template>

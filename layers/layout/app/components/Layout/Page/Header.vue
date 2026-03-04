@@ -18,18 +18,27 @@
 interface Props {
   title: string
   description?: string
+  back?: string
 }
 
 defineProps<Props>()
 </script>
 
 <template>
-  <!-- <div class="prose-rhythm text-center">
-    <h1 class="text-5xl font-bold">{{ title }}</h1>
-    <p v-if="description" class="text-xl text-gray-600 dark:text-gray-400">
-      {{ description }}
-    </p>
-  </div> -->
+  <div :class="back ? 'flex items-center gap-4 py-6' : 'py-10 text-center'">
+    <!-- Sub-page: back button + title -->
+    <template v-if="back">
+      <UButton :to="back" variant="ghost" icon="i-lucide-arrow-left" />
+      <div>
+        <h1 class="text-3xl font-bold text-highlighted">{{ title }}</h1>
+        <p v-if="description" class="text-muted">{{ description }}</p>
+      </div>
+    </template>
 
-  <UPageHeader :title :description />
+    <!-- Centered page header (homepage, section intros) -->
+    <template v-else>
+      <h1 class="text-4xl font-bold text-highlighted">{{ title }}</h1>
+      <p v-if="description" class="mt-3 text-lg text-muted">{{ description }}</p>
+    </template>
+  </div>
 </template>

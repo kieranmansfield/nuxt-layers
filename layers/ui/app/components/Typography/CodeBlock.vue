@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-defineOptions({ inheritAttrs: false })
 import { useColor } from '../../composables/color'
 import type { UiColors } from '../../types/colors'
 import type { FontSize } from '../../types/typography'
+
+defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(
   defineProps<{

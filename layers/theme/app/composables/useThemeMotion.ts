@@ -16,9 +16,13 @@ export const useThemeMotion = createSharedComposable(() => {
   }
 
   if (import.meta.client) {
-    watch(effectiveReducedMotion, (reduced) => {
-      document.documentElement.setAttribute('data-theme-motion', reduced ? 'reduced' : 'full')
-    }, { immediate: true })
+    watch(
+      effectiveReducedMotion,
+      (reduced) => {
+        document.documentElement.setAttribute('data-theme-motion', reduced ? 'reduced' : 'full')
+      },
+      { immediate: true }
+    )
   }
 
   return {

@@ -44,6 +44,7 @@ interface Props {
   showHeader?: boolean
   headerPreset?: string
   layout?: 'grid' | 'upage'
+  back?: string
 }
 
 const {
@@ -52,6 +53,7 @@ const {
   showHeader = true,
   headerPreset = 'centered',
   layout = 'grid',
+  back,
 } = defineProps<Props>()
 
 // Set page metadata for SEO and browser tab
@@ -76,7 +78,7 @@ provide('pageTitle', title)
     <!-- Optional visible header -->
     <LayoutSection v-if="showHeader">
       <LayoutGridItem :preset="headerPreset">
-        <LayoutPageHeader :title :description />
+        <LayoutPageHeader :title :description :back />
       </LayoutGridItem>
     </LayoutSection>
 

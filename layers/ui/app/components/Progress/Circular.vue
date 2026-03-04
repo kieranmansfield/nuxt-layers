@@ -18,9 +18,7 @@ const {
 const percentage = computed(() => Math.round(progress * 100))
 const radius = computed(() => (size - strokeWidth) / 2)
 const circumference = computed(() => 2 * Math.PI * radius.value)
-const strokeDasharray = computed(
-  () => `${progress * circumference.value} ${circumference.value}`
-)
+const strokeDasharray = computed(() => `${progress * circumference.value} ${circumference.value}`)
 
 const gradientId = `progress-circular-gradient-${Math.random().toString(36).slice(2, 9)}`
 </script>

@@ -1,4 +1,8 @@
-import { createSharedComposable, useLocalStorage, usePreferredReducedTransparency } from '@vueuse/core'
+import {
+  createSharedComposable,
+  useLocalStorage,
+  usePreferredReducedTransparency,
+} from '@vueuse/core'
 import type { PreferenceOverride } from '#layers/theme/app/types/theme'
 
 export const useThemeTransparency = createSharedComposable(() => {
@@ -16,9 +20,16 @@ export const useThemeTransparency = createSharedComposable(() => {
   }
 
   if (import.meta.client) {
-    watch(effectiveReducedTransparency, (reduced) => {
-      document.documentElement.setAttribute('data-theme-transparency', reduced ? 'reduced' : 'full')
-    }, { immediate: true })
+    watch(
+      effectiveReducedTransparency,
+      (reduced) => {
+        document.documentElement.setAttribute(
+          'data-theme-transparency',
+          reduced ? 'reduced' : 'full'
+        )
+      },
+      { immediate: true }
+    )
   }
 
   return {

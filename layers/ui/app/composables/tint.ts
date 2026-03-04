@@ -1,4 +1,4 @@
-import type { CSSProperties, ComputedRef } from 'vue'
+import type { ComputedRef, CSSProperties } from 'vue'
 import { TINT_LEVEL_OPACITY } from '../types/tint'
 import type { TintConfig } from '../types/tint'
 

@@ -19,10 +19,7 @@ function contrastColor(hex: string): string {
   <div v-if="colors.length" class="space-y-6">
     <h3 class="text-2xl font-semibold tracking-tight text-highlighted">Palette</h3>
     <LinksGroup class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-      <div
-        v-for="color in colors"
-        :key="color.value"
-      >
+      <div v-for="color in colors" :key="color.value">
         <div
           class="aspect-2/3 flex flex-col justify-between p-4 rounded-lg border border-default/20 shadow-lg cursor-default"
           :style="{ backgroundColor: color.value, color: contrastColor(color.value) }"

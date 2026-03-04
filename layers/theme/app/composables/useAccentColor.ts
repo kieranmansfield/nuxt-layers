@@ -19,9 +19,13 @@ export const useAccentColor = createSharedComposable(() => {
   }
 
   if (import.meta.client) {
-    watch(activeAccent, (color) => {
-      document.documentElement.setAttribute('data-theme-colour', color)
-    }, { immediate: true })
+    watch(
+      activeAccent,
+      (color) => {
+        document.documentElement.setAttribute('data-theme-colour', color)
+      },
+      { immediate: true }
+    )
   }
 
   return {

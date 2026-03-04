@@ -21,13 +21,5 @@ const modelValue = computed(() => (progress != null ? progress * 100 : undefined
 </script>
 
 <template>
-  <UProgress
-    :model-value="modelValue"
-    :color
-    :size
-    :orientation
-    :status
-    :animation
-    :inverted
-  />
+  <UProgress :model-value="modelValue" :color :size :orientation :status :animation :inverted />
 </template>

@@ -16,9 +16,13 @@ export const useThemeContrast = createSharedComposable(() => {
   }
 
   if (import.meta.client) {
-    watch(effectiveHighContrast, (high) => {
-      document.documentElement.setAttribute('data-theme-contrast', high ? 'high' : 'standard')
-    }, { immediate: true })
+    watch(
+      effectiveHighContrast,
+      (high) => {
+        document.documentElement.setAttribute('data-theme-contrast', high ? 'high' : 'standard')
+      },
+      { immediate: true }
+    )
   }
 
   return {

@@ -32,11 +32,13 @@ async function onSubmit(event: FormSubmitEvent<FormState>) {
     await $fetch('/api/contact', { method: 'POST', body: event.data })
     toast.add({ title: 'Message sent!', description: 'Thanks for reaching out.', color: 'success' })
     emit('submit', event.data)
-  }
-  catch {
-    toast.add({ title: 'Something went wrong', description: 'Please try again later.', color: 'error' })
-  }
-  finally {
+  } catch {
+    toast.add({
+      title: 'Something went wrong',
+      description: 'Please try again later.',
+      color: 'error',
+    })
+  } finally {
     isLoading.value = false
   }
 }
@@ -80,8 +82,6 @@ async function onError() {
       class="w-full"
     />
 
-    <UButton type="submit" size="xl" :loading="isLoading" :disabled="isLoading">
-      Submit
-    </UButton>
+    <UButton type="submit" size="xl" :loading="isLoading" :disabled="isLoading"> Submit </UButton>
   </UForm>
 </template>

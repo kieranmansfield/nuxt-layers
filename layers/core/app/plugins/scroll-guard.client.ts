@@ -41,7 +41,10 @@ export default defineNuxtPlugin(() => {
     console.log('[Scroll Guard] Initialized', {
       strict: coreLayer?.scrollGuard?.strict ?? true,
       debug: coreLayer?.scrollGuard?.debug ?? false,
-      excludeSelectors: coreLayer?.scrollGuard?.excludeSelectors ?? ['.carousel', '.overflow-intent'],
+      excludeSelectors: coreLayer?.scrollGuard?.excludeSelectors ?? [
+        '.carousel',
+        '.overflow-intent',
+      ],
     })
 
     // Log clamped count after initial scan settles

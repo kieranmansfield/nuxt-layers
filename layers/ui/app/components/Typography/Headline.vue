@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-defineOptions({ inheritAttrs: false })
 import { useColor } from '../../composables/color'
 import { useTypography } from '../../composables/typography'
 import type { UiColors } from '../../types/colors'
@@ -13,6 +12,8 @@ import type {
   TextAlign,
   TextTransform,
 } from '../../types/typography'
+
+defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(
   defineProps<{

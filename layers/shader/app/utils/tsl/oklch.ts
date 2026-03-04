@@ -23,15 +23,21 @@ export function oklchToLinearSRGB(l: TSLNode, c: TSLNode, h: TSLNode): TSLNode {
   // OKLab -> linear sRGB (approximate matrix transform)
   const l_ = l.add(mul(a, float(0.3963377774))).add(mul(b, float(0.2158037573)))
   const m_ = l.sub(mul(a, float(0.1055613458))).sub(mul(b, float(0.0638541728)))
-  const s_ = l.sub(mul(a, float(0.0894841775))).sub(mul(b, float(1.2914855480)))
+  const s_ = l.sub(mul(a, float(0.0894841775))).sub(mul(b, float(1.291485548)))
 
   const lCubed = pow(l_, 3)
   const mCubed = pow(m_, 3)
   const sCubed = pow(s_, 3)
 
-  const r = mul(lCubed, float(4.0767416621)).sub(mul(mCubed, float(3.3077115913))).add(mul(sCubed, float(0.2309699292)))
-  const g = mul(lCubed, float(-1.2684380046)).add(mul(mCubed, float(2.6097574011))).sub(mul(sCubed, float(0.3413193965)))
-  const bOut = mul(lCubed, float(-0.0041960863)).sub(mul(mCubed, float(0.7034186147))).add(mul(sCubed, float(1.7076147010)))
+  const r = mul(lCubed, float(4.0767416621))
+    .sub(mul(mCubed, float(3.3077115913)))
+    .add(mul(sCubed, float(0.2309699292)))
+  const g = mul(lCubed, float(-1.2684380046))
+    .add(mul(mCubed, float(2.6097574011)))
+    .sub(mul(sCubed, float(0.3413193965)))
+  const bOut = mul(lCubed, float(-0.0041960863))
+    .sub(mul(mCubed, float(0.7034186147)))
+    .add(mul(sCubed, float(1.707614701)))
 
   return vec3(r, g, bOut)
 }
@@ -70,7 +76,7 @@ export function oklchToColor(l: number, c: number, h: number): Color {
   // OKLab to linear sRGB (approximate)
   const l_ = l + a * 0.3963377774 + b * 0.2158037573
   const m_ = l - a * 0.1055613458 - b * 0.0638541728
-  const s_ = l - a * 0.0894841775 - b * 1.2914855480
+  const s_ = l - a * 0.0894841775 - b * 1.291485548
 
   const lCubed = l_ * l_ * l_
   const mCubed = m_ * m_ * m_
@@ -78,7 +84,7 @@ export function oklchToColor(l: number, c: number, h: number): Color {
 
   const r = lCubed * 4.0767416621 - mCubed * 3.3077115913 + sCubed * 0.2309699292
   const g = lCubed * -1.2684380046 + mCubed * 2.6097574011 - sCubed * 0.3413193965
-  const bOut = lCubed * -0.0041960863 - mCubed * 0.7034186147 + sCubed * 1.7076147010
+  const bOut = lCubed * -0.0041960863 - mCubed * 0.7034186147 + sCubed * 1.707614701
 
   // Clamp to [0,1]
   const color = new Color()

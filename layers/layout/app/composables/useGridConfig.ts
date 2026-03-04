@@ -1,4 +1,9 @@
-import type { GridConfig, GridLayers, GridMode, GridPresetsItem } from '#layers/layout/app/types/layouts'
+import type {
+  GridConfig,
+  GridLayers,
+  GridMode,
+  GridPresetsItem,
+} from '#layers/layout/app/types/layouts'
 
 interface LayoutLayerConfig {
   layoutLayer?: {

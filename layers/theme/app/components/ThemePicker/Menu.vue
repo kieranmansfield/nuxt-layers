@@ -50,10 +50,7 @@ const transparencyModel = computed({
             <li class="flex w-full flex-row items-center justify-between py-1">
               <div>
                 <h2 class="text-lg font-semibold">High Contrast</h2>
-                <p
-                  v-if="contrastOverride === 'system'"
-                  class="text-sm text-muted"
-                >
+                <p v-if="contrastOverride === 'system'" class="text-sm text-muted">
                   Following system
                 </p>
               </div>
@@ -68,10 +65,7 @@ const transparencyModel = computed({
             <li class="flex w-full flex-row items-center justify-between py-1">
               <div>
                 <h2 class="text-lg font-semibold">Reduce Motion</h2>
-                <p
-                  v-if="motionOverride === 'system'"
-                  class="text-sm text-muted"
-                >
+                <p v-if="motionOverride === 'system'" class="text-sm text-muted">
                   Following system
                 </p>
               </div>
@@ -86,10 +80,7 @@ const transparencyModel = computed({
             <li class="flex w-full flex-row items-center justify-between py-1">
               <div>
                 <h2 class="text-lg font-semibold">Reduce Transparency</h2>
-                <p
-                  v-if="transparencyOverride === 'system'"
-                  class="text-sm text-muted"
-                >
+                <p v-if="transparencyOverride === 'system'" class="text-sm text-muted">
                   Following system
                 </p>
               </div>

@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import type { TintColorSlot, TintLevel, ColorShade } from '../../types/tint'
+import type { ColorShade, TintColorSlot, TintLevel } from '../../types/tint'
 
-const props = withDefaults(defineProps<{
-  color: TintColorSlot
-  level: TintLevel
-  shade?: ColorShade
-  tag?: string
-}>(), {
-  shade: 500,
-  tag: 'div',
-})
+const props = withDefaults(
+  defineProps<{
+    color: TintColorSlot
+    level: TintLevel
+    shade?: ColorShade
+    tag?: string
+  }>(),
+  {
+    shade: 500,
+    tag: 'div',
+  }
+)
 
 const { style } = useTint(props)
 </script>
@@ -17,10 +20,6 @@ const { style } = useTint(props)
 <template>
   <component :is="tag" class="relative">
     <slot />
-    <span
-      class="absolute inset-0 pointer-events-none"
-      :style="style"
-      aria-hidden="true"
-    />
+    <span class="absolute inset-0 pointer-events-none" :style="style" aria-hidden="true" />
   </component>
 </template>

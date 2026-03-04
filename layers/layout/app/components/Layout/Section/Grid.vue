@@ -29,10 +29,7 @@ const { minItemWidth = '200px', fullHeight = false } = defineProps<Props>()
 <template>
   <LayoutSection :full-height>
     <LayoutGridItem>
-      <div
-        class="ram-grid"
-        :style="{ '--min-item-width': minItemWidth }"
-      >
+      <div class="ram-grid" :style="{ '--min-item-width': minItemWidth }">
         <slot />
       </div>
     </LayoutGridItem>

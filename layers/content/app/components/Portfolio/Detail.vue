@@ -5,7 +5,12 @@ const { slug } = defineProps<{
 </script>
 
 <template>
-  <NuxtContentDetail collection="portfolio" :slug not-found-message="Portfolio item not found" hide-toc>
+  <NuxtContentDetail
+    collection="portfolio"
+    :slug
+    not-found-message="Portfolio item not found"
+    hide-toc
+  >
     <template #headline="{ item }">
       <div class="flex flex-wrap items-center gap-2">
         <UBadge v-if="item.client" color="primary" variant="subtle">

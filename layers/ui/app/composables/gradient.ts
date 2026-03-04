@@ -1,4 +1,4 @@
-import type { CSSProperties, MaybeRefOrGetter, ComputedRef } from 'vue'
+import type { ComputedRef, CSSProperties, MaybeRefOrGetter } from 'vue'
 import type { GradientConfig, GradientStop } from '../types/gradient'
 
 const DEFAULT_CONFIG: GradientConfig = {
@@ -50,7 +50,7 @@ function buildStyle(cfg: GradientConfig): CSSProperties {
 
 export function useGradient(
   config: MaybeRefOrGetter<GradientConfig | string>,
-  overrides?: MaybeRefOrGetter<Partial<GradientConfig>>,
+  overrides?: MaybeRefOrGetter<Partial<GradientConfig>>
 ): { style: ComputedRef<CSSProperties> } {
   const appConfig = useAppConfig()
 
@@ -60,10 +60,11 @@ export function useGradient(
 
     let resolved: GradientConfig
     if (typeof raw === 'string') {
-      const preset = (appConfig.uiLayer as Record<string, unknown> | undefined)?.gradients as Record<string, GradientConfig> | undefined
+      const preset = (appConfig.uiLayer as Record<string, unknown> | undefined)?.gradients as
+        | Record<string, GradientConfig>
+        | undefined
       resolved = preset?.[raw] ?? DEFAULT_CONFIG
-    }
-    else {
+    } else {
       resolved = raw
     }
 

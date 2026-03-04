@@ -15,7 +15,7 @@ export default defineNuxtPlugin(() => {
   // Initialize feature detection
   const features = useFeatures()
 
-  if (import.meta.dev) {
+  if (import.meta.dev && process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line no-console
     console.log('[Feature Detection] Initialized:', {
       grid: features.grid.value,

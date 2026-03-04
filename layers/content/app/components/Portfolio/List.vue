@@ -9,7 +9,11 @@ const { data: items, status } = await usePortfolioItems(options)
 </script>
 
 <template>
-  <NuxtContentList :status="status" :has-items="!!items?.length" empty-message="No portfolio items found">
+  <NuxtContentList
+    :status="status"
+    :has-items="!!items?.length"
+    empty-message="No portfolio items found"
+  >
     <UPageGrid>
       <UPageCard
         v-for="item in items"

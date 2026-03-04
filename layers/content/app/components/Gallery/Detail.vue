@@ -7,7 +7,10 @@ const lightboxOpen = ref(false)
 const lightboxIndex = ref(0)
 const lightboxImages = ref<{ src: string; alt: string; width?: number; height?: number }[]>([])
 
-function openLightbox(images: { src: string; alt: string; width?: number; height?: number }[], index: number) {
+function openLightbox(
+  images: { src: string; alt: string; width?: number; height?: number }[],
+  index: number
+) {
   lightboxImages.value = images
   lightboxIndex.value = index
   lightboxOpen.value = true
@@ -36,16 +39,15 @@ function openLightbox(images: { src: string; alt: string; width?: number; height
             :key="img.src"
             class="overflow-hidden rounded-lg group relative"
           >
-            <NuxtLink
-              :to="`/gallery/${slug}/${idx}`"
-              class="block relative overflow-hidden"
-            >
+            <NuxtLink :to="`/gallery/${slug}/${idx}`" class="block relative overflow-hidden">
               <img
                 :src="img.src"
                 :alt="img.alt"
                 class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <div
+                class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+              >
                 <span class="text-white font-semibold text-sm text-center px-3">
                   {{ img.title || img.alt }}
                 </span>

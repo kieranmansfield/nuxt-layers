@@ -27,5 +27,8 @@ export default defineEventHandler(async (event) => {
   }
 
   await formsLayerHooks.callHook('contact:failed', { ...data, error: emailResult.error })
-  throw createError({ statusCode: 500, statusMessage: 'Failed to send message. Please try again later.' })
+  throw createError({
+    statusCode: 500,
+    statusMessage: 'Failed to send message. Please try again later.',
+  })
 })

@@ -9,7 +9,11 @@ const { data: posts, status } = await useBlogPosts(options)
 </script>
 
 <template>
-  <NuxtContentList :status="status" :has-items="!!posts?.length" empty-message="No blog posts found">
+  <NuxtContentList
+    :status="status"
+    :has-items="!!posts?.length"
+    empty-message="No blog posts found"
+  >
     <UBlogPosts orientation="vertical">
       <UBlogPost
         v-for="post in posts"

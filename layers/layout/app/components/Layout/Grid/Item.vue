@@ -101,7 +101,7 @@ const getDefaultValue = <T,>(value: T | ResponsiveValue<T> | undefined, defaultV
 
 const getResponsiveValue = <T,>(
   value: T | ResponsiveValue<T> | undefined,
-  breakpoint: 'md' | 'lg',
+  breakpoint: 'md' | 'lg'
 ): T | undefined => {
   if (value === undefined) return undefined
   if (typeof value === 'object' && value !== null && 'default' in value) {
@@ -114,7 +114,10 @@ const style = computed(() => {
   const styles: Record<string, string> = {}
 
   const colStartVal = getDefaultValue(colStart.value, undefined)
-  const colSpanVal = getDefaultValue(colSpan.value as ColSpanValue | ResponsiveValue<number> | undefined, 'full' as ColSpanValue)
+  const colSpanVal = getDefaultValue(
+    colSpan.value as ColSpanValue | ResponsiveValue<number> | undefined,
+    'full' as ColSpanValue
+  )
   const rowStartVal = getDefaultValue(rowStart.value, undefined)
   const rowSpanVal = getDefaultValue(rowSpan.value, 1)
 
@@ -208,22 +211,25 @@ const classes = computed(() => {
 </template>
 
 <style>
+/* stylelint-disable custom-property-pattern */
 .gi-placed {
-  grid-column: var(--_cs, auto) / span var(--_ce, 1);
   grid-row: var(--_rs, auto) / span var(--_re, 1);
+  grid-column: var(--_cs, auto) / span var(--_ce, 1);
 }
 
 @media (width >= 48rem) {
   .gi-placed {
-    grid-column: var(--_md-cs, var(--_cs, auto)) / span var(--_md-ce, var(--_ce, 1));
     grid-row: var(--_md-rs, var(--_rs, auto)) / span var(--_md-re, var(--_re, 1));
+    grid-column: var(--_md-cs, var(--_cs, auto)) / span var(--_md-ce, var(--_ce, 1));
   }
 }
 
 @media (width >= 80rem) {
   .gi-placed {
-    grid-column: var(--_lg-cs, var(--_md-cs, var(--_cs, auto))) / span var(--_lg-ce, var(--_md-ce, var(--_ce, 1)));
-    grid-row: var(--_lg-rs, var(--_md-rs, var(--_rs, auto))) / span var(--_lg-re, var(--_md-re, var(--_re, 1)));
+    grid-row: var(--_lg-rs, var(--_md-rs, var(--_rs, auto))) / span
+      var(--_lg-re, var(--_md-re, var(--_re, 1)));
+    grid-column: var(--_lg-cs, var(--_md-cs, var(--_cs, auto))) / span
+      var(--_lg-ce, var(--_md-ce, var(--_ce, 1)));
   }
 }
 </style>

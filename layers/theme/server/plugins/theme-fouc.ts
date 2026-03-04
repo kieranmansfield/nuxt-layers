@@ -24,12 +24,26 @@ import type { DefaultColors } from 'tailwindcss/types/generated/colors'
  */
 
 const ACCENTS = [
-  'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald',
-  'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple',
-  'fuchsia', 'pink', 'rose',
+  'red',
+  'orange',
+  'amber',
+  'yellow',
+  'lime',
+  'green',
+  'emerald',
+  'teal',
+  'cyan',
+  'sky',
+  'blue',
+  'indigo',
+  'violet',
+  'purple',
+  'fuchsia',
+  'pink',
+  'rose',
 ] as const
 
-type AccentName = typeof ACCENTS[number]
+type AccentName = (typeof ACCENTS)[number]
 
 const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const
 
@@ -42,29 +56,29 @@ const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const
  *   secondary = a related colour in the same hue family
  *   info      = a third complementary accent
  */
-const ACCENT_PALETTES: Record<AccentName, { secondary: AccentName, info: AccentName }> = {
-  red:     { secondary: 'rose',    info: 'orange' },
-  orange:  { secondary: 'amber',   info: 'red' },
-  amber:   { secondary: 'orange',  info: 'yellow' },
-  yellow:  { secondary: 'lime',    info: 'amber' },
-  lime:    { secondary: 'green',   info: 'yellow' },
-  green:   { secondary: 'teal',    info: 'emerald' },
-  emerald: { secondary: 'green',   info: 'teal' },
-  teal:    { secondary: 'cyan',    info: 'emerald' },
-  cyan:    { secondary: 'sky',     info: 'teal' },
-  sky:     { secondary: 'blue',    info: 'cyan' },
-  blue:    { secondary: 'indigo',  info: 'sky' },
-  indigo:  { secondary: 'violet',  info: 'blue' },
-  violet:  { secondary: 'purple',  info: 'indigo' },
-  purple:  { secondary: 'fuchsia', info: 'violet' },
-  fuchsia: { secondary: 'pink',    info: 'purple' },
-  pink:    { secondary: 'rose',    info: 'fuchsia' },
-  rose:    { secondary: 'pink',    info: 'red' },
+const ACCENT_PALETTES: Record<AccentName, { secondary: AccentName; info: AccentName }> = {
+  red: { secondary: 'rose', info: 'orange' },
+  orange: { secondary: 'amber', info: 'red' },
+  amber: { secondary: 'orange', info: 'yellow' },
+  yellow: { secondary: 'lime', info: 'amber' },
+  lime: { secondary: 'green', info: 'yellow' },
+  green: { secondary: 'teal', info: 'emerald' },
+  emerald: { secondary: 'green', info: 'teal' },
+  teal: { secondary: 'cyan', info: 'emerald' },
+  cyan: { secondary: 'sky', info: 'teal' },
+  sky: { secondary: 'blue', info: 'cyan' },
+  blue: { secondary: 'indigo', info: 'sky' },
+  indigo: { secondary: 'violet', info: 'blue' },
+  violet: { secondary: 'purple', info: 'indigo' },
+  purple: { secondary: 'fuchsia', info: 'violet' },
+  fuchsia: { secondary: 'pink', info: 'purple' },
+  pink: { secondary: 'rose', info: 'fuchsia' },
+  rose: { secondary: 'pink', info: 'red' },
 }
 
 function getShades(name: AccentName): Record<number, string> | null {
   const p = (twColors as DefaultColors)[name]
-  return !p || typeof p === 'string' ? null : p as Record<number, string>
+  return !p || typeof p === 'string' ? null : (p as Record<number, string>)
 }
 
 // Pre-compute all CSS rules at startup (once)
@@ -135,8 +149,7 @@ const initScript = `(function(){
 export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hook('render:html', (html) => {
     html.head.unshift(
-      `<style id="theme-accent-css">${accentCSS}</style>`
-      + `<script>${initScript}</script>`,
+      `<style id="theme-accent-css">${accentCSS}</style>` + `<script>${initScript}</script>`
     )
   })
 })

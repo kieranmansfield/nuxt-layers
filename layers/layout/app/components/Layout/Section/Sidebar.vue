@@ -27,7 +27,12 @@ interface Props {
   fullHeight?: boolean
 }
 
-const { sidebarMin = '150px', sidebarMax = '25%', reverse = false, fullHeight = false } = defineProps<Props>()
+const {
+  sidebarMin = '150px',
+  sidebarMax = '25%',
+  reverse = false,
+  fullHeight = false,
+} = defineProps<Props>()
 </script>
 
 <template>
