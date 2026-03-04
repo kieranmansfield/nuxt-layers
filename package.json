@@ -51,7 +51,7 @@
     "layer:rebuild:layout": "pnpm build:layout && pnpm layer:generate:layout && pnpm layer:layout",
     "layer:rebuild:motion": "pnpm build:motion && pnpm layer:generate:motion && pnpm layer:motion",
     "browserlist": "npx update-browserslist-db@latest",
-    "deploy": "cd apps/playground/ && nuxt generate"
+    "deploy": "turbo run build --filter playground"
   },
   "keywords": [],
   "author": "Kieran Mansfield",

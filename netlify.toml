@@ -1,5 +1,5 @@
 [build]
-  command = "cd apps/playground && NETLIFY=true pnpm build"
+  command = "turbo run build --filter playground"
   publish = "apps/playground/.output/public"
 
 [build.environment]
