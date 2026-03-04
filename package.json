@@ -1,7 +1,7 @@
 {
   "name": "kmcom-nuxt-layers",
   "private": false,
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Composable Nuxt 4 layers for building scalable Vue applications",
   "files": [
     "layers/*/nuxt.config.ts",
@@ -55,33 +55,33 @@
   "keywords": [],
   "author": "Kieran Mansfield",
   "license": "ISC",
-  "packageManager": "pnpm@10.30.1",
+  "packageManager": "pnpm@10.30.3",
   "workspaces": [
     "layers/*",
     "apps/*",
     "packages/*"
   ],
   "peerDependencies": {
-    "@nuxt/content": "^3.0.0",
-    "@nuxt/eslint": "^1.0.0",
+    "@nuxt/content": "^3.12.0",
+    "@nuxt/eslint": "^1.15.2",
     "@nuxt/image": "^2.0.0",
-    "@nuxt/ui": "^4.5.0",
+    "@nuxt/ui": "^4.5.1",
     "@nuxtjs/device": "^4.0.0",
-    "@tresjs/cientos": "^5.0.0",
-    "@tresjs/core": "^5.0.0",
-    "@tresjs/nuxt": "^5.0.0",
-    "@tresjs/post-processing": "^3.0.0",
-    "@vite-pwa/nuxt": "^1.0.0",
-    "@vueuse/nuxt": "^14.0.0",
-    "better-sqlite3": "^12.0.0",
-    "gsap": "^3.12.0",
-    "locomotive-scroll": "^5.0.0",
+    "@tresjs/cientos": "^5.4.0",
+    "@tresjs/core": "^5.5.0",
+    "@tresjs/nuxt": "^5.3.0",
+    "@tresjs/post-processing": "^3.4.0",
+    "@vite-pwa/nuxt": "^1.1.1",
+    "@vueuse/nuxt": "^14.2.1",
+    "better-sqlite3": "^12.6.2",
+    "gsap": "^3.14.2",
+    "locomotive-scroll": "^5.0.1",
     "nuxt": "^4.3.1",
-    "nuxt-studio": "^1.0.0",
-    "pinia": "^3.0.0",
+    "nuxt-studio": "^1.4.0",
+    "pinia": "^3.0.4",
     "tailwindcss": "^4.2.1",
-    "three": "^0.170.0",
-    "zod": "^3.20.0"
+    "three": "^0.183.2",
+    "zod": "^4.3.6"
   },
   "peerDependenciesMeta": {
     "@nuxtjs/device": {
@@ -128,21 +128,21 @@
     }
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.4.1",
-    "@commitlint/config-conventional": "^20.4.1",
-    "@culur/config-stylelint": "^1.6.4",
+    "@commitlint/cli": "^20.4.3",
+    "@commitlint/config-conventional": "^20.4.3",
+    "@culur/config-stylelint": "^1.6.5",
     "@eslint/json": "^1.0.1",
     "@eslint/markdown": "^7.5.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
-    "@iconify-json/lucide": "^1.2.89",
+    "@iconify-json/lucide": "^1.2.95",
     "@nuxt/eslint": "^1.15.2",
-    "@nuxt/fonts": "^0.13.0",
+    "@nuxt/fonts": "^0.14.0",
     "@nuxt/image": "^2.0.0",
     "@nuxt/ui": "latest",
     "@nuxtjs/device": "^4.0.0",
     "@perplex-digital/stylelint-config": "^17.3.0",
     "@pinia/nuxt": "^0.11.3",
-    "@types/node": "^25.3.0",
+    "@types/node": "^25.3.3",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
     "@vue/eslint-config-typescript": "^14.7.0",
@@ -154,7 +154,7 @@
     "cypress": "^15.10.0",
     "depcheck": "^1.4.7",
     "eslint": "^10.0.2",
-    "eslint-plugin-compat": "^6.2.0",
+    "eslint-plugin-compat": "^6.2.1",
     "eslint-plugin-glsl": "0.0.0-wip",
     "eslint-plugin-oxlint": "^1.50.0",
     "eslint-plugin-pnpm": "^1.6.0",
@@ -162,7 +162,7 @@
     "eslint-plugin-unicorn": "^63.0.0",
     "eslint-plugin-unused-imports": "^4.4.1",
     "eslint-plugin-vue": "^10.8.0",
-    "npm-check-updates": "^19.5.0",
+    "npm-check-updates": "^19.6.3",
     "nuxt": "latest",
     "oxlint": "^1.43.0",
     "pinia": "^3.0.4",
@@ -170,11 +170,11 @@
     "postcss-html": "^1.8.1",
     "prettier": "^3.8.1",
     "prettier-plugin-css-order": "^2.2.0",
-    "prettier-plugin-glsl": "^0.2.3",
+    "prettier-plugin-glsl": "^0.2.4",
     "prettier-plugin-organize-attributes": "^1.0.0",
     "prettier-plugin-tailwind-styled-components": "^2.0.2",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "stylelint": "^17.1.1",
+    "stylelint": "^17.4.0",
     "stylelint-config-recommended-vue": "^1.6.1",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-config-standard-vue": "^1.0.0",
@@ -182,22 +182,30 @@
     "stylelint-no-unsupported-browser-features": "^8.1.1",
     "stylelint-prettier": "^5.0.3",
     "tailwindcss": "^4.2.1",
-    "turbo": "^2.8.10",
+    "turbo": "^2.8.13",
     "typescript": "^5.9.3",
     "vite-plugin-checker": "^0.12.0",
     "vitest": "^4.0.18",
     "vue": "latest",
-    "vue-tsc": "^3.2.5"
+    "vue-tsc": "^3.2.5",
+    "zod": "^4.3.6",
+    "zod-to-json-schema": "^3.25.1"
   },
   "pnpm": {
     "overrides": {
-      "vue": "3.5.28",
-      "@vue/runtime-core": "3.5.28",
-      "@vue/runtime-dom": "3.5.28",
-      "@vue/reactivity": "3.5.28",
-      "@vue/shared": "3.5.28",
-      "three": "0.182.0"
-    }
+      "vue": "3.5.29",
+      "@vue/runtime-core": "3.5.29",
+      "@vue/runtime-dom": "3.5.29",
+      "@vue/reactivity": "3.5.29",
+      "@vue/shared": "3.5.29",
+      "three": "0.183.2",
+      "citty": "0.2.0",
+      "stylelint": "17.4.0",
+      "eslint": "10.0.2"
+    },
+    "onlyBuiltDependencies": [
+      "vue-demi"
+    ]
   },
   "browserslist": [
     "last 2 Chrome major versions",
@@ -206,6 +214,6 @@
     "last 2 Edge major versions"
   ],
   "dependencies": {
-    "skills": "^1.4.1"
+    "skills": "^1.4.3"
   }
 }

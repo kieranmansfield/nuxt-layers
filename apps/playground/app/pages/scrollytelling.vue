@@ -60,7 +60,7 @@ const cards = [
               class="inline-block"
               v-gsap.from="{ y: 120, opacity: 0, rotateX: -90, duration: 1.2, ease: 'power3.out' }"
             >
-              SCROLL
+              SCROLLY
             </span>
             <br />
             <span
