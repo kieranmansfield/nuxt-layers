@@ -199,103 +199,103 @@ export default {}
 }
 
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
-  extends: resolveExtendedLayers(),
+ compatibilityDate: '2025-07-15',
+ extends: resolveExtendedLayers(),
+ devtools: { enabled: true },
 
-  devtools: { enabled: true },
+ routeRules: {
+   '/_studio/**': { redirect: '/' },
+ },
 
-  routeRules: {
-    '/_studio/**': { redirect: '/' },
-  },
+ // TresJS components (Tres*, primitive) must be excluded from Vue component
+ // resolution — they're handled by TresJS's custom renderer. @tresjs/nuxt sets
+ // this too, but setting it here ensures it survives any module ordering issues.
+ // TresCanvas/TresLeches/TresScene are whitelisted by @tresjs/core: they are
+ // real Vue components and must NOT be treated as custom elements.
+ vue: {
+   compilerOptions: {
+     isCustomElement: (tag: string) => {
+       const tresVueComponents = ['TresCanvas', 'TresLeches', 'TresScene']
+       return (
+         ((/^Tres[A-Z]/.test(tag) || tag.startsWith('tres-')) &&
+           !tresVueComponents.includes(tag)) ||
+         tag === 'primitive'
+       )
+     },
+   },
+ },
 
-  // TresJS components (Tres*, primitive) must be excluded from Vue component
-  // resolution — they're handled by TresJS's custom renderer. @tresjs/nuxt sets
-  // this too, but setting it here ensures it survives any module ordering issues.
-  // TresCanvas/TresLeches/TresScene are whitelisted by @tresjs/core: they are
-  // real Vue components and must NOT be treated as custom elements.
-  vue: {
-    compilerOptions: {
-      isCustomElement: (tag: string) => {
-        const tresVueComponents = ['TresCanvas', 'TresLeches', 'TresScene']
-        return (
-          ((/^Tres[A-Z]/.test(tag) || tag.startsWith('tres-')) &&
-            !tresVueComponents.includes(tag)) ||
-          tag === 'primitive'
-        )
-      },
-    },
-  },
+ vite: {
+   plugins: [threeWebGPUSSRStub()],
+   resolve: {
+     dedupe: [
+       'vue',
+       '@vue/runtime-core',
+       '@vue/runtime-dom',
+       '@vue/reactivity',
+       '@vue/shared',
+       'three',
+     ],
+   },
+   optimizeDeps: {
+     // slugify is CJS-only. Pre-bundling it here ensures Vite converts it to
+     // ESM before any request hits it. Without this (or if force:true discards
+     // the cache before the bundle is ready) the browser gets the raw CJS file
+     // and throws "does not provide an export named 'default'".
+     include: ['slugify'],
+   },
+   ssr: {
+     // Also bundle slugify for SSR — @nuxt/content uses it server-side.
+     noExternal: ['slugify'],
+   },
+ },
 
-  vite: {
-    plugins: [threeWebGPUSSRStub()],
-    resolve: {
-      dedupe: [
-        'vue',
-        '@vue/runtime-core',
-        '@vue/runtime-dom',
-        '@vue/reactivity',
-        '@vue/shared',
-        'three',
-      ],
-    },
-    optimizeDeps: {
-      // slugify is CJS-only. Pre-bundling it here ensures Vite converts it to
-      // ESM before any request hits it. Without this (or if force:true discards
-      // the cache before the bundle is ready) the browser gets the raw CJS file
-      // and throws "does not provide an export named 'default'".
-      include: ['slugify'],
-    },
-    ssr: {
-      // Also bundle slugify for SSR — @nuxt/content uses it server-side.
-      noExternal: ['slugify'],
-    },
-  },
+ $development: {
+   vite: {
+     server: {
+       watch: {
+         usePolling: true,
+       },
+     },
+     optimizeDeps: {
+       // Keep slugify in include alongside force so the CJS→ESM conversion
+       // is always re-run when the cache is cleared.
+       include: ['slugify'],
+       // Removed force:true — it clears the dep cache on every start which
+       // causes slugify to be served as a raw CJS file while Vite is still
+       // re-optimising. Run `nuxt dev --force` manually when you need a
+       // fresh dep scan.
+     },
+   },
+   nitro: {
+     devStorage: {
+       cache: {
+         driver: 'memory', // Use memory storage instead of filesystem cache
+       },
+     },
+   },
+ },
 
-  $development: {
-    vite: {
-      server: {
-        watch: {
-          usePolling: true,
-        },
-      },
-      optimizeDeps: {
-        // Keep slugify in include alongside force so the CJS→ESM conversion
-        // is always re-run when the cache is cleared.
-        include: ['slugify'],
-        // Removed force:true — it clears the dep cache on every start which
-        // causes slugify to be served as a raw CJS file while Vite is still
-        // re-optimising. Run `nuxt dev --force` manually when you need a
-        // fresh dep scan.
-      },
-    },
-    nitro: {
-      devStorage: {
-        cache: {
-          driver: 'memory', // Use memory storage instead of filesystem cache
-        },
-      },
-    },
-  },
+ // Netlify deployment configuration
+ // modules: ['@nuxt/eslint'],
+ // eslint: {
+ //   config: {
+ //     // Use the generated ESLint config for lint root project as well
+ //     rootDir: fileURLToPath(new URL('..', import.meta.url)),
+ //   },
+ // },
+ nitro: {
+   prerender: {
+     crawlLinks: true,
+     ignore: ['/admin'],
+   },
+   // For Netlify build, ensure proper output
+   ...(process.env.NETLIFY && {
+     output: {
+       dir: '.output/public',
+     },
+   }),
+ },
 
-  // Netlify deployment configuration
-  nitro: {
-    prerender: {
-      crawlLinks: true,
-      ignore: ['/admin'],
-    },
-    // For Netlify build, ensure proper output
-    ...(process.env.NETLIFY && {
-      output: {
-        dir: '.output/public',
-      },
-    }),
-  },
-
-  // modules: ['@nuxt/eslint'],
-  // eslint: {
-  //   config: {
-  //     // Use the generated ESLint config for lint root project as well
-  //     rootDir: fileURLToPath(new URL('..', import.meta.url)),
-  //   },
-  // },
+ modules: ['@netlify/nuxt']
 })
