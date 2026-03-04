@@ -95,24 +95,78 @@ const n = new Proxy(function noop() { return n }, {
 })
 `
   const tslNames = [
-    'float', 'vec2', 'vec3', 'vec4', 'color', 'mat2', 'mat3', 'mat4',
-    'uniform', 'attribute', 'varying',
+    'float',
+    'vec2',
+    'vec3',
+    'vec4',
+    'color',
+    'mat2',
+    'mat3',
+    'mat4',
+    'uniform',
+    'attribute',
+    'varying',
     'Fn',
-    'add', 'sub', 'mul', 'div', 'mod', 'abs', 'sign',
-    'floor', 'ceil', 'fract', 'round',
-    'min', 'max', 'clamp', 'mix', 'smoothstep',
-    'pow', 'sqrt', 'exp', 'log',
-    'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'atan2',
-    'dot', 'cross', 'normalize', 'length', 'distance', 'reflect', 'refract',
-    'transpose', 'inverse',
-    'texture', 'sampler',
-    'lessThan', 'lessThanEqual', 'greaterThan', 'greaterThanEqual',
-    'step', 'select', 'cond',
-    'uv', 'time', 'EPSILON', 'Loop',
-    'positionLocal', 'positionWorld', 'positionView',
-    'normalLocal', 'normalWorld', 'normalView',
-    'positionViewDirection', 'cameraPosition',
-    'timerGlobal', 'timerLocal', 'timerDelta',
+    'add',
+    'sub',
+    'mul',
+    'div',
+    'mod',
+    'abs',
+    'sign',
+    'floor',
+    'ceil',
+    'fract',
+    'round',
+    'min',
+    'max',
+    'clamp',
+    'mix',
+    'smoothstep',
+    'pow',
+    'sqrt',
+    'exp',
+    'log',
+    'sin',
+    'cos',
+    'tan',
+    'asin',
+    'acos',
+    'atan',
+    'atan2',
+    'dot',
+    'cross',
+    'normalize',
+    'length',
+    'distance',
+    'reflect',
+    'refract',
+    'transpose',
+    'inverse',
+    'texture',
+    'sampler',
+    'lessThan',
+    'lessThanEqual',
+    'greaterThan',
+    'greaterThanEqual',
+    'step',
+    'select',
+    'cond',
+    'uv',
+    'time',
+    'EPSILON',
+    'Loop',
+    'positionLocal',
+    'positionWorld',
+    'positionView',
+    'normalLocal',
+    'normalWorld',
+    'normalView',
+    'positionViewDirection',
+    'cameraPosition',
+    'timerGlobal',
+    'timerLocal',
+    'timerDelta',
   ]
 
   const stub =
@@ -164,7 +218,8 @@ export default defineNuxtConfig({
       isCustomElement: (tag: string) => {
         const tresVueComponents = ['TresCanvas', 'TresLeches', 'TresScene']
         return (
-          ((/^Tres[A-Z]/.test(tag) || tag.startsWith('tres-')) && !tresVueComponents.includes(tag)) ||
+          ((/^Tres[A-Z]/.test(tag) || tag.startsWith('tres-')) &&
+            !tresVueComponents.includes(tag)) ||
           tag === 'primitive'
         )
       },
@@ -174,7 +229,14 @@ export default defineNuxtConfig({
   vite: {
     plugins: [threeWebGPUSSRStub()],
     resolve: {
-      dedupe: ['vue', '@vue/runtime-core', '@vue/runtime-dom', '@vue/reactivity', '@vue/shared', 'three'],
+      dedupe: [
+        'vue',
+        '@vue/runtime-core',
+        '@vue/runtime-dom',
+        '@vue/reactivity',
+        '@vue/shared',
+        'three',
+      ],
     },
     optimizeDeps: {
       // slugify is CJS-only. Pre-bundling it here ensures Vite converts it to
@@ -213,6 +275,21 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+
+  // Netlify deployment configuration
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: ['/sitemap.xml', '/rss.xml'],
+      ignore: ['/admin'],
+    },
+    // For Netlify build, ensure proper output
+    ...(process.env.NETLIFY && {
+      output: {
+        dir: '.output/public',
+      },
+    }),
   },
 
   // modules: ['@nuxt/eslint'],
