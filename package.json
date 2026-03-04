@@ -216,5 +216,8 @@
   ],
   "dependencies": {
     "skills": "^1.4.3"
+  },
+  "engines": {
+    "node": ">=18 <21"
   }
 }
