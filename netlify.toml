@@ -6,5 +6,6 @@
   NODE_VERSION = "20"
   PNPM_HOME = ".pnpm"
   PNPM_FLAGS = "--shamefully-hoist"
-  NITRO_PRERENDER = "true"
   NPM_CONFIG_BUILD_FROM_SOURCE = "true"
+  NITRO_PRERENDER = "false"
+  NODE_OPTIONS = "--max-old-space-size=4096"
