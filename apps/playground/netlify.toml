@@ -1,0 +1,6 @@
+[build.environment]
+  NODE_VERSION = "20"
+  PNPM_HOME = ".pnpm"
+  PNPM_FLAGS = "--shamefully-hoist"
+  NPM_CONFIG_BUILD_FROM_SOURCE = "true"
+  NODE_OPTIONS = "--max-old-space-size=4096"
