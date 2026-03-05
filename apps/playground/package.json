@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@netlify/nuxt": "0.2.27",
+    "@netlify/nuxt": "0.2.29",
     "better-sqlite3": "^12.6.2",
     "nuxt": "^4.3.1",
     "vue": "^3.5.27",
