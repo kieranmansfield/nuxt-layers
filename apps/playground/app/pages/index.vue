@@ -176,19 +176,19 @@ const layers = [
     iconColor: 'text-neutral-300',
     buttonClass: 'bg-neutral-300/10 text-neutral-300 hover:bg-neutral-300/20',
   },
-  // {
-  //   name: 'Content',
-  //   description: 'Config-driven content management system using Nuxt Content',
-  //   loaded: true,
-  //   icon: 'i-lucide-swatch-book',
-  //   to: '/content',
-  //   features: ['Markdown', 'Content Collections', 'Frontmatter', 'Content API'],
-  //   borderColor: 'border-red-300/30',
-  //   bgColor: 'bg-red-300/5',
-  //   iconBg: 'bg-red-300/10',
-  //   iconColor: 'text-red-300',
-  //   buttonClass: 'bg-red-300/10 text-red-300 hover:bg-red-300/20',
-  // },
+  {
+    name: 'Content',
+    description: 'Config-driven content management system using Nuxt Content',
+    loaded: true,
+    icon: 'i-lucide-swatch-book',
+    to: '/content',
+    features: ['Markdown', 'Content Collections', 'Frontmatter', 'Content API'],
+    borderColor: 'border-red-300/30',
+    bgColor: 'bg-red-300/5',
+    iconBg: 'bg-red-300/10',
+    iconColor: 'text-red-300',
+    buttonClass: 'bg-red-300/10 text-red-300 hover:bg-red-300/20',
+  },
 ]
 
 definePageMeta({ layout: 'grid' })
