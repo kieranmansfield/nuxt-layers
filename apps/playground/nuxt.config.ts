@@ -289,12 +289,6 @@ export default defineNuxtConfig({
       crawlLinks: true,
       ignore: ['/admin'],
     },
-    // For Netlify build, ensure proper output
-    ...(process.env.NETLIFY && {
-      output: {
-        dir: '.output/public',
-      },
-    }),
   },
 
   modules: ['@netlify/nuxt'],

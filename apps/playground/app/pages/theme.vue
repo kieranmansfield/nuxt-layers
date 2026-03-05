@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useSupported } from '@vueuse/core'
-
 const {
   activeAccent,
   contrastOverride,
@@ -17,16 +15,17 @@ const {
   systemTransparency,
 } = useTheme()
 
-// Media query support detection
-const contrastSupported = useSupported(
-  () => window.matchMedia('(prefers-contrast: more)').media !== 'not all'
-)
-const motionSupported = useSupported(
-  () => window.matchMedia('(prefers-reduced-motion: reduce)').media !== 'not all'
-)
-const transparencySupported = useSupported(
-  () => window.matchMedia('(prefers-reduced-transparency: reduce)').media !== 'not all'
-)
+// Media query support detection (onMounted to avoid SSR window access)
+const contrastSupported = ref(false)
+const motionSupported = ref(false)
+const transparencySupported = ref(false)
+
+onMounted(() => {
+  contrastSupported.value = window.matchMedia('(prefers-contrast: more)').media !== 'not all'
+  motionSupported.value = window.matchMedia('(prefers-reduced-motion: reduce)').media !== 'not all'
+  transparencySupported.value =
+    window.matchMedia('(prefers-reduced-transparency: reduce)').media !== 'not all'
+})
 
 // Toggle models — match ThemePicker/Menu.vue pattern
 const contrastModel = computed({
