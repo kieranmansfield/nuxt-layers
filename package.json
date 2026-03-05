@@ -206,7 +206,9 @@
     },
     "onlyBuiltDependencies": [
       "esbuild",
-      "vue-demi"
+      "vue-demi",
+      "better-sqlite3",
+      "sqlite3"
     ]
   },
   "browserslist": [
