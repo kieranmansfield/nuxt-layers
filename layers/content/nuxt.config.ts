@@ -25,7 +25,10 @@ export default defineNuxtConfig({
   // Configure @nuxt/content for production/Netlify builds
   content: {
     // Disable local database for production builds to avoid better-sqlite3 native module issues
-    database: process.env.NETLIFY || process.env.NODE_ENV === 'production' ? false : {},
+    // database: process.env.NETLIFY || process.env.NODE_ENV === 'production' ? false : {},
+    experimental: {
+      nativeSqlite: true,
+    },
   },
 
   css: ['#layers/content/app/assets/css/main.css'],
