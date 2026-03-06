@@ -24,19 +24,28 @@ export function useThemeColors() {
     }
   }
 
+  function applyColors() {
+    const isDark = colorMode.value === 'dark'
+    const primary = cssVarToHex('--ui-color-primary-500')
+    // CSS vars not ready yet (returns fallback) — retry next frame
+    if (primary === '#888888') {
+      requestAnimationFrame(applyColors)
+      return
+    }
+    primaryHex.value      = primary
+    secondaryHex.value    = isDark ? cssVarToHex('--ui-color-neutral-700')   : cssVarToHex('--ui-color-secondary-500')
+    primaryLightHex.value = isDark ? cssVarToHex('--ui-color-neutral-900')   : cssVarToHex('--ui-color-primary-300')
+    infoHex.value         = isDark ? cssVarToHex('--ui-color-secondary-500') : cssVarToHex('--ui-color-neutral-300')
+  }
+
   function refresh() {
-    nextTick(() => {
-      const isDark = colorMode.value === 'dark'
-      primaryHex.value      = cssVarToHex(isDark ? '--ui-color-primary-500'   : '--ui-color-primary-600')
-      secondaryHex.value    = cssVarToHex(isDark ? '--ui-color-secondary-500' : '--ui-color-secondary-700')
-      primaryLightHex.value = cssVarToHex(isDark ? '--ui-color-primary-300'   : '--ui-color-primary-400')
-      infoHex.value         = cssVarToHex(isDark ? '--ui-color-info-500'      : '--ui-color-info-600')
-    })
+    nextTick(applyColors)
   }
 
   if (import.meta.client) {
     watch(activeAccent, refresh, { immediate: true })
     watch(() => colorMode.value, refresh)
+    onMounted(applyColors)
   }
 
   return { primaryHex, secondaryHex, infoHex, primaryLightHex, clearColor, refresh }

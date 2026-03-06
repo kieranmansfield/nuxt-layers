@@ -318,6 +318,8 @@ importers:
         specifier: latest
         version: 1.5.12(magicast@0.5.2)
 
+  layers/routing: {}
+
   layers/shader:
     dependencies:
       '@tresjs/cientos':

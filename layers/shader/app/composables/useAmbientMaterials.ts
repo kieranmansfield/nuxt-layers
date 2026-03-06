@@ -10,6 +10,7 @@ import {
   mix,
   mul,
   pow,
+  sign,
   sin,
   smoothstep,
   sub,
@@ -22,6 +23,7 @@ import {
 import { MeshBasicNodeMaterial } from 'three/webgpu'
 import {
   simplexNoise2D,
+  simplexNoise3d,
   fbm2D,
   fbm3dSimplex,
   ridgedFbm2d,
@@ -424,6 +426,160 @@ export function createThemeAuroraColorNode(
     const shimmerColor = mul(colors.color3, mul(shimmer, mul(aurora, 0.15)))
 
     return add(mix(skyColor, auroraColor, aurora), shimmerColor)
+  })()
+}
+
+export function createThemeWaveColorNode(
+  uniforms: AmbientUniforms,
+  colors: ThemeColorUniforms,
+): any {
+  const { speed: uSpeed, intensity: uIntensity, mouseX: uMouseX, mouseY: uMouseY, mouseStrength: uMouseStrength } = uniforms
+
+  return Fn(() => {
+    const t = mul(time, uSpeed, 0.1)
+    const mouseOff = vec2(
+      mul(sub(uMouseX, 0.5), uMouseStrength),
+      mul(sub(uMouseY, 0.5), uMouseStrength),
+    )
+    const uvCoord = add(sub(uv(), 0.5), mouseOff)
+
+    // Noise-driven rotation
+    const degree = simplexNoise2D(vec2(t, uvCoord.x.mul(uvCoord.y))).mul(0.5).add(0.5)
+    const angle = degree.sub(0.5).mul(720.0 * Math.PI / 180.0).add(Math.PI)
+    const cosA = angle.cos()
+    const sinA = angle.sin()
+    const rx = uvCoord.x.mul(cosA).sub(uvCoord.y.mul(sinA))
+    const ry = uvCoord.x.mul(sinA).add(uvCoord.y.mul(cosA))
+
+    // Wave warp (order matters: warped x feeds into y)
+    const waveSpeed = mul(time, uSpeed, 2.0)
+    const wx = rx.add(sin(ry.mul(5.0).add(waveSpeed)).div(30.0))
+    const wy = ry.add(sin(wx.mul(7.5).add(waveSpeed)).div(15.0))
+
+    // -5° rotation for layer blend
+    const COS5 = Math.cos(-5 * Math.PI / 180)
+    const SIN5 = Math.sin(-5 * Math.PI / 180)
+    const rotated5x = wx.mul(COS5).sub(wy.mul(SIN5))
+
+    const layer1 = mix(colors.color1, colors.color2, smoothstep(-0.3, 0.2, rotated5x))
+    const layer2 = mix(colors.color3, colors.color4, smoothstep(-0.3, 0.2, rotated5x))
+
+    return mix(layer1, layer2, smoothstep(0.5, -0.3, wy)).mul(uIntensity)
+  })()
+}
+
+export function createThemeLavaLampColorNode(
+  uniforms: AmbientUniforms,
+  colors: ThemeColorUniforms,
+): any {
+  const { speed: uSpeed, intensity: uIntensity, mouseX: uMouseX, mouseY: uMouseY, mouseStrength: uMouseStrength } = uniforms
+
+  return Fn(() => {
+    const t = mul(time, uSpeed, 0.2)
+    const mouseOff = vec2(
+      mul(sub(uMouseX, 0.5), uMouseStrength),
+      mul(sub(uMouseY, 0.5), uMouseStrength),
+    )
+    const uvCoord = add(sub(uv(), 0.5), mouseOff)
+
+    // 4 blobs anchored to quadrants, oscillation wide enough to cross center and intersect
+    const b1 = vec2(sin(mul(t, 0.9)).mul(0.22).sub(0.20), sin(mul(t, 0.7)).mul(0.22).sub(0.18))
+    const b2 = vec2(sin(mul(t, 0.8).add(2.1)).mul(0.22).add(0.20), sin(mul(t, 1.0).add(1.5)).mul(0.22).sub(0.18))
+    const b3 = vec2(sin(mul(t, 0.6).add(4.2)).mul(0.22).sub(0.20), sin(mul(t, 0.9).add(3.1)).mul(0.22).add(0.18))
+    const b4 = vec2(sin(mul(t, 1.1).add(1.0)).mul(0.22).add(0.20), sin(mul(t, 0.5).add(2.8)).mul(0.22).add(0.18))
+
+    // Per-blob breathing k: oscillates between -3.5 (large) and -6.5 (tight)
+    const k1 = sin(mul(t, 0.4)).mul(1.5).sub(5.0)
+    const k2 = sin(add(mul(t, 0.35), 2.1)).mul(1.5).sub(5.0)
+    const k3 = sin(add(mul(t, 0.45), 4.2)).mul(1.5).sub(5.0)
+    const k4 = sin(add(mul(t, 0.3), 1.0)).mul(1.5).sub(5.0)
+
+    const w1 = exp(length(sub(uvCoord, b1)).mul(k1))
+    const w2 = exp(length(sub(uvCoord, b2)).mul(k2))
+    const w3 = exp(length(sub(uvCoord, b3)).mul(k3))
+    const w4 = exp(length(sub(uvCoord, b4)).mul(k4))
+    const wTotal = add(w1, w2, w3, w4)
+
+    // Weighted colour blend
+    const colorNode = add(
+      mul(colors.color1, w1),
+      mul(colors.color2, w2),
+      mul(colors.color3, w3),
+      mul(colors.color4, w4),
+    ).div(wTotal.add(0.001))
+
+    // Darken space between blobs
+    const blobStrength = smoothstep(0.05, 0.9, wTotal)
+    const bg = mul(mix(colors.color1, colors.color2, 0.3), 0.15)
+    return mix(bg, colorNode, blobStrength).mul(uIntensity)
+  })()
+}
+
+export function createThemeBubbleColorNode(
+  uniforms: AmbientUniforms,
+  colors: ThemeColorUniforms,
+): any {
+  const { speed: uSpeed, intensity: uIntensity, mouseX: uMouseX, mouseY: uMouseY, mouseStrength: uMouseStrength } = uniforms
+
+  return Fn(() => {
+    const t = mul(time, uSpeed, 0.06)
+    const mouseOff = vec2(
+      mul(sub(uMouseX, 0.5), uMouseStrength),
+      mul(sub(uMouseY, 0.5), uMouseStrength),
+    )
+    const uvCoord = add(uv(), mouseOff)
+
+    const n1 = simplexNoise3d(vec3(uvCoord.x.mul(1.5), uvCoord.y.mul(1.5), t)).mul(0.5).add(0.5)
+    const n2 = simplexNoise3d(vec3(
+      uvCoord.x.mul(2.5).add(1.3), uvCoord.y.mul(2.5).add(0.7), t.mul(0.8),
+    )).mul(0.5).add(0.5)
+
+    const blend1 = mix(colors.color1, colors.color2, smoothstep(0.3, 0.7, n1))
+    const blend2 = mix(colors.color3, colors.color4, smoothstep(0.3, 0.7, n2))
+    return mix(blend1, blend2, smoothstep(0.35, 0.65, n2)).mul(uIntensity)
+  })()
+}
+
+export function createThemePlasmaColorNode(
+  uniforms: AmbientUniforms,
+  colors: ThemeColorUniforms,
+): any {
+  const { speed: uSpeed, intensity: uIntensity, mouseX: uMouseX, mouseY: uMouseY, mouseStrength: uMouseStrength } = uniforms
+
+  return Fn(() => {
+    const t = mul(time, uSpeed, 0.03)
+    const mouseOff = vec2(
+      mul(sub(uMouseX, 0.5), uMouseStrength, 0.2),
+      mul(sub(uMouseY, 0.5), uMouseStrength, 0.2),
+    )
+    const uvMut = add(sub(uv(), 0.5).mul(1.2), mouseOff).toVar()
+
+    const h = simplexNoise3d(vec3(uvMut.x.mul(2.0), uvMut.y.mul(2.0), t)).toVar()
+
+    // Unrolled distortion loop (n = 1..4)
+    for (let n = 1; n < 5; n++) {
+      const i = float(n)
+      uvMut.subAssign(vec2(
+        float(0.7).div(i).mul(sin(i.mul(uvMut.y).add(i).add(t.mul(1.5)).add(h.mul(i)))),
+        float(0.4).div(i).mul(sin(uvMut.x.add(4.0).sub(i).add(h).add(t.mul(1.5)).add(i.mul(0.3)))),
+      ))
+    }
+
+    // Final UV shift
+    uvMut.subAssign(vec2(
+      float(1.2).mul(sin(uvMut.x.add(t).add(h))),
+      float(0.4).mul(sin(uvMut.y.add(t).add(h.mul(0.3)))),
+    ))
+
+    const cx = sin(uvMut.x.mul(2.0)).mul(0.5).add(0.5)
+    const cxy = sin(uvMut.x.add(uvMut.y).mul(1.5)).mul(0.5).add(0.5)
+    const cy = sin(uvMut.y.mul(2.0)).mul(0.5).add(0.5)
+
+    const t12 = mix(colors.color1, colors.color2, cx)
+    const t34 = mix(colors.color3, colors.color4, cy)
+    const vivid = mix(t12, t34, cxy)
+    // Mix against near-black base so black/gray reads through between colour bands
+    return mix(vec3(0.03, 0.03, 0.03), vivid, float(0.65)).mul(uIntensity)
   })()
 }
 

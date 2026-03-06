@@ -1,0 +1,6 @@
+{
+  "name": "@layers/routing",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./nuxt.config.ts"
+}

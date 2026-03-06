@@ -138,6 +138,15 @@ watch(
   }
 )
 
+watch(
+  () => props.clearColor,
+  (color) => {
+    if (renderer && initialized) {
+      renderer.setClearColor(new Color(color))
+    }
+  }
+)
+
 watch([width, height], ([w, h]) => {
   if (!initialized) return
   camera.aspect = w / (h || 1)

@@ -10,6 +10,7 @@ const AVAILABLE_LAYERS = [
   'forms',
   'theme',
   'content',
+  'routing',
 ] as const
 type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
@@ -22,6 +23,7 @@ const LAYER_PATHS: Record<LayerName, string> = {
   forms: '../../layers/forms',
   theme: '../../layers/theme',
   content: '../../layers/content',
+  routing: '../../layers/routing',
 }
 
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included
@@ -34,6 +36,7 @@ const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
   forms: ['core'], // forms depends on core
   theme: ['core'],
   content: ['core'],
+  routing: ['core'],
 }
 
 /**

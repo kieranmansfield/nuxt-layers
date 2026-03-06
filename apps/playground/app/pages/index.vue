@@ -189,6 +189,26 @@ const layers = [
     iconColor: 'text-red-300',
     buttonClass: 'bg-red-300/10 text-red-300 hover:bg-red-300/20',
   },
+  {
+    name: 'Routing',
+    description: 'Feature flags, governance presets, maintenance mode, and route access control',
+    loaded: true,
+    icon: 'i-lucide-route',
+    to: '/routing',
+    features: [
+      'Governance Presets',
+      'Feature Flags',
+      'Maintenance Mode',
+      'Scroll Routing',
+      'Route Meta Augmentation',
+      'Runtime Flags',
+    ],
+    borderColor: 'border-orange-500/30',
+    bgColor: 'bg-orange-500/5',
+    iconBg: 'bg-orange-500/10',
+    iconColor: 'text-orange-500',
+    buttonClass: 'bg-orange-500/10 text-orange-500 hover:bg-orange-500/20',
+  },
 ]
 
 definePageMeta({ layout: 'grid' })

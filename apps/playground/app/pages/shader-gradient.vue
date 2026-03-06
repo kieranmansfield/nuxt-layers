@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import ThemeAurora from '#layers/shader/app/components/Preset/ThemeAurora.client.vue'
-import ThemeFlow from '#layers/shader/app/components/Preset/ThemeFlow.client.vue'
 import ThemeGradient from '#layers/shader/app/components/Preset/ThemeGradient.client.vue'
+import ThemeWave from '#layers/shader/app/components/Preset/ThemeWave.client.vue'
+import ThemeLavaLamp from '#layers/shader/app/components/Preset/ThemeLavaLamp.client.vue'
+import ThemeBubble from '#layers/shader/app/components/Preset/ThemeBubble.client.vue'
+import ThemePlasma from '#layers/shader/app/components/Preset/ThemePlasma.client.vue'
 import type { AccentColor } from '#layers/theme/app/types/theme'
 
 definePageMeta({ ssr: false })
@@ -30,11 +32,13 @@ const ACCENT_HEX: Record<AccentColor, string> = {
 const accents = Object.keys(ACCENT_HEX) as AccentColor[]
 
 // Pattern selector
-type PatternKey = 'mesh' | 'flow' | 'aurora'
+type PatternKey = 'mesh' | 'wave' | 'lavalamp' | 'bubble' | 'plasma'
 const PATTERNS: { key: PatternKey; label: string; component: any }[] = [
-  { key: 'mesh', label: 'Mesh', component: ThemeGradient },
-  { key: 'flow', label: 'Flow', component: ThemeFlow },
-  { key: 'aurora', label: 'Aurora', component: ThemeAurora },
+  { key: 'mesh',     label: 'Mesh',   component: ThemeGradient },
+  { key: 'wave',     label: 'Wave',   component: ThemeWave },
+  { key: 'lavalamp', label: 'Lava',   component: ThemeLavaLamp },
+  { key: 'bubble',   label: 'Bubble', component: ThemeBubble },
+  { key: 'plasma',   label: 'Plasma', component: ThemePlasma },
 ]
 const activePattern = ref<PatternKey>('mesh')
 const activePreset = computed(() => PATTERNS.find((p) => p.key === activePattern.value)!.component)
@@ -55,18 +59,10 @@ const color4 = ref('#38bdf8')
 const { setAccent, activeAccent } = useAccentColor()
 const { primaryHex, secondaryHex, infoHex, primaryLightHex, clearColor } = useThemeColors()
 
-watch(primaryHex, (hex) => {
-  color1.value = hex
-})
-watch(secondaryHex, (hex) => {
-  color2.value = hex
-})
-watch(primaryLightHex, (hex) => {
-  color3.value = hex
-})
-watch(infoHex, (hex) => {
-  color4.value = hex
-})
+watch(primaryHex,    (hex) => { color1.value = hex }, { immediate: true })
+watch(secondaryHex,  (hex) => { color2.value = hex }, { immediate: true })
+watch(primaryLightHex, (hex) => { color3.value = hex }, { immediate: true })
+watch(infoHex,       (hex) => { color4.value = hex }, { immediate: true })
 
 const presetProps = computed(() => ({
   speed: speed.value,
@@ -118,7 +114,7 @@ const isDark = computed(() => colorMode.value === 'dark')
             </p>
           </div>
           <div class="flex items-center gap-1.5">
-            <UColorModeButton size="xs" />
+            <UColorModeSelect size="xs" />
             <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" size="xs" color="neutral" />
           </div>
         </div>
