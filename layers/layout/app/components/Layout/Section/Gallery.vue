@@ -23,7 +23,7 @@
  */
 
 interface Props<T> {
-  items: T[]
+  items?: T[]
   columns?: 2 | 3 | 4 | 6
   itemRowSpan?: number
   fullHeight?: boolean
