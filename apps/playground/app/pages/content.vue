@@ -5,14 +5,13 @@ onUnmounted(() => setPageAccent(null))
 
 const { data: page } = await useContentPage('/')
 
-definePageMeta({ layout: 'grid' })
+definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: true } } })
 </script>
 
 <template>
-  <LayoutPageContainer
+  <LayoutPage
     title="Content Layer Demo"
     description="Demonstrating the content layer with blog, portfolio, and gallery collections"
-    :show-header="false"
   >
     <LayoutSection>
       <LayoutGridItem preset="centered">
@@ -207,5 +206,5 @@ definePageMeta({ layout: 'grid' })
         </div>
       </LayoutGridItem>
     </LayoutSection>
-  </LayoutPageContainer>
+  </LayoutPage>
 </template>

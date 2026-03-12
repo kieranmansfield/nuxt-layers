@@ -12,9 +12,9 @@
   "dependencies": {
     "@netlify/nuxt": "0.2.29",
     "better-sqlite3": "^12.6.2",
-    "nuxt": "^4.3.1",
+    "nuxt": "^4.4.2",
     "vue": "^3.5.27",
-    "vue-router": "^4.6.4",
+    "vue-router": "^5.0.0",
     "zod": "^4.3.6",
     "zod-to-json-schema": "^3.25.1"
   }

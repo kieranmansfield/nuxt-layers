@@ -1,4 +1,5 @@
 <script setup lang="ts">
+definePageMeta({ layout: false })
 const { setPageAccent } = useAccentColor()
 setPageAccent('violet')
 onUnmounted(() => setPageAccent(null))
@@ -427,10 +428,9 @@ const entrancePresetDemos = [
 </script>
 
 <template>
-  <LayoutPageContainer
+  <LayoutPage
     title="v-gsap Directive Guide"
     description="Complete reference for the v-gsap directive with live examples"
-    :show-header="false"
   >
     <div class="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
       <!-- Hero -->
@@ -2288,5 +2288,5 @@ const entrancePresetDemos = [
         </UContainer>
       </section>
     </div>
-  </LayoutPageContainer>
+  </LayoutPage>
 </template>

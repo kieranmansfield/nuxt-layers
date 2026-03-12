@@ -3,7 +3,7 @@ import type { BlogQueryOptions } from '../types/content'
 export function useBlogPosts(options: BlogQueryOptions = {}) {
   const { excludeDrafts = true, tags, limit } = options
 
-  return useAsyncData('blog-posts', async () => {
+  return useContentData('blog-posts', async () => {
     let posts = await queryCollection('blog').order('date', 'DESC').all()
 
     if (excludeDrafts) {

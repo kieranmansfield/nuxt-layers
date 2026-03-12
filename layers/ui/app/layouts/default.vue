@@ -8,14 +8,10 @@ const hasMastHeader = typeof mastHeader !== 'string'
 const hasMastFooter = typeof mastFooter !== 'string'
 </script>
 
-<!-- eslint-disable vue/no-multiple-template-root -->
 <template>
-  <MastScroller>
-    <component :is="mastHeader" v-if="hasMastHeader" />
-    <MastMain>
-      <slot />
-    </MastMain>
-    <component :is="mastFooter" v-if="hasMastFooter" />
-    <LayoutGridDebug />
-  </MastScroller>
+  <component :is="mastHeader" v-if="hasMastHeader" />
+  <MastMain>
+    <slot />
+  </MastMain>
+  <component :is="mastFooter" v-if="hasMastFooter" />
 </template>

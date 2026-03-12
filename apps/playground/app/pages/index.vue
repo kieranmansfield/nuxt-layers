@@ -211,16 +211,15 @@ const layers = [
   },
 ]
 
-definePageMeta({ layout: 'grid' })
+definePageMeta({ layout: { name: 'grid', props: { showHeader: false, showFooter: false } } })
 </script>
 
 <!--    -->
 
 <template>
-  <LayoutPageContainer
+  <LayoutPage
     title="Nuxt Layers Playground"
     description="Explore the features of each layer in this monorepo architecture demo"
-    :show-header="false"
   >
     <LayoutSection>
       <LayoutGridItem preset="centered">
@@ -316,5 +315,5 @@ definePageMeta({ layout: 'grid' })
         </div>
       </LayoutGridItem>
     </LayoutSection>
-  </LayoutPageContainer>
+  </LayoutPage>
 </template>

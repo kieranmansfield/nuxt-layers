@@ -3,7 +3,7 @@ import type { GalleryQueryOptions } from '../types/content'
 export function useGalleryItems(options: GalleryQueryOptions = {}) {
   const { tags, limit } = options
 
-  return useAsyncData('gallery-items', async () => {
+  return useContentData('gallery-items', async () => {
     let items = await queryCollection('gallery').order('date', 'DESC').all()
 
     if (tags?.length) {

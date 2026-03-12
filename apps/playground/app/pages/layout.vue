@@ -1,5 +1,7 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'grid' })
+definePageMeta({
+  layout: { name: 'grid', props: { showHeader: true, showFooter: false, showGridDebug: true } },
+})
 
 const { setPageAccent } = useAccentColor()
 setPageAccent('amber')

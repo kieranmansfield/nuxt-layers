@@ -52,14 +52,13 @@ const COLOR_ROLES = [
   { key: 'neutral', label: 'Neutral' },
 ] as const
 
-definePageMeta({ layout: 'grid' })
+definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: true } } })
 </script>
 
 <template>
-  <LayoutPageContainer
+  <LayoutPage
     title="Theme Layer Demo"
     description="Demonstrating the Theme layer color system, palettes, and design tokens"
-    :show-header="false"
   >
     <LayoutSection>
       <LayoutGridItem preset="centered">
@@ -295,5 +294,5 @@ definePageMeta({ layout: 'grid' })
         </div>
       </LayoutGridItem>
     </LayoutSection>
-  </LayoutPageContainer>
+  </LayoutPage>
 </template>

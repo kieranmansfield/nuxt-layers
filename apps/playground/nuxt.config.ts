@@ -205,6 +205,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   extends: resolveExtendedLayers(),
   devtools: { enabled: true },
+  experimental: {
+    payloadExtraction: 'client',
+  },
 
   routeRules: {
     '/_studio/**': { redirect: '/' },

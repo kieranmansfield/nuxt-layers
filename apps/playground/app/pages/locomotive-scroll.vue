@@ -1,4 +1,5 @@
 <script setup lang="ts">
+definePageMeta({ layout: false })
 const { setPageAccent } = useAccentColor()
 setPageAccent('emerald')
 onUnmounted(() => setPageAccent(null))
@@ -75,10 +76,9 @@ const { progress } = useSmoothScroll()
 </script>
 
 <template>
-  <LayoutPageContainer
+  <LayoutPage
     title="Locomotive Scroll Deep Dive"
     description="Comprehensive guide to Locomotive Scroll v5 features and usage"
-    :show-header="false"
   >
     <div class="locomotive-deep-dive">
       <!-- Fixed scroll stats using component -->
@@ -740,7 +740,7 @@ const { progress } = useSmoothScroll()
         </UContainer>
       </section>
     </div>
-  </LayoutPageContainer>
+  </LayoutPage>
 </template>
 
 <style scoped>

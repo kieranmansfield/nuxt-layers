@@ -6,7 +6,7 @@ import ThemeBubble from '#layers/shader/app/components/Preset/ThemeBubble.client
 import ThemePlasma from '#layers/shader/app/components/Preset/ThemePlasma.client.vue'
 import type { AccentColor } from '#layers/theme/app/types/theme'
 
-definePageMeta({ ssr: false })
+definePageMeta({ ssr: false, layout: false })
 
 // Hardcoded Tailwind 500 hex values (same as ThemePickerAccentButton)
 const ACCENT_HEX: Record<AccentColor, string> = {

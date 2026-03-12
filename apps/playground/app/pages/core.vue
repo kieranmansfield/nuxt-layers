@@ -124,14 +124,13 @@ async function handleUpdate() {
   await updateServiceWorker()
 }
 
-definePageMeta({ layout: 'grid' })
+definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: true } } })
 </script>
 
 <template>
-  <LayoutPageContainer
+  <LayoutPage
     title="Core Layer Demo"
     description="Demonstrating the core layer utilities and composables"
-    :show-header="false"
   >
     <LayoutSection>
       <LayoutGridItem preset="centered">
@@ -571,5 +570,5 @@ definePageMeta({ layout: 'grid' })
         </div>
       </LayoutGridItem>
     </LayoutSection>
-  </LayoutPageContainer>
+  </LayoutPage>
 </template>

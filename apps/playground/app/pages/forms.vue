@@ -77,7 +77,7 @@ interface EmailStatus {
   emailTo: string | null
 }
 
-const { data: emailStatus } = useFetch<EmailStatus>('/api/forms/status')
+const { data: emailStatus } = useFormsFetch<EmailStatus>('/status')
 
 const testEmailLoading = ref(false)
 const testEmailResult = ref<{ success: boolean; error?: string } | null>(null)
@@ -146,14 +146,13 @@ const schema = z.object({
 // Type is automatically inferred
 type FormState = z.infer<typeof schema>`
 
-definePageMeta({ layout: 'grid' })
+definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: true } } })
 </script>
 
 <template>
-  <LayoutPageContainer
+  <LayoutPage
     title="Forms Layer Demo"
     description="Config-driven form fields with Zod validation and type inference"
-    :show-header="false"
   >
     <LayoutSection>
       <LayoutGridItem preset="centered">
@@ -817,5 +816,5 @@ NUXT_FORMS_LAYER_EMAIL_TO=you@example.com</pre
         </div>
       </LayoutGridItem>
     </LayoutSection>
-  </LayoutPageContainer>
+  </LayoutPage>
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ ssr: false })
+definePageMeta({ ssr: false, layout: false })
 
 const { setPageAccent } = useAccentColor()
 setPageAccent('violet')
@@ -412,10 +412,9 @@ const totalNewFunctions = computed(() => {
 </script>
 
 <template>
-  <LayoutPageContainer
+  <LayoutPage
     title="Shader Layer Demo"
     description="TSL shader utilities — noise, SDF, lighting, tonemapping, patterns & effects"
-    :show-header="false"
   >
     <div class="min-h-screen bg-gray-950 text-white">
       <!-- Hero Section -->
@@ -1706,7 +1705,7 @@ const totalNewFunctions = computed(() => {
         </UContainer>
       </section>
     </div>
-  </LayoutPageContainer>
+  </LayoutPage>
 </template>
 
 <style scoped>

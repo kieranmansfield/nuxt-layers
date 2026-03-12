@@ -3,7 +3,7 @@ import ShaderHost from '#layers/shader/app/components/Shader/Host.client.vue'
 import ShaderRuntime from '#layers/shader/app/components/Shader/Runtime.client.vue'
 import type { Component } from 'vue'
 
-definePageMeta({ ssr: false })
+definePageMeta({ ssr: false, layout: false })
 
 const { setPageAccent } = useAccentColor()
 setPageAccent('emerald')
@@ -70,10 +70,9 @@ const presets = [
 </script>
 
 <template>
-  <LayoutPageContainer
+  <LayoutPage
     title="Ambient Backgrounds"
     description="Beautiful TSL-powered ambient backgrounds using WebGPU"
-    :show-header="false"
   >
     <div class="min-h-screen bg-gray-950 text-white">
       <!-- Hero Section -->
@@ -288,5 +287,5 @@ const presets = [
         </UContainer>
       </section>
     </div>
-  </LayoutPageContainer>
+  </LayoutPage>
 </template>

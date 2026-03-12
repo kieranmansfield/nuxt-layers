@@ -1,5 +1,6 @@
 <script setup lang="ts">
 /* eslint-disable vue/prefer-true-attribute-shorthand */
+definePageMeta({ layout: false })
 
 const { setPageAccent } = useAccentColor()
 setPageAccent('emerald')
@@ -128,10 +129,9 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
 </script>
 
 <template>
-  <LayoutPageContainer
+  <LayoutPage
     title="Motion Layer Demo"
     description="GSAP animations + Locomotive Scroll v5"
-    :show-header="false"
   >
     <div class="motion-page">
       <!-- Hero Section -->
@@ -735,7 +735,7 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
         </UContainer>
       </section>
     </div>
-  </LayoutPageContainer>
+  </LayoutPage>
 </template>
 
 <style scoped>

@@ -2,7 +2,7 @@
 import { ROUTING_PRESETS } from '#layers/routing/app/types/routing'
 import type { FeatureValue, RoutingPreset, RoutingLayerConfig } from '#layers/routing/app/types/routing'
 
-definePageMeta({ layout: 'grid' })
+definePageMeta({ layout: { name: 'grid', props: { showHeader: true } } })
 
 const appConfig = useAppConfig()
 
@@ -179,10 +179,9 @@ const maintenanceEnabled = computed({
 </script>
 
 <template>
-  <LayoutPageContainer
+  <LayoutPage
     title="Routing Layer Demo"
     description="Feature flags, governance presets, maintenance mode, and route access control"
-    :show-header="false"
   >
     <LayoutSection>
       <LayoutGridItem preset="centered">
@@ -444,5 +443,5 @@ const maintenanceEnabled = computed({
         </div>
       </LayoutGridItem>
     </LayoutSection>
-  </LayoutPageContainer>
+  </LayoutPage>
 </template>

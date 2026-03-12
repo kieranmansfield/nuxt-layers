@@ -3,7 +3,7 @@ import type { PortfolioQueryOptions } from '../types/content'
 export function usePortfolioItems(options: PortfolioQueryOptions = {}) {
   const { featured, tags, limit } = options
 
-  return useAsyncData('portfolio-items', async () => {
+  return useContentData('portfolio-items', async () => {
     let items = await queryCollection('portfolio').order('year', 'DESC').all()
 
     if (featured !== undefined) {

@@ -3,7 +3,7 @@ export function useCollectionSurround(
   slug: string,
   fields: string[] = ['description']
 ) {
-  return useAsyncData(`${collection}-${slug}-surround`, () =>
+  return useContentData(`${collection}-${slug}-surround`, () =>
     queryCollectionItemSurroundings(collection, `/${collection}/${slug}`, { fields })
   )
 }

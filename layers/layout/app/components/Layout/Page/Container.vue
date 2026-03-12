@@ -84,9 +84,6 @@ provide('pageTitle', title)
 
     <!-- Main content slot -->
     <slot />
-
-    <!-- Grid debugging helper -->
-    <LayoutGridDebug />
   </template>
 
   <!-- UPage Layout Mode - needs wrapper with MastMain -->
@@ -96,8 +93,5 @@ provide('pageTitle', title)
         <slot />
       </UPage>
     </MastMain>
-
-    <!-- Grid debugging helper -->
-    <LayoutGridDebug />
   </div>
 </template>

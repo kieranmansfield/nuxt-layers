@@ -1,4 +1,5 @@
 <script setup lang="ts">
+definePageMeta({ layout: false })
 const { setPageAccent } = useAccentColor()
 setPageAccent('violet')
 onUnmounted(() => setPageAccent(null))
@@ -41,10 +42,9 @@ const cards = [
 </script>
 
 <template>
-  <LayoutPageContainer
+  <LayoutPage
     title="Scrollytelling"
     description="Multi-chapter narrative scroll demos"
-    :show-header="false"
   >
     <div class="scrollytelling-page">
       <!-- Hero -->
@@ -354,5 +354,5 @@ const cards = [
         </UContainer>
       </section>
     </div>
-  </LayoutPageContainer>
+  </LayoutPage>
 </template>
