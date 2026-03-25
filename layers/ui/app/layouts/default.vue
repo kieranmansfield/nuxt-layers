@@ -14,4 +14,5 @@ const hasMastFooter = typeof mastFooter !== 'string'
     <slot />
   </MastMain>
   <component :is="mastFooter" v-if="hasMastFooter" />
+  <UOverlayProvider />
 </template>

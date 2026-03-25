@@ -1,13 +1,17 @@
 <template>
-  <NuxtLayout>
-    <NuxtAnnouncer />
-    <NuxtRouteAnnouncer />
-    <NuxtPage />
-  </NuxtLayout>
+  <UApp>
+    <NuxtLayout>
+      <NuxtAnnouncer />
+      <NuxtRouteAnnouncer />
+      <NuxtPage />
+    </NuxtLayout>
 
-  <ClientOnly>
-    <div class="fixed top-4 right-4 z-50">
-      <ThemePickerMenu />
-    </div>
-  </ClientOnly>
+    <ClientOnly>
+      <div class="fixed top-4 right-4 z-50">
+        <ThemePickerMenu />
+      </div>
+    </ClientOnly>
+
+    <UOverlayProvider />
+  </UApp>
 </template>
