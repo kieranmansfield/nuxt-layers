@@ -9,6 +9,16 @@ A Nuxt layer for adding smooth animations and transitions to your application.
 - Ready-to-use Vue components for common motion patterns
 - Client-side plugin for global motion utilities
 
+## Peer Dependencies
+
+This layer requires `v-gsap-nuxt` to be installed in your project:
+
+```bash
+pnpm add v-gsap-nuxt
+```
+
+> pnpm does not hoist nested layer dependencies — this must be declared at your project root.
+
 ## Installation
 
 The motion layer is automatically included when you run the playground with all layers:
