@@ -60,6 +60,23 @@ export default defineNuxtConfig({
     },
   },
 
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'en',
+      },
+      meta: [
+        // <meta name="viewport" content="width=device-width, initial-scale=1">
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      ],
+
+      noscript: [
+        // <noscript>JavaScript is required</noscript>
+        { textContent: 'JavaScript is required' },
+      ],
+    },
+  },
+
   // PWA configuration (only applied when module is loaded in production)
   // pwa:
   //   process.env.NODE_ENV === 'production'
