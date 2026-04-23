@@ -84,6 +84,9 @@ importers:
       '@iconify-json/lucide':
         specifier: ^1.2.102
         version: 1.2.102
+      '@netlify/nuxt':
+        specifier: 0.2.41
+        version: 0.2.41(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.9.0))(ioredis@5.10.1)(magicast@0.5.2)(rollup@4.60.2)(srvx@0.11.15)
       '@nuxt/eslint':
         specifier: ^1.15.2
         version: 1.15.2(@typescript-eslint/utils@8.59.0(eslint@10.2.0(jiti@2.6.1))(typescript@6.0.3))(@vue/compiler-sfc@3.5.33)(eslint@10.2.0(jiti@2.6.1))(magicast@0.5.2)(typescript@6.0.3)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
@@ -163,8 +166,8 @@ importers:
         specifier: ^10.8.0
         version: 10.9.0(@stylistic/eslint-plugin@5.10.0(eslint@10.2.0(jiti@2.6.1)))(@typescript-eslint/parser@8.59.0(eslint@10.2.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.2.0(jiti@2.6.1))(vue-eslint-parser@10.4.0(eslint@10.2.0(jiti@2.6.1)))
       npm-check-updates:
-        specifier: ^19.6.3
-        version: 19.6.6
+        specifier: ^21.0.3
+        version: 21.0.3
       nuxt:
         specifier: latest
         version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@electric-sql/pglite@0.3.16)(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@netlify/blobs@10.7.4)(@parcel/watcher@2.5.6)(@types/node@25.6.0)(@vue/compiler-sfc@3.5.33)(better-sqlite3@12.9.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.9.0))(eslint@10.2.0(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(meow@13.2.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.32(typescript@6.0.3)))(rollup-plugin-visualizer@7.0.1(rollup@4.60.2))(rollup@4.60.2)(srvx@0.11.15)(stylelint@17.7.0(typescript@6.0.3))(terser@5.46.2)(typescript@6.0.3)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))(vue-tsc@3.2.7(typescript@6.0.3))(yaml@2.8.3)
@@ -217,19 +220,19 @@ importers:
         specifier: ^5.0.3
         version: 5.0.3(prettier@3.8.3)(stylelint@17.7.0(typescript@6.0.3))
       tailwindcss:
-        specifier: ^4.2.2
+        specifier: ^4.2.4
         version: 4.2.4
       turbo:
-        specifier: ^2.8.13
+        specifier: ^2.9.6
         version: 2.9.6
       typescript:
         specifier: ^6.0.2
         version: 6.0.3
       vite-plugin-checker:
-        specifier: ^0.12.0
-        version: 0.12.0(eslint@10.2.0(jiti@2.6.1))(meow@13.2.0)(optionator@0.9.4)(stylelint@17.7.0(typescript@6.0.3))(typescript@6.0.3)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))(vue-tsc@3.2.7(typescript@6.0.3))
+        specifier: ^0.13.0
+        version: 0.13.0(eslint@10.2.0(jiti@2.6.1))(meow@13.2.0)(optionator@0.9.4)(stylelint@17.7.0(typescript@6.0.3))(typescript@6.0.3)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))(vue-tsc@3.2.7(typescript@6.0.3))
       vitest:
-        specifier: ^4.0.18
+        specifier: ^4.1.5
         version: 4.1.5(@opentelemetry/api@1.9.0)(@types/node@25.6.0)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
       vue:
         specifier: 3.5.32
@@ -1924,6 +1927,10 @@ packages:
 
   '@netlify/nuxt@0.2.29':
     resolution: {integrity: sha512-DR9LIjVfgO+gF6aowUebA9dqtXJ8AKlXQMaPKjflfkzlXShoJtv8mSwF2LsHdXsG8Yv3lugnJv+h+0nTvJiGfQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+
+  '@netlify/nuxt@0.2.41':
+    resolution: {integrity: sha512-gWnx75gxfxheaS396O5YRoWVjhvh1LlMCtvttutY3KWNVi4Yz+yTFfKWlD9eXFEjRJWRDxrrYqbGhq/H/m0F5w==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
   '@netlify/open-api@2.53.0':
@@ -7340,9 +7347,9 @@ packages:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
 
-  npm-check-updates@19.6.6:
-    resolution: {integrity: sha512-AvlRcnlUEyBEJfblUSjYMJwYKvCIWDRuCDa6x3hyUMTMkI3kslmFm0LDqwgzQfshfNh0Z3ouKiA4fLjRN7HejQ==}
-    engines: {node: '>=20.0.0', npm: '>=8.12.1'}
+  npm-check-updates@21.0.3:
+    resolution: {integrity: sha512-8y0fqtxdo5JhwzxcS9rZd969tvPbSZ3MzQoG5Fj8eqL42t1Jsg5tjZCz8CYuXLE8LNbbyV+1xxR/f/T4AdPmdg==}
+    engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0, npm: '>=10.0.0'}
     hasBin: true
 
   npm-run-path@4.0.1:
@@ -8076,6 +8083,9 @@ packages:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
     engines: {node: '>= 0.6.0'}
 
+  proper-lockfile@4.1.2:
+    resolution: {integrity: sha512-TjNPblN4BwAWMXU8s9AEz4JmQxnD1NNL7bNOY/AKUzyamc379FWASUhc/K1pL2noVb+XmZKLL68cjzLsiOAMaA==}
+
   property-information@7.1.0:
     resolution: {integrity: sha512-TwEZ+X+yCJmYfL7TPUOcvBZ4QfoT5YenQiJuX//0th53DE6w0xxLEtfK3iyryQFddXuvkIk51EEgrJQ0WJkOmQ==}
 
@@ -8385,6 +8395,10 @@ packages:
   restore-cursor@3.1.0:
     resolution: {integrity: sha512-l+sSefzHpj5qimhFSE5a8nufZYAM3sBSVMAPtYkmC+4EH2anSGaEMXSD0izRQbu9nfyQ9y5JrVmp7E8oZrUjvA==}
     engines: {node: '>=8'}
+
+  retry@0.12.0:
+    resolution: {integrity: sha512-9LkiTwjUh6rT555DtE9rTX+BKByPfrMzEAtnlEtdEwr3Nkffwiihqe2bWADg+OQRjt9gl6ICdmB/ZFDCGAtSow==}
+    engines: {node: '>= 4'}
 
   retry@0.13.1:
     resolution: {integrity: sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==}
@@ -9578,6 +9592,43 @@ packages:
       '@biomejs/biome': '>=1.7'
       eslint: 10.2.0
       meow: ^13.2.0
+      optionator: ^0.9.4
+      oxlint: '>=1'
+      stylelint: 17.7.0
+      typescript: ^6.0.2
+      vite: '>=5.4.21'
+      vls: '*'
+      vti: '*'
+      vue-tsc: ~2.2.10 || ^3.0.0
+    peerDependenciesMeta:
+      '@biomejs/biome':
+        optional: true
+      eslint:
+        optional: true
+      meow:
+        optional: true
+      optionator:
+        optional: true
+      oxlint:
+        optional: true
+      stylelint:
+        optional: true
+      typescript:
+        optional: true
+      vls:
+        optional: true
+      vti:
+        optional: true
+      vue-tsc:
+        optional: true
+
+  vite-plugin-checker@0.13.0:
+    resolution: {integrity: sha512-14EkOZmfinVZNxRmg2uCNDwtqGc/33lU/UEJansHgu27+ad+r6mMBf1Xtnq57jGZWiO/xzwtiEKPYsganw7ZFQ==}
+    engines: {node: '>=16.11'}
+    peerDependencies:
+      '@biomejs/biome': '>=1.7'
+      eslint: 10.2.0
+      meow: ^13.2.0 || ^14.0.0
       optionator: ^0.9.4
       oxlint: '>=1'
       stylelint: 17.7.0
@@ -11877,6 +11928,40 @@ snapshots:
       - uploadthing
 
   '@netlify/nuxt@0.2.29(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.9.0))(ioredis@5.10.1)(magicast@0.5.2)(rollup@4.60.2)(srvx@0.11.15)':
+    dependencies:
+      '@netlify/dev': 4.17.3(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.9.0))(ioredis@5.10.1)(rollup@4.60.2)(srvx@0.11.15)
+      '@netlify/dev-utils': 4.4.3
+      '@nuxt/kit': 4.4.2(magicast@0.5.2)
+      h3: 1.15.11
+    transitivePeerDependencies:
+      - '@azure/app-configuration'
+      - '@azure/cosmos'
+      - '@azure/data-tables'
+      - '@azure/identity'
+      - '@azure/keyvault-secrets'
+      - '@azure/storage-blob'
+      - '@capacitor/preferences'
+      - '@deno/kv'
+      - '@planetscale/database'
+      - '@upstash/redis'
+      - '@vercel/blob'
+      - '@vercel/functions'
+      - '@vercel/kv'
+      - aws4fetch
+      - bare-abort-controller
+      - bare-buffer
+      - db0
+      - encoding
+      - idb-keyval
+      - ioredis
+      - magicast
+      - react-native-b4a
+      - rollup
+      - srvx
+      - supports-color
+      - uploadthing
+
+  '@netlify/nuxt@0.2.41(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.9.0))(ioredis@5.10.1)(magicast@0.5.2)(rollup@4.60.2)(srvx@0.11.15)':
     dependencies:
       '@netlify/dev': 4.17.3(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.9.0))(ioredis@5.10.1)(rollup@4.60.2)(srvx@0.11.15)
       '@netlify/dev-utils': 4.4.3
@@ -18310,7 +18395,7 @@ snapshots:
 
   normalize-path@3.0.0: {}
 
-  npm-check-updates@19.6.6: {}
+  npm-check-updates@21.0.3: {}
 
   npm-run-path@4.0.1:
     dependencies:
@@ -19225,6 +19310,12 @@ snapshots:
 
   process@0.11.10: {}
 
+  proper-lockfile@4.1.2:
+    dependencies:
+      graceful-fs: 4.2.11
+      retry: 0.12.0
+      signal-exit: 3.0.7
+
   property-information@7.1.0: {}
 
   prosemirror-changeset@2.4.1:
@@ -19683,6 +19774,8 @@ snapshots:
     dependencies:
       onetime: 5.1.2
       signal-exit: 3.0.7
+
+  retry@0.12.0: {}
 
   retry@0.13.1: {}
 
@@ -21074,6 +21167,26 @@ snapshots:
       npm-run-path: 6.0.0
       picocolors: 1.1.1
       picomatch: 4.0.4
+      tiny-invariant: 1.3.3
+      tinyglobby: 0.2.16
+      vite: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vscode-uri: 3.1.0
+    optionalDependencies:
+      eslint: 10.2.0(jiti@2.6.1)
+      meow: 13.2.0
+      optionator: 0.9.4
+      stylelint: 17.7.0(typescript@6.0.3)
+      typescript: 6.0.3
+      vue-tsc: 3.2.7(typescript@6.0.3)
+
+  vite-plugin-checker@0.13.0(eslint@10.2.0(jiti@2.6.1))(meow@13.2.0)(optionator@0.9.4)(stylelint@17.7.0(typescript@6.0.3))(typescript@6.0.3)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))(vue-tsc@3.2.7(typescript@6.0.3)):
+    dependencies:
+      '@babel/code-frame': 7.29.0
+      chokidar: 4.0.3
+      npm-run-path: 6.0.0
+      picocolors: 1.1.1
+      picomatch: 4.0.4
+      proper-lockfile: 4.1.2
       tiny-invariant: 1.3.3
       tinyglobby: 0.2.16
       vite: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
