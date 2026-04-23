@@ -208,10 +208,14 @@
       "typescript": "^6.0.2"
     },
     "onlyBuiltDependencies": [
-      "esbuild",
-      "vue-demi",
+      "@parcel/watcher",
       "better-sqlite3",
-      "sqlite3"
+      "cypress",
+      "esbuild",
+      "sharp",
+      "sqlite3",
+      "unrs-resolver",
+      "vue-demi"
     ]
   },
   "browserslist": [
