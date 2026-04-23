@@ -1,25 +1,19 @@
 <script setup lang="ts">
 // @ts-nocheck
-import { Color, Vector3 } from 'three'
-import { uniform, time, vec3, vec4, floor, clamp, float } from 'three/tsl'
+import { uniform, time, vec3, vec4, floor, clamp } from 'three/tsl'
 import { grain } from '../../shaders/common/grain'
+import { blendOverlay, blendScreen, blendSoftLight } from '../../shaders/common/blend'
 
-/**
- * Risograph grain — coarse, coloured per-channel grain that mimics the halftone
- * dot spread of Risograph printing. Each channel gets independent noise at a
- * low frame-rate to simulate the mechanical inconsistency of a drum printer.
- */
+type GrainBlendMode = 'add' | 'sub' | 'screen' | 'overlay' | 'soft-light'
+
 const props = withDefaults(defineProps<{
-  /** Grain coarseness (UV scale multiplier — lower = bigger dots) */
   scale?: number
-  /** Grain strength per channel */
   strength?: number
-  /** Channel misregistration amount */
   misregistration?: number
-  /** Grain fps (lower = chunkier animation) */
   fps?: number
+  blendMode?: GrainBlendMode
   order?: number
-}>(), { scale: 0.6, strength: 0.12, misregistration: 0.003, fps: 8, order: 0 })
+}>(), { scale: 0.6, strength: 0.12, misregistration: 0.003, fps: 8, blendMode: 'add', order: 0 })
 
 const scaleNode = uniform(props.scale)
 const strengthNode = uniform(props.strength)
@@ -37,7 +31,6 @@ useShaderStage(
     const uv = pipeline.uvNode.value
     const seed = floor(time.mul(fpsNode))
 
-    // Each channel samples grain at a slightly offset UV — simulates plate misreg
     const uvR = uv.mul(scaleNode).add(misregNode)
     const uvG = uv.mul(scaleNode)
     const uvB = uv.mul(scaleNode).sub(misregNode)
@@ -45,9 +38,17 @@ useShaderStage(
     const rNoise = grain(uvR, strengthNode, seed)
     const gNoise = grain(uvG, strengthNode, seed.add(17.0))
     const bNoise = grain(uvB, strengthNode, seed.add(31.0))
+    const grainVec = vec3(rNoise, gNoise, bNoise)
 
-    const result = clamp(prev.xyz.add(vec3(rNoise, gNoise, bNoise)), 0, 1)
-    return vec4(result, prev.w)
+    let blended
+    switch (props.blendMode) {
+      case 'sub': blended = prev.xyz.sub(grainVec.abs()); break
+      case 'screen': blended = blendScreen(prev.xyz, grainVec.add(0.5)); break
+      case 'overlay': blended = blendOverlay(prev.xyz, grainVec.add(0.5)); break
+      case 'soft-light': blended = blendSoftLight(prev.xyz, grainVec.add(0.5)); break
+      default: blended = prev.xyz.add(grainVec)
+    }
+    return vec4(clamp(blended, 0, 1), prev.w)
   },
   props.order,
 )

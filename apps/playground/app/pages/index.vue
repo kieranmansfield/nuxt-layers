@@ -145,10 +145,31 @@ const layers = [
   },
   {
     name: 'Shader Pipeline',
-    description: '142 composable TSL blocks — generators, UV transforms, colour ops, film overlays, ray pipeline',
+    description:
+      '142 composable TSL blocks — generators, UV transforms, colour ops, film overlays, ray pipeline',
     loaded: true,
     icon: 'i-lucide-layers-3',
     to: '/shader-pipeline',
+    features: [
+      'Generators',
+      'UV Transforms',
+      'Colour Ops',
+      'Film / Analogue',
+      'Overlays',
+      'Compositions',
+    ],
+    borderColor: 'border-violet-500/30',
+    bgColor: 'bg-violet-500/5',
+    iconBg: 'bg-violet-500/10',
+    iconColor: 'text-violet-400',
+    buttonClass: 'bg-violet-500/10 text-violet-400 hover:bg-violet-500/20',
+  },
+  {
+    name: 'Shader Pipeline Background',
+    description: 'Backgrounds from composable TSL blocks',
+    loaded: true,
+    icon: 'i-lucide-layers-3',
+    to: '/shader-pipeline-background',
     features: [
       'Generators',
       'UV Transforms',
