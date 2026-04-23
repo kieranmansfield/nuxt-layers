@@ -5,7 +5,7 @@
  */
 import {
   abs,
-  atan2,
+  atan,
   cos,
   float,
   floor,
@@ -281,7 +281,7 @@ export function star(
   const outer = typeof outerRadius === 'number' ? float(outerRadius) : outerRadius
 
   const p = uv.sub(c)
-  const angle = atan2(p.y, p.x)
+  const angle = atan(p.y, p.x)
   const dist = length(p)
 
   const segmentAngle = float((Math.PI * 2) / points)
@@ -310,7 +310,7 @@ export function radialLines(
   const t = typeof thickness === 'number' ? float(thickness) : thickness
 
   const p = uv.sub(c)
-  const angle = atan2(p.y, p.x).add(Math.PI)
+  const angle = atan(p.y, p.x).add(Math.PI)
   const segment = float((Math.PI * 2) / numLines)
 
   const foldedAngle = fract(angle.div(segment))
@@ -353,7 +353,7 @@ export function polygon(
   const rot = typeof rotation === 'number' ? float(rotation) : rotation
 
   const p = uv.sub(c)
-  const angle = atan2(p.y, p.x).add(rot)
+  const angle = atan(p.y, p.x).add(rot)
   const dist = length(p)
 
   const segmentAngle = float((Math.PI * 2) / sides)

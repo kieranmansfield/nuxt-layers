@@ -45,19 +45,22 @@ export default defineNuxtPlugin(() => {
   }
 
   const router = useRouter()
+  const appConfig = useAppConfig() as any
+  const smoothScroll: boolean | string[] = appConfig.motion?.smoothScroll ?? true
 
-  const SMOOTH_SCROLL_ROUTES = ['/locomotive-scroll', '/layout-stacking', '/layout-blind-reveal']
-
-  addRouteMiddleware((to, from) => {
-    if (SMOOTH_SCROLL_ROUTES.includes(to.path)) {
-      nextTick(init)
-    } else if (from?.path && SMOOTH_SCROLL_ROUTES.includes(from.path)) {
-      destroy()
-    }
-  })
-
-  if (SMOOTH_SCROLL_ROUTES.includes(router.currentRoute.value.path)) {
+  if (smoothScroll === true) {
     init()
+  } else if (Array.isArray(smoothScroll)) {
+    addRouteMiddleware((to, from) => {
+      if (smoothScroll.includes(to.path)) {
+        nextTick(init)
+      } else if (from?.path && smoothScroll.includes(from.path)) {
+        destroy()
+      }
+    })
+    if (smoothScroll.includes(router.currentRoute.value.path)) {
+      init()
+    }
   }
 
   return {

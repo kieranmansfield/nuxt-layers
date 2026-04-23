@@ -7,6 +7,7 @@ export default defineAppConfig({
       { id: 'layout', label: 'Layout', to: { name: 'layout' } },
       { id: 'motion', label: 'Motion', to: { name: 'motion' } },
       { id: 'shader', label: 'Shader', to: { name: 'shader' } },
+      { id: 'shader-pipeline', label: 'Pipeline', to: { name: 'shader-pipeline' } },
       { id: 'overlays', label: 'Overlays', to: { name: 'overlays' } },
     ],
   },

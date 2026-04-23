@@ -1,4 +1,4 @@
-import { atan2, cos, float, Fn, fract, length, sin, vec2 } from 'three/tsl'
+import { atan, cos, float, Fn, fract, length, sin, vec2 } from 'three/tsl'
 import type { TSLNode } from '../../types'
 
 /**
@@ -34,7 +34,7 @@ export const distortUV = Fn(([uv, noiseValue, strength]: [TSLNode, TSLNode, TSLN
  */
 export const polarUV = Fn(([uv, center]: [TSLNode, TSLNode]) => {
   const centered = uv.sub(center)
-  const angle = atan2(centered.y, centered.x)
+  const angle = atan(centered.y, centered.x)
     .div(Math.PI * 2)
     .add(0.5)
   const radius = length(centered)
@@ -94,7 +94,7 @@ export const mirrorUV = Fn(([uv]: [TSLNode]) => {
  */
 export const kaleidoscopeUV = Fn(([uv, center, segments]: [TSLNode, TSLNode, TSLNode]) => {
   const centered = uv.sub(center)
-  const angle = atan2(centered.y, centered.x)
+  const angle = atan(centered.y, centered.x)
   const radius = length(centered)
 
   const segmentAngle = float(Math.PI * 2).div(segments)

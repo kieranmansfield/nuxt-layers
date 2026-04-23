@@ -64,7 +64,6 @@ export function useTSLNodes() {
     asin: TSL.asin,
     acos: TSL.acos,
     atan: TSL.atan,
-    atan2: TSL.atan2,
 
     // Vector operations
     dot: TSL.dot,

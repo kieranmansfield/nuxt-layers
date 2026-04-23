@@ -3,7 +3,7 @@
  * Modular TSL UV Manipulation Utilities
  * Provides composable UV transformation functions
  */
-import { abs, atan2, cos, float, floor, fract, length, pow, sin, smoothstep, vec2 } from 'three/tsl'
+import { abs, atan, cos, float, floor, fract, length, pow, sin, smoothstep, vec2 } from 'three/tsl'
 import type { TSLNode } from '../types'
 
 // ============================================
@@ -96,7 +96,7 @@ export function toPolar(uv: TSLNode, center: TSLNode | [number, number] = [0.5, 
   const centered = uv.sub(c)
 
   const radius = length(centered)
-  const angle = atan2(centered.y, centered.x)
+  const angle = atan(centered.y, centered.x)
     .add(Math.PI)
     .div(Math.PI * 2)
 

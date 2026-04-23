@@ -126,7 +126,7 @@ export const radialLines = Fn(
   ([uv, center, count, width]: [TSLNode, TSLNode, TSLNode, TSLNode]) => {
     const centered = uv.sub(center)
     const angle = centered.y
-      .atan2(centered.x)
+      .atan(centered.x)
       .div(Math.PI * 2)
       .add(0.5)
     const segment = fract(angle.mul(count))

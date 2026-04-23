@@ -1,6 +1,12 @@
 export default defineAppConfig({
   motion: {
     /**
+     * Enable smooth scroll globally (true), on specific routes (string[]), or disable (false).
+     * @default true
+     */
+    smoothScroll: true as boolean | string[],
+
+    /**
      * Enable GSAP ScrollTrigger integration with Lenis
      * @default true
      */
