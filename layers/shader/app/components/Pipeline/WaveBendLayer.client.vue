@@ -1,23 +1,13 @@
 <script setup lang="ts">
 // @ts-nocheck
 import { Color, Vector3 } from 'three'
-import { Fn, uniform, time, vec4, vec2, mix, sin, float } from 'three/tsl'
+import { uniform, time, vec4, vec2, mix, sin } from 'three/tsl'
 
-/**
- * ColorBends-style per-colour wave layer.
- * Uses sin(uv.yx * freq) with optional domain-warp feedback loop.
- * Stack one instance per colour for the characteristic multi-hue bend look.
- */
 const props = withDefaults(defineProps<{
-  /** Wave fill colour */
   color?: string
-  /** Blend opacity */
   opacity?: number
-  /** Wave frequency */
   frequency?: number
-  /** Animation speed */
   speed?: number
-  /** Domain warp strength — feeds back into itself for rounder bends */
   warpStrength?: number
   order?: number
 }>(), {
@@ -47,23 +37,23 @@ watch(() => props.warpStrength, v => { warpNode.value = v })
 
 const pipeline = useShaderPipelineContext()
 
-// Fn defined once at setup — toVar/addAssign require a Fn() stack at shader compile time
-const waveBendFn = Fn(([prev, uvCurrent]) => {
-  const t = time.mul(speedNode)
-
-  // Domain warp: feed UV through sin(yx) feedback
-  const s = uvCurrent.toVar()
-  s.addAssign(vec2(sin(s.y.mul(freqNode).add(t)), sin(s.x.mul(freqNode).add(t))).mul(warpNode))
-
-  // Band intensity: sin(length(s) * freq + time), remapped to 0..1
-  const band = sin(s.length().mul(freqNode.mul(4.0)).add(t)).mul(0.5).add(0.5)
-  const alpha = band.mul(opacityNode)
-
-  return vec4(mix(prev.xyz, colorNode, alpha), prev.w)
-})
-
 useShaderStage(
-  (prev) => waveBendFn([prev, pipeline.uvNode.value]),
+  (prev) => {
+    const uvCurrent = pipeline.uvNode.value
+    if (!prev || !uvCurrent) return vec4(0, 0, 0, 1)
+
+    const t = time.mul(speedNode)
+
+    // Domain warp — pure functional (both x and y use original uvCurrent coords)
+    const warpX = uvCurrent.x.add(sin(uvCurrent.y.mul(freqNode).add(t)).mul(warpNode))
+    const warpY = uvCurrent.y.add(sin(uvCurrent.x.mul(freqNode).add(t)).mul(warpNode))
+    const s = vec2(warpX, warpY)
+
+    const band = sin(s.length().mul(freqNode.mul(4.0)).add(t)).mul(0.5).add(0.5)
+    const alpha = band.mul(opacityNode)
+
+    return vec4(mix(prev.xyz, colorNode, alpha), prev.w)
+  },
   props.order,
 )
 </script>

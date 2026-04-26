@@ -43,6 +43,9 @@ const pipeline = useShaderPipelineContext()
 
 // Fn defined once at setup — Loop/If/Break/toVar/addAssign require a Fn() stack at compile time
 const raymarchFn = Fn(([ray]) => {
+  // Three.js calls Fn bodies with null args during type-inference — bail out safely
+  if (!ray) return vec4(0, 0, 0, 0)
+
   // Camera flies forward along Z
   const camZ = time.mul(speedNode)
   const ro = vec3(float(0), float(0), camZ)
@@ -82,7 +85,15 @@ const raymarchFn = Fn(([ray]) => {
 })
 
 useShaderStage(
-  () => raymarchFn([pipeline.rayNode.value]),
+  () => {
+    // Fall back to a simple perspective ray from UV when no ray node is set
+    const provided = pipeline.rayNode.value
+    const uvc = pipeline.uvNode.value
+    // Use +1 for Z so the ray points forward into the tunnel (matching Pipeline.client.vue screenRayNode)
+    const ray = provided ?? (uvc ? vec3(uvc.sub(0.5).mul(2).x, uvc.sub(0.5).mul(2).y, float(1)) : null)
+    if (!ray) return vec4(0, 0, 0, 0)
+    return raymarchFn([ray])
+  },
   props.order,
 )
 </script>

@@ -43,6 +43,7 @@ const pipeline = useShaderPipelineContext()
 useShaderStage(
   (prev) => {
     const uvCurrent = pipeline.uvNode.value
+    if (!uvCurrent) return prev
     const t = time.mul(speedNode)
     const n = simplexNoise2D(uvCurrent.mul(scaleNode).add(t)).mul(0.5).add(0.5)
     const band = smoothstep(edge0Node, edge1Node, n).mul(opacityNode)

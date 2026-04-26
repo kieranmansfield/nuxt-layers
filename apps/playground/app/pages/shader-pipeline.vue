@@ -238,6 +238,7 @@ const uvGrain = reactive({
           <p class="text-xs text-white/40">142 composable TSL blocks · WebGPU</p>
         </div>
       </div>
+      <UButton to="/shader-background" label="Background Builder" icon="i-lucide-layers" size="xs" variant="soft" color="neutral" />
       <div class="flex items-center gap-3">
         <div class="flex gap-2 text-xs text-white/30">
           <span class="bg-white/5 rounded px-2 py-0.5">Generators</span>

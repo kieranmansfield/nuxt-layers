@@ -46,7 +46,9 @@ watch(
   { immediate: true },
 )
 
-onUnmounted(() => material.dispose())
+onUnmounted(() => {
+  try { material.dispose() } catch { /* renderer already torn down */ }
+})
 </script>
 
 <template>

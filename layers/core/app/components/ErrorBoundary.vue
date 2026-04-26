@@ -61,7 +61,7 @@ const handleError = (error: unknown) => {
     <template #error="{ error, clearError }">
       <slot name="error" :error :clear-error>
         <!-- Default error UI -->
-        <div class="rounded-lg border border-error bg-error/10 p-4">
+        <div class="rounded-lg border border-error bg-error/10 p-4 ">
           <div class="flex items-start gap-3">
             <!-- Error icon -->
             <span

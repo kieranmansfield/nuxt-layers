@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // @ts-nocheck
 import { Color, Vector3 } from 'three'
-import { Fn, uniform, time, vec2, vec4, mix, smoothstep, cos, sin, float } from 'three/tsl'
+import { uniform, time, vec2, vec4, mix, smoothstep, cos, sin, float } from 'three/tsl'
 import { simplexNoise2D } from '../../shaders/common/noise'
 
 /**
@@ -77,38 +77,38 @@ watch(() => props.speed, v => { speedNode.value = v })
 
 const pipeline = useShaderPipelineContext()
 
-// Fn defined once at setup — toVar/addAssign require a Fn() stack at shader compile time
-const noisyGradientFn = Fn(([uvCurrent]) => {
-  const t = time.mul(speedNode)
-
-  // 1. Noise-driven UV rotation (UVNoiseRotate)
-  const n = simplexNoise2D(uvCurrent.mul(noiseScaleNode).add(t))
-  // Remap n so rotation never snaps to zero: (n * 0.5 + 0.5) * rotAmount + π - rotAmount/2
-  const angle = n.mul(0.5).add(0.5).mul(rotAmountNode).add(float(Math.PI)).sub(rotAmountNode.mul(0.5))
-  const c1 = cos(angle)
-  const s1 = sin(angle)
-  const centered = uvCurrent.sub(0.5)
-  const rotated = vec2(
-    centered.x.mul(c1).sub(centered.y.mul(s1)),
-    centered.x.mul(s1).add(centered.y.mul(c1)),
-  ).add(0.5)
-
-  // 2. Asymmetric sine warp (UVSineWarpXY)
-  const tuv = rotated.toVar()
-  tuv.x.addAssign(sin(tuv.y.mul(warpFreqNode).add(t)).div(warpAmpNode))
-  tuv.y.addAssign(sin(tuv.x.mul(warpFreqNode.mul(1.5)).add(t)).div(warpAmpNode.mul(0.5)))
-
-  // 3. Rotated gradient blend (RotatedGradientBlend)
-  const cb = cos(blendAngleNode)
-  const sb = sin(blendAngleNode)
-  const rotX = tuv.sub(0.5).x.mul(cb).sub(tuv.sub(0.5).y.mul(sb)).add(0.5)
-  const blend = smoothstep(edge0Node, edge1Node, rotX)
-
-  return vec4(mix(colorANode, colorBNode, blend), float(1))
-})
-
 useShaderStage(
-  () => noisyGradientFn([pipeline.uvNode.value]),
+  () => {
+    const uvCurrent = pipeline.uvNode.value
+    if (!uvCurrent) return vec4(0, 0, 0, 1)
+
+    const t = time.mul(speedNode)
+
+    // 1. Noise-driven UV rotation
+    const n = simplexNoise2D(uvCurrent.mul(noiseScaleNode).add(t))
+    const angle = n.mul(0.5).add(0.5).mul(rotAmountNode).add(float(Math.PI)).sub(rotAmountNode.mul(0.5))
+    const c1 = cos(angle)
+    const s1 = sin(angle)
+    const centered = uvCurrent.sub(0.5)
+    const rotated = vec2(
+      centered.x.mul(c1).sub(centered.y.mul(s1)),
+      centered.x.mul(s1).add(centered.y.mul(c1)),
+    ).add(0.5)
+
+    // 2. Asymmetric sine warp — pure functional (no toVar/addAssign needed)
+    // warpedY uses warpedX to replicate the sequential addAssign behaviour
+    const warpedX = rotated.x.add(sin(rotated.y.mul(warpFreqNode).add(t)).div(warpAmpNode))
+    const warpedY = rotated.y.add(sin(warpedX.mul(warpFreqNode.mul(1.5)).add(t)).div(warpAmpNode.mul(0.5)))
+    const tuv = vec2(warpedX, warpedY)
+
+    // 3. Rotated gradient blend
+    const cb = cos(blendAngleNode)
+    const sb = sin(blendAngleNode)
+    const rotX = tuv.sub(0.5).x.mul(cb).sub(tuv.sub(0.5).y.mul(sb)).add(0.5)
+    const blend = smoothstep(edge0Node, edge1Node, rotX)
+
+    return vec4(mix(colorANode, colorBNode, blend), float(1))
+  },
   props.order,
 )
 </script>
