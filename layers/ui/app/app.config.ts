@@ -1,6 +1,4 @@
-import { defineAppConfig } from 'nuxt/app'
-
-export default defineAppConfig({
+export default {
   mastNav: {
     links: [],
     scrollBehaviour: 'router',
@@ -37,4 +35,4 @@ export default defineAppConfig({
       },
     },
   },
-})
+}

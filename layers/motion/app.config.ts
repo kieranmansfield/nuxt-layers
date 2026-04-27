@@ -1,6 +1,4 @@
-import { defineAppConfig } from 'nuxt/app'
-
-export default defineAppConfig({
+export default {
   motion: {
     /**
      * Enable smooth scroll globally (true), on specific routes (string[]), or disable (false).
@@ -26,4 +24,4 @@ export default defineAppConfig({
       touchMultiplier: 2,
     },
   },
-})
+}

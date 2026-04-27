@@ -1,6 +1,4 @@
-import { defineAppConfig } from 'nuxt/app'
-
-export default defineAppConfig({
+export default {
   shader: {
     preferWebGPU: true,
     maxPixelRatio: 2,
@@ -8,4 +6,4 @@ export default defineAppConfig({
     debugPanel: true,
     toneMapping: 'aces',
   },
-})
+}

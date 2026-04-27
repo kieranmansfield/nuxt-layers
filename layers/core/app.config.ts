@@ -1,6 +1,4 @@
-import { defineAppConfig } from 'nuxt/app'
-
-export default defineAppConfig({
+export default {
   coreLayer: {
     // 404 Page defaults (all optional)
     notFound: {
@@ -72,4 +70,4 @@ export default defineAppConfig({
       debug: false,
     },
   },
-})
+}

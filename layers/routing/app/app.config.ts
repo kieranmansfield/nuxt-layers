@@ -1,6 +1,4 @@
-import { defineAppConfig } from 'nuxt/app'
-
-export default defineAppConfig({
+export default {
   routingLayer: {
     preset: 'simple',
     strictDefaultDeny: false,
@@ -11,4 +9,4 @@ export default defineAppConfig({
     scrollRouting: { enabled: false, mode: 'replace' },
     features: {},
   },
-})
+}

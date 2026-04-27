@@ -1,6 +1,4 @@
-import { defineAppConfig } from 'nuxt/app'
-
-export default defineAppConfig({
+export default {
   /**
    * Nuxt UI component theming — aligned to the Swiss Grid System.
    *
@@ -178,4 +176,4 @@ export default defineAppConfig({
       },
     },
   },
-})
+}
