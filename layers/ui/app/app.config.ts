@@ -1,7 +1,7 @@
 export default defineAppConfig({
   mastNav: {
-    links: [] as Array<{ id: string; label: string; to: string | { name: string; params?: Record<string, unknown>; query?: Record<string, unknown> } }>,
-    scrollBehaviour: 'router' as 'smooth-scroll' | 'router',
+    links: [],
+    scrollBehaviour: 'router',
   },
   uiLayer: {
     gradients: {
@@ -36,17 +36,3 @@ export default defineAppConfig({
     },
   },
 })
-
-declare module '@nuxt/schema' {
-  interface AppConfigInput {
-    mastNav?: {
-      links?: Array<{ id: string; label: string; to: string | { name: string; params?: Record<string, unknown>; query?: Record<string, unknown> } }>
-      scrollBehaviour?: 'smooth-scroll' | 'router'
-    }
-    uiLayer?: {
-      name?: string
-      gradients?: Record<string, import('./types/gradient').GradientConfig>
-      accentScenes?: Record<string, import('./types/accent').AccentSceneConfig>
-    }
-  }
-}
