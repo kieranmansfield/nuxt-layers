@@ -1,3 +1,5 @@
+import { defineAppConfig } from 'nuxt/app'
+
 export default defineAppConfig({
   /**
    * Nuxt UI component theming — aligned to the Swiss Grid System.
@@ -177,15 +179,3 @@ export default defineAppConfig({
     },
   },
 })
-
-declare module '@nuxt/schema' {
-  interface AppConfigInput {
-    layoutLayer?: {
-      /** Project name */
-      name?: string
-      ui?: {
-        grid?: import('./app/types/layouts').GridConfig
-      }
-    }
-  }
-}

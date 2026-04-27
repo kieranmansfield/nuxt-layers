@@ -1,4 +1,4 @@
-import type { RoutingLayerConfig } from './types/routing'
+import { defineAppConfig } from 'nuxt/app'
 
 export default defineAppConfig({
   routingLayer: {
@@ -10,11 +10,5 @@ export default defineAppConfig({
     maintenance: { enabled: false, allowRoutes: ['/maintenance'] },
     scrollRouting: { enabled: false, mode: 'replace' },
     features: {},
-  } satisfies RoutingLayerConfig,
+  },
 })
-
-declare module '@nuxt/schema' {
-  interface AppConfigInput {
-    routingLayer?: Partial<import('./types/routing').RoutingLayerConfig>
-  }
-}

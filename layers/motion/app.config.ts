@@ -1,10 +1,12 @@
+import { defineAppConfig } from 'nuxt/app'
+
 export default defineAppConfig({
   motion: {
     /**
      * Enable smooth scroll globally (true), on specific routes (string[]), or disable (false).
      * @default true
      */
-    smoothScroll: true as boolean | string[],
+    smoothScroll: true,
 
     /**
      * Enable GSAP ScrollTrigger integration with Lenis
@@ -25,12 +27,3 @@ export default defineAppConfig({
     },
   },
 })
-
-declare module '@nuxt/schema' {
-  interface AppConfigInput {
-    motionLayer?: {
-      /** Project name */
-      name?: string
-    }
-  }
-}

@@ -1,18 +1,11 @@
+import { defineAppConfig } from 'nuxt/app'
+
 export default defineAppConfig({
   shader: {
     preferWebGPU: true,
     maxPixelRatio: 2,
-    defaultQuality: 'high' as 'low' | 'medium' | 'high' | 'ultra',
+    defaultQuality: 'high',
     debugPanel: true,
-    toneMapping: 'aces' as 'aces' | 'reinhard' | 'cineon' | 'linear',
+    toneMapping: 'aces',
   },
 })
-
-declare module '@nuxt/schema' {
-  interface AppConfigInput {
-    shaderLayer?: {
-      /** Project name */
-      name?: string
-    }
-  }
-}
