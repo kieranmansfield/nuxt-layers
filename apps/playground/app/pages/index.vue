@@ -147,7 +147,8 @@ const layers = [
   },
   {
     name: 'Shader Background',
-    description: '50+ background presets — gradients, mesh, noise, atmospheric, abstract, animated themes',
+    description:
+      '50+ background presets — gradients, mesh, noise, atmospheric, abstract, animated themes',
     loaded: true,
     icon: 'i-lucide-wand-sparkles',
     to: '/shader-background',
@@ -291,7 +292,7 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: false, showFooter:
             description="Explore the features of each layer in this monorepo architecture demo"
           />
           <!-- Layer Cards -->
-          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <div
               v-for="layer in layers"
               :key="layer.name"

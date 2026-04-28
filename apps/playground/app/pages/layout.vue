@@ -30,7 +30,7 @@ const presetGroups = [
     label: 'Width variants',
     presets: [
       { name: 'wide', desc: 'lg: cols 2–17 · 16 cols', lgStart: 2, lgSpan: 16 },
-      { name: 'centered', desc: 'lg: cols 4–15 · 12 cols', lgStart: 4, lgSpan: 12 },
+      { name: 'centered', desc: 'Full width · 12 rows (100vh)', lgStart: 1, lgSpan: 18 },
       { name: 'prose', desc: 'lg: cols 5–14 · 10 cols', lgStart: 5, lgSpan: 10 },
     ],
   },
@@ -580,7 +580,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                 <pre
                   class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
                 ><code>&lt;LayoutGridItem preset="centered"&gt;
-  &lt;!-- lg: cols 4–15 · md: cols 2–11 · mobile: full --&gt;
+  &lt;!-- full width within the grid's padding · 12 rows (100vh) --&gt;
 &lt;/LayoutGridItem&gt;
 
 &lt;!-- Pair two presets for a sidebar layout --&gt;

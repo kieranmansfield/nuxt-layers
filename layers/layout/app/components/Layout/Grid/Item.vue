@@ -12,6 +12,9 @@
  * @prop {number | ResponsiveValue} rowSpan - Number of rows to span (default: 1)
  * @prop {Alignment} align - Vertical alignment (align-self): start, center, end, stretch
  * @prop {Alignment} justify - Horizontal alignment (justify-self): start, center, end, stretch
+ * @prop {string} container - Content width constraint: content (65ch), wide (90rem), fluid, full
+ * @prop {string} gap - Override --grid-gap for nested content (e.g. '1rem', '2rem')
+ * @prop {string} density - Vertical rhythm: compact (2px), normal (4px), relaxed (8px)
  * @prop {number} z - Explicit z-index value
  * @prop {LayerName} layer - Semantic layer: back, mid, front, top
  * @prop {BleedDirection} bleed - Edge bleed: left, right, both
@@ -41,6 +44,9 @@ interface ResponsiveValue<T> {
   lg?: T
 }
 
+type ContainerSize = 'content' | 'wide' | 'fluid' | 'full'
+type Density = 'compact' | 'normal' | 'relaxed'
+
 interface Props {
   preset?: string
   as?: string
@@ -50,6 +56,9 @@ interface Props {
   rowSpan?: number | ResponsiveValue<number>
   align?: Alignment
   justify?: Alignment
+  container?: ContainerSize
+  gap?: string
+  density?: Density
   z?: number
   layer?: LayerName
   bleed?: BleedDirection
@@ -73,6 +82,9 @@ const rowSpan = computed(() => props.rowSpan ?? presetConfig.value?.rowSpan ?? 1
 // Preset-aware alignment computed refs
 const align = computed(() => props.align ?? presetConfig.value?.align)
 const justify = computed(() => props.justify ?? presetConfig.value?.justify)
+const container = computed(() => props.container ?? presetConfig.value?.container)
+const gap = computed(() => props.gap ?? presetConfig.value?.gap)
+const density = computed(() => props.density ?? presetConfig.value?.density)
 
 const layerZIndex: Record<LayerName, number> = {
   back: 0,
@@ -186,6 +198,19 @@ const style = computed(() => {
     styles.placeItems = `${align.value ?? 'stretch'} ${justify.value ?? 'stretch'}`
   }
 
+  // Gap override — cascades to nested content via --grid-gap
+  if (gap.value) styles['--grid-gap'] = gap.value
+
+  // Density — sets --rhythm base unit for child spacing utilities
+  if (density.value) {
+    const rhythmMap: Record<Density, string> = {
+      compact: '0.125rem',
+      normal: '0.25rem',
+      relaxed: '0.5rem',
+    }
+    styles['--rhythm'] = rhythmMap[density.value]
+  }
+
   // Z-index
   const zIndex = props.z ?? (props.layer ? layerZIndex[props.layer] : undefined)
   if (zIndex !== undefined) styles.zIndex = String(zIndex)
@@ -196,9 +221,8 @@ const style = computed(() => {
 const classes = computed(() => {
   const classList: string[] = ['gi-placed', '@container', '@container/item']
 
-  if (props.aspect) {
-    classList.push(aspectClasses[props.aspect])
-  }
+  if (props.aspect) classList.push(aspectClasses[props.aspect])
+  if (container.value) classList.push(`layout-container-${container.value}`)
 
   return classList.join(' ')
 })

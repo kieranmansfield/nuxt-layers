@@ -28,7 +28,7 @@ export interface GridLayers {
 }
 
 export type GridContainerSize = 'content' | 'wide' | 'fluid' | 'full'
-export type GridDensity = 'compact' | 'normal' | 'relaxed'
+export type GridDensity = 'compact' | 'normal' | 'relaxed' // relaxed = 0.5rem --rhythm base
 export type GridMode = 'swiss' | 'fluid' | 'disabled'
 
 export interface GridPresetsItem {

@@ -36,7 +36,7 @@ layers/layout/
 │   │   └── useGridConfig.ts           # config, isEnabled, mode, layers, getPreset, useZIndex
 │   └── types/
 │       └── layouts.ts                 # GridConfig, GridMode, GridLayers, GridPresetsItem, etc.
-├── app.config.ts                      # Config defaults + Nuxt UI component theming
+│   └── app.config.ts                  # Config defaults + Nuxt UI component theming
 ├── nuxt.config.ts                     # Layer meta, alias (#layers/layout), CSS import
 └── CLAUDE.md                          # This file
 ```
@@ -146,7 +146,7 @@ const { config, getPreset, isEnabled, mode, layers, useZIndex } = useGridConfig(
 |---|---|
 | Grid CSS | `app/assets/css/layout/grids.css` |
 | Fluid / container CSS | `app/assets/css/layout/modes/fluid.css` |
-| Config + Nuxt UI theming | `app.config.ts` |
+| Config + Nuxt UI theming | `app/app.config.ts` |
 | TypeScript types | `app/types/layouts.ts` |
 | Config composable | `app/composables/useGridConfig.ts` |
 | Grid wrapper component | `app/components/Layout/Main.vue` |

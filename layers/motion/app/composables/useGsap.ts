@@ -1,5 +1,9 @@
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
 /**
- * GSAP composable - provides access to GSAP and ScrollTrigger
+ * Provides access to GSAP and ScrollTrigger.
+ * Registration is handled by v-gsap-nuxt.
  *
  * @example
  * const { gsap, ScrollTrigger } = useGsap()
@@ -11,11 +15,5 @@
  * })
  */
 export function useGsap() {
-  const nuxtApp = useNuxtApp()
-
-  return {
-    gsap: nuxtApp.$gsap as unknown as typeof import('gsap').gsap,
-    ScrollTrigger:
-      nuxtApp.$ScrollTrigger as unknown as typeof import('gsap/ScrollTrigger').ScrollTrigger,
-  }
+  return { gsap, ScrollTrigger }
 }

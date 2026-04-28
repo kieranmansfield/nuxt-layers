@@ -86,11 +86,12 @@ export default {
           // Full-viewport hero: full width, all 12 rows
           hero: { colSpan: 'full', rowSpan: 12 },
 
-          // Centered content column (equal margins both sides)
-          // lg: 3 + 12 + 3 = 18 ✓  |  md: 1 + 10 + 1 = 12 ✓
+          // Full-width content area within the grid's own padding.
+          // mastmain already applies padding-inline (clamp-based gutters),
+          // so col-start:1 / col-end:-1 is already visually centred.
+          // Use preset="prose" for a narrower reading-width column.
           centered: {
-            colStart: { default: 1, md: 2, lg: 4 },
-            colSpan: { default: 6, md: 10, lg: 12 },
+            colSpan: 'full',
             rowSpan: 12,
           },
 

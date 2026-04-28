@@ -3,7 +3,7 @@ declare module '@nuxt/schema' {
     layoutLayer?: {
       name?: string
       ui?: {
-        grid?: import('../app/types/layouts').GridConfig
+        grid?: import('./layouts').GridConfig
       }
     }
   }

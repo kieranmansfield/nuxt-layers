@@ -208,8 +208,11 @@ Positioned child within a subgrid section. Use `preset` for common layouts or se
 | `rowStart` | `number \| ResponsiveValue` | Grid row start |
 | `rowSpan` | `number \| ResponsiveValue` | Row span |
 | `layer` | `keyof GridLayers` | Z-index layer: `back`, `mid`, `front`, `top` |
-| `align` | `string` | `align-self` value |
-| `justify` | `string` | `justify-self` value |
+| `align` | `string` | `align-self` value: `start`, `center`, `end`, `stretch` |
+| `justify` | `string` | `justify-self` value: `start`, `center`, `end`, `stretch` |
+| `container` | `string` | Content width constraint: `content` (65ch), `wide` (90rem), `fluid`, `full` |
+| `gap` | `string` | Override `--grid-gap` for nested content (e.g. `'1rem'`) |
+| `density` | `string` | Rhythm base unit: `compact` (2px), `normal` (4px), `relaxed` (8px) |
 | `bleed` | `boolean` | Negative margin to reach viewport edge |
 | `as` | `string` | Tag override |
 
@@ -428,12 +431,14 @@ interface GridConfig {
 
 interface GridPresetsItem {
   colStart?: number | ResponsiveValue
-  colSpan?: number | ResponsiveValue
+  colSpan?: number | 'full' | ResponsiveValue
   rowStart?: number | ResponsiveValue
   rowSpan?: number | ResponsiveValue
+  align?: 'start' | 'center' | 'end' | 'stretch'
+  justify?: 'start' | 'center' | 'end' | 'stretch'
   container?: 'content' | 'wide' | 'fluid' | 'full'
   gap?: string
-  density?: 'compact' | 'normal' | 'spacious'
+  density?: 'compact' | 'normal' | 'relaxed'
 }
 ```
 
