@@ -6,6 +6,13 @@
  * same Tailwind pass as all utility generation (avoids HMR regeneration shift).
  */
 
+/* --- Theme Transition --- */
+.theme-transition {
+  transition-property: color, background-color, border-color, fill, stroke, box-shadow;
+  transition-duration: 700ms;
+  transition-delay: 0ms;
+}
+
 /* --- Reduced Motion --- */
 [data-theme-motion='reduced'] *,
 [data-theme-motion='reduced'] *::before,
