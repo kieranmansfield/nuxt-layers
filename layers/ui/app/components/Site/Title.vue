@@ -1,15 +1,5 @@
-<script lang="ts" setup>
-import { splitSpaces } from '../../utils/regex'
-
-defineProps<{
-  siteTitle: string
-  tag: string
-  titleVariant: string
-}>()
-</script>
-
 <template>
-  <component :is="tag" :v-bind="$attrs">
-    {{ titleVariant == 'split' ? splitSpaces(siteTitle) : siteTitle }}
-  </component>
+  <span v-for="(word, index) in useSite().titleWords" :key="index" class="site-word">
+    {{ word }}
+  </span>
 </template>

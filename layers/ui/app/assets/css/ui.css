@@ -18,3 +18,9 @@
 [data-theme-transparency='reduced'] .accent-blob {
   opacity: 0 !important;
 }
+
+@layer utilities {
+  .site-word {
+    display: block;
+  }
+}
