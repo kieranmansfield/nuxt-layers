@@ -44,7 +44,14 @@ const props = withDefaults(
 )
 
 const tag = computed(() => `h${props.level}` as const)
-const sizeClass = computed(() => `text-${props.size}`)
+
+const sizeMap: Record<string, string> = {
+  screen: 'text-screen',
+  'screen-xl': 'text-screen-xl',
+  'screen-xxl': 'text-screen-xxl',
+  'screen-xxxl': 'text-screen-xxxl',
+}
+const sizeClass = computed(() => sizeMap[props.size] ?? 'text-screen-xxl')
 
 const { classes } = useTypography({
   weight: props.weight,
