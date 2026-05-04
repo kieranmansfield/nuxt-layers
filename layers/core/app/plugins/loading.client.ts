@@ -29,6 +29,8 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   // console.log('[Loading Plugin] Config:', coreLayer?.loading)
 
+  if ((config.layers as Record<string, boolean> | undefined)?.core === false) return
+
   // Check if loading is enabled
   if (coreLayer?.loading?.enabled === false) {
     // console.log('[Loading Plugin] Disabled')

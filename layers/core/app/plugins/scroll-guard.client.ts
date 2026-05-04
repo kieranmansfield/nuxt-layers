@@ -24,6 +24,8 @@ export default defineNuxtPlugin(() => {
   const config = useAppConfig()
   const coreLayer = config.coreLayer as CoreLayerConfig | undefined
 
+  if ((config.layers as Record<string, boolean> | undefined)?.core === false) return
+
   if (coreLayer?.scrollGuard?.enabled === false) {
     if (import.meta.dev) {
       // eslint-disable-next-line no-console
