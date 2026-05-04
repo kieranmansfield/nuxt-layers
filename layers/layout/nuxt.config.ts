@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     '#layers/layout': import.meta.dirname,
   },
 
-  css: ['#layers/layout/app/assets/css/main.css'],
+  css: ['#layers/layout/app/assets/css/layout.css'],
 
   compatibilityDate: '2026-01-20',
 })

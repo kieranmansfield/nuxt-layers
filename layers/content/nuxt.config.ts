@@ -31,7 +31,7 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['#layers/content/app/assets/css/main.css'],
+  css: ['#layers/content/app/assets/css/content.css'],
 
   compatibilityDate: '2026-01-24',
 

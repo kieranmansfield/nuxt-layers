@@ -32,7 +32,7 @@ const props = withDefaults(
   {
     level: 1,
     weight: 'font-bold',
-    width: 'normal',
+    width: 'font-stretch-normal',
     slant: 'normal',
     leading: 'leading-tight',
     tracking: 'tracking-tight',

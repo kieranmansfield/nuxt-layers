@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     composable: true,
   },
 
-  css: ['#layers/motion/app/assets/css/main.css'],
+  css: ['#layers/motion/app/assets/css/motion.css'],
 
   compatibilityDate: '2026-01-30',
 

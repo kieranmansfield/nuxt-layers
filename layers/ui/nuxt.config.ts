@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     // '@nuxt/image'
   ],
 
-  css: ['#layers/ui/app/assets/css/main.css'],
+  css: ['#layers/ui/app/assets/css/ui.css'],
 
   // devtools: {
   //   enabled: true,

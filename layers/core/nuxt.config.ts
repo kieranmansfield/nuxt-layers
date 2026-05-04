@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     ...(process.env.NODE_ENV === 'production' ? ['@vite-pwa/nuxt'] : []),
   ],
 
-  css: ['#layers/core/app/assets/css/main.css'],
+  css: ['#layers/core/app/assets/css/core.css'],
 
   devtools: {
     enabled: true,

@@ -95,7 +95,7 @@ export default defineNuxtConfig({
     devtools: true,
   },
 
-  css: ['#layers/shader/app/assets/css/main.css'],
+  css: ['#layers/shader/app/assets/css/shader.css'],
 
   alias: {
     '#layers/shader': import.meta.dirname,

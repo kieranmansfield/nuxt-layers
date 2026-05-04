@@ -10,9 +10,11 @@
 }
 
 .accent-blob {
-  transition: background-color 400ms ease, opacity 300ms ease;
+  transition:
+    background-color 400ms ease,
+    opacity 300ms ease;
 }
 
-[data-theme-transparency="reduced"] .accent-blob {
+[data-theme-transparency='reduced'] .accent-blob {
   opacity: 0 !important;
 }

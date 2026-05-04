@@ -50,7 +50,7 @@ export function useTypography(props: {
       }),
 
       normalizeAxis(props.width, {
-        prefix: 'font',
+        numericFormatter: (v) => `font-stretch-[${v}%]`,
       }),
 
       normalizeAxis(props.slant, {

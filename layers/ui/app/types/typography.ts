@@ -65,7 +65,15 @@ export type FontSize =
    - Semantic abstraction over wdth axis
    ====================================================== */
 
-export type FontWidth = 'condensed' | 'normal' | 'expanded' | number // variable wdth axis override
+export type FontWidth =
+  | 'font-stretch-ultra-condensed'
+  | 'font-stretch-condensed'
+  | 'font-stretch-semi-condensed'
+  | 'font-stretch-normal'
+  | 'font-stretch-semi-expanded'
+  | 'font-stretch-expanded'
+  | 'font-stretch-ultra-expanded'
+  | number // variable wdth axis override
 
 /* ======================================================
    Font Slant

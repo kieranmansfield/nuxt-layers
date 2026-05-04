@@ -7,46 +7,46 @@
  */
 
 /* --- Reduced Motion --- */
-[data-theme-motion="reduced"] *,
-[data-theme-motion="reduced"] *::before,
-[data-theme-motion="reduced"] *::after {
+[data-theme-motion='reduced'] *,
+[data-theme-motion='reduced'] *::before,
+[data-theme-motion='reduced'] *::after {
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;
   scroll-behavior: auto !important;
 }
 
-[data-theme-motion="reduced"] {
+[data-theme-motion='reduced'] {
   --duration-base: 0ms;
 }
 
 /* --- Reduced Transparency --- */
-[data-theme-transparency="reduced"] {
+[data-theme-transparency='reduced'] {
   --ui-bg-elevated: var(--ui-bg);
   --opacity-glass: 1;
   --backdrop-blur: 0px;
 }
 
-[data-theme-transparency="reduced"] :where([class*='backdrop-blur']) {
+[data-theme-transparency='reduced'] :where([class*='backdrop-blur']) {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
 
-[data-theme-transparency="reduced"] :where([class*='bg-default/'], [class*='bg-elevated/']) {
+[data-theme-transparency='reduced'] :where([class*='bg-default/'], [class*='bg-elevated/']) {
   background-color: var(--ui-bg-elevated) !important;
 }
 
 /* --- High Contrast --- */
-[data-theme-contrast="high"] {
+[data-theme-contrast='high'] {
   --ui-border: var(--ui-border-accented);
 }
 
-[data-theme-contrast="high"] :where(button, a, [role='button']) {
+[data-theme-contrast='high'] :where(button, a, [role='button']) {
   outline-width: 2px;
 }
 
-[data-theme-contrast="high"] .text-muted,
-[data-theme-contrast="high"] .text-dimmed {
+[data-theme-contrast='high'] .text-muted,
+[data-theme-contrast='high'] .text-dimmed {
   opacity: 1;
   filter: contrast(1.25);
 }
