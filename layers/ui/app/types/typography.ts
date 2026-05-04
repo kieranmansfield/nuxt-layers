@@ -113,6 +113,13 @@ export type FontTracking =
   | FontTrackingNumber
 
 /* ======================================================
+   Screen-scale Font Sizes
+   - Companion to text-screen-* fluid tokens
+   ====================================================== */
+
+export type FontScreenSize = 'screen' | 'screen-xl' | 'screen-xxl' | 'screen-xxxl'
+
+/* ======================================================
    Text Layout
    ====================================================== */
 
