@@ -78,7 +78,13 @@ provide('pageTitle', title)
     <!-- Optional visible header -->
     <LayoutSection v-if="showHeader">
       <LayoutGridItem :preset="headerPreset">
-        <LayoutPageHeader :title :description :back />
+        <LayoutPageHeader
+          :title
+          v-bind="{
+            ...(description !== undefined && { description }),
+            ...(back !== undefined && { back }),
+          }"
+        />
       </LayoutGridItem>
     </LayoutSection>
 

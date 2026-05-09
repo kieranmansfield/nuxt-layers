@@ -19,20 +19,21 @@ const { data: posts, status } = await useBlogPosts(options)
         v-for="post in posts"
         :key="post.id"
         :title="post.title"
-        :description="post.description"
         :date="post.date"
-        :image="post.image"
-        :badge="post.badge"
-        :authors="
-          post.authors?.map((a) => ({
-            name: a.name,
-            avatar: a.avatar ? { src: a.avatar } : undefined,
-            to: a.url,
-            target: a.url ? '_blank' : undefined,
-          }))
-        "
         :to="post.path"
         variant="outline"
+        v-bind="{
+          ...(post.description !== undefined && { description: post.description }),
+          ...(post.image !== undefined && { image: post.image }),
+          ...(post.badge !== undefined && { badge: post.badge }),
+          ...(post.authors && {
+            authors: post.authors.map((a) => ({
+              name: a.name,
+              ...(a.avatar && { avatar: { src: a.avatar } }),
+              ...(a.url && { to: a.url, target: '_blank' as const }),
+            })),
+          }),
+        }"
       />
     </UBlogPosts>
   </NuxtContentList>

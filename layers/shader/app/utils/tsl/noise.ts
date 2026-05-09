@@ -4,11 +4,6 @@ import type { FBMOptions, TSLNode } from '../../types'
 /**
  * Hash function for noise generation
  */
-const hash21 = Fn(([p]: [TSLNode]) => {
-  const p3 = fract(p.mul(vec2(443.8975, 397.2973)))
-  const shifted = p3.add(dot(p3, p3.add(19.19)))
-  return fract(shifted.x.mul(shifted.y))
-})
 
 const hash22 = Fn(([p]: [TSLNode]) => {
   const p3 = fract(p.mul(vec2(443.8975, 397.2973)))

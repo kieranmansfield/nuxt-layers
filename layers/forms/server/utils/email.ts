@@ -17,8 +17,8 @@ export async function sendContactEmail(data: ContactEmailData) {
 
   const resend = new Resend(resendApiKey)
   const { data: result, error } = await resend.emails.send({
-    from: emailFrom,
-    to: emailTo,
+    from: emailFrom ?? '',
+    to: emailTo ?? '',
     replyTo: data.email,
     subject: `Contact form submission from ${data.name}`,
     text: `Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`,

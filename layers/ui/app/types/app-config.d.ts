@@ -1,5 +1,10 @@
 declare module '@nuxt/schema' {
   interface AppConfigInput {
+    site?: {
+      title?: string
+      subtitle?: string
+      description?: string
+    }
     mastNav?: {
       links?: Array<{
         id: string

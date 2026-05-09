@@ -15,10 +15,15 @@ const {
   tags?: string[]
   to?: string
 }>()
+
+const cardProps = computed(() => ({
+  ...(description !== undefined && { description }),
+  ...(to !== undefined && { to }),
+}))
 </script>
 
 <template>
-  <UPageCard :title :description :to variant="outline">
+  <UPageCard :title v-bind="cardProps" variant="outline">
     <img
       v-if="coverImage"
       :src="coverImage.src"

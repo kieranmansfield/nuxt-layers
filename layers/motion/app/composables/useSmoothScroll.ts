@@ -81,7 +81,7 @@ export function useSmoothScroll() {
         duration: options?.duration ?? 1.2,
         immediate: options?.immediate ?? false,
         lock: options?.lock ?? false,
-        onComplete: options?.onComplete,
+        ...(options?.onComplete !== undefined && { onComplete: options.onComplete }),
       })
     } else {
       // Native fallback

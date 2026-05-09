@@ -10,7 +10,11 @@ const colorClass = useColor(props.color, 'text')
 </script>
 
 <template>
-  <Typography tag="blockquote" :size="props.size" :class="colorClass" v-bind="$attrs">
+  <Typography
+    tag="blockquote"
+    :class="colorClass"
+    v-bind="{ ...(props.size !== undefined && { size: props.size }), ...$attrs }"
+  >
     <slot />
   </Typography>
 </template>

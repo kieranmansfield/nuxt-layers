@@ -1,5 +1,7 @@
+import type { Collections } from '@nuxt/content'
+
 export function useCollectionItem(collection: string, slug: string) {
   return useContentData(`${collection}-${slug}`, () =>
-    queryCollection(collection).path(`/${collection}/${slug}`).first()
+    queryCollection(collection as keyof Collections).path(`/${collection}/${slug}`).first()
   )
 }

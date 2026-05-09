@@ -1,4 +1,9 @@
 export default {
+  site: {
+    title: '',
+    subtitle: '',
+    description: '',
+  },
   mastNav: {
     links: [],
     scrollBehaviour: 'router',

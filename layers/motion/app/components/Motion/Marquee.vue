@@ -142,12 +142,16 @@ function handleMouseLeave() {
 <template>
   <div
     ref="containerRef"
-    class="motion-marquee"
+    class="motion-marquee width-full overflow-hidden"
     :class="{ 'is-paused': isPaused }"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
-    <div ref="contentRef" class="motion-marquee__content" :style="{ gap }">
+    <div
+      ref="contentRef"
+      class="motion-marquee__content flex will-change-transform w-max"
+      :style="{ gap }"
+    >
       <slot />
       <!-- Duplicate for seamless loop -->
       <slot />
@@ -155,17 +159,9 @@ function handleMouseLeave() {
   </div>
 </template>
 
-<style scoped>
-.motion-marquee {
-  width: 100%;
-  overflow: hidden;
-}
-
-/* stylelint-disable-next-line selector-class-pattern */
-.motion-marquee__content {
-  display: flex;
-  will-change: transform;
-  /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
-  width: max-content;
-}
-</style>
+<!-- <style scoped>
+/* .motion-marquee { width: 100%; overflow: hidden; } */ /* stylelint-disable-next-line
+selector-class-pattern */ /* .motion-marquee__content { */ /* display: flex; */ /* will-change:
+transform; */ /* stylelint-disable-next-line plugin/no-unsupported-browser-features */ /* width:
+max-content; */ /* } */
+</style> -->

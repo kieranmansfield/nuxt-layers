@@ -18,8 +18,18 @@ const {
 }>()
 
 const modelValue = computed(() => (progress != null ? progress * 100 : undefined))
+
+const progressProps = computed(() => ({
+  ...(modelValue.value !== undefined && { modelValue: modelValue.value }),
+  ...(color !== undefined && { color }),
+  ...(size !== undefined && { size }),
+  ...(orientation !== undefined && { orientation }),
+  ...(status !== undefined && { status }),
+  ...(animation !== undefined && { animation }),
+  ...(inverted !== undefined && { inverted }),
+}))
 </script>
 
 <template>
-  <UProgress :model-value="modelValue" :color :size :orientation :status :animation :inverted />
+  <UProgress v-bind="progressProps" />
 </template>

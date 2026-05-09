@@ -11,6 +11,8 @@
       "env": ["PLAYGROUND_LAYERS"]
     },
     "lint": {},
-    "typecheck": {}
+    "typecheck": {
+      "dependsOn": ["^typecheck"]
+    }
   }
 }

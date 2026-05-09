@@ -20,7 +20,11 @@ const {
 </script>
 
 <template>
-  <UPageCard :title :description :to variant="outline">
+  <UPageCard
+    :title
+    variant="outline"
+    v-bind="{ ...(description !== undefined && { description }), ...(to !== undefined && { to }) }"
+  >
     <img v-if="image" :src="image" :alt="title" class="w-full h-48 object-cover rounded" />
     <template #footer>
       <div class="flex flex-wrap gap-1.5">

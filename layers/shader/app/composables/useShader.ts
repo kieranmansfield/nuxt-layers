@@ -143,6 +143,6 @@ export function useBasicShader(
 export function useStandardShader(config?: NodeMaterialConfig) {
   return useShader({
     type: 'standard',
-    config,
+    ...(config !== undefined && { config }),
   })
 }

@@ -50,7 +50,7 @@ onMounted(() => {
 <template>
   <div class="motion-staggered">
     <slot
-      v-for="(item, index) in slots.default?.()"
+      v-for="(_, index) in slots.default?.()"
       :key="index"
       :ref="(el: HTMLElement | null) => setItemRef(el, index)"
       :class="{ animated: animatedItems[index] }"

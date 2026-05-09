@@ -43,20 +43,7 @@ onMounted(() => {
   }, 50)
 })
 
-// Methods
-const enter = (el: Element) => {
-  // Handle enter transition
-  ;(el as HTMLElement).style.opacity = '0'
-  setTimeout(() => {
-    ;(el as HTMLElement).style.opacity = '1'
-  }, 10)
-}
 
-const leave = (el: Element, done: () => void) => {
-  // Handle leave transition
-  ;(el as HTMLElement).style.opacity = '0'
-  setTimeout(done, props.duration)
-}
 </script>
 
 <template>

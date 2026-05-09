@@ -1,4 +1,8 @@
-import type { NuxtPage } from '@nuxt/schema'
+interface RoutePage {
+  file?: string
+  meta?: Record<string, unknown>
+  children?: RoutePage[]
+}
 
 export default defineNuxtConfig({
   $meta: { name: 'routing' },
@@ -10,9 +14,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-01-30',
 
   hooks: {
-    'pages:extend'(pages) {
+    'pages:extend'(pages: unknown[]) {
       const cwd = process.cwd()
-      const tag = (list: NuxtPage[]) => {
+      const tag = (list: RoutePage[]) => {
         for (const page of list) {
           if (page.file && !page.file.startsWith(cwd)) {
             page.meta ??= {}
@@ -21,7 +25,7 @@ export default defineNuxtConfig({
           if (page.children) tag(page.children)
         }
       }
-      tag(pages)
+      tag(pages as unknown as RoutePage[])
     },
   },
 })

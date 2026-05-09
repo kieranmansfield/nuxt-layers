@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "main": "./nuxt.config.ts",
   "scripts": {
+    "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json",
     "dev": "nuxi dev .playground",
     "dev:content": "CONTENT_STANDALONE=true nuxi dev",
     "dev:prepare": "nuxt prepare .playground",

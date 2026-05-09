@@ -32,7 +32,7 @@ const props = withDefaults(
   {
     tag: 'p',
     weight: 'font-normal',
-    width: 'normal',
+    width: 'font-stretch-normal',
     slant: 'normal',
     leading: 'leading-normal',
     tracking: 'tracking-normal',

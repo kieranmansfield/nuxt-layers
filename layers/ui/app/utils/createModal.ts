@@ -24,11 +24,12 @@ export function createModal<P extends Record<string, unknown>>(component: Compon
     if (import.meta.server) return { open: () => {}, close: () => {}, patch: () => {} }
 
     const overlay = useOverlay()
-    const modal = overlay.create<P>(component)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const modal = overlay.create(component as any)
     return {
-      open: (props?: Partial<P>) => modal.open(props),
+      open: (props?: Partial<P>) => modal.open(props as never),
       close: () => modal.close(),
-      patch: (props: Partial<P>) => modal.patch(props),
+      patch: (props: Partial<P>) => modal.patch(props as never),
     }
   })
 }

@@ -1,3 +1,5 @@
+import { useFeatures } from '../composables/useFeatures'
+
 export default defineNuxtRouteMiddleware((to) => {
   const { config, isStrictMode, isLayerDefaultDeny } = useRoutingConfig()
   const { resolve } = useFeatures()

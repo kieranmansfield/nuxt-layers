@@ -17,11 +17,7 @@ const schema = z.object({
 
 type FormState = z.infer<typeof schema>
 
-const state = reactive<Partial<FormState>>({
-  name: undefined,
-  email: undefined,
-  message: undefined,
-})
+const state = reactive({ name: '', email: '', message: '' })
 
 const toast = useToast()
 const isLoading = ref(false)

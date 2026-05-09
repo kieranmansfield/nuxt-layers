@@ -41,6 +41,36 @@ const resolvedIcon = computed(() => icon ?? config.value.icon)
 const isTextarea = computed(() => config.value.component === 'UTextarea')
 const isNumber = computed(() => config.value.component === 'UInputNumber')
 
+const formFieldProps = computed(() => ({
+  name,
+  required,
+  size,
+  ...(label !== undefined && { label }),
+  ...(className !== undefined && { class: className }),
+}))
+
+const baseInputProps = computed(() => ({
+  size,
+  ...(resolvedPlaceholder.value !== undefined && { placeholder: resolvedPlaceholder.value }),
+  ...(resolvedIcon.value !== undefined && { leadingIcon: resolvedIcon.value }),
+}))
+
+const numberInputProps = computed(() => ({
+  size,
+  ...(resolvedPlaceholder.value !== undefined && { placeholder: resolvedPlaceholder.value }),
+  ...(resolvedIcon.value !== undefined && { leadingIcon: resolvedIcon.value }),
+  ...(currencyOptions.value !== undefined && { formatOptions: currencyOptions.value }),
+}))
+
+const textInputProps = computed(() => ({
+  type: config.value.inputType,
+  size,
+  ...(config.value.inputMode !== undefined && { inputmode: config.value.inputMode }),
+  ...(config.value.autocomplete !== undefined && { autocomplete: config.value.autocomplete }),
+  ...(resolvedPlaceholder.value !== undefined && { placeholder: resolvedPlaceholder.value }),
+  ...(resolvedIcon.value !== undefined && { leadingIcon: resolvedIcon.value }),
+}))
+
 const currencyOptions = computed((): Intl.NumberFormatOptions | undefined => {
   if (config.value.format === 'currency') {
     return {
@@ -53,33 +83,15 @@ const currencyOptions = computed((): Intl.NumberFormatOptions | undefined => {
 </script>
 
 <template>
-  <UFormField :name :label :required :size :class="className">
-    <UTextarea
-      v-if="isTextarea"
-      v-model="model as string"
-      :placeholder="resolvedPlaceholder"
-      :size
-      autoresize
-    />
+  <UFormField v-bind="formFieldProps">
+    <UTextarea v-if="isTextarea" v-model="model as string" autoresize v-bind="baseInputProps" />
 
     <UInputNumber
       v-else-if="isNumber"
       v-model="model as number"
-      :placeholder="resolvedPlaceholder"
-      :leading-icon="resolvedIcon"
-      :size
-      :format-options="currencyOptions"
+      v-bind="numberInputProps"
     />
 
-    <UInput
-      v-else
-      v-model="model as string"
-      :type="config.inputType"
-      :inputmode="config.inputMode"
-      :autocomplete="config.autocomplete"
-      :placeholder="resolvedPlaceholder"
-      :leading-icon="resolvedIcon"
-      :size
-    />
+    <UInput v-else v-model="model as string" v-bind="textInputProps" />
   </UFormField>
 </template>

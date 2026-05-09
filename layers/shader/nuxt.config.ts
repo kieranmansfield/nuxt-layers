@@ -76,7 +76,7 @@ export default {}
   return {
     name: 'three-webgpu-ssr-stub',
     enforce: 'pre',
-    transform(code, id, options) {
+    transform(_code, id, options) {
       // Only intercept in SSR context
       if (!options?.ssr) return null
       // In three r182+, three/webgpu → three.webgpu.js, three/tsl → three.tsl.js

@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import type { GalleryCollectionItem } from '@nuxt/content'
+
 const { slug, index } = defineProps<{
   slug: string
   index: number
 }>()
 
-const { data: item } = await useCollectionItem('gallery', slug)
+const { data: rawItem } = await useCollectionItem('gallery', slug)
+const item = computed(() => rawItem.value as GalleryCollectionItem | null)
 
 const image = computed(() => item.value?.images?.[index])
 const totalImages = computed(() => item.value?.images?.length ?? 0)
@@ -19,8 +22,11 @@ useSeoMeta({
 </script>
 
 <template>
-  <div v-if="item && image">
-    <UPageHeader :title="image.title || image.alt" :description="image.caption">
+  <div v-if="item && item.images && image">
+    <UPageHeader
+      :title="image.title || image.alt"
+      v-bind="image.caption ? { description: image.caption } : {}"
+    >
       <template #headline>
         <UBreadcrumb
           :items="[

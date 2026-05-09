@@ -57,7 +57,16 @@ const sizeClass = computed(() => {
   return sizes[props.level]
 })
 
-const { classes } = useTypography(props)
+const { classes } = useTypography({
+  weight: props.weight,
+  width: props.width,
+  slant: props.slant,
+  leading: props.leading,
+  tracking: props.tracking,
+  align: props.align,
+  transform: props.transform,
+  ...(props.size !== undefined && { size: props.size }),
+})
 const colorClass = useColor(props.color, 'text')
 </script>
 
@@ -71,9 +80,8 @@ const colorClass = useColor(props.color, 'text')
     :tracking="props.tracking"
     :align="props.align"
     :transform="props.transform"
-    :size="props.size"
     :class="[sizeClass, classes, colorClass, props.class]"
-    v-bind="$attrs"
+    v-bind="{ ...(props.size !== undefined && { size: props.size }), ...$attrs }"
   >
     <slot />
   </Typography>

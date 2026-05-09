@@ -22,7 +22,7 @@ export interface PortfolioColor {
 
 export interface PortfolioFont {
   name: string
-  weights: string[]
+  weights?: string[]
   usage?: string
 }
 

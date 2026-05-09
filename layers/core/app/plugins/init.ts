@@ -130,13 +130,14 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
 
     // Test environment access (works on both server and client)
-    const env = useEnv()
+    const env = useEnv() as unknown as Record<string, unknown>
 
     if (isDev) {
+      const publicConfig = env.public as Record<string, unknown> | undefined
       // eslint-disable-next-line no-console
       console.log('[Core Layer] Environment config loaded:', {
-        hasPublicConfig: !!env.public,
-        publicKeys: Object.keys(env.public || {}),
+        hasPublicConfig: !!publicConfig,
+        publicKeys: Object.keys(publicConfig ?? {}),
       })
     }
   } catch (error) {

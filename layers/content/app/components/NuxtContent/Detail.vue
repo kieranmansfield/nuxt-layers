@@ -15,10 +15,14 @@ const {
 const { data: item, status } = await useCollectionItem(collection, slug)
 const { data: surround } = await useCollectionSurround(collection, slug)
 
+const itemImage = computed(
+  () => (item.value as { image?: string } | null)?.image
+)
+
 useSeoMeta({
   title: item.value?.title,
   description: item.value?.description,
-  ogImage: item.value?.image,
+  ogImage: itemImage,
 })
 </script>
 
@@ -26,7 +30,7 @@ useSeoMeta({
   <div>
     <USkeleton v-if="status === 'pending'" class="h-96 w-full" />
     <UPage v-else-if="item">
-      <UPageHeader :title="item.title" :description="item.description">
+      <UPageHeader :title="item.title" v-bind="item.description ? { description: item.description } : {}">
         <template v-if="$slots.headline" #headline>
           <slot name="headline" :item="item" />
         </template>
@@ -45,7 +49,7 @@ useSeoMeta({
       </UPageBody>
 
       <template v-if="!hideToc" #right>
-        <NuxtContentToc :links="item.body?.toc?.links" />
+        <NuxtContentToc v-bind="item.body?.toc?.links ? { links: item.body.toc.links } : {}" />
       </template>
     </UPage>
     <div v-else class="text-muted text-center py-12">{{ notFoundMessage }}</div>

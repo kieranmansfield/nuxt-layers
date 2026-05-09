@@ -19,9 +19,11 @@ const { data: items, status } = await usePortfolioItems(options)
         v-for="item in items"
         :key="item.id"
         :title="item.title"
-        :description="item.description"
-        :to="item.path"
         variant="outline"
+        v-bind="{
+          ...(item.description !== undefined && { description: item.description }),
+          to: item.path,
+        }"
       >
         <img
           v-if="item.image"

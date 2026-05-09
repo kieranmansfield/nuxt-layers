@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import type { PortfolioCollectionItem } from '@nuxt/content'
+
 const { slug } = defineProps<{
   slug: string
 }>()
+
+const asPortfolio = (item: unknown) => item as PortfolioCollectionItem
 </script>
 
 <template>
@@ -13,13 +17,19 @@ const { slug } = defineProps<{
   >
     <template #headline="{ item }">
       <div class="flex flex-wrap items-center gap-2">
-        <UBadge v-if="item.client" color="primary" variant="subtle">
-          {{ item.client }}
+        <UBadge v-if="asPortfolio(item).client" color="primary" variant="subtle">
+          {{ asPortfolio(item).client }}
         </UBadge>
-        <UBadge v-if="item.year" color="neutral" variant="subtle">
-          {{ item.year }}
+        <UBadge v-if="asPortfolio(item).year" color="neutral" variant="subtle">
+          {{ asPortfolio(item).year }}
         </UBadge>
-        <UBadge v-for="tag in item.tags" :key="tag" color="neutral" variant="subtle" size="xs">
+        <UBadge
+          v-for="tag in asPortfolio(item).tags"
+          :key="tag"
+          color="neutral"
+          variant="subtle"
+          size="xs"
+        >
           {{ tag }}
         </UBadge>
       </div>
@@ -27,8 +37,8 @@ const { slug } = defineProps<{
 
     <template #links="{ item }">
       <UButton
-        v-if="item.url"
-        :to="item.url"
+        v-if="asPortfolio(item).url"
+        :to="asPortfolio(item).url"
         target="_blank"
         icon="i-lucide-external-link"
         variant="outline"
@@ -38,15 +48,26 @@ const { slug } = defineProps<{
     </template>
 
     <template #before-content="{ item }">
-      <img v-if="item.image" :src="item.image" :alt="item.title" class="w-full rounded-lg mb-8" />
+      <img
+        v-if="asPortfolio(item).image"
+        :src="asPortfolio(item).image"
+        :alt="item.title"
+        class="w-full rounded-lg mb-8"
+      />
     </template>
 
     <template #after-content="{ item }">
-      <template v-if="item.colors?.length || item.typography?.length">
+      <template v-if="asPortfolio(item).colors?.length || asPortfolio(item).typography?.length">
         <USeparator class="my-8" />
         <div class="space-y-8">
-          <PortfolioColorPalette v-if="item.colors?.length" :colors="item.colors" />
-          <PortfolioTypography v-if="item.typography?.length" :typography="item.typography" />
+          <PortfolioColorPalette
+            v-if="asPortfolio(item).colors?.length"
+            :colors="asPortfolio(item).colors!"
+          />
+          <PortfolioTypography
+            v-if="asPortfolio(item).typography?.length"
+            :typography="asPortfolio(item).typography!"
+          />
         </div>
       </template>
     </template>

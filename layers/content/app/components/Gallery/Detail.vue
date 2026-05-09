@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { GalleryCollectionItem } from '@nuxt/content'
+
 const { slug } = defineProps<{
   slug: string
 }>()
@@ -6,6 +8,8 @@ const { slug } = defineProps<{
 const lightboxOpen = ref(false)
 const lightboxIndex = ref(0)
 const lightboxImages = ref<{ src: string; alt: string; width?: number; height?: number }[]>([])
+
+const asGallery = (item: unknown) => item as GalleryCollectionItem
 
 function openLightbox(
   images: { src: string; alt: string; width?: number; height?: number }[],
@@ -21,21 +25,21 @@ function openLightbox(
   <NuxtContentDetail collection="gallery" :slug not-found-message="Gallery not found">
     <template #headline="{ item }">
       <div class="flex flex-wrap items-center gap-2">
-        <span v-if="item.images?.length" class="text-sm text-muted">
-          {{ item.images.length }} image{{ item.images.length === 1 ? '' : 's' }}
+        <span v-if="asGallery(item).images?.length" class="text-sm text-muted">
+          {{ asGallery(item).images!.length }} image{{ asGallery(item).images!.length === 1 ? '' : 's' }}
         </span>
-        <UBadge v-for="tag in item.tags" :key="tag" color="neutral" variant="subtle" size="xs">
+        <UBadge v-for="tag in asGallery(item).tags" :key="tag" color="neutral" variant="subtle" size="xs">
           {{ tag }}
         </UBadge>
       </div>
     </template>
 
     <template #after-content="{ item }">
-      <template v-if="item.images?.length">
+      <template v-if="asGallery(item).images?.length">
         <USeparator class="my-8" />
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div
-            v-for="(img, idx) in item.images"
+            v-for="(img, idx) in asGallery(item).images"
             :key="img.src"
             class="overflow-hidden rounded-lg group relative"
           >
@@ -55,7 +59,7 @@ function openLightbox(
             </NuxtLink>
             <button
               class="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5 cursor-pointer"
-              @click.stop="openLightbox(item.images, idx)"
+              @click.stop="openLightbox(asGallery(item).images!, idx)"
             >
               <UIcon name="i-lucide-expand" class="size-4" />
             </button>

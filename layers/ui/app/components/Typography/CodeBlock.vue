@@ -13,7 +13,6 @@ const props = withDefaults(
     class?: string
   }>(),
   {
-    language: undefined,
     class: '',
     color: 'default',
   }
@@ -24,11 +23,13 @@ const colorClass = useColor(props.color, 'text')
 <template>
   <Typography
     tag="pre"
-    v-bind="$attrs"
-    :size="props.size"
+    v-bind="{
+      ...$attrs,
+      ...(props.size !== undefined && { size: props.size }),
+      ...(props.language !== undefined && { 'data-language': props.language }),
+    }"
     class="overflow-x-auto"
     :class="[props.class]"
-    :data-language="props.language"
   >
     <Typography
       tag="code"

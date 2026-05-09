@@ -77,18 +77,6 @@ function clampElement(el: HTMLElement) {
   clampedCount.value++
 }
 
-function restoreElement(el: HTMLElement) {
-  const saved = clampedElements.get(el)
-  if (!saved) return
-
-  el.style.transition = saved.transition
-  el.style.maxWidth = saved.maxWidth
-  el.style.boxSizing = saved.boxSizing
-  el.style.overflowX = saved.overflowX
-
-  clampedElements.delete(el)
-  clampedSet.delete(el)
-}
 
 function guard() {
   if (!isEnabled.value || !opts) return

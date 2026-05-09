@@ -1,7 +1,7 @@
 {
   "name": "kmcom-nuxt-layers",
   "private": false,
-  "version": "1.6.18",
+  "version": "1.6.20",
   "description": "Composable Nuxt 4 layers for building scalable Vue applications",
   "files": [
     "layers/*/nuxt.config.ts",
@@ -21,6 +21,7 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
+    "prepublishOnly": "pnpm typecheck",
     "clean": "pnpm -r exec rm -rf node_modules .nuxt .output .data && pnpm store prune && pnpm install",
     "cleancache": "pnpm store prune && pnpm store status",
     "update": "ncu -i",
@@ -83,7 +84,7 @@
     "tailwindcss": "^4.2.4",
     "three": "^0.183.2",
     "v-gsap-nuxt": ">=1.0.0",
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   },
   "peerDependenciesMeta": {
     "@nuxtjs/device": {
@@ -149,8 +150,8 @@
     "@perplex-digital/stylelint-config": "^17.4.0",
     "@pinia/nuxt": "^0.11.3",
     "@types/node": "^25.6.0",
-    "@typescript-eslint/eslint-plugin": "^8.59.1",
-    "@typescript-eslint/parser": "^8.59.1",
+    "@typescript-eslint/eslint-plugin": "^8.59.2",
+    "@typescript-eslint/parser": "^8.59.2",
     "@vue/eslint-config-typescript": "^14.7.0",
     "@vueuse/core": "^14.3.0",
     "@vueuse/nuxt": "^14.3.0",
@@ -166,7 +167,7 @@
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-unicorn": "^64.0.0",
     "eslint-plugin-unused-imports": "^4.4.1",
-    "eslint-plugin-vue": "^10.9.0",
+    "eslint-plugin-vue": "^10.9.1",
     "npm-check-updates": "^21.0.3",
     "nuxt": "latest",
     "pinia": "^3.0.4",
@@ -186,14 +187,14 @@
     "stylelint-no-unsupported-browser-features": "^8.1.1",
     "stylelint-prettier": "^5.0.3",
     "tailwindcss": "^4.2.4",
-    "turbo": "^2.9.8",
+    "turbo": "^2.9.9",
     "typescript": "^6.0.3",
     "vite-plugin-checker": "^0.13.0",
     "vitest": "^4.1.5",
     "vue": "latest",
     "vue-tsc": "^3.2.8",
-    "zod": "^4.3.6",
-    "zod-to-json-schema": "^3.25.1"
+    "zod": "^4.4.3",
+    "zod-to-json-schema": "^3.25.2"
   },
   "pnpm": {
     "overrides": {

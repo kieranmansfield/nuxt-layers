@@ -36,7 +36,7 @@ const props = withDefaults(
   }
 )
 
-const { gsap, ScrollTrigger } = useGsap()
+const { gsap } = useGsap()
 
 const containerRef = ref<HTMLElement | null>(null)
 const contentRef = ref<HTMLElement | null>(null)

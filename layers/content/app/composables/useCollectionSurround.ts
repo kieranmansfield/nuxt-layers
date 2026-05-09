@@ -1,9 +1,7 @@
-export function useCollectionSurround(
-  collection: string,
-  slug: string,
-  fields: string[] = ['description']
-) {
+import type { PageCollections } from '@nuxt/content'
+
+export function useCollectionSurround(collection: string, slug: string) {
   return useContentData(`${collection}-${slug}-surround`, () =>
-    queryCollectionItemSurroundings(collection, `/${collection}/${slug}`, { fields })
+    queryCollectionItemSurroundings(collection as keyof PageCollections, `/${collection}/${slug}`)
   )
 }

@@ -1,4 +1,5 @@
 import type { FeatureValue } from '../types/routing'
+import { useFeatures } from '../composables/useFeatures'
 
 export default defineNuxtPlugin(async () => {
   const { config } = useRoutingConfig()

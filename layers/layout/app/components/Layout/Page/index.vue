@@ -60,7 +60,10 @@ provide('pageTitle', title)
   <!-- Optional visible page header — rendered as a grid section -->
   <LayoutSection v-if="showHeader">
     <LayoutGridItem preset="centered">
-      <LayoutPageHeader :title :description />
+      <LayoutPageHeader
+        :title
+        v-bind="description !== undefined ? { description } : {}"
+      />
     </LayoutGridItem>
   </LayoutSection>
 
