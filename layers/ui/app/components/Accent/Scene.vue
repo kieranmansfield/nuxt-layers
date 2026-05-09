@@ -17,7 +17,7 @@ const appConfig = useAppConfig()
 const resolvedBlobs = computed((): BlobConfig[] => {
   if (props.blobs) return props.blobs
   if (props.preset) {
-    const scenes = (appConfig.uiLayer? as Record<string, unknown> | undefined)?.accentScenes as
+    const scenes = (appConfig.uiLayer as Record<string, unknown> | undefined)?.accentScenes as
       | Record<string, AccentSceneConfig>
       | undefined
     return scenes?.[props.preset]?.blobs ?? []
