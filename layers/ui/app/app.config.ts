@@ -1,7 +1,13 @@
 type MastNavLink = {
   id: string
   label: string
-  to: string | { name: string; params?: Record<string, string | number>; query?: Record<string, string | number> }
+  to:
+    | string
+    | {
+        name: string
+        params?: Record<string, string | number>
+        query?: Record<string, string | number>
+      }
 }
 
 export default defineAppConfig({
@@ -12,13 +18,27 @@ export default defineAppConfig({
   },
   mastNav: {
     links: [] as MastNavLink[],
-    scrollBehaviour: 'router' as string,
+    scrollBehaviour: 'router',
   },
   uiLayer: {
     gradients: {
-      brand: { shape: 'linear', direction: 'to-br', from: { color: 'primary', shade: 500 }, to: { color: 'secondary', shade: 600 } },
-      subtle: { shape: 'linear', direction: 'to-b', from: { color: 'primary', shade: 100, opacity: 50 }, to: { color: 'transparent' } },
-      hero: { shape: 'radial', from: { color: 'primary', shade: 400, opacity: 40 }, to: { color: 'transparent' } },
+      brand: {
+        shape: 'linear',
+        direction: 'to-br',
+        from: { color: 'primary', shade: 500 },
+        to: { color: 'secondary', shade: 600 },
+      },
+      subtle: {
+        shape: 'linear',
+        direction: 'to-b',
+        from: { color: 'primary', shade: 100, opacity: 50 },
+        to: { color: 'transparent' },
+      },
+      hero: {
+        shape: 'radial',
+        from: { color: 'primary', shade: 400, opacity: 40 },
+        to: { color: 'transparent' },
+      },
     },
     accentScenes: {
       hero: {
