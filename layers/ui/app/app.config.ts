@@ -1,4 +1,4 @@
-export default defineAppConfig({
+export default {
   site: {
     title: '',
     subtitle: '',
@@ -54,4 +54,4 @@ export default defineAppConfig({
       },
     },
   },
-})
+}
