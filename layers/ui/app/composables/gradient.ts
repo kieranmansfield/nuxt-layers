@@ -60,7 +60,7 @@ export function useGradient(
 
     let resolved: GradientConfig
     if (typeof raw === 'string') {
-      const preset = (appConfig.uiLayer as Record<string, unknown> | undefined)?.gradients as
+      const preset = (appConfig.uiLayer as Record<string, unknown> | undefined)?.['gradients'] as
         | Record<string, GradientConfig>
         | undefined
       resolved = preset?.[raw] ?? DEFAULT_CONFIG

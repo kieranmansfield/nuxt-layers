@@ -1,4 +1,3 @@
-import { createSharedComposable } from '@vueuse/core'
 import type { Component } from 'vue'
 
 /**

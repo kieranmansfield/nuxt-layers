@@ -21,7 +21,7 @@ const modelValue = computed(() => (progress != null ? progress * 100 : undefined
 
 const progressProps = computed(() => ({
   ...(modelValue.value !== undefined && { modelValue: modelValue.value }),
-  ...(color !== undefined && { color }),
+  ...(color !== undefined && { color: color as 'primary' | 'neutral' }),
   ...(size !== undefined && { size }),
   ...(orientation !== undefined && { orientation }),
   ...(status !== undefined && { status }),

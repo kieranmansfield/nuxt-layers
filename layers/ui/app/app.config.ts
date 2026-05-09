@@ -1,12 +1,18 @@
-export default {
+type MastNavLink = {
+  id: string
+  label: string
+  to: string | { name: string; params?: Record<string, string | number>; query?: Record<string, string | number> }
+}
+
+export default defineAppConfig({
   site: {
     title: '',
     subtitle: '',
     description: '',
   },
   mastNav: {
-    links: [],
-    scrollBehaviour: 'router',
+    links: [] as MastNavLink[],
+    scrollBehaviour: 'router' as string,
   },
   uiLayer: {
     gradients: {
@@ -40,4 +46,4 @@ export default {
       },
     },
   },
-}
+})

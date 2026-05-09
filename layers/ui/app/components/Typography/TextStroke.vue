@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { usePreferredContrast } from '@vueuse/core'
-
 const id = useId()
 const contrast = usePreferredContrast()
 

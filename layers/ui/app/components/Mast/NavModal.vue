@@ -5,7 +5,8 @@ const emit = defineEmits<{
   'close': []
 }>()
 
-const { links, scrollBehaviour } = useAppConfig().mastNav
+type NavLink = { id: string; label: string; to: string | { name: string; params?: Record<string, string | number>; query?: Record<string, string | number> } }
+const { links, scrollBehaviour } = useAppConfig().mastNav as { links: NavLink[]; scrollBehaviour: string }
 const activeSection = useState<string>('activeSection', () => '')
 const route = useRoute()
 const { close: closeNav } = useMastNav()
@@ -16,7 +17,7 @@ function dismiss() {
   closeNav()
 }
 
-function handleNav(link: { id: string; to: string | { name: string; params?: Record<string, unknown>; query?: Record<string, unknown> } }) {
+function handleNav(link: NavLink) {
   if (scrollBehaviour === 'smooth-scroll' && route.name === 'index') {
     try { useSmoothScroll().scrollTo(`#${link.id}`) }
     catch {}

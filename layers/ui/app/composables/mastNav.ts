@@ -1,4 +1,3 @@
-import { createSharedComposable } from '@vueuse/core'
 import MastNavModal from '../components/Mast/NavModal.vue'
 
 function _useMastNav() {
