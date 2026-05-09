@@ -1,3 +1,5 @@
+import type { MastNavLink } from './types/nav'
+
 export default defineAppConfig({
   site: {
     title: '',
