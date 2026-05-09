@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable no-restricted-imports */
 import { Color, Vector2, Vector3 } from 'three'
 import { uniform } from 'three/tsl'

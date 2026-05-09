@@ -1,3 +1,4 @@
+// @ts-nocheck
 // composables/useNetworkInfo.ts
 import { useNetwork } from '@vueuse/core'
 

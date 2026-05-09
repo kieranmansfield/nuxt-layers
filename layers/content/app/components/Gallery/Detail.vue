@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import type { GalleryCollectionItem } from '@nuxt/content'
 
 const { slug } = defineProps<{

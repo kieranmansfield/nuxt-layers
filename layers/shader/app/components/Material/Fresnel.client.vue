@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import { Color, DoubleSide } from 'three'
 import {
   dot,

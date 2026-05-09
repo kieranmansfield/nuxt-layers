@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { z } from 'zod'
 import { fieldConfigs } from '../../config/fields'

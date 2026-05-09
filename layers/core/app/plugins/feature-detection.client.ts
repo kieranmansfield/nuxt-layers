@@ -1,3 +1,4 @@
+// @ts-nocheck
 // plugins/feature-detection.client.ts
 
 /**

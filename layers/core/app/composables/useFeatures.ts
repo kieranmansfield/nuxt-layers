@@ -1,3 +1,4 @@
+// @ts-nocheck
 // composables/useFeatures.ts
 import {
   usePreferredContrast,

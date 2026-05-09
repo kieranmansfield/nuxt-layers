@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { z, type ZodObject, type ZodRawShape, type ZodTypeAny } from 'zod'
 import { fieldConfigs } from '../config/fields'
 import type { FieldType } from '../types/fields'

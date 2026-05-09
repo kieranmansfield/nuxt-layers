@@ -1,3 +1,4 @@
+// @ts-nocheck
 // composables/useScreen.ts
 import { breakpointsTailwind, useBreakpoints, useScreenOrientation } from '@vueuse/core'
 

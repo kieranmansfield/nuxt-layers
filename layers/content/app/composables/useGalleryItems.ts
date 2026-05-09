@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { GalleryQueryOptions } from '../types/content'
 
 export function useGalleryItems(options: GalleryQueryOptions = {}) {

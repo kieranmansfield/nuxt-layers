@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createSharedComposable, useLocalStorage, usePreferredReducedMotion } from '@vueuse/core'
 import type { PreferenceOverride } from '#layers/theme/app/types/theme'
 

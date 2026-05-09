@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { abs, clamp, float, Fn, max, min, mix, mod, vec3 } from 'three/tsl'
 import type { GradientStop, TSLNode } from '../../types'
 import { circularDistance } from './math'

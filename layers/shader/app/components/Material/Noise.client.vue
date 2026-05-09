@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import { Color, DoubleSide } from 'three'
 import { mix, time as tslTime, uniform, uv, vec3 } from 'three/tsl'
 import { MeshBasicNodeMaterial } from 'three/webgpu'

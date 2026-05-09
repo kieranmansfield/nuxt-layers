@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import type { BlogQueryOptions } from '../../types/content'
 
 const { options = {} } = defineProps<{

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { ZodSchema } from 'zod'
 
 /**

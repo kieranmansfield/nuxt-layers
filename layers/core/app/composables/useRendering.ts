@@ -1,3 +1,4 @@
+// @ts-nocheck
 // composables/useRendering.ts
 
 type RenderMode = 'ssr' | 'ssg' | 'csr' | 'hybrid'

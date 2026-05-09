@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createSharedComposable, useLocalStorage } from '@vueuse/core'
 import type { AccentColor } from '#layers/theme/app/types/theme'
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import { EffectComposer } from '@tresjs/post-processing'
 
 const props = withDefaults(

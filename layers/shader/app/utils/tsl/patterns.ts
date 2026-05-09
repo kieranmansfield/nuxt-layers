@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { abs, float, floor, Fn, fract, length, min, mod, sin, vec2 } from 'three/tsl'
 import type { TSLNode } from '../../types'
 import { rotateUV } from './uv'

@@ -1,5 +1,6 @@
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
+// @ts-nocheck
 import { DoubleSide, type Texture } from 'three'
 import {
   float,

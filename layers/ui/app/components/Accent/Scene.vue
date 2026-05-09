@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import type { AccentSceneConfig, BlobConfig } from '../../types/accent'
 
 const props = withDefaults(

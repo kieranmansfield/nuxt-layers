@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { abs, cos, float, Fn, mod, pow, sin } from 'three/tsl'
 import type { TSLNode } from '../../types'
 

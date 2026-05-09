@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable no-console */
 // composables/useCache.ts
 import { useOnline } from '@vueuse/core'

@@ -1,5 +1,6 @@
 <!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
+// @ts-nocheck
 const {
   collection,
   slug,

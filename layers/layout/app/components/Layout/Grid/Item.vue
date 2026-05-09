@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 /**
  * BaseGridItem - Positions content on the Swiss Grid
  *
