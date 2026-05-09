@@ -1,5 +1,3 @@
-import type { MastNavLink } from './types/nav'
-
 export default defineAppConfig({
   site: {
     title: '',
@@ -7,7 +5,7 @@ export default defineAppConfig({
     description: '',
   },
   mastNav: {
-    links: [] as MastNavLink[],
+    links: [],
     scrollBehaviour: 'router',
   },
   uiLayer: {
