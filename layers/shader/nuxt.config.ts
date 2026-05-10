@@ -89,6 +89,11 @@ export default {}
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
+  typescript: {
+    typeCheck: true,
+    strict: true,
+  },
+
   modules: ['@tresjs/nuxt'],
 
   tres: {

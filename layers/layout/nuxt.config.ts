@@ -11,4 +11,9 @@ export default defineNuxtConfig({
   css: ['#layers/layout/app/assets/css/layout.css'],
 
   compatibilityDate: '2026-01-20',
+
+  typescript: {
+    typeCheck: true,
+    strict: true,
+  },
 })

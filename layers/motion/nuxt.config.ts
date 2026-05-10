@@ -18,6 +18,11 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2026-01-30',
 
+  typescript: {
+    typeCheck: true,
+    strict: true,
+  },
+
   // Ensure GSAP is transpiled for SSR compatibility
   build: {
     transpile: ['gsap'],

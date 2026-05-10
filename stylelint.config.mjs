@@ -1,20 +1,16 @@
 /** @type {import('stylelint').Config} */
 export default {
-  // Base configs
   extends: [
-    'stylelint-config-standard', // Standard CSS rules
-    'stylelint-config-tailwindcss', // Tailwind directives support
-    // Note: stylelint-config-prettier is deprecated for Stylelint 16+
-    // Stylistic rules were removed from Stylelint, so no conflicts with Prettier
+    'stylelint-config-standard',
+    'stylelint-config-tailwindcss',
+    'stylelint-config-recommended-vue',
   ],
 
-  // Plugins
   plugins: [
-    'stylelint-prettier', // Enforce Prettier formatting through Stylelint
-    'stylelint-no-unsupported-browser-features', // Warn about unsupported CSS
+    'stylelint-prettier',
+    'stylelint-no-unsupported-browser-features',
   ],
 
-  // Allow linting inside <style> blocks in Vue files
   overrides: [
     {
       files: ['**/*.vue', '**/*.html'],
@@ -24,17 +20,23 @@ export default {
       files: ['**/*.css'],
       customSyntax: 'postcss',
     },
+    {
+      files: ['**/tokens.css', '**/design-tokens.css', '**/_tokens.css'],
+      rules: {
+        'color-no-hex': null,
+        'function-disallowed-list': [],
+      },
+    },
   ],
 
   rules: {
-    // Prettier integration
     'prettier/prettier': true,
 
-    // Core CSS rules
     'color-function-notation': 'modern',
     'alpha-value-notation': 'number',
+    'media-feature-range-notation': 'context',
+    'hue-degree-notation': 'angle',
 
-    // Class selector pattern
     'selector-class-pattern': [
       '^([a-z][a-zA-Z0-9]*|[a-z]+(-[a-z0-9]+)*)$',
       {
@@ -43,23 +45,16 @@ export default {
       },
     ],
 
-    // Color enforcement
     'color-no-hex': true,
     'function-disallowed-list': ['rgb', 'rgba', 'lab', 'lch'],
+    'color-named': ['never', { ignore: ['inside-function'] }],
 
-    // Comments
-    'comment-empty-line-before': [
-      'always',
-      {
-        except: ['first-nested'],
-        ignore: ['after-comment', 'stylelint-commands'],
-      },
-    ],
+    'max-nesting-depth': [3, { ignoreAtRules: ['media', 'supports', 'include'] }],
+    'selector-max-compound-selectors': 4,
+    'selector-no-qualifying-type': [true, { ignore: ['attribute', 'class'] }],
+    'no-descending-specificity': null,
+    'selector-max-id': 0,
 
-    // Deprecated / duplicate properties
-    'at-rule-no-deprecated': true,
-    'declaration-block-no-duplicate-custom-properties': true,
-    'font-family-no-duplicate-names': true,
     'declaration-block-no-duplicate-properties': [
       true,
       {
@@ -69,24 +64,22 @@ export default {
         ],
       },
     ],
+    'declaration-block-no-duplicate-custom-properties': true,
+    'declaration-no-important': [true, { severity: 'warning' }],
 
-    // Browser compatibility
-    'plugin/no-unsupported-browser-features': [
-      true,
+    'font-family-no-duplicate-names': true,
+    'no-duplicate-selectors': true,
+    'no-empty-source': null,
+
+    'comment-empty-line-before': [
+      'always',
       {
-        severity: 'warning',
-        ignore: [
-          'css-variables',
-          'css-cascade-layers',
-          'css-nesting',
-          'subgrid',
-          'css-grid',
-          'viewport-unit-variants',
-        ],
+        except: ['first-nested'],
+        ignore: ['after-comment', 'stylelint-commands'],
       },
     ],
 
-    // Tailwind at-rule exceptions
+    'at-rule-no-deprecated': true,
     'at-rule-no-unknown': [
       true,
       {
@@ -102,10 +95,30 @@ export default {
           'config',
           'utility',
           'custom-variant',
+          'source',
+          'plugin',
+          'variant',
         ],
       },
     ],
+
+    'plugin/no-unsupported-browser-features': [
+      true,
+      {
+        severity: 'warning',
+        ignore: [
+          'css-variables',
+          'css-cascade-layers',
+          'css-nesting',
+          'subgrid',
+          'css-grid',
+          'viewport-unit-variants',
+        ],
+      },
+    ],
+
+    'custom-property-pattern': null,
   },
 
-  ignoreFiles: ['node_modules/**', '.nuxt/**', '.output/**', '.playground/**'],
+  ignoreFiles: ['node_modules/**', '.nuxt/**', '.output/**', '.data', '.playground/**'],
 }

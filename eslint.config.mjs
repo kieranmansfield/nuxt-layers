@@ -56,11 +56,10 @@ export default defineConfigWithVueTs(
       quotes: ['error', 'single', { avoidEscape: true }],
       'no-console': 'warn',
       'no-debugger': 'error',
-      // 'no-unused-vars': 'off',
-      // '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       'prefer-const': 'error',
       'no-var': 'error',
-      // 'compat/compat': 'warn',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 
       // Disable formatting rules that conflict with Prettier
       'vue/max-attributes-per-line': 'off',
@@ -69,7 +68,7 @@ export default defineConfigWithVueTs(
       'vue/html-indent': 'off',
       'vue/multi-word-component-names': 'off',
 
-      //   // Code quality rules
+      // Code quality
       'vue/block-spacing': ['error', 'always'],
       'vue/v-bind-style': ['error', 'shorthand', { sameNameShorthand: 'always' }],
       'vue/html-self-closing': [
@@ -89,55 +88,82 @@ export default defineConfigWithVueTs(
       'vue/block-order': ['error', { order: ['script', 'template', 'style'] }],
       'vue/html-comment-content-spacing': ['error', 'always'],
       'vue/no-empty-component-block': 'error',
-      'vue/require-macro-variable-name': 'error',
 
-      // Enforce TypeScript and type-based syntax
+      // TypeScript and type-based syntax
       'vue/block-lang': ['error', { script: { lang: 'ts' } }],
       'vue/define-props-declaration': ['error', 'type-based'],
-      'vue/define-emits-declaration': ['error', 'type-based'],
-      'vue/no-duplicate-attr-inheritance': 'off',
+      'vue/define-emits-declaration': ['error', 'type-literal'],
+      'vue/no-duplicate-attr-inheritance': 'error',
+      'vue/attribute-hyphenation': ['error', 'always'],
+      'vue/v-on-event-hyphenation': ['error', 'always'],
+
+      // Macros
+      'vue/define-macros-order': [
+        'error',
+        { order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots', 'defineExpose'] },
+      ],
+      'vue/define-props-destructuring': ['error', { destructure: 'always' }],
+      'vue/require-macro-variable-name': [
+        'error',
+        { defineProps: 'props', defineEmits: 'emit', defineSlots: 'slots' },
+      ],
+      'vue/prop-name-casing': ['error', 'camelCase'],
+      'vue/custom-event-name-casing': ['error', 'camelCase'],
+      'vue/no-unused-properties': [
+        'error',
+        { groups: ['props', 'data', 'computed', 'methods', 'setup'] },
+      ],
+      'vue/prefer-use-template-ref': 'error',
+      'vue/max-template-depth': ['error', { maxDepth: 8 }],
+
+      // Composition API enforcement
+      'vue/component-api-style': ['error', ['script-setup', 'composition']],
+      'vue/prefer-define-options': 'error',
+      'vue/no-export-in-script-setup': 'error',
+      'vue/no-deprecated-slot-attribute': 'error',
+      'vue/no-deprecated-slot-scope-attribute': 'error',
+      'vue/no-deprecated-v-bind-sync': 'error',
+      'vue/prefer-prop-type-boolean-first': 'error',
+      'vue/no-required-prop-with-default': 'error',
+      'vue/v-on-handler-style': ['error', ['method', 'inline-function']],
+      'vue/no-this-in-before-route-enter': 'error',
+      'vue/require-emit-validator': 'warn',
+      'vue/require-typed-object-prop': 'error',
+
+      // Reactivity safety
+      'vue/no-ref-object-reactivity-loss': 'error',
+      'vue/max-lines-per-block': ['error', { template: 300, script: 300, style: 200 }],
+      'vue/require-typed-ref': 'error',
+      'vue/require-explicit-emits': 'error',
+      'vue/no-ref-as-operand': 'error',
+      'vue/no-lifecycle-after-await': 'error',
+      'vue/no-watch-after-await': 'error',
+      'vue/no-expose-after-await': 'error',
+      'vue/require-name-property': 'error',
+      'vue/no-boolean-default': ['error', 'default-false'],
+      'vue/no-unused-emit-declarations': 'error',
+      'vue/no-unused-vars': 'error',
+      'vue/no-template-shadow': 'error',
+      'vue/no-side-effects-in-computed-properties': 'error',
+      'vue/no-async-in-computed-properties': 'error',
+      'vue/no-mutating-props': 'error',
+      'vue/no-restricted-call-after-await': [
+        'error',
+        { module: 'vue', path: 'provide', message: 'provide() must be called before any await.' },
+        { module: 'vue', path: 'inject', message: 'inject() must be called before any await.' },
+      ],
 
       'no-restricted-imports': [
         'error',
         {
           paths: [
-            {
-              name: 'vue',
-              message: 'Vue APIs are auto-imported by Nuxt. Remove this import.',
-            },
-            {
-              name: '#imports',
-              message: 'Already auto-imported by Nuxt.',
-            },
-            {
-              name: '#components',
-              message: 'Components are auto-imported by Nuxt.',
-            },
+            { name: 'vue', message: 'Vue APIs are auto-imported by Nuxt. Remove this import.' },
+            { name: '#imports', message: 'Already auto-imported by Nuxt.' },
+            { name: '#components', message: 'Components are auto-imported by Nuxt.' },
           ],
           patterns: ['@/components/**', '~/components/**'],
         },
       ],
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
-      'vue/prop-name-casing': ['error', 'camelCase'],
-      'vue/custom-event-name-casing': ['error', 'camelCase'],
-      'vue/no-unused-properties': ['error', { groups: ['props', 'data', 'computed', 'methods'] }],
-      'vue/define-macros-order': [
-        'error',
-        { order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots'] },
-      ],
-      'vue/define-props-destructuring': 'error',
-      'vue/prefer-use-template-ref': 'error',
-      'vue/max-template-depth': ['error', { maxDepth: 8 }],
-      // 'unicorn/filename-case': [
-      //   'error',
-      //   {
-      //     cases: {
-      //       camelCase: true,
-      //       pascalCase: true,
-      //     },
-      //   },
-      // ],
 
       'unicorn/filename-case': 'off',
     },
@@ -161,7 +187,34 @@ export default defineConfigWithVueTs(
     rules: {
       complexity: ['warn', { max: 10 }],
       'no-nested-ternary': 'error',
+      eqeqeq: ['error', 'always'],
+      'no-implicit-coercion': 'error',
+      'no-useless-concat': 'error',
+      'no-useless-return': 'error',
+      'no-unneeded-ternary': 'error',
+      'max-params': ['warn', { max: 3 }],
+
       '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'never' }],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+      ],
+      '@typescript-eslint/consistent-type-exports': 'error',
+      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/prefer-optional-chain': 'error',
+      '@typescript-eslint/prefer-ts-expect-error': 'error',
+      '@typescript-eslint/no-non-null-assertion': 'error',
+      '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
+      '@typescript-eslint/prefer-as-const': 'error',
+      '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
+      '@typescript-eslint/method-signature-style': ['error', 'property'],
+      '@typescript-eslint/consistent-indexed-object-style': ['error', 'record'],
+      '@typescript-eslint/consistent-generic-constructors': ['error', 'constructor'],
+      '@typescript-eslint/prefer-string-starts-ends-with': 'error',
+      '@typescript-eslint/prefer-includes': 'error',
+      '@typescript-eslint/prefer-find': 'error',
+
       'no-restricted-syntax': [
         'error',
         { selector: 'TSEnumDeclaration', message: 'Use literal unions instead of enums.' },
@@ -170,6 +223,59 @@ export default defineConfigWithVueTs(
           message: 'Avoid else. Use early returns.',
         },
         { selector: 'TryStatement', message: 'Use tryCatch() instead of try/catch.' },
+        {
+          selector:
+            "VariableDeclarator[id.type='Identifier'][id.name='props'][init.callee.name='defineProps']",
+          message:
+            'Avoid `const props = defineProps()`. Destructure: `const { foo } = defineProps<...>()`.',
+        },
+        {
+          selector: "VariableDeclarator[init.callee.name='reactive'] > ObjectPattern",
+          message:
+            'Do not destructure reactive() — it breaks reactivity. Use toRefs() or keep the object reference.',
+        },
+        {
+          selector:
+            "CallExpression[callee.name='watch'] > MemberExpression.arguments:first-child[object.name='props']",
+          message: 'watch(props.x, …) captures the value once. Use a getter: watch(() => props.x, …).',
+        },
+        {
+          selector:
+            "CallExpression[callee.name='watch'] > MemberExpression.arguments:first-child[property.name='value']",
+          message:
+            'watch(ref.value, …) captures the value once. Pass the ref itself or a getter: watch(ref, …).',
+        },
+        {
+          selector: "MemberExpression[object.name='process'][property.name='client']",
+          message: 'Use import.meta.client (Nuxt 3) — process.client is deprecated.',
+        },
+        {
+          selector: "MemberExpression[object.name='process'][property.name='server']",
+          message: 'Use import.meta.server (Nuxt 3) — process.server is deprecated.',
+        },
+        {
+          selector: "CallExpression[callee.name='useState'][arguments.length=0]",
+          message: 'useState requires an explicit key for SSR-safe state.',
+        },
+        {
+          selector: "CallExpression[callee.name='useFetch'][arguments.length=0]",
+          message: 'useFetch must be called with at least a URL.',
+        },
+        {
+          selector: "CallExpression[callee.name='useAsyncData'][arguments.length=0]",
+          message: 'useAsyncData must be called with at least a key + handler.',
+        },
+        {
+          selector:
+            "ExportDefaultDeclaration > CallExpression[callee.name='defineNuxtPlugin'] > ArrowFunctionExpression",
+          message:
+            'Prefer the object syntax for defineNuxtPlugin({ name, hooks }) — Nuxt can statically analyse and parallelize it.',
+        },
+        {
+          selector: 'Program > VariableDeclaration[kind="let"][declarations.0.init]',
+          message:
+            'Module-level `let` is a cross-request state-pollution risk under SSR. Use `useState(key, …)` or move into a composable.',
+        },
       ],
     },
   },
@@ -187,16 +293,6 @@ export default defineConfigWithVueTs(
       compat,
     },
   },
-
-  // GLSL + TSL shaders
-  // {
-  //   files: ['**/*.glsl', '**/*.vert', '**/*.frag'],
-  //   plugins: { glsl },
-  //   rules: {
-  //     'glsl/no-undef': 'error',
-  //     'glsl/no-unused-vars': 'warn',
-  //   },
-  // },
 
   // TSL files (treat as TypeScript)
   {

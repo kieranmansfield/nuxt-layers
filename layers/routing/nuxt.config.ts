@@ -13,6 +13,11 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2026-01-30',
 
+  typescript: {
+    typeCheck: true,
+    strict: true,
+  },
+
   hooks: {
     'pages:extend'(pages: unknown[]) {
       const cwd = process.cwd()
