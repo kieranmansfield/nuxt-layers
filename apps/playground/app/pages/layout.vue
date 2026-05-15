@@ -66,8 +66,10 @@ const presetGroups = [
   },
 ]
 
+type PresetPart = { name: string; lgStart: number; lgSpan: number; colorClass: string }
+
 // Paired presets — shown as combined 18-column visualizations (lg layout)
-const presetPairs = [
+const presetPairs: { label: string; note: string; parts: [PresetPart, PresetPart] }[] = [
   {
     label: 'Sidebar pair',
     note: '4 + 14 = 18 ✓',

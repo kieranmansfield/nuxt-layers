@@ -87,7 +87,7 @@ function setFeature(name: string, value: FeatureValue) {
   if (!appConfig.routingLayer.features) {
     appConfig.routingLayer.features = {}
   }
-  appConfig.routingLayer.features[name] = value
+  ;(appConfig.routingLayer.features as Record<string, FeatureValue>)[name] = value
 }
 
 function featureVariant(name: string): FeatureValue {

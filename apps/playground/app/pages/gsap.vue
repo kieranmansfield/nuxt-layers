@@ -1,40 +1,40 @@
 <script setup lang="ts">
-definePageMeta({ layout: false })
-const { setPageAccent } = useAccentColor()
-setPageAccent('violet')
-onUnmounted(() => setPageAccent(null))
+  definePageMeta({ layout: false })
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('violet')
+  onUnmounted(() => setPageAccent(null))
 
-const copied = ref<string | null>(null)
-const replayKeys = ref<Record<string, number>>({})
+  const copied = ref<string | null>(null)
+  const replayKeys = ref<Record<string, number>>({})
 
-async function copy(text: string, id: string) {
-  await navigator.clipboard.writeText(text.trim())
-  copied.value = id
-  setTimeout(() => {
-    copied.value = null
-  }, 2000)
-}
+  async function copy(text: string, id: string) {
+    await navigator.clipboard.writeText(text.trim())
+    copied.value = id
+    setTimeout(() => {
+      copied.value = null
+    }, 2000)
+  }
 
-function replay(id: string) {
-  replayKeys.value[id] = (replayKeys.value[id] ?? 0) + 1
-}
+  function replay(id: string) {
+    replayKeys.value[id] = (replayKeys.value[id] ?? 0) + 1
+  }
 
-const snippets = {
-  from: `<div
+  const snippets = {
+    from: `<div
   v-gsap.from="{ opacity: 0, y: 40, duration: 0.8 }"
   class="p-8 rounded-xl"
 >
   Animates from opacity 0 + y:40 on mount
 </div>`,
 
-  to: `<div
+    to: `<div
   v-gsap.to="{ x: 100, duration: 1, ease: 'bounce.out' }"
   class="p-8 rounded-xl"
 >
   Tweens to x:100 on mount
 </div>`,
 
-  fromTo: `<div
+    fromTo: `<div
   v-gsap.fromTo="[
     { scale: 0, rotation: -180 },
     { scale: 1, rotation: 0, duration: 0.8, ease: 'back.out(1.7)' }
@@ -44,12 +44,12 @@ const snippets = {
   Scale + rotate entrance
 </div>`,
 
-  infinitely: `<div
+    infinitely: `<div
   v-gsap.infinitely.to="{ rotation: 360, duration: 2, ease: 'linear' }"
   class="w-16 h-16 rounded-xl"
 />`,
 
-  fromInvisible: `<!-- data-vgsap-from-invisible prevents FOUC on SSR -->
+    fromInvisible: `<!-- data-vgsap-from-invisible prevents FOUC on SSR -->
 <div
   v-gsap.whenVisible.once.fromInvisible.from="{ y: 40, duration: 0.8 }"
   class="p-8 rounded-xl"
@@ -57,21 +57,21 @@ const snippets = {
   No flash of unstyled content before JS loads
 </div>`,
 
-  whenVisibleOnce: `<div
+    whenVisibleOnce: `<div
   v-gsap.whenVisible.once.from="{ opacity: 0, y: 60, duration: 0.8 }"
   class="p-8 rounded-xl"
 >
   Slides in once when scrolled into view
 </div>`,
 
-  whenVisibleReversible: `<div
+    whenVisibleReversible: `<div
   v-gsap.whenVisible.once.reversible.from="{ opacity: 0, x: -60, duration: 0.6 }"
   class="p-8 rounded-xl"
 >
   Plays forward on enter, reverses on scroll up
 </div>`,
 
-  whenVisibleScrub: `<div
+    whenVisibleScrub: `<div
   v-gsap.whenVisible.fromTo="[
     { opacity: 0, scale: 0.8 },
     { opacity: 1, scale: 1 }
@@ -81,38 +81,38 @@ const snippets = {
   Tied to scroll position (scrubbed)
 </div>`,
 
-  whenVisibleDelay: `<div
+    whenVisibleDelay: `<div
   v-gsap.whenVisible.once.from.delay-400="{ opacity: 0, y: 40, duration: 0.7 }"
   class="p-8 rounded-xl"
 >
   400ms delay before animating in
 </div>`,
 
-  entranceFade: `<div v-gsap.entrance.fade class="p-8 rounded-xl">
+    entranceFade: `<div v-gsap.entrance.fade class="p-8 rounded-xl">
   Fades in (built-in preset)
 </div>`,
 
-  entranceSlideLeft: `<div v-gsap.entrance.slide-left class="p-8 rounded-xl">
+    entranceSlideLeft: `<div v-gsap.entrance.slide-left class="p-8 rounded-xl">
   Slides in from left
 </div>`,
 
-  entranceSlideRight: `<div v-gsap.entrance.slide-right class="p-8 rounded-xl">
+    entranceSlideRight: `<div v-gsap.entrance.slide-right class="p-8 rounded-xl">
   Slides in from right
 </div>`,
 
-  entranceSlideBottom: `<div v-gsap.entrance.slide-bottom class="p-8 rounded-xl">
+    entranceSlideBottom: `<div v-gsap.entrance.slide-bottom class="p-8 rounded-xl">
   Slides in from below
 </div>`,
 
-  entranceScale: `<div v-gsap.entrance.scale class="p-8 rounded-xl">
+    entranceScale: `<div v-gsap.entrance.scale class="p-8 rounded-xl">
   Scales in from 75%
 </div>`,
 
-  entranceScaleFull: `<div v-gsap.entrance.scale-full class="p-8 rounded-xl">
+    entranceScaleFull: `<div v-gsap.entrance.scale-full class="p-8 rounded-xl">
   Scales in from 0
 </div>`,
 
-  splitChars: `<p
+    splitChars: `<p
   v-gsap.whenVisible.once.splitText.chars.from="{
     opacity: 0,
     y: 20,
@@ -124,7 +124,7 @@ const snippets = {
   Characters animate in
 </p>`,
 
-  splitWords: `<p
+    splitWords: `<p
   v-gsap.whenVisible.once.splitText.words.from="{
     opacity: 0,
     x: -20,
@@ -136,7 +136,7 @@ const snippets = {
   Each word slides in
 </p>`,
 
-  splitLines: `<p
+    splitLines: `<p
   v-gsap.whenVisible.once.splitText.lines.from="{
     opacity: 0,
     y: 30,
@@ -149,7 +149,7 @@ const snippets = {
   Finally the third line.
 </p>`,
 
-  splitMask: `<p
+    splitMask: `<p
   v-gsap.whenVisible.once.splitText.words.mask.from="{
     y: '100%',
     stagger: 0.08,
@@ -161,28 +161,28 @@ const snippets = {
   Masked word reveal
 </p>`,
 
-  whileHoverScale: `<div
+    whileHoverScale: `<div
   v-gsap.whileHover.to="{ scale: 1.08, duration: 0.3, ease: 'power2.out' }"
   class="p-8 rounded-xl cursor-pointer"
 >
   Hover to scale up
 </div>`,
 
-  whileHoverRotate: `<div
+    whileHoverRotate: `<div
   v-gsap.whileHover.to="{ rotation: 6, scale: 1.05, duration: 0.25 }"
   class="p-8 rounded-xl cursor-pointer"
 >
   Hover to rotate + scale
 </div>`,
 
-  whileHoverNoReverse: `<div
+    whileHoverNoReverse: `<div
   v-gsap.whileHover.noReverse.to="{ y: -8, duration: 0.3 }"
   class="p-8 rounded-xl cursor-pointer"
 >
   Lifts up on hover, stays lifted on leave
 </div>`,
 
-  whileHoverFromTo: `<div
+    whileHoverFromTo: `<div
   v-gsap.whileHover.fromTo="[
     { boxShadow: '0 0 0 0 rgba(139,92,246,0)' },
     { boxShadow: '0 8px 32px 0 rgba(139,92,246,0.4)', duration: 0.3 }
@@ -192,7 +192,7 @@ const snippets = {
   Hover for glow effect
 </div>`,
 
-  parallaxSlower: `<div class="relative h-56 overflow-hidden rounded-xl">
+    parallaxSlower: `<div class="relative h-56 overflow-hidden rounded-xl">
   <div
     v-gsap.parallax.slower-3
     class="absolute inset-0 flex items-center justify-center"
@@ -201,7 +201,7 @@ const snippets = {
   </div>
 </div>`,
 
-  parallaxFaster: `<div class="relative h-56 overflow-hidden rounded-xl">
+    parallaxFaster: `<div class="relative h-56 overflow-hidden rounded-xl">
   <div
     v-gsap.parallax.faster-2
     class="absolute inset-0 flex items-center justify-center"
@@ -210,7 +210,7 @@ const snippets = {
   </div>
 </div>`,
 
-  stagger: `<div
+    stagger: `<div
   v-gsap.whenVisible.once.stagger.from="{
     opacity: 0,
     y: 40,
@@ -224,7 +224,7 @@ const snippets = {
   <div class="p-4 rounded-lg">Card 3</div>
 </div>`,
 
-  timeline: `<!-- Parent declares the timeline -->
+    timeline: `<!-- Parent declares the timeline -->
 <div
   v-gsap.timeline="{ scrub: false }"
   class="space-y-3"
@@ -250,7 +250,7 @@ const snippets = {
   </div>
 </div>`,
 
-  magnetic: `<button
+    magnetic: `<button
   v-gsap.magnetic
   class="px-6 py-3 rounded-full font-semibold cursor-pointer"
 >
@@ -261,22 +261,22 @@ const snippets = {
 <button v-gsap.magnetic.strong ...>Strong</button>
 <button v-gsap.magnetic.weak ...>Weak</button>`,
 
-  draggableX: `<div
+    draggableX: `<div
   v-gsap.draggable.x
   class="w-20 h-20 rounded-xl cursor-grab active:cursor-grabbing"
 />`,
 
-  draggableXY: `<div
+    draggableXY: `<div
   v-gsap.draggable
   class="w-20 h-20 rounded-xl cursor-grab active:cursor-grabbing"
 />`,
 
-  draggableRotation: `<div
+    draggableRotation: `<div
   v-gsap.draggable.rotation
   class="w-20 h-20 rounded-xl cursor-grab active:cursor-grabbing"
 />`,
 
-  animateText: `<p
+    animateText: `<p
   v-gsap.whenVisible.once.animateText
   class="text-xl font-mono"
 >
@@ -287,7 +287,7 @@ const snippets = {
 <p v-gsap.animateText.slow ...>Slow typewriter</p>
 <p v-gsap.animateText.fast ...>Fast typewriter</p>`,
 
-  desktopOnly: `<!-- Only animates on screens >= 768px -->
+    desktopOnly: `<!-- Only animates on screens >= 768px -->
 <div
   v-gsap.desktop.whenVisible.once.from="{
     opacity: 0, y: 40, duration: 0.8
@@ -307,7 +307,7 @@ const snippets = {
   Mobile-only animation
 </div>`,
 
-  pinned: `<!-- Element pins to viewport for 800px of scroll travel -->
+    pinned: `<!-- Element pins to viewport for 800px of scroll travel -->
 <div
   v-gsap.pinned="{ start: 'top top', end: '+=800' }"
   class="h-screen flex items-center justify-center"
@@ -315,7 +315,7 @@ const snippets = {
   Pinned while scrolling through
 </div>`,
 
-  onState: `<!-- Animates when data-open="true" -->
+    onState: `<!-- Animates when data-open="true" -->
 <div
   v-gsap.onState-open.to="{ height: 'auto', opacity: 1, duration: 0.4 }"
   data-open="false"
@@ -323,108 +323,108 @@ const snippets = {
 >
   Animates based on data attribute state
 </div>`,
-}
+  }
 
-const quickRef = [
-  {
-    modifier: 'v-gsap.from',
-    desc: 'Animate from props on mount',
-    example: '{ opacity: 0, y: 40 }',
-  },
-  { modifier: 'v-gsap.to', desc: 'Tween to props on mount', example: '{ x: 100, rotation: 45 }' },
-  { modifier: 'v-gsap.fromTo', desc: 'Tween between two states', example: '[{x: -50}, {x: 0}]' },
-  { modifier: 'v-gsap.set', desc: 'Set props instantly', example: '{ opacity: 0 }' },
-  {
-    modifier: 'v-gsap.whenVisible',
-    desc: 'ScrollTrigger activation',
-    example: '+ .from / .to / .fromTo',
-  },
-  { modifier: '.once', desc: 'Play only on first enter (no scrub)', example: '' },
-  { modifier: '.reversible', desc: 'Reverse on scroll back up', example: '' },
-  { modifier: '.fromInvisible', desc: 'SSR-safe: start invisible', example: '' },
-  { modifier: '.delay-N', desc: 'Delay by Nms before animating', example: '.delay-400' },
-  { modifier: '.infinitely', desc: 'Loop animation forever', example: '' },
-  {
-    modifier: '.entrance.*',
-    desc: 'Built-in entrance presets',
-    example: '.fade .slide-left .scale',
-  },
-  { modifier: '.splitText', desc: 'SplitText animation', example: '+ .chars / .words / .lines' },
-  { modifier: '.mask', desc: 'Masked text reveal (with splitText)', example: '' },
-  { modifier: '.whileHover', desc: 'Animate on mouse enter/leave', example: '+ .to / .fromTo' },
-  { modifier: '.noReverse', desc: 'No reverse on mouse leave', example: '(with .whileHover)' },
-  { modifier: '.parallax', desc: 'Scroll-based parallax', example: '.slower-N or .faster-N' },
-  { modifier: '.stagger', desc: 'Stagger children animations', example: '' },
-  { modifier: '.timeline', desc: 'Create a GSAP timeline', example: '' },
-  { modifier: '.add', desc: 'Add child to parent timeline', example: '+ .withPrevious' },
-  {
-    modifier: '.magnetic',
-    desc: 'Cursor attraction effect',
-    example: '.strong .weak .stronger .weaker',
-  },
-  { modifier: '.draggable', desc: 'Make element draggable', example: '.x .y .rotation' },
-  { modifier: '.animateText', desc: 'Typewriter text effect', example: '.slow .fast' },
-  { modifier: '.desktop', desc: 'Only animate on desktop (≥768px)', example: '' },
-  { modifier: '.mobile', desc: 'Only animate on mobile (<768px)', example: '' },
-  { modifier: '.pinned', desc: 'Pin element during scroll', example: '' },
-]
+  const quickRef = [
+    {
+      modifier: 'v-gsap.from',
+      desc: 'Animate from props on mount',
+      example: '{ opacity: 0, y: 40 }',
+    },
+    { modifier: 'v-gsap.to', desc: 'Tween to props on mount', example: '{ x: 100, rotation: 45 }' },
+    { modifier: 'v-gsap.fromTo', desc: 'Tween between two states', example: '[{x: -50}, {x: 0}]' },
+    { modifier: 'v-gsap.set', desc: 'Set props instantly', example: '{ opacity: 0 }' },
+    {
+      modifier: 'v-gsap.whenVisible',
+      desc: 'ScrollTrigger activation',
+      example: '+ .from / .to / .fromTo',
+    },
+    { modifier: '.once', desc: 'Play only on first enter (no scrub)', example: '' },
+    { modifier: '.reversible', desc: 'Reverse on scroll back up', example: '' },
+    { modifier: '.fromInvisible', desc: 'SSR-safe: start invisible', example: '' },
+    { modifier: '.delay-N', desc: 'Delay by Nms before animating', example: '.delay-400' },
+    { modifier: '.infinitely', desc: 'Loop animation forever', example: '' },
+    {
+      modifier: '.entrance.*',
+      desc: 'Built-in entrance presets',
+      example: '.fade .slide-left .scale',
+    },
+    { modifier: '.splitText', desc: 'SplitText animation', example: '+ .chars / .words / .lines' },
+    { modifier: '.mask', desc: 'Masked text reveal (with splitText)', example: '' },
+    { modifier: '.whileHover', desc: 'Animate on mouse enter/leave', example: '+ .to / .fromTo' },
+    { modifier: '.noReverse', desc: 'No reverse on mouse leave', example: '(with .whileHover)' },
+    { modifier: '.parallax', desc: 'Scroll-based parallax', example: '.slower-N or .faster-N' },
+    { modifier: '.stagger', desc: 'Stagger children animations', example: '' },
+    { modifier: '.timeline', desc: 'Create a GSAP timeline', example: '' },
+    { modifier: '.add', desc: 'Add child to parent timeline', example: '+ .withPrevious' },
+    {
+      modifier: '.magnetic',
+      desc: 'Cursor attraction effect',
+      example: '.strong .weak .stronger .weaker',
+    },
+    { modifier: '.draggable', desc: 'Make element draggable', example: '.x .y .rotation' },
+    { modifier: '.animateText', desc: 'Typewriter text effect', example: '.slow .fast' },
+    { modifier: '.desktop', desc: 'Only animate on desktop (≥768px)', example: '' },
+    { modifier: '.mobile', desc: 'Only animate on mobile (<768px)', example: '' },
+    { modifier: '.pinned', desc: 'Pin element during scroll', example: '' },
+  ]
 
-const entrancePresetDemos = [
-  {
-    id: 'entranceFade',
-    mod: 'entrance.fade',
-    label: 'entrance.fade',
-    snip: 'entranceFade',
-    bgClass: 'bg-violet-100 dark:bg-violet-900/30',
-    textClass: 'text-violet-800 dark:text-violet-200',
-    text: 'Fades in',
-  },
-  {
-    id: 'entranceSlideLeft',
-    mod: 'entrance.slide-left',
-    label: 'entrance.slide-left',
-    snip: 'entranceSlideLeft',
-    bgClass: 'bg-blue-100 dark:bg-blue-900/30',
-    textClass: 'text-blue-800 dark:text-blue-200',
-    text: 'From left',
-  },
-  {
-    id: 'entranceSlideRight',
-    mod: 'entrance.slide-right',
-    label: 'entrance.slide-right',
-    snip: 'entranceSlideRight',
-    bgClass: 'bg-green-100 dark:bg-green-900/30',
-    textClass: 'text-green-800 dark:text-green-200',
-    text: 'From right',
-  },
-  {
-    id: 'entranceSlideBottom',
-    mod: 'entrance.slide-bottom',
-    label: 'entrance.slide-bottom',
-    snip: 'entranceSlideBottom',
-    bgClass: 'bg-orange-100 dark:bg-orange-900/30',
-    textClass: 'text-orange-800 dark:text-orange-200',
-    text: 'From below',
-  },
-  {
-    id: 'entranceScale',
-    mod: 'entrance.scale',
-    label: 'entrance.scale',
-    snip: 'entranceScale',
-    bgClass: 'bg-pink-100 dark:bg-pink-900/30',
-    textClass: 'text-pink-800 dark:text-pink-200',
-    text: 'Scale 75% → 100%',
-  },
-  {
-    id: 'entranceScaleFull',
-    mod: 'entrance.scale-full',
-    label: 'entrance.scale-full',
-    snip: 'entranceScaleFull',
-    bgClass: 'bg-red-100 dark:bg-red-900/30',
-    textClass: 'text-red-800 dark:text-red-200',
-    text: 'Scale 0% → 100%',
-  },
-]
+  const entrancePresetDemos = [
+    {
+      id: 'entranceFade',
+      mod: 'entrance.fade',
+      label: 'entrance.fade',
+      snip: 'entranceFade',
+      bgClass: 'bg-violet-100 dark:bg-violet-900/30',
+      textClass: 'text-violet-800 dark:text-violet-200',
+      text: 'Fades in',
+    },
+    {
+      id: 'entranceSlideLeft',
+      mod: 'entrance.slide-left',
+      label: 'entrance.slide-left',
+      snip: 'entranceSlideLeft',
+      bgClass: 'bg-blue-100 dark:bg-blue-900/30',
+      textClass: 'text-blue-800 dark:text-blue-200',
+      text: 'From left',
+    },
+    {
+      id: 'entranceSlideRight',
+      mod: 'entrance.slide-right',
+      label: 'entrance.slide-right',
+      snip: 'entranceSlideRight',
+      bgClass: 'bg-green-100 dark:bg-green-900/30',
+      textClass: 'text-green-800 dark:text-green-200',
+      text: 'From right',
+    },
+    {
+      id: 'entranceSlideBottom',
+      mod: 'entrance.slide-bottom',
+      label: 'entrance.slide-bottom',
+      snip: 'entranceSlideBottom',
+      bgClass: 'bg-orange-100 dark:bg-orange-900/30',
+      textClass: 'text-orange-800 dark:text-orange-200',
+      text: 'From below',
+    },
+    {
+      id: 'entranceScale',
+      mod: 'entrance.scale',
+      label: 'entrance.scale',
+      snip: 'entranceScale',
+      bgClass: 'bg-pink-100 dark:bg-pink-900/30',
+      textClass: 'text-pink-800 dark:text-pink-200',
+      text: 'Scale 75% → 100%',
+    },
+    {
+      id: 'entranceScaleFull',
+      mod: 'entrance.scale-full',
+      label: 'entrance.scale-full',
+      snip: 'entranceScaleFull',
+      bgClass: 'bg-red-100 dark:bg-red-900/30',
+      textClass: 'text-red-800 dark:text-red-200',
+      text: 'Scale 0% → 100%',
+    },
+  ]
 </script>
 
 <template>
@@ -444,8 +444,8 @@ const entrancePresetDemos = [
         <UContainer class="relative">
           <div class="max-w-3xl">
             <div class="flex items-center gap-2 mb-4">
-              <UBadge color="violet" variant="subtle" size="lg">v-gsap-nuxt v1.5</UBadge>
-              <UBadge color="gray" variant="subtle" size="lg">GSAP 3</UBadge>
+              <UBadge color="primary" variant="subtle" size="lg">v-gsap-nuxt v1.5</UBadge>
+              <UBadge variant="subtle" size="lg">GSAP 3</UBadge>
             </div>
             <h1 class="text-5xl font-bold mb-4 tracking-tight">v-gsap Directive Guide</h1>
             <p class="text-xl text-gray-300 mb-8 leading-relaxed">
@@ -453,15 +453,15 @@ const entrancePresetDemos = [
               Scroll-triggered entrances, text splits, hover effects, parallax, timelines, and more.
             </p>
             <div class="flex flex-wrap gap-3">
-              <UButton size="lg" color="white" variant="solid" to="#quick-ref">
+              <UButton size="lg" color="neutral" variant="solid" to="#quick-ref">
                 <UIcon name="i-lucide-table" class="mr-2" />
                 Quick Reference
               </UButton>
-              <UButton size="lg" variant="ghost" color="white" to="/motion">
+              <UButton size="lg" variant="ghost" color="neutral" to="/motion">
                 <UIcon name="i-lucide-arrow-left" class="mr-2" />
                 Motion Overview
               </UButton>
-              <UButton size="lg" variant="ghost" color="white" to="/locomotive-scroll">
+              <UButton size="lg" variant="ghost" color="neutral" to="/locomotive-scroll">
                 <UIcon name="i-lucide-train" class="mr-2" />
                 Locomotive Scroll
               </UButton>
@@ -545,7 +545,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('from')"
                   >Replay</UButton
@@ -571,7 +570,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'from' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.from, 'from')"
                 >
@@ -596,7 +594,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('fromTo')"
                   >Replay</UButton
@@ -625,7 +622,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'fromTo' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.fromTo, 'fromTo')"
                 >
@@ -650,7 +646,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('infinitely')"
                   >Replay</UButton
@@ -685,7 +680,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'infinitely' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.infinitely, 'infinitely')"
                 >
@@ -730,7 +724,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('whenVisibleOnce')"
                   >Replay</UButton
@@ -756,7 +749,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'whenVisibleOnce' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.whenVisibleOnce, 'whenVisibleOnce')"
                 >
@@ -781,7 +773,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('whenVisibleReversible')"
                   >Replay</UButton
@@ -807,7 +798,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'whenVisibleReversible' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.whenVisibleReversible, 'whenVisibleReversible')"
                 >
@@ -832,7 +822,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('whenVisibleScrub')"
                   >Replay</UButton
@@ -861,7 +850,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'whenVisibleScrub' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.whenVisibleScrub, 'whenVisibleScrub')"
                 >
@@ -886,7 +874,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('whenVisibleDelay')"
                   >Replay</UButton
@@ -924,7 +911,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'whenVisibleDelay' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.whenVisibleDelay, 'whenVisibleDelay')"
                 >
@@ -972,7 +958,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay(demo.id)"
                   >Replay</UButton
@@ -1057,7 +1042,6 @@ const entrancePresetDemos = [
                   <UButton
                     size="xs"
                     variant="ghost"
-                    color="gray"
                     :icon="copied === demo.id ? 'i-lucide-check' : 'i-lucide-copy'"
                     @click="copy(snippets[demo.snip as keyof typeof snippets], demo.id)"
                   >
@@ -1107,7 +1091,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('splitChars')"
                   >Replay</UButton
@@ -1138,7 +1121,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'splitChars' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.splitChars, 'splitChars')"
                 >
@@ -1163,7 +1145,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('splitWords')"
                   >Replay</UButton
@@ -1194,7 +1175,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'splitWords' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.splitWords, 'splitWords')"
                 >
@@ -1219,7 +1199,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('splitLines')"
                   >Replay</UButton
@@ -1250,7 +1229,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'splitLines' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.splitLines, 'splitLines')"
                 >
@@ -1275,7 +1253,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('splitMask')"
                   >Replay</UButton
@@ -1306,7 +1283,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'splitMask' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.splitMask, 'splitMask')"
                 >
@@ -1361,7 +1337,6 @@ const entrancePresetDemos = [
                   <UButton
                     size="xs"
                     variant="ghost"
-                    color="gray"
                     :icon="copied === 'whileHoverScale' ? 'i-lucide-check' : 'i-lucide-copy'"
                     @click="copy(snippets.whileHoverScale, 'whileHoverScale')"
                     >{{ copied === 'whileHoverScale' ? 'Copied!' : 'Copy' }}</UButton
@@ -1395,7 +1370,6 @@ const entrancePresetDemos = [
                   <UButton
                     size="xs"
                     variant="ghost"
-                    color="gray"
                     :icon="copied === 'whileHoverRotate' ? 'i-lucide-check' : 'i-lucide-copy'"
                     @click="copy(snippets.whileHoverRotate, 'whileHoverRotate')"
                     >{{ copied === 'whileHoverRotate' ? 'Copied!' : 'Copy' }}</UButton
@@ -1429,7 +1403,6 @@ const entrancePresetDemos = [
                   <UButton
                     size="xs"
                     variant="ghost"
-                    color="gray"
                     :icon="copied === 'whileHoverNoReverse' ? 'i-lucide-check' : 'i-lucide-copy'"
                     @click="copy(snippets.whileHoverNoReverse, 'whileHoverNoReverse')"
                     >{{ copied === 'whileHoverNoReverse' ? 'Copied!' : 'Copy' }}</UButton
@@ -1466,7 +1439,6 @@ const entrancePresetDemos = [
                   <UButton
                     size="xs"
                     variant="ghost"
-                    color="gray"
                     :icon="copied === 'whileHoverFromTo' ? 'i-lucide-check' : 'i-lucide-copy'"
                     @click="copy(snippets.whileHoverFromTo, 'whileHoverFromTo')"
                     >{{ copied === 'whileHoverFromTo' ? 'Copied!' : 'Copy' }}</UButton
@@ -1521,7 +1493,6 @@ const entrancePresetDemos = [
                   <UButton
                     size="xs"
                     variant="ghost"
-                    color="gray"
                     :icon="copied === 'parallaxSlower' ? 'i-lucide-check' : 'i-lucide-copy'"
                     @click="copy(snippets.parallaxSlower, 'parallaxSlower')"
                     >{{ copied === 'parallaxSlower' ? 'Copied!' : 'Copy' }}</UButton
@@ -1555,7 +1526,6 @@ const entrancePresetDemos = [
                   <UButton
                     size="xs"
                     variant="ghost"
-                    color="gray"
                     :icon="copied === 'parallaxFaster' ? 'i-lucide-check' : 'i-lucide-copy'"
                     @click="copy(snippets.parallaxFaster, 'parallaxFaster')"
                     >{{ copied === 'parallaxFaster' ? 'Copied!' : 'Copy' }}</UButton
@@ -1598,7 +1568,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('stagger')"
                   >Replay</UButton
@@ -1655,7 +1624,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'stagger' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.stagger, 'stagger')"
                 >
@@ -1703,7 +1671,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('timeline')"
                   >Replay</UButton
@@ -1746,7 +1713,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'timeline' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.timeline, 'timeline')"
                 >
@@ -1824,7 +1790,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'magnetic' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.magnetic, 'magnetic')"
                 >
@@ -1898,7 +1863,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'draggableX' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.draggableX, 'draggableX')"
                 >
@@ -1945,7 +1909,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('animateText')"
                   >Replay</UButton
@@ -1983,7 +1946,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   :icon="copied === 'animateText' ? 'i-lucide-check' : 'i-lucide-copy'"
                   @click="copy(snippets.animateText, 'animateText')"
                 >
@@ -2020,7 +1982,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('responsive')"
                   >Replay</UButton
@@ -2048,7 +2009,6 @@ const entrancePresetDemos = [
                   <UButton
                     size="xs"
                     variant="ghost"
-                    color="gray"
                     :icon="copied === 'desktopOnly' ? 'i-lucide-check' : 'i-lucide-copy'"
                     @click="copy(snippets.desktopOnly, 'desktopOnly')"
                     >{{ copied === 'desktopOnly' ? 'Copied!' : 'Copy' }}</UButton
@@ -2070,7 +2030,6 @@ const entrancePresetDemos = [
                 <UButton
                   size="xs"
                   variant="ghost"
-                  color="gray"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('fromInvisible')"
                   >Replay</UButton
@@ -2096,7 +2055,6 @@ const entrancePresetDemos = [
                   <UButton
                     size="xs"
                     variant="ghost"
-                    color="gray"
                     :icon="copied === 'fromInvisible' ? 'i-lucide-check' : 'i-lucide-copy'"
                     @click="copy(snippets.fromInvisible, 'fromInvisible')"
                     >{{ copied === 'fromInvisible' ? 'Copied!' : 'Copy' }}</UButton
@@ -2138,7 +2096,6 @@ const entrancePresetDemos = [
                   <UButton
                     size="xs"
                     variant="ghost"
-                    color="gray"
                     :icon="copied === 'pinned' ? 'i-lucide-check' : 'i-lucide-copy'"
                     @click="copy(snippets.pinned, 'pinned')"
                     >{{ copied === 'pinned' ? 'Copied!' : 'Copy' }}</UButton

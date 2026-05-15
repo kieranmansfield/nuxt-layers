@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Context } from 'gsap'
-
 definePageMeta({ layout: 'grid' })
 
 const { setPageAccent } = useAccentColor()
@@ -17,7 +15,7 @@ const sectionStyles = [1, 2, 3, 4, 5].map((n) => ({
   willChange: n < 5 ? 'transform' : undefined,
 }))
 
-let ctx: Context | null = null
+let ctx: ReturnType<typeof gsap.context> | null = null
 
 onMounted(() => {
   const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-stack-section]'))

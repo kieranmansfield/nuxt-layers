@@ -20,7 +20,7 @@
     "paths": {
       "#layers/theme": ["../../layers/theme"],
       "#layers/theme/*": ["../../layers/theme/*"]
-    },
-    "exclude": ["node_modules"]
-  }
+    }
+  },
+  "exclude": ["node_modules"]
 }

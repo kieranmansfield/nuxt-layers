@@ -110,7 +110,7 @@ const cards = [
       <section class="py-24 bg-gray-900">
         <UContainer>
           <div class="text-center mb-16">
-            <UBadge color="violet" variant="subtle" class="mb-4">Chapter 1</UBadge>
+            <UBadge color="primary" variant="subtle" class="mb-4">Chapter 1</UBadge>
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">MotionScrollScene</h2>
             <p class="text-gray-400 text-lg">
               Two narrative beats revealed in sequence as you scroll.
@@ -155,7 +155,7 @@ const cards = [
                   >
                     1
                   </div>
-                  <UBadge :color="isActive ? 'violet' : 'neutral'" variant="subtle">
+                  <UBadge :color="isActive ? 'primary' : 'neutral'" variant="subtle">
                     {{ isActive ? 'Active' : 'Waiting' }}
                   </UBadge>
                 </div>
@@ -207,7 +207,7 @@ const cards = [
       <section class="py-24 bg-gray-900">
         <UContainer>
           <div class="text-center mb-16">
-            <UBadge color="violet" variant="subtle" class="mb-4">Chapter 2</UBadge>
+            <UBadge color="primary" variant="subtle" class="mb-4">Chapter 2</UBadge>
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">MotionPinnedSection</h2>
             <p class="text-gray-400 text-lg">
               Three cards revealed one by one as you scroll through the pin.
@@ -239,7 +239,7 @@ const cards = [
       <section ref="debugSectionRef" class="py-32 bg-gray-900">
         <UContainer>
           <div class="text-center mb-16">
-            <UBadge color="violet" variant="subtle" class="mb-4">Chapter 3</UBadge>
+            <UBadge color="primary" variant="subtle" class="mb-4">Chapter 3</UBadge>
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">useSectionProgress</h2>
             <p class="text-gray-400 text-lg">
               Section-local progress tracked independently of the page scroll.
@@ -298,7 +298,7 @@ const cards = [
       <section class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
-            <UBadge color="violet" variant="subtle" class="mb-4">Chapter 4</UBadge>
+            <UBadge color="primary" variant="subtle" class="mb-4">Chapter 4</UBadge>
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">MotionHorizontalScroll</h2>
             <p class="text-gray-400 text-lg">
               Four panels advancing horizontally, pinned to the viewport.

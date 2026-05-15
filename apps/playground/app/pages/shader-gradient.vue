@@ -76,7 +76,7 @@ const presetProps = computed(() => ({
 }))
 
 const COLOR_LABELS = ['Point 1', 'Point 2', 'Point 3', 'Point 4'] as const
-const colorRefs = [color1, color2, color3, color4]
+const colorRefs = [color1, color2, color3, color4] as [typeof color1, typeof color1, typeof color1, typeof color1]
 
 // Panel text/border adapts to color mode
 const colorMode = useColorMode()

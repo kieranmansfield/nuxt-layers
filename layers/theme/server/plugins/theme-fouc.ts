@@ -1,5 +1,6 @@
 import twColors from 'tailwindcss/colors'
-import type { DefaultColors } from 'tailwindcss/types/generated/colors'
+
+type DefaultColors = typeof twColors
 
 /**
  * Nitro render hook — prevents FOUC for all theme preferences by injecting:

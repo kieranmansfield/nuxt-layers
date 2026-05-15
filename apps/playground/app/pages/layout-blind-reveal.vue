@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Context } from 'gsap'
-
 definePageMeta({ layout: 'grid' })
 
 const { setPageAccent } = useAccentColor()
@@ -21,7 +19,7 @@ const footerStyle = {
   alignSelf: 'end',
 }
 
-let ctx: Context | null = null
+let ctx: ReturnType<typeof gsap.context> | null = null
 
 onMounted(() => {
   const contentSections = Array.from(document.querySelectorAll<HTMLElement>('[data-blind-content]'))

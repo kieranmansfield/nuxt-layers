@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { UiColors } from '#layers/ui/app/types/colors'
+import type { TintLevel } from '#layers/ui/app/types/tint'
 
 const { setPageAccent } = useAccentColor()
 setPageAccent('pink')
@@ -1039,7 +1040,7 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
 
               <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
                 <TintOverlay
-                  v-for="level in ['subtle', 'light', 'medium', 'strong', 'heavy']"
+                  v-for="level in (['subtle', 'light', 'medium', 'strong', 'heavy'] as TintLevel[])"
                   :key="level"
                   color="primary"
                   :level="level"
