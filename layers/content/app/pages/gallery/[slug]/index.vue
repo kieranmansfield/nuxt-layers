@@ -1,10 +1,12 @@
 <script setup lang="ts">
-const route = useRoute()
-const slug = route.params.slug as string
+  const route = useRoute()
+  const slug = route.params.slug as string
 </script>
 
 <template>
-  <UContainer>
-    <GalleryDetail :slug="slug" />
-  </UContainer>
+  <LayoutSection>
+    <LayoutGridItem>
+      <GalleryDetail :slug="slug" />
+    </LayoutGridItem>
+  </LayoutSection>
 </template>
