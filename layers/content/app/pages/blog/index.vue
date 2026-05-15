@@ -1,4 +1,9 @@
 <script setup lang="ts">
+  const { contentLayer } = useAppConfig()
+  if (contentLayer?.sections?.blog === false) {
+    throw createError({ statusCode: 404, statusMessage: 'Not Found' })
+  }
+
   useSeoMeta({
     title: 'Blog',
     description: 'Latest articles and updates',

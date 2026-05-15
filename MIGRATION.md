@@ -1,3 +1,126 @@
+# Migration Guide: v1.6.34 — Content Layer Collection Aliases & Section Disabling
+
+Two new capabilities have been added to the content layer:
+
+1. **Collection aliases** — reuse a collection schema under a custom name (e.g. `works` instead of `portfolio`)
+2. **Section disabling** — suppress content routes you don't need via `app.config.ts`
+
+Neither change is breaking. Existing apps using `portfolio`, `blog`, or `gallery` work exactly as before.
+
+---
+
+## 1. Collection Aliases
+
+### The problem
+
+The content layer hard-codes the collection names `blog`, `portfolio`, and `gallery`. If your app wants a `works` section that uses the portfolio schema, you previously had to duplicate the entire Zod schema in your own `content.config.ts`.
+
+### The solution
+
+The layer now exports named schemas and factory functions from `content.config.ts`:
+
+```ts
+// Named schema exports:
+contentCollectionSchema
+blogCollectionSchema
+portfolioCollectionSchema
+galleryCollectionSchema
+
+// Factory functions (return a ready-to-use defineCollection(...) object):
+createContentCollection(source?: string)
+createBlogCollection(source?: string)
+createPortfolioCollection(source?: string)
+createGalleryCollection(source?: string)
+```
+
+Each factory defaults to the conventional source glob if you omit the argument.
+
+### Registering a custom-named collection
+
+In your app's `content.config.ts`, import the factory and register it under any name you like:
+
+```ts
+import { createPortfolioCollection, createBlogCollection } from '#layers/content/content.config'
+
+export default defineContentConfig({
+  collections: {
+    blog: createBlogCollection(),
+    works: createPortfolioCollection('works/**/*.md'),
+    // gallery omitted — not needed
+  }
+})
+```
+
+Your markdown files now live at `content/works/`, and `queryCollection('works')` returns portfolio-shaped items.
+
+### Querying the aliased collection
+
+The layer also exports `createPortfolioComposables`, a factory that returns fully-wired `useItems` and `useItem` composables bound to your custom collection name:
+
+```ts
+// app/composables/useWorks.ts
+import { createPortfolioComposables } from '#layers/content/app/composables/createPortfolioComposables'
+
+const { useItems: useWorksItems, useItem: useWorksItem } = createPortfolioComposables('works')
+export { useWorksItems, useWorksItem }
+```
+
+`useWorksItems` accepts the same options as `usePortfolioItems` (`featured`, `tags`, `limit`). `useWorksItem(slug)` fetches a single item by slug.
+
+### Using Portfolio components with a custom collection
+
+The `PortfolioList`, `PortfolioCard`, and `PortfolioDetail` components accept data via props — they don't query the collection directly. Pass your `works` data in to reuse them:
+
+```vue
+<PortfolioList :items="worksItems" />
+<PortfolioDetail :item="worksItem" />
+```
+
+---
+
+## 2. Section Disabling
+
+### The problem
+
+Layer pages at `/blog`, `/portfolio`, and `/gallery` are always registered. Previously there was no way to suppress a route you didn't want without creating a 404 override page in your app.
+
+### The solution
+
+All content routes now check `useAppConfig().contentLayer.sections` at runtime and throw a 404 if a section is explicitly set to `false`.
+
+### Disabling sections
+
+In your app's `app.config.ts` (must be inside `app/`):
+
+```ts
+export default defineAppConfig({
+  contentLayer: {
+    sections: {
+      blog: true,
+      portfolio: false,  // /portfolio and /portfolio/[slug] → 404
+      gallery: false,    // /gallery and all nested routes → 404
+    },
+  },
+})
+```
+
+All three flags default to `true` in the layer, so you only need to declare the ones you want to disable.
+
+**Note:** The routes still exist at the Nuxt router level — they are compiled at build time from the layer's page files. Disabling returns a 404 response at runtime. Links to disabled routes will hit a 404 error page rather than being absent from the router.
+
+---
+
+## Quick Reference
+
+| Goal | How |
+|---|---|
+| Reuse portfolio schema as `works` | `works: createPortfolioCollection('works/**/*.md')` in `content.config.ts` |
+| Query custom-named collection | `createPortfolioComposables('works')` → `useItems` / `useItem` |
+| Disable the gallery section | `contentLayer: { sections: { gallery: false } }` in `app.config.ts` |
+| Disable multiple sections | List each with `false` in `sections` |
+
+---
+
 # Migration Guide: v1.5.x → v1.6.0
 
 v1.6.0 restructures the layout and content systems. The main theme is **opt-in chrome** — header, footer, and nav are no longer always-on, full-bleed pages now use `layout: false`, and the global Locomotive Scroll wrapper is gone.
