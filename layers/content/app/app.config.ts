@@ -1,9 +1,9 @@
-export default defineAppConfig({
+export default {
   contentLayer: {
     sections: {
-      blog: true as boolean,
-      portfolio: true as boolean,
-      gallery: true as boolean,
+      blog: true,
+      portfolio: true,
+      gallery: true,
     },
   },
-})
+}
