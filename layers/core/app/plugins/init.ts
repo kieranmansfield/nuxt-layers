@@ -29,15 +29,15 @@ export default defineNuxtPlugin((nuxtApp) => {
   // 2. Verify modules and composables are loaded
   // ============================================================
   try {
-    // Test @nuxtjs/device module
-    const { isMobile, isDesktop, isTablet } = useDevice()
+    // Test @nuxtjs/device module (SSR-safe: returns undefined before device plugin runs)
+    const device = useDevice()
 
-    if (isDev) {
+    if (isDev && device) {
       // eslint-disable-next-line no-console
       console.log('[Core Layer] Device detection:', {
-        mobile: isMobile,
-        desktop: isDesktop,
-        tablet: isTablet,
+        mobile: device.isMobile,
+        desktop: device.isDesktop,
+        tablet: device.isTablet,
       })
     }
 
