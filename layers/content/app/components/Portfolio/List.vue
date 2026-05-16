@@ -2,18 +2,20 @@
 // @ts-nocheck
 import type { PortfolioQueryOptions } from '../../types/content'
 
-const { options = {} } = defineProps<{
+const { options = {}, collection = 'portfolio' } = defineProps<{
   options?: PortfolioQueryOptions
+  collection?: string
 }>()
 
-const { data: items, status } = await usePortfolioItems(options)
+const { useItems } = createPortfolioComposables(collection)
+const { data: items, status } = await useItems(options)
 </script>
 
 <template>
   <NuxtContentList
     :status="status"
     :has-items="!!items?.length"
-    empty-message="No portfolio items found"
+    empty-message="No items found"
   >
     <UPageGrid>
       <UPageCard

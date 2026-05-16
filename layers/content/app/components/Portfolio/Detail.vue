@@ -2,8 +2,9 @@
 // @ts-nocheck
 import type { PortfolioCollectionItem } from '@nuxt/content'
 
-const { slug } = defineProps<{
+const { slug, collection = 'portfolio' } = defineProps<{
   slug: string
+  collection?: string
 }>()
 
 const asPortfolio = (item: unknown) => item as PortfolioCollectionItem
@@ -11,9 +12,9 @@ const asPortfolio = (item: unknown) => item as PortfolioCollectionItem
 
 <template>
   <NuxtContentDetail
-    collection="portfolio"
+    :collection
     :slug
-    not-found-message="Portfolio item not found"
+    not-found-message="Item not found"
     hide-toc
   >
     <template #headline="{ item }">
