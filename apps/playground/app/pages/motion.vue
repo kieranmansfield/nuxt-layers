@@ -179,6 +179,10 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
               <UIcon name="i-lucide-train" class="mr-2" />
               Locomotive Scroll
             </UButton>
+            <UButton size="lg" variant="ghost" to="/marquee-text">
+              <UIcon name="i-lucide-text" class="mr-2" />
+              Marquee Text
+            </UButton>
           </div>
         </div>
 

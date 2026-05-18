@@ -77,6 +77,7 @@ const layers = [
       'Transition Components',
       'Staggered Animations',
       'Scrollytelling',
+      'MarqueeText',
     ],
     borderColor: 'border-emerald-500/30',
     bgColor: 'bg-emerald-500/5',
