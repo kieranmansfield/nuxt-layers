@@ -77,7 +77,7 @@ onMounted(() => {
     modifiers: {
       x: gsap.utils.unitize((x) => {
         const mod = contentWidth / 2
-        return props.direction === 'left' ? parseFloat(x) % mod : -Math.abs(parseFloat(x) % mod)
+        return props.direction === 'left' ? parseFloat(x) % mod : Math.abs(parseFloat(x) % mod)
       }),
     },
   })
