@@ -183,6 +183,10 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
               <UIcon name="i-lucide-text" class="mr-2" />
               Marquee Text
             </UButton>
+            <UButton size="lg" variant="ghost" to="/motion-interactions">
+              <UIcon name="i-lucide-mouse-pointer-2" class="mr-2" />
+              Interactions
+            </UButton>
           </div>
         </div>
 

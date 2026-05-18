@@ -23,13 +23,3 @@ export default defineNuxtConfig({
     strict: true,
   },
 })
-
-declare module '@nuxt/schema' {
-  interface RuntimeConfig {
-    formsLayer?: {
-      resendApiKey: string
-      emailFrom: string
-      emailTo: string
-    }
-  }
-}

@@ -198,11 +198,11 @@ const isDark = computed(() => colorMode.value === 'dark')
                 :class="isDark ? 'border-white/20' : 'border-black/20'"
               >
                 <input
-                  v-model="colorRefs[i].value"
+                  v-model="colorRefs[i]!.value"
                   type="color"
                   class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
-                <div class="w-full h-full" :style="{ backgroundColor: colorRefs[i].value }" />
+                <div class="w-full h-full" :style="{ backgroundColor: colorRefs[i]!.value }" />
               </div>
               <span
                 class="text-xs leading-none transition-colors"

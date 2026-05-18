@@ -1,6 +1,5 @@
 export default defineEventHandler(() => {
-  const config = useRuntimeConfig()
-  const { resendApiKey, emailFrom, emailTo } = config.formsLayer ?? {}
+  const { resendApiKey, emailFrom, emailTo } = useFormsConfig()
 
   return {
     configured: !!resendApiKey,

@@ -7,8 +7,7 @@ export interface ContactEmailData {
 }
 
 export async function sendContactEmail(data: ContactEmailData) {
-  const config = useRuntimeConfig()
-  const { resendApiKey, emailFrom, emailTo } = config.formsLayer ?? {}
+  const { resendApiKey, emailFrom, emailTo } = useFormsConfig()
 
   if (!resendApiKey) {
     console.warn('[forms] NUXT_FORMS_LAYER_RESEND_API_KEY not set — email skipped')

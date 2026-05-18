@@ -9,78 +9,43 @@ type EffectType =
   | 'translateY'
   | 'hueRotate'
 
-const props = withDefaults(
-  defineProps<{
-    /**
-     * Type of velocity effect to apply
-     */
-    effect: EffectType
-    /**
-     * Intensity multiplier (default varies by effect type)
-     */
-    intensity?: number
-    /**
-     * Whether to use smoothed velocity (recommended)
-     */
-    smooth?: boolean
-    /**
-     * Lerp factor for smoothing (0.1 = very smooth, 0.3 = responsive)
-     */
-    smoothFactor?: number
-    /**
-     * Tag to render as
-     */
-    as?: string
-  }>(),
-  {
-    smooth: true,
-    smoothFactor: 0.15,
-    as: 'div',
-  }
-)
+const {
+  effect,
+  intensity = undefined,
+  damping = 15,
+  stiffness = 150,
+  as = 'div',
+} = defineProps<{
+  effect: EffectType
+  intensity?: number
+  damping?: number
+  stiffness?: number
+  as?: string
+}>()
 
+const { gsap } = useGsap()
 const { velocity } = useSmoothScroll()
 
-// Smoothed velocity for stable animations
 const smoothVelocity = ref(0)
 const smoothAbsVelocity = ref(0)
-let animationFrame: number | null = null
 
-function lerp(start: number, end: number, factor: number): number {
-  return start + (end - start) * factor
-}
+function tick() {
+  const d = damping / 1000
+  const s = stiffness / 1000
 
-function updateSmoothedValues() {
-  smoothVelocity.value = lerp(smoothVelocity.value, velocity.value, props.smoothFactor)
-  smoothAbsVelocity.value = lerp(
-    smoothAbsVelocity.value,
-    Math.abs(velocity.value),
-    props.smoothFactor
-  )
+  smoothVelocity.value += (velocity.value - smoothVelocity.value) * s
+  smoothVelocity.value *= 1 - d
+
+  smoothAbsVelocity.value += (Math.abs(velocity.value) - smoothAbsVelocity.value) * s
+  smoothAbsVelocity.value *= 1 - d
 
   if (Math.abs(smoothVelocity.value) < 0.01) smoothVelocity.value = 0
   if (smoothAbsVelocity.value < 0.01) smoothAbsVelocity.value = 0
-
-  animationFrame = requestAnimationFrame(updateSmoothedValues)
 }
 
-onMounted(() => {
-  if (props.smooth) {
-    animationFrame = requestAnimationFrame(updateSmoothedValues)
-  }
-})
+onMounted(() => gsap.ticker.add(tick))
+onUnmounted(() => gsap.ticker.remove(tick))
 
-onUnmounted(() => {
-  if (animationFrame) cancelAnimationFrame(animationFrame)
-})
-
-// Get the active velocity value
-const activeVelocity = computed(() => (props.smooth ? smoothVelocity.value : velocity.value))
-const activeAbsVelocity = computed(() =>
-  props.smooth ? smoothAbsVelocity.value : Math.abs(velocity.value)
-)
-
-// Default intensities per effect type
 const defaultIntensities: Record<EffectType, number> = {
   skew: 3,
   scale: 0.12,
@@ -92,15 +57,14 @@ const defaultIntensities: Record<EffectType, number> = {
   hueRotate: 45,
 }
 
-const intensity = computed(() => props.intensity ?? defaultIntensities[props.effect])
+const activeIntensity = computed(() => intensity ?? defaultIntensities[effect])
 
-// Compute the style based on effect type
 const effectStyle = computed(() => {
-  const vel = activeVelocity.value
-  const absVel = activeAbsVelocity.value
-  const int = intensity.value
+  const vel = smoothVelocity.value
+  const absVel = smoothAbsVelocity.value
+  const int = activeIntensity.value
 
-  switch (props.effect) {
+  switch (effect) {
     case 'skew':
       return { transform: `skewX(${Math.max(-15, Math.min(15, vel * int))}deg)` }
     case 'scale':
@@ -122,13 +86,11 @@ const effectStyle = computed(() => {
   }
 })
 
-// Classes for performance optimization
 const effectClasses = computed(() => {
-  const classes = []
-  if (['skew', 'scale', 'rotate', 'translateY'].includes(props.effect)) {
-    classes.push('will-change-transform')
+  if (['skew', 'scale', 'rotate', 'translateY'].includes(effect)) {
+    return ['will-change-transform']
   }
-  return classes
+  return []
 })
 </script>
 
