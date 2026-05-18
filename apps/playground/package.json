@@ -9,6 +9,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  },
   "dependencies": {
     "@netlify/nuxt": "0.2.29",
     "better-sqlite3": "^12.6.2",

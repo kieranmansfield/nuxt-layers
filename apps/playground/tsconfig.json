@@ -16,7 +16,6 @@
     }
   ],
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "#layers/theme": ["../../layers/theme"],
       "#layers/theme/*": ["../../layers/theme/*"]

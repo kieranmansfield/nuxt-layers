@@ -10,8 +10,7 @@ This is a Nuxt 4 monorepo using pnpm workspaces and Turbo for task orchestration
 
 ```bash
 # Development
-pnpm dev                    # Start all dev servers via Turbo
-pnpm -F playground dev      # Start only the playground app
+pnpm dev                    # Start the playground dev server (all layers loaded)
 
 # Build & Type Check
 pnpm build                  # Build all packages
