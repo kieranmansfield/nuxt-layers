@@ -17,7 +17,8 @@ let progressTimeout: ReturnType<typeof setTimeout> | null = null
  * @returns Loading state and control methods
  */
 export function useLoading() {
-  const isLoading = useState('core:loading', () => true)
+  const appConfig = useAppConfig()
+  const isLoading = useState('core:loading', () => appConfig.coreLayer?.loading?.enabled !== false)
   const progress = useState('core:loading:progress', () => 0)
 
   function startLoading(): void {
