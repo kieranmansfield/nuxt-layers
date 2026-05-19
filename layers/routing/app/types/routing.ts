@@ -1,10 +1,16 @@
 export type FeatureValue = 'enabled' | 'disabled' | 'beta' | 'coming-soon'
 export type RoutingPreset = 'simple' | 'marketing' | 'product' | 'enterprise'
 
+export type RouteResolution =
+  | { outcome: 'allow' }
+  | { outcome: 'deny' }
+  | { outcome: 'redirect'; to: string }
+
 export interface RoutingLayerConfig {
   preset: RoutingPreset
   strictDefaultDeny: boolean
   layerDefaultDeny: boolean
+  betaRedirect: string
   runtimeFlags: boolean
   debug: boolean
   maintenance: { enabled: boolean; allowRoutes: string[] }
@@ -16,6 +22,7 @@ export const ROUTING_PRESETS: Record<RoutingPreset, Omit<RoutingLayerConfig, 'pr
   simple: {
     strictDefaultDeny: false,
     layerDefaultDeny: false,
+    betaRedirect: '/coming-soon',
     runtimeFlags: false,
     debug: false,
     maintenance: { enabled: false, allowRoutes: ['/maintenance'] },
@@ -24,6 +31,7 @@ export const ROUTING_PRESETS: Record<RoutingPreset, Omit<RoutingLayerConfig, 'pr
   marketing: {
     strictDefaultDeny: false,
     layerDefaultDeny: true,
+    betaRedirect: '/coming-soon',
     runtimeFlags: false,
     debug: false,
     maintenance: { enabled: true, allowRoutes: ['/maintenance'] },
@@ -32,6 +40,7 @@ export const ROUTING_PRESETS: Record<RoutingPreset, Omit<RoutingLayerConfig, 'pr
   product: {
     strictDefaultDeny: false,
     layerDefaultDeny: true,
+    betaRedirect: '/coming-soon',
     runtimeFlags: true,
     debug: false,
     maintenance: { enabled: true, allowRoutes: ['/maintenance'] },
@@ -40,6 +49,7 @@ export const ROUTING_PRESETS: Record<RoutingPreset, Omit<RoutingLayerConfig, 'pr
   enterprise: {
     strictDefaultDeny: true,
     layerDefaultDeny: true,
+    betaRedirect: '/coming-soon',
     runtimeFlags: true,
     debug: false,
     maintenance: { enabled: true, allowRoutes: ['/maintenance'] },

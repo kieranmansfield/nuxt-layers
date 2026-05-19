@@ -14,6 +14,7 @@ const config = computed<RoutingLayerConfig>(() => {
     preset: r.preset ?? 'simple',
     strictDefaultDeny: r.strictDefaultDeny ?? p.strictDefaultDeny,
     layerDefaultDeny: r.layerDefaultDeny ?? p.layerDefaultDeny,
+    betaRedirect: r.betaRedirect ?? p.betaRedirect,
     runtimeFlags: r.runtimeFlags ?? p.runtimeFlags,
     debug: r.debug ?? p.debug,
     maintenance: {

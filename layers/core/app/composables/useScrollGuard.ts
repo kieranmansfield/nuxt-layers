@@ -14,11 +14,8 @@ interface SavedStyles {
 }
 
 // ---------------------------------------------------------------------------
-// Singleton state (shared across all calls)
+// Singleton DOM tracking state (non-reactive, intentionally module-scope)
 // ---------------------------------------------------------------------------
-
-const isEnabled = ref(false)
-const clampedCount = ref(0)
 
 const clampedElements = new WeakMap<HTMLElement, SavedStyles>()
 /** Live set so we can iterate and restore on disable */
@@ -34,130 +31,6 @@ let savedBodyTransition = ''
 
 // Current resolved options (set by enable())
 let opts: ScrollGuardConfig | null = null
-
-// ---------------------------------------------------------------------------
-// Internal helpers
-// ---------------------------------------------------------------------------
-
-function shouldExclude(el: HTMLElement): boolean {
-  if (!opts) return true
-  return opts.excludeSelectors.some((sel) => {
-    try {
-      return el.matches(sel)
-    } catch {
-      return false
-    }
-  })
-}
-
-function clampElement(el: HTMLElement) {
-  if (!opts || clampedElements.has(el) || shouldExclude(el)) return
-  if (el.scrollWidth <= window.innerWidth) return
-
-  // Save original styles
-  clampedElements.set(el, {
-    transition: el.style.transition,
-    maxWidth: el.style.maxWidth,
-    boxSizing: el.style.boxSizing,
-    overflowX: el.style.overflowX,
-  })
-  clampedSet.add(el)
-
-  el.style.transition = `max-width ${opts.transitionDuration}ms ease`
-  el.style.maxWidth = '100%'
-  el.style.boxSizing = 'border-box'
-
-  if (opts.debug) {
-    el.style.outline = '2px dashed red'
-    setTimeout(() => {
-      el.style.outline = ''
-    }, 1000)
-  }
-
-  clampedCount.value++
-}
-
-
-function guard() {
-  if (!isEnabled.value || !opts) return
-
-  const html = document.documentElement
-  const body = document.body
-
-  html.style.overflowX = 'clip'
-  body.style.overflowX = 'clip'
-  body.style.maxWidth = '100vw'
-
-  if (!opts.strict) return
-
-  const elements = document.body.querySelectorAll<HTMLElement>('*')
-  for (const el of elements) {
-    if (el.offsetParent !== null) {
-      clampElement(el)
-    }
-  }
-}
-
-function startObservers() {
-  if (!opts) return
-
-  // MutationObserver for dynamically added content
-  observer = new MutationObserver((mutations) => {
-    if (!isEnabled.value || !opts?.strict) return
-    for (const m of mutations) {
-      for (const node of m.addedNodes) {
-        if (node instanceof HTMLElement) {
-          clampElement(node)
-          for (const child of node.querySelectorAll<HTMLElement>('*')) {
-            clampElement(child)
-          }
-        }
-      }
-    }
-  })
-  observer.observe(document.body, { childList: true, subtree: true })
-
-  // Debounced resize handler
-  debouncedGuard = debounce(guard, opts.resizeDebounce)
-  resizeHandler = debouncedGuard
-  window.addEventListener('resize', resizeHandler)
-}
-
-function stopObservers() {
-  if (observer) {
-    observer.disconnect()
-    observer = null
-  }
-  if (resizeHandler) {
-    window.removeEventListener('resize', resizeHandler)
-    resizeHandler = null
-    debouncedGuard = null
-  }
-}
-
-function restoreAll() {
-  // Restore all clamped elements
-  for (const el of clampedSet) {
-    const saved = clampedElements.get(el)
-    if (saved) {
-      el.style.transition = saved.transition
-      el.style.maxWidth = saved.maxWidth
-      el.style.boxSizing = saved.boxSizing
-      el.style.overflowX = saved.overflowX
-      clampedElements.delete(el)
-    }
-  }
-  clampedSet.clear()
-  clampedCount.value = 0
-
-  // Restore html/body styles
-  const html = document.documentElement
-  const body = document.body
-  html.style.overflowX = savedHtmlOverflowX
-  body.style.overflowX = savedBodyOverflowX
-  body.style.maxWidth = savedBodyMaxWidth
-  body.style.transition = savedBodyTransition
-}
 
 // ---------------------------------------------------------------------------
 // Composable
@@ -180,11 +53,127 @@ function restoreAll() {
  * ```
  */
 export function useScrollGuard() {
+  const isEnabled = useState('core:scroll-guard:enabled', () => false)
+  const clampedCount = useState('core:scroll-guard:clamped', () => 0)
+
+  function shouldExclude(el: HTMLElement): boolean {
+    if (!opts) return true
+    return opts.excludeSelectors.some((sel) => {
+      try {
+        return el.matches(sel)
+      } catch {
+        return false
+      }
+    })
+  }
+
+  function clampElement(el: HTMLElement) {
+    if (!opts || clampedElements.has(el) || shouldExclude(el)) return
+    if (el.scrollWidth <= window.innerWidth) return
+
+    clampedElements.set(el, {
+      transition: el.style.transition,
+      maxWidth: el.style.maxWidth,
+      boxSizing: el.style.boxSizing,
+      overflowX: el.style.overflowX,
+    })
+    clampedSet.add(el)
+
+    el.style.transition = `max-width ${opts.transitionDuration}ms ease`
+    el.style.maxWidth = '100%'
+    el.style.boxSizing = 'border-box'
+
+    if (opts.debug) {
+      el.style.outline = '2px dashed red'
+      setTimeout(() => {
+        el.style.outline = ''
+      }, 1000)
+    }
+
+    clampedCount.value++
+  }
+
+  function guard() {
+    if (!isEnabled.value || !opts) return
+
+    const html = document.documentElement
+    const body = document.body
+
+    html.style.overflowX = 'clip'
+    body.style.overflowX = 'clip'
+    body.style.maxWidth = '100vw'
+
+    if (!opts.strict) return
+
+    const elements = document.body.querySelectorAll<HTMLElement>('*')
+    for (const el of elements) {
+      if (el.offsetParent !== null) {
+        clampElement(el)
+      }
+    }
+  }
+
+  function startObservers() {
+    if (!opts) return
+
+    observer = new MutationObserver((mutations) => {
+      if (!isEnabled.value || !opts?.strict) return
+      for (const m of mutations) {
+        for (const node of m.addedNodes) {
+          if (node instanceof HTMLElement) {
+            clampElement(node)
+            for (const child of node.querySelectorAll<HTMLElement>('*')) {
+              clampElement(child)
+            }
+          }
+        }
+      }
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    debouncedGuard = debounce(guard, opts.resizeDebounce)
+    resizeHandler = debouncedGuard
+    window.addEventListener('resize', resizeHandler)
+  }
+
+  function stopObservers() {
+    if (observer) {
+      observer.disconnect()
+      observer = null
+    }
+    if (resizeHandler) {
+      window.removeEventListener('resize', resizeHandler)
+      resizeHandler = null
+      debouncedGuard = null
+    }
+  }
+
+  function restoreAll() {
+    for (const el of clampedSet) {
+      const saved = clampedElements.get(el)
+      if (saved) {
+        el.style.transition = saved.transition
+        el.style.maxWidth = saved.maxWidth
+        el.style.boxSizing = saved.boxSizing
+        el.style.overflowX = saved.overflowX
+        clampedElements.delete(el)
+      }
+    }
+    clampedSet.clear()
+    clampedCount.value = 0
+
+    const html = document.documentElement
+    const body = document.body
+    html.style.overflowX = savedHtmlOverflowX
+    body.style.overflowX = savedBodyOverflowX
+    body.style.maxWidth = savedBodyMaxWidth
+    body.style.transition = savedBodyTransition
+  }
+
   function enable(config?: Partial<ScrollGuardConfig>) {
     if (!import.meta.client) return
     if (isEnabled.value) return
 
-    // Resolve config: explicit arg → app.config → defaults
     const appConfig = useAppConfig()
     const configFromApp = (
       appConfig.coreLayer as { scrollGuard?: Partial<ScrollGuardConfig> } | undefined
@@ -201,7 +190,6 @@ export function useScrollGuard() {
       ...config,
     }
 
-    // Save original html/body styles before we touch them
     const html = document.documentElement
     const body = document.body
     savedHtmlOverflowX = html.style.overflowX
@@ -210,8 +198,6 @@ export function useScrollGuard() {
     savedBodyTransition = body.style.transition
 
     isEnabled.value = true
-
-    // Initial scan
     guard()
     startObservers()
   }

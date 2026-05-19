@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// @ts-nocheck
 /**
  * BaseModal — overlay-compatible modal shell.
  *

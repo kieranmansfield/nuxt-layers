@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createSharedComposable, useLocalStorage, usePreferredReducedMotion } from '@vueuse/core'
 import type { PreferenceOverride } from '#layers/theme/app/types/theme'
 
@@ -14,16 +13,6 @@ export const useThemeMotion = createSharedComposable(() => {
 
   function setMotionOverride(value: PreferenceOverride) {
     motionOverride.value = value
-  }
-
-  if (import.meta.client) {
-    watch(
-      effectiveReducedMotion,
-      (reduced) => {
-        document.documentElement.setAttribute('data-theme-motion', reduced ? 'reduced' : 'full')
-      },
-      { immediate: true }
-    )
   }
 
   return {

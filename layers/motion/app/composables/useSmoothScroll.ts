@@ -23,11 +23,18 @@ interface ScrollToOptions {
  */
 export function useSmoothScroll() {
   const nuxtApp = useNuxtApp()
+  const appConfig = useAppConfig()
 
   // Get the Locomotive Scroll instance from the reactive ref provided by the plugin
   const locomotiveScroll = computed<LocomotiveScroll | undefined>(
     () => (nuxtApp.$locomotiveScroll as Ref<LocomotiveScroll | null>)?.value ?? undefined
   )
+
+  // true if smooth scroll is configured to run (globally or per-route)
+  const isEnabled = computed(() => (appConfig.motion?.smoothScroll ?? true) !== false)
+
+  // true once the LocomotiveScroll instance is actually initialised on this route
+  const isReady = computed(() => locomotiveScroll.value != null)
 
   // Reactive scroll state from the plugin
   const scrollState = computed(
@@ -109,6 +116,10 @@ export function useSmoothScroll() {
   return {
     // Locomotive Scroll instance
     locomotiveScroll,
+
+    // Scroll availability
+    isEnabled,
+    isReady,
 
     // Reactive scroll state
     scrollY,

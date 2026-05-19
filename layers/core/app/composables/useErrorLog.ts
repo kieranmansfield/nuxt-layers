@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * Error logging composable for tracking and reporting errors
  *
@@ -49,16 +48,12 @@ export function useErrorLog() {
   const appConfig = useAppConfig()
   const route = useRoute()
 
-  // Get error log configuration from app.config
-  const config = computed(() => {
-    const coreLayer = appConfig.coreLayer as { errors?: ErrorLogConfig } | undefined
-    return {
-      logToConsole: coreLayer?.errors?.logToConsole ?? true,
-      logToExternal: coreLayer?.errors?.logToExternal ?? false,
-      externalUrl: coreLayer?.errors?.externalUrl,
-      externalToken: coreLayer?.errors?.externalToken,
-    }
-  })
+  const config = computed(() => ({
+    logToConsole: appConfig.coreLayer?.errors?.logToConsole ?? true,
+    logToExternal: appConfig.coreLayer?.errors?.logToExternal ?? false,
+    externalUrl: appConfig.coreLayer?.errors?.externalUrl,
+    externalToken: appConfig.coreLayer?.errors?.externalToken,
+  }))
 
   /**
    * Log an error with optional context

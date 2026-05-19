@@ -1,11 +1,10 @@
-// @ts-nocheck
 import { createSharedComposable, useLocalStorage } from '@vueuse/core'
 import type { AccentColor } from '#layers/theme/app/types/theme'
 
 export const useAccentColor = createSharedComposable(() => {
   const appConfig = useAppConfig()
 
-  const defaultAccent = ((appConfig as any).themeLayer?.defaultAccent ?? 'blue') as AccentColor
+  const defaultAccent = (appConfig.themeLayer?.defaultAccent ?? 'blue') as AccentColor
   const accent = useLocalStorage<AccentColor>('theme-colour', defaultAccent)
 
   const pageAccent = ref<AccentColor | null>(null)
@@ -17,16 +16,6 @@ export const useAccentColor = createSharedComposable(() => {
 
   function setPageAccent(color: AccentColor | null) {
     pageAccent.value = color
-  }
-
-  if (import.meta.client) {
-    watch(
-      activeAccent,
-      (color) => {
-        document.documentElement.setAttribute('data-theme-colour', color)
-      },
-      { immediate: true }
-    )
   }
 
   return {

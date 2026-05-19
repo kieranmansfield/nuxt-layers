@@ -1,5 +1,11 @@
 import type { Component } from 'vue'
 
+export interface ModalController<P extends Record<string, unknown>> {
+  open: (props?: Partial<P>) => void
+  close: () => void
+  patch: (props: Partial<P>) => void
+}
+
 /**
  * Factory that turns any overlay-compatible component into a shared modal composable.
  *
@@ -19,10 +25,13 @@ import type { Component } from 'vue'
  * Extend BaseModal.vue as a starting point.
  */
 export function createModal<P extends Record<string, unknown>>(component: Component) {
-  return createSharedComposable(() => {
-    if (import.meta.server) return { open: () => {}, close: () => {}, patch: () => {} }
+  return createSharedComposable((): ModalController<P> => {
+    if (import.meta.server) {
+      return { open: () => {}, close: () => {}, patch: () => {} }
+    }
 
     const overlay = useOverlay()
+    // useOverlay is a Nuxt UI auto-import; not resolvable in standalone layer typecheck
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const modal = overlay.create(component as any)
     return {

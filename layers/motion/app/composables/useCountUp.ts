@@ -1,3 +1,4 @@
+import type { MaybeRefOrGetter } from 'vue'
 import type { ScrollTrigger as GSAPScrollTrigger } from 'gsap/ScrollTrigger'
 
 interface UseCountUpOptions {
@@ -9,7 +10,7 @@ interface UseCountUpOptions {
   once?: boolean
 }
 
-export function useCountUp(elementRef: Ref<HTMLElement | null>, opts: UseCountUpOptions) {
+export function useCountUp(elementRef: MaybeRefOrGetter<HTMLElement | null>, opts: UseCountUpOptions) {
   const { gsap, ScrollTrigger } = useGsap()
 
   const displayValue = ref(String(opts.from ?? 0))
@@ -40,10 +41,11 @@ export function useCountUp(elementRef: Ref<HTMLElement | null>, opts: UseCountUp
     await nextTick()
     displayValue.value = format(opts.from ?? 0)
 
-    if (!elementRef.value) return
+    const el = toValue(elementRef)
+    if (!el) return
 
     scrollTriggerInstance = ScrollTrigger.create({
-      trigger: elementRef.value,
+      trigger: el,
       start: 'top 80%',
       once: opts.once ?? true,
       onEnter: startCount,

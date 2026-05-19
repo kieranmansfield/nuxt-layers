@@ -1,22 +1,4 @@
-// @ts-nocheck
-import type { ZodSchema } from 'zod'
-
-/**
- * Supported field types for the FormField component
- */
-export type FieldType =
-  | 'text'
-  | 'email'
-  | 'phone'
-  | 'password'
-  | 'url'
-  | 'textarea'
-  | 'name'
-  | 'number'
-  | 'date'
-  | 'time'
-  | 'search'
-  | 'currency'
+import type { ZodTypeAny } from 'zod'
 
 /**
  * HTML input modes for mobile keyboard optimization
@@ -48,7 +30,7 @@ export interface FieldConfig {
   /** Placeholder text */
   placeholder?: string
   /** Zod validation schema */
-  validation: ZodSchema
+  validation: ZodTypeAny
   /** Nuxt UI component to use for rendering */
   component?: FieldComponent
   /** Special formatting to apply */

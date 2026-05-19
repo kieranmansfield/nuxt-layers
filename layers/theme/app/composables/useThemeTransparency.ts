@@ -1,4 +1,3 @@
-// @ts-nocheck
 import {
   createSharedComposable,
   useLocalStorage,
@@ -18,19 +17,6 @@ export const useThemeTransparency = createSharedComposable(() => {
 
   function setTransparencyOverride(value: PreferenceOverride) {
     transparencyOverride.value = value
-  }
-
-  if (import.meta.client) {
-    watch(
-      effectiveReducedTransparency,
-      (reduced) => {
-        document.documentElement.setAttribute(
-          'data-theme-transparency',
-          reduced ? 'reduced' : 'full'
-        )
-      },
-      { immediate: true }
-    )
   }
 
   return {

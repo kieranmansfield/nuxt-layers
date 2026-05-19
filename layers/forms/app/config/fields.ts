@@ -1,12 +1,12 @@
-// @ts-nocheck
 import { z } from 'zod'
-import type { FieldConfig, FieldType } from '../types/fields'
+import type { FieldConfig } from '../types/fields'
 
 /**
- * Field configuration registry
- * Defines default behavior, validation, and UI props for each field type
+ * Field configuration registry — single source of truth for all field types.
+ * FieldType is derived from the keys of this object, so adding a new field
+ * here is sufficient; the type stays in sync automatically.
  */
-export const fieldConfigs: Record<FieldType, FieldConfig> = {
+const _fieldConfigs = {
   text: {
     inputType: 'text',
     inputMode: 'text',
@@ -102,4 +102,10 @@ export const fieldConfigs: Record<FieldType, FieldConfig> = {
     component: 'UInputNumber',
     format: 'currency',
   },
-} as const
+} satisfies Record<string, FieldConfig>
+
+// FieldType is derived from the keys — adding an entry above is all that's needed
+export type FieldType = keyof typeof _fieldConfigs
+
+// Cast to widened FieldConfig so callers get safe property access (icon?, placeholder?, etc.)
+export const fieldConfigs = _fieldConfigs as Record<FieldType, FieldConfig>

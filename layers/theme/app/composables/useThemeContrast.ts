@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createSharedComposable, useLocalStorage, usePreferredContrast } from '@vueuse/core'
 import type { PreferenceOverride } from '#layers/theme/app/types/theme'
 
@@ -14,16 +13,6 @@ export const useThemeContrast = createSharedComposable(() => {
 
   function setContrastOverride(value: PreferenceOverride) {
     contrastOverride.value = value
-  }
-
-  if (import.meta.client) {
-    watch(
-      effectiveHighContrast,
-      (high) => {
-        document.documentElement.setAttribute('data-theme-contrast', high ? 'high' : 'standard')
-      },
-      { immediate: true }
-    )
   }
 
   return {
