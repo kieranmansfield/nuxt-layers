@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { generateScale } from '~/composables/useTailwindScale'
+  import { generateScale } from '~/composables/useTailwindScale'
 
-const { state } = useBrandState()
+  const { state } = useBrandState()
 
-const showOklch = ref(false)
+  const showOklch = ref(false)
 
-const scaledColours = computed(() =>
-  state.value.colours.map((c) => ({
-    ...c,
-    scale: generateScale(c.hex),
-  })),
-)
+  const scaledColours = computed(() =>
+    state.value.colours.map((c) => ({
+      ...c,
+      scale: generateScale(c.hex),
+    }))
+  )
 </script>
 
 <template>
@@ -44,11 +44,7 @@ const scaledColours = computed(() =>
           <UBadge :label="colour.role" color="neutral" variant="soft" size="xs" />
           <span class="text-xs text-(--ui-text-muted) font-mono ml-auto">{{ colour.hex }}</span>
         </div>
-        <ColourScaleRow
-          :name="colour.name"
-          :scale="colour.scale"
-          :show-oklch="showOklch"
-        />
+        <ColourScaleRow :name="colour.name" :scale="colour.scale" :show-oklch="showOklch" />
       </div>
     </div>
   </div>

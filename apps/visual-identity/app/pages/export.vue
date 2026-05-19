@@ -1,63 +1,60 @@
 <script setup lang="ts">
-const { state, importState } = useBrandState()
-const {
-  generateCssVars,
-  generateTailwindV4,
-  generateJson,
-  exportCssVars,
-  exportTailwindV4,
-  exportJson,
-  copyToClipboard,
-} = useExport()
+  const { state, importState } = useBrandState()
+  const {
+    generateCssVars,
+    generateTailwindV4,
+    generateJson,
+    exportCssVars,
+    exportTailwindV4,
+    exportJson,
+    copyToClipboard,
+  } = useExport()
 
-const activeTab = ref<'css' | 'tailwind' | 'json'>('tailwind')
+  const activeTab = ref<'css' | 'tailwind' | 'json'>('tailwind')
 
-const codeMap = computed(() => ({
-  css: generateCssVars(),
-  tailwind: generateTailwindV4(),
-  json: generateJson(),
-}))
+  const codeMap = computed(() => ({
+    css: generateCssVars(),
+    tailwind: generateTailwindV4(),
+    json: generateJson(),
+  }))
 
-const tabs = [
-  { id: 'tailwind' as const, label: 'Tailwind v4', icon: 'i-lucide-wind' },
-  { id: 'css' as const, label: 'CSS Variables', icon: 'i-lucide-braces' },
-  { id: 'json' as const, label: 'JSON', icon: 'i-lucide-file-json' },
-]
+  const tabs = [
+    { id: 'tailwind' as const, label: 'Tailwind v4', icon: 'i-lucide-wind' },
+    { id: 'css' as const, label: 'CSS Variables', icon: 'i-lucide-braces' },
+    { id: 'json' as const, label: 'JSON', icon: 'i-lucide-file-json' },
+  ]
 
-const copied = ref(false)
+  const copied = ref(false)
 
-async function handleCopy() {
-  await copyToClipboard(codeMap.value[activeTab.value])
-  copied.value = true
-  setTimeout(() => (copied.value = false), 2000)
-}
-
-function handleDownload() {
-  if (activeTab.value === 'tailwind') exportTailwindV4()
-  else if (activeTab.value === 'css') exportCssVars()
-  else exportJson()
-}
-
-const importError = ref('')
-function handleImport(event: Event) {
-  const file = (event.target as HTMLInputElement).files?.[0]
-  if (!file) return
-  const reader = new FileReader()
-  reader.onload = (e) => {
-    try {
-      importState(e.target?.result as string)
-      importError.value = ''
-    }
-    catch {
-      importError.value = 'Invalid brand configuration file.'
-    }
+  async function handleCopy() {
+    await copyToClipboard(codeMap.value[activeTab.value])
+    copied.value = true
+    setTimeout(() => (copied.value = false), 2000)
   }
-  reader.readAsText(file)
-}
 
-const isEmpty = computed(
-  () => state.value.colours.length === 0,
-)
+  function handleDownload() {
+    if (activeTab.value === 'tailwind') exportTailwindV4()
+    else if (activeTab.value === 'css') exportCssVars()
+    else exportJson()
+  }
+
+  const importError = ref('')
+  function handleImport(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      try {
+        importState(e.target?.result as string)
+        importError.value = ''
+      } catch {
+        importError.value = 'Invalid brand configuration file.'
+      }
+    }
+    reader.readAsText(file)
+  }
+
+  const isEmpty = computed(() => state.value.colours.length === 0)
 </script>
 
 <template>
@@ -81,12 +78,13 @@ const isEmpty = computed(
 
     <p v-if="importError" class="text-red-500 text-sm mb-4">{{ importError }}</p>
 
-    <div v-if="isEmpty" class="text-center py-16 text-(--ui-text-muted) border-2 border-dashed border-(--ui-border) rounded-xl">
+    <div
+      v-if="isEmpty"
+      class="text-center py-16 text-(--ui-text-muted) border-2 border-dashed border-(--ui-border) rounded-xl"
+    >
       <UIcon name="i-lucide-download" class="size-10 mx-auto mb-3" />
       <p class="text-sm mb-4">Add colours and typography settings before exporting.</p>
-      <UButton to="/colour/foundation" variant="outline" size="sm">
-        Get started
-      </UButton>
+      <UButton to="/colour/foundation" variant="outline" size="sm"> Get started </UButton>
     </div>
 
     <div v-else>
@@ -122,7 +120,9 @@ const isEmpty = computed(
             <UIcon name="i-lucide-sun-moon" class="size-5 text-(--ui-text-muted)" />
             <div>
               <p class="text-xs text-(--ui-text-muted)">Modes</p>
-              <p class="font-semibold text-(--ui-text) capitalize">{{ state.themeMode.mode.replace('-', ' ') }}</p>
+              <p class="font-semibold text-(--ui-text) capitalize">
+                {{ state.themeMode.mode.replace('-', ' ') }}
+              </p>
             </div>
           </div>
         </UCard>
@@ -147,7 +147,13 @@ const isEmpty = computed(
         <template #header>
           <div class="flex items-center justify-between">
             <p class="text-xs font-mono text-(--ui-text-muted)">
-              {{ activeTab === 'tailwind' ? 'brand-theme.css' : activeTab === 'css' ? 'brand-variables.css' : 'brand-config.json' }}
+              {{
+                activeTab === 'tailwind'
+                  ? 'brand-theme.css'
+                  : activeTab === 'css'
+                    ? 'brand-variables.css'
+                    : 'brand-config.json'
+              }}
             </p>
             <div class="flex gap-2">
               <UButton
@@ -171,7 +177,10 @@ const isEmpty = computed(
             </div>
           </div>
         </template>
-        <pre class="text-xs font-mono text-(--ui-text) overflow-auto max-h-96 leading-relaxed whitespace-pre-wrap">{{ codeMap[activeTab] }}</pre>
+        <pre
+          class="text-xs font-mono text-(--ui-text) overflow-auto max-h-96 leading-relaxed whitespace-pre-wrap"
+          >{{ codeMap[activeTab] }}</pre
+        >
       </UCard>
     </div>
   </div>

@@ -1,32 +1,31 @@
 <script setup lang="ts">
+  const { state, updateFontScale } = useBrandState()
 
-const { state, updateFontScale } = useBrandState()
+  const activeFont = ref(state.value.typography[0]?.id ?? 'heading')
 
-const activeFont = ref(state.value.typography[0]?.id ?? 'heading')
+  const currentFont = computed(
+    () => state.value.typography.find((f) => f.id === activeFont.value) ?? state.value.typography[0]
+  )
 
-const currentFont = computed(
-  () => state.value.typography.find((f) => f.id === activeFont.value) ?? state.value.typography[0],
-)
+  function addSize(field: 'sizeScale' | 'spacingScale') {
+    if (!currentFont.value) return
+    const last = currentFont.value[field].at(-1) ?? 16
+    const next = Math.round(last * 1.333)
+    updateFontScale(currentFont.value.id, field, [...currentFont.value[field], next])
+  }
 
-function addSize(field: 'sizeScale' | 'spacingScale') {
-  if (!currentFont.value) return
-  const last = currentFont.value[field].at(-1) ?? 16
-  const next = Math.round(last * 1.333)
-  updateFontScale(currentFont.value.id, field, [...currentFont.value[field], next])
-}
+  function removeSize(field: 'sizeScale' | 'spacingScale', index: number) {
+    if (!currentFont.value) return
+    const updated = currentFont.value[field].filter((_, i) => i !== index)
+    updateFontScale(currentFont.value.id, field, updated)
+  }
 
-function removeSize(field: 'sizeScale' | 'spacingScale', index: number) {
-  if (!currentFont.value) return
-  const updated = currentFont.value[field].filter((_, i) => i !== index)
-  updateFontScale(currentFont.value.id, field, updated)
-}
-
-function updateSize(field: 'sizeScale' | 'spacingScale', index: number, value: number) {
-  if (!currentFont.value) return
-  const updated = [...currentFont.value[field]]
-  updated[index] = value
-  updateFontScale(currentFont.value.id, field, updated)
-}
+  function updateSize(field: 'sizeScale' | 'spacingScale', index: number, value: number) {
+    if (!currentFont.value) return
+    const updated = [...currentFont.value[field]]
+    updated[index] = value
+    updateFontScale(currentFont.value.id, field, updated)
+  }
 </script>
 
 <template>
@@ -62,11 +61,7 @@ function updateSize(field: 'sizeScale' | 'spacingScale', index: number, value: n
           </div>
         </template>
         <div class="flex flex-col gap-2">
-          <div
-            v-for="(size, i) in currentFont.sizeScale"
-            :key="i"
-            class="flex items-center gap-3"
-          >
+          <div v-for="(size, i) in currentFont.sizeScale" :key="i" class="flex items-center gap-3">
             <div
               class="overflow-hidden"
               :style="{
@@ -109,7 +104,12 @@ function updateSize(field: 'sizeScale' | 'spacingScale', index: number, value: n
         <template #header>
           <div class="flex items-center justify-between">
             <p class="text-sm font-medium text-(--ui-text)">Spacing</p>
-            <UButton icon="i-lucide-plus" size="xs" variant="ghost" @click="addSize('spacingScale')" />
+            <UButton
+              icon="i-lucide-plus"
+              size="xs"
+              variant="ghost"
+              @click="addSize('spacingScale')"
+            />
           </div>
         </template>
         <div class="flex flex-col gap-2">

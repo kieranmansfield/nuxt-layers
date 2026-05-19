@@ -1,45 +1,44 @@
 <script setup lang="ts">
-import { DEFAULT_AXES, FONT_AXIS_META } from '~/composables/useBrandState'
-import type { FontAxes } from '~/composables/useBrandState'
+  import { DEFAULT_AXES, FONT_AXIS_META, type FontAxes } from '~/composables/useBrandState'
 
-const { state, updateFontAxis } = useBrandState()
+  const { state, updateFontAxis } = useBrandState()
 
-const activeFont = ref(state.value.typography[0]?.id ?? 'heading')
+  const activeFont = ref(state.value.typography[0]?.id ?? 'heading')
 
-const currentFont = computed(
-  () => state.value.typography.find((f) => f.id === activeFont.value) ?? state.value.typography[0],
-)
+  const currentFont = computed(
+    () => state.value.typography.find((f) => f.id === activeFont.value) ?? state.value.typography[0]
+  )
 
-const previewText = ref('Aa')
-const previewSize = ref(220)
+  const previewText = ref('Aa')
+  const previewSize = ref(220)
 
-// Computed directly from state so Vue tracks each axis property
-const variationSettingsString = computed(() => {
-  const font = currentFont.value
-  if (!font) return ''
-  return (Object.keys(font.axes) as (keyof FontAxes)[])
-    .map((k) => `'${k}' ${font.axes[k]}`)
-    .join(', ')
-})
+  // Computed directly from state so Vue tracks each axis property
+  const variationSettingsString = computed(() => {
+    const font = currentFont.value
+    if (!font) return ''
+    return (Object.keys(font.axes) as (keyof FontAxes)[])
+      .map((k) => `'${k}' ${font.axes[k]}`)
+      .join(', ')
+  })
 
-const previewStyle = computed(() => ({
-  fontFamily: `'${currentFont.value?.family ?? 'Roboto Flex'}', sans-serif`,
-  fontVariationSettings: variationSettingsString.value,
-  fontSize: `${previewSize.value}px`,
-  lineHeight: 1,
-}))
+  const previewStyle = computed(() => ({
+    fontFamily: `'${currentFont.value?.family ?? 'Roboto Flex'}', sans-serif`,
+    fontVariationSettings: variationSettingsString.value,
+    fontSize: `${previewSize.value}px`,
+    lineHeight: 1,
+  }))
 
-function resetAxes() {
-  if (!currentFont.value) return
-  for (const key of Object.keys(FONT_AXIS_META) as (keyof FontAxes)[]) {
-    updateFontAxis(currentFont.value.id, key, DEFAULT_AXES[key])
+  function resetAxes() {
+    if (!currentFont.value) return
+    for (const key of Object.keys(FONT_AXIS_META) as (keyof FontAxes)[]) {
+      updateFontAxis(currentFont.value.id, key, DEFAULT_AXES[key])
+    }
   }
-}
 
-function onAxisUpdate(axis: keyof FontAxes, v: number | undefined) {
-  if (!currentFont.value || v === undefined) return
-  updateFontAxis(currentFont.value.id, axis, v)
-}
+  function onAxisUpdate(axis: keyof FontAxes, v: number | undefined) {
+    if (!currentFont.value || v === undefined) return
+    updateFontAxis(currentFont.value.id, axis, v)
+  }
 </script>
 
 <template>
@@ -53,9 +52,7 @@ function onAxisUpdate(axis: keyof FontAxes, v: number | undefined) {
             <h1 class="text-lg font-semibold text-(--ui-text)">Font & Axes</h1>
             <p class="text-xs text-(--ui-text-muted)">Roboto Flex variable axes</p>
           </div>
-          <UButton variant="ghost" size="xs" color="neutral" @click="resetAxes">
-            Reset
-          </UButton>
+          <UButton variant="ghost" size="xs" color="neutral" @click="resetAxes"> Reset </UButton>
         </div>
         <!-- Font role tabs -->
         <div class="flex gap-1.5 flex-wrap">
@@ -93,10 +90,7 @@ function onAxisUpdate(axis: keyof FontAxes, v: number | undefined) {
     <div class="flex-1 flex flex-col overflow-hidden bg-(--ui-bg-elevated)">
       <!-- Big preview area -->
       <div class="flex-1 flex items-center justify-center overflow-hidden px-8 select-none">
-        <div
-          class="text-(--ui-text) transition-all duration-75"
-          :style="previewStyle"
-        >
+        <div class="text-(--ui-text) transition-all duration-75" :style="previewStyle">
           {{ previewText || 'Aa' }}
         </div>
       </div>
@@ -104,12 +98,7 @@ function onAxisUpdate(axis: keyof FontAxes, v: number | undefined) {
       <!-- Bottom controls bar -->
       <div class="shrink-0 border-t border-(--ui-border) bg-(--ui-bg) px-6 py-4">
         <div class="flex items-center gap-6 mb-3">
-          <UInput
-            v-model="previewText"
-            class="w-32"
-            size="sm"
-            placeholder="Aa"
-          />
+          <UInput v-model="previewText" class="w-32" size="sm" placeholder="Aa" />
           <div class="flex items-center gap-3 flex-1">
             <span class="text-xs text-(--ui-text-muted) shrink-0 tabular-nums w-12 text-right">
               {{ previewSize }}px

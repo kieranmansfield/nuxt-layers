@@ -1,9 +1,7 @@
 import { generateScale } from './useTailwindScale'
 
 function colourCssName(colour: { role: string; name: string }): string {
-  return colour.role === 'custom'
-    ? colour.name.toLowerCase().replace(/\s+/g, '-')
-    : colour.role
+  return colour.role === 'custom' ? colour.name.toLowerCase().replace(/\s+/g, '-') : colour.role
 }
 
 function downloadText(content: string, filename: string, mimeType = 'text/plain') {

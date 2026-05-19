@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import type { BrandColour } from '~/composables/useBrandState'
+  import type { BrandColour } from '~/composables/useBrandState'
 
-const { state, addColour, removeColour, updateColour } = useBrandState()
+  const { state, addColour, removeColour, updateColour } = useBrandState()
 
-const ROLES: BrandColour['role'][] = ['primary', 'secondary', 'accent', 'neutral', 'custom']
+  const ROLES: BrandColour['role'][] = ['primary', 'secondary', 'accent', 'neutral', 'custom']
 
-function onHexInput(id: string, event: Event) {
-  const value = (event.target as HTMLInputElement).value
-  updateColour(id, { hex: value })
-}
+  function onHexInput(id: string, event: Event) {
+    const value = (event.target as HTMLInputElement).value
+    updateColour(id, { hex: value })
+  }
 
-function onNameInput(id: string, event: Event) {
-  const value = (event.target as HTMLInputElement).value
-  updateColour(id, { name: value })
-}
+  function onNameInput(id: string, event: Event) {
+    const value = (event.target as HTMLInputElement).value
+    updateColour(id, { name: value })
+  }
 </script>
 
 <template>
@@ -54,11 +54,7 @@ function onNameInput(id: string, event: Event) {
       >
         <!-- Native colour picker -->
         <label class="cursor-pointer shrink-0">
-          <input
-            type="color"
-            :value="colour.hex"
-            @input="onHexInput(colour.id, $event)"
-          />
+          <input type="color" :value="colour.hex" @input="onHexInput(colour.id, $event)" />
         </label>
 
         <!-- Hex input -->
@@ -99,13 +95,7 @@ function onNameInput(id: string, event: Event) {
       </div>
     </div>
 
-    <UButton
-      icon="i-lucide-plus"
-      variant="outline"
-      @click="addColour()"
-    >
-      Add colour
-    </UButton>
+    <UButton icon="i-lucide-plus" variant="outline" @click="addColour()"> Add colour </UButton>
 
     <!-- Empty state -->
     <div

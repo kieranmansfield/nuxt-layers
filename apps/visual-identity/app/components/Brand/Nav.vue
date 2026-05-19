@@ -1,37 +1,37 @@
 <script setup lang="ts">
-const route = useRoute()
-const { resetState } = useBrandState()
+  const route = useRoute()
+  const { resetState } = useBrandState()
 
-const sections = [
-  {
-    label: 'Colour',
-    items: [
-      { label: 'Foundation', to: '/colour/foundation', icon: 'i-lucide-pipette' },
-      { label: 'Harmony', to: '/colour/harmony', icon: 'i-lucide-circle-dot' },
-      { label: 'Scales', to: '/colour/scales', icon: 'i-lucide-layers' },
-      { label: 'Modes', to: '/colour/modes', icon: 'i-lucide-sun-moon' },
-    ],
-  },
-  {
-    label: 'Typography',
-    items: [
-      { label: 'Font & Axes', to: '/typography', icon: 'i-lucide-type' },
-      { label: 'Scale', to: '/typography/scale', icon: 'i-lucide-ruler' },
-    ],
-  },
-]
+  const sections = [
+    {
+      label: 'Colour',
+      items: [
+        { label: 'Foundation', to: '/colour/foundation', icon: 'i-lucide-pipette' },
+        { label: 'Harmony', to: '/colour/harmony', icon: 'i-lucide-circle-dot' },
+        { label: 'Scales', to: '/colour/scales', icon: 'i-lucide-layers' },
+        { label: 'Modes', to: '/colour/modes', icon: 'i-lucide-sun-moon' },
+      ],
+    },
+    {
+      label: 'Typography',
+      items: [
+        { label: 'Font & Axes', to: '/typography', icon: 'i-lucide-type' },
+        { label: 'Scale', to: '/typography/scale', icon: 'i-lucide-ruler' },
+      ],
+    },
+  ]
 
-const isActive = (to: string) => {
-  if (to === '/typography') return route.path === '/typography'
-  return route.path.startsWith(to)
-}
+  const isActive = (to: string) => {
+    if (to === '/typography') return route.path === '/typography'
+    return route.path.startsWith(to)
+  }
 
-const confirmOpen = ref(false)
+  const confirmOpen = ref(false)
 
-function handleClear() {
-  resetState()
-  confirmOpen.value = false
-}
+  function handleClear() {
+    resetState()
+    confirmOpen.value = false
+  }
 </script>
 
 <template>

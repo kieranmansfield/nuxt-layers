@@ -1,53 +1,54 @@
 <script setup lang="ts">
-import { formatHex, oklch, parse } from 'culori'
-import type { BackgroundStyle, BrandColour } from '~/composables/useBrandState'
-import { generateScale } from '~/composables/useTailwindScale'
+  import { formatHex, oklch, parse } from 'culori'
 
-const { colours, mode, backgroundStyle } = defineProps<{
-  colours: BrandColour[]
-  mode: 'light-only' | 'dark-only' | 'both'
-  backgroundStyle: BackgroundStyle
-}>()
+  import type { BackgroundStyle, BrandColour } from '~/composables/useBrandState'
+  import { generateScale } from '~/composables/useTailwindScale'
 
-function mixOklch(hexA: string, hexB: string, t: number): string {
-  const a = oklch(parse(hexA) ?? { mode: 'rgb', r: 1, g: 1, b: 1 })
-  const b = oklch(parse(hexB) ?? { mode: 'rgb', r: 0, g: 0, b: 0 })
-  if (!a || !b) return hexA
-  return (
-    formatHex({
-      mode: 'oklch',
-      l: a.l + (b.l - a.l) * t,
-      c: (a.c ?? 0) + ((b.c ?? 0) - (a.c ?? 0)) * t,
-      h: (a.h ?? 0) + ((b.h ?? 0) - (a.h ?? 0)) * t,
-    }) ?? hexA
-  )
-}
+  const { colours, mode, backgroundStyle } = defineProps<{
+    colours: BrandColour[]
+    mode: 'light-only' | 'dark-only' | 'both'
+    backgroundStyle: BackgroundStyle
+  }>()
 
-function getBg(dark: boolean): string {
-  const neutral = dark ? '#121214' : '#fafafa'
-  const primary = colours.find((c) => c.role === 'primary')
-  if (!primary || backgroundStyle === 'neutral') return neutral
+  function mixOklch(hexA: string, hexB: string, t: number): string {
+    const a = oklch(parse(hexA) ?? { mode: 'rgb', r: 1, g: 1, b: 1 })
+    const b = oklch(parse(hexB) ?? { mode: 'rgb', r: 0, g: 0, b: 0 })
+    if (!a || !b) return hexA
+    return (
+      formatHex({
+        mode: 'oklch',
+        l: a.l + (b.l - a.l) * t,
+        c: (a.c ?? 0) + ((b.c ?? 0) - (a.c ?? 0)) * t,
+        h: (a.h ?? 0) + ((b.h ?? 0) - (a.h ?? 0)) * t,
+      }) ?? hexA
+    )
+  }
 
-  const scale = generateScale(primary.hex)
-  const tinted = dark ? (scale[10]?.hex ?? neutral) : (scale[0]?.hex ?? neutral)
+  function getBg(dark: boolean): string {
+    const neutral = dark ? '#121214' : '#fafafa'
+    const primary = colours.find((c) => c.role === 'primary')
+    if (!primary || backgroundStyle === 'neutral') return neutral
 
-  if (backgroundStyle === 'tinted') return tinted
-  // blended: 50% mix of tinted and neutral in Oklch
-  return mixOklch(tinted, neutral, 0.5)
-}
+    const scale = generateScale(primary.hex)
+    const tinted = dark ? (scale[10]?.hex ?? neutral) : (scale[0]?.hex ?? neutral)
 
-function getTextShade(dark: boolean): string {
-  const primary = colours.find((c) => c.role === 'primary')
-  if (!primary) return dark ? '#f0f0f0' : '#111111'
-  const scale = generateScale(primary.hex)
-  return dark ? (scale[1]?.hex ?? '#f0f0f0') : (scale[9]?.hex ?? '#111111')
-}
+    if (backgroundStyle === 'tinted') return tinted
+    // blended: 50% mix of tinted and neutral in Oklch
+    return mixOklch(tinted, neutral, 0.5)
+  }
 
-function getAccentShade(): string {
-  const primary = colours.find((c) => c.role === 'primary')
-  if (!primary) return '#6366f1'
-  return generateScale(primary.hex)[4]?.hex ?? primary.hex
-}
+  function getTextShade(dark: boolean): string {
+    const primary = colours.find((c) => c.role === 'primary')
+    if (!primary) return dark ? '#f0f0f0' : '#111111'
+    const scale = generateScale(primary.hex)
+    return dark ? (scale[1]?.hex ?? '#f0f0f0') : (scale[9]?.hex ?? '#111111')
+  }
+
+  function getAccentShade(): string {
+    const primary = colours.find((c) => c.role === 'primary')
+    if (!primary) return '#6366f1'
+    return generateScale(primary.hex)[4]?.hex ?? primary.hex
+  }
 </script>
 
 <template>
@@ -60,10 +61,19 @@ function getAccentShade(): string {
     >
       <div class="flex items-center gap-2 mb-3">
         <div class="size-3 rounded-full" :style="{ backgroundColor: getAccentShade() }" />
-        <div class="h-2 rounded w-16 opacity-40" :style="{ backgroundColor: getTextShade(false) }" />
+        <div
+          class="h-2 rounded w-16 opacity-40"
+          :style="{ backgroundColor: getTextShade(false) }"
+        />
       </div>
-      <div class="h-2 rounded w-full mb-1.5 opacity-20" :style="{ backgroundColor: getTextShade(false) }" />
-      <div class="h-2 rounded w-3/4 mb-4 opacity-20" :style="{ backgroundColor: getTextShade(false) }" />
+      <div
+        class="h-2 rounded w-full mb-1.5 opacity-20"
+        :style="{ backgroundColor: getTextShade(false) }"
+      />
+      <div
+        class="h-2 rounded w-3/4 mb-4 opacity-20"
+        :style="{ backgroundColor: getTextShade(false) }"
+      />
       <div
         class="inline-block px-3 py-1.5 rounded-lg text-xs text-white font-medium"
         :style="{ backgroundColor: getAccentShade() }"
@@ -85,8 +95,14 @@ function getAccentShade(): string {
         <div class="size-3 rounded-full" :style="{ backgroundColor: getAccentShade() }" />
         <div class="h-2 rounded w-16 opacity-40" :style="{ backgroundColor: getTextShade(true) }" />
       </div>
-      <div class="h-2 rounded w-full mb-1.5 opacity-20" :style="{ backgroundColor: getTextShade(true) }" />
-      <div class="h-2 rounded w-3/4 mb-4 opacity-20" :style="{ backgroundColor: getTextShade(true) }" />
+      <div
+        class="h-2 rounded w-full mb-1.5 opacity-20"
+        :style="{ backgroundColor: getTextShade(true) }"
+      />
+      <div
+        class="h-2 rounded w-3/4 mb-4 opacity-20"
+        :style="{ backgroundColor: getTextShade(true) }"
+      />
       <div
         class="inline-block px-3 py-1.5 rounded-lg text-xs text-white font-medium"
         :style="{ backgroundColor: getAccentShade() }"

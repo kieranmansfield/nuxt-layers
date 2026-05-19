@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { HARMONY_LABELS, HARMONY_TYPES, computeHarmony } from '~/composables/useColourHarmony'
-import type { HarmonyType } from '~/composables/useBrandState'
+  import type { HarmonyType } from '~/composables/useBrandState'
+  import { computeHarmony, HARMONY_LABELS, HARMONY_TYPES } from '~/composables/useColourHarmony'
 
-const { state, updateColour } = useBrandState()
+  const { state, updateColour } = useBrandState()
 
-const harmonyHexes = (colour: { hex: string; harmonyType: HarmonyType | null }) => {
-  if (!colour.harmonyType) return []
-  return computeHarmony(colour.hex, colour.harmonyType)
-}
+  const harmonyHexes = (colour: { hex: string; harmonyType: HarmonyType | null }) => {
+    if (!colour.harmonyType) return []
+    return computeHarmony(colour.hex, colour.harmonyType)
+  }
 
-const harmonyOptions = HARMONY_TYPES.map((t) => ({ label: HARMONY_LABELS[t], value: t }))
+  const harmonyOptions = HARMONY_TYPES.map((t) => ({ label: HARMONY_LABELS[t], value: t }))
 </script>
 
 <template>
@@ -20,9 +20,7 @@ const harmonyOptions = HARMONY_TYPES.map((t) => ({ label: HARMONY_LABELS[t], val
   >
     <UIcon name="i-lucide-circle-dot" class="size-12" />
     <p class="text-sm">Add colours on the Foundation page first.</p>
-    <UButton to="/colour/foundation" variant="outline" size="sm">
-      Go to Foundation
-    </UButton>
+    <UButton to="/colour/foundation" variant="outline" size="sm"> Go to Foundation </UButton>
   </div>
 
   <!-- Scrollable full-height sections -->
@@ -47,10 +45,7 @@ const harmonyOptions = HARMONY_TYPES.map((t) => ({ label: HARMONY_LABELS[t], val
       <div class="flex-1 flex items-center justify-center" style="height: 70vh; padding: 2rem 4rem">
         <!-- width: min(65vh, 88%) keeps it square and constrained to the viewport -->
         <div style="width: min(65vh, 88%)">
-          <ColourHarmonyWheel
-            :base-hex="colour.hex"
-            :harmony-hexes="harmonyHexes(colour)"
-          />
+          <ColourHarmonyWheel :base-hex="colour.hex" :harmony-hexes="harmonyHexes(colour)" />
         </div>
       </div>
 
@@ -59,7 +54,9 @@ const harmonyOptions = HARMONY_TYPES.map((t) => ({ label: HARMONY_LABELS[t], val
         <div class="flex items-start gap-10">
           <!-- Harmony type selector -->
           <div class="shrink-0">
-            <label class="text-xs font-semibold text-(--ui-text-muted) uppercase tracking-wider block mb-2">
+            <label
+              class="text-xs font-semibold text-(--ui-text-muted) uppercase tracking-wider block mb-2"
+            >
               Harmony
             </label>
             <USelect
@@ -74,7 +71,9 @@ const harmonyOptions = HARMONY_TYPES.map((t) => ({ label: HARMONY_LABELS[t], val
 
           <!-- Generated swatches -->
           <div class="flex-1">
-            <label class="text-xs font-semibold text-(--ui-text-muted) uppercase tracking-wider block mb-2">
+            <label
+              class="text-xs font-semibold text-(--ui-text-muted) uppercase tracking-wider block mb-2"
+            >
               Colours
             </label>
             <div class="flex flex-wrap gap-4">
@@ -103,10 +102,7 @@ const harmonyOptions = HARMONY_TYPES.map((t) => ({ label: HARMONY_LABELS[t], val
                 </div>
               </template>
 
-              <p
-                v-else
-                class="text-sm text-(--ui-text-muted) italic self-center"
-              >
+              <p v-else class="text-sm text-(--ui-text-muted) italic self-center">
                 Select a harmony type above.
               </p>
             </div>

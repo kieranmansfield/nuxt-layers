@@ -1,34 +1,35 @@
 <script setup lang="ts">
-import type { BackgroundStyle } from '~/composables/useBrandState'
+  import type { BackgroundStyle } from '~/composables/useBrandState'
 
-const { state } = useBrandState()
+  const { state } = useBrandState()
 
-const modeOptions = [
-  { label: 'Light only', value: 'light-only', icon: 'i-lucide-sun' },
-  { label: 'Dark only', value: 'dark-only', icon: 'i-lucide-moon' },
-  { label: 'Both', value: 'both', icon: 'i-lucide-sun-moon' },
-] as const
+  const modeOptions = [
+    { label: 'Light only', value: 'light-only', icon: 'i-lucide-sun' },
+    { label: 'Dark only', value: 'dark-only', icon: 'i-lucide-moon' },
+    { label: 'Both', value: 'both', icon: 'i-lucide-sun-moon' },
+  ] as const
 
-const bgOptions: { label: string; value: BackgroundStyle; description: string; icon: string }[] = [
-  {
-    label: 'Neutral',
-    value: 'neutral',
-    description: 'Pure white or dark grey — no colour influence on backgrounds.',
-    icon: 'i-lucide-square',
-  },
-  {
-    label: 'Tinted',
-    value: 'tinted',
-    description: 'A light hue of the primary colour washes the background.',
-    icon: 'i-lucide-droplets',
-  },
-  {
-    label: 'Blended',
-    value: 'blended',
-    description: 'A 50/50 mix of neutral and primary tint — subtle warmth.',
-    icon: 'i-lucide-blend',
-  },
-]
+  const bgOptions: { label: string; value: BackgroundStyle; description: string; icon: string }[] =
+    [
+      {
+        label: 'Neutral',
+        value: 'neutral',
+        description: 'Pure white or dark grey — no colour influence on backgrounds.',
+        icon: 'i-lucide-square',
+      },
+      {
+        label: 'Tinted',
+        value: 'tinted',
+        description: 'A light hue of the primary colour washes the background.',
+        icon: 'i-lucide-droplets',
+      },
+      {
+        label: 'Blended',
+        value: 'blended',
+        description: 'A 50/50 mix of neutral and primary tint — subtle warmth.',
+        icon: 'i-lucide-blend',
+      },
+    ]
 </script>
 
 <template>
@@ -83,7 +84,9 @@ const bgOptions: { label: string; value: BackgroundStyle; description: string; i
           <UIcon :name="option.icon" class="size-5 text-(--ui-text)" />
           <div>
             <p class="text-sm font-medium text-(--ui-text)">{{ option.label }}</p>
-            <p class="text-xs text-(--ui-text-muted) mt-0.5 leading-snug">{{ option.description }}</p>
+            <p class="text-xs text-(--ui-text-muted) mt-0.5 leading-snug">
+              {{ option.description }}
+            </p>
           </div>
         </button>
       </div>
@@ -94,7 +97,10 @@ const bgOptions: { label: string; value: BackgroundStyle; description: string; i
       <template #header>
         <p class="text-sm font-medium text-(--ui-text)">Preview</p>
       </template>
-      <div v-if="state.colours.length === 0" class="text-center py-8 text-(--ui-text-muted) text-sm">
+      <div
+        v-if="state.colours.length === 0"
+        class="text-center py-8 text-(--ui-text-muted) text-sm"
+      >
         Add brand colours to see a preview.
       </div>
       <ColourModePreview

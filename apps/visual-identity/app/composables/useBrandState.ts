@@ -124,8 +124,7 @@ export function useBrandState() {
       if (saved) {
         try {
           Object.assign(state.value, JSON.parse(saved))
-        }
-        catch {}
+        } catch {}
       }
     })
 
@@ -134,7 +133,7 @@ export function useBrandState() {
       (val) => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(val))
       },
-      { deep: true },
+      { deep: true }
     )
   }
 
@@ -183,8 +182,7 @@ export function useBrandState() {
     try {
       const parsed = JSON.parse(json) as BrandState
       Object.assign(state.value, parsed)
-    }
-    catch {
+    } catch {
       throw new Error('Invalid brand configuration JSON')
     }
   }
