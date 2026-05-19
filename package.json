@@ -25,6 +25,7 @@
   ],
   "scripts": {
     "dev": "pnpm -F playground dev",
+    "dev:identity": "pnpm -F visual-identity dev",
     "dev:core": "PLAYGROUND_LAYERS=core pnpm -F playground dev",
     "dev:ui": "PLAYGROUND_LAYERS=core,ui pnpm -F playground dev",
     "dev:layout": "PLAYGROUND_LAYERS=core,ui,layout pnpm -F playground dev",
