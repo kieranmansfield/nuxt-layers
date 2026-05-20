@@ -58,7 +58,7 @@
     />
 
     <!-- Inner fill — hides the wheel behind the center hole -->
-    <div class="absolute rounded-full bg-(--ui-bg)" :style="{ inset: `${50 - INNER_R}%` }" />
+    <div class="absolute rounded-full bg-default" :style="{ inset: `${50 - INNER_R}%` }" />
 
     <!-- SVG overlay: lines and dots only -->
     <svg
