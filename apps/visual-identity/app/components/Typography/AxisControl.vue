@@ -19,8 +19,8 @@ function onSliderUpdate(v: number | undefined) {
 <template>
   <div class="flex items-center gap-3">
     <div class="w-28 shrink-0">
-      <p class="text-xs font-medium text-(--ui-text)">{{ label }}</p>
-      <p class="text-[10px] text-(--ui-text-muted) font-mono">{{ min }} – {{ max }}</p>
+      <p class="text-xs font-medium text-default">{{ label }}</p>
+      <p class="text-[10px] text-muted font-mono">{{ min }} – {{ max }}</p>
     </div>
     <USlider
       :model-value="modelValue"
@@ -31,7 +31,7 @@ function onSliderUpdate(v: number | undefined) {
       @update:model-value="onSliderUpdate"
     />
     <div class="w-14 shrink-0 text-right">
-      <span class="text-xs font-mono tabular-nums text-(--ui-text)">{{ modelValue }}</span>
+      <span class="text-xs font-mono tabular-nums text-default">{{ modelValue }}</span>
     </div>
   </div>
 </template>

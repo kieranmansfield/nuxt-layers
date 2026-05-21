@@ -18,7 +18,7 @@ const family = computed(() => props.family ?? 'Roboto Flex')
 
 <template>
   <div
-    class="font-preview select-none transition-all duration-100 text-(--ui-text)"
+    class="font-preview select-none transition-all duration-100 text-default"
     :style="{
       fontFamily: `'${family}', sans-serif`,
       fontVariationSettings: variationSettings,

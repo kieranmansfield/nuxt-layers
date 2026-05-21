@@ -1,13 +1,14 @@
 /* Visual Identity Builder styles */
 
-.vi-sidebar {
-  width: 220px;
-  min-width: 220px;
+.vi-page {
+  padding: 1.25rem;
+  max-width: 960px;
 }
 
-.vi-page {
-  padding: 2rem;
-  max-width: 960px;
+@media (min-width: 640px) {
+  .vi-page {
+    padding: 2rem;
+  }
 }
 
 /* Colour picker integration */

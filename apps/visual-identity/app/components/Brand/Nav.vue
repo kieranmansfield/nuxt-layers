@@ -1,96 +1,70 @@
 <script setup lang="ts">
-  const route = useRoute()
-  const { resetState } = useBrandState()
+import type { NavigationMenuItem } from '@nuxt/ui'
 
-  const sections = [
-    {
-      label: 'Colour',
-      items: [
-        { label: 'Foundation', to: '/colour/foundation', icon: 'i-lucide-pipette' },
-        { label: 'Harmony', to: '/colour/harmony', icon: 'i-lucide-circle-dot' },
-        { label: 'Scales', to: '/colour/scales', icon: 'i-lucide-layers' },
-        { label: 'Modes', to: '/colour/modes', icon: 'i-lucide-sun-moon' },
-      ],
-    },
-    {
-      label: 'Typography',
-      items: [
-        { label: 'Font & Axes', to: '/typography', icon: 'i-lucide-type' },
-        { label: 'Scale', to: '/typography/scale', icon: 'i-lucide-ruler' },
-      ],
-    },
-  ]
+const { resetState } = useBrandState()
+const confirmOpen = ref(false)
 
-  const isActive = (to: string) => {
-    if (to === '/typography') return route.path === '/typography'
-    return route.path.startsWith(to)
-  }
+function handleClear() {
+  resetState()
+  confirmOpen.value = false
+}
 
-  const confirmOpen = ref(false)
-
-  function handleClear() {
-    resetState()
-    confirmOpen.value = false
-  }
+// Array-of-arrays groups nav items; type:'label' renders section headers.
+// UNavigationMenu handles active state automatically via NuxtLink.
+const navItems: NavigationMenuItem[][] = [
+  [
+    { label: 'Colour', type: 'label' },
+    { label: 'Foundation', icon: 'i-lucide-pipette', to: '/colour/foundation' },
+    { label: 'Harmony', icon: 'i-lucide-circle-dot', to: '/colour/harmony' },
+    { label: 'Scales', icon: 'i-lucide-layers', to: '/colour/scales' },
+    { label: 'Modes', icon: 'i-lucide-sun-moon', to: '/colour/modes' },
+    { label: 'Themes', icon: 'i-lucide-swatch-book', to: '/colour/themes' },
+  ],
+  [
+    { label: 'Typography', type: 'label' },
+    { label: 'Font & Axes', icon: 'i-lucide-type', to: '/typography', exact: true },
+    { label: 'Scale', icon: 'i-lucide-ruler', to: '/typography/scale' },
+  ],
+  [
+    { label: 'Export', icon: 'i-lucide-download', to: '/export' },
+  ],
+]
 </script>
 
 <template>
-  <nav
-    class="vi-sidebar border-r border-(--ui-border) bg-(--ui-bg) flex flex-col gap-1 py-4 overflow-y-auto shrink-0"
-  >
-    <div class="px-4 pb-4 border-b border-(--ui-border) mb-2">
-      <p class="text-xs font-semibold tracking-widest text-(--ui-text-muted) uppercase">
+  <nav class="flex flex-col h-full bg-default overflow-y-auto">
+    <div class="px-4 py-4 border-b border-default shrink-0">
+      <p class="text-xs font-semibold tracking-widest text-muted uppercase">
         Visual Identity
       </p>
     </div>
 
-    <div v-for="section in sections" :key="section.label" class="mb-2">
-      <p class="px-4 py-1 text-xs font-semibold text-(--ui-text-muted) uppercase tracking-wider">
-        {{ section.label }}
-      </p>
-      <NuxtLink
-        v-for="item in section.items"
-        :key="item.to"
-        :to="item.to"
-        class="flex items-center gap-2.5 mx-2 px-3 py-2 rounded-lg text-sm transition-colors"
-        :class="
-          isActive(item.to)
-            ? 'bg-(--ui-primary) text-white font-medium'
-            : 'text-(--ui-text-muted) hover:text-(--ui-text) hover:bg-(--ui-bg-elevated)'
-        "
-      >
-        <UIcon :name="item.icon" class="size-4 shrink-0" />
-        {{ item.label }}
-      </NuxtLink>
+    <div class="flex-1 py-2 px-2 overflow-y-auto">
+      <UNavigationMenu
+        orientation="vertical"
+        :items="navItems"
+        highlight
+        class="w-full"
+      />
     </div>
 
-    <div class="mt-auto px-2 pt-3 border-t border-(--ui-border) flex flex-col gap-1">
-      <NuxtLink
-        to="/export"
-        class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors w-full"
-        :class="
-          route.path === '/export'
-            ? 'bg-(--ui-primary) text-white font-medium'
-            : 'text-(--ui-text-muted) hover:text-(--ui-text) hover:bg-(--ui-bg-elevated)'
-        "
-      >
-        <UIcon name="i-lucide-download" class="size-4 shrink-0" />
-        Export
-      </NuxtLink>
-
-      <button
-        class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors w-full text-left text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
+    <div class="shrink-0 px-2 pb-4 pt-3 border-t border-default">
+      <UButton
+        icon="i-lucide-trash-2"
+        variant="ghost"
+        color="error"
+        size="sm"
+        class="w-full justify-start"
         @click="confirmOpen = true"
       >
-        <UIcon name="i-lucide-trash-2" class="size-4 shrink-0" />
         Clear all
-      </button>
+      </UButton>
     </div>
   </nav>
 
   <UModal v-model:open="confirmOpen" title="Clear everything?">
     <template #body>
-      <p class="text-sm text-(--ui-text-muted)">
+      <p class="text-sm text-muted">
         This will remove all colours, typography settings, and saved state. This cannot be undone.
       </p>
     </template>

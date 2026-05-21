@@ -39,10 +39,27 @@ export interface FontConfig {
 }
 
 export type BackgroundStyle = 'neutral' | 'tinted' | 'blended'
+export type ColourScheme = 'light' | 'dark'
+export type ContrastLevel = 'standard' | 'high'
 
 export interface ThemeMode {
-  mode: 'light-only' | 'dark-only' | 'both'
+  schemes: ColourScheme[]
+  contrastLevels: ContrastLevel[]
   backgroundStyle: BackgroundStyle
+}
+
+// A theme variant remaps which brand colours fill each semantic role.
+// null = use the BrandColour whose role matches the slot.
+export interface ThemeVariant {
+  id: string
+  name: string
+  isDefault: boolean
+  colourMappings: {
+    primary: string | null
+    secondary: string | null
+    accent: string | null
+    neutral: string | null
+  }
 }
 
 export interface BrandState {
@@ -50,6 +67,7 @@ export interface BrandState {
   colours: BrandColour[]
   typography: FontConfig[]
   themeMode: ThemeMode
+  themes: ThemeVariant[]
 }
 
 export const DEFAULT_AXES: FontAxes = {
@@ -89,6 +107,15 @@ export const FONT_AXIS_META: Record<
 
 const STORAGE_KEY = 'vi-brand-state'
 
+function makeDefaultTheme(): ThemeVariant {
+  return {
+    id: 'default',
+    name: 'Default',
+    isDefault: true,
+    colourMappings: { primary: null, secondary: null, accent: null, neutral: null },
+  }
+}
+
 function makeDefaultState(): BrandState {
   return {
     meta: { name: '', description: '' },
@@ -111,8 +138,48 @@ function makeDefaultState(): BrandState {
         spacingScale: [4, 8, 12, 16, 24, 32, 48, 64, 96],
       },
     ],
-    themeMode: { mode: 'both', backgroundStyle: 'neutral' },
+    themeMode: {
+      schemes: ['light', 'dark'],
+      contrastLevels: ['standard'],
+      backgroundStyle: 'neutral',
+    },
+    themes: [makeDefaultTheme()],
   }
+}
+
+// Migrate localStorage state written by older versions of the app.
+function migrateState(raw: Record<string, unknown>): BrandState {
+  // Use a loose type so the migration code can freely read/write any property
+  // without fighting TypeScript's narrowing on the old schema.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const s = raw as Record<string, any>
+
+  // Old format: themeMode.mode = 'light-only' | 'dark-only' | 'both'
+  if (s.themeMode && 'mode' in s.themeMode && !('schemes' in s.themeMode)) {
+    const old: string = s.themeMode.mode
+    s.themeMode = {
+      schemes: old === 'light-only' ? ['light'] : old === 'dark-only' ? ['dark'] : ['light', 'dark'],
+      contrastLevels: ['standard'],
+      backgroundStyle: s.themeMode.backgroundStyle ?? 'neutral',
+    }
+  }
+
+  if (!Array.isArray(s.themes) || s.themes.length === 0) {
+    s.themes = [makeDefaultTheme()]
+  }
+
+  // Remove duplicate hex values already in saved state (keep first occurrence)
+  if (Array.isArray(s.colours)) {
+    const seen = new Set<string>()
+    s.colours = s.colours.filter((c: BrandColour) => {
+      const norm = c.hex?.toLowerCase()
+      if (!norm || seen.has(norm)) return false
+      seen.add(norm)
+      return true
+    })
+  }
+
+  return s as BrandState
 }
 
 export function useBrandState() {
@@ -123,29 +190,29 @@ export function useBrandState() {
       const saved = localStorage.getItem(STORAGE_KEY)
       if (saved) {
         try {
-          Object.assign(state.value, JSON.parse(saved))
-        } catch {}
+          Object.assign(state.value, migrateState(JSON.parse(saved)))
+        }
+        catch {}
       }
     })
 
-    watch(
-      state,
-      (val) => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(val))
-      },
-      { deep: true }
-    )
+    watch(state, (val) => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(val))
+    }, { deep: true })
   }
 
+  // ── Colours ──────────────────────────────────────────────────────────
+
   function addColour(hex = '#6366f1') {
+    // Skip silently if this hex is already in the palette
+    const norm = hex.toLowerCase()
+    if (state.value.colours.some((c) => c.hex.toLowerCase() === norm)) return
+
     const role =
-      state.value.colours.length === 0
-        ? 'primary'
-        : state.value.colours.length === 1
-          ? 'secondary'
-          : state.value.colours.length === 2
-            ? 'accent'
-            : 'custom'
+      state.value.colours.length === 0 ? 'primary'
+      : state.value.colours.length === 1 ? 'secondary'
+      : state.value.colours.length === 2 ? 'accent'
+      : 'custom'
 
     state.value.colours.push({
       id: crypto.randomUUID(),
@@ -165,11 +232,12 @@ export function useBrandState() {
     if (idx >= 0) Object.assign(state.value.colours[idx]!, patch)
   }
 
+  // ── Typography ───────────────────────────────────────────────────────
+
   function updateFontAxis(id: string, axis: keyof FontAxes, value: number) {
     const idx = state.value.typography.findIndex((f) => f.id === id)
     if (idx < 0) return
     const font = state.value.typography[idx]!
-    // Replace axes object so Vue's reactivity system picks up the change
     state.value.typography[idx] = { ...font, axes: { ...font.axes, [axis]: value } }
   }
 
@@ -178,11 +246,42 @@ export function useBrandState() {
     if (font) font[field] = scale
   }
 
+  // ── Themes ───────────────────────────────────────────────────────────
+
+  function addTheme(name: string) {
+    state.value.themes.push({
+      id: crypto.randomUUID(),
+      name,
+      isDefault: false,
+      colourMappings: { primary: null, secondary: null, accent: null, neutral: null },
+    })
+  }
+
+  function removeTheme(id: string) {
+    state.value.themes = state.value.themes.filter((t) => t.id !== id)
+  }
+
+  function updateTheme(id: string, patch: Partial<Pick<ThemeVariant, 'name' | 'colourMappings'>>) {
+    const idx = state.value.themes.findIndex((t) => t.id === id)
+    if (idx >= 0) Object.assign(state.value.themes[idx]!, patch)
+  }
+
+  function setThemeColour(
+    themeId: string,
+    role: keyof ThemeVariant['colourMappings'],
+    colourId: string | null,
+  ) {
+    const theme = state.value.themes.find((t) => t.id === themeId)
+    if (theme) theme.colourMappings[role] = colourId
+  }
+
+  // ── Persistence ──────────────────────────────────────────────────────
+
   function importState(json: string) {
     try {
-      const parsed = JSON.parse(json) as BrandState
-      Object.assign(state.value, parsed)
-    } catch {
+      Object.assign(state.value, migrateState(JSON.parse(json)))
+    }
+    catch {
       throw new Error('Invalid brand configuration JSON')
     }
   }
@@ -199,6 +298,10 @@ export function useBrandState() {
     updateColour,
     updateFontAxis,
     updateFontScale,
+    addTheme,
+    removeTheme,
+    updateTheme,
+    setThemeColour,
     importState,
     resetState,
   }

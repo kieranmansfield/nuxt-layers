@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  defineProps<{
-    hex: string
-    label?: string
-    size?: 'sm' | 'md' | 'lg'
-  }>()
+defineProps<{
+  hex: string
+  label?: string
+  size?: 'sm' | 'md' | 'lg'
+}>()
 </script>
 
 <template>
@@ -17,6 +17,6 @@
       }"
       :style="{ backgroundColor: hex }"
     />
-    <span v-if="label" class="text-[10px] text-(--ui-text-muted) font-mono">{{ label }}</span>
+    <span v-if="label" class="text-[10px] text-muted font-mono">{{ label }}</span>
   </div>
 </template>
