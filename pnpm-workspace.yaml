@@ -20,6 +20,16 @@ minimumReleaseAgeExclude:
   - '@vue/language-core'
   - vue-tsc
   - '@types/node'
+  - '@commitlint/cli@21.0.2'
+  - '@commitlint/config-conventional@21.0.2'
+  - '@commitlint/is-ignored@21.0.2'
+  - '@commitlint/lint@21.0.2'
+  - '@commitlint/load@21.0.2'
+  - '@commitlint/message@21.0.2'
+  - '@commitlint/parse@21.0.2'
+  - '@commitlint/read@21.0.2'
+  - '@commitlint/rules@21.0.2'
+  - '@commitlint/top-level@21.0.2'
 
 overrides:
   # vue-tsc@3.3.1 / @vue/language-core@3.3.1 published 2026-05-19, blocked by minimumReleaseAge — remove once >24h old

@@ -146,13 +146,13 @@
     }
   },
   "devDependencies": {
-    "@commitlint/cli": "^21.0.1",
-    "@commitlint/config-conventional": "^21.0.1",
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
     "@culur/config-stylelint": "^1.7.0",
     "@eslint/json": "^1.2.0",
-    "@eslint/markdown": "^8.0.1",
+    "@eslint/markdown": "^8.0.2",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
-    "@iconify-json/lucide": "^1.2.109",
+    "@iconify-json/lucide": "^1.2.110",
     "@netlify/nuxt": "0.3.6",
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/fonts": "^0.14.0",
@@ -177,11 +177,11 @@
     "eslint-plugin-compat": "^7.0.2",
     "eslint-plugin-glsl": "0.0.0-wip",
     "eslint-plugin-pnpm": "^1.6.1",
-    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-prettier": "^5.5.6",
     "eslint-plugin-unicorn": "^64.0.0",
     "eslint-plugin-unused-imports": "^4.4.1",
     "eslint-plugin-vue": "^10.9.1",
-    "npm-check-updates": "^22.2.0",
+    "npm-check-updates": "^22.2.1",
     "nuxt": "^4.4.6",
     "pinia": "^3.0.4",
     "playwright": "^1.60.0",
@@ -205,7 +205,7 @@
     "vite-plugin-checker": "^0.13.0",
     "vitest": "^4.1.7",
     "vue": "latest",
-    "vue-tsc": "3.3.1",
+    "vue-tsc": "3.3.2",
     "zod": "^4.4.3",
     "zod-to-json-schema": "^3.25.2"
   },
@@ -217,7 +217,7 @@
   ],
   "dependencies": {
     "node-gyp": "^12.3.0",
-    "skills": "^1.5.7"
+    "skills": "^1.5.9"
   },
   "engines": {
     "node": ">=21 <23"
