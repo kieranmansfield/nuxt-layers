@@ -70,10 +70,9 @@ export function useSmoothScroll() {
    * Unlock scrolling (enable scroll)
    */
   function unlockScrolling() {
-    if (import.meta.client && locomotiveScroll.value) {
-      document.documentElement.style.overflow = ''
-      locomotiveScroll.value.start()
-    }
+    if (!import.meta.client) return
+    document.documentElement.style.overflow = ''
+    locomotiveScroll.value?.start()
   }
 
   /**

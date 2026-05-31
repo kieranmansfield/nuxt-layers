@@ -1,52 +1,59 @@
 <script setup lang="ts">
-// @ts-nocheck
-import type { FormSubmitEvent } from '@nuxt/ui'
-import { z } from 'zod'
-import { fieldConfigs } from '../../config/fields'
+  // @ts-nocheck
+  import type { FormSubmitEvent } from '@nuxt/ui'
+  import { z } from 'zod'
 
-const emit = defineEmits<{
-  submit: [data: FormState]
-}>()
+  import { fieldConfigs } from '../../config/fields'
 
-const schema = z.object({
-  name: fieldConfigs.name.validation.pipe(z.string().min(3, 'Name must be at least 3 characters')),
-  email: fieldConfigs.email.validation,
-  message: fieldConfigs.textarea.validation.pipe(
-    z.string().min(8, 'Message must be at least 8 characters')
-  ),
-})
+  const emit = defineEmits<{
+    submit: [data: FormState]
+  }>()
 
-type FormState = z.infer<typeof schema>
+  const schema = z.object({
+    name: fieldConfigs.name.validation.pipe(
+      z.string().min(3, 'Name must be at least 3 characters')
+    ),
+    email: fieldConfigs.email.validation,
+    message: fieldConfigs.textarea.validation.pipe(
+      z.string().min(8, 'Message must be at least 8 characters')
+    ),
+  })
 
-const state = reactive({ name: '', email: '', message: '' })
+  type FormState = z.infer<typeof schema>
 
-const toast = useToast()
-const isLoading = ref(false)
+  const state = reactive({ name: '', email: '', message: '' })
 
-async function onSubmit(event: FormSubmitEvent<FormState>) {
-  isLoading.value = true
-  try {
-    await $fetch('/api/contact', { method: 'POST', body: event.data })
-    toast.add({ title: 'Message sent!', description: 'Thanks for reaching out.', color: 'success' })
-    emit('submit', event.data)
-  } catch {
+  const toast = useToast()
+  const isLoading = ref(false)
+
+  async function onSubmit(event: FormSubmitEvent<FormState>) {
+    isLoading.value = true
+    try {
+      await $fetch('/api/contact', { method: 'POST', body: event.data })
+      toast.add({
+        title: 'Message sent!',
+        description: 'Thanks for reaching out.',
+        color: 'success',
+      })
+      emit('submit', event.data)
+    } catch {
+      toast.add({
+        title: 'Something went wrong',
+        description: 'Please try again later.',
+        color: 'error',
+      })
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  async function onError() {
     toast.add({
-      title: 'Something went wrong',
-      description: 'Please try again later.',
+      title: 'Error',
+      description: 'There was an error submitting the form.',
       color: 'error',
     })
-  } finally {
-    isLoading.value = false
   }
-}
-
-async function onError() {
-  toast.add({
-    title: 'Error',
-    description: 'There was an error submitting the form.',
-    color: 'error',
-  })
-}
 </script>
 
 <template>
