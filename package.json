@@ -66,6 +66,10 @@
     "browserlist": "npx update-browserslist-db@latest",
     "deploy": "turbo run build --filter playground"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kieranmansfield/nuxt-layers"
+  },
   "keywords": [],
   "author": "Kieran Mansfield",
   "license": "ISC",
