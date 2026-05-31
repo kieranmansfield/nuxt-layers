@@ -48,8 +48,10 @@ export default defineNuxtPlugin(() => {
   const appConfig = useAppConfig()
   const smoothScroll: boolean | string[] = appConfig.motion?.smoothScroll ?? true
 
+  const nuxtApp = useNuxtApp()
+
   if (smoothScroll === true) {
-    init()
+    nuxtApp.hook('app:mounted', () => nextTick(init))
   } else if (Array.isArray(smoothScroll)) {
     addRouteMiddleware((to, from) => {
       if (smoothScroll.includes(to.path)) {
@@ -59,7 +61,7 @@ export default defineNuxtPlugin(() => {
       }
     })
     if (smoothScroll.includes(router.currentRoute.value.path)) {
-      init()
+      nuxtApp.hook('app:mounted', () => nextTick(init))
     }
   }
 
