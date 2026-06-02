@@ -53,4 +53,7 @@ overrides:
   'eslint': '10.4.1'
   'typescript': '^6.0.3'
 
+patchedDependencies:
+  '@nuxt/vite-builder@4.4.7': patches/@nuxt__vite-builder@4.4.7.patch
+
 # minimumReleaseAge: 0
