@@ -3,6 +3,22 @@ definePageMeta({ layout: false })
 
 const { velocity } = useSmoothScroll()
 
+interface Stat {
+  to: number
+  label: string
+  duration: number
+  prefix?: string
+  suffix?: string
+  ease?: string
+}
+
+const stats: Stat[] = [
+  { to: 99, suffix: '+', label: 'Projects', duration: 1.5 },
+  { to: 4800000, prefix: '$', label: 'Revenue', duration: 2.5 },
+  { to: 100, suffix: '%', label: 'Uptime', duration: 2, ease: 'power1.out' },
+  { to: 12, suffix: ' yrs', label: 'Experience', duration: 1.2 },
+]
+
 const showCursor = ref(false)
 const cursorType = ref<'dot' | 'ring' | 'dot-ring' | 'glow'>('dot-ring')
 const cursorVisible = ref(true)
@@ -207,12 +223,7 @@ const cursorSmoothing = ref(0.15)
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div
-              v-for="stat in [
-                { to: 99, suffix: '+', label: 'Projects', duration: 1.5 },
-                { to: 4800000, prefix: '$', label: 'Revenue', duration: 2.5 },
-                { to: 100, suffix: '%', label: 'Uptime', duration: 2, ease: 'power1.out' },
-                { to: 12, suffix: ' yrs', label: 'Experience', duration: 1.2 },
-              ]"
+              v-for="stat in stats"
               :key="stat.label"
               class="bg-gray-800 rounded-2xl p-8 text-center"
             >

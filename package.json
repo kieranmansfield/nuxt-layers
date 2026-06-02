@@ -35,7 +35,7 @@
     "typecheck": "turbo run typecheck",
     "prepublishOnly": "pnpm typecheck",
     "clean": "pnpm -r exec rm -rf node_modules .nuxt .output .data && pnpm store prune && pnpm install",
-    "cleancache": "pnpm store prune && pnpm store status",
+    "cleancache": "pnpm store prune --force",
     "update": "ncu -i",
     "nuxtupdate": "npx nuxi@latest upgrade --dedupe --force",
     "nuxiupgrade": "npx nuxi upgrade",
@@ -93,10 +93,10 @@
     "@tresjs/post-processing": "^3.4.0",
     "@vite-pwa/nuxt": "^1.1.1",
     "@vueuse/nuxt": "^14.3.0",
-    "better-sqlite3": "^12.6.2",
+    "better-sqlite3": "^11.5.0",
     "gsap": "^3.14.2",
     "locomotive-scroll": "^5.0.1",
-    "nuxt": "^4.3.0",
+    "nuxt": "^4.4.7",
     "nuxt-studio": "^1.4.0",
     "pinia": "^3.0.4",
     "tailwindcss": "^4.3.0",
@@ -165,6 +165,7 @@
     "@nuxt/image": "^2.0.0",
     "@nuxt/ui": "latest",
     "@nuxtjs/device": "^4.0.0",
+    "@oxc-parser/binding-darwin-arm64": "^0.133.0",
     "@perplex-digital/stylelint-config": "^17.4.0",
     "@pinia/nuxt": "^0.11.3",
     "@types/node": "^20",
@@ -189,7 +190,7 @@
     "eslint-plugin-vue": "^10.9.1",
     "netlify-cli": "^26.1.0",
     "npm-check-updates": "^22.2.1",
-    "nuxt": "^4.4.6",
+    "nuxt": "^4.4.7",
     "pinia": "^3.0.4",
     "playwright": "^1.60.0",
     "postcss-html": "^1.8.1",
@@ -198,7 +199,6 @@
     "prettier-plugin-glsl": "^0.3.0",
     "prettier-plugin-organize-attributes": "^1.0.0",
     "prettier-plugin-tailwind-styled-components": "^2.0.2",
-    "nuxt": "4.3.0",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "stylelint": "^17.12.0",
     "stylelint-config-recommended-vue": "^1.6.1",
@@ -229,5 +229,9 @@
   },
   "engines": {
     "node": ">=20 <21"
+  },
+  "volta": {
+    "node": "20.19.0",
+    "pnpm": "8.15.8"
   }
 }

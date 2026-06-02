@@ -70,24 +70,10 @@ export default defineNuxtConfig({
   },
 
   // PWA configuration (only applied when module is loaded in production)
-  // pwa:
-  //   process.env.NODE_ENV === 'production'
-  //     ? {
-  //         registerType: 'autoUpdate',
-  //         manifest: {
-  //           name: 'Core Layer App',
-  //           short_name: 'Core Layer',
-  //           description: 'Foundation layer for Nuxt applications',
-  //           theme_color: '#ffffff',
-  //           background_color: '#ffffff',
-  //           display: 'standalone',
-  //           start_url: '/',
-  //         },
-  //         workbox: {
-  //           navigateFallback: '/',
-  //           globPatterns: ['**/*.{js,css,html}'],
-  //           globIgnores: ['**/node_modules/**/*'],
-  //         },
-  //       }
-  //     : undefined,
+  pwa: {
+    workbox: {
+      globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff,woff2}'],
+      globIgnores: ['**/node_modules/**/*', 'sw.js', 'workbox-*.js'],
+    },
+  },
 })
