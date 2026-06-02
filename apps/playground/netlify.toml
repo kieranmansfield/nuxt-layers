@@ -3,7 +3,7 @@
   publish = ".output/public"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22"
   PNPM_HOME = ".pnpm"
   PNPM_FLAGS = "--shamefully-hoist"
   NPM_CONFIG_BUILD_FROM_SOURCE = "false"
