@@ -1,7 +1,7 @@
 {
   "name": "kmcom-nuxt-layers",
   "private": false,
-  "version": "1.6.53",
+  "version": "1.7.0",
   "description": "Composable Nuxt 4 layers for building scalable Vue applications",
   "exports": {
     "./layers/core": "./layers/core/nuxt.config.ts",
@@ -75,33 +75,32 @@
   "keywords": [],
   "author": "Kieran Mansfield",
   "license": "ISC",
-  "packageManager": "pnpm@8.15.8",
+  "packageManager": "pnpm@11.5.1",
   "workspaces": [
     "layers/*",
     "apps/*",
     "packages/*"
   ],
   "peerDependencies": {
-    "@nuxt/content": "^3.12.0",
+    "@nuxt/content": "^3.14.0",
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/image": "^2.0.0",
-    "@nuxt/ui": "^4.5.1",
+    "@nuxt/ui": "^4.8.1",
     "@nuxtjs/device": "^4.0.0",
-    "@tresjs/cientos": "^5.4.0",
-    "@tresjs/core": "^5.5.0",
-    "@tresjs/nuxt": "^5.3.0",
-    "@tresjs/post-processing": "^3.4.0",
+    "@tresjs/cientos": "^5.7.2",
+    "@tresjs/core": "^5.8.1",
+    "@tresjs/nuxt": "^5.6.1",
+    "@tresjs/post-processing": "^3.7.2",
     "@vite-pwa/nuxt": "^1.1.1",
     "@vueuse/nuxt": "^14.3.0",
-    "better-sqlite3": "^11.5.0",
-    "gsap": "^3.14.2",
+    "better-sqlite3": "^12.10.0",
+    "gsap": "^3.15.0",
     "locomotive-scroll": "^5.0.1",
     "nuxt": "^4.4.7",
-    "nuxt-studio": "^1.4.0",
     "pinia": "^3.0.4",
     "tailwindcss": "^4.3.0",
-    "three": ">=0.183.0",
-    "v-gsap-nuxt": ">=1.0.0",
+    "three": ">=0.184.0",
+    "v-gsap-nuxt": ">=1.5.12",
     "zod": "^4.4.3"
   },
   "peerDependenciesMeta": {
@@ -154,24 +153,24 @@
   "devDependencies": {
     "@commitlint/cli": "^21.0.2",
     "@commitlint/config-conventional": "^21.0.2",
-    "@culur/config-stylelint": "^1.7.0",
+    "@culur/config-stylelint": "^1.7.1",
     "@eslint/json": "^1.2.0",
     "@eslint/markdown": "^8.0.2",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
-    "@iconify-json/lucide": "^1.2.110",
-    "@netlify/nuxt": "0.3.6",
+    "@iconify-json/lucide": "^1.2.111",
+    "@netlify/nuxt": "0.3.7",
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/fonts": "^0.14.0",
     "@nuxt/image": "^2.0.0",
     "@nuxt/ui": "latest",
     "@nuxtjs/device": "^4.0.0",
-    "@oxc-parser/binding-darwin-arm64": "^0.133.0",
+    "@oxc-parser/binding-darwin-arm64": "^0.134.0",
     "@perplex-digital/stylelint-config": "^17.4.0",
     "@pinia/nuxt": "^0.11.3",
-    "@types/node": "^20",
+    "@types/node": "^25.9.1",
     "@types/three": "^0.184.1",
-    "@typescript-eslint/eslint-plugin": "^8.59.4",
-    "@typescript-eslint/parser": "^8.59.4",
+    "@typescript-eslint/eslint-plugin": "^8.60.1",
+    "@typescript-eslint/parser": "^8.60.1",
     "@vue/eslint-config-typescript": "^14.7.0",
     "@vueuse/core": "^14.3.0",
     "@vueuse/nuxt": "^14.3.0",
@@ -180,7 +179,7 @@
     "changesets": "^1.0.2",
     "cypress": "^15.16.0",
     "depcheck": "^1.4.7",
-    "eslint": "^10.4.0",
+    "eslint": "^10.4.1",
     "eslint-plugin-compat": "^7.0.2",
     "eslint-plugin-glsl": "0.0.0-wip",
     "eslint-plugin-pnpm": "^1.6.1",
@@ -209,11 +208,11 @@
     "stylelint-prettier": "^5.0.3",
     "tailwindcss": "^4.3.0",
     "turbo": "^2.9.16",
-    "typescript": "^5",
+    "typescript": "^5.9.3",
     "vite-plugin-checker": "^0.14.1",
     "vitest": "^4.1.7",
     "vue": "latest",
-    "vue-tsc": "3.3.2",
+    "vue-tsc": "3.3.3",
     "zod": "^4.4.3",
     "zod-to-json-schema": "^3.25.2"
   },
@@ -228,10 +227,10 @@
     "skills": "^1.5.9"
   },
   "engines": {
-    "node": ">=20 <21"
+    "node": ">=22 <23"
   },
   "volta": {
-    "node": "20.19.0",
-    "pnpm": "8.15.8"
+    "node": "22.22.2",
+    "pnpm": "11.5.1"
   }
 }
