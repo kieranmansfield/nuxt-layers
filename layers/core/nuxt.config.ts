@@ -42,7 +42,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-01-24',
 
   typescript: {
-    typeCheck: true,
+    // vite-plugin-checker@0.14.1 bundles TypeScript 6 which crashes on Nuxt's
+    // generated tsconfig.shared.json (noEmit:true + getFirstProjectOutput = Debug.fail).
+    // Disable dev typecheck; use `pnpm typecheck` or IDE (Volar) for type checking.
+    typeCheck: false,
     strict: true,
   },
 
