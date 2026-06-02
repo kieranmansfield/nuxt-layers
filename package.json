@@ -64,7 +64,9 @@
     "layer:rebuild:layout": "pnpm build:layout && pnpm layer:generate:layout && pnpm layer:layout",
     "layer:rebuild:motion": "pnpm build:motion && pnpm layer:generate:motion && pnpm layer:motion",
     "browserlist": "npx update-browserslist-db@latest",
-    "deploy": "turbo run build --filter playground"
+    "deploy": "turbo run build --filter playground",
+    "build:netlify": "pnpm -F playground build:netlify",
+    "dev:netlify": "pnpm -F playground dev:netlify"
   },
   "repository": {
     "type": "git",
@@ -185,6 +187,7 @@
     "eslint-plugin-unicorn": "^64.0.0",
     "eslint-plugin-unused-imports": "^4.4.1",
     "eslint-plugin-vue": "^10.9.1",
+    "netlify-cli": "^26.1.0",
     "npm-check-updates": "^22.2.1",
     "nuxt": "^4.4.6",
     "pinia": "^3.0.4",

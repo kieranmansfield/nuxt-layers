@@ -31,3 +31,6 @@ dist
 **/app/utils/*.js
 **/app/components/**/*.js
 **/app.config.js
+
+# Local Netlify folder
+.netlify

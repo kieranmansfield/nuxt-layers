@@ -10,8 +10,10 @@ allowBuilds:
   'better-sqlite3': true
   'cypress': true
   'esbuild': true
+  netlify-cli: true
   'sharp': true
   'sqlite3': true
+  unix-dgram: true
   'unrs-resolver': true
   'vue-demi': true
 
