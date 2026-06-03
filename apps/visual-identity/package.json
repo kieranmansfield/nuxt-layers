@@ -16,7 +16,6 @@
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
-    "@nuxt/fonts": "^0.14.0",
-    "vite": "^8.0.16"
+    "@nuxt/fonts": "^0.14.0"
   }
 }
