@@ -1,9 +1,0 @@
-[build]
-  base = "apps/playground"
-  command = "nuxt build"
-  publish = "dist"
-
-[build.environment]
-  NODE_VERSION = "22"
-  NPM_CONFIG_BUILD_FROM_SOURCE = "false"
-  NODE_OPTIONS = "--max-old-space-size=4096"
