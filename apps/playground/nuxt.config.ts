@@ -307,6 +307,10 @@ export default defineNuxtConfig({
   //   },
   // },
   nitro: {
+    // std-env detects GITHUB_ACTIONS before NETLIFY, so in CI the provider
+    // resolves to "github_actions" and Nitro silently falls back to node-server.
+    // Pinning the preset ensures the Netlify Function is always generated.
+    preset: 'netlify',
     prerender: {
       crawlLinks: true,
       ignore: ['/admin'],
