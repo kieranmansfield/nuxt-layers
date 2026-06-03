@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     '#layers/motion': import.meta.dirname,
   },
 
-
   modules: ['v-gsap-nuxt'],
 
   vgsap: {
