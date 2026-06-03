@@ -56,8 +56,8 @@ importers:
         specifier: ^12.3.0
         version: 12.3.0
       skills:
-        specifier: ^1.5.9
-        version: 1.5.9
+        specifier: ^1.5.10
+        version: 1.5.10
       three:
         specifier: 0.184.0
         version: 0.184.0
@@ -9678,8 +9678,8 @@ packages:
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
 
-  skills@1.5.9:
-    resolution: {integrity: sha512-BjxnhlIy5IrQ30q1nGgNDSf4gy84iNA2o4Ieq4im/HsRvOjGtqvDNpb/xx15FZryXMnAPeDUWqU1ndPRQ0IyOQ==}
+  skills@1.5.10:
+    resolution: {integrity: sha512-5d9lKHeF4qcF/7LRd8h1arnPGJtRu6GxVoWyt9hh0u1RUe+UrjzXIc6PITE+HMzgqR8sZ/vJtGDi8lrOZTGS7w==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -23263,7 +23263,7 @@ snapshots:
 
   sisteransi@1.0.5: {}
 
-  skills@1.5.9:
+  skills@1.5.10:
     dependencies:
       yaml: 2.9.0
 

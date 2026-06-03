@@ -37,6 +37,7 @@ minimumReleaseAgeExclude:
   - '@nuxt/schema@4.4.7'
   - '@nuxt/vite-builder@4.4.7'
   - nuxt@4.4.7
+  - skills@1.5.10
 
 overrides:
   # vue-tsc@3.3.1 / @vue/language-core@3.3.1 published 2026-05-19, blocked by minimumReleaseAge — remove once >24h old

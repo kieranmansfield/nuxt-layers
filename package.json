@@ -224,7 +224,7 @@
   ],
   "dependencies": {
     "node-gyp": "^12.3.0",
-    "skills": "^1.5.9"
+    "skills": "^1.5.10"
   },
   "engines": {
     "node": ">=22 <23"

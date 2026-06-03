@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     '#layers/motion': import.meta.dirname,
   },
 
+
   modules: ['v-gsap-nuxt'],
 
   vgsap: {
@@ -27,4 +28,12 @@ export default defineNuxtConfig({
   build: {
     transpile: ['gsap'],
   },
+
+  vite: {
+    optimizeDeps: {
+      include: [
+        'locomotive-scroll',
+      ]
+    }
+  }
 })

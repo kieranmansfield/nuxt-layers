@@ -4,7 +4,7 @@ import typescript from '@typescript-eslint/eslint-plugin'
 import typescriptParser from '@typescript-eslint/parser'
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import compat from 'eslint-plugin-compat'
-import pluginOxlint from 'eslint-plugin-oxlint'
+// import pluginOxlint from 'eslint-plugin-oxlint'
 import { configs as pnpmConfigs } from 'eslint-plugin-pnpm'
 import prettier from 'eslint-plugin-prettier'
 // import pluginUnicorn from 'eslint-plugin-unicorn'
@@ -317,7 +317,7 @@ export default defineConfigWithVueTs(
   },
 
   // OXLint integration
-  ...pluginOxlint.buildFromOxlintConfigFile('./.oxlintrc.json'),
+  // ...pluginOxlint.buildFromOxlintConfigFile('./.oxlintrc.json'),
   // pnpm catalog enforcement
   ...pnpmConfigs.recommended
 )
