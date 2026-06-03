@@ -1,11 +1,14 @@
 {
+  "extends": "./apps/playground/.nuxt/tsconfig.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "Preserve",
-    "moduleResolution": "Bundler",
-    "strict": true,
     "noEmit": true,
     "skipLibCheck": true
   },
-  "exclude": ["node_modules", ".nuxt", ".output", "dist"]
+  "include": [
+    "./apps/playground/.nuxt/nuxt.d.ts",
+    "./apps/playground/.nuxt/nuxt.node.d.ts",
+    "./apps/playground/.nuxt/imports.d.ts",
+    "./apps/playground/.nuxt/types/*.d.ts",
+    "./apps/playground/.nuxt/content/types.d.ts"
+  ]
 }
