@@ -1,6 +1,6 @@
 [build]
-  command = "nuxt build"
-  publish = "dist"
+  command = "turbo run build --filter playground"
+  publish = "apps/playground/dist"
 
 [build.environment]
   NODE_VERSION = "22"
