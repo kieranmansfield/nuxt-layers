@@ -1,6 +1,6 @@
 [build]
   command = "nuxt build"
-  publish = "apps/playground/.netlify/static"
+  publish = "apps/playground/dist"
 
 [build.environment]
   NODE_VERSION = "22"
