@@ -28,13 +28,11 @@ useSeoMeta({
   <div class="min-h-screen p-8">
     <UContainer>
       <div class="space-y-8">
-        <!-- Header -->
         <div class="text-center">
           <h1 class="text-4xl font-bold mb-2">Core Layer Diagnostics</h1>
           <p class="text-gray-500 dark:text-gray-400">Feature detection and system information</p>
         </div>
 
-        <!-- CSS Features -->
         <UCard>
           <template #header>
             <h2 class="text-xl font-semibold">CSS Features</h2>
@@ -73,7 +71,6 @@ useSeoMeta({
           </div>
         </UCard>
 
-        <!-- Image Formats -->
         <UCard>
           <template #header>
             <h2 class="text-xl font-semibold">Image Formats</h2>
@@ -92,7 +89,6 @@ useSeoMeta({
           </div>
         </UCard>
 
-        <!-- JavaScript APIs -->
         <UCard>
           <template #header>
             <h2 class="text-xl font-semibold">JavaScript APIs</h2>
@@ -121,7 +117,6 @@ useSeoMeta({
           </div>
         </UCard>
 
-        <!-- Device Info -->
         <UCard>
           <template #header>
             <h2 class="text-xl font-semibold">Device Information</h2>
@@ -136,7 +131,6 @@ useSeoMeta({
           </div>
         </UCard>
 
-        <!-- Network Info -->
         <UCard>
           <template #header>
             <h2 class="text-xl font-semibold">Network Information</h2>
@@ -177,7 +171,6 @@ useSeoMeta({
           </div>
         </UCard>
 
-        <!-- Rendering Info -->
         <UCard>
           <template #header>
             <h2 class="text-xl font-semibold">Rendering Information</h2>
@@ -200,7 +193,6 @@ useSeoMeta({
           </div>
         </UCard>
 
-        <!-- PWA Info -->
         <UCard>
           <template #header>
             <h2 class="text-xl font-semibold">PWA Information</h2>
