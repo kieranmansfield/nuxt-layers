@@ -1,17 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    'app/components/**/*.{vue,js,ts}',
-    'app/composables/**/*.{js,ts}',
-    'app/content/**/*.md',
-    'app/layouts/**/*.vue',
-    'app/pages/**/*.vue',
-    'app/plugins/**/*.{js,ts}',
-    'app/App.{js,ts,vue}',
-    'app/app.{js,ts,vue}',
-    'app/Error.{js,ts,vue}',
-    'app/error.{js,ts,vue}',
-  ],
+  // No content array — Tailwind 4's Vite plugin auto-discovers all processed files.
+  // A content array here would restrict scanning to only these paths (v3 behaviour),
+  // causing utilities from ui/layout/theme/etc layers to be absent from the initial CSS.
 
   safelist: [
     // Swiss Grid System - Responsive grid classes for BaseGridItem

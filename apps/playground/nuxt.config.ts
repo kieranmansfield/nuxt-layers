@@ -230,6 +230,12 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [threeWebGPUSSRStub()],
+    build: {
+      // Merge all CSS into one bundle so every Tailwind utility and Nuxt UI style
+      // is available from first paint — no deferred CSS chunks causing layout shifts.
+      cssCodeSplit: false,
+      target: 'es2020',
+    },
     resolve: {
       dedupe: [
         'vue',
