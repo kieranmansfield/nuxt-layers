@@ -30,9 +30,7 @@ export default defineNuxtConfig({
 
   vite: {
     optimizeDeps: {
-      include: [
-        'locomotive-scroll',
-      ]
-    }
-  }
+      include: ['locomotive-scroll'],
+    },
+  },
 })

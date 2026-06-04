@@ -320,5 +320,12 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@netlify/nuxt', '@nuxt/ui'],
+  modules: [
+    '@netlify/nuxt',
+    '@nuxt/ui',
+    '@vueuse/nuxt',
+    '@nuxtjs/device',
+    '@nuxt/content',
+    'v-gsap-nuxt',
+  ],
 })
