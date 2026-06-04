@@ -141,6 +141,7 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
             back="/"
           />
 
+          <ClientOnly>
           <!-- Browser Detection -->
           <UCard>
             <template #header>
@@ -567,6 +568,11 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
             </UButton>
             <UButton to="/ui" icon="i-lucide-arrow-right"> UI Layer Demo </UButton>
           </div>
+
+            <template #fallback>
+              <div class="text-center text-muted py-16">Loading diagnostics…</div>
+            </template>
+          </ClientOnly>
         </div>
       </LayoutGridItem>
     </LayoutSection>

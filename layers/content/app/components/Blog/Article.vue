@@ -12,7 +12,7 @@ const asBlog = (item: unknown) => item as BlogCollectionItem
   <NuxtContentDetail collection="blog" :slug not-found-message="Blog post not found">
     <template #headline="{ item }">
       <div class="flex items-center gap-3 text-sm text-muted">
-        <time v-if="asBlog(item).date">{{ new Date(asBlog(item).date).toLocaleDateString() }}</time>
+        <time v-if="asBlog(item).date">{{ new Date(asBlog(item).date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</time>
         <UBadge v-if="asBlog(item).badge" color="primary" variant="subtle">
           {{ asBlog(item).badge }}
         </UBadge>

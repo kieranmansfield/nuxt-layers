@@ -1,8 +1,8 @@
-import { createSharedComposable, useLocalStorage, usePreferredReducedMotion } from '@vueuse/core'
+import { createSharedComposable, usePreferredReducedMotion } from '@vueuse/core'
 import type { PreferenceOverride } from '#layers/theme/app/types/theme'
 
 export const useThemeMotion = createSharedComposable(() => {
-  const motionOverride = useLocalStorage<PreferenceOverride>('theme-motion', 'system')
+  const motionOverride = useState<PreferenceOverride>('theme-motion', () => 'system')
   const systemMotion = usePreferredReducedMotion()
 
   const effectiveReducedMotion = computed(() => {
@@ -13,6 +13,9 @@ export const useThemeMotion = createSharedComposable(() => {
 
   function setMotionOverride(value: PreferenceOverride) {
     motionOverride.value = value
+    if (import.meta.client) {
+      localStorage.setItem('theme-motion', value)
+    }
   }
 
   return {

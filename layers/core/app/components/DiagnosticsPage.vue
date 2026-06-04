@@ -27,6 +27,7 @@ useSeoMeta({
 <template>
   <div class="min-h-screen p-8">
     <UContainer>
+      <ClientOnly>
       <div class="space-y-8">
         <div class="text-center">
           <h1 class="text-4xl font-bold mb-2">Core Layer Diagnostics</h1>
@@ -215,6 +216,11 @@ useSeoMeta({
           </div>
         </UCard>
       </div>
+
+        <template #fallback>
+          <div class="text-center text-muted py-16">Loading diagnostics…</div>
+        </template>
+      </ClientOnly>
     </UContainer>
   </div>
 </template>

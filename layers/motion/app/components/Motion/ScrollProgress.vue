@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ inheritAttrs: false })
+
 const props = withDefaults(
   defineProps<{
     /**
@@ -48,7 +50,7 @@ const percentage = computed(() => Math.round(progress.value * 100))
 
 <template>
   <!-- Linear Progress -->
-  <div v-if="type === 'linear'" class="motion-scroll-progress-linear">
+  <div v-if="type === 'linear'" class="motion-scroll-progress-linear" v-bind="$attrs">
     <div
       class="w-full rounded-full overflow-hidden"
       :style="{ height: `${height}px`, backgroundColor: bgColor }"
@@ -69,6 +71,7 @@ const percentage = computed(() => Math.round(progress.value * 100))
   <!-- Circular Progress -->
   <ProgressCircular
     v-else
+    v-bind="$attrs"
     :progress="progress"
     :size
     :stroke-width="strokeWidth"

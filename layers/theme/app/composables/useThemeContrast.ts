@@ -1,8 +1,8 @@
-import { createSharedComposable, useLocalStorage, usePreferredContrast } from '@vueuse/core'
+import { createSharedComposable, usePreferredContrast } from '@vueuse/core'
 import type { PreferenceOverride } from '#layers/theme/app/types/theme'
 
 export const useThemeContrast = createSharedComposable(() => {
-  const contrastOverride = useLocalStorage<PreferenceOverride>('theme-contrast', 'system')
+  const contrastOverride = useState<PreferenceOverride>('theme-contrast', () => 'system')
   const systemContrast = usePreferredContrast()
 
   const effectiveHighContrast = computed(() => {
@@ -13,6 +13,9 @@ export const useThemeContrast = createSharedComposable(() => {
 
   function setContrastOverride(value: PreferenceOverride) {
     contrastOverride.value = value
+    if (import.meta.client) {
+      localStorage.setItem('theme-contrast', value)
+    }
   }
 
   return {

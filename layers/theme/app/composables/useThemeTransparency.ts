@@ -1,12 +1,11 @@
 import {
   createSharedComposable,
-  useLocalStorage,
   usePreferredReducedTransparency,
 } from '@vueuse/core'
 import type { PreferenceOverride } from '#layers/theme/app/types/theme'
 
 export const useThemeTransparency = createSharedComposable(() => {
-  const transparencyOverride = useLocalStorage<PreferenceOverride>('theme-transparency', 'system')
+  const transparencyOverride = useState<PreferenceOverride>('theme-transparency', () => 'system')
   const systemTransparency = usePreferredReducedTransparency()
 
   const effectiveReducedTransparency = computed(() => {
@@ -17,6 +16,9 @@ export const useThemeTransparency = createSharedComposable(() => {
 
   function setTransparencyOverride(value: PreferenceOverride) {
     transparencyOverride.value = value
+    if (import.meta.client) {
+      localStorage.setItem('theme-transparency', value)
+    }
   }
 
   return {

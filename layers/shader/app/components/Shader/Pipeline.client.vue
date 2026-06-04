@@ -2,7 +2,7 @@
 // @ts-nocheck - TSL types are complex
 import { DoubleSide } from 'three'
 import { MeshBasicNodeMaterial } from 'three/webgpu'
-import { float, positionLocal, uv, vec3, vec4 } from 'three/tsl'
+import { float, Fn, positionLocal, uv, vec3, vec4 } from 'three/tsl'
 
 const { transparent = false } = defineProps<{
   transparent?: boolean
@@ -28,18 +28,16 @@ watch(
     const vertex = pipeline.stagesFor('vertex')
     const ray = pipeline.stagesFor('ray')
 
-    // UV chain — generators read pipeline.uvNode.value in their stage fn closures
-    pipeline.uvNode.value = uvStages.reduce((node, { fn }) => fn(node), uv())
-
-    // Ray chain — sky/tunnel generators read pipeline.rayNode.value in their closures
-    pipeline.rayNode.value = ray.reduce((node, { fn }) => fn(node), screenRayNode)
-
-    // Fragment chain
-    material.colorNode = fragment.reduce((node, { fn }) => fn(node), vec4(0, 0, 0, 1))
+    // Wrap each chain in Fn() so TSL .toVar()/.assign() ops (used by noise functions
+    // like simplexNoise3d) have a valid stack context. Without this, TSL throws
+    // "No stack defined for assign operation".
+    pipeline.uvNode.value = Fn(() => uvStages.reduce((node, { fn }) => fn(node), uv()))()
+    pipeline.rayNode.value = Fn(() => ray.reduce((node, { fn }) => fn(node), screenRayNode))()
+    material.colorNode = Fn(() => fragment.reduce((node, { fn }) => fn(node), vec4(0, 0, 0, 1)))()
     material.needsUpdate = true
 
     if (vertex.length > 0) {
-      material.positionNode = vertex.reduce((node, { fn }) => fn(node), positionLocal)
+      material.positionNode = Fn(() => vertex.reduce((node, { fn }) => fn(node), positionLocal))()
       material.needsUpdate = true
     }
   },
