@@ -252,7 +252,7 @@ export default defineNuxtConfig({
       // the cache before the bundle is ready) the browser gets the raw CJS file
       // and throws "does not provide an export named 'default'".
       // include: ['slugify'],
-        include: [
+      include: [
         '@vue/devtools-kit',
         'locomotive-scroll',
         'slugify',
@@ -278,14 +278,14 @@ export default defineNuxtConfig({
         // Keep slugify in include alongside force so the CJS→ESM conversion
         // is always re-run when the cache is cleared.
         // include: ['slugify'],
-      include: [
-        '@vue/devtools-kit',
-        'locomotive-scroll',
-        'slugify',
-        'three',
-        'three/tsl',
-        'three/webgpu',
-      ],
+        include: [
+          '@vue/devtools-kit',
+          'locomotive-scroll',
+          'slugify',
+          'three',
+          'three/tsl',
+          'three/webgpu',
+        ],
         // Removed force:true — it clears the dep cache on every start which
         // causes slugify to be served as a raw CJS file while Vite is still
         // re-optimising. Run `nuxt dev --force` manually when you need a
@@ -320,5 +320,5 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@netlify/nuxt'],
+  modules: ['@netlify/nuxt', '@nuxt/ui'],
 })
