@@ -8,5 +8,11 @@
 
 @config '#layers/core/tailwind.config.js';
 
+/* Force Tailwind 4 to eagerly scan all layer and app component files upfront.
+   Without this, dev mode compiles CSS lazily (per-file as Vite requests them),
+   causing an HMR update mid-render that produces a visible layout shift. */
+@source '../../../../*/app/**/*.{vue,ts}';
+@source '../../../../../apps/*/app/**/*.{vue,ts}';
+
 @import '#layers/core/app/assets/css/layout.css';
 @import '#layers/core/app/assets/css/base.css';
