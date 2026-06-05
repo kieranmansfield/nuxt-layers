@@ -1,15 +1,21 @@
 {
-  "name": "nuxt-app",
+  "name": "@layers/feeds",
+  "version": "0.0.1",
   "type": "module",
   "private": true,
+  "main": "./nuxt.config.ts",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json",
+    "dev": "nuxi dev .playground",
+    "dev:prepare": "nuxt prepare .playground",
+    "build": "FEEDS_STANDALONE=true nuxi build",
+    "generate": "FEEDS_STANDALONE=true nuxi generate",
+    "preview": "nuxt preview .playground"
   },
   "dependencies": {
+    "feed": "^5.2.1"
+  },
+  "devDependencies": {
     "nuxt": "^4.4.7",
     "vue": "^3.5.35",
     "vue-router": "^5.1.0"

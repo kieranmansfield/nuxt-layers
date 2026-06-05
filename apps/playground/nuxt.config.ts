@@ -11,6 +11,7 @@ const AVAILABLE_LAYERS = [
   'theme',
   'content',
   'routing',
+  'feeds',
 ] as const
 type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
@@ -24,6 +25,7 @@ const LAYER_PATHS: Record<LayerName, string> = {
   theme: '../../layers/theme',
   content: '../../layers/content',
   routing: '../../layers/routing',
+  feeds: '../../layers/feeds',
 }
 
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included
@@ -37,6 +39,7 @@ const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
   theme: ['core'],
   content: ['core'],
   routing: ['core'],
+  feeds: ['core', 'content'],
 }
 
 /**
