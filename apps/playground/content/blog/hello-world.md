@@ -6,7 +6,7 @@ image: https://picsum.photos/seed/blog1/800/400
 authors:
   - name: Jane Doe
     avatar: https://i.pravatar.cc/150?u=jane
-    url: https://github.com/janedoe
+    link: https://github.com/janedoe
 tags:
   - announcement
   - getting-started
