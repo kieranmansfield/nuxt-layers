@@ -27,6 +27,7 @@ export function toAtom(items: FeedItem[], config: FeedConfig): string {
     .join('')
 
   return `<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/feed/style.xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>${escapeXml(config.title)}</title>
   <id>${escapeXml(config.siteUrl)}</id>
