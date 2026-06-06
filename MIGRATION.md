@@ -163,6 +163,25 @@ feedsLayer: {
 }
 ```
 
+### Netlify / static deployment: prerender collection routes
+
+Feed routes are server routes — they aren't discoverable by the prerender crawler. The feeds layer automatically prerenders the shorthand routes (`/feed`, `/feed/rss`, `/feed/atom`, `/feed/json`), but **collection-specific routes must be listed explicitly** in your app's `nuxt.config.ts`:
+
+```ts
+nitro: {
+  prerender: {
+    routes: [
+      '/feed/blog/rss',
+      '/feed/blog/atom',
+      '/feed/blog/json',
+      // one set per collection in feedsLayer.feed.collections
+    ],
+  },
+},
+```
+
+Without this, collection routes return 404 on Netlify and other static hosts.
+
 ---
 
 ## 6. Feed autodiscovery in `<head>`
