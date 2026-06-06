@@ -14,10 +14,10 @@ export interface ContactFailedPayload extends ContactSubmittedPayload {
   error: unknown
 }
 
-export interface FormsLayerHooks {
+export interface MailerLayerHooks {
   'contact:submitted': (payload: ContactSubmittedPayload) => void
   'contact:sent': (payload: ContactSentPayload) => void
   'contact:failed': (payload: ContactFailedPayload) => void
 }
 
-export const formsLayerHooks = createHooks<FormsLayerHooks>()
+export const mailerLayerHooks = createHooks<MailerLayerHooks>()

@@ -5,6 +5,7 @@ const AVAILABLE_LAYERS = [
   'layout',
   'motion',
   'shader',
+  'mailer',
   'forms',
   'theme',
   'content',
@@ -18,6 +19,7 @@ const LAYER_PATHS: Record<LayerName, string> = {
   layout: '../../layers/layout',
   motion: '../../layers/motion',
   shader: '../../layers/shader',
+  mailer: '../../layers/mailer',
   forms: '../../layers/forms',
   theme: '../../layers/theme',
   content: '../../layers/content',
@@ -27,11 +29,12 @@ const LAYER_PATHS: Record<LayerName, string> = {
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included
 const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
   core: [],
-  ui: ['core'], // ui depends on core
-  layout: ['core'], // layout depends on core
-  motion: ['core'], // motion depends on core
-  shader: ['core'], // shader depends on core
-  forms: ['core'], // forms depends on core
+  ui: ['core'],
+  layout: ['core'],
+  motion: ['core'],
+  shader: ['core'],
+  mailer: ['core'],
+  forms: ['mailer'],
   theme: ['core'],
   content: ['core'],
   routing: ['core'],

@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     name: 'forms',
   },
 
-  extends: ['../core'],
+  extends: ['../mailer'],
 
   alias: {
     '#layers/forms': import.meta.dirname,
@@ -12,14 +12,6 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2026-01-24',
-
-  runtimeConfig: {
-    formsLayer: {
-      resendApiKey: '', // env: NUXT_FORMS_LAYER_RESEND_API_KEY
-      emailFrom: 'contact@example.com', // env: NUXT_FORMS_LAYER_EMAIL_FROM
-      emailTo: '', // env: NUXT_FORMS_LAYER_EMAIL_TO
-    },
-  },
 
   typescript: {
     typeCheck: true,

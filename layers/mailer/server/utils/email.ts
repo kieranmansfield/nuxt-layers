@@ -7,10 +7,10 @@ export interface ContactEmailData {
 }
 
 export async function sendContactEmail(data: ContactEmailData) {
-  const { resendApiKey, emailFrom, emailTo } = useFormsConfig()
+  const { resendApiKey, emailFrom, emailTo } = useMailerConfig()
 
   if (!resendApiKey) {
-    console.warn('[forms] NUXT_FORMS_LAYER_RESEND_API_KEY not set — email skipped')
+    console.warn('[mailer] NUXT_MAILER_LAYER_RESEND_API_KEY not set — email skipped')
     return { success: false as const, error: 'No API key configured' }
   }
 

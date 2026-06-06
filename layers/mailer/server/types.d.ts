@@ -2,7 +2,7 @@ import {} from 'nitropack'
 
 declare module 'nitropack' {
   interface NitroRuntimeConfig {
-    formsLayer?: {
+    mailerLayer?: {
       resendApiKey: string
       emailFrom: string
       emailTo: string
