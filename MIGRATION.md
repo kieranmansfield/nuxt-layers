@@ -1,3 +1,201 @@
+# Migration Guide: Feeds Layer, Site Config & Content Type Normalisation
+
+Four related changes landed together. None are strictly breaking for existing pages, but anything that reads `feedsLayer.site`, imports `SiteAuthor`, or uses the `authors[].url` frontmatter field needs updating.
+
+---
+
+## 1. Shared `site` config (replaces `feedsLayer.site`)
+
+Site metadata is no longer namespaced under `feedsLayer`. It lives at the top-level `site` key in `app.config.ts`, owned by the core layer's type declarations. Any layer can read it.
+
+**Before:**
+```ts
+// app/app.config.ts
+export default defineAppConfig({
+  feedsLayer: {
+    site: {
+      title: 'My Site',
+      url: 'https://example.com',
+      author: { name: 'Jane', email: 'jane@example.com' },
+    },
+  },
+})
+```
+
+**After:**
+```ts
+// app/app.config.ts
+export default defineAppConfig({
+  site: {
+    title: 'My Site',
+    url: 'https://example.com',
+    author: { name: 'Jane', email: 'jane@example.com' },
+  },
+})
+```
+
+The `site` key is typed via `SiteConfig` from the core layer — `useAppConfig().site` has full TypeScript completion.
+
+---
+
+## 2. `SiteAuthor` renamed to `Author`
+
+The core type previously exported as `SiteAuthor` is now exported as `Author`. It's the base author shape used by `SiteConfig.author`, `ContentAuthor`, and any other layer that deals with authorship.
+
+**Before:**
+```ts
+import type { SiteAuthor } from '#layers/core/app/types/site'
+
+const author: SiteAuthor = { name: 'Jane' }
+```
+
+**After:**
+```ts
+import type { Author } from '#layers/core/app/types/site'
+
+const author: Author = { name: 'Jane' }
+```
+
+`SiteConfig.author` still has the same shape — only the type name changed.
+
+---
+
+## 3. Content author `url` renamed to `link`
+
+The `url` field on blog post authors has been renamed to `link` to align with core's `Author` type. The Zod schema, TypeScript interface, and markdown frontmatter all need updating.
+
+**Zod schema (in your `content.config.ts`):**
+```ts
+// Before
+authors: z.array(z.object({ name: z.string(), avatar: z.string().optional(), url: z.string().optional() }))
+
+// After
+authors: z.array(z.object({ name: z.string(), avatar: z.string().optional(), link: z.string().optional() }))
+```
+
+**Markdown frontmatter:**
+```yaml
+# Before
+authors:
+  - name: Jane Doe
+    url: https://github.com/janedoe
+
+# After
+authors:
+  - name: Jane Doe
+    link: https://github.com/janedoe
+```
+
+**TypeScript interface** — `ContentAuthor` now extends `Author` instead of being a standalone type:
+```ts
+import type { Author } from '#layers/core/app/types/site'
+
+// ContentAuthor from the content layer
+interface ContentAuthor extends Author {
+  avatar?: string
+  // inherits: name, email?, link?
+}
+```
+
+---
+
+## 4. `BaseContent` base interface
+
+A `BaseContent` interface was extracted from the shared fields across `BlogPost`, `PortfolioItem`, `GalleryItem`, and `ContentPage`. All four now extend it.
+
+```ts
+interface BaseContent {
+  title: string
+  description?: string
+  image?: string
+  tags?: string[]
+  date?: string
+  draft?: boolean
+}
+```
+
+If you have custom types that replicate these fields, you can now extend `BaseContent` directly:
+
+```ts
+import type { BaseContent } from '#layers/content/app/types/content'
+
+interface MyCustomPage extends BaseContent {
+  featuredVideo?: string
+}
+```
+
+---
+
+## 5. Feeds layer: collection wiring
+
+Feeds are now driven by `feedsLayer.feed.collections` — an array of collection names to expose as feeds. The default is `['blog']`. Add more collections to get automatic feed routes for each.
+
+```ts
+// app/app.config.ts
+export default defineAppConfig({
+  site: { ... },
+  feedsLayer: {
+    feed: {
+      limit: 30,
+      collections: ['blog'],           // expose these collections as feeds
+      defaultCollection: 'blog',        // used by /feed/rss shorthand routes
+    },
+  },
+})
+```
+
+Available feed URLs for each collection:
+
+| URL | Format |
+|-----|--------|
+| `/feed/:collection/rss` | RSS 2.0 |
+| `/feed/:collection/atom` | Atom 1.0 |
+| `/feed/:collection/json` | JSON Feed 1.1 |
+| `/feed/rss` | RSS for `defaultCollection` |
+| `/feed/atom` | Atom for `defaultCollection` |
+| `/feed/json` | JSON Feed for `defaultCollection` |
+| `/feed` | JSON index of all configured feeds |
+
+To expose portfolio items as a feed:
+```ts
+feedsLayer: {
+  feed: { collections: ['blog', 'portfolio'] }
+}
+```
+
+---
+
+## 6. Feed autodiscovery in `<head>`
+
+The feeds layer automatically injects `<link rel="alternate">` tags so RSS readers and browsers can discover feeds without cluttering every page with links for every collection.
+
+**The rule:** every page gets the main site feeds. Pages that belong to a non-default collection also get that collection's specific feeds.
+
+| Page | Links injected |
+|------|---------------|
+| `/`, `/about`, any non-collection page | 3 main site feeds |
+| `/blog`, `/blog/hello-world` (if `blog` = `defaultCollection`) | 3 main site feeds (these already point to blog) |
+| `/portfolio`, `/portfolio/project` (non-default collection) | 3 main site feeds + 3 portfolio feeds |
+
+The main site feeds use the shorthand routes (`/feed/rss`, `/feed/atom`, `/feed/json`) which always serve `defaultCollection`. Collection-specific links are only added for non-default collections — where you're actively browsing content not covered by the main feeds.
+
+No action required. The collection a page belongs to is inferred from the first path segment matching an entry in `feedsLayer.feed.collections`.
+
+---
+
+## Quick Reference
+
+| Change | Action required |
+|--------|----------------|
+| Site metadata | Move `feedsLayer.site` → top-level `site` in `app.config.ts` |
+| `SiteAuthor` type import | Rename to `Author` |
+| Author `url` in frontmatter | Rename `url:` → `link:` in blog author blocks |
+| Author `url` in Zod schema | Rename `url` → `link` in `authors` object schema |
+| Collection feeds | Set `feedsLayer.feed.collections` in `app.config.ts` |
+| Feed autodiscovery | Nothing — automatic via the feeds layer plugin |
+
+---
+
 # Migration Guide: v1.6.34 — Content Layer Collection Aliases & Section Disabling
 
 Two new capabilities have been added to the content layer:

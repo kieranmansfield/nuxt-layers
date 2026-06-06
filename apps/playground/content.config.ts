@@ -24,7 +24,7 @@ export default defineContentConfig({
             z.object({
               name: z.string(),
               avatar: z.string().optional(),
-              url: z.string().optional(),
+              link: z.string().optional(),
             })
           )
           .default([]),

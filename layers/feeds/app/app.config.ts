@@ -1,20 +1,9 @@
 export default defineAppConfig({
   feedsLayer: {
-    site: {
-      title: 'My Site',
-      description: 'Latest content',
-      url: 'https://example.com',
-      author: {
-        name: '',
-        email: '',
-        link: '',
-      },
-      image: '',
-      favicon: '/favicon.ico',
-      copyright: '',
-    },
     feed: {
       limit: 30,
+      collections: ['blog'],
+      defaultCollection: 'blog',
     },
   },
 })
@@ -22,21 +11,12 @@ export default defineAppConfig({
 declare module '@nuxt/schema' {
   interface AppConfigInput {
     feedsLayer?: {
-      site?: {
-        title?: string
-        description?: string
-        url?: string
-        author?: {
-          name?: string
-          email?: string
-          link?: string
-        }
-        image?: string
-        favicon?: string
-        copyright?: string
-      }
       feed?: {
         limit?: number
+        /** Collection names to expose as feeds. Default: ['blog'] */
+        collections?: string[]
+        /** Collection used by the shorthand /feed/rss routes. Default: 'blog' */
+        defaultCollection?: string
       }
     }
   }

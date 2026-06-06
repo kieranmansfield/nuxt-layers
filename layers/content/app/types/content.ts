@@ -1,7 +1,7 @@
-export interface ContentAuthor {
-  name: string
+import type { Author } from '#layers/core/app/types/site'
+
+export interface ContentAuthor extends Author {
   avatar?: string
-  url?: string
 }
 
 export interface GalleryImage {
@@ -26,17 +26,19 @@ export interface PortfolioFont {
   usage?: string
 }
 
-export interface ContentPage {
+export interface BaseContent {
   title: string
   description?: string
   image?: string
+  tags?: string[]
+  date?: string
+  draft?: boolean
 }
 
-export interface BlogPost {
-  title: string
-  description?: string
+export interface ContentPage extends BaseContent {}
+
+export interface BlogPost extends BaseContent {
   date: string
-  image?: string
   authors: ContentAuthor[]
   tags: string[]
   badge?: string
@@ -44,25 +46,20 @@ export interface BlogPost {
   readingTime?: number
 }
 
-export interface PortfolioItem {
-  title: string
-  description?: string
-  image?: string
+export interface PortfolioItem extends BaseContent {
   tags: string[]
   client?: string
   year?: number
+  /** External project URL */
   url?: string
   featured: boolean
   colors: PortfolioColor[]
   typography: PortfolioFont[]
 }
 
-export interface GalleryItem {
-  title: string
-  description?: string
+export interface GalleryItem extends BaseContent {
   images: GalleryImage[]
   tags: string[]
-  date?: string
 }
 
 export interface ContentQueryOptions {

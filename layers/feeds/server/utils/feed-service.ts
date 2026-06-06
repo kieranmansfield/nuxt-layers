@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 
+import type { SiteConfig } from '#layers/core/app/types/site'
 import type { FeedConfig, FeedItem } from './types'
 
 export async function buildFeed(
@@ -7,26 +8,34 @@ export async function buildFeed(
   collection?: string
 ): Promise<{ items: FeedItem[]; config: FeedConfig }> {
   const appConfig = useAppConfig()
-  const site =
-    (appConfig as { feedsLayer?: { site?: Record<string, unknown>; feed?: { limit?: number } } })
-      .feedsLayer?.site ?? {}
-  const feedConfig =
-    (appConfig as { feedsLayer?: { feed?: { limit?: number } } }).feedsLayer?.feed ?? {}
+  const site: SiteConfig = (appConfig as { site?: SiteConfig }).site ?? {}
+  const feedConfig = (appConfig as { feedsLayer?: { feed?: { limit?: number; defaultCollection?: string } } }).feedsLayer?.feed ?? {}
+  const limit: number = feedConfig.limit ?? 30
+  const defaultCollection = feedConfig.defaultCollection ?? 'blog'
+
+  const requestUrl = getRequestURL(event)
+  const origin = `${requestUrl.protocol}//${requestUrl.host}`
+  const siteUrl = (site.url as string | undefined)?.replace(/\/$/, '') || origin
+
+  const authorName = site.author?.name ?? ''
+  const resolvedCollection = collection ?? defaultCollection
+  const collectionLabel = collection
+    ? ` — ${collection.charAt(0).toUpperCase() + collection.slice(1)}`
+    : ''
 
   const config: FeedConfig = {
-    title: (site.title as string) ?? 'My Site',
-    description: (site.description as string) ?? '',
-    siteUrl: (site.url as string) ?? '',
-    author: site.author as FeedConfig['author'],
-    image: site.image as string | undefined,
-    favicon: (site.favicon as string) ?? '/favicon.ico',
+    title: `${site.title ?? 'My Site'}${collectionLabel}`,
+    description: site.description ?? '',
+    siteUrl,
+    author: authorName ? { name: authorName, email: site.author?.email, link: site.author?.link } : undefined,
+    image: site.image || undefined,
+    favicon: site.favicon ?? '/favicon.ico',
     copyright:
-      (site.copyright as string) ||
-      `Copyright ${new Date().getFullYear()} ${(site.author as { name?: string } | undefined)?.name ?? ''}`.trim(),
+      site.copyright ||
+      (authorName ? `Copyright ${new Date().getFullYear()} ${authorName}` : undefined),
   }
 
-  const limit = feedConfig.limit ?? 30
-  const items = await getContentFeedItems(event, collection, limit)
+  const items = await getContentFeedItems(event, resolvedCollection, limit)
 
   return { items, config }
 }

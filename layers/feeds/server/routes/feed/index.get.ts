@@ -1,23 +1,31 @@
 export default defineEventHandler((event) => {
-  const appConfig = useAppConfig()
-  const configuredUrl =
-    (appConfig as { feedsLayer?: { site?: { url?: string } } }).feedsLayer?.site?.url ?? ''
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const appConfig = useAppConfig() as any
+  const site = appConfig.site ?? {}
+  const feedConfig = appConfig.feedsLayer?.feed ?? {}
+  const collections: string[] = feedConfig.collections ?? ['blog']
 
-  // Fall back to the request origin so local dev links work without configuration
   const requestUrl = getRequestURL(event)
-  const baseUrl = configuredUrl || `${requestUrl.protocol}//${requestUrl.host}`
+  const baseUrl =
+    (site.url as string | undefined)?.replace(/\/$/, '') ||
+    `${requestUrl.protocol}//${requestUrl.host}`
 
   setHeader(event, 'Cache-Control', 'public, max-age=300, s-maxage=3600')
 
+  const formats = [
+    { format: 'RSS 2.0', ext: 'rss', contentType: 'application/rss+xml' },
+    { format: 'Atom 1.0', ext: 'atom', contentType: 'application/atom+xml' },
+    { format: 'JSON Feed 1.1', ext: 'json', contentType: 'application/feed+json' },
+  ]
+
   return {
-    feeds: [
-      { format: 'RSS 2.0', url: `${baseUrl}/feed/rss`, contentType: 'application/rss+xml' },
-      { format: 'Atom 1.0', url: `${baseUrl}/feed/atom`, contentType: 'application/atom+xml' },
-      {
-        format: 'JSON Feed 1.1',
-        url: `${baseUrl}/feed/json`,
-        contentType: 'application/feed+json',
-      },
-    ],
+    feeds: collections.flatMap((collection) =>
+      formats.map(({ format, ext, contentType }) => ({
+        collection,
+        format,
+        url: `${baseUrl}/feed/${collection}/${ext}`,
+        contentType,
+      }))
+    ),
   }
 })

@@ -1,4 +1,10 @@
 export default defineAppConfig({
+  site: {
+    title: 'Nuxt Layers Playground',
+    description: 'Demo and development playground for nuxt-layers.',
+    url: 'https://nuxtlayers.netlify.app/',
+    author: { name: 'Kieran Mansfield' },
+  },
   mastNav: {
     scrollBehaviour: 'router',
     links: [

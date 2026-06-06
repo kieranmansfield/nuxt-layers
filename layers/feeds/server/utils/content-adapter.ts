@@ -1,4 +1,5 @@
 import type { H3Event } from 'h3'
+import { queryCollection } from '@nuxt/content/nitro'
 
 import type { FeedItem } from './types'
 
@@ -10,11 +11,8 @@ export async function getContentFeedItems(
   collection: string = 'blog',
   limit: number = 30
 ): Promise<FeedItem[]> {
-  // queryCollection is auto-imported from #content/server when @nuxt/content is loaded
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { queryCollection } = await import('#content/server' as any)
-
-  const raw: AnyContent[] = await queryCollection(event, collection).all()
+  const raw: AnyContent[] = await (queryCollection as any)(event, collection).all()
 
   return raw
     .filter((item) => !item.draft)
@@ -24,13 +22,18 @@ export async function getContentFeedItems(
         new Date(a.date ?? a.createdAt ?? 0).getTime()
     )
     .slice(0, limit)
-    .map((item) => ({
-      title: item.title ?? item.stem ?? '',
-      description: item.description,
-      link: item.path ?? item._path ?? '',
-      id: item.path ?? item._path ?? '',
-      date: new Date(item.date ?? item.createdAt ?? Date.now()),
-      author: item.author?.name ?? item.author ?? undefined,
-      tags: Array.isArray(item.tags) ? item.tags : undefined,
-    }))
+    .map((item) => {
+      const firstAuthor = Array.isArray(item.authors)
+        ? item.authors[0]?.name
+        : (item.author?.name ?? (typeof item.author === 'string' ? item.author : undefined))
+      return {
+        title: item.title ?? item.stem ?? '',
+        description: item.description,
+        link: item.path ?? item._path ?? '',
+        id: item.path ?? item._path ?? '',
+        date: new Date(item.date ?? item.createdAt ?? Date.now()),
+        author: firstAuthor ?? undefined,
+        tags: Array.isArray(item.tags) ? item.tags : undefined,
+      }
+    })
 }
