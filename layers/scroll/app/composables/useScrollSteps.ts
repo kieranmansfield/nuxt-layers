@@ -16,7 +16,6 @@ export interface ScrollSceneContext {
  *
  * @example
  * const { currentStep, isActive, stepProgress } = useScrollSteps(3)
- * // currentStep: 0 | 1 | 2 based on scene progress
  */
 export function useScrollSteps(total: number) {
   const scene = inject<ScrollSceneContext>(SCROLL_SCENE_KEY)

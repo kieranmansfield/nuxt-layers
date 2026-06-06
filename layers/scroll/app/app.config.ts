@@ -1,6 +1,21 @@
+export default defineAppConfig({
+  scroll: {
+    smoothScroll: true as boolean | string[],
+    gsapScrollTrigger: true,
+    lenis: {
+      duration: 1.2,
+      orientation: 'vertical' as 'vertical' | 'horizontal',
+      gestureOrientation: 'vertical' as 'vertical' | 'horizontal',
+      smoothWheel: true,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    },
+  },
+})
+
 declare module '@nuxt/schema' {
   interface AppConfigInput {
-    motion?: {
+    scroll?: {
       smoothScroll?: boolean | string[]
       gsapScrollTrigger?: boolean
       lenis?: {

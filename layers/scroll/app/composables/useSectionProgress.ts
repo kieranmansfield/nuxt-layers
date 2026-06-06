@@ -10,8 +10,7 @@ interface SectionProgressOptions {
  * Section-local scroll progress (0–1) scoped to a given element.
  *
  * @example
- * const sectionRef = ref<HTMLElement | null>(null)
- * const { progress, active, entering, leaving } = useSectionProgress(sectionRef, {
+ * const { progress, active } = useSectionProgress(sectionRef, {
  *   start: 'top top',
  *   end: '+=200%',
  * })

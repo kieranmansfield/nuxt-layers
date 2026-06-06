@@ -37,7 +37,11 @@ Placing it at the layer root silently ignores it — `useAppConfig()` returns `u
 | `scripts` | Third-party script loading via @nuxt/scripts (analytics, GTM, embeds) | `core` |
 | `ui` | Shared UI component library | `core` |
 | `layout` | Page layout components (header, footer, sidebar) | `core` |
-| `motion` | Animation and motion composables/directives | `core` |
+| `scroll` | GSAP + Locomotive Scroll infrastructure, scroll-reactive components | `core` |
+| `animations` | Animation components (Marquee, Cursor, Tilt, Magnetic, CountUp, TextReveal) | `scroll` |
+| `transitions` | CSS transition/animation classes + Transition.vue component | `core` |
+| `page-transitions` | Nuxt page transition defaults + usePageTransition() | `core` |
+| `motion` | Motion orchestrator — composes scroll, animations, transitions, page-transitions | `scroll`, `animations`, `transitions`, `page-transitions` |
 | `canvas` | WebGL/WebGPU/TresJS rendering context | `core` |
 | `shader` | TSL shader pipeline blocks, materials, presets | `canvas` |
 | `mailer` | Email sending via Resend, hooks, runtime config | `core` |
@@ -69,7 +73,7 @@ Import examples:
 - `core` has **no** layer dependencies — it is always the base
 - **Every non-core layer MUST declare `extends: ['../core']` in its own `nuxt.config.ts`**
 - Do not rely on the playground load order to provide core — declare the dependency explicitly
-- Layers should **not** depend on each other (except `core`) to avoid circular deps
+- Layers may depend on other layers to form a chain (e.g. `animations → scroll → core`); avoid circular deps
 - Nuxt deduplicates layers when multiple paths resolve to the same config, so there is no cost
   to declaring `extends: ['../core']` even when the playground already loads core first
 

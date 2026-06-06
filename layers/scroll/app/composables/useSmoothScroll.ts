@@ -17,26 +17,18 @@ interface ScrollToOptions {
  *
  * // Scroll to element
  * scrollTo('#section', { offset: -100, duration: 2 })
- *
- * // React to scroll velocity
- * watch(velocity, (v) => console.log('Velocity:', v))
  */
 export function useSmoothScroll() {
   const nuxtApp = useNuxtApp()
   const appConfig = useAppConfig()
 
-  // Get the Locomotive Scroll instance from the reactive ref provided by the plugin
   const locomotiveScroll = computed<LocomotiveScroll | undefined>(
     () => (nuxtApp.$locomotiveScroll as Ref<LocomotiveScroll | null>)?.value ?? undefined
   )
 
-  // true if smooth scroll is configured to run (globally or per-route)
-  const isEnabled = computed(() => (appConfig.motion?.smoothScroll ?? true) !== false)
-
-  // true once the LocomotiveScroll instance is actually initialised on this route
+  const isEnabled = computed(() => (appConfig.scroll?.smoothScroll ?? true) !== false)
   const isReady = computed(() => locomotiveScroll.value != null)
 
-  // Reactive scroll state from the plugin
   const scrollState = computed(
     () =>
       nuxtApp.$scrollState as
@@ -50,15 +42,11 @@ export function useSmoothScroll() {
         | undefined
   )
 
-  // Derived reactive values
   const scrollY = computed(() => scrollState.value?.scroll ?? 0)
   const velocity = computed(() => scrollState.value?.velocity ?? 0)
   const direction = computed(() => scrollState.value?.direction ?? 0)
   const progress = computed(() => scrollState.value?.progress ?? 0)
 
-  /**
-   * Lock scrolling (disable scroll)
-   */
   function lockScrolling() {
     if (import.meta.client && locomotiveScroll.value) {
       document.documentElement.style.overflow = 'hidden'
@@ -66,18 +54,12 @@ export function useSmoothScroll() {
     }
   }
 
-  /**
-   * Unlock scrolling (enable scroll)
-   */
   function unlockScrolling() {
     if (!import.meta.client) return
     document.documentElement.style.overflow = ''
     locomotiveScroll.value?.start()
   }
 
-  /**
-   * Scroll to a target (element, selector, or position)
-   */
   function scrollTo(target: string | number | HTMLElement, options?: ScrollToOptions) {
     if (!import.meta.client) return
 
@@ -90,14 +72,10 @@ export function useSmoothScroll() {
         ...(options?.onComplete !== undefined && { onComplete: options.onComplete }),
       })
     } else {
-      // Native fallback
       nativeScrollTo(target, options)
     }
   }
 
-  /**
-   * Scroll to top of page
-   */
   function scrollToTop(options?: { duration?: number; immediate?: boolean }) {
     scrollTo(0, {
       duration: options?.duration ?? 2,
@@ -105,28 +83,18 @@ export function useSmoothScroll() {
     })
   }
 
-  /**
-   * Snap to top immediately (no animation)
-   */
   function snapToTop() {
     scrollTo(0, { immediate: true })
   }
 
   return {
-    // Locomotive Scroll instance
     locomotiveScroll,
-
-    // Scroll availability
     isEnabled,
     isReady,
-
-    // Reactive scroll state
     scrollY,
     velocity,
     direction,
     progress,
-
-    // Methods
     scrollTo,
     scrollToTop,
     snapToTop,
@@ -135,9 +103,6 @@ export function useSmoothScroll() {
   }
 }
 
-/**
- * Native browser scroll fallback
- */
 function nativeScrollTo(target: string | number | HTMLElement, options?: ScrollToOptions) {
   let targetPosition: number
 

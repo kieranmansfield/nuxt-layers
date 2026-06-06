@@ -1,0 +1,11 @@
+{
+  "name": "kmcom-layer-scroll",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "locomotive-scroll": "^5.0.1",
+    "v-gsap-nuxt": "latest"
+  }
+}
