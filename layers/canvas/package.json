@@ -1,0 +1,22 @@
+{
+  "name": "kmcom-layer-canvas",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi dev",
+    "dev:playground": "PLAYGROUND_LAYERS=core,canvas pnpm -F playground dev",
+    "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json"
+  },
+  "dependencies": {
+    "@tresjs/cientos": "^5.7.2",
+    "@tresjs/core": "^5.8.1",
+    "@tresjs/nuxt": "^5.6.1",
+    "@tresjs/post-processing": "^3.7.2",
+    "@vueuse/core": "^14.3.0",
+    "three": "^0.184.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.184.1"
+  }
+}

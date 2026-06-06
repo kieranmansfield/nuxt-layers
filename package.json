@@ -8,6 +8,7 @@
     "./layers/ui": "./layers/ui/nuxt.config.ts",
     "./layers/layout": "./layers/layout/nuxt.config.ts",
     "./layers/motion": "./layers/motion/nuxt.config.ts",
+    "./layers/canvas": "./layers/canvas/nuxt.config.ts",
     "./layers/shader": "./layers/shader/nuxt.config.ts",
     "./layers/mailer": "./layers/mailer/nuxt.config.ts",
     "./layers/forms": "./layers/forms/nuxt.config.ts",
