@@ -5,6 +5,8 @@
   "description": "Composable Nuxt 4 layers for building scalable Vue applications",
   "exports": {
     "./layers/core": "./layers/core/nuxt.config.ts",
+    "./layers/seo": "./layers/seo/nuxt.config.ts",
+    "./layers/scripts": "./layers/scripts/nuxt.config.ts",
     "./layers/ui": "./layers/ui/nuxt.config.ts",
     "./layers/layout": "./layers/layout/nuxt.config.ts",
     "./layers/motion": "./layers/motion/nuxt.config.ts",
@@ -85,6 +87,8 @@
     "packages/*"
   ],
   "peerDependencies": {
+    "@nuxt/scripts": "^0.11.0",
+    "@nuxtjs/seo": "^2.0.0",
     "@nuxt/content": "^3.14.0",
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/image": "^2.0.0",
@@ -107,6 +111,12 @@
     "zod": "^4.4.3"
   },
   "peerDependenciesMeta": {
+    "@nuxt/scripts": {
+      "optional": true
+    },
+    "@nuxtjs/seo": {
+      "optional": true
+    },
     "@nuxtjs/device": {
       "optional": true
     },

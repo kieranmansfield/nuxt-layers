@@ -33,13 +33,18 @@ Placing it at the layer root silently ignores it — `useAppConfig()` returns `u
 | Layer | Purpose | Depends on |
 |-------|---------|------------|
 | `core` | Base utilities, 404, loading screen, scroll guard | nothing (loads @nuxt/ui, @vueuse/nuxt, @nuxtjs/device) |
+| `seo` | SEO: robots, sitemap, og-image, schema-org via @nuxtjs/seo | `core` |
+| `scripts` | Third-party script loading via @nuxt/scripts (analytics, GTM, embeds) | `core` |
 | `ui` | Shared UI component library | `core` |
 | `layout` | Page layout components (header, footer, sidebar) | `core` |
 | `motion` | Animation and motion composables/directives | `core` |
-| `shader` | GLSL shader components (Three.js / TresJS) | `core` |
-| `forms` | Form components, validation, email sending | `core` |
+| `canvas` | WebGL/WebGPU/TresJS rendering context | `core` |
+| `shader` | TSL shader pipeline blocks, materials, presets | `canvas` |
+| `mailer` | Email sending via Resend, hooks, runtime config | `core` |
+| `forms` | Form UI components, Zod validation | `mailer` |
 | `theme` | Design tokens and theming utilities | `core` |
 | `content` | Nuxt Content v3 collections and components | `core` |
+| `routing` | Advanced routing, maintenance mode, feature flags | `core` |
 
 ## Alias Pattern
 

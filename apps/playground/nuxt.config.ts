@@ -1,6 +1,8 @@
 // Layer configuration
 const AVAILABLE_LAYERS = [
   'core',
+  'seo',
+  'scripts',
   'ui',
   'layout',
   'motion',
@@ -16,6 +18,8 @@ type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
 const LAYER_PATHS: Record<LayerName, string> = {
   core: '../../layers/core',
+  seo: '../../layers/seo',
+  scripts: '../../layers/scripts',
   ui: '../../layers/ui',
   layout: '../../layers/layout',
   motion: '../../layers/motion',
@@ -31,6 +35,8 @@ const LAYER_PATHS: Record<LayerName, string> = {
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included
 const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
   core: [],
+  seo: ['core'],
+  scripts: ['core'],
   ui: ['core'],
   layout: ['core'],
   motion: ['core'],
