@@ -4,11 +4,11 @@ export default defineNuxtConfig({
     name: 'ui',
   },
 
-  // Only extend core when running standalone dev (via dev:ui script)
-  extends: process.env.UI_STANDALONE ? ['../core'] : [],
+  extends: ['../core'],
 
   alias: {
     '#layers/ui': import.meta.dirname,
+    '#layers/ui/types': `${import.meta.dirname}/app/types`,
   },
 
   modules: [

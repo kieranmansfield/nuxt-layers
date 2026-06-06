@@ -4,8 +4,11 @@ export default defineNuxtConfig({
     name: 'motion',
   },
 
+  extends: ['../core'],
+
   alias: {
     '#layers/motion': import.meta.dirname,
+    '#layers/motion/types': `${import.meta.dirname}/app/types`,
   },
 
   modules: ['v-gsap-nuxt'],

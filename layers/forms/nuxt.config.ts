@@ -4,8 +4,11 @@ export default defineNuxtConfig({
     name: 'forms',
   },
 
+  extends: ['../core'],
+
   alias: {
     '#layers/forms': import.meta.dirname,
+    '#layers/forms/types': `${import.meta.dirname}/app/types`,
   },
 
   compatibilityDate: '2026-01-24',

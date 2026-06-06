@@ -1,6 +1,6 @@
 import type { FeatureValue } from '../types/routing'
 
-export function useFeatures() {
+export function useFeatureFlags() {
   const { config } = useRoutingConfig()
   const runtimeFlags = useState<Record<string, FeatureValue>>('routing:flags', () => ({}))
 

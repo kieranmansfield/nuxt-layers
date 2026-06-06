@@ -1,11 +1,11 @@
 import type { FeatureValue } from '../types/routing'
-import { useFeatures } from '../composables/useFeatures'
+import { useFeatureFlags } from '../composables/useFeatureFlags'
 
 export default defineNuxtPlugin(async () => {
   const { config } = useRoutingConfig()
   if (!config.runtimeFlags) return
 
-  const { runtimeFlags } = useFeatures()
+  const { runtimeFlags } = useFeatureFlags()
   try {
     const data = await $fetch<Record<string, FeatureValue>>('/api/feature-flags')
     runtimeFlags.value = data

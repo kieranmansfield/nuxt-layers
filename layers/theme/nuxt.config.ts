@@ -4,8 +4,11 @@ export default defineNuxtConfig({
     name: 'theme',
   },
 
+  extends: ['../core'],
+
   alias: {
     '#layers/theme': import.meta.dirname,
+    '#layers/theme/types': `${import.meta.dirname}/app/types`,
   },
 
   css: ['#layers/theme/app/assets/css/theme.css'],

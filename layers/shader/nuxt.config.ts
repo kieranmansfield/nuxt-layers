@@ -89,6 +89,8 @@ export default {}
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
+  extends: ['../core'],
+
   typescript: {
     typeCheck: true,
     strict: true,
@@ -104,6 +106,7 @@ export default defineNuxtConfig({
 
   alias: {
     '#layers/shader': import.meta.dirname,
+    '#layers/shader/types': `${import.meta.dirname}/app/types`,
   },
 
   imports: {

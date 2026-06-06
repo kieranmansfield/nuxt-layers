@@ -43,24 +43,30 @@ Placing it at the layer root silently ignores it — `useAppConfig()` returns `u
 
 ## Alias Pattern
 
-Each layer registers its own `#layers/<name>` alias pointing to its root directory:
+Each layer registers `#layers/<name>` (root) and `#layers/<name>/types` (types directory):
 
 ```ts
 // layers/<name>/nuxt.config.ts
 export default defineNuxtConfig({
   alias: {
     '#layers/<name>': import.meta.dirname,
+    '#layers/<name>/types': `${import.meta.dirname}/app/types`,
   },
 })
 ```
 
-Import example: `import { formsLayerHooks } from '#layers/forms/server/utils/hooks'`
+Import examples:
+- `import { formsLayerHooks } from '#layers/forms/server/utils/hooks'`
+- `import type { GridConfig } from '#layers/layout/types/layouts'`
 
 ## Dependency Graph
 
-- `core` has **no** layer dependencies — it is always loaded first
-- All other layers depend on `core` and should be listed after it in `PLAYGROUND_LAYERS`
+- `core` has **no** layer dependencies — it is always the base
+- **Every non-core layer MUST declare `extends: ['../core']` in its own `nuxt.config.ts`**
+- Do not rely on the playground load order to provide core — declare the dependency explicitly
 - Layers should **not** depend on each other (except `core`) to avoid circular deps
+- Nuxt deduplicates layers when multiple paths resolve to the same config, so there is no cost
+  to declaring `extends: ['../core']` even when the playground already loads core first
 
 ## Server Code
 
