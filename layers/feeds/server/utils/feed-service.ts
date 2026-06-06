@@ -5,12 +5,13 @@ import type { FeedConfig, FeedItem } from './types'
 
 export async function buildFeed(
   event: H3Event,
-  collection?: string
+  collection?: string,
+  options?: { unlimited?: boolean }
 ): Promise<{ items: FeedItem[]; config: FeedConfig }> {
   const appConfig = useAppConfig()
   const site: SiteConfig = (appConfig as { site?: SiteConfig }).site ?? {}
   const feedConfig = (appConfig as { feedsLayer?: { feed?: { limit?: number; defaultCollection?: string } } }).feedsLayer?.feed ?? {}
-  const limit: number = feedConfig.limit ?? 30
+  const limit: number = options?.unlimited ? Infinity : (feedConfig.limit ?? 30)
   const defaultCollection = feedConfig.defaultCollection ?? 'blog'
 
   const requestUrl = getRequestURL(event)
