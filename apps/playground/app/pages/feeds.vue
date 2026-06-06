@@ -3,7 +3,7 @@ const { setPageAccent } = useAccentColor()
 setPageAccent('orange')
 onUnmounted(() => setPageAccent(null))
 
-const { data: feedIndex, error: feedIndexError } = await useFetch('/feed')
+const { data: feedIndex, error: feedIndexError } = await useFetch('/feed/discovery')
 
 interface FeedEndpoint {
   format: string
@@ -107,10 +107,15 @@ export default defineAppConfig({
 })`
 
 const routeUsageCode = `# Global feeds (all collections)
-GET /feed/rss    → application/rss+xml
-GET /feed/atom   → application/atom+xml
-GET /feed/json   → application/feed+json
-GET /feed        → JSON index of available feeds
+GET /feed/rss         → application/rss+xml
+GET /feed/atom        → application/atom+xml
+GET /feed/json        → application/feed+json
+GET /feed             → 302 redirect to /feed/rss
+GET /feed/discovery   → JSON index of all available feeds
+
+# Unlimited feeds (no item limit)
+GET /feed/rss/all
+GET /feed/atom/all
 
 # Per-collection feeds
 GET /feed/blog/rss
@@ -209,7 +214,7 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-alert-circle" class="text-red-500" />
                   <span class="text-sm text-red-700 dark:text-red-300">
-                    Could not reach <code>/feed</code> — run with
+                    Could not reach <code>/feed/discovery</code> — run with
                     <code>PLAYGROUND_LAYERS=core,content,feeds</code>
                   </span>
                 </div>
@@ -257,6 +262,74 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                     </UButton>
                   </div>
                 </div>
+              </div>
+            </UCard>
+          </section>
+
+          <!-- Browser View -->
+          <section class="space-y-6">
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Browser View</h2>
+              <p class="text-gray-500">
+                RSS and Atom feeds include an
+                <code>&#x3C;?xml-stylesheet?&#x3E;</code> processing instruction.
+                Open them directly in your browser for a styled reading experience — no
+                RSS reader needed.
+              </p>
+            </div>
+
+            <UCard>
+              <template #header>
+                <div class="flex items-center justify-between flex-wrap gap-2">
+                  <div class="flex items-center gap-2">
+                    <UIcon name="i-lucide-monitor" class="text-primary" />
+                    <h3 class="text-xl font-semibold">Feed Preview</h3>
+                  </div>
+                  <div class="flex gap-2">
+                    <UButton
+                      size="xs"
+                      variant="outline"
+                      icon="i-lucide-rss"
+                      to="/feed/rss"
+                      target="_blank"
+                    >
+                      Open RSS
+                    </UButton>
+                    <UButton
+                      size="xs"
+                      variant="outline"
+                      icon="i-lucide-radio"
+                      to="/feed/atom"
+                      target="_blank"
+                    >
+                      Open Atom
+                    </UButton>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-1">
+                  Server-rendered preview using the same <code>/feed/style.css</code> as the
+                  XSLT-rendered feeds
+                </p>
+              </template>
+
+              <div class="space-y-3">
+                <div class="rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden" style="height: 520px">
+                  <iframe
+                    src="/feed/demo"
+                    class="w-full h-full border-0 bg-white dark:bg-gray-950"
+                    title="Feed browser view"
+                  />
+                </div>
+
+                <p class="text-xs text-gray-400 flex items-center gap-1.5">
+                  <UIcon name="i-lucide-info" />
+                  <span>
+                    Open RSS or Atom in a new tab to see the live XSLT transformation in your
+                    browser. Both formats use <code class="text-xs">/feed/style.css</code> for
+                    styling. The subscribe button in the feed header uses the
+                    <code class="text-xs">feed://</code> protocol to open in your reader app.
+                  </span>
+                </p>
               </div>
             </UCard>
           </section>
