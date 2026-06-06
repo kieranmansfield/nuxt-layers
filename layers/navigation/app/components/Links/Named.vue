@@ -1,7 +1,6 @@
 <script setup lang="ts">
 // @ts-nocheck
-import { useColor } from '../../composables/color'
-import type { UiColors } from '../../types/colors'
+import type { UiColors } from '#layers/typography/types/colors'
 
 const {
   name,

@@ -35,7 +35,10 @@ Placing it at the layer root silently ignores it — `useAppConfig()` returns `u
 | `core` | Base utilities, 404, loading screen, scroll guard | nothing (loads @nuxt/ui, @vueuse/nuxt, @nuxtjs/device) |
 | `seo` | SEO: robots, sitemap, og-image, schema-org via @nuxtjs/seo | `core` |
 | `scripts` | Third-party script loading via @nuxt/scripts (analytics, GTM, embeds) | `core` |
-| `ui` | Shared UI component library | `core` |
+| `typography` | Typography components (Headline, TextStroke, CodeBlock) + useTypography, useColor | `core` |
+| `navigation` | Nav/header/footer, site title, links, useMastNav, useSite, useAppToast | `core`, `scroll`, `layout`, `typography` |
+| `visual` | Accent blobs, gradients, tints, modals, picture, progress + their composables | `core` |
+| `ui` | UI orchestrator — composes typography, navigation, visual + default layout | `typography`, `navigation`, `visual` |
 | `layout` | Page layout components (header, footer, sidebar) | `core` |
 | `scroll` | GSAP + Locomotive Scroll infrastructure, scroll-reactive components | `core` |
 | `animations` | Animation components (Marquee, Cursor, Tilt, Magnetic, CountUp, TextReveal) | `scroll` |

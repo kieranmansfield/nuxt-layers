@@ -1,0 +1,15 @@
+.gradient-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.accent-blob {
+  transition:
+    background-color 400ms ease,
+    opacity 300ms ease;
+}
+
+[data-theme-transparency='reduced'] .accent-blob {
+  opacity: 0 !important;
+}
