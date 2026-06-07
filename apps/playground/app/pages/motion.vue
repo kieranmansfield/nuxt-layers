@@ -187,6 +187,10 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
               <UIcon name="i-lucide-mouse-pointer-2" class="mr-2" />
               Interactions
             </UButton>
+            <UButton size="lg" variant="ghost" to="/scrollytelling">
+              <UIcon name="i-lucide-book-open-text" class="mr-2" />
+              Scrollytelling
+            </UButton>
           </div>
         </div>
 
@@ -726,13 +730,25 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
               <p class="text-gray-400">GSAP + Locomotive Scroll for professional animations</p>
             </div>
             <div class="flex flex-wrap gap-4">
+              <UButton variant="ghost" to="/scrollytelling">
+                <UIcon name="i-lucide-book-open-text" class="mr-2" />
+                Scrollytelling
+              </UButton>
+              <UButton variant="ghost" to="/motion-interactions">
+                <UIcon name="i-lucide-mouse-pointer-2" class="mr-2" />
+                Interactions
+              </UButton>
               <UButton variant="ghost" to="/gsap">
                 <UIcon name="i-lucide-zap" class="mr-2" />
-                GSAP Guide
+                GSAP
               </UButton>
               <UButton variant="ghost" to="/locomotive-scroll">
                 <UIcon name="i-lucide-train" class="mr-2" />
                 Locomotive Scroll
+              </UButton>
+              <UButton variant="ghost" to="/marquee-text">
+                <UIcon name="i-lucide-text-cursor-input" class="mr-2" />
+                MarqueeText
               </UButton>
               <UButton variant="outline" @click="scrollToTop({ duration: 2 })">
                 Back to Top

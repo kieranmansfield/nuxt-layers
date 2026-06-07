@@ -1090,6 +1090,20 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
             </UCard>
           </section>
 
+          <!-- Sub-demos -->
+          <section class="space-y-4">
+            <div>
+              <h2 class="text-2xl font-bold mb-1">Sub-demos</h2>
+              <p class="text-gray-500">Dedicated demo pages for specific UI layer features</p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <UButton to="/nav" variant="outline" icon="i-lucide-menu">Navigation</UButton>
+              <UButton to="/overlays" variant="outline" icon="i-lucide-layers">Overlays</UButton>
+              <UButton to="/typography" variant="outline" icon="i-lucide-type">Typography</UButton>
+              <UButton to="/ambient" variant="outline" icon="i-lucide-moon">Ambient</UButton>
+            </div>
+          </section>
+
           <!-- Navigation -->
           <div class="flex gap-4 justify-center pt-4">
             <UButton to="/core" variant="outline" icon="i-lucide-arrow-left">

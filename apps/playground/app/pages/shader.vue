@@ -460,6 +460,24 @@ const totalNewFunctions = computed(() => {
               <div class="text-sm text-gray-400">TypeScript</div>
             </div>
             <NuxtLink
+              to="/shader-pipeline"
+              class="bg-linear-to-r from-violet-600/20 to-purple-600/20 backdrop-blur border border-violet-500/50 rounded-xl px-6 py-4 hover:border-violet-500 transition-colors group"
+            >
+              <div class="text-lg font-bold text-white group-hover:text-violet-300 transition-colors">
+                Shader Pipeline
+              </div>
+              <div class="text-sm text-gray-400">142 composable TSL blocks</div>
+            </NuxtLink>
+            <NuxtLink
+              to="/shader-background"
+              class="bg-linear-to-r from-violet-600/20 to-indigo-600/20 backdrop-blur border border-violet-500/50 rounded-xl px-6 py-4 hover:border-violet-500 transition-colors group"
+            >
+              <div class="text-lg font-bold text-white group-hover:text-violet-300 transition-colors">
+                Shader Backgrounds
+              </div>
+              <div class="text-sm text-gray-400">50+ pre-built background presets</div>
+            </NuxtLink>
+            <NuxtLink
               to="/ambient"
               class="bg-linear-to-r from-violet-600/20 to-cyan-600/20 backdrop-blur border border-violet-500/50 rounded-xl px-6 py-4 hover:border-violet-500 transition-colors group"
             >
@@ -1686,10 +1704,22 @@ const totalNewFunctions = computed(() => {
               <h2 class="text-2xl font-bold mb-2">Shader Layer</h2>
               <p class="text-gray-400">TSL utilities for procedural graphics</p>
             </div>
-            <div class="flex gap-4">
-              <UButton to="/motion" variant="outline">
-                <UIcon name="i-lucide-arrow-left" class="mr-2" />
-                Motion Layer
+            <div class="flex flex-wrap gap-4">
+              <UButton
+                to="/shader-pipeline"
+                variant="outline"
+                class="border-violet-500/50 text-violet-400 hover:bg-violet-500/10"
+              >
+                <UIcon name="i-lucide-layers-3" class="mr-2" />
+                Shader Pipeline
+              </UButton>
+              <UButton
+                to="/shader-background"
+                variant="outline"
+                class="border-violet-500/50 text-violet-400 hover:bg-violet-500/10"
+              >
+                <UIcon name="i-lucide-wand-sparkles" class="mr-2" />
+                Backgrounds
               </UButton>
               <UButton
                 to="/ambient"
@@ -1697,7 +1727,7 @@ const totalNewFunctions = computed(() => {
                 class="border-violet-500/50 text-violet-400 hover:bg-violet-500/10"
               >
                 <UIcon name="i-lucide-sparkles" class="mr-2" />
-                Ambient Backgrounds
+                Ambient
               </UButton>
               <UButton to="/"> Home </UButton>
             </div>

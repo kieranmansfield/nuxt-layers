@@ -2,7 +2,7 @@
 const layers = [
   {
     name: 'Core',
-    description: 'Foundation utilities, error handling, device detection, PWA support',
+    description: 'Foundation utilities, error handling, device detection, and PWA support',
     loaded: true,
     icon: 'i-lucide-box',
     to: '/core',
@@ -22,20 +22,19 @@ const layers = [
   },
   {
     name: 'UI',
-    description: 'Typography, colors, responsive media components',
+    description: 'Typography, gradients, navigation, modals, and visual identity components',
     loaded: true,
     icon: 'i-lucide-palette',
     to: '/ui',
     features: [
       'Typography System',
       'Color Tokens',
-      'Responsive Images',
-      'Headline Components',
-      'Code Blocks',
-      'Progress Components',
       'Gradient System',
       'Tint Overlays',
       'Accent Blobs',
+      'Navigation',
+      'Modals & Toasts',
+      'Responsive Images',
     ],
     borderColor: 'border-pink-500/30',
     bgColor: 'bg-pink-500/5',
@@ -45,7 +44,7 @@ const layers = [
   },
   {
     name: 'Layout',
-    description: 'Swiss Grid system, sections, and page components',
+    description: 'Swiss Grid system, sections, and full-page composition components',
     loaded: true,
     icon: 'i-lucide-layout',
     to: '/layout',
@@ -55,6 +54,8 @@ const layers = [
       'Split Section',
       'Gallery Section',
       'Page Container',
+      'Blind Reveal',
+      'Stacking Layouts',
       'Grid Debug',
     ],
     borderColor: 'border-amber-500/30',
@@ -65,56 +66,20 @@ const layers = [
   },
   {
     name: 'Motion',
-    description: 'Animations, smooth scrolling, and transition effects',
+    description: 'GSAP, Locomotive Scroll, scrollytelling, and micro-interaction primitives',
     loaded: true,
     icon: 'i-lucide-sparkles',
     to: '/motion',
     features: [
-      'GSAP',
-      'ScrollTrigger',
+      'GSAP + ScrollTrigger',
       'Locomotive Scroll v5',
-      'VueUse Motion',
-      'Transition Components',
-      'Staggered Animations',
       'Scrollytelling',
+      'Micro-interactions',
       'MarqueeText',
-      'Magnetic',
-      'Tilt',
-      'CountUp',
+      'VueUse Motion',
+      'Spring Physics',
+      'Staggered Animations',
     ],
-    borderColor: 'border-emerald-500/30',
-    bgColor: 'bg-emerald-500/5',
-    iconBg: 'bg-emerald-500/10',
-    iconColor: 'text-emerald-500',
-    buttonClass: 'bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20',
-  },
-  {
-    name: 'Scrollytelling',
-    description: 'Scroll-driven narratives: scenes, steps, pinned sections, horizontal tracks',
-    loaded: true,
-    icon: 'i-lucide-book-open-text',
-    to: '/scrollytelling',
-    features: [
-      'ScrollScene',
-      'ScrollStep',
-      'PinnedSection',
-      'HorizontalScroll',
-      'useSectionProgress',
-      'useScrollSteps',
-    ],
-    borderColor: 'border-emerald-500/30',
-    bgColor: 'bg-emerald-500/5',
-    iconBg: 'bg-emerald-500/10',
-    iconColor: 'text-emerald-500',
-    buttonClass: 'bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20',
-  },
-  {
-    name: 'Interactions',
-    description: 'Micro-interactions: magnetic pull, 3D tilt, count-up, and velocity effects',
-    loaded: true,
-    icon: 'i-lucide-mouse-pointer-2',
-    to: '/motion-interactions',
-    features: ['Magnetic', 'Tilt', 'CountUp', 'CursorFollower', 'VelocityEffect', 'Spring Physics'],
     borderColor: 'border-emerald-500/30',
     bgColor: 'bg-emerald-500/5',
     iconBg: 'bg-emerald-500/10',
@@ -123,12 +88,14 @@ const layers = [
   },
   {
     name: 'Shader',
-    description: 'WebGL/WebGPU shaders with TSL and TresJS',
+    description: 'WebGL/WebGPU shaders, a 142-block TSL pipeline, and 50+ background presets',
     loaded: true,
     icon: 'i-lucide-shapes',
     to: '/shader',
     features: [
       'TSL Shaders',
+      '142 TSL Blocks',
+      '50+ Background Presets',
       'Noise Functions',
       'Gradient Materials',
       'Fresnel Effects',
@@ -142,50 +109,21 @@ const layers = [
     buttonClass: 'bg-violet-500/10 text-violet-500 hover:bg-violet-500/20',
   },
   {
-    name: 'Shader Pipeline',
-    description:
-      '142 composable TSL blocks — generators, UV transforms, colour ops, film overlays, ray pipeline',
+    name: 'Theme',
+    description: 'Config-driven theme system with dark mode and accent colour support',
     loaded: true,
-    icon: 'i-lucide-layers-3',
-    to: '/shader-pipeline',
-    features: [
-      'Generators',
-      'UV Transforms',
-      'Colour Ops',
-      'Film / Analogue',
-      'Overlays',
-      'Compositions',
-    ],
-    borderColor: 'border-violet-500/30',
-    bgColor: 'bg-violet-500/5',
-    iconBg: 'bg-violet-500/10',
-    iconColor: 'text-violet-400',
-    buttonClass: 'bg-violet-500/10 text-violet-400 hover:bg-violet-500/20',
-  },
-  {
-    name: 'Shader Background',
-    description:
-      '50+ background presets — gradients, mesh, noise, atmospheric, abstract, animated themes',
-    loaded: true,
-    icon: 'i-lucide-wand-sparkles',
-    to: '/shader-background',
-    features: [
-      'Gradient Builder',
-      'Mesh Gradients',
-      'Noise & FX',
-      'Atmospheric',
-      'Animated Themes',
-      'Grain Overlay',
-    ],
-    borderColor: 'border-violet-500/30',
-    bgColor: 'bg-violet-500/5',
-    iconBg: 'bg-violet-500/10',
-    iconColor: 'text-violet-500',
-    buttonClass: 'bg-violet-500/10 text-violet-500 hover:bg-violet-500/20',
+    icon: 'i-lucide-swatch-book',
+    to: '/theme',
+    features: ['Dark Mode', 'Accent Colors', 'Color Themes', 'CSS Variables'],
+    borderColor: 'border-neutral-400/30',
+    bgColor: 'bg-neutral-400/5',
+    iconBg: 'bg-neutral-400/10',
+    iconColor: 'text-neutral-400',
+    buttonClass: 'bg-neutral-400/10 text-neutral-400 hover:bg-neutral-400/20',
   },
   {
     name: 'Forms',
-    description: 'Config-driven form fields with Zod validation',
+    description: 'Config-driven form fields with Zod validation and full type inference',
     loaded: true,
     icon: 'i-lucide-file-input',
     to: '/forms',
@@ -204,87 +142,28 @@ const layers = [
     buttonClass: 'bg-cyan-500/10 text-cyan-500 hover:bg-cyan-500/20',
   },
   {
-    name: 'Theme',
-    description: 'Config-driven theme system with Tailwind CSS',
-    loaded: true,
-    icon: 'i-lucide-swatch-book',
-    to: '/theme',
-    features: ['Dark Mode', 'Accent Colors', 'Color Themes'],
-    borderColor: 'border-neutral-300/30',
-    bgColor: 'bg-neutral-300/5',
-    iconBg: 'bg-neutral-300/10',
-    iconColor: 'text-neutral-300',
-    buttonClass: 'bg-neutral-300/10 text-neutral-300 hover:bg-neutral-300/20',
-  },
-  {
     name: 'Content',
-    description: 'Config-driven content management system using Nuxt Content',
+    description: 'Nuxt Content v3 with typed collections for blog, portfolio, and gallery',
     loaded: true,
-    icon: 'i-lucide-swatch-book',
+    icon: 'i-lucide-file-text',
     to: '/content',
-    features: ['Markdown', 'Content Collections', 'Frontmatter', 'Content API'],
-    borderColor: 'border-red-300/30',
-    bgColor: 'bg-red-300/5',
-    iconBg: 'bg-red-300/10',
-    iconColor: 'text-red-300',
-    buttonClass: 'bg-red-300/10 text-red-300 hover:bg-red-300/20',
-  },
-  {
-    name: 'Feeds',
-    description: 'RSS 2.0, Atom 1.0, and JSON Feed syndication with per-collection endpoints',
-    loaded: true,
-    icon: 'i-lucide-rss',
-    to: '/feeds',
-    features: ['RSS 2.0', 'Atom 1.0', 'JSON Feed 1.1', 'Per-collection', 'ETags', 'Cache-Control'],
-    borderColor: 'border-orange-500/30',
-    bgColor: 'bg-orange-500/5',
-    iconBg: 'bg-orange-500/10',
-    iconColor: 'text-orange-500',
-    buttonClass: 'bg-orange-500/10 text-orange-500 hover:bg-orange-500/20',
-  },
-  {
-    name: 'Nav',
-    description: 'Hamburger button + full-screen overlay modal driven by app.config.ts',
-    loaded: true,
-    icon: 'i-lucide-menu',
-    to: '/nav',
     features: [
-      'useMastNav',
-      'createSharedComposable',
-      'app.config Links',
-      'Smooth Scroll Mode',
-      'Router Mode',
-      'Active Section',
+      'Markdown',
+      'Blog Collection',
+      'Portfolio Collection',
+      'Gallery Collection',
+      'Frontmatter Schema',
+      'Content API',
     ],
-    borderColor: 'border-sky-500/30',
-    bgColor: 'bg-sky-500/5',
-    iconBg: 'bg-sky-500/10',
-    iconColor: 'text-sky-500',
-    buttonClass: 'bg-sky-500/10 text-sky-500 hover:bg-sky-500/20',
-  },
-  {
-    name: 'Overlays',
-    description: 'Toasts, modals, and the createModal factory for quick overlay creation',
-    loaded: true,
-    icon: 'i-lucide-layers',
-    to: '/overlays',
-    features: [
-      'useAppToast',
-      'createModal',
-      'BaseModal',
-      'UOverlayProvider',
-      'UNotifications',
-      'Scoped Props',
-    ],
-    borderColor: 'border-rose-500/30',
-    bgColor: 'bg-rose-500/5',
-    iconBg: 'bg-rose-500/10',
-    iconColor: 'text-rose-500',
-    buttonClass: 'bg-rose-500/10 text-rose-500 hover:bg-rose-500/20',
+    borderColor: 'border-red-400/30',
+    bgColor: 'bg-red-400/5',
+    iconBg: 'bg-red-400/10',
+    iconColor: 'text-red-400',
+    buttonClass: 'bg-red-400/10 text-red-400 hover:bg-red-400/20',
   },
   {
     name: 'Routing',
-    description: 'Feature flags, governance presets, maintenance mode, and route access control',
+    description: 'Feature flags, governance presets, maintenance mode, and access control',
     loaded: true,
     icon: 'i-lucide-route',
     to: '/routing',
@@ -302,12 +181,49 @@ const layers = [
     iconColor: 'text-orange-500',
     buttonClass: 'bg-orange-500/10 text-orange-500 hover:bg-orange-500/20',
   },
+  {
+    name: 'Feeds',
+    description: 'RSS 2.0, Atom 1.0, and JSON Feed syndication with XSLT browser rendering',
+    loaded: true,
+    icon: 'i-lucide-rss',
+    to: '/feeds',
+    features: [
+      'RSS 2.0',
+      'Atom 1.0',
+      'JSON Feed 1.1',
+      'XSLT Rendering',
+      'Per-collection',
+      'ETags',
+      'Cache-Control',
+    ],
+    borderColor: 'border-teal-500/30',
+    bgColor: 'bg-teal-500/5',
+    iconBg: 'bg-teal-500/10',
+    iconColor: 'text-teal-500',
+    buttonClass: 'bg-teal-500/10 text-teal-500 hover:bg-teal-500/20',
+  },
+]
+
+const demos = [
+  { label: 'Scrollytelling', to: '/scrollytelling', icon: 'i-lucide-book-open-text', layer: 'Motion' },
+  { label: 'Interactions', to: '/motion-interactions', icon: 'i-lucide-mouse-pointer-2', layer: 'Motion' },
+  { label: 'MarqueeText', to: '/marquee-text', icon: 'i-lucide-text-cursor-input', layer: 'Motion' },
+  { label: 'Locomotive Scroll', to: '/locomotive-scroll', icon: 'i-lucide-train', layer: 'Motion' },
+  { label: 'GSAP', to: '/gsap', icon: 'i-lucide-zap', layer: 'Motion' },
+  { label: 'Shader Pipeline', to: '/shader-pipeline', icon: 'i-lucide-layers-3', layer: 'Shader' },
+  { label: 'Shader Background', to: '/shader-background', icon: 'i-lucide-wand-sparkles', layer: 'Shader' },
+  { label: 'Navigation', to: '/nav', icon: 'i-lucide-menu', layer: 'UI' },
+  { label: 'Overlays', to: '/overlays', icon: 'i-lucide-layers', layer: 'UI' },
+  { label: 'Ambient', to: '/ambient', icon: 'i-lucide-moon', layer: 'UI' },
+  { label: 'Typography', to: '/typography', icon: 'i-lucide-type', layer: 'UI' },
+  { label: 'Gallery', to: '/gallery', icon: 'i-lucide-images', layer: 'Content' },
+  { label: 'Layout: Blind Reveal', to: '/layout-blind-reveal', icon: 'i-lucide-eye', layer: 'Layout' },
+  { label: 'Layout: Stacking', to: '/layout-stacking', icon: 'i-lucide-stack', layer: 'Layout' },
+  { label: 'Routing: Scroll', to: '/routing-scroll', icon: 'i-lucide-scroll', layer: 'Routing' },
 ]
 
 definePageMeta({ layout: { name: 'grid', props: { showHeader: false, showFooter: false } } })
 </script>
-
-<!--    -->
 
 <template>
   <LayoutPage
@@ -316,88 +232,105 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: false, showFooter:
   >
     <LayoutSection>
       <LayoutGridItem preset="centered">
-        <div class="space-y-8 pb-8">
+        <div class="space-y-12 pb-8">
           <LayoutPageHeader
             title="Nuxt Layers Playground"
             description="Explore the features of each layer in this monorepo architecture demo"
           />
+
           <!-- Layer Cards -->
-          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div
-              v-for="layer in layers"
-              :key="layer.name"
-              class="rounded-xl border-2 p-5"
-              :class="[layer.borderColor, layer.bgColor]"
-            >
-              <div class="flex flex-col h-full">
-                <!-- Header -->
-                <div class="flex items-center justify-between mb-4">
-                  <div class="flex items-center gap-3">
-                    <div
-                      class="w-10 h-10 rounded-lg flex items-center justify-center"
-                      :class="[layer.iconBg]"
-                    >
-                      <UIcon :name="layer.icon" class="text-xl" :class="[layer.iconColor]" />
-                    </div>
-                    <div>
-                      <h2 class="font-semibold text-lg text-highlighted">
-                        {{ layer.name }}
-                      </h2>
-                      <UBadge
-                        :color="layer.loaded ? 'success' : 'neutral'"
-                        variant="subtle"
-                        size="xs"
+          <div>
+            <h2 class="text-xs font-semibold uppercase tracking-widest text-muted mb-4">
+              Layers
+            </h2>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div
+                v-for="layer in layers"
+                :key="layer.name"
+                class="rounded-xl border-2 p-5"
+                :class="[layer.borderColor, layer.bgColor]"
+              >
+                <div class="flex flex-col h-full">
+                  <!-- Header -->
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                      <div
+                        class="w-10 h-10 rounded-lg flex items-center justify-center"
+                        :class="[layer.iconBg]"
                       >
-                        {{ layer.loaded ? 'Loaded' : 'Not configured' }}
-                      </UBadge>
+                        <UIcon :name="layer.icon" class="text-xl" :class="[layer.iconColor]" />
+                      </div>
+                      <div>
+                        <h3 class="font-semibold text-lg text-highlighted">
+                          {{ layer.name }}
+                        </h3>
+                        <UBadge color="success" variant="subtle" size="xs">Loaded</UBadge>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <!-- Description -->
-                <p class="text-sm text-muted mb-4">
-                  {{ layer.description }}
-                </p>
+                  <!-- Description -->
+                  <p class="text-sm text-muted mb-4">
+                    {{ layer.description }}
+                  </p>
 
-                <!-- Features -->
-                <div class="flex flex-wrap gap-1.5 mb-4 grow">
-                  <UBadge
-                    v-for="feature in layer.features"
-                    :key="feature"
-                    variant="subtle"
-                    color="neutral"
-                    size="xs"
-                  >
-                    {{ feature }}
-                  </UBadge>
-                </div>
+                  <!-- Features -->
+                  <div class="flex flex-wrap gap-1.5 mb-4 grow">
+                    <UBadge
+                      v-for="feature in layer.features"
+                      :key="feature"
+                      variant="subtle"
+                      color="neutral"
+                      size="xs"
+                    >
+                      {{ feature }}
+                    </UBadge>
+                  </div>
 
-                <!-- Action - always at bottom -->
-                <div class="mt-auto pt-4">
-                  <NuxtLink
-                    v-if="layer.to"
-                    :to="layer.to"
-                    class="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg font-medium transition-colors"
-                    :class="[layer.buttonClass]"
-                  >
-                    Explore {{ layer.name }}
-                    <UIcon name="i-lucide-arrow-right" class="text-sm" />
-                  </NuxtLink>
-                  <UButton v-else variant="soft" color="neutral" block disabled>
-                    Coming Soon
-                  </UButton>
+                  <!-- Action -->
+                  <div class="mt-auto pt-4">
+                    <NuxtLink
+                      :to="layer.to"
+                      class="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg font-medium transition-colors"
+                      :class="[layer.buttonClass]"
+                    >
+                      Explore {{ layer.name }}
+                      <UIcon name="i-lucide-arrow-right" class="text-sm" />
+                    </NuxtLink>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
+          <!-- Demo Pages -->
+          <div>
+            <h2 class="text-xs font-semibold uppercase tracking-widest text-muted mb-4">
+              Demo Pages
+            </h2>
+            <div class="flex flex-wrap gap-2">
+              <NuxtLink
+                v-for="demo in demos"
+                :key="demo.to"
+                :to="demo.to"
+                class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium bg-elevated border border-default hover:bg-muted transition-colors"
+              >
+                <UIcon :name="demo.icon" class="text-muted text-sm shrink-0" />
+                {{ demo.label }}
+                <UBadge variant="subtle" color="neutral" size="xs" class="ml-1">
+                  {{ demo.layer }}
+                </UBadge>
+              </NuxtLink>
+            </div>
+          </div>
+
           <!-- Quick Links -->
-          <div class="flex flex-wrap gap-4 justify-center pt-4">
+          <div class="flex flex-wrap gap-4 justify-center pt-2">
             <UButton to="/diagnostics" variant="outline" icon="i-lucide-activity">
               System Diagnostics
             </UButton>
             <UButton
-              href="https://github.com/your-org/nuxt-layers"
+              href="https://github.com/kieranmansfield/nuxt-layers"
               target="_blank"
               variant="outline"
               icon="i-lucide-github"

@@ -441,6 +441,25 @@ const maintenanceEnabled = computed({
               </table>
             </UCard>
           </section>
+
+          <!-- Sub-demos -->
+          <section class="space-y-4">
+            <div>
+              <h2 class="text-2xl font-bold mb-1">Sub-demos</h2>
+              <p class="text-muted">Scroll-driven routing built on the routing layer</p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <UButton to="/routing-scroll" variant="outline" icon="i-lucide-scroll">
+                Scroll Routing
+              </UButton>
+            </div>
+          </section>
+
+          <!-- Navigation -->
+          <div class="flex gap-4 justify-center pt-4">
+            <UButton to="/" variant="outline" icon="i-lucide-arrow-left">Back to Home</UButton>
+            <UButton to="/feeds" trailing-icon="i-lucide-arrow-right">Feeds Layer Demo</UButton>
+          </div>
         </div>
       </LayoutGridItem>
     </LayoutSection>

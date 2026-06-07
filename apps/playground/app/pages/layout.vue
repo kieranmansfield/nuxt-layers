@@ -1107,6 +1107,22 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
             </UCard>
           </section>
 
+          <!-- Sub-demos -->
+          <section class="space-y-4">
+            <div>
+              <h2 class="text-2xl font-bold mb-1">Sub-demos</h2>
+              <p class="text-muted">Scroll-driven layout compositions built on the layout layer</p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <UButton to="/layout-blind-reveal" variant="outline" icon="i-lucide-eye">
+                Blind Reveal
+              </UButton>
+              <UButton to="/layout-stacking" variant="outline" icon="i-lucide-stack">
+                Stacking
+              </UButton>
+            </div>
+          </section>
+
           <!-- Navigation -->
           <div class="flex gap-4 justify-center pt-4">
             <UButton to="/ui" variant="outline" icon="i-lucide-arrow-left">UI Layer Demo</UButton>

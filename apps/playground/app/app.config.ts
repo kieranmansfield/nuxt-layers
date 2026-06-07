@@ -9,12 +9,16 @@ export default defineAppConfig({
     scrollBehaviour: 'router',
     links: [
       { id: 'home', label: 'Home', to: { name: 'index' } },
+      { id: 'core', label: 'Core', to: { name: 'core' } },
       { id: 'ui', label: 'UI', to: { name: 'ui' } },
       { id: 'layout', label: 'Layout', to: { name: 'layout' } },
       { id: 'motion', label: 'Motion', to: { name: 'motion' } },
       { id: 'shader', label: 'Shader', to: { name: 'shader' } },
-      { id: 'shader-pipeline', label: 'Pipeline', to: { name: 'shader-pipeline' } },
-      { id: 'overlays', label: 'Overlays', to: { name: 'overlays' } },
+      { id: 'theme', label: 'Theme', to: { name: 'theme' } },
+      { id: 'forms', label: 'Forms', to: { name: 'forms' } },
+      { id: 'content', label: 'Content', to: { name: 'content' } },
+      { id: 'routing', label: 'Routing', to: { name: 'routing' } },
+      { id: 'feeds', label: 'Feeds', to: { name: 'feeds' } },
     ],
   },
   coreLayer: {
