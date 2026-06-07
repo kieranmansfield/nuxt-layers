@@ -105,8 +105,12 @@ export default defineNuxtConfig({
   },
 
   alias: {
-    '#layers/canvas': import.meta.dirname,
+    // More specific alias must be registered first — Vite/Rollup alias
+    // resolution is order-dependent (first prefix match wins), so
+    // '#layers/canvas' would otherwise shadow '#layers/canvas/types'
+    // and resolve it to '<root>/types/...' instead of '<root>/app/types/...'.
     '#layers/canvas/types': `${import.meta.dirname}/app/types`,
+    '#layers/canvas': import.meta.dirname,
   },
 
   imports: {

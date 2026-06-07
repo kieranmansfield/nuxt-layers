@@ -123,7 +123,7 @@ const initScript = `(function(){
   try{
     var h=document.documentElement;
     var c=localStorage.getItem('theme-colour');
-    h.setAttribute('data-theme-colour',c?JSON.parse(c):'blue')
+    h.setAttribute('data-theme-colour',c?JSON.parse(c):'blue');
     var ct=localStorage.getItem('theme-contrast');
     var ctv=ct?JSON.parse(ct):'system';
     if(ctv==='on'){h.setAttribute('data-theme-contrast','high')}
