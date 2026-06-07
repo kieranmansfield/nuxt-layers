@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { checkWebGPUSupport } from '../composables/useRendererCapabilities'
+import { checkWebGPUSupport } from '#layers/canvas/app/composables/useRendererCapabilities'
 
 export default defineNuxtPlugin(async () => {
   const config = useAppConfig()
