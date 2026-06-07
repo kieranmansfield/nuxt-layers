@@ -13,11 +13,11 @@ export default defineNuxtConfig({
     name: 'content',
   },
 
-  // Only extend core when running standalone dev (via dev:content script)
-  extends: process.env.CONTENT_STANDALONE ? ['../core'] : [],
+  extends: ['../core'],
 
   alias: {
     '#layers/content': import.meta.dirname,
+    '#layers/content/types': `${import.meta.dirname}/app/types`,
   },
 
   modules: ['@nuxt/ui', '@nuxt/content', ...studioModule],

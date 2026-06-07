@@ -4,16 +4,11 @@
   "type": "module",
   "main": "./nuxt.config.ts",
   "scripts": {
-    "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json",
-    "dev": "nuxi dev .playground",
-    "dev:prepare": "nuxt prepare .playground",
-    "build": "nuxt build .playground",
-    "generate": "nuxt generate .playground",
-    "preview": "nuxt preview .playground"
+    "dev": "nuxi dev",
+    "dev:playground": "PLAYGROUND_LAYERS=core,mailer,forms pnpm -F playground dev",
+    "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json"
   },
   "dependencies": {
-    "hookable": "^5.5.3",
-    "resend": "^4.0.0",
     "zod": "^4.4.3"
   }
 }

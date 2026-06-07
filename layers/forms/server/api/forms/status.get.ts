@@ -1,5 +1,7 @@
+import { useMailerConfig } from '#layers/mailer/server/utils/config'
+
 export default defineEventHandler(() => {
-  const { resendApiKey, emailFrom, emailTo } = useFormsConfig()
+  const { resendApiKey, emailFrom, emailTo } = useMailerConfig()
 
   return {
     configured: !!resendApiKey,

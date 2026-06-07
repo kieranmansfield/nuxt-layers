@@ -1,12 +1,21 @@
-import type { Plugin } from 'vite'
-
 // Layer configuration
 const AVAILABLE_LAYERS = [
   'core',
+  'seo',
+  'scripts',
+  'typography',
+  'navigation',
+  'visual',
   'ui',
   'layout',
+  'scroll',
+  'animations',
+  'transitions',
+  'page-transitions',
   'motion',
+  'canvas',
   'shader',
+  'mailer',
   'forms',
   'theme',
   'content',
@@ -17,10 +26,21 @@ type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
 const LAYER_PATHS: Record<LayerName, string> = {
   core: '../../layers/core',
+  seo: '../../layers/seo',
+  scripts: '../../layers/scripts',
+  typography: '../../layers/typography',
+  navigation: '../../layers/navigation',
+  visual: '../../layers/visual',
   ui: '../../layers/ui',
   layout: '../../layers/layout',
+  scroll: '../../layers/scroll',
+  animations: '../../layers/animations',
+  transitions: '../../layers/transitions',
+  'page-transitions': '../../layers/page-transitions',
   motion: '../../layers/motion',
+  canvas: '../../layers/canvas',
   shader: '../../layers/shader',
+  mailer: '../../layers/mailer',
   forms: '../../layers/forms',
   theme: '../../layers/theme',
   content: '../../layers/content',
@@ -31,11 +51,22 @@ const LAYER_PATHS: Record<LayerName, string> = {
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included
 const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
   core: [],
-  ui: ['core'], // ui depends on core
-  layout: ['core'], // layout depends on core
-  motion: ['core'], // motion depends on core
-  shader: ['core'], // shader depends on core
-  forms: ['core'], // forms depends on core
+  seo: ['core'],
+  scripts: ['core'],
+  typography: ['core'],
+  navigation: ['core', 'scroll', 'layout', 'typography'],
+  visual: ['core'],
+  ui: ['typography', 'navigation', 'visual'],
+  layout: ['core'],
+  scroll: ['core'],
+  animations: ['scroll'],
+  transitions: ['core'],
+  'page-transitions': ['core'],
+  motion: ['scroll', 'animations', 'transitions', 'page-transitions'],
+  canvas: ['core'],
+  shader: ['canvas'],
+  mailer: ['core'],
+  forms: ['mailer'],
   theme: ['core'],
   content: ['core'],
   routing: ['core'],
@@ -80,130 +111,6 @@ function resolveExtendedLayers(): string[] {
   )
 }
 
-/**
- * Stubs three.webgpu.js in SSR via the transform hook.
- *
- * three/webgpu and three/tsl both resolve to three/build/three.webgpu.js.
- * That file accesses `self` and `navigator` at module scope, crashing SSR
- * startup when shader composables are auto-imported. The transform hook is
- * used (not resolveId) because vite-node caches module graph resolutions and
- * calls transform — not resolveId — when fetching each module.
- */
-function threeWebGPUSSRStub(): Plugin {
-  const tslNoop = `
-const n = new Proxy(function noop() { return n }, {
-  get(_t, k) {
-    if (k === 'then' || k === Symbol.toPrimitive || k === Symbol.iterator || k === Symbol.toStringTag) return undefined
-    return n
-  },
-  apply() { return n },
-  construct() { return Object.create(n) },
-})
-`
-  const tslNames = [
-    'float',
-    'vec2',
-    'vec3',
-    'vec4',
-    'color',
-    'mat2',
-    'mat3',
-    'mat4',
-    'uniform',
-    'attribute',
-    'varying',
-    'Fn',
-    'add',
-    'sub',
-    'mul',
-    'div',
-    'mod',
-    'abs',
-    'sign',
-    'floor',
-    'ceil',
-    'fract',
-    'round',
-    'min',
-    'max',
-    'clamp',
-    'mix',
-    'smoothstep',
-    'pow',
-    'sqrt',
-    'exp',
-    'log',
-    'sin',
-    'cos',
-    'tan',
-    'asin',
-    'acos',
-    'atan',
-    'atan2',
-    'dot',
-    'cross',
-    'normalize',
-    'length',
-    'distance',
-    'reflect',
-    'refract',
-    'transpose',
-    'inverse',
-    'texture',
-    'sampler',
-    'lessThan',
-    'lessThanEqual',
-    'greaterThan',
-    'greaterThanEqual',
-    'step',
-    'select',
-    'cond',
-    'uv',
-    'time',
-    'EPSILON',
-    'Loop',
-    'positionLocal',
-    'positionWorld',
-    'positionView',
-    'normalLocal',
-    'normalWorld',
-    'normalView',
-    'positionViewDirection',
-    'cameraPosition',
-    'timerGlobal',
-    'timerLocal',
-    'timerDelta',
-  ]
-
-  const stub =
-    tslNoop +
-    tslNames.map((name) => `export const ${name} = n`).join('\n') +
-    `
-export class MeshBasicNodeMaterial {
-  constructor() { this.colorNode = null; this.side = null }
-}
-export class MeshStandardNodeMaterial {
-  constructor() { this.colorNode = null; this.side = null }
-}
-export class TextureLoader {
-  load() { return null }
-}
-export class UniformNode {}
-export default {}
-`
-
-  return {
-    name: 'three-webgpu-ssr-stub',
-    enforce: 'pre',
-    transform(code, id, options) {
-      if (!options?.ssr) return null
-      // In three r182+, three/webgpu → three.webgpu.js, three/tsl → three.tsl.js
-      if (!id.includes('three.webgpu.js') && !id.includes('three.tsl.js')) return null
-      return { code: stub, map: null }
-    },
-  }
-}
-
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   extends: resolveExtendedLayers(),
@@ -232,7 +139,6 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    plugins: [threeWebGPUSSRStub()],
     build: {
       // Merge all CSS into one bundle so every Tailwind utility and Nuxt UI style
       // is available from first paint — no deferred CSS chunks causing layout shifts.

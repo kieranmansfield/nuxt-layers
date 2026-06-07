@@ -1,38 +1,22 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+// UI orchestrator — composes typography, navigation, and visual
 export default defineNuxtConfig({
   $meta: {
     name: 'ui',
   },
 
-  // Only extend core when running standalone dev (via dev:ui script)
-  extends: process.env.UI_STANDALONE ? ['../core'] : [],
+  extends: ['../typography', '../navigation', '../visual'],
 
   alias: {
     '#layers/ui': import.meta.dirname,
+    '#layers/ui/types': `${import.meta.dirname}/app/types`,
   },
-
-  modules: [
-    ...(process.env.NODE_ENV !== 'production' ? ['@nuxt/eslint'] : []),
-    '@nuxt/ui',
-    // '@nuxt/image'
-  ],
 
   css: ['#layers/ui/app/assets/css/ui.css'],
 
-  // devtools: {
-  //   enabled: true,
-  // },
-
-  compatibilityDate: '2026-01-24',
+  compatibilityDate: '2026-06-06',
 
   typescript: {
     typeCheck: true,
     strict: true,
   },
-
-  // vite: {
-  //   build: {
-  //     target: 'es2020',
-  //   },
-  // },
 })

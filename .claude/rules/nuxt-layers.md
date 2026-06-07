@@ -33,34 +33,52 @@ Placing it at the layer root silently ignores it — `useAppConfig()` returns `u
 | Layer | Purpose | Depends on |
 |-------|---------|------------|
 | `core` | Base utilities, 404, loading screen, scroll guard | nothing (loads @nuxt/ui, @vueuse/nuxt, @nuxtjs/device) |
-| `ui` | Shared UI component library | `core` |
+| `seo` | SEO: robots, sitemap, og-image, schema-org via @nuxtjs/seo | `core` |
+| `scripts` | Third-party script loading via @nuxt/scripts (analytics, GTM, embeds) | `core` |
+| `typography` | Typography components (Headline, TextStroke, CodeBlock) + useTypography, useColor | `core` |
+| `navigation` | Nav/header/footer, site title, links, useMastNav, useSite, useAppToast | `core`, `scroll`, `layout`, `typography` |
+| `visual` | Accent blobs, gradients, tints, modals, picture, progress + their composables | `core` |
+| `ui` | UI orchestrator — composes typography, navigation, visual + default layout | `typography`, `navigation`, `visual` |
 | `layout` | Page layout components (header, footer, sidebar) | `core` |
-| `motion` | Animation and motion composables/directives | `core` |
-| `shader` | GLSL shader components (Three.js / TresJS) | `core` |
-| `forms` | Form components, validation, email sending | `core` |
+| `scroll` | GSAP + Locomotive Scroll infrastructure, scroll-reactive components | `core` |
+| `animations` | Animation components (Marquee, Cursor, Tilt, Magnetic, CountUp, TextReveal) | `scroll` |
+| `transitions` | CSS transition/animation classes + Transition.vue component | `core` |
+| `page-transitions` | Nuxt page transition defaults + usePageTransition() | `core` |
+| `motion` | Motion orchestrator — composes scroll, animations, transitions, page-transitions | `scroll`, `animations`, `transitions`, `page-transitions` |
+| `canvas` | WebGL/WebGPU/TresJS rendering context | `core` |
+| `shader` | TSL shader pipeline blocks, materials, presets | `canvas` |
+| `mailer` | Email sending via Resend, hooks, runtime config | `core` |
+| `forms` | Form UI components, Zod validation | `mailer` |
 | `theme` | Design tokens and theming utilities | `core` |
 | `content` | Nuxt Content v3 collections and components | `core` |
+| `routing` | Advanced routing, maintenance mode, feature flags | `core` |
 
 ## Alias Pattern
 
-Each layer registers its own `#layers/<name>` alias pointing to its root directory:
+Each layer registers `#layers/<name>` (root) and `#layers/<name>/types` (types directory):
 
 ```ts
 // layers/<name>/nuxt.config.ts
 export default defineNuxtConfig({
   alias: {
     '#layers/<name>': import.meta.dirname,
+    '#layers/<name>/types': `${import.meta.dirname}/app/types`,
   },
 })
 ```
 
-Import example: `import { formsLayerHooks } from '#layers/forms/server/utils/hooks'`
+Import examples:
+- `import { formsLayerHooks } from '#layers/forms/server/utils/hooks'`
+- `import type { GridConfig } from '#layers/layout/types/layouts'`
 
 ## Dependency Graph
 
-- `core` has **no** layer dependencies — it is always loaded first
-- All other layers depend on `core` and should be listed after it in `PLAYGROUND_LAYERS`
-- Layers should **not** depend on each other (except `core`) to avoid circular deps
+- `core` has **no** layer dependencies — it is always the base
+- **Every non-core layer MUST declare `extends: ['../core']` in its own `nuxt.config.ts`**
+- Do not rely on the playground load order to provide core — declare the dependency explicitly
+- Layers may depend on other layers to form a chain (e.g. `animations → scroll → core`); avoid circular deps
+- Nuxt deduplicates layers when multiple paths resolve to the same config, so there is no cost
+  to declaring `extends: ['../core']` even when the playground already loads core first
 
 ## Server Code
 

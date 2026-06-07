@@ -1,36 +1,20 @@
-// Motion Layer - GSAP + Locomotive Scroll
+// Motion orchestrator — composes scroll, animations, transitions, and page-transitions
 export default defineNuxtConfig({
   $meta: {
     name: 'motion',
   },
 
+  extends: ['../scroll', '../animations', '../transitions', '../page-transitions'],
+
   alias: {
     '#layers/motion': import.meta.dirname,
+    '#layers/motion/types': `${import.meta.dirname}/app/types`,
   },
 
-  modules: ['v-gsap-nuxt'],
-
-  vgsap: {
-    composable: true,
-  },
-
-  css: ['#layers/motion/app/assets/css/motion.css'],
-
-  compatibilityDate: '2026-01-30',
+  compatibilityDate: '2026-06-06',
 
   typescript: {
     typeCheck: true,
     strict: true,
-  },
-
-  // Ensure GSAP is transpiled for SSR compatibility
-  build: {
-    transpile: ['gsap'],
-  },
-
-  vite: {
-    optimizeDeps: {
-      include: ['locomotive-scroll'],
-    },
   },
 })

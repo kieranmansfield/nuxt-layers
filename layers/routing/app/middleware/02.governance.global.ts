@@ -1,9 +1,9 @@
-import { useFeatures } from '../composables/useFeatures'
+import { useFeatureFlags } from '../composables/useFeatureFlags'
 import { resolveRoute } from '../utils/resolveRoute'
 
 export default defineNuxtRouteMiddleware((to) => {
   const { config } = useRoutingConfig()
-  const { resolve } = useFeatures()
+  const { resolve } = useFeatureFlags()
 
   if (config.debug) console.log('[routing] governance check', to.path, to.meta)
 

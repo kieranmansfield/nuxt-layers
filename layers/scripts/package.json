@@ -1,0 +1,14 @@
+{
+  "name": "kmcom-layer-scripts",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi dev",
+    "dev:playground": "PLAYGROUND_LAYERS=core,scripts pnpm -F playground dev",
+    "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json"
+  },
+  "dependencies": {
+    "@nuxt/scripts": "^0.11.0"
+  }
+}

@@ -6,6 +6,7 @@ export default defineNuxtConfig({
 
   alias: {
     '#layers/core': import.meta.dirname,
+    '#layers/core/types': `${import.meta.dirname}/app/types`,
   },
 
   // Base modules (always loaded)

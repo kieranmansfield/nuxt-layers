@@ -1,0 +1,6 @@
+{
+  "name": "kmcom-layer-animations",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./nuxt.config.ts"
+}

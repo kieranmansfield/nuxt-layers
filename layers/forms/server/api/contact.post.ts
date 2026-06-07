@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { sendContactEmail } from '../utils/email'
-import { formsLayerHooks } from '../utils/hooks'
+import { sendContactEmail } from '#layers/mailer/server/utils/email'
+import { mailerLayerHooks } from '#layers/mailer/server/utils/hooks'
 
 const contactSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters'),
@@ -17,16 +17,16 @@ export default defineEventHandler(async (event) => {
   }
 
   const data = result.data
-  await formsLayerHooks.callHook('contact:submitted', data)
+  await mailerLayerHooks.callHook('contact:submitted', data)
 
   const emailResult = await sendContactEmail(data)
 
   if (emailResult.success) {
-    await formsLayerHooks.callHook('contact:sent', { ...data, messageId: emailResult.messageId })
+    await mailerLayerHooks.callHook('contact:sent', { ...data, messageId: emailResult.messageId })
     return { success: true }
   }
 
-  await formsLayerHooks.callHook('contact:failed', { ...data, error: emailResult.error })
+  await mailerLayerHooks.callHook('contact:failed', { ...data, error: emailResult.error })
   throw createError({
     statusCode: 500,
     statusMessage: 'Failed to send message. Please try again later.',

@@ -7,8 +7,11 @@ interface RoutePage {
 export default defineNuxtConfig({
   $meta: { name: 'routing' },
 
+  extends: ['../core'],
+
   alias: {
     '#layers/routing': import.meta.dirname,
+    '#layers/routing/types': `${import.meta.dirname}/app/types`,
   },
 
   compatibilityDate: '2026-01-30',
