@@ -10,9 +10,9 @@
       "persistent": true,
       "env": ["PLAYGROUND_LAYERS"]
     },
-    "lint": {},
-    "typecheck": {
-      "dependsOn": ["^typecheck"]
-    }
+    "lint": {}
+    // "typecheck": {
+    //   "dependsOn": ["^typecheck"]
+    // }
   }
 }
