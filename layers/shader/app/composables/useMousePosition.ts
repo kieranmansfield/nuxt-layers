@@ -1,7 +1,7 @@
 import { useMouse, useWindowSize } from '@vueuse/core'
 import { vec2 as tslVec2, uniform } from 'three/tsl'
 
-export interface MousePositionOptions {
+export type MousePositionOptions = {
   /** Smoothing factor (0-1, lower = smoother) */
   smoothing?: number
   /** Normalize to -1 to 1 range instead of 0 to 1 */

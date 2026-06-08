@@ -4,8 +4,8 @@
   "type": "module",
   "main": "./nuxt.config.ts",
   "dependencies": {
-    "gsap": "^3.15.0",
-    "locomotive-scroll": "^5.0.1",
-    "v-gsap-nuxt": "latest"
+    "gsap": "catalog:",
+    "locomotive-scroll": "catalog:",
+    "v-gsap-nuxt": "catalog:"
   }
 }

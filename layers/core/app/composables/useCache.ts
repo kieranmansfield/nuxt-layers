@@ -1,5 +1,7 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
-/* eslint-disable no-console */
+
 // composables/useCache.ts
 import { useOnline } from '@vueuse/core'
 
@@ -34,7 +36,7 @@ export function useCache() {
     try {
       const cache = await caches.open('workbox-precache-v2')
       const response = await cache.match(url)
-      return !!response
+      return Boolean(response)
     } catch (error) {
       console.warn('[useCache] Failed to check cache:', error)
       return false

@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex
 /**
  * OKLCH color space utilities for both TSL (GPU) and JS (CPU) use.
  */
 import { Color } from 'three'
 import { cos, float, mul, pow, sin, vec3 } from 'three/tsl'
+
 import type { TSLNode } from '../../types'
 
 // ============================================

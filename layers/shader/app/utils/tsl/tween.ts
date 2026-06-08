@@ -1,9 +1,11 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable max-params */
 /**
  * GPU-friendly uniform tweening via requestAnimationFrame.
  * Updates uniform .value each frame -- no shader recompilation.
  */
 
-export interface TweenHandle {
+export type TweenHandle = {
   cancel: () => void
   promise: Promise<void>
 }
@@ -51,7 +53,7 @@ export function tweenUniform(
   return {
     cancel() {
       cancelled = true
-      resolvePromise!()
+      resolvePromise?.()
     },
     promise,
   }

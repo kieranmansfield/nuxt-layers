@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Noise Utilities
@@ -26,6 +28,7 @@ import {
   vec3,
   vec4,
 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 import {
   fade,
@@ -204,7 +207,7 @@ export function gradientNoise3D(p: TSLNode): TSLNode {
 // FBM (Fractal Brownian Motion)
 // ============================================
 
-export interface FBMOptions {
+export type FBMOptions = {
   octaves?: number
   lacunarity?: number
   gain?: number
@@ -255,7 +258,7 @@ export function fbm3D(p: TSLNode, options: FBMOptions = {}): TSLNode {
 // Voronoi / Cellular Noise
 // ============================================
 
-export interface VoronoiResult {
+export type VoronoiResult = {
   distance: TSLNode
   cellId: TSLNode
 }
@@ -699,7 +702,7 @@ export function ridgedFbm3d(p: TSLNode, options: FBMOptions = {}): TSLNode {
 // Warped FBM Coordinates
 // ============================================
 
-export interface WarpedFbmOptions {
+export type WarpedFbmOptions = {
   frequency?: number
   offset1?: number
   offset2?: number
@@ -751,7 +754,7 @@ export function warpedFbmCoords(
 // Turbulence Rotational (XorDev style)
 // ============================================
 
-export interface TurbulenceRotationalOptions {
+export type TurbulenceRotationalOptions = {
   octaves?: number
   amplitude?: number
   speed?: number

@@ -1,12 +1,14 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 // composables/useFeatures.ts
+import type { FeatureDetection } from '#layers/core/app/types/detection'
 import {
   usePreferredContrast,
   usePreferredDark,
   usePreferredReducedMotion,
   useSessionStorage,
 } from '@vueuse/core'
-import type { FeatureDetection } from '#layers/core/app/types/detection'
 
 /**
  * Check if CSS feature is supported
@@ -97,7 +99,7 @@ function detectFeatures(): FeatureDetection {
     intersectionObserver: checkAPI('IntersectionObserver'),
     resizeObserver: checkAPI('ResizeObserver'),
     serviceWorker: 'serviceWorker' in navigator,
-    webGL: !!(
+    webGL: Boolean(
       document.createElement('canvas').getContext('webgl') ||
       document.createElement('canvas').getContext('experimental-webgl')
     ),

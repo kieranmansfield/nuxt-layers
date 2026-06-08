@@ -1,30 +1,32 @@
+<!-- eslint-disable vue/no-boolean-default -->
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-/**
- * LayoutSectionStack — Pancake Stack layout
- *
- * Full-section wrapper using `auto 1fr auto` row template. Header and footer
- * take natural height; the default slot fills the remaining space.
- *
- * @prop {boolean} fullHeight - Force 100svh on the section (default: true)
- *
- * @slot header - Top-pinned content (auto height)
- * @slot default - Main content area (fills remaining space)
- * @slot footer - Bottom-pinned content (auto height)
- *
- * @example
- * <LayoutSectionStack>
- *   <template #header><nav>...</nav></template>
- *   <main>Content</main>
- *   <template #footer><footer>...</footer></template>
- * </LayoutSectionStack>
- */
+  // @ts-nocheck
+  /**
+   * LayoutSectionStack — Pancake Stack layout
+   *
+   * Full-section wrapper using `auto 1fr auto` row template. Header and footer
+   * take natural height; the default slot fills the remaining space.
+   *
+   * @prop {boolean} fullHeight - Force 100svh on the section (default: true)
+   *
+   * @slot header - Top-pinned content (auto height)
+   * @slot default - Main content area (fills remaining space)
+   * @slot footer - Bottom-pinned content (auto height)
+   *
+   * @example
+   * <LayoutSectionStack>
+   *   <template #header><nav>...</nav></template>
+   *   <main>Content</main>
+   *   <template #footer><footer>...</footer></template>
+   * </LayoutSectionStack>
+   */
 
-interface Props {
-  fullHeight?: boolean
-}
+  interface Props {
+    fullHeight?: boolean
+  }
 
-const { fullHeight = true } = defineProps<Props>()
+  const { fullHeight = true } = defineProps<Props>()
 </script>
 
 <template>
@@ -46,19 +48,19 @@ const { fullHeight = true } = defineProps<Props>()
 </template>
 
 <style scoped>
-.stack-inner {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  width: 100%;
-  height: 100%;
-}
+  .stack-inner {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    width: 100%;
+    height: 100%;
+  }
 
-.stack-header,
-.stack-footer {
-  /* auto — natural height */
-}
+  .stack-header,
+  .stack-footer {
+    /* auto — natural height */
+  }
 
-.stack-main {
-  /* 1fr — grows to fill remaining space */
-}
+  .stack-main {
+    /* 1fr — grows to fill remaining space */
+  }
 </style>

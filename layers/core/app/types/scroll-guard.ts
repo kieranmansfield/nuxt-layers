@@ -2,7 +2,7 @@
  * Horizontal Scroll Guard types
  */
 
-export interface ScrollGuardConfig {
+export type ScrollGuardConfig = {
   /** Master toggle — set to false to disable completely */
   enabled: boolean
   /** CSS selectors for elements allowed to overflow intentionally */
@@ -17,7 +17,7 @@ export interface ScrollGuardConfig {
   debug: boolean
 }
 
-export interface ScrollGuardState {
+export type ScrollGuardState = {
   /** Whether the guard is currently active */
   isEnabled: boolean
   /** Number of elements currently clamped */

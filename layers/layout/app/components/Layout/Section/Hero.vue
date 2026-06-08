@@ -1,35 +1,37 @@
+<!-- eslint-disable vue/no-boolean-default -->
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-/**
- * SectionHero - Full-viewport hero section
- *
- * Pre-configured hero layout with optional background and footer slots.
- * Main content is vertically and horizontally centered.
- *
- * @prop {boolean} fullHeight - Force 100svh (default: true)
- *
- * @slot background - Full-bleed background layer (z-index: 0)
- * @slot default - Main centered content (z-index: 10)
- * @slot footer - Bottom-aligned content (z-index: 10)
- *
- * @example
- * <SectionHero>
- *   <template #background>
- *     <NuxtImg src="/hero.jpg" class="size-full object-cover" />
- *   </template>
- *   <h1>Main Heading</h1>
- *   <p>Subtitle</p>
- *   <template #footer>
- *     <UButton>CTA</UButton>
- *   </template>
- * </SectionHero>
- */
+  // @ts-nocheck
+  /**
+   * SectionHero - Full-viewport hero section
+   *
+   * Pre-configured hero layout with optional background and footer slots.
+   * Main content is vertically and horizontally centered.
+   *
+   * @prop {boolean} fullHeight - Force 100svh (default: true)
+   *
+   * @slot background - Full-bleed background layer (z-index: 0)
+   * @slot default - Main centered content (z-index: 10)
+   * @slot footer - Bottom-aligned content (z-index: 10)
+   *
+   * @example
+   * <SectionHero>
+   *   <template #background>
+   *     <NuxtImg src="/hero.jpg" class="size-full object-cover" />
+   *   </template>
+   *   <h1>Main Heading</h1>
+   *   <p>Subtitle</p>
+   *   <template #footer>
+   *     <UButton>CTA</UButton>
+   *   </template>
+   * </SectionHero>
+   */
 
-interface Props {
-  fullHeight?: boolean
-}
+  interface Props {
+    fullHeight?: boolean
+  }
 
-const { fullHeight = true } = defineProps<Props>()
+  const { fullHeight = true } = defineProps<Props>()
 </script>
 
 <template>

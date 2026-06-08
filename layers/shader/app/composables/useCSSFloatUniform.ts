@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { uniform } from 'three/tsl'
 
 /**
@@ -8,15 +9,13 @@ import { uniform } from 'three/tsl'
  * const spacingNode = useCSSFloatUniform('--spacing-scale')
  */
 export function useCSSFloatUniform(varName: string) {
-  // @ts-ignore — TSL uniform types
+  // @ts-expect-error — TSL uniform types
   const node = uniform(0)
 
   function sync() {
-    const raw = getComputedStyle(document.documentElement)
-      .getPropertyValue(varName)
-      .trim()
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(varName).trim()
     const val = parseFloat(raw)
-    // @ts-ignore
+    // @ts-expect-error
     if (!isNaN(val)) node.value = val
   }
 

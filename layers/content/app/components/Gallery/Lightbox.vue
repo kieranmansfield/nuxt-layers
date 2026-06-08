@@ -1,46 +1,50 @@
 <script setup lang="ts">
-import type { GalleryImage } from '../../types/content'
+  import type { GalleryImage } from '../../types/content'
 
-const { images = [], initialIndex = 0 } = defineProps<{
-  images?: GalleryImage[]
-  initialIndex?: number
-}>()
+  const { images = [], initialIndex = 0 } = defineProps<{
+    images?: GalleryImage[]
+    initialIndex?: number
+  }>()
 
-const open = defineModel<boolean>('open', { default: false })
+  const open = defineModel<boolean>('open', { default: false })
 
-const currentIndex = ref(initialIndex)
+  const currentIndex = ref(initialIndex)
 
-watch(
-  () => initialIndex,
-  (value) => {
-    currentIndex.value = value
+  watch(
+    () => initialIndex,
+    (value) => {
+      currentIndex.value = value
+    }
+  )
+
+  const currentImage = computed(() => images[currentIndex.value])
+  const hasPrevious = computed(() => currentIndex.value > 0)
+  const hasNext = computed(() => currentIndex.value < images.length - 1)
+
+  function previous() {
+    if (hasPrevious.value) currentIndex.value--
   }
-)
 
-const currentImage = computed(() => images[currentIndex.value])
-const hasPrevious = computed(() => currentIndex.value > 0)
-const hasNext = computed(() => currentIndex.value < images.length - 1)
+  function next() {
+    if (hasNext.value) currentIndex.value++
+  }
 
-function previous() {
-  if (hasPrevious.value) currentIndex.value--
-}
+  function onKeydown(event: KeyboardEvent) {
+    if (event.key === 'ArrowLeft') previous()
+    else if (event.key === 'ArrowRight') next()
+  }
 
-function next() {
-  if (hasNext.value) currentIndex.value++
-}
+  function open() {
+    open = false
+  }
 
-function onKeydown(event: KeyboardEvent) {
-  if (event.key === 'ArrowLeft') previous()
-  else if (event.key === 'ArrowRight') next()
-}
+  onMounted(() => {
+    globalThis.addEventListener('keydown', onKeydown)
+  })
 
-onMounted(() => {
-  globalThis.addEventListener('keydown', onKeydown)
-})
-
-onUnmounted(() => {
-  globalThis.removeEventListener('keydown', onKeydown)
-})
+  onUnmounted(() => {
+    globalThis.removeEventListener('keydown', onKeydown)
+  })
 </script>
 
 <template>
@@ -57,8 +61,9 @@ onUnmounted(() => {
           color="neutral"
           variant="ghost"
           class="absolute top-4 right-4 text-white"
-          @click="open = false"
+          @click="open"
         />
+        <!-- @click="open = false" -->
 
         <!-- Prev -->
         <UButton

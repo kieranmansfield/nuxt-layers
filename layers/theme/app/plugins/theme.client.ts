@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { AccentColor, PreferenceOverride } from '#layers/theme/app/types/theme'
 
 export default defineNuxtPlugin(() => {

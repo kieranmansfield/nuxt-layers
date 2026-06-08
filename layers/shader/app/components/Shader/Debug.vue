@@ -1,52 +1,57 @@
+<!-- eslint-disable @typescript-eslint/no-explicit-any -->
+<!-- eslint-disable vue/no-boolean-default -->
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
+<!-- eslint-disable vue/define-props-destructuring -->
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-const props = withDefaults(
-  defineProps<{
-    show?: boolean
-  }>(),
-  {
-    show: true,
+  const props = withDefaults(
+    defineProps<{
+      show?: boolean
+    }>(),
+    {
+      show: true,
+    }
+  )
+
+  const config = useAppConfig()
+  const shaderConfig = (config.shader || {}) as {
+    debugPanel?: boolean
   }
-)
 
-const config = useAppConfig()
-const shaderConfig = (config.shader || {}) as {
-  debugPanel?: boolean
-}
+  const { $shader } = useNuxtApp() as { $shader?: { useWebGPU: boolean } }
 
-const { $shader } = useNuxtApp() as { $shader?: { useWebGPU: boolean } }
+  const showDebug = computed(() => {
+    if (!props.show) return false
+    return import.meta.dev && shaderConfig.debugPanel !== false
+  })
 
-const showDebug = computed(() => {
-  if (!props.show) return false
-  return import.meta.dev && shaderConfig.debugPanel !== false
-})
+  const fps = ref(0)
+  const frameCount = ref(0)
+  let lastTime = performance.now()
+  let animationFrameId: number | null = null
 
-const fps = ref(0)
-const frameCount = ref(0)
-let lastTime = performance.now()
-let animationFrameId: number | null = null
-
-function updateFps() {
-  frameCount.value++
-  const now = performance.now()
-  if (now - lastTime >= 1000) {
-    fps.value = Math.round((frameCount.value * 1000) / (now - lastTime))
-    frameCount.value = 0
-    lastTime = now
+  function updateFps() {
+    frameCount.value++
+    const now = performance.now()
+    if (now - lastTime >= 1000) {
+      fps.value = Math.round((frameCount.value * 1000) / (now - lastTime))
+      frameCount.value = 0
+      lastTime = now
+    }
+    animationFrameId = requestAnimationFrame(updateFps)
   }
-  animationFrameId = requestAnimationFrame(updateFps)
-}
 
-onMounted(() => {
-  if (showDebug.value) {
-    updateFps()
-  }
-})
+  onMounted(() => {
+    if (showDebug.value) {
+      updateFps()
+    }
+  })
 
-onUnmounted(() => {
-  if (animationFrameId !== null) {
-    cancelAnimationFrame(animationFrameId)
-  }
-})
+  onUnmounted(() => {
+    if (animationFrameId !== null) {
+      cancelAnimationFrame(animationFrameId)
+    }
+  })
 </script>
 
 <template>

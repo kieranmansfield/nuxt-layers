@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import { atan, cos, float, Fn, fract, length, sin, vec2 } from 'three/tsl'
+
 import type { TSLNode } from '../../types'
 
 /**

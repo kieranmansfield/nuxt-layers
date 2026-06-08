@@ -1,7 +1,11 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable complexity */
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { Ref } from 'vue'
 import type LocomotiveScroll from 'locomotive-scroll'
 
-interface ScrollToOptions {
+type ScrollToOptions = {
   offset?: number
   duration?: number
   immediate?: boolean

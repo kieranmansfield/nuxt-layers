@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable no-restricted-syntax */
 // plugins/loading.client.ts
 
-interface LoadingConfig {
+type LoadingConfig = {
   enabled?: boolean
   minDuration?: number
   maxDuration?: number
@@ -9,7 +11,7 @@ interface LoadingConfig {
   zIndex?: number
 }
 
-interface CoreLayerConfig {
+type CoreLayerConfig = {
   loading?: LoadingConfig
 }
 

@@ -1,4 +1,4 @@
-export interface ResponsiveValue<T> {
+export type ResponsiveValue<T> = {
   default: T
   sm?: T
   md?: T
@@ -6,7 +6,7 @@ export interface ResponsiveValue<T> {
   xl?: T
 }
 
-export interface GridLayers {
+export type GridLayers = {
   /** Component/content at rest — z-index 0 */
   back: number
   /** Standard interactive content — z-index 10 */
@@ -31,7 +31,7 @@ export type GridContainerSize = 'content' | 'wide' | 'fluid' | 'full'
 export type GridDensity = 'compact' | 'normal' | 'relaxed' // relaxed = 0.5rem --rhythm base
 export type GridMode = 'swiss' | 'fluid' | 'disabled'
 
-export interface GridPresetsItem {
+export type GridPresetsItem = {
   colStart?: number | ResponsiveValue<number>
   colSpan: number | 'full' | ResponsiveValue<number>
   rowStart?: number | ResponsiveValue<number>
@@ -50,7 +50,7 @@ export interface GridPresetsItem {
 
 export type GridPresets = Record<string, GridPresetsItem>
 
-export interface GridConfig {
+export type GridConfig = {
   /**
    * Layout mode.
    * - `'swiss'`    — Swiss Grid System (default)

@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 declare module '@nuxt/schema' {
-  interface AppConfigInput {
+  type AppConfigInput = {
     themeLayer?: {
-      accents?: import('./theme').AccentColor[]
+      accents?: Array<import('./theme').AccentColor>
       defaultAccent?: import('./theme').AccentColor
     }
   }

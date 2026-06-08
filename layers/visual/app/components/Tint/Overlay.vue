@@ -1,25 +1,27 @@
+<!-- eslint-disable vue/no-unused-properties -->
+<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
-import type { ColorShade, TintColorSlot, TintLevel } from '../../types/tint'
+  import type { ColorShade, TintColorSlot, TintLevel } from '../../types/tint'
 
-const props = withDefaults(
-  defineProps<{
-    color: TintColorSlot
-    level: TintLevel
-    shade?: ColorShade
-    tag?: string
-  }>(),
-  {
-    shade: 500,
-    tag: 'div',
-  }
-)
+  const props = withDefaults(
+    defineProps<{
+      color: TintColorSlot
+      level: TintLevel
+      shade?: ColorShade
+      tag?: string
+    }>(),
+    {
+      shade: 500,
+      tag: 'div',
+    }
+  )
 
-const { style } = useTint(props)
+  const { style } = useTint(props)
 </script>
 
 <template>
   <component :is="tag" class="relative">
     <slot />
-    <span class="absolute inset-0 pointer-events-none" :style="style" aria-hidden="true" />
+    <span class="absolute inset-0 pointer-events-none" :style aria-hidden="true" />
   </component>
 </template>

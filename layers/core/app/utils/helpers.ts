@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable no-restricted-syntax */
 /**
  * Core utility helpers
  *

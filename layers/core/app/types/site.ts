@@ -1,4 +1,4 @@
-export interface Author {
+export type Author = {
   name: string
   email?: string
   /** URL of the author's profile or homepage */
@@ -23,7 +23,7 @@ export interface Author {
  * })
  * ```
  */
-export interface SiteConfig {
+export type SiteConfig = {
   /** Display name of the site */
   title?: string
   /** Tagline or secondary title */

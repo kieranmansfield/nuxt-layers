@@ -1,4 +1,5 @@
 import type { ComputedRef, CSSProperties } from 'vue'
+
 import type { BlobBlur, BlobConfig } from '../types/accent'
 
 const BLUR_PX_MAP: Record<string, number> = {

@@ -1,6 +1,9 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex
 import { Color } from 'three'
 import { uniform } from 'three/tsl'
+
 import type { TweenHandle } from '../utils/tsl/tween'
 
 /**
@@ -31,7 +34,11 @@ export function useShaderColor(initialHex: string) {
     hex.value = `#${color.getHexString()}`
   }
 
-  function tweenTo(targetHex: string, duration: number, easing?: (t: number) => number): TweenHandle {
+  function tweenTo(
+    targetHex: string,
+    duration: number,
+    easing?: (t: number) => number
+  ): TweenHandle {
     activeTween?.cancel()
 
     const startR = color.r

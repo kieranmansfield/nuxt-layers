@@ -1,33 +1,44 @@
+<!-- eslint-disable vue/define-props-destructuring -->
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-import { uniform, vec4 } from 'three/tsl'
-import { halftone } from '../../shaders/common/grain'
-import { luminance } from '../../shaders/common/blend'
+  // @ts-nocheck
+  import { uniform, vec4 } from 'three/tsl'
 
-const props = withDefaults(defineProps<{
-  /** Dot density — higher = finer dots */
-  scale?: number
-  /** Screen angle in radians */
-  angle?: number
-  order?: number
-}>(), { scale: 50, angle: 0, order: 0 })
+  import { luminance } from '../../shaders/common/blend'
+  import { halftone } from '../../shaders/common/grain'
 
-const scaleNode = uniform(props.scale)
-const angleNode = uniform(props.angle)
-watch(() => props.scale, v => { scaleNode.value = v })
-watch(() => props.angle, v => { angleNode.value = v })
+  const props = withDefaults(
+    defineProps<{
+      /** Dot density — higher = finer dots */
+      scale?: number
+      /** Screen angle in radians */
+      angle?: number
+      order?: number
+    }>(),
+    { scale: 50, angle: 0, order: 0 }
+  )
 
-const pipeline = useShaderPipelineContext()
+  const scaleNode = uniform(props.scale)
+  const angleNode = uniform(props.angle)
+  watch(
+    () => props.scale,
+    (v) => {
+      scaleNode.value = v
+    }
+  )
+  watch(
+    () => props.angle,
+    (v) => {
+      angleNode.value = v
+    }
+  )
 
-useShaderStage(
-  (prev) => {
+  const pipeline = useShaderPipelineContext()
+
+  useShaderStage((prev) => {
     const uvCurrent = pipeline.uvNode.value
     const lum = luminance(prev.xyz)
     const dot = halftone(uvCurrent, lum, scaleNode, angleNode)
     return vec4(prev.xyz.mul(dot), prev.w)
-  },
-  props.order,
-)
+  }, props.order)
 </script>
-
-<template><!-- --></template>

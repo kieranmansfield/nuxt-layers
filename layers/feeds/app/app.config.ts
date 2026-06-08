@@ -9,7 +9,7 @@ export default defineAppConfig({
 })
 
 declare module '@nuxt/schema' {
-  interface AppConfigInput {
+  type AppConfigInput = {
     feedsLayer?: {
       feed?: {
         limit?: number

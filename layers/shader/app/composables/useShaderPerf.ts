@@ -33,13 +33,13 @@ export function useShaderPerf(label = 'pipeline') {
 
     if (accumMs >= 500) {
       fps.value = Math.round((frames / accumMs) * 1000)
-      frameMs.value = Math.round(accumMs / frames * 10) / 10
+      frameMs.value = Math.round((accumMs / frames) * 10) / 10
       frames = 0
       accumMs = 0
     }
 
     stageCount.value = pipeline
-      ? (pipeline.stagesFor('uv').length + pipeline.stagesFor('fragment').length)
+      ? pipeline.stagesFor('uv').length + pipeline.stagesFor('fragment').length
       : 0
     rafId = requestAnimationFrame(tick)
   }
@@ -64,7 +64,6 @@ export function useShaderPerf(label = 'pipeline') {
 
   if (import.meta.dev) {
     watch([fps, frameMs, stageCount], ([f, ms, s]) => {
-      // eslint-disable-next-line no-console
       console.debug(`[ShaderPerf:${label}] ${f}fps  ${ms}ms/frame  ${s} stages`)
     })
   }

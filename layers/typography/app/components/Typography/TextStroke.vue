@@ -1,7 +1,5 @@
+<!-- eslint-disable vue/define-props-destructuring -->
 <script lang="ts" setup>
-  const id = useId()
-  const contrast = usePreferredContrast()
-
   const props = withDefaults(
     defineProps<{
       text: string
@@ -19,6 +17,8 @@
       tag: 'div',
     }
   )
+  const id = useId()
+  const contrast = usePreferredContrast()
 
   const effectiveStrokeWidth = computed(() =>
     contrast.value === 'more' ? props.strokeWidth * 1.5 : props.strokeWidth
@@ -26,6 +26,7 @@
 </script>
 
 <template>
+  <!-- eslint-disable vue/no-duplicate-attr-inheritance -->
   <component
     :is="tag"
     class="text-stroke inline-grid leading-none *:[grid-area:1/1]"
@@ -78,7 +79,7 @@
         x="0"
         y="0"
         dominant-baseline="text-before-edge"
-        :fill="fill"
+        :fill
         :stroke="strokeColor"
         :stroke-width="effectiveStrokeWidth"
         :stroke-linejoin="linejoin"

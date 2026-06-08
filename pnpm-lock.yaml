@@ -4,6 +4,195 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    '@commitlint/cli':
+      specifier: ^21.0.2
+      version: 21.0.2
+    '@commitlint/config-conventional':
+      specifier: ^21.0.2
+      version: 21.0.2
+    '@culur/config-stylelint':
+      specifier: ^1.7.1
+      version: 1.7.1
+    '@eslint/json':
+      specifier: ^1.2.0
+      version: 1.2.0
+    '@eslint/markdown':
+      specifier: ^8.0.2
+      version: 8.0.2
+    '@ianvs/prettier-plugin-sort-imports':
+      specifier: ^4.7.1
+      version: 4.7.1
+    '@iconify-json/lucide':
+      specifier: ^1.2.111
+      version: 1.2.111
+    '@netlify/nuxt':
+      specifier: 0.3.7
+      version: 0.3.7
+    '@nuxt/eslint':
+      specifier: ^1.15.2
+      version: 1.15.2
+    '@nuxt/fonts':
+      specifier: ^0.14.0
+      version: 0.14.0
+    '@nuxt/image':
+      specifier: ^2.0.0
+      version: 2.0.0
+    '@nuxt/ui':
+      specifier: latest
+      version: 4.8.2
+    '@nuxtjs/device':
+      specifier: ^4.0.0
+      version: 4.0.0
+    '@oxc-parser/binding-darwin-arm64':
+      specifier: ^0.134.0
+      version: 0.134.0
+    '@perplex-digital/stylelint-config':
+      specifier: ^17.4.0
+      version: 17.4.0
+    '@pinia/nuxt':
+      specifier: ^0.11.3
+      version: 0.11.3
+    '@types/node':
+      specifier: ^25.9.1
+      version: 25.9.1
+    '@types/three':
+      specifier: ^0.184.1
+      version: 0.184.1
+    '@typescript-eslint/eslint-plugin':
+      specifier: ^8.60.1
+      version: 8.60.1
+    '@typescript-eslint/parser':
+      specifier: ^8.60.1
+      version: 8.60.1
+    '@vue/eslint-config-typescript':
+      specifier: ^14.7.0
+      version: 14.7.0
+    '@vueuse/core':
+      specifier: ^14.3.0
+      version: 14.3.0
+    '@vueuse/nuxt':
+      specifier: ^14.3.0
+      version: 14.3.0
+    '@webgpu/glslang':
+      specifier: ^0.0.15
+      version: 0.0.15
+    browserslist:
+      specifier: ^4.28.2
+      version: 4.28.2
+    changesets:
+      specifier: ^1.0.2
+      version: 1.0.2
+    cypress:
+      specifier: ^15.16.0
+      version: 15.16.0
+    depcheck:
+      specifier: ^1.4.7
+      version: 1.4.7
+    eslint-plugin-compat:
+      specifier: ^7.0.2
+      version: 7.0.2
+    eslint-plugin-glsl:
+      specifier: 0.0.0-wip
+      version: 0.0.0-wip
+    eslint-plugin-pnpm:
+      specifier: ^1.6.1
+      version: 1.6.1
+    eslint-plugin-prettier:
+      specifier: ^5.5.6
+      version: 5.5.6
+    eslint-plugin-unicorn:
+      specifier: ^64.0.0
+      version: 64.0.0
+    eslint-plugin-unused-imports:
+      specifier: ^4.4.1
+      version: 4.4.1
+    eslint-plugin-vue:
+      specifier: ^10.9.2
+      version: 10.9.2
+    netlify-cli:
+      specifier: ^26.1.0
+      version: 26.1.0
+    node-gyp:
+      specifier: ^12.3.0
+      version: 12.3.0
+    npm-check-updates:
+      specifier: ^22.2.2
+      version: 22.2.2
+    nuxt:
+      specifier: ^4.4.7
+      version: 4.4.7
+    pinia:
+      specifier: ^3.0.4
+      version: 3.0.4
+    playwright:
+      specifier: ^1.60.0
+      version: 1.60.0
+    postcss-html:
+      specifier: ^1.8.1
+      version: 1.8.1
+    prettier:
+      specifier: ^3.8.3
+      version: 3.8.3
+    prettier-plugin-css-order:
+      specifier: ^2.2.0
+      version: 2.2.0
+    prettier-plugin-glsl:
+      specifier: ^0.3.0
+      version: 0.3.0
+    prettier-plugin-organize-attributes:
+      specifier: ^1.0.0
+      version: 1.0.0
+    prettier-plugin-tailwind-styled-components:
+      specifier: ^2.0.2
+      version: 2.0.2
+    prettier-plugin-tailwindcss:
+      specifier: ^0.8.0
+      version: 0.8.0
+    skills:
+      specifier: ^1.5.10
+      version: 1.5.10
+    stylelint-config-recommended-vue:
+      specifier: ^1.6.1
+      version: 1.6.1
+    stylelint-config-standard:
+      specifier: ^40.0.0
+      version: 40.0.0
+    stylelint-config-standard-vue:
+      specifier: ^1.0.0
+      version: 1.0.0
+    stylelint-config-tailwindcss:
+      specifier: ^1.0.1
+      version: 1.0.1
+    stylelint-no-unsupported-browser-features:
+      specifier: ^8.1.1
+      version: 8.1.1
+    stylelint-prettier:
+      specifier: ^5.0.3
+      version: 5.0.3
+    tailwindcss:
+      specifier: ^4.3.0
+      version: 4.3.0
+    turbo:
+      specifier: ^2.9.16
+      version: 2.9.16
+    typescript:
+      specifier: ^6
+      version: 6.0.3
+    vite-plugin-checker:
+      specifier: ^0.14.1
+      version: 0.14.1
+    vitest:
+      specifier: ^4.1.8
+      version: 4.1.8
+    zod:
+      specifier: ^4.4.3
+      version: 4.4.3
+    zod-to-json-schema:
+      specifier: ^3.25.2
+      version: 3.25.2
+
 overrides:
   vue-tsc: 3.3.3
   '@vue/language-core': 3.3.3
@@ -59,10 +248,10 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(@nuxt/kit@4.4.7(magicast@0.5.3))(react@19.2.7)(vue@3.5.35(typescript@6.0.3))
       node-gyp:
-        specifier: ^12.3.0
+        specifier: 'catalog:'
         version: 12.3.0
       skills:
-        specifier: ^1.5.10
+        specifier: 'catalog:'
         version: 1.5.10
       three:
         specifier: 0.184.0
@@ -72,184 +261,184 @@ importers:
         version: 1.5.12(magicast@0.5.3)
     devDependencies:
       '@commitlint/cli':
-        specifier: ^21.0.2
+        specifier: 'catalog:'
         version: 21.0.2(@types/node@25.9.1)(conventional-commits-parser@6.4.0)(typescript@6.0.3)
       '@commitlint/config-conventional':
-        specifier: ^21.0.2
+        specifier: 'catalog:'
         version: 21.0.2
       '@culur/config-stylelint':
-        specifier: ^1.7.1
+        specifier: 'catalog:'
         version: 1.7.1(postcss-html@1.8.1)(postcss@8.5.15)(stylelint@17.12.0(typescript@6.0.3))
       '@eslint/json':
-        specifier: ^1.2.0
+        specifier: 'catalog:'
         version: 1.2.0
       '@eslint/markdown':
-        specifier: ^8.0.2
+        specifier: 'catalog:'
         version: 8.0.2
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: ^4.7.1
+        specifier: 'catalog:'
         version: 4.7.1(@vue/compiler-sfc@3.5.35)(prettier@3.8.3)
       '@iconify-json/lucide':
-        specifier: ^1.2.111
+        specifier: 'catalog:'
         version: 1.2.111
       '@netlify/nuxt':
-        specifier: 0.3.7
+        specifier: 'catalog:'
         version: 0.3.7(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(ioredis@5.11.0)(magicast@0.5.3)(rollup@4.61.0)(srvx@0.11.16)
       '@nuxt/eslint':
-        specifier: ^1.15.2
+        specifier: 'catalog:'
         version: 1.15.2(@typescript-eslint/utils@8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3))(@vue/compiler-sfc@3.5.35)(eslint@10.4.1(jiti@2.7.0))(magicast@0.5.3)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
       '@nuxt/fonts':
-        specifier: ^0.14.0
+        specifier: 'catalog:'
         version: 0.14.0(@netlify/blobs@10.7.9)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(ioredis@5.11.0)(magicast@0.5.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
       '@nuxt/image':
-        specifier: ^2.0.0
+        specifier: 'catalog:'
         version: 2.0.0(@netlify/blobs@10.7.9)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(ioredis@5.11.0)(magicast@0.5.3)(srvx@0.11.16)
       '@nuxt/ui':
-        specifier: latest
+        specifier: 'catalog:'
         version: 4.8.2(b8d12b4f6522cadc4a79f666912f2232)
       '@nuxtjs/device':
-        specifier: ^4.0.0
+        specifier: 'catalog:'
         version: 4.0.0
       '@oxc-parser/binding-darwin-arm64':
-        specifier: ^0.134.0
+        specifier: 'catalog:'
         version: 0.134.0
       '@perplex-digital/stylelint-config':
-        specifier: ^17.4.0
+        specifier: 'catalog:'
         version: 17.4.0(postcss-html@1.8.1)(stylelint-order@8.1.1(stylelint@17.12.0(typescript@6.0.3)))(stylelint@17.12.0(typescript@6.0.3))
       '@pinia/nuxt':
-        specifier: ^0.11.3
+        specifier: 'catalog:'
         version: 0.11.3(magicast@0.5.3)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))
       '@types/node':
-        specifier: ^25.9.1
+        specifier: 'catalog:'
         version: 25.9.1
       '@types/three':
-        specifier: ^0.184.1
+        specifier: 'catalog:'
         version: 0.184.1
       '@typescript-eslint/eslint-plugin':
-        specifier: ^8.60.1
+        specifier: 'catalog:'
         version: 8.60.1(@typescript-eslint/parser@8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3))(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3)
       '@typescript-eslint/parser':
-        specifier: ^8.60.1
+        specifier: 'catalog:'
         version: 8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3)
       '@vue/eslint-config-typescript':
-        specifier: ^14.7.0
+        specifier: 'catalog:'
         version: 14.7.0(eslint-plugin-vue@10.9.2(@stylistic/eslint-plugin@5.10.0(eslint@10.4.1(jiti@2.7.0)))(@typescript-eslint/parser@8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3))(eslint@10.4.1(jiti@2.7.0))(vue-eslint-parser@10.4.0(eslint@10.4.1(jiti@2.7.0))))(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3)
       '@vueuse/core':
-        specifier: ^14.3.0
+        specifier: 'catalog:'
         version: 14.3.0(vue@3.5.35(typescript@6.0.3))
       '@vueuse/nuxt':
-        specifier: ^14.3.0
+        specifier: 'catalog:'
         version: 14.3.0(magicast@0.5.3)(nuxt@4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0))(vue@3.5.35(typescript@6.0.3))
       '@webgpu/glslang':
-        specifier: ^0.0.15
+        specifier: 'catalog:'
         version: 0.0.15
       browserslist:
-        specifier: ^4.28.2
+        specifier: 'catalog:'
         version: 4.28.2
       changesets:
-        specifier: ^1.0.2
+        specifier: 'catalog:'
         version: 1.0.2
       cypress:
-        specifier: ^15.16.0
+        specifier: 'catalog:'
         version: 15.16.0
       depcheck:
-        specifier: ^1.4.7
+        specifier: 'catalog:'
         version: 1.4.7
       eslint:
         specifier: 10.4.1
         version: 10.4.1(jiti@2.7.0)
       eslint-plugin-compat:
-        specifier: ^7.0.2
+        specifier: 'catalog:'
         version: 7.0.2(eslint@10.4.1(jiti@2.7.0))
       eslint-plugin-glsl:
-        specifier: 0.0.0-wip
+        specifier: 'catalog:'
         version: 0.0.0-wip
       eslint-plugin-pnpm:
-        specifier: ^1.6.1
+        specifier: 'catalog:'
         version: 1.6.1(eslint@10.4.1(jiti@2.7.0))
       eslint-plugin-prettier:
-        specifier: ^5.5.6
+        specifier: 'catalog:'
         version: 5.5.6(eslint@10.4.1(jiti@2.7.0))(prettier@3.8.3)
       eslint-plugin-unicorn:
-        specifier: ^64.0.0
+        specifier: 'catalog:'
         version: 64.0.0(eslint@10.4.1(jiti@2.7.0))
       eslint-plugin-unused-imports:
-        specifier: ^4.4.1
+        specifier: 'catalog:'
         version: 4.4.1(@typescript-eslint/eslint-plugin@8.60.1(@typescript-eslint/parser@8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3))(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3))(eslint@10.4.1(jiti@2.7.0))
       eslint-plugin-vue:
-        specifier: ^10.9.2
+        specifier: 'catalog:'
         version: 10.9.2(@stylistic/eslint-plugin@5.10.0(eslint@10.4.1(jiti@2.7.0)))(@typescript-eslint/parser@8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3))(eslint@10.4.1(jiti@2.7.0))(vue-eslint-parser@10.4.0(eslint@10.4.1(jiti@2.7.0)))
       netlify-cli:
-        specifier: ^26.1.0
+        specifier: 'catalog:'
         version: 26.1.0(@types/node@25.9.1)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(ioredis@5.11.0)(picomatch@4.0.4)(rollup@4.61.0)(srvx@0.11.16)
       npm-check-updates:
-        specifier: ^22.2.2
+        specifier: 'catalog:'
         version: 22.2.2
       nuxt:
-        specifier: ^4.4.7
+        specifier: 'catalog:'
         version: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
       pinia:
-        specifier: ^3.0.4
+        specifier: 'catalog:'
         version: 3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3))
       playwright:
-        specifier: ^1.60.0
+        specifier: 'catalog:'
         version: 1.60.0
       postcss-html:
-        specifier: ^1.8.1
+        specifier: 'catalog:'
         version: 1.8.1
       prettier:
-        specifier: ^3.8.3
+        specifier: 'catalog:'
         version: 3.8.3
       prettier-plugin-css-order:
-        specifier: ^2.2.0
+        specifier: 'catalog:'
         version: 2.2.0(postcss@8.5.15)(prettier@3.8.3)
       prettier-plugin-glsl:
-        specifier: ^0.3.0
+        specifier: 'catalog:'
         version: 0.3.0(prettier@3.8.3)
       prettier-plugin-organize-attributes:
-        specifier: ^1.0.0
+        specifier: 'catalog:'
         version: 1.0.0(prettier@3.8.3)
       prettier-plugin-tailwind-styled-components:
-        specifier: ^2.0.2
+        specifier: 'catalog:'
         version: 2.0.2(prettier-plugin-tailwindcss@0.8.0(@ianvs/prettier-plugin-sort-imports@4.7.1(@vue/compiler-sfc@3.5.35)(prettier@3.8.3))(prettier-plugin-css-order@2.2.0(postcss@8.5.15)(prettier@3.8.3))(prettier-plugin-organize-attributes@1.0.0(prettier@3.8.3))(prettier@3.8.3))(prettier@3.8.3)
       prettier-plugin-tailwindcss:
-        specifier: ^0.8.0
+        specifier: 'catalog:'
         version: 0.8.0(@ianvs/prettier-plugin-sort-imports@4.7.1(@vue/compiler-sfc@3.5.35)(prettier@3.8.3))(prettier-plugin-css-order@2.2.0(postcss@8.5.15)(prettier@3.8.3))(prettier-plugin-organize-attributes@1.0.0(prettier@3.8.3))(prettier@3.8.3)
       stylelint:
         specifier: 17.12.0
         version: 17.12.0(typescript@6.0.3)
       stylelint-config-recommended-vue:
-        specifier: ^1.6.1
+        specifier: 'catalog:'
         version: 1.6.1(postcss-html@1.8.1)(stylelint@17.12.0(typescript@6.0.3))
       stylelint-config-standard:
-        specifier: ^40.0.0
+        specifier: 'catalog:'
         version: 40.0.0(stylelint@17.12.0(typescript@6.0.3))
       stylelint-config-standard-vue:
-        specifier: ^1.0.0
+        specifier: 'catalog:'
         version: 1.0.0(postcss-html@1.8.1)(stylelint@17.12.0(typescript@6.0.3))
       stylelint-config-tailwindcss:
-        specifier: ^1.0.1
+        specifier: 'catalog:'
         version: 1.0.1(stylelint@17.12.0(typescript@6.0.3))(tailwindcss@4.3.0)
       stylelint-no-unsupported-browser-features:
-        specifier: ^8.1.1
+        specifier: 'catalog:'
         version: 8.1.1(stylelint@17.12.0(typescript@6.0.3))
       stylelint-prettier:
-        specifier: ^5.0.3
+        specifier: 'catalog:'
         version: 5.0.3(prettier@3.8.3)(stylelint@17.12.0(typescript@6.0.3))
       tailwindcss:
-        specifier: ^4.3.0
+        specifier: 'catalog:'
         version: 4.3.0
       turbo:
-        specifier: ^2.9.16
+        specifier: 'catalog:'
         version: 2.9.16
       typescript:
-        specifier: ^6
+        specifier: 'catalog:'
         version: 6.0.3
       vite-plugin-checker:
-        specifier: ^0.14.1
+        specifier: 'catalog:'
         version: 0.14.1(eslint@10.4.1(jiti@2.7.0))(meow@14.1.0)(optionator@0.9.4)(stylelint@17.12.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))
       vitest:
-        specifier: ^4.1.8
+        specifier: 'catalog:'
         version: 4.1.8(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
       vue:
         specifier: 3.5.35
@@ -258,10 +447,10 @@ importers:
         specifier: 3.3.3
         version: 3.3.3(typescript@6.0.3)
       zod:
-        specifier: ^4.4.3
+        specifier: 'catalog:'
         version: 4.4.3
       zod-to-json-schema:
-        specifier: ^3.25.2
+        specifier: 'catalog:'
         version: 3.25.2(zod@4.4.3)
 
   apps/debug:
@@ -6295,20 +6484,6 @@ packages:
       eslint: 10.4.1
     peerDependenciesMeta:
       '@typescript-eslint/eslint-plugin':
-        optional: true
-
-  eslint-plugin-vue@10.9.1:
-    resolution: {integrity: sha512-cHB0Tf4Duvzwecwd/AqWzZvF/QszE13BhjVUpVXWCy9AeMR5GjkAjP3i85vqgLgOuTmkHR1OJ5oMeqLHtuw8zg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      '@stylistic/eslint-plugin': ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
-      '@typescript-eslint/parser': ^7.0.0 || ^8.0.0
-      eslint: 10.4.1
-      vue-eslint-parser: ^10.3.0
-    peerDependenciesMeta:
-      '@stylistic/eslint-plugin':
-        optional: true
-      '@typescript-eslint/parser':
         optional: true
 
   eslint-plugin-vue@10.9.2:
@@ -13816,7 +13991,7 @@ snapshots:
     dependencies:
       '@netlify/dev': 4.18.7(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(ioredis@5.11.0)(rollup@4.61.0)(srvx@0.11.16)
       '@netlify/dev-utils': 4.4.6
-      '@nuxt/kit': 4.4.6(magicast@0.5.3)
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
       h3: 1.15.11
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -14081,7 +14256,7 @@ snapshots:
 
   '@nuxt/devtools-kit@3.2.4(magicast@0.5.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))':
     dependencies:
-      '@nuxt/kit': 4.4.6(magicast@0.5.3)
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
       execa: 8.0.1
       vite: 8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0)
     transitivePeerDependencies:
@@ -14089,7 +14264,7 @@ snapshots:
 
   '@nuxt/devtools-kit@3.2.4(magicast@0.5.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))':
     dependencies:
-      '@nuxt/kit': 4.4.6(magicast@0.5.3)
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
       execa: 8.0.1
       vite: 8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0)
     transitivePeerDependencies:
@@ -14206,7 +14381,7 @@ snapshots:
       eslint-plugin-jsdoc: 62.9.0(eslint@10.4.1(jiti@2.7.0))
       eslint-plugin-regexp: 3.1.0(eslint@10.4.1(jiti@2.7.0))
       eslint-plugin-unicorn: 63.0.0(eslint@10.4.1(jiti@2.7.0))
-      eslint-plugin-vue: 10.9.1(@stylistic/eslint-plugin@5.10.0(eslint@10.4.1(jiti@2.7.0)))(@typescript-eslint/parser@8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3))(eslint@10.4.1(jiti@2.7.0))(vue-eslint-parser@10.4.0(eslint@10.4.1(jiti@2.7.0)))
+      eslint-plugin-vue: 10.9.2(@stylistic/eslint-plugin@5.10.0(eslint@10.4.1(jiti@2.7.0)))(@typescript-eslint/parser@8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3))(eslint@10.4.1(jiti@2.7.0))(vue-eslint-parser@10.4.0(eslint@10.4.1(jiti@2.7.0)))
       eslint-processor-vue-blocks: 2.0.0(@vue/compiler-sfc@3.5.35)(eslint@10.4.1(jiti@2.7.0))
       globals: 17.6.0
       local-pkg: 1.2.1
@@ -14234,7 +14409,7 @@ snapshots:
       '@nuxt/devtools-kit': 3.2.4(magicast@0.5.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
       '@nuxt/eslint-config': 1.15.2(@typescript-eslint/utils@8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3))(@vue/compiler-sfc@3.5.35)(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3)
       '@nuxt/eslint-plugin': 1.15.2(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3)
-      '@nuxt/kit': 4.4.6(magicast@0.5.3)
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
       chokidar: 5.0.0
       eslint: 10.4.1(jiti@2.7.0)
       eslint-flat-config-utils: 3.2.0
@@ -14259,7 +14434,7 @@ snapshots:
   '@nuxt/fonts@0.14.0(@netlify/blobs@10.7.9)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(ioredis@5.11.0)(magicast@0.5.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))':
     dependencies:
       '@nuxt/devtools-kit': 3.2.4(magicast@0.5.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
-      '@nuxt/kit': 4.4.6(magicast@0.5.3)
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
       consola: 3.4.2
       defu: 6.1.7
       fontless: 0.2.1(@netlify/blobs@10.7.9)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(ioredis@5.11.0)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
@@ -14299,7 +14474,7 @@ snapshots:
   '@nuxt/fonts@0.14.0(@netlify/blobs@10.7.9)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(ioredis@5.11.0)(magicast@0.5.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))':
     dependencies:
       '@nuxt/devtools-kit': 3.2.4(magicast@0.5.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
-      '@nuxt/kit': 4.4.6(magicast@0.5.3)
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
       consola: 3.4.2
       defu: 6.1.7
       fontless: 0.2.1(@netlify/blobs@10.7.9)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(ioredis@5.11.0)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
@@ -14380,7 +14555,7 @@ snapshots:
 
   '@nuxt/image@2.0.0(@netlify/blobs@10.7.9)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(ioredis@5.11.0)(magicast@0.5.3)(srvx@0.11.16)':
     dependencies:
-      '@nuxt/kit': 4.4.6(magicast@0.5.3)
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
       consola: 3.4.2
       defu: 6.1.7
       h3: 1.15.11
@@ -15091,7 +15266,7 @@ snapshots:
 
   '@nuxtjs/mdc@0.22.0(magicast@0.5.3)':
     dependencies:
-      '@nuxt/kit': 4.4.6(magicast@0.5.3)
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
       '@shikijs/core': 4.1.0
       '@shikijs/engine-javascript': 4.1.0
       '@shikijs/langs': 4.1.0
@@ -15698,7 +15873,7 @@ snapshots:
 
   '@pinia/nuxt@0.11.3(magicast@0.5.3)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))':
     dependencies:
-      '@nuxt/kit': 4.4.6(magicast@0.5.3)
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
       pinia: 3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3))
     transitivePeerDependencies:
       - magicast
@@ -17361,7 +17536,7 @@ snapshots:
 
   '@vueuse/nuxt@14.3.0(magicast@0.5.3)(nuxt@4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0))(vue@3.5.35(typescript@6.0.3))':
     dependencies:
-      '@nuxt/kit': 4.4.6(magicast@0.5.3)
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
       '@vueuse/core': 14.3.0(vue@3.5.35(typescript@6.0.3))
       '@vueuse/metadata': 14.3.0
       local-pkg: 1.2.1
@@ -19131,20 +19306,6 @@ snapshots:
       eslint: 10.4.1(jiti@2.7.0)
     optionalDependencies:
       '@typescript-eslint/eslint-plugin': 8.60.1(@typescript-eslint/parser@8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3))(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3)
-
-  eslint-plugin-vue@10.9.1(@stylistic/eslint-plugin@5.10.0(eslint@10.4.1(jiti@2.7.0)))(@typescript-eslint/parser@8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3))(eslint@10.4.1(jiti@2.7.0))(vue-eslint-parser@10.4.0(eslint@10.4.1(jiti@2.7.0))):
-    dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@10.4.1(jiti@2.7.0))
-      eslint: 10.4.1(jiti@2.7.0)
-      natural-compare: 1.4.0
-      nth-check: 2.1.1
-      postcss-selector-parser: 7.1.1
-      semver: 7.8.1
-      vue-eslint-parser: 10.4.0(eslint@10.4.1(jiti@2.7.0))
-      xml-name-validator: 4.0.0
-    optionalDependencies:
-      '@stylistic/eslint-plugin': 5.10.0(eslint@10.4.1(jiti@2.7.0))
-      '@typescript-eslint/parser': 8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3)
 
   eslint-plugin-vue@10.9.2(@stylistic/eslint-plugin@5.10.0(eslint@10.4.1(jiti@2.7.0)))(@typescript-eslint/parser@8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3))(eslint@10.4.1(jiti@2.7.0))(vue-eslint-parser@10.4.0(eslint@10.4.1(jiti@2.7.0))):
     dependencies:
@@ -22053,7 +22214,7 @@ snapshots:
 
   nuxt-component-meta@0.17.2(magicast@0.5.3):
     dependencies:
-      '@nuxt/kit': 4.4.6(magicast@0.5.3)
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
       citty: 0.2.2
       mlly: 1.8.2
       ohash: 2.0.11
@@ -25540,7 +25701,7 @@ snapshots:
     dependencies:
       assert-plus: 1.0.0
       core-util-is: 1.0.2
-      extsprintf: 1.3.0
+      extsprintf: 1.4.1
 
   vfile-location@5.0.3:
     dependencies:

@@ -1,55 +1,56 @@
+<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
-const props = withDefaults(
-  defineProps<{
-    /**
-     * Which stats to show
-     */
-    show?: ('velocity' | 'progress' | 'direction' | 'scrollY')[]
-    /**
-     * Position on screen
-     */
-    position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-    /**
-     * Use compact layout
-     */
-    compact?: boolean
-  }>(),
-  {
-    show: () => ['velocity', 'progress', 'direction'],
-    position: 'bottom-right',
-    compact: false,
-  }
-)
+  const props = withDefaults(
+    defineProps<{
+      /**
+       * Which stats to show
+       */
+      show?: ('velocity' | 'progress' | 'direction' | 'scrollY')[]
+      /**
+       * Position on screen
+       */
+      position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+      /**
+       * Use compact layout
+       */
+      compact?: boolean
+    }>(),
+    {
+      show: () => ['velocity', 'progress', 'direction'],
+      position: 'bottom-right',
+      compact: false,
+    }
+  )
 
-const { velocity, progress, direction, scrollY } = useSmoothScroll()
+  const { velocity, progress, direction, scrollY } = useSmoothScroll()
 
-const isScrolling = computed(() => Math.abs(velocity.value) > 0.01)
+  const isScrolling = computed(() => Math.abs(velocity.value) > 0.01)
 
-const positionClasses = computed(() => {
-  const classes = ['fixed', 'z-50']
-  switch (props.position) {
-    case 'top-left':
-      classes.push('top-4', 'left-4')
-      break
-    case 'top-right':
-      classes.push('top-4', 'right-4')
-      break
-    case 'bottom-left':
-      classes.push('bottom-4', 'left-4')
-      break
-    case 'bottom-right':
-    default:
-      classes.push('bottom-4', 'right-4')
-      break
-  }
-  return classes
-})
+  const positionClasses = computed(() => {
+    const classes = ['fixed', 'z-50']
+    switch (props.position) {
+      case 'top-left':
+        classes.push('top-4', 'left-4')
+        break
+      case 'top-right':
+        classes.push('top-4', 'right-4')
+        break
+      case 'bottom-left':
+        classes.push('bottom-4', 'left-4')
+        break
+      case 'bottom-right':
+      default:
+        classes.push('bottom-4', 'right-4')
+        break
+    }
+    return classes
+  })
 
-const directionLabel = computed(() => {
-  if (direction.value > 0) return 'DOWN'
-  if (direction.value < 0) return 'UP'
-  return 'IDLE'
-})
+  const directionLabel = computed(() => {
+    if (direction.value > 0) return 'DOWN'
+    if (direction.value < 0) return 'UP'
+    return 'IDLE'
+  })
 </script>
 
 <template>
@@ -96,7 +97,7 @@ const directionLabel = computed(() => {
 </template>
 
 <style scoped>
-.tabular-nums {
-  font-variant-numeric: tabular-nums;
-}
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
 </style>

@@ -1,7 +1,7 @@
 import type { SiteConfig } from './site'
 
 declare module '@nuxt/schema' {
-  interface AppConfigInput {
+  type AppConfigInput = {
     /** Shared site metadata — consumed by feeds, SEO, and any layer needing canonical site info. */
     site?: SiteConfig
     coreLayer?: {

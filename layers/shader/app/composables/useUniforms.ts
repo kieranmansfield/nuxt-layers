@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
-/* eslint-disable no-restricted-imports */
+
+import { reactive, ref, watch } from 'vue'
 import { Color, Vector2, Vector3 } from 'three'
 import { uniform } from 'three/tsl'
-import { reactive, ref, watch } from 'vue'
+
 import type { UniformValue, UniformValues } from '../types'
 
 /**

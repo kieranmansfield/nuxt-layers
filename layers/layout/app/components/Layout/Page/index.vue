@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
   /**
    * LayoutPage — canonical page wrapper for the Swiss Grid System.

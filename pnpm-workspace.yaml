@@ -67,14 +67,21 @@ catalog:
   '@iconify-json/lucide': ^1.2.111
   '@netlify/nuxt': 0.3.7
   '@netlify/plugin-lighthouse': 6.0.1
+  '@nuxt/content': ^3.14.0
   '@nuxt/eslint': ^1.15.2
   '@nuxt/fonts': ^0.14.0
   '@nuxt/image': ^2.0.0
+  '@nuxt/scripts': ^0.11.0
   '@nuxt/ui': latest
   '@nuxtjs/device': ^4.0.0
+  '@nuxtjs/seo': ^2.0.0
   '@oxc-parser/binding-darwin-arm64': ^0.134.0
   '@perplex-digital/stylelint-config': ^17.4.0
   '@pinia/nuxt': ^0.11.3
+  '@tresjs/cientos': ^5.7.2
+  '@tresjs/core': ^5.8.1
+  '@tresjs/nuxt': ^5.6.1
+  '@tresjs/post-processing': ^3.7.2
   '@types/node': ^25.9.1
   '@types/three': ^0.184.1
   '@typescript-eslint/eslint-plugin': ^8.60.1
@@ -98,6 +105,10 @@ catalog:
   eslint-plugin-unicorn: ^64.0.0
   eslint-plugin-unused-imports: ^4.4.1
   eslint-plugin-vue: ^10.9.2
+  feed: ^5.2.1
+  gsap: ^3.15.0
+  hookable: ^5.5.3
+  locomotive-scroll: ^5.0.1
   netlify-cli: ^26.1.0
   node-gyp: ^12.3.0
   npm-check-updates: ^22.2.2
@@ -112,6 +123,7 @@ catalog:
   prettier-plugin-organize-attributes: ^1.0.0
   prettier-plugin-tailwind-styled-components: ^2.0.2
   prettier-plugin-tailwindcss: ^0.8.0
+  resend: ^4.0.0
   skills: ^1.5.10
   stylelint: ^17.12.0
   stylelint-config-recommended-vue: ^1.6.1
@@ -121,9 +133,11 @@ catalog:
   stylelint-no-unsupported-browser-features: ^8.1.1
   stylelint-prettier: ^5.0.3
   tailwindcss: ^4.3.0
+  three: ^0.184.0
   turbo: ^2.9.16
   typescript: ^6
   user-agent-blocker-buildhooks: https://229cd987-05ad-4a05-b612-849942d6bec4.netlify.app/packages/buildhooks.tgz
+  v-gsap-nuxt: latest
   vite-plugin-checker: ^0.14.1
   vitest: ^4.1.8
   vue: ^3.5.35
@@ -134,5 +148,13 @@ catalog:
 catalogs:
   conflicts_vue_latest:
     vue: latest
+  conflicts_zod_h4_3_6:
+    zod: ^4.3.6
+  conflicts_zod-to-json-schema_h3_25_1:
+    zod-to-json-schema: ^3.25.1
+  conflicts_conflicts_vue_latest_h3_5_35:
+    vue: ^3.5.35
+  conflicts_conflicts_zod_h4_3_6_h4_4_3:
+    zod: ^4.4.3
 
 # minimumReleaseAge: 0

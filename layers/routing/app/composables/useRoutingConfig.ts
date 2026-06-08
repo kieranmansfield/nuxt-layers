@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { defu } from 'defu'
-import { ROUTING_PRESETS } from '../types/routing'
-import type { RoutingLayerConfig, FeatureValue } from '../types/routing'
+
+import { ROUTING_PRESETS, type FeatureValue, type RoutingLayerConfig } from '../types/routing'
 
 export function useRoutingConfig() {
   const appConfig = useAppConfig()
@@ -12,9 +13,7 @@ export function useRoutingConfig() {
     config,
     isStrictMode: () => config.strictDefaultDeny,
     isLayerDefaultDeny: () => config.layerDefaultDeny,
-    getFeatureVariant: (name: string): FeatureValue =>
-      config.features[name] ?? 'disabled',
-    isFeatureEnabled: (name: string) =>
-      config.features[name] === 'enabled',
+    getFeatureVariant: (name: string): FeatureValue => config.features[name] ?? 'disabled',
+    isFeatureEnabled: (name: string) => config.features[name] === 'enabled',
   }
 }

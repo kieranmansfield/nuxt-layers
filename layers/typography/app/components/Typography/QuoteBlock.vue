@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
   import { useColor } from '../../composables/color'
   import type { UiColors } from '../../types/colors'

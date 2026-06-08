@@ -1,36 +1,74 @@
+<!-- eslint-disable vue/define-props-destructuring -->
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-import { clamp, floor, mix, time, uniform, vec3, vec4 } from 'three/tsl'
-import { grain } from '../../shaders/common/grain'
-import { blendOverlay, blendScreen, blendSoftLight } from '../../shaders/common/blend'
+  // @ts-nocheck
+  import { clamp, floor, mix, time, uniform, vec3, vec4 } from 'three/tsl'
 
-type GrainBlendMode = 'add' | 'sub' | 'screen' | 'overlay' | 'soft-light'
+  import { blendOverlay, blendScreen, blendSoftLight } from '../../shaders/common/blend'
+  import { grain } from '../../shaders/common/grain'
 
-const props = withDefaults(defineProps<{
-  scale?: number
-  strength?: number
-  opacity?: number
-  misregistration?: number
-  fps?: number
-  blendMode?: GrainBlendMode
-  order?: number
-}>(), { scale: 0.6, strength: 0.12, opacity: 1.0, misregistration: 0.003, fps: 8, blendMode: 'add', order: 0 })
+  type GrainBlendMode = 'add' | 'sub' | 'screen' | 'overlay' | 'soft-light'
 
-const scaleNode = uniform(props.scale)
-const strengthNode = uniform(props.strength)
-const opacityNode = uniform(props.opacity)
-const misregNode = uniform(props.misregistration)
-const fpsNode = uniform(props.fps)
-watch(() => props.scale, v => { scaleNode.value = v })
-watch(() => props.strength, v => { strengthNode.value = v })
-watch(() => props.opacity, v => { opacityNode.value = v })
-watch(() => props.misregistration, v => { misregNode.value = v })
-watch(() => props.fps, v => { fpsNode.value = v })
+  const props = withDefaults(
+    defineProps<{
+      scale?: number
+      strength?: number
+      opacity?: number
+      misregistration?: number
+      fps?: number
+      blendMode?: GrainBlendMode
+      order?: number
+    }>(),
+    {
+      scale: 0.6,
+      strength: 0.12,
+      opacity: 1.0,
+      misregistration: 0.003,
+      fps: 8,
+      blendMode: 'add',
+      order: 0,
+    }
+  )
 
-const pipeline = useShaderPipelineContext()
+  const scaleNode = uniform(props.scale)
+  const strengthNode = uniform(props.strength)
+  const opacityNode = uniform(props.opacity)
+  const misregNode = uniform(props.misregistration)
+  const fpsNode = uniform(props.fps)
+  watch(
+    () => props.scale,
+    (v) => {
+      scaleNode.value = v
+    }
+  )
+  watch(
+    () => props.strength,
+    (v) => {
+      strengthNode.value = v
+    }
+  )
+  watch(
+    () => props.opacity,
+    (v) => {
+      opacityNode.value = v
+    }
+  )
+  watch(
+    () => props.misregistration,
+    (v) => {
+      misregNode.value = v
+    }
+  )
+  watch(
+    () => props.fps,
+    (v) => {
+      fpsNode.value = v
+    }
+  )
 
-useShaderStage(
-  (prev) => {
+  const pipeline = useShaderPipelineContext()
+
+  useShaderStage((prev) => {
     const uv = pipeline.uvNode.value
     const seed = floor(time.mul(fpsNode))
 
@@ -66,9 +104,5 @@ useShaderStage(
         blended = prev.xyz.add(grainVec.mul(opacityNode))
     }
     return vec4(clamp(blended, 0, 1), prev.w)
-  },
-  props.order,
-)
+  }, props.order)
 </script>
-
-<template><!-- --></template>

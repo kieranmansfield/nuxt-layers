@@ -1,13 +1,13 @@
 <script setup lang="ts">
-const { contentLayer } = useAppConfig()
-if (contentLayer?.sections?.portfolio === false) {
-  throw createError({ statusCode: 404, statusMessage: 'Not Found' })
-}
+  const { contentLayer } = useAppConfig()
+  if (contentLayer?.sections?.portfolio === false) {
+    throw createError({ statusCode: 404, statusMessage: 'Not Found' })
+  }
 
-useSeoMeta({
-  title: 'Portfolio',
-  description: 'Featured projects and work',
-})
+  useSeoMeta({
+    title: 'Portfolio',
+    description: 'Featured projects and work',
+  })
 </script>
 
 <template>

@@ -1,25 +1,26 @@
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-import type { GalleryCollectionItem } from '@nuxt/content'
+  // @ts-nocheck
+  import type { GalleryCollectionItem } from '@nuxt/content'
 
-const { slug, index } = defineProps<{
-  slug: string
-  index: number
-}>()
+  const { slug, index } = defineProps<{
+    slug: string
+    index: number
+  }>()
 
-const { data: rawItem } = await useCollectionItem('gallery', slug)
-const item = computed(() => rawItem.value as GalleryCollectionItem | null)
+  const { data: rawItem } = await useCollectionItem('gallery', slug)
+  const item = computed(() => rawItem.value as GalleryCollectionItem | null)
 
-const image = computed(() => item.value?.images?.[index])
-const totalImages = computed(() => item.value?.images?.length ?? 0)
-const hasPrevious = computed(() => index > 0)
-const hasNext = computed(() => index < totalImages.value - 1)
+  const image = computed(() => item.value?.images?.[index])
+  const totalImages = computed(() => item.value?.images?.length ?? 0)
+  const hasPrevious = computed(() => index > 0)
+  const hasNext = computed(() => index < totalImages.value - 1)
 
-useSeoMeta({
-  title: () => image.value?.title || image.value?.alt || `Image ${index + 1}`,
-  description: () => image.value?.caption || item.value?.title,
-  ogImage: () => image.value?.src,
-})
+  useSeoMeta({
+    title: () => image.value?.title || image.value?.alt || `Image ${index + 1}`,
+    description: () => image.value?.caption || item.value?.title,
+    ogImage: () => image.value?.src,
+  })
 </script>
 
 <template>

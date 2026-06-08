@@ -1,4 +1,4 @@
-import {} from 'nitropack'
+import 'nitropack'
 
 declare module 'nitropack' {
   interface NitroRuntimeConfig {

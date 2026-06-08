@@ -5,7 +5,7 @@
  * and image format detection
  */
 
-export interface FeatureDetection {
+export type FeatureDetection = {
   // CSS Features
   grid: boolean
   subgrid: boolean
@@ -34,7 +34,7 @@ export interface FeatureDetection {
 /**
  * Device detection types
  */
-export interface DeviceInfo {
+export type DeviceInfo = {
   isMobile: boolean
   isTablet: boolean
   isDesktop: boolean
@@ -48,7 +48,7 @@ export interface DeviceInfo {
 /**
  * Browser detection types
  */
-export interface BrowserInfo {
+export type BrowserInfo = {
   isChrome: boolean
   isSafari: boolean
   isFirefox: boolean
@@ -61,7 +61,7 @@ export interface BrowserInfo {
 /**
  * Screen detection types
  */
-export interface ScreenInfo {
+export type ScreenInfo = {
   breakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   width: number
   height: number
@@ -73,7 +73,7 @@ export interface ScreenInfo {
 /**
  * Network information types
  */
-export interface NetworkInfo {
+export type NetworkInfo = {
   isOnline: boolean
   connectionType: 'slow-2g' | '2g' | '3g' | '4g' | 'wifi' | 'ethernet' | 'unknown'
   effectiveType: string
@@ -89,7 +89,7 @@ export interface NetworkInfo {
  */
 export type RenderingMode = 'ssr' | 'ssg' | 'csr' | 'hybrid'
 
-export interface RenderingInfo {
+export type RenderingInfo = {
   mode: RenderingMode
   isServer: boolean
   isClient: boolean
@@ -100,7 +100,7 @@ export interface RenderingInfo {
 /**
  * PWA types
  */
-export interface PWAInfo {
+export type PWAInfo = {
   isInstalled: boolean
   canInstall: boolean
   needRefresh: boolean
@@ -109,7 +109,7 @@ export interface PWAInfo {
 /**
  * Cache types
  */
-export interface CacheInfo {
+export type CacheInfo = {
   isOnline: boolean
   offlineReady: boolean
   isCached: boolean

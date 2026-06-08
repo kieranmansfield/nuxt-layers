@@ -1,3 +1,7 @@
+<!-- eslint-disable vue/no-boolean-default -->
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
+<!-- eslint-disable vue/define-props-destructuring -->
+<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
   // @ts-nocheck - Three.js WebGPU types + TresJS renderer factory
   import { TresCanvas } from '@tresjs/core'

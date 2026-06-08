@@ -1,5 +1,5 @@
 declare module 'vue-router' {
-  interface RouteMeta {
+  type RouteMeta = {
     feature?: string
     __fromLayer?: boolean
   }

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-const appConfig = useAppConfig()
-const title = appConfig.site?.title ?? 'Site Title'
+  const appConfig = useAppConfig()
+  const title = appConfig.site?.title ?? 'Site Title'
 </script>
 
 <template>

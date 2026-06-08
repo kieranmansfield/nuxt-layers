@@ -1,3 +1,7 @@
+/* eslint-disable complexity */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * ShaderGradient-inspired Shader Layer
@@ -5,6 +9,7 @@
  */
 import { Color } from 'three'
 import { cos, mix, pow, smoothstep, time as tslTime, uniform, uv, vec2, vec3 } from 'three/tsl'
+
 import { fbm2D, simplexNoise2D } from '../common/noise'
 import type { TSLNode } from '../types'
 

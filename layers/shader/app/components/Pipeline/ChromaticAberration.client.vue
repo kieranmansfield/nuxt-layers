@@ -1,32 +1,52 @@
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
+<!-- eslint-disable vue/define-props-destructuring -->
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-import { uniform, time, vec3, vec4, sin, float } from 'three/tsl'
+  // @ts-nocheck
+  import { float, sin, time, uniform, vec3, vec4 } from 'three/tsl'
 
-/**
- * Chromatic aberration — RGB channel offset approximated without texture sampling.
- * Shifts colour contribution along each channel using screen-position phase offsets.
- */
-const props = withDefaults(defineProps<{
-  /** How far channels separate */
-  strength?: number
-  /** Boost aberration at screen edges */
-  edgeFalloff?: number
-  /** Animation speed for subtle drift */
-  speed?: number
-  order?: number
-}>(), { strength: 0.008, edgeFalloff: 1.5, speed: 0.2, order: 0 })
+  /**
+   * Chromatic aberration — RGB channel offset approximated without texture sampling.
+   * Shifts colour contribution along each channel using screen-position phase offsets.
+   */
+  const props = withDefaults(
+    defineProps<{
+      /** How far channels separate */
+      strength?: number
+      /** Boost aberration at screen edges */
+      edgeFalloff?: number
+      /** Animation speed for subtle drift */
+      speed?: number
+      order?: number
+    }>(),
+    { strength: 0.008, edgeFalloff: 1.5, speed: 0.2, order: 0 }
+  )
 
-const strengthNode = uniform(props.strength)
-const edgeNode = uniform(props.edgeFalloff)
-const speedNode = uniform(props.speed)
-watch(() => props.strength, v => { strengthNode.value = v })
-watch(() => props.edgeFalloff, v => { edgeNode.value = v })
-watch(() => props.speed, v => { speedNode.value = v })
+  const strengthNode = uniform(props.strength)
+  const edgeNode = uniform(props.edgeFalloff)
+  const speedNode = uniform(props.speed)
+  watch(
+    () => props.strength,
+    (v) => {
+      strengthNode.value = v
+    }
+  )
+  watch(
+    () => props.edgeFalloff,
+    (v) => {
+      edgeNode.value = v
+    }
+  )
+  watch(
+    () => props.speed,
+    (v) => {
+      speedNode.value = v
+    }
+  )
 
-const pipeline = useShaderPipelineContext()
+  const pipeline = useShaderPipelineContext()
 
-useShaderStage(
-  (prev) => {
+  useShaderStage((prev) => {
     const uv = pipeline.uvNode.value
     const t = time.mul(speedNode)
 
@@ -44,9 +64,5 @@ useShaderStage(
     const bContrib = prev.z.mul(float(1).add(bShift.mul(fromCenter)))
 
     return vec4(vec3(rContrib, gContrib, bContrib), prev.w)
-  },
-  props.order,
-)
+  }, props.order)
 </script>
-
-<template><!-- --></template>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type {
   GridConfig,
   GridLayers,
@@ -5,7 +6,7 @@ import type {
   GridPresetsItem,
 } from '#layers/layout/app/types/layouts'
 
-interface LayoutLayerConfig {
+type LayoutLayerConfig = {
   layoutLayer?: {
     name?: string
     ui?: {

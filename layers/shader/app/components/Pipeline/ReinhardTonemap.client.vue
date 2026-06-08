@@ -1,18 +1,16 @@
+<!-- eslint-disable vue/define-props-destructuring -->
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-import { vec4 } from 'three/tsl'
-import { reinhardTonemap } from '../../shaders/common/tonemapping'
+  // @ts-nocheck
+  import { vec4 } from 'three/tsl'
 
-/**
- * Simple Reinhard tone mapping: col / (col + 1).
- * Compresses HDR values with no hard clip — highlights desaturate toward white.
- */
-const { order = 0 } = defineProps<{ order?: number }>()
+  import { reinhardTonemap } from '../../shaders/common/tonemapping'
 
-useShaderStage(
-  (prev) => vec4(reinhardTonemap(prev.xyz), prev.w),
-  order,
-)
+  /**
+   * Simple Reinhard tone mapping: col / (col + 1).
+   * Compresses HDR values with no hard clip — highlights desaturate toward white.
+   */
+  const { order = 0 } = defineProps<{ order?: number }>()
+
+  useShaderStage((prev) => vec4(reinhardTonemap(prev.xyz), prev.w), order)
 </script>
-
-<template><!-- --></template>

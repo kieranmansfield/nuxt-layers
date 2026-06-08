@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import { abs, dot, float, floor, Fn, fract, max, mix, mod, vec2, vec3, vec4 } from 'three/tsl'
+
 import type { FBMOptions, TSLNode } from '../../types'
 
 /**

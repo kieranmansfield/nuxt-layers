@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 export default defineAppConfig({
   scriptsLayer: {
     consent: {
@@ -20,7 +21,7 @@ export default defineAppConfig({
 })
 
 declare module '@nuxt/schema' {
-  interface AppConfigInput {
+  type AppConfigInput = {
     scriptsLayer?: {
       consent?: {
         required?: boolean

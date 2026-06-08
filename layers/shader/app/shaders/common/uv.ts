@@ -1,9 +1,16 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable complexity */
+/* eslint-disable max-params */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL UV Manipulation Utilities
  * Provides composable UV transformation functions
  */
 import { abs, atan, cos, float, floor, fract, length, pow, sin, smoothstep, vec2 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 
 // ============================================
@@ -357,7 +364,7 @@ export function parallaxUV(
 // Bulge/Pinch Distortion
 // ============================================
 
-export interface BulgeUVOptions {
+export type BulgeUVOptions = {
   strength?: TSLNode | number
   radius?: TSLNode | number
   power?: TSLNode | number

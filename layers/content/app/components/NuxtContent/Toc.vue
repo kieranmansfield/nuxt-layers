@@ -1,11 +1,11 @@
 <!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
-import type { TocLink } from '@nuxt/content'
+  import type { TocLink } from '@nuxt/content'
 
-const { links, title = 'Table of Contents' } = defineProps<{
-  links?: TocLink[]
-  title?: string
-}>()
+  const { links, title = 'Table of Contents' } = defineProps<{
+    links?: TocLink[]
+    title?: string
+  }>()
 </script>
 
 <template>

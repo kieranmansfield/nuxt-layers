@@ -1,6 +1,6 @@
 import type { FeatureValue, RouteResolution, RoutingLayerConfig } from '../types/routing'
 
-interface RouteMeta {
+type RouteMeta = {
   feature?: string
   __fromLayer?: boolean
 }
@@ -8,7 +8,7 @@ interface RouteMeta {
 export function resolveRoute(
   meta: RouteMeta,
   config: RoutingLayerConfig,
-  resolveFeature: (name: string) => FeatureValue,
+  resolveFeature: (name: string) => FeatureValue
 ): RouteResolution {
   if (config.strictDefaultDeny && !meta.feature) {
     return { outcome: 'deny' }

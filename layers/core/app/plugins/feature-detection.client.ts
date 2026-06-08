@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 // plugins/feature-detection.client.ts
 
@@ -17,7 +19,6 @@ export default defineNuxtPlugin(() => {
   const features = useFeatures()
 
   if (import.meta.dev && process.env.NODE_ENV === 'development') {
-    // eslint-disable-next-line no-console
     console.log('[Feature Detection] Initialized:', {
       grid: features.grid.value,
       subgrid: features.subgrid.value,

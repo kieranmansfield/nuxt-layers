@@ -1,22 +1,19 @@
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-import type { PortfolioQueryOptions } from '../../types/content'
+  // @ts-nocheck
+  import type { PortfolioQueryOptions } from '../../types/content'
 
-const { options = {}, collection = 'portfolio' } = defineProps<{
-  options?: PortfolioQueryOptions
-  collection?: string
-}>()
+  const { options = {}, collection = 'portfolio' } = defineProps<{
+    options?: PortfolioQueryOptions
+    collection?: string
+  }>()
 
-const { useItems } = createPortfolioComposables(collection)
-const { data: items, status } = await useItems(options)
+  const { useItems } = createPortfolioComposables(collection)
+  const { data: items, status } = await useItems(options)
 </script>
 
 <template>
-  <NuxtContentList
-    :status="status"
-    :has-items="!!items?.length"
-    empty-message="No items found"
-  >
+  <NuxtContentList :status :has-items="!!items?.length" empty-message="No items found">
     <UPageGrid>
       <UPageCard
         v-for="item in items"

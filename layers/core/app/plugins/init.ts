@@ -1,3 +1,7 @@
+/* eslint-disable complexity */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 /**
  * Core Layer Initialization Plugin
@@ -13,15 +17,14 @@
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useAppConfig()
   // const isDev = import.meta.dev
-  const isDev = process.env.NODE_ENV === 'development' ? true : false
+  const isDev = process.env.NODE_ENV === 'development'
 
   // ============================================================
   // 1. Log initialization (dev only)
   // ============================================================
   if (isDev) {
-    // eslint-disable-next-line no-console
     console.log('🚀 [Core Layer] Initializing...')
-    // eslint-disable-next-line no-console
+
     console.log('[Core Layer] Config:', config.coreLayer)
   }
 
@@ -33,7 +36,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     const device = useDevice()
 
     if (isDev && device) {
-      // eslint-disable-next-line no-console
       console.log('[Core Layer] Device detection:', {
         mobile: device.isMobile,
         desktop: device.isDesktop,
@@ -45,7 +47,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     const isOnline = useOnline()
 
     if (isDev) {
-      // eslint-disable-next-line no-console
       console.log('[Core Layer] VueUse loaded, online status:', isOnline.value)
     }
 
@@ -55,7 +56,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       const { name, version, engine, os } = useBrowser()
 
       if (isDev) {
-        // eslint-disable-next-line no-console
         console.log('[Core Layer] Browser detection:', {
           name: name.value,
           version: version.value,
@@ -68,7 +68,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       const { breakpoint, isRetina, orientation } = useScreen()
 
       if (isDev) {
-        // eslint-disable-next-line no-console
         console.log('[Core Layer] Screen detection:', {
           breakpoint: breakpoint.value,
           retina: isRetina.value,
@@ -80,7 +79,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       const { connectionQuality, effectiveType, saveData } = useNetworkInfo()
 
       if (isDev) {
-        // eslint-disable-next-line no-console
         console.log('[Core Layer] Network detection:', {
           quality: connectionQuality.value,
           type: effectiveType.value,
@@ -92,7 +90,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       const { grid, subgrid, containerQueries, webGL, darkMode } = useFeatures()
 
       if (isDev) {
-        // eslint-disable-next-line no-console
         console.log('[Core Layer] Feature detection:', {
           grid: grid.value,
           subgrid: subgrid.value,
@@ -106,7 +103,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       const { offlineReady, isOnline: cacheOnline } = useCache()
 
       if (isDev) {
-        // eslint-disable-next-line no-console
         console.log('[Core Layer] Cache status:', {
           online: cacheOnline.value,
           offlineReady: offlineReady.value,
@@ -121,7 +117,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     const { mode, isServer, isClient, isHydrated } = useRendering()
 
     if (isDev) {
-      // eslint-disable-next-line no-console
       console.log('[Core Layer] Rendering mode:', {
         mode: mode.value,
         server: isServer.value,
@@ -135,14 +130,13 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     if (isDev) {
       const publicConfig = env.public as Record<string, unknown> | undefined
-      // eslint-disable-next-line no-console
+
       console.log('[Core Layer] Environment config loaded:', {
-        hasPublicConfig: !!publicConfig,
+        hasPublicConfig: Boolean(publicConfig),
         publicKeys: Object.keys(publicConfig ?? {}),
       })
     }
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('[Core Layer] Module verification failed:', error)
   }
 
@@ -151,27 +145,22 @@ export default defineNuxtPlugin((nuxtApp) => {
   // ============================================================
   if (isDev) {
     nuxtApp.hook('app:created', () => {
-      // eslint-disable-next-line no-console
       console.log('✅ [Core Layer] App created')
     })
 
     nuxtApp.hook('app:beforeMount', () => {
-      // eslint-disable-next-line no-console
       console.log('⏳ [Core Layer] App mounting...')
     })
 
     nuxtApp.hook('app:mounted', () => {
-      // eslint-disable-next-line no-console
       console.log('✅ [Core Layer] App mounted')
     })
 
     nuxtApp.hook('page:start', () => {
-      // eslint-disable-next-line no-console
       console.log('📄 [Core Layer] Page navigation started')
     })
 
     nuxtApp.hook('page:finish', () => {
-      // eslint-disable-next-line no-console
       console.log('✅ [Core Layer] Page navigation finished')
     })
   }

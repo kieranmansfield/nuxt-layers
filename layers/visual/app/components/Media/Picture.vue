@@ -1,33 +1,34 @@
 <script lang="ts" setup>
-import { usePicture } from '../../composables/picture'
-import type { PictureProps } from '../../types/media'
+  import { usePicture } from '../../composables/picture'
+  import type { PictureProps } from '../../types/media'
 
-const {
-  src,
-  alt,
-  width,
-  height,
-  sizes = '100vw',
-  format = 'webp',
-  quality = 80,
-  fit = 'cover',
-  loading = 'lazy',
-  fetchpriority = 'auto',
-  decoding = 'async',
-  provider,
-  preset,
-  densities,
-  class: wrapperClass = '',
-  imgClass = '',
-} = defineProps<PictureProps>()
+  const {
+    src,
+    alt,
+    width,
+    height,
+    sizes = '100vw',
+    format = 'webp',
+    quality = 80,
+    fit = 'cover',
+    loading = 'lazy',
+    fetchpriority = 'auto',
+    decoding = 'async',
+    provider,
+    preset,
+    densities,
+    class: wrapperClass = '',
+    imgClass = '',
+  } = defineProps<PictureProps>()
 
-const { sizesString, computedFormat } = usePicture(
-  () => sizes,
-  () => format
-)
+  const { sizesString, computedFormat } = usePicture(
+    () => sizes,
+    () => format
+  )
 </script>
 
 <template>
+  <!-- eslint-disable vue/no-duplicate-attr-inheritance -->
   <NuxtPicture
     :src
     :alt

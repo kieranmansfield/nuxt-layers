@@ -2,7 +2,7 @@ import type { ComputedRef, Ref } from 'vue'
 
 export const SCROLL_SCENE_KEY = Symbol('motionScrollScene')
 
-export interface ScrollSceneContext {
+export type ScrollSceneContext = {
   progress: Ref<number>
   active: Ref<boolean>
   name: string
@@ -22,9 +22,7 @@ export function useScrollSteps(total: number) {
 
   const sceneProgress = computed(() => scene?.progress.value ?? 0)
 
-  const currentStep = computed(() =>
-    Math.min(Math.floor(sceneProgress.value * total), total - 1)
-  )
+  const currentStep = computed(() => Math.min(Math.floor(sceneProgress.value * total), total - 1))
 
   function isActive(index: number): boolean {
     return currentStep.value === index

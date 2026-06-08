@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Noise Helper Functions
  * Provides primitive functions required by 3D/4D noise algorithms
  */
 import { abs, dot, floor, fract, lessThan, mod, mul, sub, vec3, vec4 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 
 // ============================================

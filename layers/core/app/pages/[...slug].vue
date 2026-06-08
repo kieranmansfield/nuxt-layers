@@ -1,111 +1,111 @@
 <script setup lang="ts">
-// Type definition for notFound config
-interface NotFoundConfig {
-  icon?: string
-  title?: string
-  description?: string
-  showPath?: boolean
-  showHomeButton?: boolean
-  homeButtonLabel?: string
-  homeButtonTo?: string
-  showBackButton?: boolean
-  backButtonLabel?: string
-  actions?: Array<{
-    label: string
-    to?: string
+  // Type definition for notFound config
+  interface NotFoundConfig {
     icon?: string
-    color?: 'primary' | 'neutral' | 'error' | 'success'
-    variant?: 'solid' | 'outline' | 'ghost' | 'soft'
-    click?: () => void
-  }>
-  suggestions?: {
-    enabled?: boolean
     title?: string
-    links?: Array<{
+    description?: string
+    showPath?: boolean
+    showHomeButton?: boolean
+    homeButtonLabel?: string
+    homeButtonTo?: string
+    showBackButton?: boolean
+    backButtonLabel?: string
+    actions?: Array<{
       label: string
-      to: string
+      to?: string
       icon?: string
+      color?: 'primary' | 'neutral' | 'error' | 'success'
+      variant?: 'solid' | 'outline' | 'ghost' | 'soft'
+      click?: () => void
     }>
-  }
-}
-
-// App configuration
-const appConfig = useAppConfig()
-const config = computed(() => {
-  const coreLayer = appConfig.coreLayer as { notFound?: NotFoundConfig } | undefined
-  return (coreLayer?.notFound ?? {}) as NotFoundConfig
-})
-
-// Route information
-const route = useRoute()
-const router = useRouter()
-const attemptedPath = computed(() => route.path)
-
-// Visual configuration with defaults
-const icon = computed(() => config.value.icon || 'i-lucide-file-question')
-const title = computed(() => config.value.title || 'Page Not Found')
-const description = computed(
-  () => config.value.description || "The page you're looking for doesn't exist or has been moved."
-)
-
-// Action buttons
-const homeButton = computed(() => ({
-  enabled: config.value.showHomeButton !== false,
-  label: config.value.homeButtonLabel || 'Go Home',
-  to: config.value.homeButtonTo || '/',
-  icon: 'i-lucide-home',
-}))
-
-const backButton = computed(() => ({
-  enabled: config.value.showBackButton !== false,
-  label: config.value.backButtonLabel || 'Go Back',
-  icon: 'i-lucide-arrow-left',
-}))
-
-// Combine all actions (built-in + custom from config)
-const allActions = computed(() => {
-  const actions = []
-
-  if (homeButton.value.enabled) {
-    actions.push({
-      label: homeButton.value.label,
-      to: homeButton.value.to,
-      icon: homeButton.value.icon,
-      color: 'primary',
-      variant: 'solid',
-    })
+    suggestions?: {
+      enabled?: boolean
+      title?: string
+      links?: Array<{
+        label: string
+        to: string
+        icon?: string
+      }>
+    }
   }
 
-  if (backButton.value.enabled) {
-    actions.push({
-      label: backButton.value.label,
-      icon: backButton.value.icon,
-      color: 'neutral',
-      variant: 'outline',
-      click: () => router.back(),
-    })
+  // App configuration
+  const appConfig = useAppConfig()
+  const config = computed(() => {
+    const coreLayer = appConfig.coreLayer as { notFound?: NotFoundConfig } | undefined
+    return (coreLayer?.notFound ?? {}) as NotFoundConfig
+  })
+
+  // Route information
+  const route = useRoute()
+  const router = useRouter()
+  const attemptedPath = computed(() => route.path)
+
+  // Visual configuration with defaults
+  const icon = computed(() => config.value.icon || 'i-lucide-file-question')
+  const title = computed(() => config.value.title || 'Page Not Found')
+  const description = computed(
+    () => config.value.description || "The page you're looking for doesn't exist or has been moved."
+  )
+
+  // Action buttons
+  const homeButton = computed(() => ({
+    enabled: config.value.showHomeButton !== false,
+    label: config.value.homeButtonLabel || 'Go Home',
+    to: config.value.homeButtonTo || '/',
+    icon: 'i-lucide-home',
+  }))
+
+  const backButton = computed(() => ({
+    enabled: config.value.showBackButton !== false,
+    label: config.value.backButtonLabel || 'Go Back',
+    icon: 'i-lucide-arrow-left',
+  }))
+
+  // Combine all actions (built-in + custom from config)
+  const allActions = computed(() => {
+    const actions = []
+
+    if (homeButton.value.enabled) {
+      actions.push({
+        label: homeButton.value.label,
+        to: homeButton.value.to,
+        icon: homeButton.value.icon,
+        color: 'primary',
+        variant: 'solid',
+      })
+    }
+
+    if (backButton.value.enabled) {
+      actions.push({
+        label: backButton.value.label,
+        icon: backButton.value.icon,
+        color: 'neutral',
+        variant: 'outline',
+        click: () => router.back(),
+      })
+    }
+
+    return [...actions, ...(config.value.actions || [])]
+  })
+
+  // Suggestions configuration
+  const suggestions = computed(() => config.value.suggestions || {})
+  const showSuggestions = computed(
+    () => suggestions.value.enabled && (suggestions.value.links?.length ?? 0) > 0
+  )
+
+  // SEO & Status Code
+  useSeoMeta({
+    title: '404 - Page Not Found',
+    description: 'The page you are looking for could not be found.',
+    robots: 'noindex, nofollow',
+  })
+
+  // Set 404 status code
+  if (import.meta.server) {
+    setResponseStatus(404)
   }
-
-  return [...actions, ...(config.value.actions || [])]
-})
-
-// Suggestions configuration
-const suggestions = computed(() => config.value.suggestions || {})
-const showSuggestions = computed(
-  () => suggestions.value.enabled && (suggestions.value.links?.length ?? 0) > 0
-)
-
-// SEO & Status Code
-useSeoMeta({
-  title: '404 - Page Not Found',
-  description: 'The page you are looking for could not be found.',
-  robots: 'noindex, nofollow',
-})
-
-// Set 404 status code
-if (import.meta.server) {
-  setResponseStatus(404)
-}
 </script>
 
 <template>

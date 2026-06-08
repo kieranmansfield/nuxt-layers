@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Complex number arithmetic in TSL
  * Both functions operate on vec2 (x = real, y = imaginary).
  */
-import { vec2, dot } from 'three/tsl'
+import { dot, vec2 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 
 /**
@@ -13,10 +15,7 @@ import type { TSLNode } from '../types'
  */
 export function complexDiv(a: TSLNode, b: TSLNode): TSLNode {
   const denom = dot(b, b)
-  return vec2(
-    a.x.mul(b.x).add(a.y.mul(b.y)).div(denom),
-    a.y.mul(b.x).sub(a.x.mul(b.y)).div(denom),
-  )
+  return vec2(a.x.mul(b.x).add(a.y.mul(b.y)).div(denom), a.y.mul(b.x).sub(a.x.mul(b.y)).div(denom))
 }
 
 /**

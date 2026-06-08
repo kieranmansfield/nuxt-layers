@@ -5,7 +5,7 @@
  * Extends Nuxt's RuntimeConfig with core layer specifics
  */
 
-export interface CoreLayerRuntimeConfig {
+export type CoreLayerRuntimeConfig = {
   // Server-side only (private)
   secretKey?: string
   apiSecretKey?: string
@@ -25,7 +25,7 @@ export interface CoreLayerRuntimeConfig {
  * Augment Nuxt's RuntimeConfig
  */
 declare module 'nuxt/schema' {
-  interface RuntimeConfig extends CoreLayerRuntimeConfig {}
+  type RuntimeConfig = {} & CoreLayerRuntimeConfig
 }
 
 export {}

@@ -1,10 +1,10 @@
 import type { Author } from '#layers/core/app/types/site'
 
-export interface ContentAuthor extends Author {
+export type ContentAuthor = {
   avatar?: string
-}
+} & Author
 
-export interface GalleryImage {
+export type GalleryImage = {
   src: string
   alt: string
   width?: number
@@ -14,19 +14,19 @@ export interface GalleryImage {
   ambient?: boolean
 }
 
-export interface PortfolioColor {
+export type PortfolioColor = {
   name: string
   value: string
   usage?: string
 }
 
-export interface PortfolioFont {
+export type PortfolioFont = {
   name: string
   weights?: string[]
   usage?: string
 }
 
-export interface BaseContent {
+export type BaseContent = {
   title: string
   description?: string
   image?: string
@@ -35,18 +35,18 @@ export interface BaseContent {
   draft?: boolean
 }
 
-export interface ContentPage extends BaseContent {}
+export type ContentPage = {} & BaseContent
 
-export interface BlogPost extends BaseContent {
+export type BlogPost = {
   date: string
   authors: ContentAuthor[]
   tags: string[]
   badge?: string
   draft: boolean
   readingTime?: number
-}
+} & BaseContent
 
-export interface PortfolioItem extends BaseContent {
+export type PortfolioItem = {
   tags: string[]
   client?: string
   year?: number
@@ -55,27 +55,27 @@ export interface PortfolioItem extends BaseContent {
   featured: boolean
   colors: PortfolioColor[]
   typography: PortfolioFont[]
-}
+} & BaseContent
 
-export interface GalleryItem extends BaseContent {
+export type GalleryItem = {
   images: GalleryImage[]
   tags: string[]
-}
+} & BaseContent
 
-export interface ContentQueryOptions {
+export type ContentQueryOptions = {
   limit?: number
 }
 
-export interface BlogQueryOptions extends ContentQueryOptions {
+export type BlogQueryOptions = {
   excludeDrafts?: boolean
   tags?: string[]
-}
+} & ContentQueryOptions
 
-export interface PortfolioQueryOptions extends ContentQueryOptions {
+export type PortfolioQueryOptions = {
   featured?: boolean
   tags?: string[]
-}
+} & ContentQueryOptions
 
-export interface GalleryQueryOptions extends ContentQueryOptions {
+export type GalleryQueryOptions = {
   tags?: string[]
-}
+} & ContentQueryOptions

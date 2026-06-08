@@ -1,20 +1,20 @@
 import { createHooks } from 'hookable'
 
-export interface ContactSubmittedPayload {
+export type ContactSubmittedPayload = {
   name: string
   email: string
   message: string
 }
 
-export interface ContactSentPayload extends ContactSubmittedPayload {
+export type ContactSentPayload = {
   messageId: string
-}
+} & ContactSubmittedPayload
 
-export interface ContactFailedPayload extends ContactSubmittedPayload {
+export type ContactFailedPayload = {
   error: unknown
-}
+} & ContactSubmittedPayload
 
-export interface MailerLayerHooks {
+export type MailerLayerHooks = {
   'contact:submitted': (payload: ContactSubmittedPayload) => void
   'contact:sent': (payload: ContactSentPayload) => void
   'contact:failed': (payload: ContactFailedPayload) => void

@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /**
  * Error logging composable for tracking and reporting errors
  *
@@ -20,7 +22,7 @@
  * ```
  */
 
-export interface ErrorContext {
+export type ErrorContext = {
   /** Component name where error occurred */
   component?: string
   /** Additional context information */
@@ -33,7 +35,7 @@ export interface ErrorContext {
   [key: string]: unknown
 }
 
-export interface ErrorLogConfig {
+export type ErrorLogConfig = {
   /** Enable console logging in development */
   logToConsole?: boolean
   /** Enable external error service logging */
@@ -72,13 +74,12 @@ export function useErrorLog() {
 
     // Console logging (development only by default)
     if (config.value.logToConsole && import.meta.dev && process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line no-console
       console.group('🔴 Error Logged')
-      // eslint-disable-next-line no-console
+
       console.error('Error:', errorObj)
-      // eslint-disable-next-line no-console
+
       console.log('Context:', fullContext)
-      // eslint-disable-next-line no-console
+
       console.groupEnd()
     }
 
@@ -95,7 +96,6 @@ export function useErrorLog() {
     const { externalUrl, externalToken } = config.value
 
     if (!externalUrl) {
-      // eslint-disable-next-line no-console
       process.env.NODE_ENV === 'development'
         ? console.warn('Error logging enabled but no externalUrl configured')
         : ''
@@ -121,7 +121,6 @@ export function useErrorLog() {
     } catch (loggingError) {
       // Don't let logging errors crash the app
       if (import.meta.dev) {
-        // eslint-disable-next-line no-console
         process.env.NODE_ENV === 'development'
           ? console.error('Failed to send error to external service:', loggingError)
           : ''
@@ -134,7 +133,6 @@ export function useErrorLog() {
    */
   const logWarning = (message: string, context?: ErrorContext) => {
     if (config.value.logToConsole && import.meta.dev) {
-      // eslint-disable-next-line no-console
       process.env.NODE_ENV === 'development' ? console.warn('⚠️  Warning:', message, context) : ''
     }
   }
@@ -144,7 +142,6 @@ export function useErrorLog() {
    */
   const logInfo = (message: string, data?: unknown) => {
     if (config.value.logToConsole && import.meta.dev) {
-      // eslint-disable-next-line no-console
       process.env.NODE_ENV === 'development' ? console.log('ℹ️  Info:', message, data) : ''
     }
   }

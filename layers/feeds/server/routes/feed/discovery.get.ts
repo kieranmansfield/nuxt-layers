@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 export default defineEventHandler((event) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const appConfig = useAppConfig() as any

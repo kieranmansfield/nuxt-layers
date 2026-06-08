@@ -1,6 +1,6 @@
 <script setup lang="ts">
-// Motion Components Index
-// This file serves as the entry point for all motion components
+  // Motion Components Index
+  // This file serves as the entry point for all motion components
 </script>
 
 <template>
@@ -10,7 +10,7 @@
 </template>
 
 <style scoped>
-.motion-components {
-  /* Container for motion components */
-}
+  .motion-components {
+    /* Container for motion components */
+  }
 </style>

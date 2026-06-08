@@ -1,32 +1,43 @@
+<!-- eslint-disable vue/define-props-destructuring -->
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-import { uniform, vec4 } from 'three/tsl'
-import { vignette } from '../../shaders/common/grain'
+  // @ts-nocheck
+  import { uniform, vec4 } from 'three/tsl'
 
-const props = withDefaults(defineProps<{
-  intensity?: number
-  smoothness?: number
-  order?: number
-}>(), {
-  intensity: 0.5,
-  smoothness: 0.5,
-  order: 0,
-})
+  import { vignette } from '../../shaders/common/grain'
 
-const intensityNode = uniform(props.intensity)
-const smoothnessNode = uniform(props.smoothness)
-watch(() => props.intensity, v => { intensityNode.value = v })
-watch(() => props.smoothness, v => { smoothnessNode.value = v })
+  const props = withDefaults(
+    defineProps<{
+      intensity?: number
+      smoothness?: number
+      order?: number
+    }>(),
+    {
+      intensity: 0.5,
+      smoothness: 0.5,
+      order: 0,
+    }
+  )
 
-const { uvNode } = useShaderPipelineContext()
+  const intensityNode = uniform(props.intensity)
+  const smoothnessNode = uniform(props.smoothness)
+  watch(
+    () => props.intensity,
+    (v) => {
+      intensityNode.value = v
+    }
+  )
+  watch(
+    () => props.smoothness,
+    (v) => {
+      smoothnessNode.value = v
+    }
+  )
 
-useShaderStage(
-  (prev) => {
+  const { uvNode } = useShaderPipelineContext()
+
+  useShaderStage((prev) => {
     const v = vignette(uvNode.value, intensityNode, smoothnessNode)
     return vec4(prev.xyz.mul(v), prev.w)
-  },
-  props.order,
-)
+  }, props.order)
 </script>
-
-<template><!-- --></template>

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 export default defineNuxtPlugin((nuxtApp) => {
   const { logError } = useErrorLog()
 
@@ -40,7 +41,6 @@ export default defineNuxtPlugin((nuxtApp) => {
   // Handle page errors
   nuxtApp.hook('app:error:cleared', () => {
     if (import.meta.dev) {
-      // eslint-disable-next-line no-console
       console.log('✅ Error cleared')
     }
   })

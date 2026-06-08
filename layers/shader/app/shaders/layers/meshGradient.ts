@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Mesh Gradient Shader Layer
@@ -5,10 +7,11 @@
  */
 import { Color } from 'three'
 import { cos, float, mix, sin, time as tslTime, uniform, uv, vec2, vec3 } from 'three/tsl'
+
 import { blob } from '../common/shapes'
 import type { TSLNode } from '../types'
 
-export interface MeshGradientOptions {
+export type MeshGradientOptions = {
   /** Array of colors (4 recommended) */
   colors?: string[]
   /** Animation speed */
@@ -25,14 +28,14 @@ export interface MeshGradientOptions {
   mouseStrength?: number
 }
 
-export interface MeshGradientUniforms {
+export type MeshGradientUniforms = {
   speed: ReturnType<typeof uniform>
   blobScale: ReturnType<typeof uniform>
   softness: ReturnType<typeof uniform>
   mouseX: ReturnType<typeof uniform>
   mouseY: ReturnType<typeof uniform>
   mouseStrength: ReturnType<typeof uniform>
-  colors: ReturnType<typeof uniform>[]
+  colors: Array<ReturnType<typeof uniform>>
 }
 
 /**

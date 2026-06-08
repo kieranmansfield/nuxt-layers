@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import MastNavModal from '../components/Mast/NavModal.vue'
 
 function _useMastNav() {
@@ -7,15 +8,17 @@ function _useMastNav() {
   const modal = overlay.create(MastNavModal)
 
   function open() {
-    try { useSmoothScroll().lockScrolling() }
-    catch {}
+    try {
+      useSmoothScroll().lockScrolling()
+    } catch {}
     modal.open()
   }
 
   function close() {
     modal.close()
-    try { useSmoothScroll().unlockScrolling() }
-    catch {}
+    try {
+      useSmoothScroll().unlockScrolling()
+    } catch {}
   }
 
   return { open, close }

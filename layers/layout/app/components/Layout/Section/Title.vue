@@ -1,26 +1,27 @@
+<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
-/**
- * PageHeader - Standard page header component
- *
- * Displays a centered page title and optional description with consistent spacing.
- * Used by PageContainer for visible page headers.
- *
- * @prop {string} title - Page title (displays as h1)
- * @prop {string} description - Optional page description
- *
- * @example
- * <LayoutSectionTitle
- *   title="About Us"
- *   description="Learn about our company and mission"
- * />
- */
+  /**
+   * PageHeader - Standard page header component
+   *
+   * Displays a centered page title and optional description with consistent spacing.
+   * Used by PageContainer for visible page headers.
+   *
+   * @prop {string} title - Page title (displays as h1)
+   * @prop {string} description - Optional page description
+   *
+   * @example
+   * <LayoutSectionTitle
+   *   title="About Us"
+   *   description="Learn about our company and mission"
+   * />
+   */
 
-interface Props {
-  title: string
-  description?: string
-}
+  interface Props {
+    title: string
+    description?: string
+  }
 
-defineProps<Props>()
+  defineProps<Props>()
 </script>
 
 <template>

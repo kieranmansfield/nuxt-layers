@@ -11,7 +11,7 @@
  * const { style } = useGridPlacement({ colStart: 2, colSpan: 10 })
  */
 
-interface GridPlacement {
+type GridPlacement = {
   colStart?: number
   colSpan?: number
   rowStart?: number

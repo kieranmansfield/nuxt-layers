@@ -1,4 +1,4 @@
-export interface FeedItem {
+export type FeedItem = {
   title: string
   description?: string
   link: string
@@ -8,7 +8,7 @@ export interface FeedItem {
   tags?: string[]
 }
 
-export interface FeedConfig {
+export type FeedConfig = {
   title: string
   description: string
   siteUrl: string

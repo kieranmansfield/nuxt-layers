@@ -1,7 +1,8 @@
 import type { Blending, DepthModes, Side } from 'three'
+
 import type { TSLNode } from './tsl'
 
-export interface NodeMaterialConfig {
+export type NodeMaterialConfig = {
   colorNode?: TSLNode
   opacityNode?: TSLNode
   normalNode?: TSLNode
@@ -20,7 +21,7 @@ export interface NodeMaterialConfig {
   flatShading?: boolean
 }
 
-export interface GradientMaterialConfig {
+export type GradientMaterialConfig = {
   colors: string[]
   angle?: number
   type?: 'linear' | 'radial'
@@ -28,7 +29,7 @@ export interface GradientMaterialConfig {
   speed?: number
 }
 
-export interface NoiseMaterialConfig {
+export type NoiseMaterialConfig = {
   scale?: number
   speed?: number
   octaves?: number
@@ -37,7 +38,7 @@ export interface NoiseMaterialConfig {
   type?: 'simplex' | 'perlin' | 'voronoi' | 'fbm'
 }
 
-export interface FresnelMaterialConfig {
+export type FresnelMaterialConfig = {
   baseColor?: string
   fresnelColor?: string
   power?: number

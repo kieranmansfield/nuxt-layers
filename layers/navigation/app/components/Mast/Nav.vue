@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { open } = useMastNav()
-const z = useGridConfig().useZIndex('dropdown')
+  const { open } = useMastNav()
+  const z = useGridConfig().useZIndex('dropdown')
 </script>
 
 <template>

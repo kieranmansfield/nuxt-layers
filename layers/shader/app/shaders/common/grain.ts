@@ -1,9 +1,13 @@
+/* eslint-disable max-params */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Grain & Film Effects
  * Provides composable grain and texture overlay functions
  */
 import { clamp, dot, float, floor, fract, mix, sin, smoothstep, vec2, vec3 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 
 // ============================================

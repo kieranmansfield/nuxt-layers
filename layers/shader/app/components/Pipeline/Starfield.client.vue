@@ -1,36 +1,72 @@
+<!-- eslint-disable vue/define-props-destructuring -->
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-import { uniform, time, vec3, vec4, vec2, floor, fract, sin, dot, smoothstep, float } from 'three/tsl'
+  // @ts-nocheck
+  import {
+    dot,
+    float,
+    floor,
+    fract,
+    sin,
+    smoothstep,
+    time,
+    uniform,
+    vec2,
+    vec3,
+    vec4,
+  } from 'three/tsl'
 
-/**
- * Hash-based procedural starfield.
- * Each cell on a grid may contain a star whose brightness twinkles over time.
- */
-const props = withDefaults(defineProps<{
-  /** Grid density — higher = more stars */
-  density?: number
-  /** Star brightness */
-  brightness?: number
-  /** Twinkle animation speed */
-  twinkleSpeed?: number
-  /** Star size (sharpness) */
-  size?: number
-  order?: number
-}>(), { density: 80, brightness: 1.0, twinkleSpeed: 1.0, size: 0.4, order: 0 })
+  /**
+   * Hash-based procedural starfield.
+   * Each cell on a grid may contain a star whose brightness twinkles over time.
+   */
+  const props = withDefaults(
+    defineProps<{
+      /** Grid density — higher = more stars */
+      density?: number
+      /** Star brightness */
+      brightness?: number
+      /** Twinkle animation speed */
+      twinkleSpeed?: number
+      /** Star size (sharpness) */
+      size?: number
+      order?: number
+    }>(),
+    { density: 80, brightness: 1.0, twinkleSpeed: 1.0, size: 0.4, order: 0 }
+  )
 
-const densityNode = uniform(props.density)
-const brightnessNode = uniform(props.brightness)
-const twinkleNode = uniform(props.twinkleSpeed)
-const sizeNode = uniform(props.size)
-watch(() => props.density, v => { densityNode.value = v })
-watch(() => props.brightness, v => { brightnessNode.value = v })
-watch(() => props.twinkleSpeed, v => { twinkleNode.value = v })
-watch(() => props.size, v => { sizeNode.value = v })
+  const densityNode = uniform(props.density)
+  const brightnessNode = uniform(props.brightness)
+  const twinkleNode = uniform(props.twinkleSpeed)
+  const sizeNode = uniform(props.size)
+  watch(
+    () => props.density,
+    (v) => {
+      densityNode.value = v
+    }
+  )
+  watch(
+    () => props.brightness,
+    (v) => {
+      brightnessNode.value = v
+    }
+  )
+  watch(
+    () => props.twinkleSpeed,
+    (v) => {
+      twinkleNode.value = v
+    }
+  )
+  watch(
+    () => props.size,
+    (v) => {
+      sizeNode.value = v
+    }
+  )
 
-const pipeline = useShaderPipelineContext()
+  const pipeline = useShaderPipelineContext()
 
-useShaderStage(
-  (prev) => {
+  useShaderStage((prev) => {
     const uv = pipeline.uvNode.value
     const t = time.mul(twinkleNode)
 
@@ -52,14 +88,12 @@ useShaderStage(
     const dist = local.sub(starPos).length()
 
     // Twinkle via time-based sine modulation
-    const twinkle = sin(t.add(h1.mul(6.28))).mul(0.3).add(0.7)
+    const twinkle = sin(t.add(h1.mul(6.28)))
+      .mul(0.3)
+      .add(0.7)
     const star = smoothstep(sizeNode, float(0), dist.mul(10)).mul(hasStar).mul(twinkle)
 
     const colour = vec3(star.mul(brightnessNode))
     return vec4(prev.xyz.add(colour), prev.w)
-  },
-  props.order,
-)
+  }, props.order)
 </script>
-
-<template><!-- --></template>

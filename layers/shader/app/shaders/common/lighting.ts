@@ -1,9 +1,12 @@
+/* eslint-disable max-params */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Lighting Utilities
  * Provides common lighting models for shader effects
  */
 import { dot, float, max, mix, normalize, pow, reflect, vec3 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 
 // ============================================
@@ -110,7 +113,7 @@ export function blinnPhongSpecular(
 // Combined Lighting
 // ============================================
 
-export interface LightingOptions {
+export type LightingOptions = {
   ambient?: TSLNode | number
   diffuseStrength?: TSLNode | number
   specularStrength?: TSLNode | number

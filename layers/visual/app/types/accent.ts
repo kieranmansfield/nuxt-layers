@@ -1,7 +1,7 @@
 export type AccentBlobColor = 'primary' | 'secondary' | 'info' | 'white' | 'black' | 'custom'
 export type BlobBlur = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | number
 
-export interface BlobConfig {
+export type BlobConfig = {
   x: number
   y: number
   size?: string
@@ -12,6 +12,6 @@ export interface BlobConfig {
   customColor?: string | undefined
 }
 
-export interface AccentSceneConfig {
+export type AccentSceneConfig = {
   blobs: BlobConfig[]
 }

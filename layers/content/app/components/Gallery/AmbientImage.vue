@@ -1,18 +1,18 @@
 <!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
-const {
-  src,
-  alt = '',
-  width,
-  height,
-  caption,
-} = defineProps<{
-  src: string
-  alt?: string
-  width?: number
-  height?: number
-  caption?: string
-}>()
+  const {
+    src,
+    alt = '',
+    width,
+    height,
+    caption,
+  } = defineProps<{
+    src: string
+    alt?: string
+    width?: number
+    height?: number
+    caption?: string
+  }>()
 </script>
 
 <template>
@@ -22,7 +22,7 @@ const {
       <Teleport to="body">
         <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
           <img
-            :src="src"
+            :src
             alt=""
             class="absolute inset-0 w-full h-full object-cover blur-[100px] opacity-30 saturate-150 scale-125"
           />
@@ -36,7 +36,7 @@ const {
 
     <!-- Main image in normal flow -->
     <figure class="my-6">
-      <img :src="src" :alt="alt" :width="width" :height="height" class="w-full rounded-lg" />
+      <img :src :alt :width :height class="w-full rounded-lg" />
       <figcaption v-if="caption" class="mt-3 text-center text-sm text-muted italic">
         {{ caption }}
       </figcaption>

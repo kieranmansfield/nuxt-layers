@@ -1,6 +1,7 @@
+/* eslint-disable complexity */
 // composables/useBrowser.ts
 
-interface BrowserInfo {
+type BrowserInfo = {
   name: string
   version: string
   engine: string

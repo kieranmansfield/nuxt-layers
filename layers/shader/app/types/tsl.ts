@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * TSL Node types
  * Using generic types for flexibility across Three.js versions
@@ -19,12 +20,12 @@ export type TSLMat3 = any
 
 export type TSLMat4 = any
 
-export interface GradientStop {
+export type GradientStop = {
   position: number
   color: TSLColor | TSLVec3
 }
 
-export interface FBMOptions {
+export type FBMOptions = {
   octaves?: number
   lacunarity?: number
   gain?: number
@@ -32,7 +33,7 @@ export interface FBMOptions {
   frequency?: number
 }
 
-export interface VoronoiResult {
+export type VoronoiResult = {
   distance: TSLFloat
   cellCenter: TSLVec2
   edgeDistance: TSLFloat

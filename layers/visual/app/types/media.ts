@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 /**
  * Media Types
  *
@@ -68,7 +69,7 @@ export type {
  * }
  * ```
  */
-export interface ResponsiveSizes {
+export type ResponsiveSizes = {
   default: string
   // Tailwind breakpoints
   sm?: string
@@ -98,7 +99,7 @@ export interface ResponsiveSizes {
  * Props for Picture component
  * Wraps NuxtPicture with sensible defaults and responsive sizing
  */
-export interface PictureProps {
+export type PictureProps = {
   // Required props
   /** Image source URL or path */
   src: string
@@ -177,7 +178,7 @@ export interface PictureProps {
 /**
  * Return type for usePicture composable
  */
-export interface UsePictureReturn {
+export type UsePictureReturn = {
   /** Computed sizes attribute string */
   sizesString: import('vue').ComputedRef<string>
   /** Computed format string */

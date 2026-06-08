@@ -1,4 +1,7 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { ComputedRef, CSSProperties, MaybeRefOrGetter } from 'vue'
+
 import type { GradientConfig, GradientStop } from '../types/gradient'
 
 const DEFAULT_CONFIG: GradientConfig = {

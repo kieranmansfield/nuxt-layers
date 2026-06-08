@@ -1,6 +1,7 @@
+/* eslint-disable no-restricted-syntax */
 import type { ComputedRef, CSSProperties } from 'vue'
-import { TINT_LEVEL_OPACITY } from '../types/tint'
-import type { TintConfig } from '../types/tint'
+
+import { TINT_LEVEL_OPACITY, type TintConfig } from '../types/tint'
 
 export function useTint(config: TintConfig): {
   style: ComputedRef<CSSProperties>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const { value, loading = false } = defineProps<{
-  value: unknown
-  loading?: boolean
-}>()
+  const { value, loading = false } = defineProps<{
+    value: unknown
+    loading?: boolean
+  }>()
 </script>
 
 <template>

@@ -1,11 +1,13 @@
-/* eslint-disable no-restricted-imports */
-import { MeshBasicNodeMaterial, MeshStandardNodeMaterial } from 'three/webgpu'
+/* eslint-disable complexity */
+/* eslint-disable no-restricted-syntax */
 import { onUnmounted, shallowRef } from 'vue'
+import { MeshBasicNodeMaterial, MeshStandardNodeMaterial } from 'three/webgpu'
+
 import type { NodeMaterialConfig, TSLNode } from '../types'
 
 export type ShaderMaterialType = 'basic' | 'standard'
 
-export interface UseShaderOptions {
+export type UseShaderOptions = {
   type?: ShaderMaterialType
   config?: NodeMaterialConfig
   autoDispose?: boolean

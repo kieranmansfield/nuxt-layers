@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 declare module '@nuxt/schema' {
-  interface AppConfigInput {
+  type AppConfigInput = {
     layoutLayer?: {
       name?: string
       ui?: {

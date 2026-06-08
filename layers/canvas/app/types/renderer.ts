@@ -2,7 +2,7 @@ export type RendererBackend = 'webgpu' | 'webgl'
 export type QualityLevel = 'low' | 'medium' | 'high' | 'ultra'
 export type ToneMappingPreset = 'aces' | 'reinhard' | 'cineon' | 'linear'
 
-export interface RendererCapabilities {
+export type RendererCapabilities = {
   backend: RendererBackend
   maxTextureSize: number
   maxTextures: number
@@ -15,7 +15,7 @@ export interface RendererCapabilities {
   isWebGPU: boolean
 }
 
-export interface QualitySettings {
+export type QualitySettings = {
   pixelRatio: number
   antialias: boolean
   shadows: boolean

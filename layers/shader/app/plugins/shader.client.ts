@@ -1,4 +1,5 @@
-/* eslint-disable no-console */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { checkWebGPUSupport } from '#layers/canvas/app/composables/useRendererCapabilities'
 
 export default defineNuxtPlugin(async () => {

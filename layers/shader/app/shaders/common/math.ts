@@ -1,3 +1,5 @@
+/* eslint-disable max-params */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Math Utilities
@@ -23,6 +25,7 @@ import {
   vec2,
   vec4,
 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 
 // ============================================

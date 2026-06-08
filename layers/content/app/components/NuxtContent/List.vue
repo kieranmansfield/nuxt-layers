@@ -1,13 +1,14 @@
+<!-- eslint-disable vue/no-boolean-default -->
 <script setup lang="ts">
-const {
-  status,
-  hasItems = true,
-  emptyMessage = 'No items found',
-} = defineProps<{
-  status: string
-  hasItems?: boolean
-  emptyMessage?: string
-}>()
+  const {
+    status,
+    hasItems = true,
+    emptyMessage = 'No items found',
+  } = defineProps<{
+    status: string
+    hasItems?: boolean
+    emptyMessage?: string
+  }>()
 </script>
 
 <template>

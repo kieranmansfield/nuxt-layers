@@ -1,6 +1,10 @@
+/* eslint-disable max-params */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex
 import { Vector2 } from 'three'
 import { uniform } from 'three/tsl'
+
 import type { TweenHandle } from '../utils/tsl/tween'
 
 /**

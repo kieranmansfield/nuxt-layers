@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { PageCollections } from '@nuxt/content'
 
 export function useCollectionSurround(collection: string, slug: string) {

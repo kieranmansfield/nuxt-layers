@@ -72,29 +72,29 @@
  * width and centres it within its parent.
  */
 .layout-container-content {
-  max-width: 65ch;
-  width: 100%;
-  margin-inline: auto;
   box-sizing: border-box;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 65ch;
 }
 
 .layout-container-wide {
-  max-width: 90rem;
-  width: 100%;
-  margin-inline: auto;
   box-sizing: border-box;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 90rem;
 }
 
 .layout-container-fluid {
-  max-width: 100%;
-  width: 100%;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
 }
 
 .layout-container-full {
+  box-sizing: border-box;
+  margin-inline: calc(var(--grid-padding, clamp(1rem, 2.5vw, 2rem)) * -1);
   /* Escape parent padding to reach the viewport edge */
   width: 100vw;
   max-width: 100vw;
-  margin-inline: calc(var(--grid-padding, clamp(1rem, 2.5vw, 2rem)) * -1);
-  box-sizing: border-box;
 }

@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Color, Vector3 } from 'three'
 import { uniform } from 'three/tsl'
 
@@ -10,21 +12,20 @@ import { uniform } from 'three/tsl'
  * // Use primaryNode directly inside useShaderStage closures.
  */
 export function useCSSColourUniform(varName: string) {
-  // @ts-ignore — TSL uniform types
+  // @ts-expect-error — TSL uniform types
   const node = uniform(new Vector3(0, 0, 0))
   const c = new Color()
 
   function sync() {
-    const raw = getComputedStyle(document.documentElement)
-      .getPropertyValue(varName)
-      .trim()
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(varName).trim()
     if (!raw) return
     try {
       c.set(raw)
-      // @ts-ignore
+      // @ts-expect-error
       node.value.set(c.r, c.g, c.b)
+    } catch {
+      /* unsupported format — leave previous value */
     }
-    catch { /* unsupported format — leave previous value */ }
   }
 
   onMounted(() => {

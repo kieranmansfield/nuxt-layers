@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
-const { surround } = defineProps<{
-  surround?: unknown[]
-}>()
+  const { surround } = defineProps<{
+    surround?: unknown[]
+  }>()
 </script>
 
 <template>

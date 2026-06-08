@@ -1,8 +1,11 @@
+/* eslint-disable complexity */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable no-restricted-syntax */
 // plugins/scroll-guard.client.ts
 
 import type { ScrollGuardConfig } from '#layers/core/app/types/scroll-guard'
 
-interface CoreLayerConfig {
+type CoreLayerConfig = {
   scrollGuard?: Partial<ScrollGuardConfig>
 }
 
@@ -26,7 +29,6 @@ export default defineNuxtPlugin(() => {
 
   if (coreLayer?.scrollGuard?.enabled === false) {
     if (import.meta.dev) {
-      // eslint-disable-next-line no-console
       console.log('[Scroll Guard] Disabled via config')
     }
     return
@@ -37,7 +39,6 @@ export default defineNuxtPlugin(() => {
   enable()
 
   if (import.meta.dev) {
-    // eslint-disable-next-line no-console
     console.log('[Scroll Guard] Initialized', {
       strict: coreLayer?.scrollGuard?.strict ?? true,
       debug: coreLayer?.scrollGuard?.debug ?? false,
@@ -49,7 +50,6 @@ export default defineNuxtPlugin(() => {
 
     // Log clamped count after initial scan settles
     requestAnimationFrame(() => {
-      // eslint-disable-next-line no-console
       console.log(`[Scroll Guard] Clamped ${clampedCount.value} element(s)`)
     })
   }

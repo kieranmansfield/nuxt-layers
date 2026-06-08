@@ -1,6 +1,6 @@
 type LoadStrategy = 'onNuxtReady' | 'idle' | 'manual'
 
-interface ScriptLoaderOptions {
+type ScriptLoaderOptions = {
   src: string
   key?: string
   strategy?: LoadStrategy

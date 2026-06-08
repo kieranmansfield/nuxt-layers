@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 export default defineAppConfig({
   seoLayer: {
     ogImage: {
@@ -13,7 +14,7 @@ export default defineAppConfig({
 })
 
 declare module '@nuxt/schema' {
-  interface AppConfigInput {
+  type AppConfigInput = {
     seoLayer?: {
       ogImage?: {
         component?: string

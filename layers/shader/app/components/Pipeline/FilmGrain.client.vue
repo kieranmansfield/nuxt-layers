@@ -1,35 +1,61 @@
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
+<!-- eslint-disable vue/define-props-destructuring -->
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-import { clamp, float, fract, mix, sin, time, uniform, vec2, vec4 } from 'three/tsl'
-import { blendOverlay, blendScreen, blendSoftLight } from '../../shaders/common/blend'
+  // @ts-nocheck
+  import { clamp, float, fract, mix, sin, time, uniform, vec2, vec4 } from 'three/tsl'
 
-type GrainBlendMode = 'add' | 'sub' | 'screen' | 'overlay' | 'soft-light'
+  import { blendOverlay, blendScreen, blendSoftLight } from '../../shaders/common/blend'
 
-const props = withDefaults(defineProps<{
-  /** Grain intensity — amplitude of the noise effect */
-  intensity?: number
-  /** Blend opacity — how strongly grain mixes into the output */
-  opacity?: number
-  /** UV scale — higher = finer dots, lower = coarser */
-  size?: number
-  fps?: number
-  blendMode?: GrainBlendMode
-  order?: number
-}>(), { intensity: 0.06, opacity: 1.0, size: 1.0, fps: 24, blendMode: 'sub', order: 0 })
+  type GrainBlendMode = 'add' | 'sub' | 'screen' | 'overlay' | 'soft-light'
 
-const intensityNode = uniform(props.intensity)
-const opacityNode = uniform(props.opacity)
-const sizeNode = uniform(props.size)
-const fpsNode = uniform(props.fps)
-watch(() => props.intensity, v => { intensityNode.value = v })
-watch(() => props.opacity, v => { opacityNode.value = v })
-watch(() => props.size, v => { sizeNode.value = v })
-watch(() => props.fps, v => { fpsNode.value = v })
+  const props = withDefaults(
+    defineProps<{
+      /** Grain intensity — amplitude of the noise effect */
+      intensity?: number
+      /** Blend opacity — how strongly grain mixes into the output */
+      opacity?: number
+      /** UV scale — higher = finer dots, lower = coarser */
+      size?: number
+      fps?: number
+      blendMode?: GrainBlendMode
+      order?: number
+    }>(),
+    { intensity: 0.06, opacity: 1.0, size: 1.0, fps: 24, blendMode: 'sub', order: 0 }
+  )
 
-const pipeline = useShaderPipelineContext()
+  const intensityNode = uniform(props.intensity)
+  const opacityNode = uniform(props.opacity)
+  const sizeNode = uniform(props.size)
+  const fpsNode = uniform(props.fps)
+  watch(
+    () => props.intensity,
+    (v) => {
+      intensityNode.value = v
+    }
+  )
+  watch(
+    () => props.opacity,
+    (v) => {
+      opacityNode.value = v
+    }
+  )
+  watch(
+    () => props.size,
+    (v) => {
+      sizeNode.value = v
+    }
+  )
+  watch(
+    () => props.fps,
+    (v) => {
+      fpsNode.value = v
+    }
+  )
 
-useShaderStage(
-  (prev) => {
+  const pipeline = useShaderPipelineContext()
+
+  useShaderStage((prev) => {
     const uvScaled = pipeline.uvNode.value.mul(sizeNode)
     const t = time.mul(fpsNode).floor().div(fpsNode)
 
@@ -61,9 +87,5 @@ useShaderStage(
         blended = prev.xyz.sub(raw.mul(intensityNode).mul(opacityNode))
     }
     return vec4(clamp(blended, 0, 1), prev.w)
-  },
-  props.order,
-)
+  }, props.order)
 </script>
-
-<template><!-- --></template>

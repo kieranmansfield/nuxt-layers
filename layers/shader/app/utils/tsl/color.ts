@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import { abs, clamp, float, Fn, max, min, mix, mod, vec3 } from 'three/tsl'
+
 import type { GradientStop, TSLNode } from '../../types'
 import { circularDistance } from './math'
 
@@ -8,9 +11,9 @@ import { circularDistance } from './math'
  */
 export const gradientLinear = Fn(([t, stops]: [TSLNode, GradientStop[]]) => {
   if (stops.length === 0) return vec3(0.0)
-  if (stops.length === 1) return stops[0]!.color
+  if (stops.length === 1) return stops[0]?.color
 
-  let result: TSLNode = stops[0]!.color
+  let result: TSLNode = stops[0]?.color
 
   for (let i = 1; i < stops.length; i++) {
     const prevStop = stops[i - 1]!

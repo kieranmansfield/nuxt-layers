@@ -1,18 +1,18 @@
 <!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
-import type { PortfolioColor } from '../../types/content'
+  import type { PortfolioColor } from '../../types/content'
 
-const { colors = [] } = defineProps<{
-  colors?: PortfolioColor[]
-}>()
+  const { colors = [] } = defineProps<{
+    colors?: PortfolioColor[]
+  }>()
 
-function contrastColor(hex: string): string {
-  const r = parseInt(hex.slice(1, 3), 16)
-  const g = parseInt(hex.slice(3, 5), 16)
-  const b = parseInt(hex.slice(5, 7), 16)
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
-  return luminance > 0.6 ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.9)'
-}
+  function contrastColor(hex: string): string {
+    const r = parseInt(hex.slice(1, 3), 16)
+    const g = parseInt(hex.slice(3, 5), 16)
+    const b = parseInt(hex.slice(5, 7), 16)
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+    return luminance > 0.6 ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.9)'
+  }
 </script>
 
 <template>

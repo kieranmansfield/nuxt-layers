@@ -1,26 +1,27 @@
+<!-- eslint-disable vue/no-boolean-default -->
 <script setup lang="ts">
-const {
-  progress,
-  size = 120,
-  strokeWidth = 8,
-  showPercentage = true,
-  colors = ['var(--color-primary-500)', 'rgb(168, 85, 247)', 'rgb(236, 72, 153)'],
-  bgColor = 'rgb(31, 41, 55)',
-} = defineProps<{
-  progress: number
-  size?: number
-  strokeWidth?: number
-  showPercentage?: boolean
-  colors?: [string, string, string]
-  bgColor?: string
-}>()
+  const {
+    progress,
+    size = 120,
+    strokeWidth = 8,
+    showPercentage = true,
+    colors = ['var(--color-primary-500)', 'rgb(168, 85, 247)', 'rgb(236, 72, 153)'],
+    bgColor = 'rgb(31, 41, 55)',
+  } = defineProps<{
+    progress: number
+    size?: number
+    strokeWidth?: number
+    showPercentage?: boolean
+    colors?: [string, string, string]
+    bgColor?: string
+  }>()
 
-const percentage = computed(() => Math.round(progress * 100))
-const radius = computed(() => (size - strokeWidth) / 2)
-const circumference = computed(() => 2 * Math.PI * radius.value)
-const strokeDasharray = computed(() => `${progress * circumference.value} ${circumference.value}`)
+  const percentage = computed(() => Math.round(progress * 100))
+  const radius = computed(() => (size - strokeWidth) / 2)
+  const circumference = computed(() => 2 * Math.PI * radius.value)
+  const strokeDasharray = computed(() => `${progress * circumference.value} ${circumference.value}`)
 
-const gradientId = `progress-circular-gradient-${useId()}`
+  const gradientId = `progress-circular-gradient-${useId()}`
 </script>
 
 <template>
@@ -32,7 +33,7 @@ const gradientId = `progress-circular-gradient-${useId()}`
         :r="radius"
         fill="none"
         :stroke="bgColor"
-        :stroke-width="strokeWidth"
+        :stroke-width
       />
       <circle
         :cx="size / 2"
@@ -40,7 +41,7 @@ const gradientId = `progress-circular-gradient-${useId()}`
         :r="radius"
         fill="none"
         :stroke="`url(#${gradientId})`"
-        :stroke-width="strokeWidth"
+        :stroke-width
         stroke-linecap="round"
         :stroke-dasharray
         class="transition-[stroke-dasharray] duration-100"
@@ -63,7 +64,7 @@ const gradientId = `progress-circular-gradient-${useId()}`
 </template>
 
 <style scoped>
-.tabular-nums {
-  font-variant-numeric: tabular-nums;
-}
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
 </style>

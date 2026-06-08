@@ -1,6 +1,6 @@
 import type { MaybeRef } from 'vue'
 
-interface SectionProgressOptions {
+type SectionProgressOptions = {
   start?: string
   end?: string
   markers?: boolean
@@ -41,10 +41,18 @@ export function useSectionProgress(
       onUpdate: (self) => {
         progress.value = self.progress
       },
-      onEnter: () => { active.value = true },
-      onLeave: () => { active.value = false },
-      onEnterBack: () => { active.value = true },
-      onLeaveBack: () => { active.value = false },
+      onEnter: () => {
+        active.value = true
+      },
+      onLeave: () => {
+        active.value = false
+      },
+      onEnterBack: () => {
+        active.value = true
+      },
+      onLeaveBack: () => {
+        active.value = false
+      },
     })
   })
 

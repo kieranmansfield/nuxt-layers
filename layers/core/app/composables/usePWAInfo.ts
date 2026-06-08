@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 /**
  * PWA composable for managing Progressive Web App functionality
  *
@@ -95,10 +96,10 @@ export function usePWAInfo() {
 /**
  * Type definition for beforeinstallprompt event
  */
-interface BeforeInstallPromptEvent extends Event {
-  prompt(): Promise<void>
+type BeforeInstallPromptEvent = {
+  prompt: () => Promise<void>
   userChoice: Promise<{
     outcome: 'accepted' | 'dismissed'
     platform: string
   }>
-}
+} & Event

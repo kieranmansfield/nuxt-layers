@@ -9,6 +9,6 @@
     "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json"
   },
   "dependencies": {
-    "@nuxtjs/seo": "^2.0.0"
+    "@nuxtjs/seo": "catalog:"
   }
 }

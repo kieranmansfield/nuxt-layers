@@ -1,56 +1,58 @@
+<!-- eslint-disable vue/no-boolean-default -->
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-/**
- * ErrorBoundary component - Catches errors in child components
- *
- * Wraps NuxtErrorBoundary with consistent styling and error logging.
- * Prevents errors in one component from crashing the entire page.
- *
- * @example
- * ```vue
- * <ErrorBoundary>
- *   <RiskyComponent />
- * </ErrorBoundary>
- * ```
- *
- * @example With custom error UI
- * ```vue
- * <ErrorBoundary>
- *   <RiskyComponent />
- *
- *   <template #error="{ error, clearError }">
- *     <div>Custom error: {{ error.message }}</div>
- *     <button @click="clearError">Retry</button>
- *   </template>
- * </ErrorBoundary>
- * ```
- */
+  // @ts-nocheck
+  /**
+   * ErrorBoundary component - Catches errors in child components
+   *
+   * Wraps NuxtErrorBoundary with consistent styling and error logging.
+   * Prevents errors in one component from crashing the entire page.
+   *
+   * @example
+   * ```vue
+   * <ErrorBoundary>
+   *   <RiskyComponent />
+   * </ErrorBoundary>
+   * ```
+   *
+   * @example With custom error UI
+   * ```vue
+   * <ErrorBoundary>
+   *   <RiskyComponent />
+   *
+   *   <template #error="{ error, clearError }">
+   *     <div>Custom error: {{ error.message }}</div>
+   *     <button @click="clearError">Retry</button>
+   *   </template>
+   * </ErrorBoundary>
+   * ```
+   */
 
-interface Props {
-  /** Show error details in development mode */
-  showDetails?: boolean
-  /** Custom error message */
-  message?: string
-  /** Component name for logging context */
-  componentName?: string
-}
+  interface Props {
+    /** Show error details in development mode */
+    showDetails?: boolean
+    /** Custom error message */
+    message?: string
+    /** Component name for logging context */
+    componentName?: string
+  }
 
-const {
-  showDetails = true,
-  message = 'Something went wrong in this section.',
-  componentName = 'Unknown',
-} = defineProps<Props>()
+  const {
+    showDetails = true,
+    message = 'Something went wrong in this section.',
+    componentName = 'Unknown',
+  } = defineProps<Props>()
 
-const { logError } = useErrorLog()
+  const { logError } = useErrorLog()
 
-// Handle error
-const handleError = (error: unknown) => {
-  // Log error with context
-  logError(error, {
-    component: componentName,
-    info: 'Error caught by ErrorBoundary',
-  })
-}
+  // Handle error
+  const handleError = (error: unknown) => {
+    // Log error with context
+    logError(error, {
+      component: componentName,
+      info: 'Error caught by ErrorBoundary',
+    })
+  }
 </script>
 
 <template>
@@ -62,7 +64,7 @@ const handleError = (error: unknown) => {
     <template #error="{ error, clearError }">
       <slot name="error" :error :clear-error>
         <!-- Default error UI -->
-        <div class="rounded-lg border border-error bg-error/10 p-4 ">
+        <div class="rounded-lg border border-error bg-error/10 p-4">
           <div class="flex items-start gap-3">
             <!-- Error icon -->
             <span

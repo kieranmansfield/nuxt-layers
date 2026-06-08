@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { Component } from 'vue'
 
-export interface ModalController<P extends Record<string, unknown>> {
+export type ModalController<P extends Record<string, unknown>> = {
   open: (props?: Partial<P>) => void
   close: () => void
   patch: (props: Partial<P>) => void

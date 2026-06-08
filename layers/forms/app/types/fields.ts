@@ -18,7 +18,7 @@ export type FieldFormat = 'currency'
 /**
  * Configuration for a field type
  */
-export interface FieldConfig {
+export type FieldConfig = {
   /** Icon to display in the input (Lucide icon class) */
   icon?: string
   /** HTML input type attribute */

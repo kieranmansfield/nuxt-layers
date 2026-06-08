@@ -1,3 +1,7 @@
+/* eslint-disable max-params */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Palette & Color Utilities
@@ -19,13 +23,14 @@ import {
   vec3,
   vec4,
 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 
 // ============================================
 // Color Stop Types
 // ============================================
 
-export interface ColorStop {
+export type ColorStop = {
   position: number
   color: string | [number, number, number]
 }

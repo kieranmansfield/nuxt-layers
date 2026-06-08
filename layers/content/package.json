@@ -13,11 +13,11 @@
     "preview": "nuxt preview .playground"
   },
   "devDependencies": {
-    "@nuxt/content": "^3.14.0"
+    "@nuxt/content": "catalog:"
   },
   "dependencies": {
-    "better-sqlite3": "^12.10.0",
-    "zod": "^4.3.6",
-    "zod-to-json-schema": "^3.25.1"
+    "better-sqlite3": "catalog:",
+    "zod": "catalog:conflicts_zod_h4_3_6",
+    "zod-to-json-schema": "catalog:conflicts_zod-to-json-schema_h3_25_1"
   }
 }

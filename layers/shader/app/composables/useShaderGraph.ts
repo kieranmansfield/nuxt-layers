@@ -1,18 +1,21 @@
+/* eslint-disable max-params */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex
-import { mix as tslMix } from 'three/tsl'
 import type { InjectionKey } from 'vue'
+import { mix as tslMix } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 
 export type BlendMode = 'normal' | 'add' | 'multiply' | 'screen' | 'overlay' | 'mix'
 
-export interface ShaderGraphEntry {
+export type ShaderGraphEntry = {
   node: TSLNode
   order: number
   blend: BlendMode
   opacity: number
 }
 
-export interface ShaderGraph {
+export type ShaderGraph = {
   register: (id: string, node: TSLNode, order?: number, blend?: BlendMode, opacity?: number) => void
   unregister: (id: string) => void
   update: (id: string, node: TSLNode) => void

@@ -18,7 +18,7 @@ export const TINT_LEVEL_OPACITY: Record<TintLevel, number> = {
   heavy: 50,
 }
 
-export interface TintConfig {
+export type TintConfig = {
   color: TintColorSlot
   level: TintLevel
   shade?: ColorShade

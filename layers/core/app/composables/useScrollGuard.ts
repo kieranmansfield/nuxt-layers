@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 // composables/useScrollGuard.ts
 
 import type { ScrollGuardConfig } from '#layers/core/app/types/scroll-guard'
@@ -6,7 +7,7 @@ import { debounce } from '#layers/core/app/utils/helpers'
 /**
  * Original inline styles stored per element so we can restore them on disable
  */
-interface SavedStyles {
+type SavedStyles = {
   transition: string
   maxWidth: string
   boxSizing: string

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Aurora Shader Layer
@@ -5,10 +7,11 @@
  */
 import { Color } from 'three'
 import { float, mix, pow, smoothstep, time as tslTime, uniform, uv, vec2, vec3 } from 'three/tsl'
+
 import { simplexNoise2D } from '../common/noise'
 import type { TSLNode } from '../types'
 
-export interface AuroraOptions {
+export type AuroraOptions = {
   /** Array of colors (3 recommended) */
   colors?: string[]
   /** Animation speed */
@@ -27,7 +30,7 @@ export interface AuroraOptions {
   mouseStrength?: number
 }
 
-export interface AuroraUniforms {
+export type AuroraUniforms = {
   speed: ReturnType<typeof uniform>
   density: ReturnType<typeof uniform>
   fadePower: ReturnType<typeof uniform>
@@ -35,7 +38,7 @@ export interface AuroraUniforms {
   mouseX: ReturnType<typeof uniform>
   mouseStrength: ReturnType<typeof uniform>
   skyColor: ReturnType<typeof uniform>
-  colors: ReturnType<typeof uniform>[]
+  colors: Array<ReturnType<typeof uniform>>
 }
 
 /**

@@ -1,20 +1,17 @@
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-import type { BlogQueryOptions } from '../../types/content'
+  // @ts-nocheck
+  import type { BlogQueryOptions } from '../../types/content'
 
-const { options = {} } = defineProps<{
-  options?: BlogQueryOptions
-}>()
+  const { options = {} } = defineProps<{
+    options?: BlogQueryOptions
+  }>()
 
-const { data: posts, status } = await useBlogPosts(options)
+  const { data: posts, status } = await useBlogPosts(options)
 </script>
 
 <template>
-  <NuxtContentList
-    :status="status"
-    :has-items="!!posts?.length"
-    empty-message="No blog posts found"
-  >
+  <NuxtContentList :status :has-items="!!posts?.length" empty-message="No blog posts found">
     <UBlogPosts orientation="vertical">
       <UBlogPost
         v-for="post in posts"

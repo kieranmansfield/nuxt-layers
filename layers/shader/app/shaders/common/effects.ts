@@ -1,3 +1,6 @@
+/* eslint-disable complexity */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Post-Processing Effects
@@ -16,13 +19,14 @@ import {
   vec2,
   vec4,
 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 
 // ============================================
 // LED Effect
 // ============================================
 
-export interface LEDEffectOptions {
+export type LEDEffectOptions = {
   scalar?: TSLNode | number
   zoom?: TSLNode | number
   exponent?: TSLNode | number
@@ -65,7 +69,7 @@ export function ledEffect(
 // Pixellation Effect
 // ============================================
 
-export interface PixellationEffectOptions {
+export type PixellationEffectOptions = {
   size?: TSLNode | number
 }
 
@@ -104,7 +108,7 @@ export function pixellationEffect(
 // Chromatic Aberration Effect
 // ============================================
 
-export interface ChromaticAberrationOptions {
+export type ChromaticAberrationOptions = {
   strength?: TSLNode | number
   radial?: TSLNode | number
   direction?: TSLNode | [number, number]
@@ -161,7 +165,7 @@ export function chromaticAberrationEffect(
 // Bulge/Pinch Effect
 // ============================================
 
-export interface BulgeEffectOptions {
+export type BulgeEffectOptions = {
   strength?: TSLNode | number
   radius?: TSLNode | number
   power?: TSLNode | number
@@ -207,7 +211,7 @@ export function bulgeEffect(
 // Wave Distortion Effect
 // ============================================
 
-export interface WaveDistortionOptions {
+export type WaveDistortionOptions = {
   frequency?: TSLNode | number
   amplitude?: TSLNode | number
   time?: TSLNode | number
@@ -254,7 +258,7 @@ export function waveDistortionEffect(
 // Swirl Distortion Effect
 // ============================================
 
-export interface SwirlDistortionOptions {
+export type SwirlDistortionOptions = {
   strength?: TSLNode | number
   radius?: TSLNode | number
   center?: TSLNode | [number, number]

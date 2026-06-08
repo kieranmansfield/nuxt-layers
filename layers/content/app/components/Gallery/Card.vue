@@ -1,25 +1,25 @@
 <!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
-const {
-  title,
-  description,
-  coverImage,
-  imageCount = 0,
-  tags = [],
-  to,
-} = defineProps<{
-  title: string
-  description?: string
-  coverImage?: { src: string; alt: string }
-  imageCount?: number
-  tags?: string[]
-  to?: string
-}>()
+  const {
+    title,
+    description,
+    coverImage,
+    imageCount = 0,
+    tags = [],
+    to,
+  } = defineProps<{
+    title: string
+    description?: string
+    coverImage?: { src: string; alt: string }
+    imageCount?: number
+    tags?: string[]
+    to?: string
+  }>()
 
-const cardProps = computed(() => ({
-  ...(description !== undefined && { description }),
-  ...(to !== undefined && { to }),
-}))
+  const cardProps = computed(() => ({
+    ...(description !== undefined && { description }),
+    ...(to !== undefined && { to }),
+  }))
 </script>
 
 <template>

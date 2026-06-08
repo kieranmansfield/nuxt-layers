@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Tonemapping Utilities
  * Provides various tonemapping operators for HDR to LDR conversion
  */
 import { float, mix, pow, smoothstep, vec3 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 import { tanh } from './math'
 

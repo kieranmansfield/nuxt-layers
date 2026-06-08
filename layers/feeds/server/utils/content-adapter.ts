@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { queryCollection } from '@nuxt/content/nitro'
 import type { H3Event } from 'h3'
 

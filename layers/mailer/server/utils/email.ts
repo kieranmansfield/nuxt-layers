@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 
-export interface ContactEmailData {
+export type ContactEmailData = {
   name: string
   email: string
   message: string

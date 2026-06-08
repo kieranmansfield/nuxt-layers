@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable complexity */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Material Factory
@@ -6,6 +9,7 @@
 import { BackSide, DoubleSide, FrontSide, type Side } from 'three'
 import { vec4 } from 'three/tsl'
 import { MeshBasicNodeMaterial } from 'three/webgpu'
+
 import {
   aurora,
   createAuroraUniforms,
@@ -49,7 +53,7 @@ type TSLNode = ShaderNodeObject<Node>
 // Types
 // ============================================
 
-export interface MaterialOptions {
+export type MaterialOptions = {
   /** Transparent material */
   transparent?: boolean
   /** Material side */
@@ -88,7 +92,7 @@ export type ShaderUniforms<T extends ShaderType> = T extends 'stripe'
           ? PaperShadingUniforms
           : never
 
-export interface ShaderMaterialResult<T extends ShaderType> {
+export type ShaderMaterialResult<T extends ShaderType> = {
   material: MeshBasicNodeMaterial
   uniforms: ShaderUniforms<T>
   update: (options: Partial<ShaderOptions<T>>) => void

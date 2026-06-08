@@ -1,4 +1,6 @@
+/* eslint-disable complexity */
 import type { MaybeRefOrGetter } from 'vue'
+
 import {
   BREAKPOINT_VALUES,
   DEVICE_BREAKPOINT_VALUES,

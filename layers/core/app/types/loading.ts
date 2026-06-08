@@ -3,7 +3,7 @@
 /**
  * Loading screen configuration interface
  */
-export interface LoadingConfig {
+export type LoadingConfig = {
   /** Master toggle - set to false to disable completely */
   enabled: boolean
   /** Minimum time to display loading screen (prevents flash) */
@@ -21,7 +21,7 @@ export interface LoadingConfig {
 /**
  * Loading state interface
  */
-export interface LoadingState {
+export type LoadingState = {
   /** Current loading state */
   isLoading: boolean
   /** Progress percentage (0-100) */
@@ -31,7 +31,7 @@ export interface LoadingState {
 /**
  * Loading composable return interface
  */
-export interface UseLoadingReturn {
+export type UseLoadingReturn = {
   /** Current loading state (readonly) */
   isLoading: Readonly<Ref<boolean>>
   /** Progress percentage 0-100 (readonly) */

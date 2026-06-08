@@ -1,3 +1,6 @@
+/* eslint-disable complexity */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Paper Shading Shader Layer
@@ -5,11 +8,12 @@
  */
 import { Color } from 'three'
 import { abs, float, mix, smoothstep, time as tslTime, uniform, uv, vec3 } from 'three/tsl'
+
 import { grain as grainFn, paperTexture } from '../common/grain'
 import { fbm2D, simplexNoise2D } from '../common/noise'
 import type { TSLNode } from '../types'
 
-export interface PaperShadingOptions {
+export type PaperShadingOptions = {
   /** Base paper color */
   paperColor?: string
   /** Ink color */
@@ -30,7 +34,7 @@ export interface PaperShadingOptions {
   edgeDarkness?: number
 }
 
-export interface PaperShadingUniforms {
+export type PaperShadingUniforms = {
   paperColor: ReturnType<typeof uniform>
   inkColor: ReturnType<typeof uniform>
   inkColor2: ReturnType<typeof uniform>

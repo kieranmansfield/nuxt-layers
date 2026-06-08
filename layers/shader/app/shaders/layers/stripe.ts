@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Stripe Gradient Shader Layer
@@ -5,10 +7,11 @@
  */
 import { Color } from 'three'
 import { float, mix, smoothstep, time as tslTime, uniform, uv, vec2, vec3 } from 'three/tsl'
+
 import { simplexNoise2D } from '../common/noise'
 import type { TSLNode } from '../types'
 
-export interface StripeGradientOptions {
+export type StripeGradientOptions = {
   /** Array of colors (3-5 recommended) */
   colors?: string[]
   /** Animation speed */
@@ -25,14 +28,14 @@ export interface StripeGradientOptions {
   mouseStrength?: number
 }
 
-export interface StripeGradientUniforms {
+export type StripeGradientUniforms = {
   speed: ReturnType<typeof uniform>
   noiseScale: ReturnType<typeof uniform>
   flowAngle: ReturnType<typeof uniform>
   mouseX: ReturnType<typeof uniform>
   mouseY: ReturnType<typeof uniform>
   mouseStrength: ReturnType<typeof uniform>
-  colors: ReturnType<typeof uniform>[]
+  colors: Array<ReturnType<typeof uniform>>
 }
 
 /**

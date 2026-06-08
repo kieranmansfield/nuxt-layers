@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL SDF (Signed Distance Field) Utilities
@@ -18,6 +19,7 @@ import {
   vec2,
   vec3,
 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 
 // ============================================
@@ -137,7 +139,7 @@ export function sdRing(uv: TSLNode, radius: TSLNode | number = 0.4): TSLNode {
   return abs(length(uv).sub(r))
 }
 
-export interface ParallelogramOptions {
+export type ParallelogramOptions = {
   width?: TSLNode | number
   height?: TSLNode | number
   skew?: TSLNode | number

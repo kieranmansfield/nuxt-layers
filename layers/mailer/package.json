@@ -9,7 +9,7 @@
     "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json"
   },
   "dependencies": {
-    "hookable": "^5.5.3",
-    "resend": "^4.0.0"
+    "hookable": "catalog:",
+    "resend": "catalog:"
   }
 }

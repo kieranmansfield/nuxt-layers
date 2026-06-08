@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex
 import { uniform } from 'three/tsl'
+
 import type { TweenHandle } from '../utils/tsl/tween'
 
-export interface ShaderFloatOptions {
+export type ShaderFloatOptions = {
   min?: number
   max?: number
 }

@@ -9,6 +9,6 @@
     "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json"
   },
   "dependencies": {
-    "zod": "^4.4.3"
+    "zod": "catalog:conflicts_conflicts_zod_h4_3_6_h4_4_3"
   }
 }

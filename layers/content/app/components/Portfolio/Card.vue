@@ -1,22 +1,22 @@
 <!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
-const {
-  title,
-  description,
-  image,
-  tags = [],
-  client,
-  year,
-  to,
-} = defineProps<{
-  title: string
-  description?: string
-  image?: string
-  tags?: string[]
-  client?: string
-  year?: number
-  to?: string
-}>()
+  const {
+    title,
+    description,
+    image,
+    tags = [],
+    client,
+    year,
+    to,
+  } = defineProps<{
+    title: string
+    description?: string
+    image?: string
+    tags?: string[]
+    client?: string
+    year?: number
+    to?: string
+  }>()
 </script>
 
 <template>

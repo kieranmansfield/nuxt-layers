@@ -132,7 +132,7 @@ export type TextTransform = 'none' | 'uppercase' | 'lowercase' | 'capitalize'
    - Used by Text / Heading / Prose components
    ====================================================== */
 
-export interface TypographyProps {
+export type TypographyProps = {
   as?: keyof HTMLElementTagNameMap
   weight?: FontWeight
   size?: FontSize

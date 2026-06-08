@@ -1,30 +1,30 @@
 <!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
-const {
-  title,
-  description,
-  date,
-  image,
-  badge,
-  authors = [],
-  to,
-} = defineProps<{
-  title: string
-  description?: string
-  date?: string
-  image?: string
-  badge?: string
-  authors?: { name: string; avatar?: string; url?: string }[]
-  to?: string
-}>()
+  const {
+    title,
+    description,
+    date,
+    image,
+    badge,
+    authors = [],
+    to,
+  } = defineProps<{
+    title: string
+    description?: string
+    date?: string
+    image?: string
+    badge?: string
+    authors?: { name: string; avatar?: string; url?: string }[]
+    to?: string
+  }>()
 
-const postProps = computed(() => ({
-  ...(description !== undefined && { description }),
-  ...(date !== undefined && { date }),
-  ...(image !== undefined && { image }),
-  ...(badge !== undefined && { badge }),
-  ...(to !== undefined && { to }),
-}))
+  const postProps = computed(() => ({
+    ...(description !== undefined && { description }),
+    ...(date !== undefined && { date }),
+    ...(image !== undefined && { image }),
+    ...(badge !== undefined && { badge }),
+    ...(to !== undefined && { to }),
+  }))
 </script>
 
 <template>

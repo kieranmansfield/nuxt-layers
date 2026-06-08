@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 // composables/useNetworkInfo.ts
 import { useNetwork } from '@vueuse/core'

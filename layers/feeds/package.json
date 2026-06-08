@@ -13,11 +13,11 @@
     "preview": "nuxt preview .playground"
   },
   "dependencies": {
-    "feed": "^5.2.1"
+    "feed": "catalog:"
   },
   "devDependencies": {
-    "nuxt": "^4.4.7",
-    "vue": "^3.5.35",
-    "vue-router": "^5.1.0"
+    "nuxt": "catalog:",
+    "vue": "catalog:conflicts_conflicts_vue_latest_h3_5_35",
+    "vue-router": "catalog:"
   }
 }

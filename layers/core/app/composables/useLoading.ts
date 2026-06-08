@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 // composables/useLoading.ts
 
 // Timer IDs are non-reactive and intentionally module-scope (singleton)

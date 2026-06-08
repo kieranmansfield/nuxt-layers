@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 // composables/useScreen.ts
 import { breakpointsTailwind, useBreakpoints, useScreenOrientation } from '@vueuse/core'

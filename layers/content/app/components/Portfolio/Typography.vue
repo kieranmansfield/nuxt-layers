@@ -1,10 +1,10 @@
 <!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
-import type { PortfolioFont } from '../../types/content'
+  import type { PortfolioFont } from '../../types/content'
 
-const { typography = [] } = defineProps<{
-  typography?: PortfolioFont[]
-}>()
+  const { typography = [] } = defineProps<{
+    typography?: PortfolioFont[]
+  }>()
 </script>
 
 <template>

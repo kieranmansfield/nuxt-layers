@@ -1,7 +1,8 @@
+/* eslint-disable no-restricted-syntax */
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import LocomotiveScroll from 'locomotive-scroll'
 
-export interface ScrollState {
+export type ScrollState = {
   scroll: number
   limit: number
   velocity: number

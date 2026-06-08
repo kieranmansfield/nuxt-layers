@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 export default defineNuxtPlugin((nuxtApp) => {
   const appConfig = useAppConfig()
 

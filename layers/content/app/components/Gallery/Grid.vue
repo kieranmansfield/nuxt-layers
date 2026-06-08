@@ -1,20 +1,17 @@
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-import type { GalleryQueryOptions } from '../../types/content'
+  // @ts-nocheck
+  import type { GalleryQueryOptions } from '../../types/content'
 
-const { options = {} } = defineProps<{
-  options?: GalleryQueryOptions
-}>()
+  const { options = {} } = defineProps<{
+    options?: GalleryQueryOptions
+  }>()
 
-const { data: items, status } = await useGalleryItems(options)
+  const { data: items, status } = await useGalleryItems(options)
 </script>
 
 <template>
-  <NuxtContentList
-    :status="status"
-    :has-items="!!items?.length"
-    empty-message="No gallery items found"
-  >
+  <NuxtContentList :status :has-items="!!items?.length" empty-message="No gallery items found">
     <UPageGrid>
       <NuxtLink
         v-for="item in items"

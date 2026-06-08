@@ -1,3 +1,4 @@
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
   // @ts-nocheck
   import type { FormSubmitEvent } from '@nuxt/ui'

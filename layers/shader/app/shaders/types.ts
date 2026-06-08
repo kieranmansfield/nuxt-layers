@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * TSL Type Definitions
  * Simplified types for Three.js TSL nodes

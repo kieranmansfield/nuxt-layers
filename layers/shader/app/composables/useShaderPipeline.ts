@@ -1,15 +1,16 @@
 import type { InjectionKey, Ref, ShallowRef } from 'vue'
+
 import type { TSLNode } from '../types'
 
 export type ShaderStage = 'fragment' | 'vertex' | 'ray' | 'uv'
 
-export interface ShaderStageEntry {
+export type ShaderStageEntry = {
   fn: (input: TSLNode) => TSLNode
   order: number
   stage: ShaderStage
 }
 
-export interface ShaderPipelineContext {
+export type ShaderPipelineContext = {
   register: (fn: ShaderStageEntry['fn'], order?: number, stage?: ShaderStage) => void
   unregister: (fn: ShaderStageEntry['fn']) => void
   stagesFor: (stage: ShaderStage) => ShaderStageEntry[]
@@ -41,7 +42,7 @@ export function useShaderPipeline(): ShaderPipelineContext {
   }
 
   function unregister(fn: ShaderStageEntry['fn']) {
-    const i = entries.findIndex(e => e.fn === fn)
+    const i = entries.findIndex((e) => e.fn === fn)
     if (i !== -1) {
       entries.splice(i, 1)
       version.value++
@@ -49,10 +50,17 @@ export function useShaderPipeline(): ShaderPipelineContext {
   }
 
   function stagesFor(stage: ShaderStage): ShaderStageEntry[] {
-    return entries.filter(e => e.stage === stage).sort((a, b) => a.order - b.order)
+    return entries.filter((e) => e.stage === stage).sort((a, b) => a.order - b.order)
   }
 
-  const context: ShaderPipelineContext = { register, unregister, stagesFor, version, uvNode, rayNode }
+  const context: ShaderPipelineContext = {
+    register,
+    unregister,
+    stagesFor,
+    version,
+    uvNode,
+    rayNode,
+  }
   provide(SHADER_PIPELINE_KEY, context)
   return context
 }
@@ -75,7 +83,7 @@ export function useShaderPipeline(): ShaderPipelineContext {
 export function useShaderStage(
   stageFn: ShaderStageEntry['fn'],
   order = 0,
-  stage: ShaderStage = 'fragment',
+  stage: ShaderStage = 'fragment'
 ): void {
   const pipeline = inject(SHADER_PIPELINE_KEY)
   if (!pipeline) {

@@ -6,7 +6,7 @@ export type RouteResolution =
   | { outcome: 'deny' }
   | { outcome: 'redirect'; to: string }
 
-export interface RoutingLayerConfig {
+export type RoutingLayerConfig = {
   preset: RoutingPreset
   strictDefaultDeny: boolean
   layerDefaultDeny: boolean
@@ -18,7 +18,10 @@ export interface RoutingLayerConfig {
   features: Record<string, FeatureValue>
 }
 
-export const ROUTING_PRESETS: Record<RoutingPreset, Omit<RoutingLayerConfig, 'preset' | 'features'>> = {
+export const ROUTING_PRESETS: Record<
+  RoutingPreset,
+  Omit<RoutingLayerConfig, 'preset' | 'features'>
+> = {
   simple: {
     strictDefaultDeny: false,
     layerDefaultDeny: false,

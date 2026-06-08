@@ -1,4 +1,5 @@
-import { parseOKLCH, oklchToColor } from '../utils/tsl/oklch'
+/* eslint-disable no-restricted-syntax */
+import { oklchToColor, parseOKLCH } from '../utils/tsl/oklch'
 
 export function useThemeColors() {
   const { activeAccent } = useAccentColor()
@@ -9,13 +10,10 @@ export function useThemeColors() {
   const infoHex = ref('#38bdf8')
   const primaryLightHex = ref('#a78bfa')
 
-  const clearColor = computed(() =>
-    colorMode.value === 'dark' ? '#0a0a0a' : '#f8f8f8'
-  )
+  const clearColor = computed(() => (colorMode.value === 'dark' ? '#0a0a0a' : '#f8f8f8'))
 
   function cssVarToHex(varName: string): string {
-    const raw = getComputedStyle(document.documentElement)
-      .getPropertyValue(varName).trim()
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(varName).trim()
     try {
       const [l, c, h] = parseOKLCH(raw)
       return `#${oklchToColor(l, c, h).getHexString()}`
@@ -32,10 +30,16 @@ export function useThemeColors() {
       requestAnimationFrame(applyColors)
       return
     }
-    primaryHex.value      = primary
-    secondaryHex.value    = isDark ? cssVarToHex('--ui-color-neutral-700')   : cssVarToHex('--ui-color-secondary-500')
-    primaryLightHex.value = isDark ? cssVarToHex('--ui-color-neutral-900')   : cssVarToHex('--ui-color-primary-300')
-    infoHex.value         = isDark ? cssVarToHex('--ui-color-secondary-500') : cssVarToHex('--ui-color-neutral-300')
+    primaryHex.value = primary
+    secondaryHex.value = isDark
+      ? cssVarToHex('--ui-color-neutral-700')
+      : cssVarToHex('--ui-color-secondary-500')
+    primaryLightHex.value = isDark
+      ? cssVarToHex('--ui-color-neutral-900')
+      : cssVarToHex('--ui-color-primary-300')
+    infoHex.value = isDark
+      ? cssVarToHex('--ui-color-secondary-500')
+      : cssVarToHex('--ui-color-neutral-300')
   }
 
   function refresh() {

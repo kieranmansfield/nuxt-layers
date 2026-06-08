@@ -1,3 +1,5 @@
+/* eslint-disable complexity */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Pattern Utilities
@@ -17,6 +19,7 @@ import {
   vec2,
   vec3,
 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 import { fbm3dSimplex, simplexNoise3d } from './noise'
 
@@ -57,7 +60,7 @@ export function canvasWeavePattern(uv: TSLNode): TSLNode {
 // LED Pattern
 // ============================================
 
-export interface LEDPatternOptions {
+export type LEDPatternOptions = {
   cellSize?: TSLNode | number
   intensity?: TSLNode | number
   intensityFalloff?: TSLNode | number
@@ -101,7 +104,7 @@ export function ledPattern(
 // Speckled Noise Pattern
 // ============================================
 
-export interface SpeckledPatternOptions {
+export type SpeckledPatternOptions = {
   density?: TSLNode | number
   warpAmount?: TSLNode | [number, number]
 }
@@ -139,7 +142,7 @@ export function speckledNoisePattern(uv: TSLNode, options: SpeckledPatternOption
 // Dot Grid Pattern
 // ============================================
 
-export interface DotGridOptions {
+export type DotGridOptions = {
   scale?: TSLNode | number
   dotSize?: TSLNode | number
   softness?: TSLNode | number
@@ -183,7 +186,7 @@ export function checkerPattern(uv: TSLNode, scale: TSLNode | number = 10): TSLNo
 // Stripe Pattern
 // ============================================
 
-export interface StripeOptions {
+export type StripeOptions = {
   scale?: TSLNode | number
   thickness?: TSLNode | number
   angle?: TSLNode | number

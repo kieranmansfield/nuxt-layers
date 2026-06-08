@@ -1,22 +1,18 @@
+<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-// @ts-nocheck
-import type { PortfolioCollectionItem } from '@nuxt/content'
+  // @ts-nocheck
+  import type { PortfolioCollectionItem } from '@nuxt/content'
 
-const { slug, collection = 'portfolio' } = defineProps<{
-  slug: string
-  collection?: string
-}>()
+  const { slug, collection = 'portfolio' } = defineProps<{
+    slug: string
+    collection?: string
+  }>()
 
-const asPortfolio = (item: unknown) => item as PortfolioCollectionItem
+  const asPortfolio = (item: unknown) => item as PortfolioCollectionItem
 </script>
 
 <template>
-  <NuxtContentDetail
-    :collection
-    :slug
-    not-found-message="Item not found"
-    hide-toc
-  >
+  <NuxtContentDetail :collection :slug not-found-message="Item not found" hide-toc>
     <template #headline="{ item }">
       <div class="flex flex-wrap items-center gap-2">
         <UBadge v-if="asPortfolio(item).client" color="primary" variant="subtle">
