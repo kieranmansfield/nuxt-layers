@@ -60,6 +60,7 @@ patchedDependencies:
 catalog:
   '@netlify/nuxt': 0.3.7
   '@netlify/plugin-lighthouse': 6.0.1
+  '@vite-pwa/nuxt': ^1.1.1
   baseline-buildhooks: https://b0650beb-2bfb-4a53-af8a-b8f14c4decaf.netlify.app/packages/buildhooks.tgz
   better-sqlite3: ^12.10.0
   nuxt: ^4.4.7

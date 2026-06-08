@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import json from '@eslint/json'
 import markdown from '@eslint/markdown'
 import typescript from '@typescript-eslint/eslint-plugin'
@@ -11,6 +12,8 @@ import prettier from 'eslint-plugin-prettier'
 import vue from 'eslint-plugin-vue'
 
 // import glsl from 'eslint-plugin-glsl'
+
+const tsconfigRootDir = fileURLToPath(new URL('.', import.meta.url))
 
 export default defineConfigWithVueTs(
   {
@@ -27,10 +30,27 @@ export default defineConfigWithVueTs(
     ],
   },
 
-  vue.configs['flat/essential'],
-  vue.configs['flat/recommended'],
+  ...vue.configs['flat/essential'].map((config) => ({ ...config, files: ['**/*.vue'] })),
+  ...vue.configs['flat/recommended'].map((config) => ({ ...config, files: ['**/*.vue'] })),
   vueTsConfigs.recommended,
   // pluginUnicorn.configs.recommended,
+
+  // Layer `tsconfig.json` files extend the playground's, which only declares
+  // `references` (not inherited via `extends`) — so the TS project service
+  // can't resolve layer files from their nearest tsconfig. Point type-aware
+  // linting at the root project file that already covers every layer instead.
+  // Scoped to `layers/**` only — apps keep their own working `.nuxt` project chain,
+  // which `tsconfig.typecheck.json` does not include.
+  {
+    files: ['layers/**/*.ts', 'layers/**/*.tsx', 'layers/**/*.mts', 'layers/**/*.vue'],
+    languageOptions: {
+      parserOptions: {
+        projectService: false,
+        project: ['./tsconfig.typecheck.json'],
+        tsconfigRootDir,
+      },
+    },
+  },
 
   // Vue/Nuxt
   {
@@ -302,22 +322,31 @@ export default defineConfigWithVueTs(
     },
   },
 
-  // JSON linting
+  // JSON linting (package.json is handled by the pnpm config below, with its own parser)
   {
     files: ['**/*.json'],
+    ignores: ['**/package.json'],
     language: 'json/json',
     ...json.configs.recommended,
   },
 
-  // Markdown linting
-  {
+  // Markdown linting (`recommended` is an array of configs, not a single config object)
+  ...markdown.configs.recommended.map((config) => ({
+    ...config,
     files: ['**/*.md'],
     language: 'markdown/gfm',
-    ...markdown.configs.recommended,
-  },
+  })),
 
   // OXLint integration
   // ...pluginOxlint.buildFromOxlintConfigFile('./.oxlintrc.json'),
-  // pnpm catalog enforcement
-  ...pnpmConfigs.recommended
+  // pnpm catalog enforcement (bundles its own jsonc parser for package.json)
+  ...pnpmConfigs.json,
+
+  // Layer/app config files (nuxt.config.ts, etc.) sit outside tsconfig.typecheck.json's
+  // `include` — they're not part of the type-checked app, so skip type-aware rules for
+  // them. Must come last so it overrides the type-aware rules set above.
+  {
+    files: ['**/nuxt.config.ts', '**/*.config.ts', '**/*.config.mts'],
+    ...typescript.configs['flat/disable-type-checked'],
+  }
 )
