@@ -1,6 +1,6 @@
+import type { SiteConfig } from '#layers/core/app/types/site'
 import type { H3Event } from 'h3'
 
-import type { SiteConfig } from '#layers/core/app/types/site'
 import type { FeedConfig, FeedItem } from './types'
 
 export async function buildFeed(
@@ -10,7 +10,9 @@ export async function buildFeed(
 ): Promise<{ items: FeedItem[]; config: FeedConfig }> {
   const appConfig = useAppConfig()
   const site: SiteConfig = (appConfig as { site?: SiteConfig }).site ?? {}
-  const feedConfig = (appConfig as { feedsLayer?: { feed?: { limit?: number; defaultCollection?: string } } }).feedsLayer?.feed ?? {}
+  const feedConfig =
+    (appConfig as { feedsLayer?: { feed?: { limit?: number; defaultCollection?: string } } })
+      .feedsLayer?.feed ?? {}
   const limit: number = options?.unlimited ? Infinity : (feedConfig.limit ?? 30)
   const defaultCollection = feedConfig.defaultCollection ?? 'blog'
 
@@ -28,7 +30,9 @@ export async function buildFeed(
     title: `${site.title ?? 'My Site'}${collectionLabel}`,
     description: site.description ?? '',
     siteUrl,
-    author: authorName ? { name: authorName, email: site.author?.email, link: site.author?.link } : undefined,
+    author: authorName
+      ? { name: authorName, email: site.author?.email, link: site.author?.link }
+      : undefined,
     image: site.image || undefined,
     favicon: site.favicon ?? '/favicon.ico',
     copyright:

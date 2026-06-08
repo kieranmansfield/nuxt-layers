@@ -30,7 +30,7 @@ export type ThemeContrast = 'high' | 'standard'
 export type ThemeMotion = 'reduced' | 'full'
 export type ThemeTransparency = 'reduced' | 'full'
 
-export interface ThemePreferences {
+export type ThemePreferences = {
   accent: AccentColor
   contrast: PreferenceOverride
   motion: PreferenceOverride

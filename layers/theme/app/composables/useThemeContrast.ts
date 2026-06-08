@@ -1,5 +1,5 @@
-import { createSharedComposable, usePreferredContrast } from '@vueuse/core'
 import type { PreferenceOverride } from '#layers/theme/app/types/theme'
+import { createSharedComposable, usePreferredContrast } from '@vueuse/core'
 
 export const useThemeContrast = createSharedComposable(() => {
   const contrastOverride = useState<PreferenceOverride>('theme-contrast', () => 'system')

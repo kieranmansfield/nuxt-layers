@@ -1,5 +1,5 @@
-import type { H3Event } from 'h3'
 import { queryCollection } from '@nuxt/content/nitro'
+import type { H3Event } from 'h3'
 
 import type { FeedItem } from './types'
 

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { AccentColor } from '#layers/theme/app/types/theme'
+  import type { AccentColor } from '#layers/theme/app/types/theme'
 
-const appConfig = useAppConfig()
-const { activeAccent, setAccent } = useAccentColor()
+  const appConfig = useAppConfig()
+  const { activeAccent, setAccent } = useAccentColor()
 
-const accents = computed(() => ((appConfig as any).themeLayer?.accents as AccentColor[]) ?? [])
+  const accents = computed(() => ((appConfig as any).themeLayer?.accents as AccentColor[]) ?? [])
 </script>
 
 <template>
@@ -12,7 +12,7 @@ const accents = computed(() => ((appConfig as any).themeLayer?.accents as Accent
     <ThemePickerAccentButton
       v-for="color in accents"
       :key="color"
-      :color="color"
+      :color
       :active="activeAccent === color"
       @select="setAccent"
     />

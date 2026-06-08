@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-imports */
-import { uniform } from 'three/tsl'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { uniform } from 'three/tsl'
 
 export interface ShaderTimeOptions {
   autoStart?: boolean

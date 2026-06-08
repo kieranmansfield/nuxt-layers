@@ -1,5 +1,6 @@
-import { createSharedComposable } from '@vueuse/core'
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { AccentColor } from '#layers/theme/app/types/theme'
+import { createSharedComposable } from '@vueuse/core'
 
 export const useAccentColor = createSharedComposable(() => {
   const appConfig = useAppConfig()

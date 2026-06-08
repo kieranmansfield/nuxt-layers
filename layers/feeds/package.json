@@ -1,5 +1,5 @@
 {
-  "name": "@layers/feeds",
+  "name": "kmcom-layer-feeds",
   "version": "0.0.1",
   "type": "module",
   "private": true,

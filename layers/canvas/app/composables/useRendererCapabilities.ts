@@ -1,6 +1,11 @@
+import {
+  QUALITY_PRESETS,
+  type QualityLevel,
+  type QualitySettings,
+  type RendererBackend,
+  type RendererCapabilities,
+} from '#layers/canvas/types/renderer'
 import type { WebGLRenderer } from 'three'
-import type { QualityLevel, QualitySettings, RendererBackend, RendererCapabilities } from '#layers/canvas/types/renderer'
-import { QUALITY_PRESETS } from '#layers/canvas/types/renderer'
 
 /**
  * Detect and expose renderer capabilities

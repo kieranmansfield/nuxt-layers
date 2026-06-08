@@ -1,0 +1,188 @@
+<script setup lang="ts">
+  definePageMeta({ layout: false })
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('rose')
+  onUnmounted(() => setPageAccent(null))
+
+  const { back } = useBackNavigation('/motion')
+
+  const variants = [
+    { name: 'default', label: 'Default', description: 'Fades and moves all properties together' },
+    { name: 'fade', label: 'Fade', description: 'Opacity-only crossfade' },
+    { name: 'slide', label: 'Slide', description: 'Transform + opacity slide-in' },
+  ]
+
+  const activeVariant = ref('fade')
+  const duration = ref(400)
+  const replayKey = ref(0)
+
+  function replay() {
+    replayKey.value++
+  }
+
+  const cssClasses = [
+    { class: '.transition-default', props: 'all · 300ms · cubic-bezier(0.4, 0, 0.2, 1)' },
+    { class: '.transition-fade', props: 'opacity · 300ms · ease-out' },
+    { class: '.transition-slide', props: 'transform, opacity · 300ms · ease-out' },
+  ]
+</script>
+
+<template>
+  <LayoutPage
+    title="Transitions Layer Demo"
+    description="CSS transition classes + the MotionTransition wrapper component"
+  >
+    <div class="transitions-page">
+      <!-- Hero -->
+      <section
+        class="min-h-[70vh] flex items-center justify-center relative overflow-hidden bg-gray-950"
+      >
+        <div
+          class="absolute inset-0 bg-linear-to-b from-primary/10 via-transparent to-transparent"
+        />
+        <div class="text-center z-10 px-4">
+          <h1 class="text-5xl sm:text-7xl md:text-8xl font-black text-white mb-8">
+            TRANSI<span class="text-primary">TIONS</span>
+          </h1>
+          <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+            Lightweight CSS transition classes and the
+            <code class="text-primary">MotionTransition</code> wrapper for element-level enter/leave
+            effects.
+          </p>
+          <div class="flex flex-wrap gap-4 justify-center">
+            <UButton size="lg" @click="$router.push('#demo')">View Demo</UButton>
+            <UButton size="lg" variant="outline" @click="back()">
+              <UIcon name="i-lucide-arrow-left" class="mr-2" />
+              Back
+            </UButton>
+            <UButton size="lg" variant="ghost" to="/page-transitions">
+              <UIcon name="i-lucide-square-stack" class="mr-2" />
+              Page Transitions
+            </UButton>
+            <UButton size="lg" variant="ghost" to="/motion">
+              <UIcon name="i-lucide-sparkles" class="mr-2" />
+              Motion Layer
+            </UButton>
+          </div>
+        </div>
+      </section>
+
+      <!-- Demo -->
+      <section id="demo" class="py-24 bg-gray-900">
+        <UContainer>
+          <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">MotionTransition</h2>
+            <p class="text-gray-400 text-lg">
+              Pick a variant, then replay to see the enter animation
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-[280px_1fr] gap-8 max-w-5xl mx-auto">
+            <!-- Controls -->
+            <div class="space-y-4">
+              <div
+                v-for="variant in variants"
+                :key="variant.name"
+                class="rounded-xl border p-4 cursor-pointer transition-colors"
+                :class="
+                  activeVariant === variant.name
+                    ? 'border-primary bg-primary/10'
+                    : 'border-gray-800 bg-gray-800/50 hover:border-gray-700'
+                "
+                @click="activeVariant = variant.name"
+              >
+                <div class="font-semibold text-white">{{ variant.label }}</div>
+                <p class="text-sm text-gray-400">{{ variant.description }}</p>
+                <code class="text-xs text-primary">name="{{ variant.name }}"</code>
+              </div>
+
+              <div class="rounded-xl border border-gray-800 bg-gray-800/50 p-4">
+                <label class="text-sm text-gray-400 block mb-2"> Duration: {{ duration }}ms </label>
+                <input
+                  v-model.number="duration"
+                  type="range"
+                  min="100"
+                  max="1200"
+                  step="50"
+                  class="w-full"
+                />
+              </div>
+
+              <UButton block size="lg" @click="replay">
+                <UIcon name="i-lucide-rotate-ccw" class="mr-2" />
+                Replay
+              </UButton>
+            </div>
+
+            <!-- Preview -->
+            <div
+              class="bg-gray-950 rounded-3xl p-12 flex items-center justify-center min-h-[360px]"
+            >
+              <MotionTransition :key="replayKey" :name="activeVariant" :duration="duration">
+                <div
+                  class="w-64 h-64 rounded-3xl bg-linear-to-br from-primary to-purple-600 flex items-center justify-center shadow-2xl shadow-primary/30"
+                >
+                  <div class="text-center text-white p-6">
+                    <UIcon name="i-lucide-square-asterisk" class="text-5xl mb-3" />
+                    <p class="text-lg font-bold">{{ activeVariant }}</p>
+                    <p class="text-sm text-white/70">{{ duration }}ms</p>
+                  </div>
+                </div>
+              </MotionTransition>
+            </div>
+          </div>
+        </UContainer>
+      </section>
+
+      <!-- CSS Reference -->
+      <section class="py-24 bg-gray-950">
+        <UContainer>
+          <div class="max-w-3xl mx-auto">
+            <h3 class="text-3xl font-bold text-white mb-8 text-center">CSS Class Reference</h3>
+            <div class="grid gap-4">
+              <div
+                v-for="entry in cssClasses"
+                :key="entry.class"
+                class="bg-gray-900 rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4 border border-gray-800"
+              >
+                <code class="text-primary font-mono text-sm whitespace-nowrap">{{
+                  entry.class
+                }}</code>
+                <span class="text-gray-400 flex-1">{{ entry.props }}</span>
+              </div>
+            </div>
+            <p class="text-gray-500 text-sm mt-6 text-center">
+              Apply these classes directly to any element, or wrap content in
+              <code class="text-primary">&lt;MotionTransition name="fade" /&gt;</code>
+              for a managed enter/leave lifecycle.
+            </p>
+          </div>
+        </UContainer>
+      </section>
+
+      <!-- Footer Nav -->
+      <section class="py-16 bg-gray-900">
+        <UContainer>
+          <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
+            <div>
+              <h2 class="text-2xl font-bold text-white mb-2">Transitions Layer</h2>
+              <p class="text-gray-400">CSS transition classes + the MotionTransition component</p>
+            </div>
+            <div class="flex flex-wrap gap-4">
+              <UButton variant="ghost" to="/page-transitions">
+                <UIcon name="i-lucide-square-stack" class="mr-2" />
+                Page Transitions
+              </UButton>
+              <UButton variant="ghost" to="/motion">
+                <UIcon name="i-lucide-sparkles" class="mr-2" />
+                Motion Layer
+              </UButton>
+              <UButton variant="outline" @click="back()">Back</UButton>
+              <UButton to="/">Home</UButton>
+            </div>
+          </div>
+        </UContainer>
+      </section>
+    </div>
+  </LayoutPage>
+</template>

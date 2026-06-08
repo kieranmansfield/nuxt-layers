@@ -1,23 +1,23 @@
 <script lang="ts" setup>
-import { useColor } from '../../composables/color'
-import type { UiColors } from '../../types/colors'
-import type { FontSize } from '../../types/typography'
+  import { useColor } from '../../composables/color'
+  import type { UiColors } from '../../types/colors'
+  import type { FontSize } from '../../types/typography'
 
-defineOptions({ inheritAttrs: false })
+  defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(
-  defineProps<{
-    language?: string
-    color?: UiColors
-    size?: FontSize
-    class?: string
-  }>(),
-  {
-    class: '',
-    color: 'default',
-  }
-)
-const colorClass = useColor(props.color, 'text')
+  const props = withDefaults(
+    defineProps<{
+      language?: string
+      color?: UiColors
+      size?: FontSize
+      class?: string
+    }>(),
+    {
+      class: '',
+      color: 'default',
+    }
+  )
+  const colorClass = useColor(props.color, 'text')
 </script>
 
 <template>

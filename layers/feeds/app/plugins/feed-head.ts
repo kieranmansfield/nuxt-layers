@@ -16,9 +16,24 @@ export default defineNuxtPlugin(() => {
 
     // Always present: main site feeds via the shorthand routes
     const mainLinks = [
-      { rel: 'alternate', type: 'application/rss+xml', title: `${siteTitle || 'Site'} (RSS)`, href: '/feed/rss' },
-      { rel: 'alternate', type: 'application/atom+xml', title: `${siteTitle || 'Site'} (Atom)`, href: '/feed/atom' },
-      { rel: 'alternate', type: 'application/feed+json', title: `${siteTitle || 'Site'} (JSON Feed)`, href: '/feed/json' },
+      {
+        rel: 'alternate',
+        type: 'application/rss+xml',
+        title: `${siteTitle || 'Site'} (RSS)`,
+        href: '/feed/rss',
+      },
+      {
+        rel: 'alternate',
+        type: 'application/atom+xml',
+        title: `${siteTitle || 'Site'} (Atom)`,
+        href: '/feed/atom',
+      },
+      {
+        rel: 'alternate',
+        type: 'application/feed+json',
+        title: `${siteTitle || 'Site'} (JSON Feed)`,
+        href: '/feed/json',
+      },
     ]
 
     // Collection-specific feeds — only when on a non-default collection's pages.
@@ -30,9 +45,24 @@ export default defineNuxtPlugin(() => {
 
     const collectionLinks = label
       ? [
-          { rel: 'alternate', type: 'application/rss+xml', title: `${label} (RSS)`, href: `/feed/${currentCollection}/rss` },
-          { rel: 'alternate', type: 'application/atom+xml', title: `${label} (Atom)`, href: `/feed/${currentCollection}/atom` },
-          { rel: 'alternate', type: 'application/feed+json', title: `${label} (JSON Feed)`, href: `/feed/${currentCollection}/json` },
+          {
+            rel: 'alternate',
+            type: 'application/rss+xml',
+            title: `${label} (RSS)`,
+            href: `/feed/${currentCollection}/rss`,
+          },
+          {
+            rel: 'alternate',
+            type: 'application/atom+xml',
+            title: `${label} (Atom)`,
+            href: `/feed/${currentCollection}/atom`,
+          },
+          {
+            rel: 'alternate',
+            type: 'application/feed+json',
+            title: `${label} (JSON Feed)`,
+            href: `/feed/${currentCollection}/json`,
+          },
         ]
       : []
 

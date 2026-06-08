@@ -1,5 +1,5 @@
-import { createSharedComposable, usePreferredReducedMotion } from '@vueuse/core'
 import type { PreferenceOverride } from '#layers/theme/app/types/theme'
+import { createSharedComposable, usePreferredReducedMotion } from '@vueuse/core'
 
 export const useThemeMotion = createSharedComposable(() => {
   const motionOverride = useState<PreferenceOverride>('theme-motion', () => 'system')

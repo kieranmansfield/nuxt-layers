@@ -157,11 +157,35 @@ Defines all typography-related type constraints:
 
 ```ts
 export type FontWeightNumber = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
-export type FontWeight = 'font-thin' | 'font-extralight' | 'font-light' | 'font-normal' | 'font-medium' | 'font-semibold' | 'font-bold' | 'font-extrabold' | 'font-black' | FontWeightNumber
+export type FontWeight =
+  | 'font-thin'
+  | 'font-extralight'
+  | 'font-light'
+  | 'font-normal'
+  | 'font-medium'
+  | 'font-semibold'
+  | 'font-bold'
+  | 'font-extrabold'
+  | 'font-black'
+  | FontWeightNumber
 export type FontWidth = 'normal' | 'condensed' | 'expanded'
 export type FontSlant = 'normal' | 'italic' | 'oblique'
-export type FontLeading = 'leading-none' | 'leading-tight' | 'leading-snug' | 'leading-normal' | 'leading-relaxed' | 'leading-loose' | number
-export type FontTracking = 'tracking-tighter' | 'tracking-tight' | 'tracking-normal' | 'tracking-wide' | 'tracking-wider' | 'tracking-widest' | number
+export type FontLeading =
+  | 'leading-none'
+  | 'leading-tight'
+  | 'leading-snug'
+  | 'leading-normal'
+  | 'leading-relaxed'
+  | 'leading-loose'
+  | number
+export type FontTracking =
+  | 'tracking-tighter'
+  | 'tracking-tight'
+  | 'tracking-normal'
+  | 'tracking-wide'
+  | 'tracking-wider'
+  | 'tracking-widest'
+  | number
 export type TextAlign = 'left' | 'center' | 'right' | 'justify'
 export type TextTransform = 'none' | 'uppercase' | 'lowercase' | 'capitalize'
 ```
@@ -177,7 +201,12 @@ export type UiStatusColor = 'info' | 'success' | 'warning' | 'error'
 export type UiDefaultNuxtUiColors = 'primary' | 'neutral'
 export type UiCustomColors = 'secondary' | 'accent'
 export type UiBaseColor = 'black' | 'white'
-export type UiColors = UiSemanticColor | UiStatusColor | UiDefaultNuxtUiColors | UiCustomColors | UiBaseColor
+export type UiColors =
+  | UiSemanticColor
+  | UiStatusColor
+  | UiDefaultNuxtUiColors
+  | UiCustomColors
+  | UiBaseColor
 ```
 
 ### 4.3 Breakpoint Types (`breakpoints.ts`)
@@ -185,37 +214,48 @@ export type UiColors = UiSemanticColor | UiStatusColor | UiDefaultNuxtUiColors |
 Comprehensive responsive breakpoint system supporting multiple paradigms:
 
 **Tailwind Breakpoints:**
+
 ```ts
 export type ResponsiveBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 export const BREAKPOINT_VALUES = { sm: 640, md: 768, lg: 1024, xl: 1280, '2xl': 1536 }
 ```
 
 **Device Breakpoints:**
+
 ```ts
 export type DeviceBreakpoint = 'mobile' | 'tablet' | 'desktop' | 'wide'
 export const DEVICE_BREAKPOINT_VALUES = { mobile: 0, tablet: 640, desktop: 1024, wide: 1920 }
 ```
 
 **Phone Breakpoints:**
+
 ```ts
 export type PhoneBreakpoint = 'phone-sm' | 'phone-md' | 'phone-lg'
 export const PHONE_BREAKPOINT_VALUES = { 'phone-sm': 320, 'phone-md': 375, 'phone-lg': 428 }
 ```
 
 **Tablet Breakpoints:**
+
 ```ts
 export type TabletBreakpoint = 'tablet-sm' | 'tablet-md' | 'tablet-lg'
 export const TABLET_BREAKPOINT_VALUES = { 'tablet-sm': 768, 'tablet-md': 834, 'tablet-lg': 1024 }
 ```
 
 **Orientation:**
+
 ```ts
 export type DeviceOrientation = 'portrait' | 'landscape'
 ```
 
 **Combined:**
+
 ```ts
-export type AllBreakpoints = ResponsiveBreakpoint | DeviceBreakpoint | PhoneBreakpoint | TabletBreakpoint | DeviceOrientation
+export type AllBreakpoints =
+  | ResponsiveBreakpoint
+  | DeviceBreakpoint
+  | PhoneBreakpoint
+  | TabletBreakpoint
+  | DeviceOrientation
 ```
 
 ### 4.4 Media Types (`media.ts`)

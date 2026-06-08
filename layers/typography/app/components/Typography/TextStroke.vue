@@ -1,28 +1,28 @@
 <script lang="ts" setup>
-const id = useId()
-const contrast = usePreferredContrast()
+  const id = useId()
+  const contrast = usePreferredContrast()
 
-const props = withDefaults(
-  defineProps<{
-    text: string
-    strokeWidth?: number
-    strokeColor?: string
-    fill?: string
-    linejoin?: 'round' | 'miter' | 'bevel'
-    tag?: string
-  }>(),
-  {
-    strokeWidth: 1.5,
-    strokeColor: 'currentColor',
-    fill: 'none',
-    linejoin: 'round',
-    tag: 'div',
-  }
-)
+  const props = withDefaults(
+    defineProps<{
+      text: string
+      strokeWidth?: number
+      strokeColor?: string
+      fill?: string
+      linejoin?: 'round' | 'miter' | 'bevel'
+      tag?: string
+    }>(),
+    {
+      strokeWidth: 1.5,
+      strokeColor: 'currentColor',
+      fill: 'none',
+      linejoin: 'round',
+      tag: 'div',
+    }
+  )
 
-const effectiveStrokeWidth = computed(() =>
-  contrast.value === 'more' ? props.strokeWidth * 1.5 : props.strokeWidth
-)
+  const effectiveStrokeWidth = computed(() =>
+    contrast.value === 'more' ? props.strokeWidth * 1.5 : props.strokeWidth
+  )
 </script>
 
 <template>
@@ -96,14 +96,14 @@ const effectiveStrokeWidth = computed(() =>
 </template>
 
 <style scoped>
-@media (forced-colors: active) {
-  .text-stroke-sizer {
-    visibility: visible;
-    color: CanvasText;
-  }
+  @media (forced-colors: active) {
+    .text-stroke-sizer {
+      visibility: visible;
+      color: CanvasText;
+    }
 
-  .text-stroke-svg {
-    display: none;
+    .text-stroke-svg {
+      display: none;
+    }
   }
-}
 </style>

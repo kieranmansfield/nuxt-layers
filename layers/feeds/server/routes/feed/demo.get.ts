@@ -26,7 +26,8 @@ function formatDate(date: Date): string {
 export default defineEventHandler(async (event) => {
   const appConfig = useAppConfig()
   const site: SiteConfig = (appConfig as { site?: SiteConfig }).site ?? {}
-  const feedConfig = (appConfig as { feedsLayer?: { feed?: { defaultCollection?: string } } }).feedsLayer?.feed ?? {}
+  const feedConfig =
+    (appConfig as { feedsLayer?: { feed?: { defaultCollection?: string } } }).feedsLayer?.feed ?? {}
   const defaultCollection = feedConfig.defaultCollection ?? 'blog'
 
   const requestUrl = getRequestURL(event)
@@ -35,7 +36,9 @@ export default defineEventHandler(async (event) => {
 
   const { items, config } = await buildFeed(event, defaultCollection)
 
-  const itemsHtml = items.map((item) => `
+  const itemsHtml = items
+    .map(
+      (item) => `
     <li class="feed-item">
       <article>
         <h2 class="feed-item-title">
@@ -46,12 +49,18 @@ export default defineEventHandler(async (event) => {
           ${item.author ? `<span class="feed-item-separator">·</span><span>${escapeHtml(item.author)}</span>` : ''}
         </div>
         ${item.description ? `<p class="feed-item-description">${escapeHtml(item.description)}</p>` : ''}
-        ${item.tags?.length ? `
+        ${
+          item.tags?.length
+            ? `
         <div class="feed-tags">
           ${item.tags.map((t) => `<span class="feed-tag">${escapeHtml(t)}</span>`).join('')}
-        </div>` : ''}
+        </div>`
+            : ''
+        }
       </article>
-    </li>`).join('')
+    </li>`
+    )
+    .join('')
 
   const html = `<!DOCTYPE html>
 <html lang="en">

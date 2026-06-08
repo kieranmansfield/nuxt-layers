@@ -29,6 +29,6 @@ export function toRSS(items: FeedItem[], config: FeedConfig): string {
   const raw = feed.rss2()
   return raw.replace(
     '<?xml version="1.0" encoding="UTF-8"?>',
-    '<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="/feed/style.xsl"?>',
+    '<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="/feed/style.xsl"?>'
   )
 }
