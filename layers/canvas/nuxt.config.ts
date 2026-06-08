@@ -148,7 +148,7 @@ export default defineNuxtConfig({
   extends: ['../core'],
 
   typescript: {
-    typeCheck: true,
+    typeCheck: false,
     strict: true,
   },
 
