@@ -51,7 +51,6 @@
     "fix:layer": "f(){ pnpm turbo run lint --filter \"./layers/$1\" -- --fix && prettier --write \"layers/$1\"; }; f",
     "fix:app": "f(){ pnpm turbo run lint --filter \"./apps/$1\" -- --fix && prettier --write \"apps/$1\"; }; f",
     "typecheck": "turbo run typecheck",
-    "prepublishOnly": "pnpm typecheck",
     "clean": "pnpm -r exec rm -rf node_modules .nuxt .output .data && pnpm store prune && pnpm install",
     "cleancache": "pnpm store prune --force",
     "update": "ncu -i",

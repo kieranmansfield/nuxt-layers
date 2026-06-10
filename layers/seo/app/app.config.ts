@@ -14,7 +14,7 @@ export default defineAppConfig({
 })
 
 declare module '@nuxt/schema' {
-  type AppConfigInput = {
+  interface AppConfigInput {
     seoLayer?: {
       ogImage?: {
         component?: string
