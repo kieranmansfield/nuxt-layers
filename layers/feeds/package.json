@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "nuxt": "catalog:",
-    "vue": "catalog:conflicts_conflicts_vue_latest_h3_5_35",
+    "vue": "^3.5.35",
     "vue-router": "catalog:"
   }
 }

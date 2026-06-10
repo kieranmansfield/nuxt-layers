@@ -236,7 +236,7 @@
     "typescript": "catalog:",
     "vite-plugin-checker": "catalog:",
     "vitest": "catalog:",
-    "vue": "catalog:conflicts_vue_latest",
+    "vue": "^3.5.35",
     "vue-tsc": "catalog:",
     "zod": "catalog:",
     "zod-to-json-schema": "catalog:"
