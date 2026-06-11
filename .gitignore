@@ -37,3 +37,6 @@ dist
 
 # Claude Code session lock files
 .claude/scheduled_tasks.lock
+
+# Superpowers skills
+.superpowers/
