@@ -1,96 +1,131 @@
+<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
+<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
+<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
-import ThemeGradient from '#layers/shader/app/components/Preset/ThemeGradient.client.vue'
-import ThemeWave from '#layers/shader/app/components/Preset/ThemeWave.client.vue'
-import ThemeLavaLamp from '#layers/shader/app/components/Preset/ThemeLavaLamp.client.vue'
-import ThemeBubble from '#layers/shader/app/components/Preset/ThemeBubble.client.vue'
-import ThemePlasma from '#layers/shader/app/components/Preset/ThemePlasma.client.vue'
-import type { AccentColor } from '#layers/theme/app/types/theme'
+  import ThemeBubble from '#layers/shader/app/components/Preset/ThemeBubble.client.vue'
+  import ThemeGradient from '#layers/shader/app/components/Preset/ThemeGradient.client.vue'
+  import ThemeLavaLamp from '#layers/shader/app/components/Preset/ThemeLavaLamp.client.vue'
+  import ThemePlasma from '#layers/shader/app/components/Preset/ThemePlasma.client.vue'
+  import ThemeWave from '#layers/shader/app/components/Preset/ThemeWave.client.vue'
+  import type { AccentColor } from '#layers/theme/app/types/theme'
 
-definePageMeta({ ssr: false, layout: false })
+  definePageMeta({ ssr: false, layout: false })
 
-// Hardcoded Tailwind 500 hex values (same as ThemePickerAccentButton)
-const ACCENT_HEX: Record<AccentColor, string> = {
-  red: '#ef4444',
-  orange: '#f97316',
-  amber: '#f59e0b',
-  yellow: '#eab308',
-  lime: '#84cc16',
-  green: '#22c55e',
-  emerald: '#10b981',
-  teal: '#14b8a6',
-  cyan: '#06b6d4',
-  sky: '#0ea5e9',
-  blue: '#3b82f6',
-  indigo: '#6366f1',
-  violet: '#8b5cf6',
-  purple: '#a855f7',
-  fuchsia: '#d946ef',
-  pink: '#ec4899',
-  rose: '#f43f5e',
-}
+  // Hardcoded Tailwind 500 hex values (same as ThemePickerAccentButton)
+  const ACCENT_HEX: Record<AccentColor, string> = {
+    red: '#ef4444',
+    orange: '#f97316',
+    amber: '#f59e0b',
+    yellow: '#eab308',
+    lime: '#84cc16',
+    green: '#22c55e',
+    emerald: '#10b981',
+    teal: '#14b8a6',
+    cyan: '#06b6d4',
+    sky: '#0ea5e9',
+    blue: '#3b82f6',
+    indigo: '#6366f1',
+    violet: '#8b5cf6',
+    purple: '#a855f7',
+    fuchsia: '#d946ef',
+    pink: '#ec4899',
+    rose: '#f43f5e',
+  }
 
-const accents = Object.keys(ACCENT_HEX) as AccentColor[]
+  const accents = Object.keys(ACCENT_HEX) as AccentColor[]
 
-// Pattern selector
-type PatternKey = 'mesh' | 'wave' | 'lavalamp' | 'bubble' | 'plasma'
-const PATTERNS: { key: PatternKey; label: string; component: any }[] = [
-  { key: 'mesh',     label: 'Mesh',   component: ThemeGradient },
-  { key: 'wave',     label: 'Wave',   component: ThemeWave },
-  { key: 'lavalamp', label: 'Lava',   component: ThemeLavaLamp },
-  { key: 'bubble',   label: 'Bubble', component: ThemeBubble },
-  { key: 'plasma',   label: 'Plasma', component: ThemePlasma },
-]
-const activePattern = ref<PatternKey>('mesh')
-const activePreset = computed(() => PATTERNS.find((p) => p.key === activePattern.value)!.component)
+  // Pattern selector
+  type PatternKey = 'mesh' | 'wave' | 'lavalamp' | 'bubble' | 'plasma'
+  const PATTERNS: { key: PatternKey; label: string; component: any }[] = [
+    { key: 'mesh', label: 'Mesh', component: ThemeGradient },
+    { key: 'wave', label: 'Wave', component: ThemeWave },
+    { key: 'lavalamp', label: 'Lava', component: ThemeLavaLamp },
+    { key: 'bubble', label: 'Bubble', component: ThemeBubble },
+    { key: 'plasma', label: 'Plasma', component: ThemePlasma },
+  ]
+  const activePattern = ref<PatternKey>('mesh')
+  const activePreset = computed(
+    () => PATTERNS.find((p) => p.key === activePattern.value)!.component
+  )
 
-// Controls
-const speed = ref(1.0)
-const intensity = ref(1.0)
-const mouseInteraction = ref(true)
-const mouseStrength = ref(0.3)
+  // Controls
+  const speed = ref(1.0)
+  const intensity = ref(1.0)
+  const mouseInteraction = ref(true)
+  const mouseStrength = ref(0.3)
 
-// 4 gradient point colours — start at violet theme defaults
-const color1 = ref('#8b5cf6')
-const color2 = ref('#6366f1')
-const color3 = ref('#a78bfa')
-const color4 = ref('#38bdf8')
+  // 4 gradient point colours — start at violet theme defaults
+  const color1 = ref('#8b5cf6')
+  const color2 = ref('#6366f1')
+  const color3 = ref('#a78bfa')
+  const color4 = ref('#38bdf8')
 
-// Sync to theme accent + color mode
-const { setAccent, activeAccent } = useAccentColor()
-const { primaryHex, secondaryHex, infoHex, primaryLightHex, clearColor } = useThemeColors()
+  // Sync to theme accent + color mode
+  const { setAccent, activeAccent } = useAccentColor()
+  const { primaryHex, secondaryHex, infoHex, primaryLightHex, clearColor } = useThemeColors()
 
-watch(primaryHex,    (hex) => { color1.value = hex }, { immediate: true })
-watch(secondaryHex,  (hex) => { color2.value = hex }, { immediate: true })
-watch(primaryLightHex, (hex) => { color3.value = hex }, { immediate: true })
-watch(infoHex,       (hex) => { color4.value = hex }, { immediate: true })
+  watch(
+    primaryHex,
+    (hex) => {
+      color1.value = hex
+    },
+    { immediate: true }
+  )
+  watch(
+    secondaryHex,
+    (hex) => {
+      color2.value = hex
+    },
+    { immediate: true }
+  )
+  watch(
+    primaryLightHex,
+    (hex) => {
+      color3.value = hex
+    },
+    { immediate: true }
+  )
+  watch(
+    infoHex,
+    (hex) => {
+      color4.value = hex
+    },
+    { immediate: true }
+  )
 
-const presetProps = computed(() => ({
-  speed: speed.value,
-  intensity: intensity.value,
-  mouseInteraction: mouseInteraction.value,
-  mouseStrength: mouseStrength.value,
-  color1: color1.value,
-  color2: color2.value,
-  color3: color3.value,
-  color4: color4.value,
-}))
+  const presetProps = computed(() => ({
+    speed: speed.value,
+    intensity: intensity.value,
+    mouseInteraction: mouseInteraction.value,
+    mouseStrength: mouseStrength.value,
+    color1: color1.value,
+    color2: color2.value,
+    color3: color3.value,
+    color4: color4.value,
+  }))
 
-const COLOR_LABELS = ['Point 1', 'Point 2', 'Point 3', 'Point 4'] as const
-const colorRefs = [color1, color2, color3, color4] as [typeof color1, typeof color1, typeof color1, typeof color1]
+  const COLOR_LABELS = ['Point 1', 'Point 2', 'Point 3', 'Point 4'] as const
+  const colorRefs = [color1, color2, color3, color4] as [
+    typeof color1,
+    typeof color1,
+    typeof color1,
+    typeof color1,
+  ]
 
-// Panel text/border adapts to color mode
-const colorMode = useColorMode()
-const isDark = computed(() => colorMode.value === 'dark')
+  // Panel text/border adapts to color mode
+  const colorMode = useColorMode()
+  const isDark = computed(() => colorMode.value === 'dark')
 </script>
 
+<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
 <template>
   <ShaderRuntime>
     <ShaderHost
       :preset="activePreset"
-      :preset-props="presetProps"
+      :preset-props
       :fixed="true"
       :z-index="-1"
-      :clear-color="clearColor"
+      :clear-color
       tone-mapping="aces"
     />
 
@@ -143,7 +178,7 @@ const isDark = computed(() => colorMode.value === 'dark')
                     ? 'bg-white/5 text-white/50 hover:text-white/80'
                     : 'bg-black/5 text-black/50 hover:text-black/80'
               "
-              @click="activePattern = p.key"
+              @click="() => (activePattern = p.key)"
             >
               {{ p.label }}
             </button>
@@ -172,7 +207,7 @@ const isDark = computed(() => colorMode.value === 'dark')
               "
               :style="{ backgroundColor: ACCENT_HEX[accent] }"
               :aria-label="accent"
-              @click="setAccent(accent)"
+              @click="() => setAccent(accent)"
             />
           </div>
         </div>

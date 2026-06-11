@@ -1,42 +1,43 @@
+<!-- eslint-disable vue/no-boolean-default -->
+<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
-import { OrbitControls } from '@tresjs/cientos'
-import { TresCanvas } from '@tresjs/core'
-import { Clock, DoubleSide, ShaderMaterial, TextureLoader } from 'three'
-import type { Texture } from 'three'
+  import { OrbitControls } from '@tresjs/cientos'
+  import { TresCanvas } from '@tresjs/core'
+  import { Clock, DoubleSide, ShaderMaterial, TextureLoader, type Texture } from 'three'
 
-const props = withDefaults(
-  defineProps<{
-    distortion?: number
-    mouseRipple?: boolean
-    grayscale?: number
-    rgbShift?: number
-    vignette?: boolean
-    mouseX?: number
-    mouseY?: number
-    disableZoom?: boolean
-  }>(),
-  {
-    distortion: 0.02,
-    mouseRipple: true,
-    grayscale: 0,
-    rgbShift: 0,
-    vignette: true,
-    mouseX: 0.5,
-    mouseY: 0.5,
-    disableZoom: false,
-  }
-)
+  const props = withDefaults(
+    defineProps<{
+      distortion?: number
+      mouseRipple?: boolean
+      grayscale?: number
+      rgbShift?: number
+      vignette?: boolean
+      mouseX?: number
+      mouseY?: number
+      disableZoom?: boolean
+    }>(),
+    {
+      distortion: 0.02,
+      mouseRipple: true,
+      grayscale: 0,
+      rgbShift: 0,
+      vignette: true,
+      mouseX: 0.5,
+      mouseY: 0.5,
+      disableZoom: false,
+    }
+  )
 
-const loadedTexture = ref<Texture | null>(null)
+  const loadedTexture = ref<Texture | null>(null)
 
-// Load a sample image
-onMounted(async () => {
-  const loader = new TextureLoader()
-  // Using a placeholder image - in production you'd use an actual image
-  loadedTexture.value = await loader.loadAsync('https://picsum.photos/1024/1024')
-})
+  // Load a sample image
+  onMounted(async () => {
+    const loader = new TextureLoader()
+    // Using a placeholder image - in production you'd use an actual image
+    loadedTexture.value = await loader.loadAsync('https://picsum.photos/1024/1024')
+  })
 
-const vertexShader = `
+  const vertexShader = `
 varying vec2 vUv;
 void main() {
   vUv = uv;
@@ -44,7 +45,7 @@ void main() {
 }
 `
 
-const fragmentShader = `
+  const fragmentShader = `
 uniform sampler2D uTexture;
 uniform float uTime;
 uniform float uDistortion;
@@ -138,58 +139,58 @@ void main() {
 }
 `
 
-const material = computed(() => {
-  if (!loadedTexture.value) return null
+  const material = computed(() => {
+    if (!loadedTexture.value) return null
 
-  return new ShaderMaterial({
-    vertexShader,
-    fragmentShader,
-    uniforms: {
-      uTexture: { value: loadedTexture.value },
-      uTime: { value: 0 },
-      uDistortion: { value: props.distortion },
-      uDistortionSpeed: { value: 1 },
-      uMouseX: { value: props.mouseX },
-      uMouseY: { value: props.mouseY },
-      uRippleStrength: { value: 0.02 },
-      uGrayscale: { value: props.grayscale },
-      uRgbShift: { value: props.rgbShift },
-      uVignetteIntensity: { value: 0.5 },
-      uMouseRipple: { value: props.mouseRipple },
-      uVignette: { value: props.vignette },
-      uZoom: { value: 1 },
-    },
-    side: DoubleSide,
+    return new ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms: {
+        uTexture: { value: loadedTexture.value },
+        uTime: { value: 0 },
+        uDistortion: { value: props.distortion },
+        uDistortionSpeed: { value: 1 },
+        uMouseX: { value: props.mouseX },
+        uMouseY: { value: props.mouseY },
+        uRippleStrength: { value: 0.02 },
+        uGrayscale: { value: props.grayscale },
+        uRgbShift: { value: props.rgbShift },
+        uVignetteIntensity: { value: 0.5 },
+        uMouseRipple: { value: props.mouseRipple },
+        uVignette: { value: props.vignette },
+        uZoom: { value: 1 },
+      },
+      side: DoubleSide,
+    })
   })
-})
 
-// Animation
-const clock = new Clock()
-let animationId: number
+  // Animation
+  const clock = new Clock()
+  let animationId: number
 
-const animate = () => {
-  if (material.value?.uniforms) {
-    const { uniforms } = material.value
-    const elapsed = clock.getElapsedTime()
-    if (uniforms.uTime) uniforms.uTime.value = elapsed
-    if (uniforms.uDistortion) uniforms.uDistortion.value = props.distortion
-    if (uniforms.uMouseX) uniforms.uMouseX.value = props.mouseX
-    if (uniforms.uMouseY) uniforms.uMouseY.value = props.mouseY
-    if (uniforms.uGrayscale) uniforms.uGrayscale.value = props.grayscale
-    if (uniforms.uRgbShift) uniforms.uRgbShift.value = props.rgbShift
-    if (uniforms.uMouseRipple) uniforms.uMouseRipple.value = props.mouseRipple
-    if (uniforms.uVignette) uniforms.uVignette.value = props.vignette
+  const animate = () => {
+    if (material.value?.uniforms) {
+      const { uniforms } = material.value
+      const elapsed = clock.getElapsedTime()
+      if (uniforms.uTime) uniforms.uTime.value = elapsed
+      if (uniforms.uDistortion) uniforms.uDistortion.value = props.distortion
+      if (uniforms.uMouseX) uniforms.uMouseX.value = props.mouseX
+      if (uniforms.uMouseY) uniforms.uMouseY.value = props.mouseY
+      if (uniforms.uGrayscale) uniforms.uGrayscale.value = props.grayscale
+      if (uniforms.uRgbShift) uniforms.uRgbShift.value = props.rgbShift
+      if (uniforms.uMouseRipple) uniforms.uMouseRipple.value = props.mouseRipple
+      if (uniforms.uVignette) uniforms.uVignette.value = props.vignette
+    }
+    animationId = requestAnimationFrame(animate)
   }
-  animationId = requestAnimationFrame(animate)
-}
 
-onMounted(() => {
-  animate()
-})
+  onMounted(() => {
+    animate()
+  })
 
-onUnmounted(() => {
-  cancelAnimationFrame(animationId)
-})
+  onUnmounted(() => {
+    cancelAnimationFrame(animationId)
+  })
 </script>
 
 <template>

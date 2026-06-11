@@ -1,138 +1,137 @@
 <script setup lang="ts">
-/* eslint-disable vue/prefer-true-attribute-shorthand */
-definePageMeta({ layout: false })
+  /* eslint-disable vue/prefer-true-attribute-shorthand */
+  definePageMeta({ layout: false })
 
-const { setPageAccent } = useAccentColor()
-setPageAccent('emerald')
-onUnmounted(() => setPageAccent(null))
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('emerald')
+  onUnmounted(() => setPageAccent(null))
 
-const { gsap } = useGsap()
-const { scrollTo, scrollToTop, velocity, progress } = useSmoothScroll()
+  const { gsap } = useGsap()
+  const { scrollTo, scrollToTop, velocity, progress } = useSmoothScroll()
 
-// Refs for animations
-const parallaxSection = ref<HTMLElement | null>(null)
-const parallaxDeep = ref<HTMLElement | null>(null)
-const parallaxBg = ref<HTMLElement | null>(null)
-const parallaxShapes = ref<HTMLElement | null>(null)
-const parallaxMid = ref<HTMLElement | null>(null)
-const parallaxFg = ref<HTMLElement | null>(null)
-const scrubSection = ref<HTMLElement | null>(null)
-const scrubProgress = ref<HTMLElement | null>(null)
-const velocityText = ref<HTMLElement | null>(null)
+  // Refs for animations
+  const parallaxSection = useTemplateRef<HTMLElement>('parallaxSection')
+  const parallaxDeep = useTemplateRef<HTMLElement>('parallaxDeep')
+  const parallaxBg = useTemplateRef<HTMLElement>('parallaxBg')
+  const parallaxShapes = useTemplateRef<HTMLElement>('parallaxShapes')
+  const parallaxMid = useTemplateRef<HTMLElement>('parallaxMid')
+  const parallaxFg = useTemplateRef<HTMLElement>('parallaxFg')
+  const scrubSection = useTemplateRef<HTMLElement>('scrubSection')
+  const scrubProgress = useTemplateRef<HTMLElement>('scrubProgress')
+  const velocityText = useTemplateRef<HTMLElement>('velocityText')
 
-// State
-const reducedMotion = ref(false)
+  // State
+  const reducedMotion = ref(false)
 
-onMounted(() => {
-  // Check reduced motion preference
-  if (import.meta.client) {
-    reducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  onMounted(() => {
+    // Check reduced motion preference
+    if (import.meta.client) {
+      reducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    }
+
+    // Parallax effect - multiple layers at different speeds
+    if (parallaxSection.value) {
+      const parallaxTrigger = {
+        trigger: parallaxSection.value,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 0.5,
+      }
+
+      // Deep background (slowest - moves up slightly)
+      if (parallaxDeep.value) {
+        gsap.to(parallaxDeep.value, {
+          scrollTrigger: parallaxTrigger,
+          y: -100,
+          scale: 1.1,
+          ease: 'none',
+        })
+      }
+
+      // Background text (slow)
+      if (parallaxBg.value) {
+        gsap.to(parallaxBg.value, {
+          scrollTrigger: parallaxTrigger,
+          y: -300,
+          ease: 'none',
+        })
+      }
+
+      // Floating shapes (medium speed + rotation)
+      if (parallaxShapes.value) {
+        gsap.to(parallaxShapes.value, {
+          scrollTrigger: parallaxTrigger,
+          y: -150,
+          rotation: 15,
+          ease: 'none',
+        })
+      }
+
+      // Middle content (subtle movement)
+      if (parallaxMid.value) {
+        gsap.to(parallaxMid.value, {
+          scrollTrigger: parallaxTrigger,
+          y: -50,
+          ease: 'none',
+        })
+      }
+
+      // Foreground blurs (fastest - moves down)
+      if (parallaxFg.value) {
+        gsap.to(parallaxFg.value, {
+          scrollTrigger: parallaxTrigger,
+          y: 200,
+          scale: 1.2,
+          ease: 'none',
+        })
+      }
+    }
+
+    // Scrub progress animation - progress bar fills as you scroll through section
+    if (scrubSection.value && scrubProgress.value) {
+      // Set initial state
+      gsap.set(scrubProgress.value, { scaleX: 0, transformOrigin: 'left center' })
+
+      gsap.to(scrubProgress.value, {
+        scaleX: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: scrubSection.value,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          scrub: 0.3,
+          // markers: true, // Uncomment to debug
+        },
+      })
+    }
+
+    // Velocity-based text skew - reacts to scroll speed
+    if (velocityText.value) {
+      watch(velocity, (vel) => {
+        if (!velocityText.value) return
+        // Skew based on velocity: faster scroll = more skew
+        const skewAmount = Math.max(-20, Math.min(20, vel * 3))
+        gsap.to(velocityText.value, {
+          skewX: skewAmount,
+          duration: 0.2,
+          ease: 'power2.out',
+        })
+      })
+    }
+  })
+
+  function scrollToSection(selector: string) {
+    scrollTo(selector, { offset: -20, duration: 1.5 })
   }
 
-  // Parallax effect - multiple layers at different speeds
-  if (parallaxSection.value) {
-    const parallaxTrigger = {
-      trigger: parallaxSection.value,
-      start: 'top bottom',
-      end: 'bottom top',
-      scrub: 0.5,
-    }
-
-    // Deep background (slowest - moves up slightly)
-    if (parallaxDeep.value) {
-      gsap.to(parallaxDeep.value, {
-        scrollTrigger: parallaxTrigger,
-        y: -100,
-        scale: 1.1,
-        ease: 'none',
-      })
-    }
-
-    // Background text (slow)
-    if (parallaxBg.value) {
-      gsap.to(parallaxBg.value, {
-        scrollTrigger: parallaxTrigger,
-        y: -300,
-        ease: 'none',
-      })
-    }
-
-    // Floating shapes (medium speed + rotation)
-    if (parallaxShapes.value) {
-      gsap.to(parallaxShapes.value, {
-        scrollTrigger: parallaxTrigger,
-        y: -150,
-        rotation: 15,
-        ease: 'none',
-      })
-    }
-
-    // Middle content (subtle movement)
-    if (parallaxMid.value) {
-      gsap.to(parallaxMid.value, {
-        scrollTrigger: parallaxTrigger,
-        y: -50,
-        ease: 'none',
-      })
-    }
-
-    // Foreground blurs (fastest - moves down)
-    if (parallaxFg.value) {
-      gsap.to(parallaxFg.value, {
-        scrollTrigger: parallaxTrigger,
-        y: 200,
-        scale: 1.2,
-        ease: 'none',
-      })
-    }
-  }
-
-  // Scrub progress animation - progress bar fills as you scroll through section
-  if (scrubSection.value && scrubProgress.value) {
-    // Set initial state
-    gsap.set(scrubProgress.value, { scaleX: 0, transformOrigin: 'left center' })
-
-    gsap.to(scrubProgress.value, {
-      scaleX: 1,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: scrubSection.value,
-        start: 'top 80%',
-        end: 'bottom 20%',
-        scrub: 0.3,
-        // markers: true, // Uncomment to debug
-      },
-    })
-  }
-
-  // Velocity-based text skew - reacts to scroll speed
-  if (velocityText.value) {
-    watch(velocity, (vel) => {
-      if (!velocityText.value) return
-      // Skew based on velocity: faster scroll = more skew
-      const skewAmount = Math.max(-20, Math.min(20, vel * 3))
-      gsap.to(velocityText.value, {
-        skewX: skewAmount,
-        duration: 0.2,
-        ease: 'power2.out',
-      })
-    })
-  }
-})
-
-function scrollToSection(selector: string) {
-  scrollTo(selector, { offset: -20, duration: 1.5 })
-}
-
-const marqueeItems = ['GSAP', '✦', 'SCROLL', '✦', 'MOTION', '✦', 'ANIMATE', '✦', 'LAYERS', '✦']
-const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'VELOCITY', '•']
+  const marqueeItems = ['GSAP', '✦', 'SCROLL', '✦', 'MOTION', '✦', 'ANIMATE', '✦', 'LAYERS', '✦']
+  const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'VELOCITY', '•']
 </script>
 
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
-  <LayoutPage
-    title="Motion Layer Demo"
-    description="GSAP animations + Locomotive Scroll v5"
-  >
+  <LayoutPage title="Motion Layer Demo" description="GSAP animations + Locomotive Scroll v5">
     <div class="motion-page">
       <!-- Hero Section -->
       <section
@@ -147,13 +146,13 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
             class="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white mb-8 perspective-1000"
           >
             <span
-              class="hero-word inline-block"
               v-gsap.from="{ y: 100, opacity: 0, rotateX: -80, duration: 1.2, ease: 'power3.out' }"
-              >MOTION</span
+              class="hero-word inline-block"
             >
+              MOTION
+            </span>
             <br />
             <span
-              class="hero-word inline-block text-primary"
               v-gsap.delay-100.from="{
                 y: 100,
                 opacity: 0,
@@ -161,8 +160,10 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
                 duration: 1.2,
                 ease: 'power3.out',
               }"
-              >LAYER</span
+              class="hero-word inline-block text-primary"
             >
+              LAYER
+            </span>
           </h1>
           <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
             GSAP + Locomotive Scroll v5. Parallax, pinning, scrub animations, and velocity-based
@@ -230,7 +231,7 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
       </div>
 
       <!-- Demos Section -->
-      <section id="demos" class="py-24 bg-gray-900">
+      <section id="demos" class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Animation Demos</h2>
@@ -241,7 +242,6 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
           <div class="mb-32">
             <h3 class="text-2xl font-bold text-white mb-8 text-center">Scroll Trigger</h3>
             <div
-              class="h-[50vh] min-h-[400px] bg-linear-to-br from-blue-600 via-purple-600 to-pink-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-purple-500/25"
               v-gsap.whenVisible.once.from="{
                 y: 100,
                 opacity: 0,
@@ -249,6 +249,7 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
                 duration: 1,
                 ease: 'power3.out',
               }"
+              class="h-[50vh] min-h-100 bg-linear-to-br from-blue-600 via-purple-600 to-pink-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-purple-500/25"
             >
               <div class="text-center text-white p-8">
                 <UIcon name="i-lucide-sparkles" class="text-6xl mb-4" />
@@ -262,7 +263,6 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
           <div class="mb-32">
             <h3 class="text-2xl font-bold text-white mb-8 text-center">Staggered Animation</h3>
             <div
-              class="grid grid-cols-2 md:grid-cols-4 gap-4"
               v-gsap.whenVisible.once.stagger.from="{
                 y: 50,
                 opacity: 0,
@@ -271,6 +271,7 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
                 stagger: 0.1,
                 ease: 'power3.out',
               }"
+              class="grid grid-cols-2 md:grid-cols-4 gap-4"
             >
               <div
                 v-for="i in 8"
@@ -359,7 +360,7 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
       </section>
 
       <!-- Pinned Section -->
-      <MotionPinnedSection :duration="200" class="bg-gray-900">
+      <MotionPinnedSection :duration="200" class="bg-gray-950">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 px-8 max-w-6xl">
           <div
             v-for="(item, i) in ['Reveal', 'As You', 'Scroll', 'Down']"
@@ -431,7 +432,7 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
       </section>
 
       <!-- Horizontal Scroll Section -->
-      <MotionHorizontalScroll id="horizontal-section" class="bg-gray-900">
+      <MotionHorizontalScroll id="horizontal-section" class="bg-gray-950">
         <div
           v-for="i in 6"
           :key="i"
@@ -473,7 +474,7 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
       </section>
 
       <!-- GSAP Parallax Demo Section -->
-      <section class="py-32 bg-gray-900 overflow-hidden">
+      <section class="py-32 bg-gray-950 overflow-hidden">
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">GSAP Parallax</h2>
@@ -669,7 +670,7 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
       </section>
 
       <!-- Data Attributes Reference -->
-      <section class="py-24 bg-gray-900">
+      <section class="py-24 bg-gray-950">
         <UContainer>
           <div class="max-w-4xl mx-auto">
             <h3 class="text-3xl font-bold text-white mb-8 text-center">Data Attribute Reference</h3>
@@ -763,18 +764,18 @@ const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'V
 </template>
 
 <style scoped>
-/* stylelint-disable function-disallowed-list */
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.stroke-text {
-  -webkit-text-stroke: 2px rgb(255 255 255 / 0.3);
-}
-
-@media (width >= 768px) {
-  .stroke-text {
-    -webkit-text-stroke: 4px rgb(255 255 255 / 0.3);
+  /* stylelint-disable function-disallowed-list */
+  .perspective-1000 {
+    perspective: 1000px;
   }
-}
+
+  .stroke-text {
+    -webkit-text-stroke: 2px rgb(255 255 255 / 0.3);
+  }
+
+  @media (width >= 768px) {
+    .stroke-text {
+      -webkit-text-stroke: 4px rgb(255 255 255 / 0.3);
+    }
+  }
 </style>

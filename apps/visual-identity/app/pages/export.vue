@@ -1,77 +1,76 @@
 <script setup lang="ts">
-import type { TabsItem } from '@nuxt/ui'
+  import type { TabsItem } from '@nuxt/ui'
 
-const { state, importState } = useBrandState()
-const {
-  generateCssVars,
-  generateTailwindV4,
-  generateJson,
-  exportCssVars,
-  exportTailwindV4,
-  exportJson,
-  copyToClipboard,
-} = useExport()
+  const { state, importState } = useBrandState()
+  const {
+    generateCssVars,
+    generateTailwindV4,
+    generateJson,
+    exportCssVars,
+    exportTailwindV4,
+    exportJson,
+    copyToClipboard,
+  } = useExport()
 
-const activeTab = ref('tailwind')
+  const activeTab = ref('tailwind')
 
-const tabItems: TabsItem[] = [
-  { label: 'Tailwind v4', icon: 'i-lucide-wind', value: 'tailwind' },
-  { label: 'CSS Variables', icon: 'i-lucide-braces', value: 'css' },
-  { label: 'JSON', icon: 'i-lucide-file-json', value: 'json' },
-]
+  const tabItems: TabsItem[] = [
+    { label: 'Tailwind v4', icon: 'i-lucide-wind', value: 'tailwind' },
+    { label: 'CSS Variables', icon: 'i-lucide-braces', value: 'css' },
+    { label: 'JSON', icon: 'i-lucide-file-json', value: 'json' },
+  ]
 
-const codeMap = computed(() => ({
-  tailwind: generateTailwindV4(),
-  css: generateCssVars(),
-  json: generateJson(),
-}))
+  const codeMap = computed(() => ({
+    tailwind: generateTailwindV4(),
+    css: generateCssVars(),
+    json: generateJson(),
+  }))
 
-const fileNames: Record<string, string> = {
-  tailwind: 'brand-theme.css',
-  css: 'brand-variables.css',
-  json: 'brand-config.json',
-}
-
-const currentCode = computed(
-  () => codeMap.value[activeTab.value as keyof typeof codeMap.value] ?? '',
-)
-
-const copied = ref(false)
-
-async function handleCopy() {
-  await copyToClipboard(currentCode.value)
-  copied.value = true
-  setTimeout(() => (copied.value = false), 2000)
-}
-
-function handleDownload() {
-  const actions: Record<string, () => void> = {
-    tailwind: exportTailwindV4,
-    css: exportCssVars,
-    json: exportJson,
+  const fileNames: Record<string, string> = {
+    tailwind: 'brand-theme.css',
+    css: 'brand-variables.css',
+    json: 'brand-config.json',
   }
-  actions[activeTab.value]?.()
-}
 
-const importError = ref('')
+  const currentCode = computed(
+    () => codeMap.value[activeTab.value as keyof typeof codeMap.value] ?? ''
+  )
 
-function handleImport(event: Event) {
-  const file = (event.target as HTMLInputElement).files?.[0]
-  if (!file) return
-  const reader = new FileReader()
-  reader.onload = (e) => {
-    try {
-      importState(e.target?.result as string)
-      importError.value = ''
-    }
-    catch {
-      importError.value = 'Invalid brand configuration file.'
-    }
+  const copied = ref(false)
+
+  async function handleCopy() {
+    await copyToClipboard(currentCode.value)
+    copied.value = true
+    setTimeout(() => (copied.value = false), 2000)
   }
-  reader.readAsText(file)
-}
 
-const isEmpty = computed(() => state.value.colours.length === 0)
+  function handleDownload() {
+    const actions: Record<string, () => void> = {
+      tailwind: exportTailwindV4,
+      css: exportCssVars,
+      json: exportJson,
+    }
+    actions[activeTab.value]?.()
+  }
+
+  const importError = ref('')
+
+  function handleImport(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      try {
+        importState(e.target?.result as string)
+        importError.value = ''
+      } catch {
+        importError.value = 'Invalid brand configuration file.'
+      }
+    }
+    reader.readAsText(file)
+  }
+
+  const isEmpty = computed(() => state.value.colours.length === 0)
 </script>
 
 <template>
@@ -147,13 +146,7 @@ const isEmpty = computed(() => state.value.colours.length === 0)
       </div>
 
       <!-- Format tabs — UTabs replaces the manual button cluster -->
-      <UTabs
-        v-model="activeTab"
-        :content="false"
-        :items="tabItems"
-        color="neutral"
-        class="mb-4"
-      />
+      <UTabs v-model="activeTab" :content="false" :items="tabItems" color="neutral" class="mb-4" />
 
       <!-- Code block -->
       <UCard>
@@ -186,7 +179,8 @@ const isEmpty = computed(() => state.value.colours.length === 0)
         </template>
         <pre
           class="text-xs font-mono text-default overflow-auto max-h-96 leading-relaxed whitespace-pre-wrap"
-        >{{ currentCode }}</pre>
+          >{{ currentCode }}</pre
+        >
       </UCard>
     </div>
   </div>

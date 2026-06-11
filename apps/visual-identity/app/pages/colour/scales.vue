@@ -1,36 +1,34 @@
 <script setup lang="ts">
-import { generateScale } from '~/composables/useTailwindScale'
+  import { generateScale } from '~/composables/useTailwindScale'
 
-const { state } = useBrandState()
+  const { state } = useBrandState()
 
-const showOklch = ref(false)
+  const showOklch = ref(false)
 
-const scaledColours = computed(() =>
-  state.value.colours.map((c) => ({ ...c, scale: generateScale(c.hex) })),
-)
+  const scaledColours = computed(() =>
+    state.value.colours.map((c) => ({ ...c, scale: generateScale(c.hex) }))
+  )
 
-// Track which sections are open on mobile (default: first colour open)
-const openIds = ref<string[]>([])
+  // Track which sections are open on mobile (default: first colour open)
+  const openIds = ref<string[]>([])
 
-watch(
-  scaledColours,
-  (colours) => {
-    if (colours[0] && !openIds.value.includes(colours[0].id)) {
-      openIds.value = [colours[0].id]
-    }
-  },
-  { immediate: true },
-)
+  watch(
+    scaledColours,
+    (colours) => {
+      if (colours[0] && !openIds.value.includes(colours[0].id)) {
+        openIds.value = [colours[0].id]
+      }
+    },
+    { immediate: true }
+  )
 
-function isOpen(id: string) {
-  return openIds.value.includes(id)
-}
+  function isOpen(id: string) {
+    return openIds.value.includes(id)
+  }
 
-function toggle(id: string) {
-  openIds.value = isOpen(id)
-    ? openIds.value.filter((x) => x !== id)
-    : [...openIds.value, id]
-}
+  function toggle(id: string) {
+    openIds.value = isOpen(id) ? openIds.value.filter((x) => x !== id) : [...openIds.value, id]
+  }
 </script>
 
 <template>
@@ -74,7 +72,13 @@ function toggle(id: string) {
               :style="{ backgroundColor: colour.hex }"
             />
             <span class="font-medium text-default flex-1 capitalize">{{ colour.name }}</span>
-            <UBadge :label="colour.role" color="neutral" variant="soft" size="xs" class="shrink-0" />
+            <UBadge
+              :label="colour.role"
+              color="neutral"
+              variant="soft"
+              size="xs"
+              class="shrink-0"
+            />
             <UIcon
               :name="isOpen(colour.id) ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
               class="size-4 text-muted shrink-0"

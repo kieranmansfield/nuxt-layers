@@ -1,108 +1,116 @@
 <script setup lang="ts">
-import type { UiColors } from '#layers/ui/app/types/colors'
-import type { TintLevel } from '#layers/ui/app/types/tint'
+  import type { UiColors } from '#layers/ui/app/types/colors'
+  import type { TintLevel } from '#layers/ui/app/types/tint'
 
-const { setPageAccent } = useAccentColor()
-setPageAccent('pink')
-onUnmounted(() => setPageAccent(null))
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('pink')
+  onUnmounted(() => setPageAccent(null))
 
-// Color tokens for demo
-const semanticColors: UiColors[] = [
-  'dimmed',
-  'muted',
-  'toned',
-  'default',
-  'highlighted',
-  'inverted',
-]
-// Status colors that UBadge supports
-const statusColors = ['info', 'success', 'warning', 'error'] as const
-// Brand colors that UBadge supports
-const brandColors = ['primary', 'secondary', 'neutral'] as const
-// Additional custom colors (shown as styled divs)
-const customColors: UiColors[] = ['accent']
-const baseColors: UiColors[] = ['black', 'white']
+  // Color tokens for demo
+  const semanticColors: UiColors[] = [
+    'dimmed',
+    'muted',
+    'toned',
+    'default',
+    'highlighted',
+    'inverted',
+  ]
+  // Status colors that UBadge supports
+  const statusColors = ['info', 'success', 'warning', 'error'] as const
+  // Brand colors that UBadge supports
+  const brandColors = ['primary', 'secondary', 'neutral'] as const
+  // Additional custom colors (shown as styled divs)
+  const customColors: UiColors[] = ['accent']
+  const baseColors: UiColors[] = ['black', 'white']
 
-// Progress interactive demo
-const circularSlider = ref(50)
-const circularProgress = computed(() => circularSlider.value / 100)
+  // Progress interactive demo
+  const circularSlider = ref(50)
+  const circularProgress = computed(() => circularSlider.value / 100)
 
-// Typography weight demos
-const fontWeights = [
-  'font-thin',
-  'font-light',
-  'font-normal',
-  'font-medium',
-  'font-semibold',
-  'font-bold',
-  'font-black',
-] as const
+  // Typography weight demos
+  const fontWeights = [
+    'font-thin',
+    'font-light',
+    'font-normal',
+    'font-medium',
+    'font-semibold',
+    'font-bold',
+    'font-black',
+  ] as const
 
-// Sample code for CodeBlock demo
-const sampleCode = `function useScreen() {
+  // Sample code for CodeBlock demo
+  const sampleCode = `function useScreen() {
   const breakpoints = useBreakpoints(breakpointsTailwind)
   const isMobile = breakpoints.smaller('md')
   const isDesktop = breakpoints.greaterOrEqual('lg')
   return { isMobile, isDesktop }
 }`
 
-// Code snippets for component demos
-const snippetHeadline = `<TypographyHeadline :level="2">Headline Level 2</TypographyHeadline>`
+  // Code snippets for component demos
+  const snippetHeadline = '<TypographyHeadline :level="2">Headline Level 2</TypographyHeadline>'
 
-const snippetTextStroke = `<h1 class="text-8xl font-bold">
+  const snippetTextStroke = `<h1 class="text-8xl font-bold">
   <TypographyTextStroke text="Hello" :stroke-width="2" stroke-color="red" />
 </h1>`
 
-const snippetLinksGroup = `<LinksGroup class="flex gap-6">
+  const snippetLinksGroup = `<LinksGroup class="flex gap-6">
   <a href="/home">Home</a>
   <a href="/about">About</a>
   <a href="/contact">Contact</a>
 </LinksGroup>`
 
-const snippetPictureBasic = `<MediaPicture src="/image.jpg" alt="Description" />`
+  const snippetPictureBasic = '<MediaPicture src="/image.jpg" alt="Description" />'
 
-const snippetPictureResponsive = `<MediaPicture
+  const snippetPictureResponsive = `<MediaPicture
   src="/image.jpg"
   :sizes="{ default: '100vw', sm: '50vw', lg: '33vw' }"
 />`
 
-const snippetProgressCircular = `<ProgressCircular :progress="0.5" />
+  const snippetProgressCircular = `<ProgressCircular :progress="0.5" />
 <ProgressCircular :progress="0.75" :size="180" :stroke-width="12" />
 <ProgressCircular :progress="1" :show-percentage="false" />`
 
-const snippetProgressBar = `<ProgressBar :progress="0.6" color="success" />
+  const snippetProgressBar = `<ProgressBar :progress="0.6" color="success" />
 <ProgressBar :progress="null" animation="carousel" />`
 
-const snippetGradientBackground = `<GradientBackground preset="brand" class="p-8 rounded-xl">
+  const snippetGradientBackground = `<GradientBackground preset="brand" class="p-8 rounded-xl">
   Slot content
 </GradientBackground>`
 
-const snippetGradientText = `<GradientText preset="brand" class="text-5xl font-black">Hello</GradientText>`
+  const snippetGradientText =
+    '<GradientText preset="brand" class="text-5xl font-black">Hello</GradientText>'
 
-const snippetTintOverlay = `<TintOverlay color="primary" level="medium">
+  const snippetTintOverlay = `<TintOverlay color="primary" level="medium">
   Your content
 </TintOverlay>`
 
-const snippetAccentScene = `<AccentScene preset="hero" class="h-screen">
+  const snippetAccentScene = `<AccentScene preset="hero" class="h-screen">
   <YourHeroContent />
 </AccentScene>`
 
-definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: true } } })
+  definePageMeta({ layout: false })
 </script>
 
+<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
+<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
+<!-- eslint-disable vue/no-template-key -->
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="UI Layer Demo"
     description="Demonstrating the UI layer typography, colors, and media components"
   >
-    <LayoutSection>
-      <LayoutGridItem preset="centered">
-        <div class="space-y-12 py-8">
-          <LayoutPageHeader
-            title="UI Layer"
-            description="Typography, colors, and media components"
-            back="/"
-          />
+    <div class="bg-gray-950 min-h-screen">
+      <DemoPageHero
+        name="UI"
+        description="UI orchestrator — typography, navigation, visual identity, gradients, modals, and more."
+      />
+      <LayoutMain>
+        <LayoutSection>
+          <LayoutGridItem preset="centered">
+            <div class="space-y-12 py-8">
 
           <!-- Typography Section -->
           <section class="space-y-8">
@@ -160,12 +168,7 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                     Font Weight
                   </h4>
                   <div class="space-y-2">
-                    <Typography
-                      v-for="weight in fontWeights"
-                      :key="weight"
-                      :weight="weight"
-                      class="text-lg"
-                    >
+                    <Typography v-for="weight in fontWeights" :key="weight" :weight class="text-lg">
                       {{ weight.replace('font-', '') }} - The quick brown fox jumps over the lazy
                       dog
                     </Typography>
@@ -178,12 +181,12 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                     Font Slant
                   </h4>
                   <div class="space-y-2">
-                    <Typography slant="normal" class="text-lg"
-                      >Normal - The quick brown fox</Typography
-                    >
-                    <Typography slant="italic" class="text-lg"
-                      >Italic - The quick brown fox</Typography
-                    >
+                    <Typography slant="normal" class="text-lg">
+                      Normal - The quick brown fox
+                    </Typography>
+                    <Typography slant="italic" class="text-lg">
+                      Italic - The quick brown fox
+                    </Typography>
                   </div>
                 </div>
 
@@ -413,7 +416,7 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                       :key="color"
                       class="px-4 py-2 rounded-lg border"
                     >
-                      <Typography :color="color" weight="font-medium">{{ color }}</Typography>
+                      <Typography :color weight="font-medium">{{ color }}</Typography>
                     </div>
                   </div>
                 </div>
@@ -424,7 +427,7 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                     Status Colors
                   </h4>
                   <div class="flex flex-wrap gap-3">
-                    <UBadge v-for="color in statusColors" :key="color" :color="color" size="lg">
+                    <UBadge v-for="color in statusColors" :key="color" :color size="lg">
                       {{ color }}
                     </UBadge>
                   </div>
@@ -436,7 +439,7 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                     Brand Colors
                   </h4>
                   <div class="flex flex-wrap gap-3">
-                    <UBadge v-for="color in brandColors" :key="color" :color="color" size="lg">
+                    <UBadge v-for="color in brandColors" :key="color" :color size="lg">
                       {{ color }}
                     </UBadge>
                     <div
@@ -444,7 +447,7 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                       :key="color"
                       class="px-3 py-1.5 rounded-full text-sm font-medium"
                     >
-                      <Typography :color="color" weight="font-medium">{{ color }}</Typography>
+                      <Typography :color weight="font-medium">{{ color }}</Typography>
                     </div>
                   </div>
                 </div>
@@ -724,8 +727,8 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                       <span class="font-mono">tablet</span><span class="text-gray-500">640px</span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="font-mono">desktop</span
-                      ><span class="text-gray-500">1024px</span>
+                      <span class="font-mono">desktop</span>
+                      <span class="text-gray-500">1024px</span>
                     </div>
                     <div class="flex justify-between">
                       <span class="font-mono">wide</span><span class="text-gray-500">1920px</span>
@@ -740,16 +743,16 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                   </h4>
                   <div class="space-y-1.5 text-sm">
                     <div class="flex justify-between">
-                      <span class="font-mono">phone-sm</span
-                      ><span class="text-gray-500">320px</span>
+                      <span class="font-mono">phone-sm</span>
+                      <span class="text-gray-500">320px</span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="font-mono">phone-md</span
-                      ><span class="text-gray-500">375px</span>
+                      <span class="font-mono">phone-md</span>
+                      <span class="text-gray-500">375px</span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="font-mono">phone-lg</span
-                      ><span class="text-gray-500">428px</span>
+                      <span class="font-mono">phone-lg</span>
+                      <span class="text-gray-500">428px</span>
                     </div>
                   </div>
                 </div>
@@ -761,16 +764,16 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                   </h4>
                   <div class="space-y-1.5 text-sm">
                     <div class="flex justify-between">
-                      <span class="font-mono">tablet-sm</span
-                      ><span class="text-gray-500">768px</span>
+                      <span class="font-mono">tablet-sm</span>
+                      <span class="text-gray-500">768px</span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="font-mono">tablet-md</span
-                      ><span class="text-gray-500">834px</span>
+                      <span class="font-mono">tablet-md</span>
+                      <span class="text-gray-500">834px</span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="font-mono">tablet-lg</span
-                      ><span class="text-gray-500">1024px</span>
+                      <span class="font-mono">tablet-lg</span>
+                      <span class="text-gray-500">1024px</span>
                     </div>
                   </div>
                 </div>
@@ -782,12 +785,12 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                   </h4>
                   <div class="space-y-1.5 text-sm">
                     <div class="flex justify-between">
-                      <span class="font-mono">portrait</span
-                      ><span class="text-gray-500">vertical</span>
+                      <span class="font-mono">portrait</span>
+                      <span class="text-gray-500">vertical</span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="font-mono">landscape</span
-                      ><span class="text-gray-500">horizontal</span>
+                      <span class="font-mono">landscape</span>
+                      <span class="text-gray-500">horizontal</span>
                     </div>
                   </div>
                 </div>
@@ -979,12 +982,12 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                 <GradientBackground
                   v-for="preset in ['brand', 'subtle', 'hero']"
                   :key="preset"
-                  :preset="preset"
-                  class="min-h-[120px] rounded-xl flex items-center justify-center p-4"
+                  :preset
+                  class="min-h-30 rounded-xl flex items-center justify-center p-4"
                 >
-                  <span class="font-semibold text-white mix-blend-overlay capitalize">{{
-                    preset
-                  }}</span>
+                  <span class="font-semibold text-white mix-blend-overlay capitalize">
+                    {{ preset }}
+                  </span>
                 </GradientBackground>
               </div>
 
@@ -1040,11 +1043,11 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
 
               <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
                 <TintOverlay
-                  v-for="level in (['subtle', 'light', 'medium', 'strong', 'heavy'] as TintLevel[])"
+                  v-for="level in ['subtle', 'light', 'medium', 'strong', 'heavy'] as TintLevel[]"
                   :key="level"
                   color="primary"
-                  :level="level"
-                  class="min-h-[80px] rounded-xl border border-default flex items-end p-3"
+                  :level
+                  class="min-h-20 rounded-xl border border-default flex items-end p-3"
                 >
                   <span class="text-xs font-mono text-highlighted relative z-10">{{ level }}</span>
                 </TintOverlay>
@@ -1073,7 +1076,7 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                 <AccentScene
                   v-for="preset in ['hero', 'corner', 'scattered', 'minimal']"
                   :key="preset"
-                  :preset="preset"
+                  :preset
                   class="h-48 rounded-xl border border-default bg-elevated/30"
                 >
                   <div class="flex items-center justify-center h-full">
@@ -1111,8 +1114,20 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
             </UButton>
             <UButton to="/" icon="i-lucide-home"> Back to Home </UButton>
           </div>
-        </div>
-      </LayoutGridItem>
-    </LayoutSection>
+            </div>
+          </LayoutGridItem>
+        </LayoutSection>
+      </LayoutMain>
+      <DemoPageFooter
+        name="UI Layer"
+        description="Typography, navigation, and visual identity components"
+        :links="[
+          { label: 'Typography', to: '/typography', icon: 'i-lucide-type' },
+          { label: 'Navigation', to: '/nav', icon: 'i-lucide-menu' },
+          { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
+          { label: 'Overlays', to: '/overlays', icon: 'i-lucide-layers' },
+        ]"
+      />
+    </div>
   </LayoutPage>
 </template>

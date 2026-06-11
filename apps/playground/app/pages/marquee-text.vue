@@ -1,9 +1,10 @@
 <script setup lang="ts">
-definePageMeta({ layout: false })
+  definePageMeta({ layout: false })
 
-const { velocity, progress } = useSmoothScroll()
+  const { velocity, progress } = useSmoothScroll()
 </script>
 
+<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
 <template>
   <LayoutPage
     title="MarqueeText"
@@ -20,14 +21,13 @@ const { velocity, progress } = useSmoothScroll()
         <div class="text-center z-10 px-4">
           <h1 class="text-6xl sm:text-8xl md:text-9xl font-black text-white mb-6">
             <span
-              class="inline-block"
               v-gsap.from="{ y: 120, opacity: 0, rotateX: -90, duration: 1.2, ease: 'power3.out' }"
+              class="inline-block"
             >
               MARQUEE
             </span>
             <br />
             <span
-              class="inline-block text-primary"
               v-gsap.delay-100.from="{
                 y: 120,
                 opacity: 0,
@@ -35,6 +35,7 @@ const { velocity, progress } = useSmoothScroll()
                 duration: 1.2,
                 ease: 'power3.out',
               }"
+              class="inline-block text-primary"
             >
               TEXT
             </span>
@@ -65,7 +66,7 @@ const { velocity, progress } = useSmoothScroll()
       </div>
 
       <!-- ─── Default: single row ────────────────────────────────────────────── -->
-      <section class="py-24 bg-gray-900">
+      <section class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-12">
             <UBadge color="primary" variant="subtle" class="mb-4">Default</UBadge>
@@ -89,13 +90,11 @@ const { velocity, progress } = useSmoothScroll()
             </p>
           </div>
         </UContainer>
-        <MotionMarqueeText
-          :texts="['MARQUEE ✦', 'TEXT ✦', 'MOTION ✦']"
-        />
+        <MotionMarqueeText :texts="['MARQUEE ✦', 'TEXT ✦', 'MOTION ✦']" />
       </section>
 
       <!-- ─── Speed comparison ───────────────────────────────────────────────── -->
-      <section class="py-24 bg-gray-900">
+      <section class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <UBadge color="primary" variant="subtle" class="mb-4">Speed</UBadge>
@@ -139,38 +138,26 @@ const { velocity, progress } = useSmoothScroll()
               <p class="text-center text-gray-500 text-sm font-mono mb-4">
                 damping: 20, stiffness: 800 — snappy
               </p>
-              <MotionMarqueeText
-                :texts="['SNAPPY ✦']"
-                :damping="20"
-                :stiffness="800"
-              />
+              <MotionMarqueeText :texts="['SNAPPY ✦']" :damping="20" :stiffness="800" />
             </div>
             <div>
               <p class="text-center text-gray-500 text-sm font-mono mb-4">
                 damping: 50, stiffness: 400 — default
               </p>
-              <MotionMarqueeText
-                :texts="['DEFAULT ✦']"
-                :damping="50"
-                :stiffness="400"
-              />
+              <MotionMarqueeText :texts="['DEFAULT ✦']" :damping="50" :stiffness="400" />
             </div>
             <div>
               <p class="text-center text-gray-500 text-sm font-mono mb-4">
                 damping: 80, stiffness: 150 — heavy drag
               </p>
-              <MotionMarqueeText
-                :texts="['HEAVY ✦']"
-                :damping="80"
-                :stiffness="150"
-              />
+              <MotionMarqueeText :texts="['HEAVY ✦']" :damping="80" :stiffness="150" />
             </div>
           </div>
         </UContainer>
       </section>
 
       <!-- ─── Velocity mapping ───────────────────────────────────────────────── -->
-      <section class="py-24 bg-gray-900">
+      <section class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <UBadge color="primary" variant="subtle" class="mb-4">Velocity Mapping</UBadge>
@@ -251,7 +238,7 @@ const { velocity, progress } = useSmoothScroll()
       </section>
 
       <!-- ─── Full showcase ─────────────────────────────────────────────────── -->
-      <section class="py-24 bg-gray-900">
+      <section class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <UBadge color="primary" variant="subtle" class="mb-4">Showcase</UBadge>

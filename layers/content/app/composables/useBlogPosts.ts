@@ -4,7 +4,9 @@ export function useBlogPosts(options: BlogQueryOptions = {}) {
   const { excludeDrafts = true, tags, limit } = options
 
   return useContentData('blog-posts', async () => {
-    let posts = await queryCollection('blog').order('date', 'DESC').all()
+    let posts = (await queryCollection('blog').all()).sort(
+      (a, b) => (b.date ?? '').localeCompare(a.date ?? '')
+    )
 
     if (excludeDrafts) {
       posts = posts.filter((post) => !post.draft)

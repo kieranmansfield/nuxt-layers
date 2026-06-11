@@ -12,8 +12,8 @@
 
   const { gsap, ScrollTrigger } = useGsap()
 
-  const sectionRef = useTemplateRef<HTMLElement | null>(null)
-  const contentRef = useTemplateRef<HTMLElement | null>(null)
+  const sectionRef = useTemplateRef<HTMLElement>('sectionRef')
+  const contentRef = useTemplateRef<HTMLElement>('contentRef')
 
   const cleanups: Array<() => void> = []
 

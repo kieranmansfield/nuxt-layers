@@ -1,46 +1,49 @@
+<!-- eslint-disable vue/no-boolean-default -->
+<!-- eslint-disable vue/define-props-destructuring -->
+<!-- eslint-disable vue/max-lines-per-block -->
 <script setup lang="ts">
-import { TresCanvas } from '@tresjs/core'
-import { Clock, Color, DoubleSide, ShaderMaterial, Vector2 } from 'three'
+  import { TresCanvas } from '@tresjs/core'
+  import { Clock, Color, DoubleSide, ShaderMaterial, Vector2 } from 'three'
 
-type PresetType =
-  | 'aurora'
-  | 'nebula'
-  | 'ocean'
-  | 'lavaLamp'
-  | 'gradientMesh'
-  | 'cosmicDust'
-  | 'organicFlow'
-  | 'etherealMist'
+  type PresetType =
+    | 'aurora'
+    | 'nebula'
+    | 'ocean'
+    | 'lavaLamp'
+    | 'gradientMesh'
+    | 'cosmicDust'
+    | 'organicFlow'
+    | 'etherealMist'
 
-const props = withDefaults(
-  defineProps<{
-    preset?: PresetType
-    speed?: number
-    intensity?: number
-    color1?: string
-    color2?: string
-    color3?: string
-    color4?: string
-    mouseInteraction?: boolean
-    mouseX?: number
-    mouseY?: number
-  }>(),
-  {
-    preset: 'aurora',
-    speed: 1.0,
-    intensity: 1.0,
-    color1: '',
-    color2: '',
-    color3: '',
-    color4: '',
-    mouseInteraction: true,
-    mouseX: 0.5,
-    mouseY: 0.5,
-  }
-)
+  const props = withDefaults(
+    defineProps<{
+      preset?: PresetType
+      speed?: number
+      intensity?: number
+      color1?: string
+      color2?: string
+      color3?: string
+      color4?: string
+      mouseInteraction?: boolean
+      mouseX?: number
+      mouseY?: number
+    }>(),
+    {
+      preset: 'aurora',
+      speed: 1.0,
+      intensity: 1.0,
+      color1: '',
+      color2: '',
+      color3: '',
+      color4: '',
+      mouseInteraction: true,
+      mouseX: 0.5,
+      mouseY: 0.5,
+    }
+  )
 
-// Shared vertex shader
-const vertexShader = `
+  // Shared vertex shader
+  const vertexShader = `
 varying vec2 vUv;
 void main() {
   vUv = uv;
@@ -48,10 +51,10 @@ void main() {
 }
 `
 
-// ============================================
-// NOISE FUNCTIONS (shared across all shaders)
-// ============================================
-const noiseLib = `
+  // ============================================
+  // NOISE FUNCTIONS (shared across all shaders)
+  // ============================================
+  const noiseLib = `
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -199,10 +202,10 @@ vec3 cosinePalette(float t, vec3 a, vec3 b, vec3 c, vec3 d) {
 }
 `
 
-// ============================================
-// AURORA - Northern Lights
-// ============================================
-const auroraFragment = `
+  // ============================================
+  // AURORA - Northern Lights
+  // ============================================
+  const auroraFragment = `
 uniform float uTime;
 uniform float uSpeed;
 uniform float uIntensity;
@@ -259,10 +262,10 @@ void main() {
 }
 `
 
-// ============================================
-// NEBULA - Space clouds
-// ============================================
-const nebulaFragment = `
+  // ============================================
+  // NEBULA - Space clouds
+  // ============================================
+  const nebulaFragment = `
 uniform float uTime;
 uniform float uSpeed;
 uniform float uIntensity;
@@ -326,10 +329,10 @@ void main() {
 }
 `
 
-// ============================================
-// OCEAN - Deep water waves
-// ============================================
-const oceanFragment = `
+  // ============================================
+  // OCEAN - Deep water waves
+  // ============================================
+  const oceanFragment = `
 uniform float uTime;
 uniform float uSpeed;
 uniform float uIntensity;
@@ -388,10 +391,10 @@ void main() {
 }
 `
 
-// ============================================
-// LAVA LAMP - Organic blobs
-// ============================================
-const lavaLampFragment = `
+  // ============================================
+  // LAVA LAMP - Organic blobs
+  // ============================================
+  const lavaLampFragment = `
 uniform float uTime;
 uniform float uSpeed;
 uniform float uIntensity;
@@ -455,10 +458,10 @@ void main() {
 }
 `
 
-// ============================================
-// GRADIENT MESH - Smooth flowing colors
-// ============================================
-const gradientMeshFragment = `
+  // ============================================
+  // GRADIENT MESH - Smooth flowing colors
+  // ============================================
+  const gradientMeshFragment = `
 uniform float uTime;
 uniform float uSpeed;
 uniform float uIntensity;
@@ -516,10 +519,10 @@ void main() {
 }
 `
 
-// ============================================
-// COSMIC DUST - Particle field
-// ============================================
-const cosmicDustFragment = `
+  // ============================================
+  // COSMIC DUST - Particle field
+  // ============================================
+  const cosmicDustFragment = `
 uniform float uTime;
 uniform float uSpeed;
 uniform float uIntensity;
@@ -587,10 +590,10 @@ void main() {
 }
 `
 
-// ============================================
-// ORGANIC FLOW - Warped noise
-// ============================================
-const organicFlowFragment = `
+  // ============================================
+  // ORGANIC FLOW - Warped noise
+  // ============================================
+  const organicFlowFragment = `
 uniform float uTime;
 uniform float uSpeed;
 uniform float uIntensity;
@@ -649,10 +652,10 @@ void main() {
 }
 `
 
-// ============================================
-// ETHEREAL MIST - Soft fog layers
-// ============================================
-const etherealMistFragment = `
+  // ============================================
+  // ETHEREAL MIST - Soft fog layers
+  // ============================================
+  const etherealMistFragment = `
 uniform float uTime;
 uniform float uSpeed;
 uniform float uIntensity;
@@ -706,81 +709,81 @@ void main() {
 }
 `
 
-// Preset color configurations
-const presetColors: Record<PresetType, { c1: string; c2: string; c3: string; c4: string }> = {
-  aurora: { c1: '#0a0a20', c2: '#00ff87', c3: '#60efff', c4: '#ff00ea' },
-  nebula: { c1: '#1a0a2e', c2: '#ff6b6b', c3: '#4ecdc4', c4: '#ffe66d' },
-  ocean: { c1: '#0a1628', c2: '#1e3a5f', c3: '#3d7ea6', c4: '#7ec8e3' },
-  lavaLamp: { c1: '#1a0a0a', c2: '#ff4757', c3: '#ff7f50', c4: '#ffa502' },
-  gradientMesh: { c1: '#667eea', c2: '#764ba2', c3: '#f093fb', c4: '#f5576c' },
-  cosmicDust: { c1: '#0f0c29', c2: '#302b63', c3: '#24243e', c4: '#eaafc8' },
-  organicFlow: { c1: '#134e5e', c2: '#71b280', c3: '#e8d5b7', c4: '#fc5c7d' },
-  etherealMist: { c1: '#e0e5ec', c2: '#a8c0ff', c3: '#d4fc79', c4: '#96e6a1' },
-}
-
-// Fragment shader map
-const fragmentShaders: Record<PresetType, string> = {
-  aurora: auroraFragment,
-  nebula: nebulaFragment,
-  ocean: oceanFragment,
-  lavaLamp: lavaLampFragment,
-  gradientMesh: gradientMeshFragment,
-  cosmicDust: cosmicDustFragment,
-  organicFlow: organicFlowFragment,
-  etherealMist: etherealMistFragment,
-}
-
-// Create material based on preset
-const material = computed(() => {
-  const colors = presetColors[props.preset]
-
-  return new ShaderMaterial({
-    vertexShader,
-    fragmentShader: fragmentShaders[props.preset],
-    uniforms: {
-      uTime: { value: 0 },
-      uSpeed: { value: props.speed },
-      uIntensity: { value: props.intensity },
-      uColor1: { value: new Color(props.color1 || colors.c1) },
-      uColor2: { value: new Color(props.color2 || colors.c2) },
-      uColor3: { value: new Color(props.color3 || colors.c3) },
-      uColor4: { value: new Color(props.color4 || colors.c4) },
-      uMouse: { value: new Vector2(0.5, 0.5) },
-      uMouseStrength: { value: props.mouseInteraction ? 0.5 : 0 },
-    },
-    side: DoubleSide,
-  })
-})
-
-// Animation
-const clock = new Clock()
-let animationId: number
-
-const animate = () => {
-  const uniforms = material.value?.uniforms
-  if (
-    uniforms?.uTime &&
-    uniforms?.uSpeed &&
-    uniforms?.uIntensity &&
-    uniforms?.uMouse &&
-    uniforms?.uMouseStrength
-  ) {
-    uniforms.uTime.value = clock.getElapsedTime()
-    uniforms.uSpeed.value = props.speed
-    uniforms.uIntensity.value = props.intensity
-    uniforms.uMouse.value.set(props.mouseX, props.mouseY)
-    uniforms.uMouseStrength.value = props.mouseInteraction ? 0.5 : 0
+  // Preset color configurations
+  const presetColors: Record<PresetType, { c1: string; c2: string; c3: string; c4: string }> = {
+    aurora: { c1: '#0a0a20', c2: '#00ff87', c3: '#60efff', c4: '#ff00ea' },
+    nebula: { c1: '#1a0a2e', c2: '#ff6b6b', c3: '#4ecdc4', c4: '#ffe66d' },
+    ocean: { c1: '#0a1628', c2: '#1e3a5f', c3: '#3d7ea6', c4: '#7ec8e3' },
+    lavaLamp: { c1: '#1a0a0a', c2: '#ff4757', c3: '#ff7f50', c4: '#ffa502' },
+    gradientMesh: { c1: '#667eea', c2: '#764ba2', c3: '#f093fb', c4: '#f5576c' },
+    cosmicDust: { c1: '#0f0c29', c2: '#302b63', c3: '#24243e', c4: '#eaafc8' },
+    organicFlow: { c1: '#134e5e', c2: '#71b280', c3: '#e8d5b7', c4: '#fc5c7d' },
+    etherealMist: { c1: '#e0e5ec', c2: '#a8c0ff', c3: '#d4fc79', c4: '#96e6a1' },
   }
-  animationId = requestAnimationFrame(animate)
-}
 
-onMounted(() => {
-  animate()
-})
+  // Fragment shader map
+  const fragmentShaders: Record<PresetType, string> = {
+    aurora: auroraFragment,
+    nebula: nebulaFragment,
+    ocean: oceanFragment,
+    lavaLamp: lavaLampFragment,
+    gradientMesh: gradientMeshFragment,
+    cosmicDust: cosmicDustFragment,
+    organicFlow: organicFlowFragment,
+    etherealMist: etherealMistFragment,
+  }
 
-onUnmounted(() => {
-  cancelAnimationFrame(animationId)
-})
+  // Create material based on preset
+  const material = computed(() => {
+    const colors = presetColors[props.preset]
+
+    return new ShaderMaterial({
+      vertexShader,
+      fragmentShader: fragmentShaders[props.preset],
+      uniforms: {
+        uTime: { value: 0 },
+        uSpeed: { value: props.speed },
+        uIntensity: { value: props.intensity },
+        uColor1: { value: new Color(props.color1 || colors.c1) },
+        uColor2: { value: new Color(props.color2 || colors.c2) },
+        uColor3: { value: new Color(props.color3 || colors.c3) },
+        uColor4: { value: new Color(props.color4 || colors.c4) },
+        uMouse: { value: new Vector2(0.5, 0.5) },
+        uMouseStrength: { value: props.mouseInteraction ? 0.5 : 0 },
+      },
+      side: DoubleSide,
+    })
+  })
+
+  // Animation
+  const clock = new Clock()
+  let animationId: number
+
+  const animate = () => {
+    const uniforms = material.value?.uniforms
+    if (
+      uniforms?.uTime &&
+      uniforms?.uSpeed &&
+      uniforms?.uIntensity &&
+      uniforms?.uMouse &&
+      uniforms?.uMouseStrength
+    ) {
+      uniforms.uTime.value = clock.getElapsedTime()
+      uniforms.uSpeed.value = props.speed
+      uniforms.uIntensity.value = props.intensity
+      uniforms.uMouse.value.set(props.mouseX, props.mouseY)
+      uniforms.uMouseStrength.value = props.mouseInteraction ? 0.5 : 0
+    }
+    animationId = requestAnimationFrame(animate)
+  }
+
+  onMounted(() => {
+    animate()
+  })
+
+  onUnmounted(() => {
+    cancelAnimationFrame(animationId)
+  })
 </script>
 
 <template>

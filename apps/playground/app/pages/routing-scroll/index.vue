@@ -1,4 +1,7 @@
 <script setup lang="ts">
-await navigateTo('/routing-scroll/intro', { replace: true })
+  await navigateTo('/routing-scroll/intro', { replace: true })
 </script>
-<template><div /></template>
+
+<template>
+  <div />
+</template>

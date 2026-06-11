@@ -1,9 +1,9 @@
 <script setup lang="ts">
-defineProps<{
-  hex: string
-  label?: string
-  size?: 'sm' | 'md' | 'lg'
-}>()
+  defineProps<{
+    hex: string
+    label?: string
+    size?: 'sm' | 'md' | 'lg'
+  }>()
 </script>
 
 <template>

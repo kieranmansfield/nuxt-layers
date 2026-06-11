@@ -6,7 +6,9 @@ export function usePortfolioItems(options: PortfolioQueryOptions = {}) {
   const { featured, tags, limit } = options
 
   return useContentData('portfolio-items', async () => {
-    let items = await queryCollection('portfolio').order('year', 'DESC').all()
+    let items = (await queryCollection('portfolio').all()).sort(
+      (a, b) => (b.year ?? 0) - (a.year ?? 0)
+    )
 
     if (featured !== undefined) {
       items = items.filter((item) => item.featured === featured)

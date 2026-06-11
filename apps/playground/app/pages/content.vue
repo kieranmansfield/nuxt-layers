@@ -1,28 +1,28 @@
 <script setup lang="ts">
-const { setPageAccent } = useAccentColor()
-setPageAccent('red')
-onUnmounted(() => setPageAccent(null))
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('red')
+  onUnmounted(() => setPageAccent(null))
 
-const { data: page } = await useContentPage('/')
+  const { data: page } = await useContentPage('/')
 
-definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: true } } })
+  definePageMeta({ layout: false })
 </script>
 
+<!-- eslint-disable vue/max-template-depth -->
 <template>
   <LayoutPage
     title="Content Layer Demo"
     description="Demonstrating the content layer with blog, portfolio, and gallery collections"
   >
-    <LayoutSection>
-      <LayoutGridItem preset="centered">
-        <div class="space-y-12 py-8">
-          <LayoutPageHeader
-            title="Content Layer"
-            description="Blog, portfolio, and gallery collections — ready out of the box"
-            back="/"
-          />
-
-          <!-- Quick Nav -->
+    <div class="bg-gray-950 min-h-screen">
+      <DemoPageHero
+        name="CONTENT"
+        description="Nuxt Content v3 with typed collections for blog, portfolio, and gallery."
+      />
+      <section class="bg-gray-950 pb-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="space-y-12 py-8">
+              <!-- Quick Nav -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <UCard to="/blog">
               <div class="flex items-center gap-3">
@@ -198,13 +198,23 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
             </div>
           </UCard>
 
-          <!-- Navigation -->
-          <div class="flex gap-4 justify-center pt-4">
-            <UButton to="/" variant="outline" icon="i-lucide-arrow-left"> Back to Home </UButton>
-            <UButton to="/ui" icon="i-lucide-arrow-right"> UI Layer Demo </UButton>
+              <!-- Navigation -->
+              <div class="flex gap-4 justify-center pt-4">
+                <UButton to="/" variant="outline" icon="i-lucide-arrow-left"> Back to Home </UButton>
+                <UButton to="/ui" icon="i-lucide-arrow-right"> UI Layer Demo </UButton>
+              </div>
           </div>
         </div>
-      </LayoutGridItem>
-    </LayoutSection>
+      </section>
+      <DemoPageFooter
+        name="Content Layer"
+        description="Nuxt Content v3 typed collections"
+        :links="[
+          { label: 'Feeds', to: '/feeds', icon: 'i-lucide-rss' },
+          { label: 'Gallery', to: '/gallery', icon: 'i-lucide-images' },
+          { label: 'Routing', to: '/routing', icon: 'i-lucide-route' },
+        ]"
+      />
+    </div>
   </LayoutPage>
 </template>

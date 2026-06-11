@@ -1,11 +1,14 @@
 <script setup lang="ts">
-const mobileNavOpen = ref(false)
-const route = useRoute()
+  const mobileNavOpen = ref(false)
+  const route = useRoute()
 
-// Close drawer on navigation
-watch(() => route.path, () => {
-  mobileNavOpen.value = false
-})
+  // Close drawer on navigation
+  watch(
+    () => route.path,
+    () => {
+      mobileNavOpen.value = false
+    }
+  )
 </script>
 
 <template>

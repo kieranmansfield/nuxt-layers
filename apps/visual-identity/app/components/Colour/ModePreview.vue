@@ -1,72 +1,80 @@
 <script setup lang="ts">
-import { formatHex, oklch, parse } from 'culori'
-import type { BackgroundStyle, BrandColour, ContrastLevel, ColourScheme } from '~/composables/useBrandState'
-import { generateScale } from '~/composables/useTailwindScale'
+  import { formatHex, oklch, parse } from 'culori'
 
-const { colours, scheme, contrast, backgroundStyle } = defineProps<{
-  colours: BrandColour[]
-  scheme: ColourScheme
-  contrast: ContrastLevel
-  backgroundStyle: BackgroundStyle
-}>()
+  import type {
+    BackgroundStyle,
+    BrandColour,
+    ColourScheme,
+    ContrastLevel,
+  } from '~/composables/useBrandState'
+  import { generateScale } from '~/composables/useTailwindScale'
 
-const dark = computed(() => scheme === 'dark')
+  const { colours, scheme, contrast, backgroundStyle } = defineProps<{
+    colours: BrandColour[]
+    scheme: ColourScheme
+    contrast: ContrastLevel
+    backgroundStyle: BackgroundStyle
+  }>()
 
-// Scale index offsets per scheme + contrast
-const indices = computed(() => {
-  if (scheme === 'light') {
-    if (contrast === 'high') return { bg: 0, text: 10, accent: 5 }
-    return { bg: 0, text: 9, accent: 4 }
+  const dark = computed(() => scheme === 'dark')
+
+  // Scale index offsets per scheme + contrast
+  const indices = computed(() => {
+    if (scheme === 'light') {
+      if (contrast === 'high') return { bg: 0, text: 10, accent: 5 }
+      return { bg: 0, text: 9, accent: 4 }
+    }
+    if (contrast === 'high') return { bg: 10, text: 0, accent: 4 }
+    return { bg: 9, text: 1, accent: 4 }
+  })
+
+  function mixOklch(hexA: string, hexB: string, t: number): string {
+    const a = oklch(parse(hexA) ?? { mode: 'rgb', r: 1, g: 1, b: 1 })
+    const b = oklch(parse(hexB) ?? { mode: 'rgb', r: 0, g: 0, b: 0 })
+    if (!a || !b) return hexA
+    return (
+      formatHex({
+        mode: 'oklch',
+        l: a.l + (b.l - a.l) * t,
+        c: (a.c ?? 0) + ((b.c ?? 0) - (a.c ?? 0)) * t,
+        h: (a.h ?? 0) + ((b.h ?? 0) - (a.h ?? 0)) * t,
+      }) ?? hexA
+    )
   }
-  if (contrast === 'high') return { bg: 10, text: 0, accent: 4 }
-  return { bg: 9, text: 1, accent: 4 }
-})
 
-function mixOklch(hexA: string, hexB: string, t: number): string {
-  const a = oklch(parse(hexA) ?? { mode: 'rgb', r: 1, g: 1, b: 1 })
-  const b = oklch(parse(hexB) ?? { mode: 'rgb', r: 0, g: 0, b: 0 })
-  if (!a || !b) return hexA
-  return (
-    formatHex({
-      mode: 'oklch',
-      l: a.l + (b.l - a.l) * t,
-      c: (a.c ?? 0) + ((b.c ?? 0) - (a.c ?? 0)) * t,
-      h: (a.h ?? 0) + ((b.h ?? 0) - (a.h ?? 0)) * t,
-    }) ?? hexA
-  )
-}
+  const neutralBg = computed(() => {
+    if (!dark.value) return contrast === 'high' ? '#ffffff' : '#fafafa'
+    return contrast === 'high' ? '#080808' : '#121214'
+  })
 
-const neutralBg = computed(() => {
-  if (!dark.value) return contrast === 'high' ? '#ffffff' : '#fafafa'
-  return contrast === 'high' ? '#080808' : '#121214'
-})
+  const bg = computed(() => {
+    const primary = colours.find((c) => c.role === 'primary')
+    if (!primary || backgroundStyle === 'neutral') return neutralBg.value
+    const scale = generateScale(primary.hex)
+    const tinted = scale[indices.value.bg]?.hex ?? neutralBg.value
+    if (backgroundStyle === 'tinted') return tinted
+    return mixOklch(tinted, neutralBg.value, 0.5)
+  })
 
-const bg = computed(() => {
-  const primary = colours.find((c) => c.role === 'primary')
-  if (!primary || backgroundStyle === 'neutral') return neutralBg.value
-  const scale = generateScale(primary.hex)
-  const tinted = scale[indices.value.bg]?.hex ?? neutralBg.value
-  if (backgroundStyle === 'tinted') return tinted
-  return mixOklch(tinted, neutralBg.value, 0.5)
-})
+  const textColour = computed(() => {
+    const primary = colours.find((c) => c.role === 'primary')
+    if (!primary) return dark.value ? '#f0f0f0' : '#111111'
+    return (
+      generateScale(primary.hex)[indices.value.text]?.hex ?? (dark.value ? '#f0f0f0' : '#111111')
+    )
+  })
 
-const textColour = computed(() => {
-  const primary = colours.find((c) => c.role === 'primary')
-  if (!primary) return dark.value ? '#f0f0f0' : '#111111'
-  return generateScale(primary.hex)[indices.value.text]?.hex ?? (dark.value ? '#f0f0f0' : '#111111')
-})
+  const accentColour = computed(() => {
+    const primary = colours.find((c) => c.role === 'primary')
+    if (!primary) return '#6366f1'
+    return generateScale(primary.hex)[indices.value.accent]?.hex ?? primary.hex
+  })
 
-const accentColour = computed(() => {
-  const primary = colours.find((c) => c.role === 'primary')
-  if (!primary) return '#6366f1'
-  return generateScale(primary.hex)[indices.value.accent]?.hex ?? primary.hex
-})
-
-const label = computed(() => {
-  const s = scheme === 'dark' ? 'Dark' : 'Light'
-  const c = contrast === 'high' ? 'High contrast' : 'Standard'
-  return `${s} · ${c}`
-})
+  const label = computed(() => {
+    const s = scheme === 'dark' ? 'Dark' : 'Light'
+    const c = contrast === 'high' ? 'High contrast' : 'Standard'
+    return `${s} · ${c}`
+  })
 </script>
 
 <template>

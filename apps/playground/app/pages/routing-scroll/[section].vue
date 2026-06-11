@@ -1,48 +1,48 @@
 <script setup lang="ts">
-definePageMeta({ layout: false })
+  definePageMeta({ layout: false })
 
-const route = useRoute()
+  const route = useRoute()
 
-const urlMode = ref<'replace' | 'push'>('replace')
-const activeSection = ref((route.params.section as string) || 'intro')
+  const urlMode = ref<'replace' | 'push'>('replace')
+  const activeSection = ref((route.params.section as string) || 'intro')
 
-const sections = [
-  { id: 'intro', label: 'Introduction' },
-  { id: 'how-it-works', label: 'How It Works' },
-  { id: 'use-cases', label: 'Use Cases' },
-  { id: 'configuration', label: 'Configuration' },
-  { id: 'get-started', label: 'Get Started' },
-]
+  const sections = [
+    { id: 'intro', label: 'Introduction' },
+    { id: 'how-it-works', label: 'How It Works' },
+    { id: 'use-cases', label: 'Use Cases' },
+    { id: 'configuration', label: 'Configuration' },
+    { id: 'get-started', label: 'Get Started' },
+  ]
 
-const sectionEls = ref<HTMLElement[]>([])
+  const sectionEls = ref<HTMLElement[]>([])
 
-onMounted(() => {
-  const els = Array.from(document.querySelectorAll<HTMLElement>('[data-section]'))
-  sectionEls.value = els
+  onMounted(() => {
+    const els = Array.from(document.querySelectorAll<HTMLElement>('[data-section]'))
+    sectionEls.value = els
 
-  const initial = els.find((el) => el.getAttribute('data-section') === activeSection.value)
-  initial?.scrollIntoView()
+    const initial = els.find((el) => el.getAttribute('data-section') === activeSection.value)
+    initial?.scrollIntoView()
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const visible = entries.find((e) => e.isIntersecting)
-      if (!visible) return
-      const id = visible.target.getAttribute('data-section')
-      if (!id) return
-      activeSection.value = id
-      const method = urlMode.value === 'replace' ? 'replaceState' : 'pushState'
-      window.history[method](null, '', `/routing-scroll/${id}`)
-    },
-    { threshold: 0.5 },
-  )
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((e) => e.isIntersecting)
+        if (!visible) return
+        const id = visible.target.getAttribute('data-section')
+        if (!id) return
+        activeSection.value = id
+        const method = urlMode.value === 'replace' ? 'replaceState' : 'pushState'
+        window.history[method](null, '', `/routing-scroll/${id}`)
+      },
+      { threshold: 0.5 }
+    )
 
-  els.forEach((el) => observer.observe(el))
-  onUnmounted(() => observer.disconnect())
-})
+    els.forEach((el) => observer.observe(el))
+    onUnmounted(() => observer.disconnect())
+  })
 
-function scrollTo(index: number) {
-  sectionEls.value[index]?.scrollIntoView({ behavior: 'smooth' })
-}
+  function scrollTo(index: number) {
+    sectionEls.value[index]?.scrollIntoView({ behavior: 'smooth' })
+  }
 </script>
 
 <template>
@@ -75,12 +75,14 @@ function scrollTo(index: number) {
         :key="section.id"
         :title="section.label"
         class="flex items-center justify-center size-6"
-        @click="scrollTo(i)"
+        @click="() => scrollTo(i)"
       >
         <span
           class="transition-all duration-300 rounded-full"
           :class="
-            activeSection === section.id ? 'size-3 bg-white' : 'size-2 bg-white/30 hover:bg-white/60'
+            activeSection === section.id
+              ? 'size-3 bg-white'
+              : 'size-2 bg-white/30 hover:bg-white/60'
           "
         />
       </button>
@@ -95,7 +97,7 @@ function scrollTo(index: number) {
         :key="mode"
         class="rounded-full px-4 py-1.5 text-xs font-medium transition-all"
         :class="urlMode === mode ? 'bg-white text-slate-900' : 'text-white/60 hover:text-white'"
-        @click="urlMode = mode"
+        @click="() => (urlMode = mode)"
       >
         {{ mode }}
       </button>

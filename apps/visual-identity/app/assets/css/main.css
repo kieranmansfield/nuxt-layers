@@ -14,13 +14,13 @@
 /* Colour picker integration */
 input[type='color'] {
   appearance: none;
-  width: 2.5rem;
-  height: 2.5rem;
+  cursor: pointer;
   border: none;
   border-radius: 0.5rem;
-  padding: 0;
-  cursor: pointer;
   background: none;
+  padding: 0;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 input[type='color']::-webkit-color-swatch-wrapper {
@@ -41,8 +41,8 @@ input[type='color']::-webkit-color-swatch {
 
 /* Font preview */
 .font-preview {
-  font-family: 'Roboto Flex', sans-serif;
   font-size: clamp(4rem, 15vw, 12rem);
   line-height: 1;
+  font-family: 'Roboto Flex', sans-serif;
   user-select: none;
 }

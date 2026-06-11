@@ -1,234 +1,257 @@
 <script setup lang="ts">
-definePageMeta({ ssr: false, layout: false })
+  definePageMeta({ ssr: false, layout: false })
 
-type Category =
-  | 'generators' | 'noise' | 'uv' | 'colour' | 'film' | 'overlays' | 'composition'
-  | 'noise_fx' | 'sdf' | 'lighting' | 'tonemapping' | 'patterns' | 'effects' | 'math' | 'uv_grain'
-const activeCategory = ref<Category>('generators')
+  type Category =
+    | 'generators'
+    | 'noise'
+    | 'uv'
+    | 'colour'
+    | 'film'
+    | 'overlays'
+    | 'composition'
+    | 'noise_fx'
+    | 'sdf'
+    | 'lighting'
+    | 'tonemapping'
+    | 'patterns'
+    | 'effects'
+    | 'math'
+    | 'uv_grain'
+  const activeCategory = ref<Category>('generators')
 
-const categories = [
-  { id: 'generators' as const, label: 'Generators', icon: 'i-lucide-circle-dot' },
-  { id: 'noise' as const, label: 'Noise', icon: 'i-lucide-waves' },
-  { id: 'uv' as const, label: 'UV Transforms', icon: 'i-lucide-move' },
-  { id: 'colour' as const, label: 'Colour Ops', icon: 'i-lucide-palette' },
-  { id: 'film' as const, label: 'Film / Analogue', icon: 'i-lucide-film' },
-  { id: 'overlays' as const, label: 'Overlays', icon: 'i-lucide-layers' },
-  { id: 'composition' as const, label: 'Compositions', icon: 'i-lucide-blend' },
-  { id: 'noise_fx' as const, label: 'Noise', icon: 'i-lucide-cloud' },
-  { id: 'sdf' as const, label: 'SDF Shapes', icon: 'i-lucide-shapes' },
-  { id: 'lighting' as const, label: 'Lighting', icon: 'i-lucide-sun' },
-  { id: 'tonemapping' as const, label: 'Tonemapping', icon: 'i-lucide-sliders-horizontal' },
-  { id: 'patterns' as const, label: 'Patterns', icon: 'i-lucide-grid-3x3' },
-  { id: 'effects' as const, label: 'Effects', icon: 'i-lucide-sparkles' },
-  { id: 'math' as const, label: 'Math', icon: 'i-lucide-calculator' },
-  { id: 'uv_grain' as const, label: 'UV & Grain', icon: 'i-lucide-scan-line' },
-]
+  const categories = [
+    { id: 'generators' as const, label: 'Generators', icon: 'i-lucide-circle-dot' },
+    { id: 'noise' as const, label: 'Noise', icon: 'i-lucide-waves' },
+    { id: 'uv' as const, label: 'UV Transforms', icon: 'i-lucide-move' },
+    { id: 'colour' as const, label: 'Colour Ops', icon: 'i-lucide-palette' },
+    { id: 'film' as const, label: 'Film / Analogue', icon: 'i-lucide-film' },
+    { id: 'overlays' as const, label: 'Overlays', icon: 'i-lucide-layers' },
+    { id: 'composition' as const, label: 'Compositions', icon: 'i-lucide-blend' },
+    { id: 'noise_fx' as const, label: 'Noise', icon: 'i-lucide-cloud' },
+    { id: 'sdf' as const, label: 'SDF Shapes', icon: 'i-lucide-shapes' },
+    { id: 'lighting' as const, label: 'Lighting', icon: 'i-lucide-sun' },
+    { id: 'tonemapping' as const, label: 'Tonemapping', icon: 'i-lucide-sliders-horizontal' },
+    { id: 'patterns' as const, label: 'Patterns', icon: 'i-lucide-grid-3x3' },
+    { id: 'effects' as const, label: 'Effects', icon: 'i-lucide-sparkles' },
+    { id: 'math' as const, label: 'Math', icon: 'i-lucide-calculator' },
+    { id: 'uv_grain' as const, label: 'UV & Grain', icon: 'i-lucide-scan-line' },
+  ]
 
-// ── Generators demo controls ──────────────────────────────────────
-const gen = reactive({
-  ringRadius: 0.3,
-  ringCount: 3,
-  ringScale: 4,
-  ringSpread: 0.15,
-  timeScale: 0.1,
-  vignetteIntensity: 0.5,
-})
+  // ── Generators demo controls ──────────────────────────────────────
+  const gen = reactive({
+    ringRadius: 0.3,
+    ringCount: 3,
+    ringScale: 4,
+    ringSpread: 0.15,
+    timeScale: 0.1,
+    vignetteIntensity: 0.5,
+  })
 
-// ── Noise demo controls ───────────────────────────────────────────
-const noise = reactive({
-  scale: 3,
-  speed: 0.15,
-  octaves: 5,
-  hue: 0.5,
-  brightness: 0.05,
-  contrast: 1.2,
-  vignetteIntensity: 0.5,
-})
+  // ── Noise demo controls ───────────────────────────────────────────
+  const noise = reactive({
+    scale: 3,
+    speed: 0.15,
+    octaves: 5,
+    hue: 0.5,
+    brightness: 0.05,
+    contrast: 1.2,
+    vignetteIntensity: 0.5,
+  })
 
-// ── UV Transform controls ─────────────────────────────────────────
-const uvt = reactive({
-  warpFrequency: 5,
-  warpAmplitude: 30,
-  warpSpeed: 2,
-  twirlStrength: 3,
-  twirlRadius: 0.5,
-  noiseScale: 4,
-  noiseSpeed: 0.1,
-})
+  // ── UV Transform controls ─────────────────────────────────────────
+  const uvt = reactive({
+    warpFrequency: 5,
+    warpAmplitude: 30,
+    warpSpeed: 2,
+    twirlStrength: 3,
+    twirlRadius: 0.5,
+    noiseScale: 4,
+    noiseSpeed: 0.1,
+  })
 
-// ── Colour Ops controls ───────────────────────────────────────────
-const colour = reactive({
-  noiseScale: 3,
-  noiseSpeed: 0.15,
-  shadowColor: '#1a0033',
-  highlightColor: '#ffcc00',
-  brightness: 0.05,
-  contrast: 1.1,
-})
+  // ── Colour Ops controls ───────────────────────────────────────────
+  const colour = reactive({
+    noiseScale: 3,
+    noiseSpeed: 0.15,
+    shadowColor: '#1a0033',
+    highlightColor: '#ffcc00',
+    brightness: 0.05,
+    contrast: 1.1,
+  })
 
-// ── Film / Analogue controls ──────────────────────────────────────
-const film = reactive({
-  gradColorA: '#1a1a2e',
-  gradColorB: '#e94560',
-  agedIntensity: 1.0,
-  agedGrain: 0.04,
-  agedVignette: 0.5,
-  agedWarmth: 0.15,
-  vhsBleed: 0.015,
-  vhsTracking: 0.3,
-  vhsSpeed: 1.0,
-})
+  // ── Film / Analogue controls ──────────────────────────────────────
+  const film = reactive({
+    gradColorA: '#1a1a2e',
+    gradColorB: '#e94560',
+    agedIntensity: 1.0,
+    agedGrain: 0.04,
+    agedVignette: 0.5,
+    agedWarmth: 0.15,
+    vhsBleed: 0.015,
+    vhsTracking: 0.3,
+    vhsSpeed: 1.0,
+  })
 
-// ── Overlays controls ─────────────────────────────────────────────
-const overlays = reactive({
-  auroraColorA: '#00ff88',
-  auroraColorB: '#8844ff',
-  auroraBandY: 0.7,
-  auroraBandHeight: 0.3,
-  auroraIntensity: 0.7,
-  auroraSpeed: 0.3,
-  starDensity: 80,
-  starBrightness: 1.0,
-  starTwinkle: 1.0,
-  hazeReach: 0.3,
-  hazeIntensity: 0.2,
-})
+  // ── Overlays controls ─────────────────────────────────────────────
+  const overlays = reactive({
+    auroraColorA: '#00ff88',
+    auroraColorB: '#8844ff',
+    auroraBandY: 0.7,
+    auroraBandHeight: 0.3,
+    auroraIntensity: 0.7,
+    auroraSpeed: 0.3,
+    starDensity: 80,
+    starBrightness: 1.0,
+    starTwinkle: 1.0,
+    hazeReach: 0.3,
+    hazeIntensity: 0.2,
+  })
 
-// ── Composition controls ──────────────────────────────────────────
-const comp = reactive({
-  ringFrequency: 12,
-  noiseStrength: 0.4,
-  woodSpeed: 0,
-  halationThreshold: 0.65,
-  halationIntensity: 0.5,
-  halationColor: '#ff2200',
-  vignetteIntensity: 0.6,
-})
+  // ── Composition controls ──────────────────────────────────────────
+  const comp = reactive({
+    ringFrequency: 12,
+    noiseStrength: 0.4,
+    woodSpeed: 0,
+    halationThreshold: 0.65,
+    halationIntensity: 0.5,
+    halationColor: '#ff2200',
+    vignetteIntensity: 0.6,
+  })
 
-// ── Noise FX sub-selector + controls ──────────────────────────
-const noiseFxSub = ref<'fbm' | 'simplex' | 'value' | 'billow' | 'ridged' | 'curl' | 'voronoi' | 'domain'>('fbm')
-const noiseFx = reactive({
-  scale: 3,
-  speed: 0.15,
-  octaves: 5,
-  vignetteIntensity: 0.5,
-})
+  // ── Noise FX sub-selector + controls ──────────────────────────
+  const noiseFxSub = ref<
+    'fbm' | 'simplex' | 'value' | 'billow' | 'ridged' | 'curl' | 'voronoi' | 'domain'
+  >('fbm')
+  const noiseFx = reactive({
+    scale: 3,
+    speed: 0.15,
+    octaves: 5,
+    vignetteIntensity: 0.5,
+  })
 
-// ── SDF Shapes sub-selector + controls ────────────────────────
-const sdfSub = ref<'circle' | 'ring' | 'rectangle' | 'star' | 'hexagon' | 'cross' | 'triangle'>('circle')
-const sdf = reactive({
-  colorA: '#000000',
-  colorB: '#ffffff',
-  radius: 0.35,
-  softness: 0.02,
-  innerRadius: 0.25,
-  outerRadius: 0.4,
-  width: 0.6,
-  height: 0.4,
-  cornerRadius: 0.05,
-  points: 5,
-  innerRatio: 0.45,
-  size: 0.4,
-  thickness: 0.1,
-  vignetteIntensity: 0.3,
-})
+  // ── SDF Shapes sub-selector + controls ────────────────────────
+  const sdfSub = ref<'circle' | 'ring' | 'rectangle' | 'star' | 'hexagon' | 'cross' | 'triangle'>(
+    'circle'
+  )
+  const sdf = reactive({
+    colorA: '#000000',
+    colorB: '#ffffff',
+    radius: 0.35,
+    softness: 0.02,
+    innerRadius: 0.25,
+    outerRadius: 0.4,
+    width: 0.6,
+    height: 0.4,
+    cornerRadius: 0.05,
+    points: 5,
+    innerRatio: 0.45,
+    size: 0.4,
+    thickness: 0.1,
+    vignetteIntensity: 0.3,
+  })
 
-// ── Lighting sub-selector + controls ──────────────────────────
-const lightingSub = ref<'god_rays' | 'lens_flare'>('god_rays')
-const lighting = reactive({
-  noiseScale: 3,
-  noiseSpeed: 0.1,
-  color: '#fff9e0',
-  intensity: 0.35,
-  rayCount: 12,
-  decay: 2.0,
-  ghostCount: 4,
-  vignetteIntensity: 0.4,
-})
+  // ── Lighting sub-selector + controls ──────────────────────────
+  const lightingSub = ref<'god_rays' | 'lens_flare'>('god_rays')
+  const lighting = reactive({
+    noiseScale: 3,
+    noiseSpeed: 0.1,
+    color: '#fff9e0',
+    intensity: 0.35,
+    rayCount: 12,
+    decay: 2.0,
+    ghostCount: 4,
+    vignetteIntensity: 0.4,
+  })
 
-// ── Tonemapping sub-selector + controls ───────────────────────
-const tonemappingSub = ref<'aces' | 'reinhard' | 'tanh' | 'exposure' | 'gamma'>('aces')
-const tonemapping = reactive({
-  noiseScale: 3,
-  noiseSpeed: 0.1,
-  exposure: 1.0,
-  stops: 0,
-  gamma: 2.2,
-})
+  // ── Tonemapping sub-selector + controls ───────────────────────
+  const tonemappingSub = ref<'aces' | 'reinhard' | 'tanh' | 'exposure' | 'gamma'>('aces')
+  const tonemapping = reactive({
+    noiseScale: 3,
+    noiseSpeed: 0.1,
+    exposure: 1.0,
+    stops: 0,
+    gamma: 2.2,
+  })
 
-// ── Patterns sub-selector + controls ──────────────────────────
-const patternsSub = ref<
-  'checkerboard' | 'grid' | 'dots' | 'stripes' | 'halftone' | 'scanlines' | 'paper'
->('checkerboard')
-const patterns = reactive({
-  colorA: '#ffffff',
-  colorB: '#000000',
-  scale: 10,
-  cellSize: 0.1,
-  lineWidth: 0.005,
-  dotRadius: 0.025,
-  frequency: 10,
-  angle: 0,
-  thickness: 0.5,
-  halftoneScale: 50,
-  scanDensity: 300,
-  scanIntensity: 0.3,
-  paperScale: 12,
-  paperIntensity: 0.08,
-  vignetteIntensity: 0.4,
-})
+  // ── Patterns sub-selector + controls ──────────────────────────
+  const patternsSub = ref<
+    'checkerboard' | 'grid' | 'dots' | 'stripes' | 'halftone' | 'scanlines' | 'paper'
+  >('checkerboard')
+  const patterns = reactive({
+    colorA: '#ffffff',
+    colorB: '#000000',
+    scale: 10,
+    cellSize: 0.1,
+    lineWidth: 0.005,
+    dotRadius: 0.025,
+    frequency: 10,
+    angle: 0,
+    thickness: 0.5,
+    halftoneScale: 50,
+    scanDensity: 300,
+    scanIntensity: 0.3,
+    paperScale: 12,
+    paperIntensity: 0.08,
+    vignetteIntensity: 0.4,
+  })
 
-// ── Effects sub-selector + controls ───────────────────────────
-const effectsSub = ref<'chromatic' | 'film_grain' | 'grain' | 'risograph' | 'halation' | 'vhs'>('chromatic')
-const effects = reactive({
-  noiseScale: 3,
-  noiseSpeed: 0.1,
-  caStrength: 0.008,
-  caEdge: 1.5,
-  grainIntensity: 0.08,
-  risoScale: 0.6,
-  risoStrength: 0.12,
-  halationColor: '#ff2200',
-  halationThreshold: 0.65,
-  halationIntensity: 0.5,
-  vhsBleed: 0.015,
-  vhsTracking: 0.3,
-})
+  // ── Effects sub-selector + controls ───────────────────────────
+  const effectsSub = ref<'chromatic' | 'film_grain' | 'grain' | 'risograph' | 'halation' | 'vhs'>(
+    'chromatic'
+  )
+  const effects = reactive({
+    noiseScale: 3,
+    noiseSpeed: 0.1,
+    caStrength: 0.008,
+    caEdge: 1.5,
+    grainIntensity: 0.08,
+    risoScale: 0.6,
+    risoStrength: 0.12,
+    halationColor: '#ff2200',
+    halationThreshold: 0.65,
+    halationIntensity: 0.5,
+    vhsBleed: 0.015,
+    vhsTracking: 0.3,
+  })
 
-// ── Math demo controls ─────────────────────────────────────────
-const math = reactive({
-  poleAngle: Math.PI / 3,
-  poleDistance: 0.4,
-  imaginaryWeight: 0.6,
-  radialWeight: 0.4,
-  speed: 0.05,
-})
+  // ── Math demo controls ─────────────────────────────────────────
+  const math = reactive({
+    poleAngle: Math.PI / 3,
+    poleDistance: 0.4,
+    imaginaryWeight: 0.6,
+    radialWeight: 0.4,
+    speed: 0.05,
+  })
 
-// ── UV & Grain sub-selector + controls ────────────────────────
-const uvGrainSub = ref<'rotate' | 'pixelate' | 'bulge' | 'tile' | 'grain' | 'risograph' | 'scanlines'>('rotate')
-const uvGrain = reactive({
-  rotateAngle: 45,
-  pixelateGrid: 32,
-  bulgeStrength: 0.5,
-  bulgeRadius: 0.5,
-  tileX: 3,
-  tileY: 3,
-  noiseScale: 4,
-  noiseSpeed: 0.1,
-  grainIntensity: 0.08,
-  risoScale: 0.6,
-  risoStrength: 0.12,
-  scanDensity: 300,
-  scanIntensity: 0.3,
-  gradColorA: '#1a1a2e',
-  gradColorB: '#e8d5b0',
-  vignetteIntensity: 0.4,
-})
+  // ── UV & Grain sub-selector + controls ────────────────────────
+  const uvGrainSub = ref<
+    'rotate' | 'pixelate' | 'bulge' | 'tile' | 'grain' | 'risograph' | 'scanlines'
+  >('rotate')
+  const uvGrain = reactive({
+    rotateAngle: 45,
+    pixelateGrid: 32,
+    bulgeStrength: 0.5,
+    bulgeRadius: 0.5,
+    tileX: 3,
+    tileY: 3,
+    noiseScale: 4,
+    noiseSpeed: 0.1,
+    grainIntensity: 0.08,
+    risoScale: 0.6,
+    risoStrength: 0.12,
+    scanDensity: 300,
+    scanIntensity: 0.3,
+    gradColorA: '#1a1a2e',
+    gradColorB: '#e8d5b0',
+    vignetteIntensity: 0.4,
+  })
 </script>
 
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <div class="min-h-screen bg-neutral-950 text-white flex flex-col">
-
     <!-- Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-white/8">
       <div class="flex items-center gap-4">
@@ -238,7 +261,14 @@ const uvGrain = reactive({
           <p class="text-xs text-white/40">142 composable TSL blocks · WebGPU</p>
         </div>
       </div>
-      <UButton to="/shader-background" label="Background Builder" icon="i-lucide-layers" size="xs" variant="soft" color="neutral" />
+      <UButton
+        to="/shader-background"
+        label="Background Builder"
+        icon="i-lucide-layers"
+        size="xs"
+        variant="soft"
+        color="neutral"
+      />
       <div class="flex items-center gap-3">
         <div class="flex gap-2 text-xs text-white/30">
           <span class="bg-white/5 rounded px-2 py-0.5">Generators</span>
@@ -262,7 +292,7 @@ const uvGrain = reactive({
             ? 'bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/30'
             : 'text-white/40 hover:text-white/70 hover:bg-white/5'
         "
-        @click="activeCategory = cat.id"
+        @click="() => (activeCategory = cat.id)"
       >
         <UIcon :name="cat.icon" class="w-3.5 h-3.5" />
         {{ cat.label }}
@@ -271,10 +301,11 @@ const uvGrain = reactive({
 
     <!-- Main content -->
     <div class="flex flex-1 gap-0 overflow-hidden">
-
       <!-- Canvas column -->
       <div class="flex-1 flex items-center justify-center p-6">
-        <div class="relative w-full max-w-lg aspect-square rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
+        <div
+          class="relative w-full max-w-lg aspect-square rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl"
+        >
           <ClientOnly>
             <!--
               ShaderPipelineContext lives in the regular Vue DOM renderer.
@@ -282,12 +313,11 @@ const uvGrain = reactive({
               ShaderPipeline inside TresMesh only attaches the material; no slot/children.
             -->
             <ShaderPipelineContext>
-
               <!-- Hidden block registry — one group active at a time -->
               <div class="hidden pointer-events-none" aria-hidden="true">
-
                 <!-- ── 1. Generators ── -->
                 <!-- :key on template forces block remount when ringCount changes (structural TSL graph change) -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-if="activeCategory === 'generators'" :key="gen.ringCount">
                   <PipelineRingField
                     :order="0"
@@ -309,6 +339,7 @@ const uvGrain = reactive({
                 </template>
 
                 <!-- ── 2. Noise ── -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'noise'" :key="noise.octaves">
                   <PipelineFBMNoise
                     :order="0"
@@ -434,17 +465,26 @@ const uvGrain = reactive({
                 </template>
 
                 <!-- ── 8. Noise FX ── -->
+                <!-- eslint-disable vue/no-template-key -->
                 <template v-else-if="activeCategory === 'noise_fx'" :key="noiseFxSub">
                   <template v-if="noiseFxSub === 'fbm'" :key="noiseFx.octaves">
                     <PipelineFBMNoise
-                      :order="0" :scale="noiseFx.scale" :speed="noiseFx.speed"
-                      :octaves="noiseFx.octaves" color-a="#000000" color-b="#ffffff"
+                      :order="0"
+                      :scale="noiseFx.scale"
+                      :speed="noiseFx.speed"
+                      :octaves="noiseFx.octaves"
+                      color-a="#000000"
+                      color-b="#ffffff"
                     />
                     <PipelineCosinePalette :order="1" scalar-source="prev" />
                     <PipelineVignette :order="2" :intensity="noiseFx.vignetteIntensity" />
                   </template>
                   <template v-else-if="noiseFxSub === 'simplex'">
-                    <PipelineSimplexNoise :order="0" :scale="noiseFx.scale" :speed="noiseFx.speed" />
+                    <PipelineSimplexNoise
+                      :order="0"
+                      :scale="noiseFx.scale"
+                      :speed="noiseFx.speed"
+                    />
                     <PipelineVignette :order="1" :intensity="noiseFx.vignetteIntensity" />
                   </template>
                   <template v-else-if="noiseFxSub === 'value'">
@@ -464,11 +504,19 @@ const uvGrain = reactive({
                     <PipelineVignette :order="1" :intensity="noiseFx.vignetteIntensity" />
                   </template>
                   <template v-else-if="noiseFxSub === 'voronoi'">
-                    <PipelineVoronoiEdges :order="0" :scale="noiseFx.scale" :speed="noiseFx.speed" />
+                    <PipelineVoronoiEdges
+                      :order="0"
+                      :scale="noiseFx.scale"
+                      :speed="noiseFx.speed"
+                    />
                     <PipelineVignette :order="1" :intensity="noiseFx.vignetteIntensity" />
                   </template>
                   <template v-else-if="noiseFxSub === 'domain'">
-                    <PipelineDomainWarpedNoise :order="0" :scale="noiseFx.scale" :speed="noiseFx.speed" />
+                    <PipelineDomainWarpedNoise
+                      :order="0"
+                      :scale="noiseFx.scale"
+                      :speed="noiseFx.speed"
+                    />
                     <PipelineVignette :order="1" :intensity="noiseFx.vignetteIntensity" />
                   </template>
                 </template>
@@ -477,47 +525,71 @@ const uvGrain = reactive({
                 <template v-else-if="activeCategory === 'sdf'" :key="sdfSub">
                   <template v-if="sdfSub === 'circle'">
                     <PipelineCircle
-                      :order="0" :color-a="sdf.colorA" :color-b="sdf.colorB"
-                      :radius="sdf.radius" :softness="sdf.softness"
+                      :order="0"
+                      :color-a="sdf.colorA"
+                      :color-b="sdf.colorB"
+                      :radius="sdf.radius"
+                      :softness="sdf.softness"
                     />
                   </template>
                   <template v-else-if="sdfSub === 'ring'">
                     <PipelineRing
-                      :order="0" :color-a="sdf.colorA" :color-b="sdf.colorB"
-                      :inner-radius="sdf.innerRadius" :outer-radius="sdf.outerRadius"
+                      :order="0"
+                      :color-a="sdf.colorA"
+                      :color-b="sdf.colorB"
+                      :inner-radius="sdf.innerRadius"
+                      :outer-radius="sdf.outerRadius"
                       :softness="sdf.softness"
                     />
                   </template>
                   <template v-else-if="sdfSub === 'rectangle'">
                     <PipelineRectangle
-                      :order="0" :color-a="sdf.colorA" :color-b="sdf.colorB"
-                      :width="sdf.width" :height="sdf.height"
-                      :corner-radius="sdf.cornerRadius" :softness="sdf.softness"
+                      :order="0"
+                      :color-a="sdf.colorA"
+                      :color-b="sdf.colorB"
+                      :width="sdf.width"
+                      :height="sdf.height"
+                      :corner-radius="sdf.cornerRadius"
+                      :softness="sdf.softness"
                     />
                   </template>
                   <template v-else-if="sdfSub === 'star'">
                     <PipelineStar
-                      :order="0" :color-a="sdf.colorA" :color-b="sdf.colorB"
-                      :radius="sdf.radius" :points="sdf.points"
-                      :inner-ratio="sdf.innerRatio" :softness="sdf.softness"
+                      :order="0"
+                      :color-a="sdf.colorA"
+                      :color-b="sdf.colorB"
+                      :radius="sdf.radius"
+                      :points="sdf.points"
+                      :inner-ratio="sdf.innerRatio"
+                      :softness="sdf.softness"
                     />
                   </template>
                   <template v-else-if="sdfSub === 'hexagon'">
                     <PipelineHexagon
-                      :order="0" :color-a="sdf.colorA" :color-b="sdf.colorB"
-                      :radius="sdf.radius" :softness="sdf.softness"
+                      :order="0"
+                      :color-a="sdf.colorA"
+                      :color-b="sdf.colorB"
+                      :radius="sdf.radius"
+                      :softness="sdf.softness"
                     />
                   </template>
                   <template v-else-if="sdfSub === 'cross'">
                     <PipelineCross
-                      :order="0" :color-a="sdf.colorA" :color-b="sdf.colorB"
-                      :size="sdf.size" :thickness="sdf.thickness" :softness="sdf.softness"
+                      :order="0"
+                      :color-a="sdf.colorA"
+                      :color-b="sdf.colorB"
+                      :size="sdf.size"
+                      :thickness="sdf.thickness"
+                      :softness="sdf.softness"
                     />
                   </template>
                   <template v-else-if="sdfSub === 'triangle'">
                     <PipelineTriangle
-                      :order="0" :color-a="sdf.colorA" :color-b="sdf.colorB"
-                      :size="sdf.size" :softness="sdf.softness"
+                      :order="0"
+                      :color-a="sdf.colorA"
+                      :color-b="sdf.colorB"
+                      :size="sdf.size"
+                      :softness="sdf.softness"
                     />
                   </template>
                   <PipelineVignette :order="1" :intensity="sdf.vignetteIntensity" />
@@ -526,18 +598,26 @@ const uvGrain = reactive({
                 <!-- ── 10. Lighting ── -->
                 <template v-else-if="activeCategory === 'lighting'" :key="lightingSub">
                   <PipelineFBMNoise
-                    :order="0" :scale="lighting.noiseScale" :speed="lighting.noiseSpeed"
-                    color-a="#0a0a1a" color-b="#334466"
+                    :order="0"
+                    :scale="lighting.noiseScale"
+                    :speed="lighting.noiseSpeed"
+                    color-a="#0a0a1a"
+                    color-b="#334466"
                   />
                   <template v-if="lightingSub === 'god_rays'">
                     <PipelineGodRays
-                      :order="1" :color="lighting.color" :intensity="lighting.intensity"
-                      :ray-count="lighting.rayCount" :decay="lighting.decay"
+                      :order="1"
+                      :color="lighting.color"
+                      :intensity="lighting.intensity"
+                      :ray-count="lighting.rayCount"
+                      :decay="lighting.decay"
                     />
                   </template>
                   <template v-else-if="lightingSub === 'lens_flare'">
                     <PipelineLensFlare
-                      :order="1" :color="lighting.color" :intensity="lighting.intensity"
+                      :order="1"
+                      :color="lighting.color"
+                      :intensity="lighting.intensity"
                       :ghost-count="lighting.ghostCount"
                     />
                   </template>
@@ -547,8 +627,11 @@ const uvGrain = reactive({
                 <!-- ── 11. Tonemapping ── -->
                 <template v-else-if="activeCategory === 'tonemapping'" :key="tonemappingSub">
                   <PipelineFBMNoise
-                    :order="0" :scale="tonemapping.noiseScale" :speed="tonemapping.noiseSpeed"
-                    color-a="#0d0020" color-b="#ff6600"
+                    :order="0"
+                    :scale="tonemapping.noiseScale"
+                    :speed="tonemapping.noiseSpeed"
+                    color-a="#0d0020"
+                    color-b="#ff6600"
                   />
                   <template v-if="tonemappingSub === 'aces'">
                     <PipelineACESTonemap :order="1" />
@@ -571,39 +654,62 @@ const uvGrain = reactive({
                 <template v-else-if="activeCategory === 'patterns'" :key="patternsSub">
                   <template v-if="patternsSub === 'checkerboard'">
                     <PipelineCheckerboard
-                      :order="0" :color-a="patterns.colorA" :color-b="patterns.colorB"
+                      :order="0"
+                      :color-a="patterns.colorA"
+                      :color-b="patterns.colorB"
                       :scale="patterns.scale"
                     />
                   </template>
                   <template v-else-if="patternsSub === 'grid'">
                     <PipelineGrid
-                      :order="0" :color-a="patterns.colorA" :color-b="patterns.colorB"
-                      :cell-size="patterns.cellSize" :line-width="patterns.lineWidth"
+                      :order="0"
+                      :color-a="patterns.colorA"
+                      :color-b="patterns.colorB"
+                      :cell-size="patterns.cellSize"
+                      :line-width="patterns.lineWidth"
                     />
                   </template>
                   <template v-else-if="patternsSub === 'dots'">
                     <PipelineDots
-                      :order="0" :color-a="patterns.colorA" :color-b="patterns.colorB"
-                      :cell-size="patterns.cellSize" :dot-radius="patterns.dotRadius"
+                      :order="0"
+                      :color-a="patterns.colorA"
+                      :color-b="patterns.colorB"
+                      :cell-size="patterns.cellSize"
+                      :dot-radius="patterns.dotRadius"
                     />
                   </template>
                   <template v-else-if="patternsSub === 'stripes'">
                     <PipelineStripes
-                      :order="0" :color-a="patterns.colorA" :color-b="patterns.colorB"
-                      :frequency="patterns.frequency" :angle="patterns.angle"
+                      :order="0"
+                      :color-a="patterns.colorA"
+                      :color-b="patterns.colorB"
+                      :frequency="patterns.frequency"
+                      :angle="patterns.angle"
                       :thickness="patterns.thickness"
                     />
                   </template>
                   <template v-else-if="patternsSub === 'halftone'">
-                    <PipelineHalftone :order="0" :scale="patterns.halftoneScale" :angle="patterns.angle" />
+                    <PipelineHalftone
+                      :order="0"
+                      :scale="patterns.halftoneScale"
+                      :angle="patterns.angle"
+                    />
                   </template>
                   <template v-else-if="patternsSub === 'scanlines'">
                     <PipelineSolidColour :order="0" color="#1a1a1a" />
-                    <PipelineScanlines :order="1" :density="patterns.scanDensity" :intensity="patterns.scanIntensity" />
+                    <PipelineScanlines
+                      :order="1"
+                      :density="patterns.scanDensity"
+                      :intensity="patterns.scanIntensity"
+                    />
                   </template>
                   <template v-else-if="patternsSub === 'paper'">
                     <PipelineSolidColour :order="0" color="#f5f0e8" />
-                    <PipelinePaperTexture :order="1" :scale="patterns.paperScale" :intensity="patterns.paperIntensity" />
+                    <PipelinePaperTexture
+                      :order="1"
+                      :scale="patterns.paperScale"
+                      :intensity="patterns.paperIntensity"
+                    />
                   </template>
                   <PipelineVignette :order="2" :intensity="patterns.vignetteIntensity" />
                 </template>
@@ -611,12 +717,17 @@ const uvGrain = reactive({
                 <!-- ── 13. Effects ── -->
                 <template v-else-if="activeCategory === 'effects'" :key="effectsSub">
                   <PipelineFBMNoise
-                    :order="0" :scale="effects.noiseScale" :speed="effects.noiseSpeed"
-                    color-a="#0a0a1a" color-b="#334466"
+                    :order="0"
+                    :scale="effects.noiseScale"
+                    :speed="effects.noiseSpeed"
+                    color-a="#0a0a1a"
+                    color-b="#334466"
                   />
                   <template v-if="effectsSub === 'chromatic'">
                     <PipelineChromaticAberration
-                      :order="1" :strength="effects.caStrength" :edge-falloff="effects.caEdge"
+                      :order="1"
+                      :strength="effects.caStrength"
+                      :edge-falloff="effects.caEdge"
                     />
                   </template>
                   <template v-else-if="effectsSub === 'film_grain'">
@@ -627,18 +738,24 @@ const uvGrain = reactive({
                   </template>
                   <template v-else-if="effectsSub === 'risograph'">
                     <PipelineRisographGrain
-                      :order="1" :scale="effects.risoScale" :strength="effects.risoStrength"
+                      :order="1"
+                      :scale="effects.risoScale"
+                      :strength="effects.risoStrength"
                     />
                   </template>
                   <template v-else-if="effectsSub === 'halation'">
                     <PipelineHalation
-                      :order="1" :color="effects.halationColor"
-                      :threshold="effects.halationThreshold" :intensity="effects.halationIntensity"
+                      :order="1"
+                      :color="effects.halationColor"
+                      :threshold="effects.halationThreshold"
+                      :intensity="effects.halationIntensity"
                     />
                   </template>
                   <template v-else-if="effectsSub === 'vhs'">
                     <PipelineVHSBleed
-                      :order="1" :bleed-strength="effects.vhsBleed" :tracking-noise="effects.vhsTracking"
+                      :order="1"
+                      :bleed-strength="effects.vhsBleed"
+                      :tracking-noise="effects.vhsTracking"
                     />
                   </template>
                 </template>
@@ -646,8 +763,11 @@ const uvGrain = reactive({
                 <!-- ── 14. Math ── -->
                 <template v-else-if="activeCategory === 'math'">
                   <PipelineComplexPlaneField
-                    :order="0" :pole-angle="math.poleAngle" :pole-distance="math.poleDistance"
-                    :imaginary-weight="math.imaginaryWeight" :radial-weight="math.radialWeight"
+                    :order="0"
+                    :pole-angle="math.poleAngle"
+                    :pole-distance="math.poleDistance"
+                    :imaginary-weight="math.imaginaryWeight"
+                    :radial-weight="math.radialWeight"
                     :speed="math.speed"
                   />
                   <PipelineCosinePalette :order="1" scalar-source="prev" />
@@ -658,56 +778,91 @@ const uvGrain = reactive({
                 <template v-else-if="activeCategory === 'uv_grain'" :key="uvGrainSub">
                   <template v-if="uvGrainSub === 'rotate'">
                     <PipelineUVRotate :order="0" :angle="uvGrain.rotateAngle" />
-                    <PipelineSimplexNoise :order="0" :scale="uvGrain.noiseScale" :speed="uvGrain.noiseSpeed" />
+                    <PipelineSimplexNoise
+                      :order="0"
+                      :scale="uvGrain.noiseScale"
+                      :speed="uvGrain.noiseSpeed"
+                    />
                     <PipelineVignette :order="1" :intensity="uvGrain.vignetteIntensity" />
                   </template>
                   <template v-else-if="uvGrainSub === 'pixelate'">
                     <PipelineUVPixelate :order="0" :grid-size="uvGrain.pixelateGrid" />
-                    <PipelineSimplexNoise :order="0" :scale="uvGrain.noiseScale" :speed="uvGrain.noiseSpeed" />
+                    <PipelineSimplexNoise
+                      :order="0"
+                      :scale="uvGrain.noiseScale"
+                      :speed="uvGrain.noiseSpeed"
+                    />
                     <PipelineVignette :order="1" :intensity="uvGrain.vignetteIntensity" />
                   </template>
                   <template v-else-if="uvGrainSub === 'bulge'">
                     <PipelineUVBulge
-                      :order="0" :strength="uvGrain.bulgeStrength" :radius="uvGrain.bulgeRadius"
+                      :order="0"
+                      :strength="uvGrain.bulgeStrength"
+                      :radius="uvGrain.bulgeRadius"
                     />
-                    <PipelineSimplexNoise :order="0" :scale="uvGrain.noiseScale" :speed="uvGrain.noiseSpeed" />
+                    <PipelineSimplexNoise
+                      :order="0"
+                      :scale="uvGrain.noiseScale"
+                      :speed="uvGrain.noiseSpeed"
+                    />
                     <PipelineVignette :order="1" :intensity="uvGrain.vignetteIntensity" />
                   </template>
                   <template v-else-if="uvGrainSub === 'tile'">
-                    <PipelineUVTile :order="0" :repeat-x="uvGrain.tileX" :repeat-y="uvGrain.tileY" />
-                    <PipelineSimplexNoise :order="0" :scale="uvGrain.noiseScale" :speed="uvGrain.noiseSpeed" />
+                    <PipelineUVTile
+                      :order="0"
+                      :repeat-x="uvGrain.tileX"
+                      :repeat-y="uvGrain.tileY"
+                    />
+                    <PipelineSimplexNoise
+                      :order="0"
+                      :scale="uvGrain.noiseScale"
+                      :speed="uvGrain.noiseSpeed"
+                    />
                     <PipelineVignette :order="1" :intensity="uvGrain.vignetteIntensity" />
                   </template>
                   <template v-else-if="uvGrainSub === 'grain'">
                     <PipelineLinearGradient
-                      :order="0" :color-a="uvGrain.gradColorA" :color-b="uvGrain.gradColorB" axis="y"
+                      :order="0"
+                      :color-a="uvGrain.gradColorA"
+                      :color-b="uvGrain.gradColorB"
+                      axis="y"
                     />
                     <PipelineGrain :order="1" :intensity="uvGrain.grainIntensity" />
                     <PipelineVignette :order="2" :intensity="uvGrain.vignetteIntensity" />
                   </template>
                   <template v-else-if="uvGrainSub === 'risograph'">
                     <PipelineLinearGradient
-                      :order="0" :color-a="uvGrain.gradColorA" :color-b="uvGrain.gradColorB" axis="y"
+                      :order="0"
+                      :color-a="uvGrain.gradColorA"
+                      :color-b="uvGrain.gradColorB"
+                      axis="y"
                     />
                     <PipelineRisographGrain
-                      :order="1" :scale="uvGrain.risoScale" :strength="uvGrain.risoStrength"
+                      :order="1"
+                      :scale="uvGrain.risoScale"
+                      :strength="uvGrain.risoStrength"
                     />
                     <PipelineVignette :order="2" :intensity="uvGrain.vignetteIntensity" />
                   </template>
                   <template v-else-if="uvGrainSub === 'scanlines'">
                     <PipelineLinearGradient
-                      :order="0" :color-a="uvGrain.gradColorA" :color-b="uvGrain.gradColorB" axis="y"
+                      :order="0"
+                      :color-a="uvGrain.gradColorA"
+                      :color-b="uvGrain.gradColorB"
+                      axis="y"
                     />
                     <PipelineScanlines
-                      :order="1" :density="uvGrain.scanDensity" :intensity="uvGrain.scanIntensity"
+                      :order="1"
+                      :density="uvGrain.scanDensity"
+                      :intensity="uvGrain.scanIntensity"
                     />
                     <PipelineVignette :order="2" :intensity="uvGrain.vignetteIntensity" />
                   </template>
                 </template>
-
               </div>
 
               <!-- Canvas — ShaderPipeline is childless; it only attaches the material -->
+              <!-- eslint-disable-next-line vue/prefer-true-attribute-shorthand -->
               <ShaderCanvas clear-color="#0a0a0a" :window-size="false" :webgpu="true">
                 <TresOrthographicCamera :args="[-1, 1, 1, -1, 0.1, 100]" :position="[0, 0, 1]" />
                 <TresMesh>
@@ -715,7 +870,6 @@ const uvGrain = reactive({
                   <ShaderPipeline />
                 </TresMesh>
               </ShaderCanvas>
-
             </ShaderPipelineContext>
           </ClientOnly>
         </div>
@@ -723,7 +877,6 @@ const uvGrain = reactive({
 
       <!-- Controls sidebar -->
       <div class="w-72 shrink-0 border-l border-white/8 overflow-y-auto p-5 space-y-5">
-
         <!-- ── Generators controls ── -->
         <template v-if="activeCategory === 'generators'">
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
@@ -733,12 +886,42 @@ const uvGrain = reactive({
             Scalar pipeline: SDF rings → grayscale → IQ palette colourised
           </p>
           <div class="space-y-4">
-            <DemoSliderRow label="Ring Radius" :min="0.05" :max="0.7" :step="0.01" v-model="gen.ringRadius" />
-            <DemoSliderRow label="Ring Count" :min="1" :max="6" :step="1" v-model="gen.ringCount" />
-            <DemoSliderRow label="Ring Scale" :min="1" :max="10" :step="0.5" v-model="gen.ringScale" />
-            <DemoSliderRow label="Ring Spread" :min="0.05" :max="0.5" :step="0.01" v-model="gen.ringSpread" />
-            <DemoSliderRow label="Palette Speed" :min="0" :max="0.5" :step="0.01" v-model="gen.timeScale" />
-            <DemoSliderRow label="Vignette" :min="0" :max="1" :step="0.01" v-model="gen.vignetteIntensity" />
+            <DemoSliderRow
+              v-model="gen.ringRadius"
+              label="Ring Radius"
+              :min="0.05"
+              :max="0.7"
+              :step="0.01"
+            />
+            <DemoSliderRow v-model="gen.ringCount" label="Ring Count" :min="1" :max="6" :step="1" />
+            <DemoSliderRow
+              v-model="gen.ringScale"
+              label="Ring Scale"
+              :min="1"
+              :max="10"
+              :step="0.5"
+            />
+            <DemoSliderRow
+              v-model="gen.ringSpread"
+              label="Ring Spread"
+              :min="0.05"
+              :max="0.5"
+              :step="0.01"
+            />
+            <DemoSliderRow
+              v-model="gen.timeScale"
+              label="Palette Speed"
+              :min="0"
+              :max="0.5"
+              :step="0.01"
+            />
+            <DemoSliderRow
+              v-model="gen.vignetteIntensity"
+              label="Vignette"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
           </div>
         </template>
 
@@ -751,13 +934,31 @@ const uvGrain = reactive({
             Fractal noise → hue shift → brightness/contrast → vignette
           </p>
           <div class="space-y-4">
-            <DemoSliderRow label="Scale" :min="1" :max="10" :step="0.5" v-model="noise.scale" />
-            <DemoSliderRow label="Speed" :min="0" :max="0.5" :step="0.01" v-model="noise.speed" />
-            <DemoSliderRow label="Octaves" :min="1" :max="8" :step="1" v-model="noise.octaves" />
-            <DemoSliderRow label="Hue Shift" :min="0" :max="1" :step="0.01" v-model="noise.hue" />
-            <DemoSliderRow label="Brightness" :min="-0.5" :max="0.5" :step="0.01" v-model="noise.brightness" />
-            <DemoSliderRow label="Contrast" :min="0.5" :max="2.5" :step="0.05" v-model="noise.contrast" />
-            <DemoSliderRow label="Vignette" :min="0" :max="1" :step="0.01" v-model="noise.vignetteIntensity" />
+            <DemoSliderRow v-model="noise.scale" label="Scale" :min="1" :max="10" :step="0.5" />
+            <DemoSliderRow v-model="noise.speed" label="Speed" :min="0" :max="0.5" :step="0.01" />
+            <DemoSliderRow v-model="noise.octaves" label="Octaves" :min="1" :max="8" :step="1" />
+            <DemoSliderRow v-model="noise.hue" label="Hue Shift" :min="0" :max="1" :step="0.01" />
+            <DemoSliderRow
+              v-model="noise.brightness"
+              label="Brightness"
+              :min="-0.5"
+              :max="0.5"
+              :step="0.01"
+            />
+            <DemoSliderRow
+              v-model="noise.contrast"
+              label="Contrast"
+              :min="0.5"
+              :max="2.5"
+              :step="0.05"
+            />
+            <DemoSliderRow
+              v-model="noise.vignetteIntensity"
+              label="Vignette"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
           </div>
         </template>
 
@@ -771,17 +972,47 @@ const uvGrain = reactive({
           </p>
           <div class="space-y-4">
             <p class="text-xs text-white/30 font-medium">Sine Warp</p>
-            <DemoSliderRow label="Frequency" :min="1" :max="15" :step="0.5" v-model="uvt.warpFrequency" />
-            <DemoSliderRow label="Amplitude" :min="5" :max="80" :step="1" v-model="uvt.warpAmplitude" />
-            <DemoSliderRow label="Speed" :min="0" :max="5" :step="0.1" v-model="uvt.warpSpeed" />
+            <DemoSliderRow
+              v-model="uvt.warpFrequency"
+              label="Frequency"
+              :min="1"
+              :max="15"
+              :step="0.5"
+            />
+            <DemoSliderRow
+              v-model="uvt.warpAmplitude"
+              label="Amplitude"
+              :min="5"
+              :max="80"
+              :step="1"
+            />
+            <DemoSliderRow v-model="uvt.warpSpeed" label="Speed" :min="0" :max="5" :step="0.1" />
             <div class="h-px bg-white/5" />
             <p class="text-xs text-white/30 font-medium">Twirl</p>
-            <DemoSliderRow label="Strength" :min="-8" :max="8" :step="0.1" v-model="uvt.twirlStrength" />
-            <DemoSliderRow label="Radius" :min="0.1" :max="1" :step="0.05" v-model="uvt.twirlRadius" />
+            <DemoSliderRow
+              v-model="uvt.twirlStrength"
+              label="Strength"
+              :min="-8"
+              :max="8"
+              :step="0.1"
+            />
+            <DemoSliderRow
+              v-model="uvt.twirlRadius"
+              label="Radius"
+              :min="0.1"
+              :max="1"
+              :step="0.05"
+            />
             <div class="h-px bg-white/5" />
             <p class="text-xs text-white/30 font-medium">Noise Generator</p>
-            <DemoSliderRow label="Scale" :min="1" :max="10" :step="0.5" v-model="uvt.noiseScale" />
-            <DemoSliderRow label="Speed" :min="0" :max="0.5" :step="0.01" v-model="uvt.noiseSpeed" />
+            <DemoSliderRow v-model="uvt.noiseScale" label="Scale" :min="1" :max="10" :step="0.5" />
+            <DemoSliderRow
+              v-model="uvt.noiseSpeed"
+              label="Speed"
+              :min="0"
+              :max="0.5"
+              :step="0.01"
+            />
           </div>
         </template>
 
@@ -794,15 +1025,39 @@ const uvGrain = reactive({
             Curl noise field → duotone colour map → brightness/contrast
           </p>
           <div class="space-y-4">
-            <DemoSliderRow label="Noise Scale" :min="1" :max="10" :step="0.5" v-model="colour.noiseScale" />
-            <DemoSliderRow label="Noise Speed" :min="0" :max="0.5" :step="0.01" v-model="colour.noiseSpeed" />
+            <DemoSliderRow
+              v-model="colour.noiseScale"
+              label="Noise Scale"
+              :min="1"
+              :max="10"
+              :step="0.5"
+            />
+            <DemoSliderRow
+              v-model="colour.noiseSpeed"
+              label="Noise Speed"
+              :min="0"
+              :max="0.5"
+              :step="0.01"
+            />
             <div class="h-px bg-white/5" />
             <p class="text-xs text-white/30 font-medium">Duotone</p>
-            <DemoColorRow label="Shadow" v-model="colour.shadowColor" />
-            <DemoColorRow label="Highlight" v-model="colour.highlightColor" />
+            <DemoColorRow v-model="colour.shadowColor" label="Shadow" />
+            <DemoColorRow v-model="colour.highlightColor" label="Highlight" />
             <div class="h-px bg-white/5" />
-            <DemoSliderRow label="Brightness" :min="-0.5" :max="0.5" :step="0.01" v-model="colour.brightness" />
-            <DemoSliderRow label="Contrast" :min="0.5" :max="2.5" :step="0.05" v-model="colour.contrast" />
+            <DemoSliderRow
+              v-model="colour.brightness"
+              label="Brightness"
+              :min="-0.5"
+              :max="0.5"
+              :step="0.01"
+            />
+            <DemoSliderRow
+              v-model="colour.contrast"
+              label="Contrast"
+              :min="0.5"
+              :max="2.5"
+              :step="0.05"
+            />
           </div>
         </template>
 
@@ -811,24 +1066,58 @@ const uvGrain = reactive({
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
             Film / Analogue Stack
           </p>
-          <p class="text-xs text-white/40 -mt-3">
-            Linear gradient → Aged Film → VHS Bleed
-          </p>
+          <p class="text-xs text-white/40 -mt-3">Linear gradient → Aged Film → VHS Bleed</p>
           <div class="space-y-4">
             <p class="text-xs text-white/30 font-medium">Base Gradient</p>
-            <DemoColorRow label="Color A" v-model="film.gradColorA" />
-            <DemoColorRow label="Color B" v-model="film.gradColorB" />
+            <DemoColorRow v-model="film.gradColorA" label="Color A" />
+            <DemoColorRow v-model="film.gradColorB" label="Color B" />
             <div class="h-px bg-white/5" />
             <p class="text-xs text-white/30 font-medium">Aged Film</p>
-            <DemoSliderRow label="Intensity" :min="0" :max="1" :step="0.01" v-model="film.agedIntensity" />
-            <DemoSliderRow label="Grain" :min="0" :max="0.15" :step="0.005" v-model="film.agedGrain" />
-            <DemoSliderRow label="Vignette" :min="0" :max="1" :step="0.01" v-model="film.agedVignette" />
-            <DemoSliderRow label="Warmth" :min="0" :max="0.5" :step="0.01" v-model="film.agedWarmth" />
+            <DemoSliderRow
+              v-model="film.agedIntensity"
+              label="Intensity"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
+            <DemoSliderRow
+              v-model="film.agedGrain"
+              label="Grain"
+              :min="0"
+              :max="0.15"
+              :step="0.005"
+            />
+            <DemoSliderRow
+              v-model="film.agedVignette"
+              label="Vignette"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
+            <DemoSliderRow
+              v-model="film.agedWarmth"
+              label="Warmth"
+              :min="0"
+              :max="0.5"
+              :step="0.01"
+            />
             <div class="h-px bg-white/5" />
             <p class="text-xs text-white/30 font-medium">VHS Bleed</p>
-            <DemoSliderRow label="Bleed" :min="0" :max="0.05" :step="0.001" v-model="film.vhsBleed" />
-            <DemoSliderRow label="Tracking" :min="0" :max="1" :step="0.01" v-model="film.vhsTracking" />
-            <DemoSliderRow label="Speed" :min="0" :max="3" :step="0.1" v-model="film.vhsSpeed" />
+            <DemoSliderRow
+              v-model="film.vhsBleed"
+              label="Bleed"
+              :min="0"
+              :max="0.05"
+              :step="0.001"
+            />
+            <DemoSliderRow
+              v-model="film.vhsTracking"
+              label="Tracking"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
+            <DemoSliderRow v-model="film.vhsSpeed" label="Speed" :min="0" :max="3" :step="0.1" />
           </div>
         </template>
 
@@ -837,26 +1126,78 @@ const uvGrain = reactive({
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
             Night Sky Composition
           </p>
-          <p class="text-xs text-white/40 -mt-3">
-            Black base → Aurora → Starfield → Edge haze
-          </p>
+          <p class="text-xs text-white/40 -mt-3">Black base → Aurora → Starfield → Edge haze</p>
           <div class="space-y-4">
             <p class="text-xs text-white/30 font-medium">Aurora</p>
-            <DemoColorRow label="Color A" v-model="overlays.auroraColorA" />
-            <DemoColorRow label="Color B" v-model="overlays.auroraColorB" />
-            <DemoSliderRow label="Band Y" :min="0.2" :max="0.9" :step="0.01" v-model="overlays.auroraBandY" />
-            <DemoSliderRow label="Band Height" :min="0.05" :max="0.6" :step="0.01" v-model="overlays.auroraBandHeight" />
-            <DemoSliderRow label="Intensity" :min="0" :max="1" :step="0.01" v-model="overlays.auroraIntensity" />
-            <DemoSliderRow label="Speed" :min="0" :max="1" :step="0.05" v-model="overlays.auroraSpeed" />
+            <DemoColorRow v-model="overlays.auroraColorA" label="Color A" />
+            <DemoColorRow v-model="overlays.auroraColorB" label="Color B" />
+            <DemoSliderRow
+              v-model="overlays.auroraBandY"
+              label="Band Y"
+              :min="0.2"
+              :max="0.9"
+              :step="0.01"
+            />
+            <DemoSliderRow
+              v-model="overlays.auroraBandHeight"
+              label="Band Height"
+              :min="0.05"
+              :max="0.6"
+              :step="0.01"
+            />
+            <DemoSliderRow
+              v-model="overlays.auroraIntensity"
+              label="Intensity"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
+            <DemoSliderRow
+              v-model="overlays.auroraSpeed"
+              label="Speed"
+              :min="0"
+              :max="1"
+              :step="0.05"
+            />
             <div class="h-px bg-white/5" />
             <p class="text-xs text-white/30 font-medium">Starfield</p>
-            <DemoSliderRow label="Density" :min="20" :max="200" :step="5" v-model="overlays.starDensity" />
-            <DemoSliderRow label="Brightness" :min="0.1" :max="2" :step="0.05" v-model="overlays.starBrightness" />
-            <DemoSliderRow label="Twinkle" :min="0" :max="3" :step="0.1" v-model="overlays.starTwinkle" />
+            <DemoSliderRow
+              v-model="overlays.starDensity"
+              label="Density"
+              :min="20"
+              :max="200"
+              :step="5"
+            />
+            <DemoSliderRow
+              v-model="overlays.starBrightness"
+              label="Brightness"
+              :min="0.1"
+              :max="2"
+              :step="0.05"
+            />
+            <DemoSliderRow
+              v-model="overlays.starTwinkle"
+              label="Twinkle"
+              :min="0"
+              :max="3"
+              :step="0.1"
+            />
             <div class="h-px bg-white/5" />
             <p class="text-xs text-white/30 font-medium">Haze</p>
-            <DemoSliderRow label="Reach" :min="0" :max="0.7" :step="0.01" v-model="overlays.hazeReach" />
-            <DemoSliderRow label="Intensity" :min="0" :max="0.6" :step="0.01" v-model="overlays.hazeIntensity" />
+            <DemoSliderRow
+              v-model="overlays.hazeReach"
+              label="Reach"
+              :min="0"
+              :max="0.7"
+              :step="0.01"
+            />
+            <DemoSliderRow
+              v-model="overlays.hazeIntensity"
+              label="Intensity"
+              :min="0"
+              :max="0.6"
+              :step="0.01"
+            />
           </div>
         </template>
 
@@ -870,17 +1211,53 @@ const uvGrain = reactive({
           </p>
           <div class="space-y-4">
             <p class="text-xs text-white/30 font-medium">Wood</p>
-            <DemoSliderRow label="Ring Frequency" :min="4" :max="30" :step="1" v-model="comp.ringFrequency" />
-            <DemoSliderRow label="Noise Strength" :min="0" :max="1" :step="0.05" v-model="comp.noiseStrength" />
-            <DemoSliderRow label="Drift Speed" :min="0" :max="0.3" :step="0.01" v-model="comp.woodSpeed" />
+            <DemoSliderRow
+              v-model="comp.ringFrequency"
+              label="Ring Frequency"
+              :min="4"
+              :max="30"
+              :step="1"
+            />
+            <DemoSliderRow
+              v-model="comp.noiseStrength"
+              label="Noise Strength"
+              :min="0"
+              :max="1"
+              :step="0.05"
+            />
+            <DemoSliderRow
+              v-model="comp.woodSpeed"
+              label="Drift Speed"
+              :min="0"
+              :max="0.3"
+              :step="0.01"
+            />
             <div class="h-px bg-white/5" />
             <p class="text-xs text-white/30 font-medium">Halation</p>
-            <DemoColorRow label="Glow Color" v-model="comp.halationColor" />
-            <DemoSliderRow label="Threshold" :min="0.3" :max="0.95" :step="0.01" v-model="comp.halationThreshold" />
-            <DemoSliderRow label="Intensity" :min="0" :max="1" :step="0.01" v-model="comp.halationIntensity" />
+            <DemoColorRow v-model="comp.halationColor" label="Glow Color" />
+            <DemoSliderRow
+              v-model="comp.halationThreshold"
+              label="Threshold"
+              :min="0.3"
+              :max="0.95"
+              :step="0.01"
+            />
+            <DemoSliderRow
+              v-model="comp.halationIntensity"
+              label="Intensity"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
             <div class="h-px bg-white/5" />
             <p class="text-xs text-white/30 font-medium">Vignette</p>
-            <DemoSliderRow label="Intensity" :min="0" :max="1" :step="0.01" v-model="comp.vignetteIntensity" />
+            <DemoSliderRow
+              v-model="comp.vignetteIntensity"
+              label="Intensity"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
           </div>
         </template>
 
@@ -890,23 +1267,46 @@ const uvGrain = reactive({
           <p class="text-xs text-white/40 -mt-3">Various procedural noise algorithms</p>
           <div class="flex flex-wrap gap-1">
             <button
-              v-for="s in (['fbm','simplex','value','billow','ridged','curl','voronoi','domain'] as const)"
+              v-for="s in [
+                'fbm',
+                'simplex',
+                'value',
+                'billow',
+                'ridged',
+                'curl',
+                'voronoi',
+                'domain',
+              ] as const"
               :key="s"
               class="px-2 py-0.5 rounded text-xs transition-all"
-              :class="noiseFxSub === s
-                ? 'bg-violet-500/30 text-violet-300'
-                : 'bg-white/5 text-white/40 hover:text-white/70'"
-              @click="noiseFxSub = s"
-            >{{ s }}</button>
+              :class="
+                noiseFxSub === s
+                  ? 'bg-violet-500/30 text-violet-300'
+                  : 'bg-white/5 text-white/40 hover:text-white/70'
+              "
+              @click="() => (noiseFxSub = s)"
+            >
+              {{ s }}
+            </button>
           </div>
           <div class="space-y-4">
-            <DemoSliderRow label="Scale" :min="1" :max="10" :step="0.5" v-model="noiseFx.scale" />
-            <DemoSliderRow label="Speed" :min="0" :max="0.5" :step="0.01" v-model="noiseFx.speed" />
+            <DemoSliderRow v-model="noiseFx.scale" label="Scale" :min="1" :max="10" :step="0.5" />
+            <DemoSliderRow v-model="noiseFx.speed" label="Speed" :min="0" :max="0.5" :step="0.01" />
             <DemoSliderRow
-              v-if="noiseFxSub === 'fbm'" label="Octaves"
-              :min="1" :max="8" :step="1" v-model="noiseFx.octaves"
+              v-if="noiseFxSub === 'fbm'"
+              v-model="noiseFx.octaves"
+              label="Octaves"
+              :min="1"
+              :max="8"
+              :step="1"
             />
-            <DemoSliderRow label="Vignette" :min="0" :max="1" :step="0.01" v-model="noiseFx.vignetteIntensity" />
+            <DemoSliderRow
+              v-model="noiseFx.vignetteIntensity"
+              label="Vignette"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
           </div>
         </template>
 
@@ -916,44 +1316,116 @@ const uvGrain = reactive({
           <p class="text-xs text-white/40 -mt-3">Signed-distance field primitives</p>
           <div class="flex flex-wrap gap-1">
             <button
-              v-for="s in (['circle','ring','rectangle','star','hexagon','cross','triangle'] as const)"
+              v-for="s in [
+                'circle',
+                'ring',
+                'rectangle',
+                'star',
+                'hexagon',
+                'cross',
+                'triangle',
+              ] as const"
               :key="s"
               class="px-2 py-0.5 rounded text-xs transition-all"
-              :class="sdfSub === s
-                ? 'bg-violet-500/30 text-violet-300'
-                : 'bg-white/5 text-white/40 hover:text-white/70'"
-              @click="sdfSub = s"
-            >{{ s }}</button>
+              :class="
+                sdfSub === s
+                  ? 'bg-violet-500/30 text-violet-300'
+                  : 'bg-white/5 text-white/40 hover:text-white/70'
+              "
+              @click="() => (sdfSub = s)"
+            >
+              {{ s }}
+            </button>
           </div>
           <div class="space-y-4">
-            <DemoColorRow label="Color A" v-model="sdf.colorA" />
-            <DemoColorRow label="Color B" v-model="sdf.colorB" />
+            <DemoColorRow v-model="sdf.colorA" label="Color A" />
+            <DemoColorRow v-model="sdf.colorB" label="Color B" />
             <template v-if="sdfSub === 'circle' || sdfSub === 'hexagon'">
-              <DemoSliderRow label="Radius" :min="0.05" :max="0.6" :step="0.01" v-model="sdf.radius" />
+              <DemoSliderRow
+                v-model="sdf.radius"
+                label="Radius"
+                :min="0.05"
+                :max="0.6"
+                :step="0.01"
+              />
             </template>
             <template v-else-if="sdfSub === 'ring'">
-              <DemoSliderRow label="Inner Radius" :min="0.05" :max="0.45" :step="0.01" v-model="sdf.innerRadius" />
-              <DemoSliderRow label="Outer Radius" :min="0.1" :max="0.6" :step="0.01" v-model="sdf.outerRadius" />
+              <DemoSliderRow
+                v-model="sdf.innerRadius"
+                label="Inner Radius"
+                :min="0.05"
+                :max="0.45"
+                :step="0.01"
+              />
+              <DemoSliderRow
+                v-model="sdf.outerRadius"
+                label="Outer Radius"
+                :min="0.1"
+                :max="0.6"
+                :step="0.01"
+              />
             </template>
             <template v-else-if="sdfSub === 'rectangle'">
-              <DemoSliderRow label="Width" :min="0.1" :max="0.9" :step="0.01" v-model="sdf.width" />
-              <DemoSliderRow label="Height" :min="0.1" :max="0.9" :step="0.01" v-model="sdf.height" />
-              <DemoSliderRow label="Corner Radius" :min="0" :max="0.2" :step="0.005" v-model="sdf.cornerRadius" />
+              <DemoSliderRow v-model="sdf.width" label="Width" :min="0.1" :max="0.9" :step="0.01" />
+              <DemoSliderRow
+                v-model="sdf.height"
+                label="Height"
+                :min="0.1"
+                :max="0.9"
+                :step="0.01"
+              />
+              <DemoSliderRow
+                v-model="sdf.cornerRadius"
+                label="Corner Radius"
+                :min="0"
+                :max="0.2"
+                :step="0.005"
+              />
             </template>
             <template v-else-if="sdfSub === 'star'">
-              <DemoSliderRow label="Radius" :min="0.05" :max="0.6" :step="0.01" v-model="sdf.radius" />
-              <DemoSliderRow label="Points" :min="3" :max="12" :step="1" v-model="sdf.points" />
-              <DemoSliderRow label="Inner Ratio" :min="0.2" :max="0.8" :step="0.01" v-model="sdf.innerRatio" />
+              <DemoSliderRow
+                v-model="sdf.radius"
+                label="Radius"
+                :min="0.05"
+                :max="0.6"
+                :step="0.01"
+              />
+              <DemoSliderRow v-model="sdf.points" label="Points" :min="3" :max="12" :step="1" />
+              <DemoSliderRow
+                v-model="sdf.innerRatio"
+                label="Inner Ratio"
+                :min="0.2"
+                :max="0.8"
+                :step="0.01"
+              />
             </template>
             <template v-else-if="sdfSub === 'cross'">
-              <DemoSliderRow label="Size" :min="0.1" :max="0.6" :step="0.01" v-model="sdf.size" />
-              <DemoSliderRow label="Thickness" :min="0.02" :max="0.3" :step="0.01" v-model="sdf.thickness" />
+              <DemoSliderRow v-model="sdf.size" label="Size" :min="0.1" :max="0.6" :step="0.01" />
+              <DemoSliderRow
+                v-model="sdf.thickness"
+                label="Thickness"
+                :min="0.02"
+                :max="0.3"
+                :step="0.01"
+              />
             </template>
             <template v-else-if="sdfSub === 'triangle'">
-              <DemoSliderRow label="Size" :min="0.1" :max="0.6" :step="0.01" v-model="sdf.size" />
+              <DemoSliderRow v-model="sdf.size" label="Size" :min="0.1" :max="0.6" :step="0.01" />
             </template>
-            <DemoSliderRow label="Softness" :min="0.001" :max="0.05" :step="0.001" v-model="sdf.softness" />
-            <DemoSliderRow label="Vignette" :min="0" :max="1" :step="0.01" v-model="sdf.vignetteIntensity" />
+            <DemoSliderRow
+              v-model="sdf.softness"
+              label="Softness"
+              :min="0.001"
+              :max="0.05"
+              :step="0.001"
+            />
+            <DemoSliderRow
+              v-model="sdf.vignetteIntensity"
+              label="Vignette"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
           </div>
         </template>
 
@@ -963,31 +1435,80 @@ const uvGrain = reactive({
           <p class="text-xs text-white/40 -mt-3">FBM noise base with volumetric light effects</p>
           <div class="flex flex-wrap gap-1">
             <button
-              v-for="s in [{ id: 'god_rays' as const, label: 'God Rays' }, { id: 'lens_flare' as const, label: 'Lens Flare' }]"
+              v-for="s in [
+                { id: 'god_rays' as const, label: 'God Rays' },
+                { id: 'lens_flare' as const, label: 'Lens Flare' },
+              ]"
               :key="s.id"
               class="px-2 py-0.5 rounded text-xs transition-all"
-              :class="lightingSub === s.id
-                ? 'bg-violet-500/30 text-violet-300'
-                : 'bg-white/5 text-white/40 hover:text-white/70'"
-              @click="lightingSub = s.id"
-            >{{ s.label }}</button>
+              :class="
+                lightingSub === s.id
+                  ? 'bg-violet-500/30 text-violet-300'
+                  : 'bg-white/5 text-white/40 hover:text-white/70'
+              "
+              @click="() => (lightingSub = s.id)"
+            >
+              {{ s.label }}
+            </button>
           </div>
           <div class="space-y-4">
             <p class="text-xs text-white/30 font-medium">Base Noise</p>
-            <DemoSliderRow label="Scale" :min="1" :max="10" :step="0.5" v-model="lighting.noiseScale" />
-            <DemoSliderRow label="Speed" :min="0" :max="0.5" :step="0.01" v-model="lighting.noiseSpeed" />
+            <DemoSliderRow
+              v-model="lighting.noiseScale"
+              label="Scale"
+              :min="1"
+              :max="10"
+              :step="0.5"
+            />
+            <DemoSliderRow
+              v-model="lighting.noiseSpeed"
+              label="Speed"
+              :min="0"
+              :max="0.5"
+              :step="0.01"
+            />
             <div class="h-px bg-white/5" />
             <p class="text-xs text-white/30 font-medium">Light</p>
-            <DemoColorRow label="Color" v-model="lighting.color" />
-            <DemoSliderRow label="Intensity" :min="0" :max="1" :step="0.01" v-model="lighting.intensity" />
+            <DemoColorRow v-model="lighting.color" label="Color" />
+            <DemoSliderRow
+              v-model="lighting.intensity"
+              label="Intensity"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
             <template v-if="lightingSub === 'god_rays'">
-              <DemoSliderRow label="Ray Count" :min="4" :max="32" :step="1" v-model="lighting.rayCount" />
-              <DemoSliderRow label="Decay" :min="0.5" :max="5" :step="0.1" v-model="lighting.decay" />
+              <DemoSliderRow
+                v-model="lighting.rayCount"
+                label="Ray Count"
+                :min="4"
+                :max="32"
+                :step="1"
+              />
+              <DemoSliderRow
+                v-model="lighting.decay"
+                label="Decay"
+                :min="0.5"
+                :max="5"
+                :step="0.1"
+              />
             </template>
             <template v-else-if="lightingSub === 'lens_flare'">
-              <DemoSliderRow label="Ghost Count" :min="1" :max="8" :step="1" v-model="lighting.ghostCount" />
+              <DemoSliderRow
+                v-model="lighting.ghostCount"
+                label="Ghost Count"
+                :min="1"
+                :max="8"
+                :step="1"
+              />
             </template>
-            <DemoSliderRow label="Vignette" :min="0" :max="1" :step="0.01" v-model="lighting.vignetteIntensity" />
+            <DemoSliderRow
+              v-model="lighting.vignetteIntensity"
+              label="Vignette"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
           </div>
         </template>
 
@@ -997,29 +1518,63 @@ const uvGrain = reactive({
           <p class="text-xs text-white/40 -mt-3">HDR noise base → various tonemap operators</p>
           <div class="flex flex-wrap gap-1">
             <button
-              v-for="s in (['aces','reinhard','tanh','exposure','gamma'] as const)"
+              v-for="s in ['aces', 'reinhard', 'tanh', 'exposure', 'gamma'] as const"
               :key="s"
               class="px-2 py-0.5 rounded text-xs transition-all"
-              :class="tonemappingSub === s
-                ? 'bg-violet-500/30 text-violet-300'
-                : 'bg-white/5 text-white/40 hover:text-white/70'"
-              @click="tonemappingSub = s"
-            >{{ s }}</button>
+              :class="
+                tonemappingSub === s
+                  ? 'bg-violet-500/30 text-violet-300'
+                  : 'bg-white/5 text-white/40 hover:text-white/70'
+              "
+              @click="() => (tonemappingSub = s)"
+            >
+              {{ s }}
+            </button>
           </div>
           <div class="space-y-4">
             <p class="text-xs text-white/30 font-medium">Source Noise</p>
-            <DemoSliderRow label="Scale" :min="1" :max="10" :step="0.5" v-model="tonemapping.noiseScale" />
-            <DemoSliderRow label="Speed" :min="0" :max="0.5" :step="0.01" v-model="tonemapping.noiseSpeed" />
+            <DemoSliderRow
+              v-model="tonemapping.noiseScale"
+              label="Scale"
+              :min="1"
+              :max="10"
+              :step="0.5"
+            />
+            <DemoSliderRow
+              v-model="tonemapping.noiseSpeed"
+              label="Speed"
+              :min="0"
+              :max="0.5"
+              :step="0.01"
+            />
             <div class="h-px bg-white/5" />
             <p class="text-xs text-white/30 font-medium">Operator</p>
             <template v-if="tonemappingSub === 'tanh'">
-              <DemoSliderRow label="Exposure" :min="0.1" :max="4" :step="0.1" v-model="tonemapping.exposure" />
+              <DemoSliderRow
+                v-model="tonemapping.exposure"
+                label="Exposure"
+                :min="0.1"
+                :max="4"
+                :step="0.1"
+              />
             </template>
             <template v-else-if="tonemappingSub === 'exposure'">
-              <DemoSliderRow label="Stops" :min="-3" :max="3" :step="0.1" v-model="tonemapping.stops" />
+              <DemoSliderRow
+                v-model="tonemapping.stops"
+                label="Stops"
+                :min="-3"
+                :max="3"
+                :step="0.1"
+              />
             </template>
             <template v-else-if="tonemappingSub === 'gamma'">
-              <DemoSliderRow label="Gamma" :min="0.5" :max="4" :step="0.1" v-model="tonemapping.gamma" />
+              <DemoSliderRow
+                v-model="tonemapping.gamma"
+                label="Gamma"
+                :min="0.5"
+                :max="4"
+                :step="0.1"
+              />
             </template>
             <template v-else>
               <p class="text-xs text-white/20">No parameters — fixed operator</p>
@@ -1033,49 +1588,137 @@ const uvGrain = reactive({
           <p class="text-xs text-white/40 -mt-3">Geometric tiling and screen patterns</p>
           <div class="flex flex-wrap gap-1">
             <button
-              v-for="s in (['checkerboard','grid','dots','stripes','halftone','scanlines','paper'] as const)"
+              v-for="s in [
+                'checkerboard',
+                'grid',
+                'dots',
+                'stripes',
+                'halftone',
+                'scanlines',
+                'paper',
+              ] as const"
               :key="s"
               class="px-2 py-0.5 rounded text-xs transition-all"
-              :class="patternsSub === s
-                ? 'bg-violet-500/30 text-violet-300'
-                : 'bg-white/5 text-white/40 hover:text-white/70'"
-              @click="patternsSub = s"
-            >{{ s }}</button>
+              :class="
+                patternsSub === s
+                  ? 'bg-violet-500/30 text-violet-300'
+                  : 'bg-white/5 text-white/40 hover:text-white/70'
+              "
+              @click="() => (patternsSub = s)"
+            >
+              {{ s }}
+            </button>
           </div>
           <div class="space-y-4">
-            <template v-if="patternsSub !== 'halftone' && patternsSub !== 'scanlines' && patternsSub !== 'paper'">
-              <DemoColorRow label="Color A" v-model="patterns.colorA" />
-              <DemoColorRow label="Color B" v-model="patterns.colorB" />
+            <template
+              v-if="
+                patternsSub !== 'halftone' && patternsSub !== 'scanlines' && patternsSub !== 'paper'
+              "
+            >
+              <DemoColorRow v-model="patterns.colorA" label="Color A" />
+              <DemoColorRow v-model="patterns.colorB" label="Color B" />
             </template>
             <template v-if="patternsSub === 'checkerboard'">
-              <DemoSliderRow label="Scale" :min="2" :max="40" :step="1" v-model="patterns.scale" />
+              <DemoSliderRow v-model="patterns.scale" label="Scale" :min="2" :max="40" :step="1" />
             </template>
             <template v-else-if="patternsSub === 'grid'">
-              <DemoSliderRow label="Cell Size" :min="0.02" :max="0.3" :step="0.005" v-model="patterns.cellSize" />
-              <DemoSliderRow label="Line Width" :min="0.001" :max="0.02" :step="0.001" v-model="patterns.lineWidth" />
+              <DemoSliderRow
+                v-model="patterns.cellSize"
+                label="Cell Size"
+                :min="0.02"
+                :max="0.3"
+                :step="0.005"
+              />
+              <DemoSliderRow
+                v-model="patterns.lineWidth"
+                label="Line Width"
+                :min="0.001"
+                :max="0.02"
+                :step="0.001"
+              />
             </template>
             <template v-else-if="patternsSub === 'dots'">
-              <DemoSliderRow label="Cell Size" :min="0.02" :max="0.2" :step="0.005" v-model="patterns.cellSize" />
-              <DemoSliderRow label="Dot Radius" :min="0.005" :max="0.08" :step="0.001" v-model="patterns.dotRadius" />
+              <DemoSliderRow
+                v-model="patterns.cellSize"
+                label="Cell Size"
+                :min="0.02"
+                :max="0.2"
+                :step="0.005"
+              />
+              <DemoSliderRow
+                v-model="patterns.dotRadius"
+                label="Dot Radius"
+                :min="0.005"
+                :max="0.08"
+                :step="0.001"
+              />
             </template>
             <template v-else-if="patternsSub === 'stripes'">
-              <DemoSliderRow label="Frequency" :min="2" :max="40" :step="1" v-model="patterns.frequency" />
-              <DemoSliderRow label="Thickness" :min="0.1" :max="0.9" :step="0.05" v-model="patterns.thickness" />
-              <DemoSliderRow label="Angle" :min="0" :max="180" :step="5" v-model="patterns.angle" />
+              <DemoSliderRow
+                v-model="patterns.frequency"
+                label="Frequency"
+                :min="2"
+                :max="40"
+                :step="1"
+              />
+              <DemoSliderRow
+                v-model="patterns.thickness"
+                label="Thickness"
+                :min="0.1"
+                :max="0.9"
+                :step="0.05"
+              />
+              <DemoSliderRow v-model="patterns.angle" label="Angle" :min="0" :max="180" :step="5" />
             </template>
             <template v-else-if="patternsSub === 'halftone'">
-              <DemoSliderRow label="Scale" :min="10" :max="150" :step="5" v-model="patterns.halftoneScale" />
-              <DemoSliderRow label="Angle" :min="0" :max="90" :step="5" v-model="patterns.angle" />
+              <DemoSliderRow
+                v-model="patterns.halftoneScale"
+                label="Scale"
+                :min="10"
+                :max="150"
+                :step="5"
+              />
+              <DemoSliderRow v-model="patterns.angle" label="Angle" :min="0" :max="90" :step="5" />
             </template>
             <template v-else-if="patternsSub === 'scanlines'">
-              <DemoSliderRow label="Density" :min="50" :max="800" :step="10" v-model="patterns.scanDensity" />
-              <DemoSliderRow label="Intensity" :min="0" :max="1" :step="0.01" v-model="patterns.scanIntensity" />
+              <DemoSliderRow
+                v-model="patterns.scanDensity"
+                label="Density"
+                :min="50"
+                :max="800"
+                :step="10"
+              />
+              <DemoSliderRow
+                v-model="patterns.scanIntensity"
+                label="Intensity"
+                :min="0"
+                :max="1"
+                :step="0.01"
+              />
             </template>
             <template v-else-if="patternsSub === 'paper'">
-              <DemoSliderRow label="Scale" :min="4" :max="30" :step="1" v-model="patterns.paperScale" />
-              <DemoSliderRow label="Intensity" :min="0" :max="0.3" :step="0.005" v-model="patterns.paperIntensity" />
+              <DemoSliderRow
+                v-model="patterns.paperScale"
+                label="Scale"
+                :min="4"
+                :max="30"
+                :step="1"
+              />
+              <DemoSliderRow
+                v-model="patterns.paperIntensity"
+                label="Intensity"
+                :min="0"
+                :max="0.3"
+                :step="0.005"
+              />
             </template>
-            <DemoSliderRow label="Vignette" :min="0" :max="1" :step="0.01" v-model="patterns.vignetteIntensity" />
+            <DemoSliderRow
+              v-model="patterns.vignetteIntensity"
+              label="Vignette"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
           </div>
         </template>
 
@@ -1085,61 +1728,159 @@ const uvGrain = reactive({
           <p class="text-xs text-white/40 -mt-3">Post-processing and stylistic effects</p>
           <div class="flex flex-wrap gap-1">
             <button
-              v-for="s in ([
+              v-for="s in [
                 { id: 'chromatic' as const, label: 'Chromatic' },
                 { id: 'film_grain' as const, label: 'Film Grain' },
                 { id: 'grain' as const, label: 'Grain' },
                 { id: 'risograph' as const, label: 'Risograph' },
                 { id: 'halation' as const, label: 'Halation' },
                 { id: 'vhs' as const, label: 'VHS' },
-              ])"
+              ]"
               :key="s.id"
               class="px-2 py-0.5 rounded text-xs transition-all"
-              :class="effectsSub === s.id
-                ? 'bg-violet-500/30 text-violet-300'
-                : 'bg-white/5 text-white/40 hover:text-white/70'"
-              @click="effectsSub = s.id"
-            >{{ s.label }}</button>
+              :class="
+                effectsSub === s.id
+                  ? 'bg-violet-500/30 text-violet-300'
+                  : 'bg-white/5 text-white/40 hover:text-white/70'
+              "
+              @click="() => (effectsSub = s.id)"
+            >
+              {{ s.label }}
+            </button>
           </div>
           <div class="space-y-4">
             <p class="text-xs text-white/30 font-medium">Base Noise</p>
-            <DemoSliderRow label="Scale" :min="1" :max="10" :step="0.5" v-model="effects.noiseScale" />
-            <DemoSliderRow label="Speed" :min="0" :max="0.5" :step="0.01" v-model="effects.noiseSpeed" />
+            <DemoSliderRow
+              v-model="effects.noiseScale"
+              label="Scale"
+              :min="1"
+              :max="10"
+              :step="0.5"
+            />
+            <DemoSliderRow
+              v-model="effects.noiseSpeed"
+              label="Speed"
+              :min="0"
+              :max="0.5"
+              :step="0.01"
+            />
             <div class="h-px bg-white/5" />
             <p class="text-xs text-white/30 font-medium">Effect</p>
             <template v-if="effectsSub === 'chromatic'">
-              <DemoSliderRow label="Strength" :min="0" :max="0.03" :step="0.001" v-model="effects.caStrength" />
-              <DemoSliderRow label="Edge Falloff" :min="0.5" :max="4" :step="0.1" v-model="effects.caEdge" />
+              <DemoSliderRow
+                v-model="effects.caStrength"
+                label="Strength"
+                :min="0"
+                :max="0.03"
+                :step="0.001"
+              />
+              <DemoSliderRow
+                v-model="effects.caEdge"
+                label="Edge Falloff"
+                :min="0.5"
+                :max="4"
+                :step="0.1"
+              />
             </template>
             <template v-else-if="effectsSub === 'film_grain' || effectsSub === 'grain'">
-              <DemoSliderRow label="Intensity" :min="0" :max="0.3" :step="0.005" v-model="effects.grainIntensity" />
+              <DemoSliderRow
+                v-model="effects.grainIntensity"
+                label="Intensity"
+                :min="0"
+                :max="0.3"
+                :step="0.005"
+              />
             </template>
             <template v-else-if="effectsSub === 'risograph'">
-              <DemoSliderRow label="Scale" :min="0.2" :max="2" :step="0.05" v-model="effects.risoScale" />
-              <DemoSliderRow label="Strength" :min="0" :max="0.4" :step="0.01" v-model="effects.risoStrength" />
+              <DemoSliderRow
+                v-model="effects.risoScale"
+                label="Scale"
+                :min="0.2"
+                :max="2"
+                :step="0.05"
+              />
+              <DemoSliderRow
+                v-model="effects.risoStrength"
+                label="Strength"
+                :min="0"
+                :max="0.4"
+                :step="0.01"
+              />
             </template>
             <template v-else-if="effectsSub === 'halation'">
-              <DemoColorRow label="Glow Color" v-model="effects.halationColor" />
-              <DemoSliderRow label="Threshold" :min="0.3" :max="0.95" :step="0.01" v-model="effects.halationThreshold" />
-              <DemoSliderRow label="Intensity" :min="0" :max="1" :step="0.01" v-model="effects.halationIntensity" />
+              <DemoColorRow v-model="effects.halationColor" label="Glow Color" />
+              <DemoSliderRow
+                v-model="effects.halationThreshold"
+                label="Threshold"
+                :min="0.3"
+                :max="0.95"
+                :step="0.01"
+              />
+              <DemoSliderRow
+                v-model="effects.halationIntensity"
+                label="Intensity"
+                :min="0"
+                :max="1"
+                :step="0.01"
+              />
             </template>
             <template v-else-if="effectsSub === 'vhs'">
-              <DemoSliderRow label="Bleed" :min="0" :max="0.05" :step="0.001" v-model="effects.vhsBleed" />
-              <DemoSliderRow label="Tracking" :min="0" :max="1" :step="0.01" v-model="effects.vhsTracking" />
+              <DemoSliderRow
+                v-model="effects.vhsBleed"
+                label="Bleed"
+                :min="0"
+                :max="0.05"
+                :step="0.001"
+              />
+              <DemoSliderRow
+                v-model="effects.vhsTracking"
+                label="Tracking"
+                :min="0"
+                :max="1"
+                :step="0.01"
+              />
             </template>
           </div>
         </template>
 
         <!-- ── Math controls ── -->
         <template v-else-if="activeCategory === 'math'">
-          <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">Complex Plane Field</p>
-          <p class="text-xs text-white/40 -mt-3">Two-pole complex function → cosine palette → ACES</p>
+          <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
+            Complex Plane Field
+          </p>
+          <p class="text-xs text-white/40 -mt-3">
+            Two-pole complex function → cosine palette → ACES
+          </p>
           <div class="space-y-4">
-            <DemoSliderRow label="Pole Angle" :min="0" :max="6.28" :step="0.05" v-model="math.poleAngle" />
-            <DemoSliderRow label="Pole Distance" :min="0.1" :max="1" :step="0.01" v-model="math.poleDistance" />
-            <DemoSliderRow label="Imaginary Wt" :min="0" :max="2" :step="0.05" v-model="math.imaginaryWeight" />
-            <DemoSliderRow label="Radial Wt" :min="0" :max="2" :step="0.05" v-model="math.radialWeight" />
-            <DemoSliderRow label="Speed" :min="0" :max="0.3" :step="0.005" v-model="math.speed" />
+            <DemoSliderRow
+              v-model="math.poleAngle"
+              label="Pole Angle"
+              :min="0"
+              :max="6.28"
+              :step="0.05"
+            />
+            <DemoSliderRow
+              v-model="math.poleDistance"
+              label="Pole Distance"
+              :min="0.1"
+              :max="1"
+              :step="0.01"
+            />
+            <DemoSliderRow
+              v-model="math.imaginaryWeight"
+              label="Imaginary Wt"
+              :min="0"
+              :max="2"
+              :step="0.05"
+            />
+            <DemoSliderRow
+              v-model="math.radialWeight"
+              label="Radial Wt"
+              :min="0"
+              :max="2"
+              :step="0.05"
+            />
+            <DemoSliderRow v-model="math.speed" label="Speed" :min="0" :max="0.3" :step="0.005" />
           </div>
         </template>
 
@@ -1149,58 +1890,149 @@ const uvGrain = reactive({
           <p class="text-xs text-white/40 -mt-3">UV distortion transforms + grain overlays</p>
           <div class="flex flex-wrap gap-1">
             <button
-              v-for="s in (['rotate','pixelate','bulge','tile','grain','risograph','scanlines'] as const)"
+              v-for="s in [
+                'rotate',
+                'pixelate',
+                'bulge',
+                'tile',
+                'grain',
+                'risograph',
+                'scanlines',
+              ] as const"
               :key="s"
               class="px-2 py-0.5 rounded text-xs transition-all"
-              :class="uvGrainSub === s
-                ? 'bg-violet-500/30 text-violet-300'
-                : 'bg-white/5 text-white/40 hover:text-white/70'"
-              @click="uvGrainSub = s"
-            >{{ s }}</button>
+              :class="
+                uvGrainSub === s
+                  ? 'bg-violet-500/30 text-violet-300'
+                  : 'bg-white/5 text-white/40 hover:text-white/70'
+              "
+              @click="() => (uvGrainSub = s)"
+            >
+              {{ s }}
+            </button>
           </div>
           <div class="space-y-4">
             <template v-if="uvGrainSub === 'rotate'">
-              <DemoSliderRow label="Angle" :min="0" :max="360" :step="1" v-model="uvGrain.rotateAngle" />
+              <DemoSliderRow
+                v-model="uvGrain.rotateAngle"
+                label="Angle"
+                :min="0"
+                :max="360"
+                :step="1"
+              />
             </template>
             <template v-else-if="uvGrainSub === 'pixelate'">
-              <DemoSliderRow label="Grid Size" :min="4" :max="128" :step="2" v-model="uvGrain.pixelateGrid" />
+              <DemoSliderRow
+                v-model="uvGrain.pixelateGrid"
+                label="Grid Size"
+                :min="4"
+                :max="128"
+                :step="2"
+              />
             </template>
             <template v-else-if="uvGrainSub === 'bulge'">
-              <DemoSliderRow label="Strength" :min="-1" :max="1" :step="0.05" v-model="uvGrain.bulgeStrength" />
-              <DemoSliderRow label="Radius" :min="0.1" :max="1" :step="0.05" v-model="uvGrain.bulgeRadius" />
+              <DemoSliderRow
+                v-model="uvGrain.bulgeStrength"
+                label="Strength"
+                :min="-1"
+                :max="1"
+                :step="0.05"
+              />
+              <DemoSliderRow
+                v-model="uvGrain.bulgeRadius"
+                label="Radius"
+                :min="0.1"
+                :max="1"
+                :step="0.05"
+              />
             </template>
             <template v-else-if="uvGrainSub === 'tile'">
-              <DemoSliderRow label="Tile X" :min="1" :max="8" :step="1" v-model="uvGrain.tileX" />
-              <DemoSliderRow label="Tile Y" :min="1" :max="8" :step="1" v-model="uvGrain.tileY" />
+              <DemoSliderRow v-model="uvGrain.tileX" label="Tile X" :min="1" :max="8" :step="1" />
+              <DemoSliderRow v-model="uvGrain.tileY" label="Tile Y" :min="1" :max="8" :step="1" />
             </template>
             <template
-              v-if="uvGrainSub === 'rotate' || uvGrainSub === 'pixelate'
-                || uvGrainSub === 'bulge' || uvGrainSub === 'tile'"
+              v-if="
+                uvGrainSub === 'rotate' ||
+                uvGrainSub === 'pixelate' ||
+                uvGrainSub === 'bulge' ||
+                uvGrainSub === 'tile'
+              "
             >
               <div class="h-px bg-white/5" />
               <p class="text-xs text-white/30 font-medium">Noise Generator</p>
-              <DemoSliderRow label="Scale" :min="1" :max="10" :step="0.5" v-model="uvGrain.noiseScale" />
-              <DemoSliderRow label="Speed" :min="0" :max="0.5" :step="0.01" v-model="uvGrain.noiseSpeed" />
+              <DemoSliderRow
+                v-model="uvGrain.noiseScale"
+                label="Scale"
+                :min="1"
+                :max="10"
+                :step="0.5"
+              />
+              <DemoSliderRow
+                v-model="uvGrain.noiseSpeed"
+                label="Speed"
+                :min="0"
+                :max="0.5"
+                :step="0.01"
+              />
             </template>
-            <template v-if="uvGrainSub === 'grain' || uvGrainSub === 'risograph' || uvGrainSub === 'scanlines'">
-              <DemoColorRow label="Grad A" v-model="uvGrain.gradColorA" />
-              <DemoColorRow label="Grad B" v-model="uvGrain.gradColorB" />
+            <template
+              v-if="
+                uvGrainSub === 'grain' || uvGrainSub === 'risograph' || uvGrainSub === 'scanlines'
+              "
+            >
+              <DemoColorRow v-model="uvGrain.gradColorA" label="Grad A" />
+              <DemoColorRow v-model="uvGrain.gradColorB" label="Grad B" />
             </template>
             <template v-if="uvGrainSub === 'grain'">
-              <DemoSliderRow label="Intensity" :min="0" :max="0.3" :step="0.005" v-model="uvGrain.grainIntensity" />
+              <DemoSliderRow
+                v-model="uvGrain.grainIntensity"
+                label="Intensity"
+                :min="0"
+                :max="0.3"
+                :step="0.005"
+              />
             </template>
             <template v-else-if="uvGrainSub === 'risograph'">
-              <DemoSliderRow label="Scale" :min="0.2" :max="2" :step="0.05" v-model="uvGrain.risoScale" />
-              <DemoSliderRow label="Strength" :min="0" :max="0.4" :step="0.01" v-model="uvGrain.risoStrength" />
+              <DemoSliderRow
+                v-model="uvGrain.risoScale"
+                label="Scale"
+                :min="0.2"
+                :max="2"
+                :step="0.05"
+              />
+              <DemoSliderRow
+                v-model="uvGrain.risoStrength"
+                label="Strength"
+                :min="0"
+                :max="0.4"
+                :step="0.01"
+              />
             </template>
             <template v-else-if="uvGrainSub === 'scanlines'">
-              <DemoSliderRow label="Density" :min="50" :max="800" :step="10" v-model="uvGrain.scanDensity" />
-              <DemoSliderRow label="Intensity" :min="0" :max="1" :step="0.01" v-model="uvGrain.scanIntensity" />
+              <DemoSliderRow
+                v-model="uvGrain.scanDensity"
+                label="Density"
+                :min="50"
+                :max="800"
+                :step="10"
+              />
+              <DemoSliderRow
+                v-model="uvGrain.scanIntensity"
+                label="Intensity"
+                :min="0"
+                :max="1"
+                :step="0.01"
+              />
             </template>
-            <DemoSliderRow label="Vignette" :min="0" :max="1" :step="0.01" v-model="uvGrain.vignetteIntensity" />
+            <DemoSliderRow
+              v-model="uvGrain.vignetteIntensity"
+              label="Vignette"
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
           </div>
         </template>
-
       </div>
     </div>
   </div>

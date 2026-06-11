@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { BrandColour } from '~/composables/useBrandState'
+  import type { BrandColour } from '~/composables/useBrandState'
 
-const { state, addColour, removeColour, updateColour } = useBrandState()
+  const { state, addColour, removeColour, updateColour } = useBrandState()
 
-const ROLES: BrandColour['role'][] = ['primary', 'secondary', 'accent', 'neutral', 'custom']
+  const ROLES: BrandColour['role'][] = ['primary', 'secondary', 'accent', 'neutral', 'custom']
 
-function onHexInput(id: string, event: Event) {
-  updateColour(id, { hex: (event.target as HTMLInputElement).value })
-}
+  function onHexInput(id: string, event: Event) {
+    updateColour(id, { hex: (event.target as HTMLInputElement).value })
+  }
 </script>
 
 <template>
@@ -83,7 +83,9 @@ function onHexInput(id: string, event: Event) {
             />
             <USelect
               :model-value="colour.role"
-              :items="ROLES.map((r) => ({ label: r.charAt(0).toUpperCase() + r.slice(1), value: r }))"
+              :items="
+                ROLES.map((r) => ({ label: r.charAt(0).toUpperCase() + r.slice(1), value: r }))
+              "
               class="w-32 shrink-0"
               @update:model-value="updateColour(colour.id, { role: $event as BrandColour['role'] })"
             />
@@ -101,9 +103,7 @@ function onHexInput(id: string, event: Event) {
       </div>
     </div>
 
-    <UButton icon="i-lucide-plus" variant="outline" @click="addColour()">
-      Add colour
-    </UButton>
+    <UButton icon="i-lucide-plus" variant="outline" @click="addColour()"> Add colour </UButton>
 
     <!-- Empty state -->
     <div

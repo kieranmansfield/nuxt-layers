@@ -1,10 +1,8 @@
 <script setup lang="ts">
   definePageMeta({ layout: false })
   const { setPageAccent } = useAccentColor()
-  setPageAccent('pink')
+  setPageAccent('rose')
   onUnmounted(() => setPageAccent(null))
-
-  const { back } = useBackNavigation('/ui')
 
   const gradientPresets = ['brand', 'subtle', 'hero']
   const activeGradient = ref('brand')
@@ -55,45 +53,36 @@
   ]
 </script>
 
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Visual Layer Demo"
     description="Gradients, tints, accent blobs, progress indicators, and responsive media"
   >
-    <div class="visual-page">
-      <!-- Hero -->
-      <section
-        class="min-h-[70vh] flex items-center justify-center relative overflow-hidden bg-gray-950"
+    <div class="bg-gray-950 min-h-screen">
+      <DemoPageHero
+        name="VISUAL LAYER"
+        description="The decorative building blocks behind the UI layer — gradients, tints, accent blobs, progress indicators, responsive pictures, and the modal primitive."
       >
-        <AccentScene preset="hero" class="absolute inset-0 opacity-60" />
-        <div class="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-gray-950" />
-        <div class="text-center z-10 px-4">
-          <h1 class="text-5xl sm:text-7xl md:text-8xl font-black text-white mb-8">
-            <GradientText preset="brand" tag="span">VISUAL</GradientText> LAYER
-          </h1>
-          <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
-            The decorative building blocks behind the UI layer — gradients, tints, accent blobs,
-            progress indicators, responsive pictures, and the modal primitive.
-          </p>
-          <div class="flex flex-wrap gap-4 justify-center">
-            <UButton size="lg" @click="$router.push('#gradients')">Gradients & Tints</UButton>
-            <UButton size="lg" variant="outline" @click="$router.push('#progress')"
-              >Progress</UButton
-            >
-            <UButton size="lg" variant="ghost" to="/ui">
-              <UIcon name="i-lucide-palette" class="mr-2" />
-              UI Layer
-            </UButton>
-            <UButton size="lg" variant="ghost" @click="back()">
-              <UIcon name="i-lucide-arrow-left" class="mr-2" />
-              Back
-            </UButton>
-          </div>
+        <template #background>
+          <AccentScene preset="hero" class="absolute inset-0 opacity-60" />
+        </template>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <UButton size="lg" @click="$router.push('#gradients')">Gradients & Tints</UButton>
+          <UButton size="lg" variant="outline" @click="$router.push('#progress')">
+            Progress
+          </UButton>
+          <UButton size="lg" variant="ghost" to="/ui">
+            <UIcon name="i-lucide-palette" class="mr-2" />
+            UI Layer
+          </UButton>
         </div>
-      </section>
+      </DemoPageHero>
 
       <!-- Gradients & Tints -->
-      <section id="gradients" class="py-24 bg-gray-900">
+      <section id="gradients" class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Gradients & Tints</h2>
@@ -112,7 +101,7 @@
                   :key="preset"
                   size="sm"
                   :variant="activeGradient === preset ? 'solid' : 'outline'"
-                  @click="activeGradient = preset"
+                  @click="() => (activeGradient = preset)"
                 >
                   {{ preset }}
                 </UButton>
@@ -135,7 +124,7 @@
                   :key="level"
                   size="sm"
                   :variant="activeTintLevel === level ? 'solid' : 'outline'"
-                  @click="activeTintLevel = level"
+                  @click="() => (activeTintLevel = level)"
                 >
                   {{ level }}
                 </UButton>
@@ -166,7 +155,7 @@
               — soft blurred shapes positioned by percentage coordinates
             </p>
           </div>
-          <div class="relative h-72 rounded-3xl overflow-hidden bg-gray-900 max-w-4xl mx-auto">
+          <div class="relative h-72 rounded-3xl overflow-hidden bg-gray-950 max-w-4xl mx-auto">
             <AccentBlob :x="20" :y="30" size="14rem" color="primary" :opacity="50" blur="3xl" />
             <AccentBlob :x="75" :y="60" size="10rem" color="secondary" :opacity="40" blur="2xl" />
             <AccentBlob :x="50" :y="85" size="8rem" color="info" :opacity="35" blur="xl" />
@@ -180,7 +169,7 @@
       </section>
 
       <!-- Progress -->
-      <section id="progress" class="py-24 bg-gray-900">
+      <section id="progress" class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Progress Indicators</h2>
@@ -233,29 +222,14 @@
         </UContainer>
       </section>
 
-      <!-- Footer Nav -->
-      <section class="py-16 bg-gray-900">
-        <UContainer>
-          <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
-            <div>
-              <h2 class="text-2xl font-bold text-white mb-2">Visual Layer</h2>
-              <p class="text-gray-400">Gradients, tints, blobs, progress, and media</p>
-            </div>
-            <div class="flex flex-wrap gap-4">
-              <UButton variant="ghost" to="/ui">
-                <UIcon name="i-lucide-palette" class="mr-2" />
-                UI Layer
-              </UButton>
-              <UButton variant="ghost" to="/overlays">
-                <UIcon name="i-lucide-layers" class="mr-2" />
-                Overlays (Modal)
-              </UButton>
-              <UButton variant="outline" @click="back()">Back</UButton>
-              <UButton to="/">Home</UButton>
-            </div>
-          </div>
-        </UContainer>
-      </section>
+      <DemoPageFooter
+        name="Visual Layer"
+        description="Gradients, tints, blobs, progress, and media"
+        :links="[
+          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Overlays', to: '/overlays', icon: 'i-lucide-layers' },
+        ]"
+      />
     </div>
   </LayoutPage>
 </template>
