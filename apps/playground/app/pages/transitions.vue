@@ -1,10 +1,13 @@
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <script setup lang="ts">
   definePageMeta({ layout: false })
   const { setPageAccent } = useAccentColor()
   setPageAccent('rose')
   onUnmounted(() => setPageAccent(null))
-
-  const { back } = useBackNavigation('/motion')
 
   const variants = [
     { name: 'default', label: 'Default', description: 'Fades and moves all properties together' },
@@ -32,43 +35,26 @@
     title="Transitions Layer Demo"
     description="CSS transition classes + the MotionTransition wrapper component"
   >
-    <div class="transitions-page">
-      <!-- Hero -->
-      <section
-        class="min-h-[70vh] flex items-center justify-center relative overflow-hidden bg-gray-950"
+    <div class="bg-gray-950 min-h-screen">
+      <DemoPageHero
+        name="TRANSITIONS"
+        description="Lightweight CSS transition classes and the MotionTransition wrapper for element-level enter/leave effects."
       >
-        <div
-          class="absolute inset-0 bg-linear-to-b from-primary/10 via-transparent to-transparent"
-        />
-        <div class="text-center z-10 px-4">
-          <h1 class="text-5xl sm:text-7xl md:text-8xl font-black text-white mb-8">
-            TRANSI<span class="text-primary">TIONS</span>
-          </h1>
-          <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            Lightweight CSS transition classes and the
-            <code class="text-primary">MotionTransition</code> wrapper for element-level enter/leave
-            effects.
-          </p>
-          <div class="flex flex-wrap gap-4 justify-center">
-            <UButton size="lg" @click="$router.push('#demo')">View Demo</UButton>
-            <UButton size="lg" variant="outline" @click="back()">
-              <UIcon name="i-lucide-arrow-left" class="mr-2" />
-              Back
-            </UButton>
-            <UButton size="lg" variant="ghost" to="/page-transitions">
-              <UIcon name="i-lucide-square-stack" class="mr-2" />
-              Page Transitions
-            </UButton>
-            <UButton size="lg" variant="ghost" to="/motion">
-              <UIcon name="i-lucide-sparkles" class="mr-2" />
-              Motion Layer
-            </UButton>
-          </div>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <UButton size="lg" @click="$router.push('#demo')">View Demo</UButton>
+          <UButton size="lg" variant="ghost" to="/page-transitions">
+            <UIcon name="i-lucide-square-stack" class="mr-2" />
+            Page Transitions
+          </UButton>
+          <UButton size="lg" variant="ghost" to="/motion">
+            <UIcon name="i-lucide-sparkles" class="mr-2" />
+            Motion Layer
+          </UButton>
         </div>
-      </section>
+      </DemoPageHero>
 
       <!-- Demo -->
-      <section id="demo" class="py-24 bg-gray-900">
+      <section id="demo" class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">MotionTransition</h2>
@@ -89,7 +75,7 @@
                     ? 'border-primary bg-primary/10'
                     : 'border-gray-800 bg-gray-800/50 hover:border-gray-700'
                 "
-                @click="activeVariant = variant.name"
+                @click="() => (activeVariant = variant.name)"
               >
                 <div class="font-semibold text-white">{{ variant.label }}</div>
                 <p class="text-sm text-gray-400">{{ variant.description }}</p>
@@ -115,13 +101,12 @@
             </div>
 
             <!-- Preview -->
-            <div
-              class="bg-gray-950 rounded-3xl p-12 flex items-center justify-center min-h-[360px]"
-            >
-              <MotionTransition :key="replayKey" :name="activeVariant" :duration="duration">
+            <div class="bg-gray-950 rounded-3xl p-12 flex items-center justify-center min-h-90">
+              <MotionTransition :key="replayKey" :name="activeVariant" :duration>
                 <div
                   class="w-64 h-64 rounded-3xl bg-linear-to-br from-primary to-purple-600 flex items-center justify-center shadow-2xl shadow-primary/30"
                 >
+                  <!-- eslint-disable vue/max-template-depth -->
                   <div class="text-center text-white p-6">
                     <UIcon name="i-lucide-square-asterisk" class="text-5xl mb-3" />
                     <p class="text-lg font-bold">{{ activeVariant }}</p>
@@ -160,29 +145,14 @@
         </UContainer>
       </section>
 
-      <!-- Footer Nav -->
-      <section class="py-16 bg-gray-900">
-        <UContainer>
-          <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
-            <div>
-              <h2 class="text-2xl font-bold text-white mb-2">Transitions Layer</h2>
-              <p class="text-gray-400">CSS transition classes + the MotionTransition component</p>
-            </div>
-            <div class="flex flex-wrap gap-4">
-              <UButton variant="ghost" to="/page-transitions">
-                <UIcon name="i-lucide-square-stack" class="mr-2" />
-                Page Transitions
-              </UButton>
-              <UButton variant="ghost" to="/motion">
-                <UIcon name="i-lucide-sparkles" class="mr-2" />
-                Motion Layer
-              </UButton>
-              <UButton variant="outline" @click="back()">Back</UButton>
-              <UButton to="/">Home</UButton>
-            </div>
-          </div>
-        </UContainer>
-      </section>
+      <DemoPageFooter
+        name="Transitions Layer"
+        description="CSS transition classes + the MotionTransition component"
+        :links="[
+          { label: 'Page Transitions', to: '/page-transitions', icon: 'i-lucide-square-stack' },
+          { label: 'Motion Layer', to: '/motion', icon: 'i-lucide-sparkles' },
+        ]"
+      />
     </div>
   </LayoutPage>
 </template>

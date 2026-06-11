@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
   const { to, icon, title, description, target } = defineProps<{
     to: string
@@ -9,7 +10,7 @@
 </script>
 
 <template>
-  <UCard :to="to" :target="target" class="hover:ring-primary transition-colors">
+  <UCard :to :target class="hover:ring-primary transition-colors">
     <div class="flex items-center gap-3">
       <UIcon :name="icon" class="text-primary text-xl shrink-0" />
       <div>

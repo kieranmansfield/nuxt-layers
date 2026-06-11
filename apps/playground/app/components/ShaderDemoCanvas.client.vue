@@ -1,41 +1,53 @@
+<!-- eslint-disable vue/no-boolean-default -->
+<!-- eslint-disable vue/no-unused-properties -->
+<!-- eslint-disable vue/define-props-destructuring -->
+<!-- eslint-disable vue/max-lines-per-block -->
 <script setup lang="ts">
-import { OrbitControls } from '@tresjs/cientos'
-import { TresCanvas } from '@tresjs/core'
-import { Clock, Color, DoubleSide, ShaderMaterial } from 'three'
+  import { OrbitControls } from '@tresjs/cientos'
+  import { TresCanvas } from '@tresjs/core'
+  import { Clock, Color, DoubleSide, ShaderMaterial } from 'three'
 
-const props = withDefaults(
-  defineProps<{
-    activeDemo: 'noise' | 'gradient' | 'fresnel' | 'mesh' | 'stripe' | 'aurora' | 'radial' | 'image'
-    /** Enable mouse interaction */
-    mouseInteraction?: boolean
-    /** Mouse X position (0-1) */
-    mouseX?: number
-    /** Mouse Y position (0-1) */
-    mouseY?: number
-    /** Disable zoom controls */
-    disableZoom?: boolean
-    /** Mouse interaction strength (0-2) */
-    mouseStrength?: number
-    /** Animation speed multiplier */
-    speed?: number
-    /** Noise/pattern scale */
-    scale?: number
-  }>(),
-  {
-    mouseInteraction: true,
-    mouseX: 0.5,
-    mouseY: 0.5,
-    disableZoom: false,
-    mouseStrength: 0.5,
-    speed: 1.0,
-    scale: 1.0,
-  }
-)
+  const props = withDefaults(
+    defineProps<{
+      activeDemo:
+        | 'noise'
+        | 'gradient'
+        | 'fresnel'
+        | 'mesh'
+        | 'stripe'
+        | 'aurora'
+        | 'radial'
+        | 'image'
+      /** Enable mouse interaction */
+      mouseInteraction?: boolean
+      /** Mouse X position (0-1) */
+      mouseX?: number
+      /** Mouse Y position (0-1) */
+      mouseY?: number
+      /** Disable zoom controls */
+      disableZoom?: boolean
+      /** Mouse interaction strength (0-2) */
+      mouseStrength?: number
+      /** Animation speed multiplier */
+      speed?: number
+      /** Noise/pattern scale */
+      scale?: number
+    }>(),
+    {
+      mouseInteraction: true,
+      mouseX: 0.5,
+      mouseY: 0.5,
+      disableZoom: false,
+      mouseStrength: 0.5,
+      speed: 1.0,
+      scale: 1.0,
+    }
+  )
 
-// ============================================
-// STRIPE GRADIENT (animated flowing gradient)
-// ============================================
-const stripeVertexShader = `
+  // ============================================
+  // STRIPE GRADIENT (animated flowing gradient)
+  // ============================================
+  const stripeVertexShader = `
 varying vec2 vUv;
 void main() {
   vUv = uv;
@@ -43,7 +55,7 @@ void main() {
 }
 `
 
-const stripeFragmentShader = `
+  const stripeFragmentShader = `
 uniform float uTime;
 uniform vec3 uColor1;
 uniform vec3 uColor2;
@@ -110,10 +122,10 @@ void main() {
 }
 `
 
-// ============================================
-// MESH GRADIENT (organic blob shapes)
-// ============================================
-const meshVertexShader = `
+  // ============================================
+  // MESH GRADIENT (organic blob shapes)
+  // ============================================
+  const meshVertexShader = `
 varying vec2 vUv;
 void main() {
   vUv = uv;
@@ -121,7 +133,7 @@ void main() {
 }
 `
 
-const meshFragmentShader = `
+  const meshFragmentShader = `
 uniform float uTime;
 uniform vec3 uColor1;
 uniform vec3 uColor2;
@@ -166,10 +178,10 @@ void main() {
 }
 `
 
-// ============================================
-// AURORA GRADIENT (northern lights)
-// ============================================
-const auroraVertexShader = `
+  // ============================================
+  // AURORA GRADIENT (northern lights)
+  // ============================================
+  const auroraVertexShader = `
 varying vec2 vUv;
 void main() {
   vUv = uv;
@@ -177,7 +189,7 @@ void main() {
 }
 `
 
-const auroraFragmentShader = `
+  const auroraFragmentShader = `
 uniform float uTime;
 uniform vec3 uColor1;
 uniform vec3 uColor2;
@@ -245,10 +257,10 @@ void main() {
 }
 `
 
-// ============================================
-// RADIAL GRADIENT
-// ============================================
-const radialVertexShader = `
+  // ============================================
+  // RADIAL GRADIENT
+  // ============================================
+  const radialVertexShader = `
 varying vec2 vUv;
 void main() {
   vUv = uv;
@@ -256,7 +268,7 @@ void main() {
 }
 `
 
-const radialFragmentShader = `
+  const radialFragmentShader = `
 uniform float uTime;
 uniform vec3 uColor1;
 uniform vec3 uColor2;
@@ -294,10 +306,10 @@ void main() {
 }
 `
 
-// ============================================
-// NOISE GRADIENT (FBM)
-// ============================================
-const noiseVertexShader = `
+  // ============================================
+  // NOISE GRADIENT (FBM)
+  // ============================================
+  const noiseVertexShader = `
 varying vec2 vUv;
 void main() {
   vUv = uv;
@@ -305,7 +317,7 @@ void main() {
 }
 `
 
-const noiseFragmentShader = `
+  const noiseFragmentShader = `
 uniform float uTime;
 uniform vec3 uBaseColor;
 uniform vec3 uPeakColor;
@@ -361,10 +373,10 @@ void main() {
 }
 `
 
-// ============================================
-// LINEAR GRADIENT
-// ============================================
-const gradientVertexShader = `
+  // ============================================
+  // LINEAR GRADIENT
+  // ============================================
+  const gradientVertexShader = `
 varying vec2 vUv;
 void main() {
   vUv = uv;
@@ -372,7 +384,7 @@ void main() {
 }
 `
 
-const gradientFragmentShader = `
+  const gradientFragmentShader = `
 uniform float uTime;
 uniform vec3 uColor1;
 uniform vec3 uColor2;
@@ -395,10 +407,10 @@ void main() {
 }
 `
 
-// ============================================
-// FRESNEL (rim lighting)
-// ============================================
-const fresnelVertexShader = `
+  // ============================================
+  // FRESNEL (rim lighting)
+  // ============================================
+  const fresnelVertexShader = `
 varying vec3 vNormal;
 varying vec3 vViewPosition;
 void main() {
@@ -409,7 +421,7 @@ void main() {
 }
 `
 
-const fresnelFragmentShader = `
+  const fresnelFragmentShader = `
 uniform vec3 uBaseColor;
 uniform vec3 uFresnelColor;
 uniform float uPower;
@@ -424,166 +436,166 @@ void main() {
 }
 `
 
-// ============================================
-// CREATE MATERIALS
-// ============================================
+  // ============================================
+  // CREATE MATERIALS
+  // ============================================
 
-// Stripe gradient (like stripe.com)
-const stripeMaterial = new ShaderMaterial({
-  vertexShader: stripeVertexShader,
-  fragmentShader: stripeFragmentShader,
-  uniforms: {
-    uTime: { value: 0 },
-    uColor1: { value: new Color('#0a2540') },
-    uColor2: { value: new Color('#635bff') },
-    uColor3: { value: new Color('#00d4ff') },
-    uColor4: { value: new Color('#7a73ff') },
-    uColor5: { value: new Color('#80e9ff') },
-    uMouseX: { value: 0.5 },
-    uMouseY: { value: 0.5 },
-    uMouseStrength: { value: 0.3 },
-  },
-  side: DoubleSide,
-})
-
-// Mesh gradient (organic blobs)
-const meshMaterial = new ShaderMaterial({
-  vertexShader: meshVertexShader,
-  fragmentShader: meshFragmentShader,
-  uniforms: {
-    uTime: { value: 0 },
-    uColor1: { value: new Color('#1a1a2e') },
-    uColor2: { value: new Color('#e94560') },
-    uColor3: { value: new Color('#0f3460') },
-    uColor4: { value: new Color('#16213e') },
-    uMouseX: { value: 0.5 },
-    uMouseY: { value: 0.5 },
-    uMouseStrength: { value: 0.5 },
-  },
-  side: DoubleSide,
-})
-
-// Aurora gradient
-const auroraMaterial = new ShaderMaterial({
-  vertexShader: auroraVertexShader,
-  fragmentShader: auroraFragmentShader,
-  uniforms: {
-    uTime: { value: 0 },
-    uColor1: { value: new Color('#00ff87') },
-    uColor2: { value: new Color('#60efff') },
-    uColor3: { value: new Color('#ff00ea') },
-    uMouseX: { value: 0.5 },
-    uMouseY: { value: 0.5 },
-    uMouseStrength: { value: 0.5 },
-  },
-  side: DoubleSide,
-})
-
-// Radial gradient
-const radialMaterial = new ShaderMaterial({
-  vertexShader: radialVertexShader,
-  fragmentShader: radialFragmentShader,
-  uniforms: {
-    uTime: { value: 0 },
-    uColor1: { value: new Color('#ff6b6b') },
-    uColor2: { value: new Color('#4ecdc4') },
-    uColor3: { value: new Color('#1a1a2e') },
-    uMouseX: { value: 0.5 },
-    uMouseY: { value: 0.5 },
-    uMouseStrength: { value: 0.5 },
-  },
-  side: DoubleSide,
-})
-
-// Noise material
-const noiseMaterial = new ShaderMaterial({
-  vertexShader: noiseVertexShader,
-  fragmentShader: noiseFragmentShader,
-  uniforms: {
-    uTime: { value: 0 },
-    uBaseColor: { value: new Color('#0f172a') },
-    uPeakColor: { value: new Color('#8b5cf6') },
-    uMouseX: { value: 0.5 },
-    uMouseY: { value: 0.5 },
-    uMouseStrength: { value: 1.0 },
-  },
-  side: DoubleSide,
-})
-
-// Linear gradient material
-const gradientMaterial = new ShaderMaterial({
-  vertexShader: gradientVertexShader,
-  fragmentShader: gradientFragmentShader,
-  uniforms: {
-    uTime: { value: 0 },
-    uColor1: { value: new Color('#3b82f6') },
-    uColor2: { value: new Color('#8b5cf6') },
-    uColor3: { value: new Color('#ec4899') },
-    uMouseX: { value: 0.5 },
-    uMouseY: { value: 0.5 },
-    uMouseStrength: { value: 0.3 },
-  },
-  side: DoubleSide,
-})
-
-// Fresnel material
-const fresnelMaterial = new ShaderMaterial({
-  vertexShader: fresnelVertexShader,
-  fragmentShader: fresnelFragmentShader,
-  uniforms: {
-    uBaseColor: { value: new Color('#1e1b4b') },
-    uFresnelColor: { value: new Color('#22d3ee') },
-    uPower: { value: 3.0 },
-  },
-  side: DoubleSide,
-})
-
-// All materials with mouse uniforms
-const materialsWithMouse = [
-  stripeMaterial,
-  meshMaterial,
-  auroraMaterial,
-  radialMaterial,
-  noiseMaterial,
-  gradientMaterial,
-]
-
-// ============================================
-// ANIMATION
-// ============================================
-const clock = new Clock()
-
-let animationId: number
-const animate = () => {
-  const elapsed = clock.getElapsedTime() * props.speed
-
-  // Update all time-based uniforms
-  if (stripeMaterial.uniforms.uTime) stripeMaterial.uniforms.uTime.value = elapsed
-  if (meshMaterial.uniforms.uTime) meshMaterial.uniforms.uTime.value = elapsed
-  if (auroraMaterial.uniforms.uTime) auroraMaterial.uniforms.uTime.value = elapsed
-  if (radialMaterial.uniforms.uTime) radialMaterial.uniforms.uTime.value = elapsed
-  if (noiseMaterial.uniforms.uTime) noiseMaterial.uniforms.uTime.value = elapsed
-  if (gradientMaterial.uniforms.uTime) gradientMaterial.uniforms.uTime.value = elapsed
-
-  // Update mouse uniforms
-  materialsWithMouse.forEach((mat) => {
-    if (mat.uniforms.uMouseX) mat.uniforms.uMouseX.value = props.mouseX
-    if (mat.uniforms.uMouseY) mat.uniforms.uMouseY.value = props.mouseY
-    if (mat.uniforms.uMouseStrength) {
-      mat.uniforms.uMouseStrength.value = props.mouseInteraction ? props.mouseStrength : 0
-    }
+  // Stripe gradient (like stripe.com)
+  const stripeMaterial = new ShaderMaterial({
+    vertexShader: stripeVertexShader,
+    fragmentShader: stripeFragmentShader,
+    uniforms: {
+      uTime: { value: 0 },
+      uColor1: { value: new Color('#0a2540') },
+      uColor2: { value: new Color('#635bff') },
+      uColor3: { value: new Color('#00d4ff') },
+      uColor4: { value: new Color('#7a73ff') },
+      uColor5: { value: new Color('#80e9ff') },
+      uMouseX: { value: 0.5 },
+      uMouseY: { value: 0.5 },
+      uMouseStrength: { value: 0.3 },
+    },
+    side: DoubleSide,
   })
 
-  animationId = requestAnimationFrame(animate)
-}
+  // Mesh gradient (organic blobs)
+  const meshMaterial = new ShaderMaterial({
+    vertexShader: meshVertexShader,
+    fragmentShader: meshFragmentShader,
+    uniforms: {
+      uTime: { value: 0 },
+      uColor1: { value: new Color('#1a1a2e') },
+      uColor2: { value: new Color('#e94560') },
+      uColor3: { value: new Color('#0f3460') },
+      uColor4: { value: new Color('#16213e') },
+      uMouseX: { value: 0.5 },
+      uMouseY: { value: 0.5 },
+      uMouseStrength: { value: 0.5 },
+    },
+    side: DoubleSide,
+  })
 
-onMounted(() => {
-  animate()
-})
+  // Aurora gradient
+  const auroraMaterial = new ShaderMaterial({
+    vertexShader: auroraVertexShader,
+    fragmentShader: auroraFragmentShader,
+    uniforms: {
+      uTime: { value: 0 },
+      uColor1: { value: new Color('#00ff87') },
+      uColor2: { value: new Color('#60efff') },
+      uColor3: { value: new Color('#ff00ea') },
+      uMouseX: { value: 0.5 },
+      uMouseY: { value: 0.5 },
+      uMouseStrength: { value: 0.5 },
+    },
+    side: DoubleSide,
+  })
 
-onUnmounted(() => {
-  cancelAnimationFrame(animationId)
-})
+  // Radial gradient
+  const radialMaterial = new ShaderMaterial({
+    vertexShader: radialVertexShader,
+    fragmentShader: radialFragmentShader,
+    uniforms: {
+      uTime: { value: 0 },
+      uColor1: { value: new Color('#ff6b6b') },
+      uColor2: { value: new Color('#4ecdc4') },
+      uColor3: { value: new Color('#1a1a2e') },
+      uMouseX: { value: 0.5 },
+      uMouseY: { value: 0.5 },
+      uMouseStrength: { value: 0.5 },
+    },
+    side: DoubleSide,
+  })
+
+  // Noise material
+  const noiseMaterial = new ShaderMaterial({
+    vertexShader: noiseVertexShader,
+    fragmentShader: noiseFragmentShader,
+    uniforms: {
+      uTime: { value: 0 },
+      uBaseColor: { value: new Color('#0f172a') },
+      uPeakColor: { value: new Color('#8b5cf6') },
+      uMouseX: { value: 0.5 },
+      uMouseY: { value: 0.5 },
+      uMouseStrength: { value: 1.0 },
+    },
+    side: DoubleSide,
+  })
+
+  // Linear gradient material
+  const gradientMaterial = new ShaderMaterial({
+    vertexShader: gradientVertexShader,
+    fragmentShader: gradientFragmentShader,
+    uniforms: {
+      uTime: { value: 0 },
+      uColor1: { value: new Color('#3b82f6') },
+      uColor2: { value: new Color('#8b5cf6') },
+      uColor3: { value: new Color('#ec4899') },
+      uMouseX: { value: 0.5 },
+      uMouseY: { value: 0.5 },
+      uMouseStrength: { value: 0.3 },
+    },
+    side: DoubleSide,
+  })
+
+  // Fresnel material
+  const fresnelMaterial = new ShaderMaterial({
+    vertexShader: fresnelVertexShader,
+    fragmentShader: fresnelFragmentShader,
+    uniforms: {
+      uBaseColor: { value: new Color('#1e1b4b') },
+      uFresnelColor: { value: new Color('#22d3ee') },
+      uPower: { value: 3.0 },
+    },
+    side: DoubleSide,
+  })
+
+  // All materials with mouse uniforms
+  const materialsWithMouse = [
+    stripeMaterial,
+    meshMaterial,
+    auroraMaterial,
+    radialMaterial,
+    noiseMaterial,
+    gradientMaterial,
+  ]
+
+  // ============================================
+  // ANIMATION
+  // ============================================
+  const clock = new Clock()
+
+  let animationId: number
+  const animate = () => {
+    const elapsed = clock.getElapsedTime() * props.speed
+
+    // Update all time-based uniforms
+    if (stripeMaterial.uniforms.uTime) stripeMaterial.uniforms.uTime.value = elapsed
+    if (meshMaterial.uniforms.uTime) meshMaterial.uniforms.uTime.value = elapsed
+    if (auroraMaterial.uniforms.uTime) auroraMaterial.uniforms.uTime.value = elapsed
+    if (radialMaterial.uniforms.uTime) radialMaterial.uniforms.uTime.value = elapsed
+    if (noiseMaterial.uniforms.uTime) noiseMaterial.uniforms.uTime.value = elapsed
+    if (gradientMaterial.uniforms.uTime) gradientMaterial.uniforms.uTime.value = elapsed
+
+    // Update mouse uniforms
+    materialsWithMouse.forEach((mat) => {
+      if (mat.uniforms.uMouseX) mat.uniforms.uMouseX.value = props.mouseX
+      if (mat.uniforms.uMouseY) mat.uniforms.uMouseY.value = props.mouseY
+      if (mat.uniforms.uMouseStrength) {
+        mat.uniforms.uMouseStrength.value = props.mouseInteraction ? props.mouseStrength : 0
+      }
+    })
+
+    animationId = requestAnimationFrame(animate)
+  }
+
+  onMounted(() => {
+    animate()
+  })
+
+  onUnmounted(() => {
+    cancelAnimationFrame(animationId)
+  })
 </script>
 
 <template>

@@ -4,8 +4,6 @@
   setPageAccent('amber')
   onUnmounted(() => setPageAccent(null))
 
-  const { back } = useBackNavigation('/motion')
-
   const cursorType = ref<'dot' | 'ring' | 'dot-ring' | 'glow'>('dot-ring')
   const cursorTypes: Array<'dot' | 'ring' | 'dot-ring' | 'glow'> = [
     'dot',
@@ -33,45 +31,27 @@
     title="Animations Layer Demo"
     description="Micro-interaction primitives — Marquee, TextReveal, Tilt, Magnetic, Cursor, CountUp, Velocity"
   >
-    <div class="animations-page">
-      <!-- Hero -->
-      <section
-        class="min-h-[70vh] flex items-center justify-center relative overflow-hidden bg-gray-950"
+    <div class="bg-gray-950 min-h-screen">
+      <DemoPageHero
+        name="ANIMATIONS"
+        description="GSAP-powered micro-interaction components — the pieces the Motion layer composes into its scrollytelling demos."
       >
-        <div
-          class="absolute inset-0 bg-linear-to-b from-primary/10 via-transparent to-transparent"
-        />
-        <div class="text-center z-10 px-4">
-          <h1 class="text-5xl sm:text-7xl md:text-8xl font-black text-white mb-8">
-            <span class="text-primary">ANIMA</span>TIONS
-          </h1>
-          <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            GSAP-powered micro-interaction components — the pieces the Motion layer composes into
-            its scrollytelling demos.
-          </p>
-          <div class="flex flex-wrap gap-4 justify-center">
-            <UButton size="lg" @click="$router.push('#interactive')">Interactions</UButton>
-            <UButton size="lg" variant="outline" @click="$router.push('#text')"
-              >Text & Counters</UButton
-            >
-            <UButton size="lg" variant="ghost" to="/motion">
-              <UIcon name="i-lucide-sparkles" class="mr-2" />
-              Motion Layer
-            </UButton>
-            <UButton size="lg" variant="ghost" to="/motion-interactions">
-              <UIcon name="i-lucide-mouse-pointer-2" class="mr-2" />
-              Interactions Showcase
-            </UButton>
-            <UButton size="lg" variant="ghost" @click="back()">
-              <UIcon name="i-lucide-arrow-left" class="mr-2" />
-              Back
-            </UButton>
-          </div>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <UButton size="lg" @click="$router.push('#interactive')">Interactions</UButton>
+          <UButton size="lg" variant="outline" @click="$router.push('#text')">Text & Counters</UButton>
+          <UButton size="lg" variant="ghost" to="/motion">
+            <UIcon name="i-lucide-sparkles" class="mr-2" />
+            Motion Layer
+          </UButton>
+          <UButton size="lg" variant="ghost" to="/motion-interactions">
+            <UIcon name="i-lucide-mouse-pointer-2" class="mr-2" />
+            Interactions Showcase
+          </UButton>
         </div>
-      </section>
+      </DemoPageHero>
 
       <!-- Interactive components -->
-      <section id="interactive" class="py-24 bg-gray-900">
+      <section id="interactive" class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Pointer Interactions</h2>
@@ -119,7 +99,7 @@
                   :key="type"
                   size="sm"
                   :variant="cursorType === type ? 'solid' : 'outline'"
-                  @click="cursorType = type"
+                  @click="() => (cursorType = type)"
                 >
                   {{ type }}
                 </UButton>
@@ -150,7 +130,7 @@
               :key="effect"
               size="sm"
               :variant="velocityEffect === effect ? 'solid' : 'outline'"
-              @click="velocityEffect = effect"
+              @click="() => (velocityEffect = effect)"
             >
               {{ effect }}
             </UButton>
@@ -167,7 +147,7 @@
       </section>
 
       <!-- Text & Counters -->
-      <section id="text" class="py-24 bg-gray-900">
+      <section id="text" class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Text & Counters</h2>
@@ -250,33 +230,15 @@
         </MotionMarquee>
       </section>
 
-      <!-- Footer Nav -->
-      <section class="py-16 bg-gray-950">
-        <UContainer>
-          <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
-            <div>
-              <h2 class="text-2xl font-bold text-white mb-2">Animations Layer</h2>
-              <p class="text-gray-400">Micro-interaction primitives for the Motion layer</p>
-            </div>
-            <div class="flex flex-wrap gap-4">
-              <UButton variant="ghost" to="/motion-interactions">
-                <UIcon name="i-lucide-mouse-pointer-2" class="mr-2" />
-                Interactions
-              </UButton>
-              <UButton variant="ghost" to="/marquee-text">
-                <UIcon name="i-lucide-text-cursor-input" class="mr-2" />
-                MarqueeText
-              </UButton>
-              <UButton variant="ghost" to="/motion">
-                <UIcon name="i-lucide-sparkles" class="mr-2" />
-                Motion Layer
-              </UButton>
-              <UButton variant="outline" @click="back()">Back</UButton>
-              <UButton to="/">Home</UButton>
-            </div>
-          </div>
-        </UContainer>
-      </section>
+      <DemoPageFooter
+        name="Animations Layer"
+        description="Micro-interaction primitives for the Motion layer"
+        :links="[
+          { label: 'Motion Interactions', to: '/motion-interactions', icon: 'i-lucide-mouse-pointer-2' },
+          { label: 'MarqueeText', to: '/marquee-text', icon: 'i-lucide-text-cursor-input' },
+          { label: 'Motion Layer', to: '/motion', icon: 'i-lucide-sparkles' },
+        ]"
+      />
     </div>
   </LayoutPage>
 </template>

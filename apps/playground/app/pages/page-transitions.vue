@@ -4,8 +4,6 @@
   setPageAccent('fuchsia')
   onUnmounted(() => setPageAccent(null))
 
-  const { back } = useBackNavigation('/motion')
-
   const { transitionName, duration, setTransition, route } = usePageTransition()
 
   const presets = [
@@ -21,48 +19,34 @@
   }
 </script>
 
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Page Transitions Layer Demo"
     description="usePageTransition() — reactive page-transition state driven by app.config defaults"
   >
-    <div class="page-transitions-page">
-      <!-- Hero -->
-      <section
-        class="min-h-[70vh] flex items-center justify-center relative overflow-hidden bg-gray-950"
+    <div class="bg-gray-950 min-h-screen">
+      <DemoPageHero
+        name="PAGE TRANSITIONS"
+        description="usePageTransition() exposes the active transition name + duration as shared reactive state, seeded from app.config.pageTransitions on every navigation."
       >
-        <div
-          class="absolute inset-0 bg-linear-to-b from-primary/10 via-transparent to-transparent"
-        />
-        <div class="text-center z-10 px-4">
-          <h1 class="text-5xl sm:text-7xl md:text-8xl font-black text-white mb-8">
-            PAGE <span class="text-primary">TRANSITIONS</span>
-          </h1>
-          <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            <code class="text-primary">usePageTransition()</code> exposes the active transition name
-            + duration as shared reactive state, seeded from
-            <code class="text-primary">app.config.pageTransitions</code> on every navigation.
-          </p>
-          <div class="flex flex-wrap gap-4 justify-center">
-            <UButton size="lg" @click="$router.push('#demo')">View Demo</UButton>
-            <UButton size="lg" variant="outline" @click="back()">
-              <UIcon name="i-lucide-arrow-left" class="mr-2" />
-              Back
-            </UButton>
-            <UButton size="lg" variant="ghost" to="/transitions">
-              <UIcon name="i-lucide-square-asterisk" class="mr-2" />
-              Transitions
-            </UButton>
-            <UButton size="lg" variant="ghost" to="/motion">
-              <UIcon name="i-lucide-sparkles" class="mr-2" />
-              Motion Layer
-            </UButton>
-          </div>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <UButton size="lg" @click="$router.push('#demo')">View Demo</UButton>
+          <UButton size="lg" variant="ghost" to="/transitions">
+            <UIcon name="i-lucide-square-asterisk" class="mr-2" />
+            Transitions
+          </UButton>
+          <UButton size="lg" variant="ghost" to="/motion">
+            <UIcon name="i-lucide-sparkles" class="mr-2" />
+            Motion Layer
+          </UButton>
         </div>
-      </section>
+      </DemoPageHero>
 
       <!-- Live state -->
-      <section id="demo" class="py-24 bg-gray-900">
+      <section id="demo" class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Live Transition State</h2>
@@ -99,18 +83,19 @@
               v-for="preset in presets"
               :key="preset.name"
               :variant="transitionName === preset.name ? 'solid' : 'outline'"
-              @click="preview(preset.name, preset.duration)"
+              @click="() => preview(preset.name, preset.duration)"
             >
               {{ preset.name }} · {{ preset.duration }}ms
             </UButton>
           </div>
-          <div :key="replayKey" class="mt-12 flex justify-center">
-            <div
-              class="w-48 h-48 rounded-3xl bg-linear-to-br from-primary to-purple-600 flex items-center justify-center shadow-2xl shadow-primary/30 transition-page-preview"
-              :style="{ transitionDuration: `${duration}ms` }"
-            >
-              <UIcon name="i-lucide-arrow-right-left" class="text-5xl text-white" />
-            </div>
+          <div class="mt-12 flex justify-center">
+            <MotionTransition :key="replayKey" :name="transitionName" :duration>
+              <div
+                class="w-48 h-48 rounded-3xl bg-linear-to-br from-primary to-purple-600 flex items-center justify-center shadow-2xl shadow-primary/30"
+              >
+                <UIcon name="i-lucide-arrow-right-left" class="text-5xl text-white" />
+              </div>
+            </MotionTransition>
           </div>
         </UContainer>
       </section>
@@ -121,7 +106,7 @@
           <div class="max-w-3xl mx-auto">
             <h3 class="text-3xl font-bold text-white mb-8 text-center">How It Works</h3>
             <div class="grid gap-4">
-              <div class="bg-gray-900 rounded-xl p-6 border border-gray-800">
+              <div class="bg-gray-950 rounded-xl p-6 border border-gray-800">
                 <code class="text-primary font-mono text-sm">app.config.pageTransitions</code>
                 <p class="text-gray-400 mt-2">
                   Layer default:
@@ -129,14 +114,14 @@
                   override per-app via <code class="text-gray-300">app.config.ts</code>
                 </p>
               </div>
-              <div class="bg-gray-900 rounded-xl p-6 border border-gray-800">
+              <div class="bg-gray-950 rounded-xl p-6 border border-gray-800">
                 <code class="text-primary font-mono text-sm">page-transitions.client.ts</code>
                 <p class="text-gray-400 mt-2">
                   Nitro plugin hook — on every <code class="text-gray-300">page:start</code> it
                   resets the shared state back to the configured default
                 </p>
               </div>
-              <div class="bg-gray-900 rounded-xl p-6 border border-gray-800">
+              <div class="bg-gray-950 rounded-xl p-6 border border-gray-800">
                 <code class="text-primary font-mono text-sm">usePageTransition(name?)</code>
                 <p class="text-gray-400 mt-2">
                   Call inside a page's <code class="text-gray-300">setup()</code> to override the
@@ -150,41 +135,15 @@
         </UContainer>
       </section>
 
-      <!-- Footer Nav -->
-      <section class="py-16 bg-gray-900">
-        <UContainer>
-          <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
-            <div>
-              <h2 class="text-2xl font-bold text-white mb-2">Page Transitions Layer</h2>
-              <p class="text-gray-400">Reactive page-transition state for Nuxt navigations</p>
-            </div>
-            <div class="flex flex-wrap gap-4">
-              <UButton variant="ghost" to="/transitions">
-                <UIcon name="i-lucide-square-asterisk" class="mr-2" />
-                Transitions
-              </UButton>
-              <UButton variant="ghost" to="/motion">
-                <UIcon name="i-lucide-sparkles" class="mr-2" />
-                Motion Layer
-              </UButton>
-              <UButton variant="outline" @click="back()">Back</UButton>
-              <UButton to="/">Home</UButton>
-            </div>
-          </div>
-        </UContainer>
-      </section>
+      <DemoPageFooter
+        name="Page Transitions Layer"
+        description="Reactive page-transition state for Nuxt navigations"
+        :links="[
+          { label: 'Transitions', to: '/transitions', icon: 'i-lucide-square-asterisk' },
+          { label: 'Motion Layer', to: '/motion', icon: 'i-lucide-sparkles' },
+        ]"
+      />
     </div>
   </LayoutPage>
 </template>
 
-<style scoped>
-  .transition-page-preview {
-    transition-property: transform, opacity, border-radius;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .transition-page-preview:hover {
-    transform: scale(1.05) rotate(-2deg);
-    border-radius: 1.5rem;
-  }
-</style>

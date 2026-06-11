@@ -1,28 +1,29 @@
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script setup lang="ts">
-definePageMeta({ layout: false })
-const { setPageAccent } = useAccentColor()
-setPageAccent('emerald')
-onUnmounted(() => setPageAccent(null))
+  definePageMeta({ layout: false })
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('emerald')
+  onUnmounted(() => setPageAccent(null))
 
-const { scrollTo, scrollToTop, velocity, progress, direction, scrollY } = useSmoothScroll()
+  const { scrollTo, scrollToTop, velocity, progress, direction, scrollY } = useSmoothScroll()
 
-// Derived state for display
-const isScrolling = computed(() => Math.abs(velocity.value) > 0.01)
-const absVelocity = computed(() => Math.abs(velocity.value))
+  // Derived state for display
+  const isScrolling = computed(() => Math.abs(velocity.value) > 0.01)
+  const absVelocity = computed(() => Math.abs(velocity.value))
 
-// Demo state
-const activeTab = ref('velocity')
+  // Demo state
+  const activeTab = ref('velocity')
 
-const tabs = [
-  { id: 'velocity', label: 'Velocity Effects', icon: 'i-lucide-gauge' },
-  { id: 'progress', label: 'Progress', icon: 'i-lucide-percent' },
-  { id: 'programmatic', label: 'Scroll Control', icon: 'i-lucide-navigation' },
-  { id: 'gsap', label: 'GSAP Integration', icon: 'i-lucide-sparkles' },
-  { id: 'api', label: 'Composable API', icon: 'i-lucide-code' },
-]
+  const tabs = [
+    { id: 'velocity', label: 'Velocity Effects', icon: 'i-lucide-gauge' },
+    { id: 'progress', label: 'Progress', icon: 'i-lucide-percent' },
+    { id: 'programmatic', label: 'Scroll Control', icon: 'i-lucide-navigation' },
+    { id: 'gsap', label: 'GSAP Integration', icon: 'i-lucide-sparkles' },
+    { id: 'api', label: 'Composable API', icon: 'i-lucide-code' },
+  ]
 
-const codeExamples = {
-  composable: `// useSmoothScroll composable
+  const codeExamples = {
+    composable: `// useSmoothScroll composable
 const {
   scrollTo,      // Scroll to element or position
   scrollToTop,   // Scroll to top
@@ -32,7 +33,7 @@ const {
   scrollY,       // Current scroll position
 } = useSmoothScroll()`,
 
-  scrollTo: `// Programmatic scrolling
+    scrollTo: `// Programmatic scrolling
 scrollTo('#section', {
   duration: 1.5,
   offset: -100,
@@ -44,7 +45,7 @@ scrollTo(500, { duration: 1 })
 // Back to top
 scrollToTop({ duration: 2 })`,
 
-  velocityEffect: `// Using MotionVelocityEffect component
+    velocityEffect: `// Using MotionVelocityEffect component
 <MotionVelocityEffect effect="skew" :intensity="3">
   <h1>Skews based on scroll velocity</h1>
 </MotionVelocityEffect>
@@ -53,7 +54,7 @@ scrollToTop({ duration: 2 })`,
 // skew, scale, blur, opacity,
 // letterSpacing, rotate, translateY, hueRotate`,
 
-  gsapIntegration: `// Using MotionParallax component
+    gsapIntegration: `// Using MotionParallax component
 <MotionParallax :speed="-0.3" :rotate="5">
   <div>Moves slower with rotation</div>
 </MotionParallax>
@@ -65,16 +66,19 @@ gsap.to('.element', {
   y: -200,
 })`,
 
-  progressBar: `// Using MotionScrollProgress component
+    progressBar: `// Using MotionScrollProgress component
 <MotionScrollProgress type="circular" :size="120" />
 <MotionScrollProgress type="linear" :height="4" />
 
 // Or manual approach
 const { progress } = useSmoothScroll()
 :style="{ width: \`\${progress * 100}%\` }"`,
-}
+  }
 </script>
 
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Locomotive Scroll Deep Dive"
@@ -98,7 +102,7 @@ const { progress } = useSmoothScroll()
             :intensity="8"
             class="absolute bottom-1/4 right-1/4"
           >
-            <div class="w-64 h-64 bg-purple-500/20 rounded-full blur-[40px]" />
+            <div class="w-64 h-64 bg-purple-500/20 rounded-full blur-2xl" />
           </MotionVelocityEffect>
           <MotionVelocityEffect effect="scale" :intensity="0.1" class="absolute top-1/2 right-1/3">
             <div class="w-48 h-48 bg-cyan-500/15 rounded-full blur-[50px]" />
@@ -170,7 +174,7 @@ const { progress } = useSmoothScroll()
       </section>
 
       <!-- Features Overview -->
-      <section id="features" class="py-32 bg-gray-900">
+      <section id="features" class="py-32 bg-gray-950">
         <UContainer>
           <div class="text-center mb-20">
             <span class="text-primary text-sm font-semibold tracking-wider uppercase mb-4 block">
@@ -253,7 +257,7 @@ const { progress } = useSmoothScroll()
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Skew Effect -->
-            <div class="bg-gray-900 rounded-2xl p-8 border border-gray-800">
+            <div class="bg-gray-950 rounded-2xl p-8 border border-gray-800">
               <h3 class="text-lg font-semibold text-gray-400 mb-6">Skew Transform</h3>
               <MotionVelocityEffect
                 effect="skew"
@@ -266,7 +270,7 @@ const { progress } = useSmoothScroll()
             </div>
 
             <!-- Scale Effect -->
-            <div class="bg-gray-900 rounded-2xl p-8 border border-gray-800">
+            <div class="bg-gray-950 rounded-2xl p-8 border border-gray-800">
               <h3 class="text-lg font-semibold text-gray-400 mb-6">Scale Transform</h3>
               <MotionVelocityEffect
                 effect="scale"
@@ -279,7 +283,7 @@ const { progress } = useSmoothScroll()
             </div>
 
             <!-- Blur Effect -->
-            <div class="bg-gray-900 rounded-2xl p-8 border border-gray-800">
+            <div class="bg-gray-950 rounded-2xl p-8 border border-gray-800">
               <h3 class="text-lg font-semibold text-gray-400 mb-6">Motion Blur</h3>
               <MotionVelocityEffect
                 effect="blur"
@@ -292,7 +296,7 @@ const { progress } = useSmoothScroll()
             </div>
 
             <!-- Opacity Effect -->
-            <div class="bg-gray-900 rounded-2xl p-8 border border-gray-800">
+            <div class="bg-gray-950 rounded-2xl p-8 border border-gray-800">
               <h3 class="text-lg font-semibold text-gray-400 mb-6">Opacity Fade</h3>
               <MotionVelocityEffect
                 effect="opacity"
@@ -301,13 +305,13 @@ const { progress } = useSmoothScroll()
               >
                 FADE
               </MotionVelocityEffect>
-              <code class="text-xs text-gray-500 block mt-4"
-                >effect="opacity" :intensity="0.25"</code
-              >
+              <code class="text-xs text-gray-500 block mt-4">
+                effect="opacity" :intensity="0.25"
+              </code>
             </div>
 
             <!-- Letter Spacing Effect -->
-            <div class="bg-gray-900 rounded-2xl p-8 border border-gray-800">
+            <div class="bg-gray-950 rounded-2xl p-8 border border-gray-800">
               <h3 class="text-lg font-semibold text-gray-400 mb-6">Letter Spacing</h3>
               <MotionVelocityEffect
                 effect="letterSpacing"
@@ -322,7 +326,7 @@ const { progress } = useSmoothScroll()
             </div>
 
             <!-- Rotate Effect -->
-            <div class="bg-gray-900 rounded-2xl p-8 border border-gray-800">
+            <div class="bg-gray-950 rounded-2xl p-8 border border-gray-800">
               <h3 class="text-lg font-semibold text-gray-400 mb-6">Rotation</h3>
               <MotionVelocityEffect
                 effect="rotate"
@@ -335,7 +339,7 @@ const { progress } = useSmoothScroll()
             </div>
 
             <!-- Color Shift Effect -->
-            <div class="bg-gray-900 rounded-2xl p-8 border border-gray-800">
+            <div class="bg-gray-950 rounded-2xl p-8 border border-gray-800">
               <h3 class="text-lg font-semibold text-gray-400 mb-6">Hue Rotation</h3>
               <MotionVelocityEffect
                 effect="hueRotate"
@@ -344,13 +348,13 @@ const { progress } = useSmoothScroll()
               >
                 COLOR
               </MotionVelocityEffect>
-              <code class="text-xs text-gray-500 block mt-4"
-                >effect="hueRotate" :intensity="45"</code
-              >
+              <code class="text-xs text-gray-500 block mt-4">
+                effect="hueRotate" :intensity="45"
+              </code>
             </div>
 
             <!-- Y Translation -->
-            <div class="bg-gray-900 rounded-2xl p-8 border border-gray-800 overflow-hidden">
+            <div class="bg-gray-950 rounded-2xl p-8 border border-gray-800 overflow-hidden">
               <h3 class="text-lg font-semibold text-gray-400 mb-6">Y Translation</h3>
               <MotionVelocityEffect
                 effect="translateY"
@@ -359,9 +363,9 @@ const { progress } = useSmoothScroll()
               >
                 SHIFT
               </MotionVelocityEffect>
-              <code class="text-xs text-gray-500 block mt-4"
-                >effect="translateY" :intensity="8"</code
-              >
+              <code class="text-xs text-gray-500 block mt-4">
+                effect="translateY" :intensity="8"
+              </code>
             </div>
 
             <!-- Combined - manual for complex combinations -->
@@ -378,16 +382,16 @@ const { progress } = useSmoothScroll()
                   MIX
                 </MotionVelocityEffect>
               </MotionVelocityEffect>
-              <code class="text-xs text-gray-400 block mt-4"
-                >Nested components for combinations</code
-              >
+              <code class="text-xs text-gray-400 block mt-4">
+                Nested components for combinations
+              </code>
             </div>
           </div>
         </UContainer>
       </section>
 
       <!-- Interactive Playground -->
-      <section id="playground" class="py-32 bg-gray-900">
+      <section id="playground" class="py-32 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <span class="text-cyan-500 text-sm font-semibold tracking-wider uppercase mb-4 block">
@@ -408,7 +412,7 @@ const { progress } = useSmoothScroll()
                   ? 'bg-primary text-white shadow-lg shadow-primary/25'
                   : 'bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700'
               "
-              @click="activeTab = tab.id"
+              @click="() => (activeTab = tab.id)"
             >
               <UIcon :name="tab.icon" />
               {{ tab.label }}
@@ -427,19 +431,19 @@ const { progress } = useSmoothScroll()
                 </p>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                  <div class="bg-gray-900 rounded-xl p-6 text-center">
+                  <div class="bg-gray-950 rounded-xl p-6 text-center">
                     <p class="text-gray-500 text-sm mb-2">Velocity</p>
                     <p class="text-3xl font-bold text-primary tabular-nums">
                       {{ velocity.toFixed(2) }}
                     </p>
                   </div>
-                  <div class="bg-gray-900 rounded-xl p-6 text-center">
+                  <div class="bg-gray-950 rounded-xl p-6 text-center">
                     <p class="text-gray-500 text-sm mb-2">Absolute</p>
                     <p class="text-3xl font-bold text-purple-500 tabular-nums">
                       {{ absVelocity.toFixed(2) }}
                     </p>
                   </div>
-                  <div class="bg-gray-900 rounded-xl p-6 text-center">
+                  <div class="bg-gray-950 rounded-xl p-6 text-center">
                     <p class="text-gray-500 text-sm mb-2">Direction</p>
                     <p
                       class="text-3xl font-bold"
@@ -454,7 +458,7 @@ const { progress } = useSmoothScroll()
                       {{ direction > 0 ? 'DOWN' : direction < 0 ? 'UP' : '—' }}
                     </p>
                   </div>
-                  <div class="bg-gray-900 rounded-xl p-6 text-center">
+                  <div class="bg-gray-950 rounded-xl p-6 text-center">
                     <p class="text-gray-500 text-sm mb-2">Scrolling</p>
                     <p
                       class="text-3xl font-bold"
@@ -553,7 +557,7 @@ const { progress } = useSmoothScroll()
                   Create GSAP-powered parallax effects with a simple component.
                 </p>
 
-                <div class="bg-gray-900 rounded-xl p-6 mb-8">
+                <div class="bg-gray-950 rounded-xl p-6 mb-8">
                   <h4 class="text-lg font-semibold text-white mb-4">Props:</h4>
                   <ul class="space-y-3 text-gray-400">
                     <li class="flex gap-3">
@@ -590,7 +594,7 @@ const { progress } = useSmoothScroll()
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                  <div class="bg-gray-900 rounded-xl p-4">
+                  <div class="bg-gray-950 rounded-xl p-4">
                     <h4 class="text-sm font-semibold text-primary mb-3">Velocity & Effects</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
                       <li>
@@ -601,7 +605,7 @@ const { progress } = useSmoothScroll()
                       <li><code class="text-white">MotionMarquee</code> - Scrolling marquee</li>
                     </ul>
                   </div>
-                  <div class="bg-gray-900 rounded-xl p-4">
+                  <div class="bg-gray-950 rounded-xl p-4">
                     <h4 class="text-sm font-semibold text-purple-500 mb-3">
                       Navigation & Progress
                     </h4>
@@ -687,7 +691,7 @@ const { progress } = useSmoothScroll()
       </section>
 
       <!-- Progress Indicator Section using MotionScrollProgress -->
-      <section class="py-32 bg-gray-900">
+      <section class="py-32 bg-gray-950">
         <UContainer>
           <div class="max-w-4xl mx-auto">
             <div class="text-center mb-16">
@@ -744,17 +748,17 @@ const { progress } = useSmoothScroll()
 </template>
 
 <style scoped>
-/* stylelint-disable plugin/no-unsupported-browser-features */
+  /* stylelint-disable plugin/no-unsupported-browser-features */
 
-pre,
-code {
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace;
-  white-space: pre;
-}
+  pre,
+  code {
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+      monospace;
+    white-space: pre;
+  }
 
-.tabular-nums {
-  font-variant-numeric: tabular-nums;
-}
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
 </style>

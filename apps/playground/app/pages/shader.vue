@@ -1,416 +1,446 @@
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <script setup lang="ts">
-definePageMeta({ ssr: false, layout: false })
+  definePageMeta({ ssr: false, layout: false })
 
-const { setPageAccent } = useAccentColor()
-setPageAccent('violet')
-onUnmounted(() => setPageAccent(null))
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('violet')
+  onUnmounted(() => setPageAccent(null))
 
-// Demo state
-type DemoCategory =
-  | 'overview'
-  | 'noise'
-  | 'sdf'
-  | 'lighting'
-  | 'tonemapping'
-  | 'patterns'
-  | 'effects'
-  | 'math'
-  | 'uv'
-const activeCategory = ref<DemoCategory>('overview')
+  // Demo state
+  type DemoCategory =
+    | 'overview'
+    | 'noise'
+    | 'sdf'
+    | 'lighting'
+    | 'tonemapping'
+    | 'patterns'
+    | 'effects'
+    | 'math'
+    | 'uv'
+  const activeCategory = ref<DemoCategory>('overview')
 
-const categories = [
-  { id: 'overview', label: 'Overview', icon: 'i-lucide-layers' },
-  { id: 'noise', label: 'Noise', icon: 'i-lucide-waves' },
-  { id: 'sdf', label: 'SDF Shapes', icon: 'i-lucide-shapes' },
-  { id: 'lighting', label: 'Lighting', icon: 'i-lucide-sun' },
-  { id: 'tonemapping', label: 'Tonemapping', icon: 'i-lucide-palette' },
-  { id: 'patterns', label: 'Patterns', icon: 'i-lucide-grid-3x3' },
-  { id: 'effects', label: 'Effects', icon: 'i-lucide-sparkles' },
-  { id: 'math', label: 'Math', icon: 'i-lucide-calculator' },
-  { id: 'uv', label: 'UV & Grain', icon: 'i-lucide-move' },
-] as const
+  const categories = [
+    { id: 'overview', label: 'Overview', icon: 'i-lucide-layers' },
+    { id: 'noise', label: 'Noise', icon: 'i-lucide-waves' },
+    { id: 'sdf', label: 'SDF Shapes', icon: 'i-lucide-shapes' },
+    { id: 'lighting', label: 'Lighting', icon: 'i-lucide-sun' },
+    { id: 'tonemapping', label: 'Tonemapping', icon: 'i-lucide-palette' },
+    { id: 'patterns', label: 'Patterns', icon: 'i-lucide-grid-3x3' },
+    { id: 'effects', label: 'Effects', icon: 'i-lucide-sparkles' },
+    { id: 'math', label: 'Math', icon: 'i-lucide-calculator' },
+    { id: 'uv', label: 'UV & Grain', icon: 'i-lucide-move' },
+  ] as const
 
-// Mouse interaction state
-const mouseX = ref(0.5)
-const mouseY = ref(0.5)
+  // Mouse interaction state
+  const mouseX = ref(0.5)
+  const mouseY = ref(0.5)
 
-function handleMouseMove(e: MouseEvent, element: HTMLElement) {
-  const rect = element.getBoundingClientRect()
-  mouseX.value = (e.clientX - rect.left) / rect.width
-  mouseY.value = 1 - (e.clientY - rect.top) / rect.height
-}
+  function handleMouseMove(e: MouseEvent, element: HTMLElement) {
+    const rect = element.getBoundingClientRect()
+    mouseX.value = (e.clientX - rect.left) / rect.width
+    mouseY.value = 1 - (e.clientY - rect.top) / rect.height
+  }
 
-// Shader control settings
-const noiseControls = reactive({
-  scale: 4,
-  speed: 1.0,
-  mouseStrength: 1.0,
-  mouseInteraction: true,
-  enableZoom: false,
-})
+  // Shader control settings
+  const noiseControls = reactive({
+    scale: 4,
+    speed: 1.0,
+    mouseStrength: 1.0,
+    mouseInteraction: true,
+    enableZoom: false,
+  })
 
-const sdfControls = reactive({
-  smoothness: 0.25,
-  speed: 1.0,
-  mouseStrength: 0.5,
-  mouseInteraction: true,
-  enableZoom: false,
-})
+  const sdfControls = reactive({
+    smoothness: 0.25,
+    speed: 1.0,
+    mouseStrength: 0.5,
+    mouseInteraction: true,
+    enableZoom: false,
+  })
 
-const effectControls = reactive({
-  distortion: 0.03,
-  rgbShift: 3,
-  mouseRipple: true,
-  vignette: true,
-  grayscale: 0,
-  enableZoom: false,
-})
+  const effectControls = reactive({
+    distortion: 0.03,
+    rgbShift: 3,
+    mouseRipple: true,
+    vignette: true,
+    grayscale: 0,
+    enableZoom: false,
+  })
 
-const uvControls = reactive({
-  distortion: 0.05,
-  rgbShift: 4,
-  mouseRipple: true,
-  vignette: true,
-  enableZoom: false,
-})
+  const uvControls = reactive({
+    distortion: 0.05,
+    rgbShift: 4,
+    mouseRipple: true,
+    vignette: true,
+    enableZoom: false,
+  })
 
-const lightingControls = reactive({
-  fresnelPower: 3.0,
-  speed: 1.0,
-  mouseInteraction: true,
-  enableZoom: true,
-})
+  const lightingControls = reactive({
+    fresnelPower: 3.0,
+    speed: 1.0,
+    mouseInteraction: true,
+    enableZoom: true,
+  })
 
-const patternControls = reactive({
-  scale: 1.0,
-  speed: 1.0,
-  mouseStrength: 0.3,
-  mouseInteraction: true,
-  enableZoom: false,
-})
+  const patternControls = reactive({
+    scale: 1.0,
+    speed: 1.0,
+    mouseStrength: 0.3,
+    mouseInteraction: true,
+    enableZoom: false,
+  })
 
-const tonemappingControls = reactive({
-  speed: 1.0,
-  mouseStrength: 0.5,
-  mouseInteraction: true,
-  enableZoom: false,
-})
+  const tonemappingControls = reactive({
+    speed: 1.0,
+    mouseStrength: 0.5,
+    mouseInteraction: true,
+    enableZoom: false,
+  })
 
-const mathControls = reactive({
-  speed: 1.0,
-  mouseStrength: 0.5,
-  mouseInteraction: true,
-  enableZoom: false,
-})
+  const mathControls = reactive({
+    speed: 1.0,
+    mouseStrength: 0.5,
+    mouseInteraction: true,
+    enableZoom: false,
+  })
 
-// Active demo for each category
-type DemoType = 'noise' | 'gradient' | 'fresnel' | 'mesh' | 'stripe' | 'aurora' | 'radial' | 'image'
-const activeNoiseDemo = ref<DemoType>('noise')
-const activeSdfDemo = ref<DemoType>('mesh')
-const activeLightingDemo = ref<DemoType>('fresnel')
-const activeTonemappingDemo = ref<DemoType>('aurora')
-const activePatternDemo = ref<DemoType>('stripe')
-const activeEffectDemo = ref<DemoType>('radial')
-const activeMathDemo = ref<DemoType>('radial')
-const activeUvDemo = ref<DemoType>('image')
+  // Active demo for each category
+  type DemoType =
+    | 'noise'
+    | 'gradient'
+    | 'fresnel'
+    | 'mesh'
+    | 'stripe'
+    | 'aurora'
+    | 'radial'
+    | 'image'
+  const activeNoiseDemo = ref<DemoType>('noise')
+  const activeSdfDemo = ref<DemoType>('mesh')
+  const activeLightingDemo = ref<DemoType>('fresnel')
+  const activeTonemappingDemo = ref<DemoType>('aurora')
+  const activePatternDemo = ref<DemoType>('stripe')
+  const activeEffectDemo = ref<DemoType>('radial')
+  const activeMathDemo = ref<DemoType>('radial')
+  const activeUvDemo = ref<DemoType>('image')
 
-// Noise demo options
-const noiseDemoOptions = [
-  { id: 'noise', name: 'FBM Noise', description: 'Fractal Brownian Motion - layered noise' },
-  { id: 'gradient', name: 'Gradient', description: 'Animated linear gradient' },
-  { id: 'stripe', name: 'Flow Noise', description: 'Flowing stripe patterns' },
-]
+  // Noise demo options
+  const noiseDemoOptions = [
+    { id: 'noise', name: 'FBM Noise', description: 'Fractal Brownian Motion - layered noise' },
+    { id: 'gradient', name: 'Gradient', description: 'Animated linear gradient' },
+    { id: 'stripe', name: 'Flow Noise', description: 'Flowing stripe patterns' },
+  ]
 
-// SDF demo options
-const sdfDemoOptions = [
-  { id: 'mesh', name: 'Metaballs', description: 'Smooth blended organic shapes' },
-  { id: 'radial', name: 'Radial SDF', description: 'Pulsing radial gradient' },
-  { id: 'aurora', name: 'Aurora', description: 'Curtain-like SDF patterns' },
-]
+  // SDF demo options
+  const sdfDemoOptions = [
+    { id: 'mesh', name: 'Metaballs', description: 'Smooth blended organic shapes' },
+    { id: 'radial', name: 'Radial SDF', description: 'Pulsing radial gradient' },
+    { id: 'aurora', name: 'Aurora', description: 'Curtain-like SDF patterns' },
+  ]
 
-// Lighting demo options
-const lightingDemoOptions = [
-  { id: 'fresnel', name: 'Fresnel', description: 'Rim lighting on 3D sphere' },
-  { id: 'gradient', name: 'Hemisphere', description: 'Sky/ground ambient light' },
-  { id: 'aurora', name: 'Diffuse', description: 'Soft directional lighting' },
-]
+  // Lighting demo options
+  const lightingDemoOptions = [
+    { id: 'fresnel', name: 'Fresnel', description: 'Rim lighting on 3D sphere' },
+    { id: 'gradient', name: 'Hemisphere', description: 'Sky/ground ambient light' },
+    { id: 'aurora', name: 'Diffuse', description: 'Soft directional lighting' },
+  ]
 
-// Tonemapping demo options
-const tonemappingDemoOptions = [
-  { id: 'aurora', name: 'Aurora HDR', description: 'High dynamic range colors' },
-  { id: 'stripe', name: 'Stripe HDR', description: 'Bright flowing gradients' },
-  { id: 'mesh', name: 'Mesh HDR', description: 'Vibrant blob colors' },
-]
+  // Tonemapping demo options
+  const tonemappingDemoOptions = [
+    { id: 'aurora', name: 'Aurora HDR', description: 'High dynamic range colors' },
+    { id: 'stripe', name: 'Stripe HDR', description: 'Bright flowing gradients' },
+    { id: 'mesh', name: 'Mesh HDR', description: 'Vibrant blob colors' },
+  ]
 
-// Pattern demo options
-const patternDemoOptions = [
-  { id: 'stripe', name: 'Flowing Stripes', description: 'Animated stripe pattern' },
-  { id: 'noise', name: 'Noise Pattern', description: 'Procedural noise texture' },
-  { id: 'mesh', name: 'Blob Pattern', description: 'Organic blob shapes' },
-]
+  // Pattern demo options
+  const patternDemoOptions = [
+    { id: 'stripe', name: 'Flowing Stripes', description: 'Animated stripe pattern' },
+    { id: 'noise', name: 'Noise Pattern', description: 'Procedural noise texture' },
+    { id: 'mesh', name: 'Blob Pattern', description: 'Organic blob shapes' },
+  ]
 
-// Effect demo options
-const effectDemoOptions = [
-  { id: 'radial', name: 'Radial Pulse', description: 'Pulsing radial effect' },
-  { id: 'mesh', name: 'Blob Blend', description: 'Smooth color blending' },
-  { id: 'image', name: 'Image FX', description: 'Distortion & chromatic' },
-]
+  // Effect demo options
+  const effectDemoOptions = [
+    { id: 'radial', name: 'Radial Pulse', description: 'Pulsing radial effect' },
+    { id: 'mesh', name: 'Blob Blend', description: 'Smooth color blending' },
+    { id: 'image', name: 'Image FX', description: 'Distortion & chromatic' },
+  ]
 
-// UV demo options
-const uvDemoOptions = [
-  { id: 'image', name: 'UV Distortion', description: 'Ripple & warp effects' },
-  { id: 'radial', name: 'Polar UV', description: 'Polar coordinate mapping' },
-  { id: 'stripe', name: 'Wave UV', description: 'Wave distortion' },
-]
+  // UV demo options
+  const uvDemoOptions = [
+    { id: 'image', name: 'UV Distortion', description: 'Ripple & warp effects' },
+    { id: 'radial', name: 'Polar UV', description: 'Polar coordinate mapping' },
+    { id: 'stripe', name: 'Wave UV', description: 'Wave distortion' },
+  ]
 
-// Noise functions list
-const noiseFunctions = [
-  { name: 'simplexNoise2D', description: '2D simplex gradient noise', category: 'Basic' },
-  {
-    name: 'simplexNoise3d',
-    description: '3D simplex noise for volumetric effects',
-    category: 'Basic',
-    isNew: true,
-  },
-  {
-    name: 'simplexNoise4d',
-    description: '4D simplex for animated 3D noise',
-    category: 'Basic',
-    isNew: true,
-  },
-  { name: 'perlinNoise3d', description: 'Classic 3D Perlin noise', category: 'Basic', isNew: true },
-  { name: 'gradientNoise3D', description: '3D gradient noise', category: 'Basic' },
-  { name: 'valueNoise2D', description: 'Simple 2D value noise', category: 'Basic' },
-  { name: 'fbm2D / fbm3D', description: 'Fractal Brownian Motion', category: 'FBM' },
-  {
-    name: 'fbm3dSimplex',
-    description: 'FBM using 3D simplex with normalization',
-    category: 'FBM',
-    isNew: true,
-  },
-  {
-    name: 'ridgedFbm2d / ridgedFbm3d',
-    description: 'Sharp ridges for mountains/veins',
-    category: 'FBM',
-    isNew: true,
-  },
-  {
-    name: 'warpedFbmCoords',
-    description: 'Organic flowing warped patterns',
-    category: 'FBM',
-    isNew: true,
-  },
-  {
-    name: 'curlNoise3d',
-    description: 'Divergence-free flow fields',
-    category: 'Advanced',
-    isNew: true,
-  },
-  { name: 'turbulence2D', description: 'Absolute value of FBM', category: 'Advanced' },
-  {
-    name: 'turbulenceRotational',
-    description: 'XorDev-style rotational turbulence',
-    category: 'Advanced',
-    isNew: true,
-  },
-  { name: 'voronoi2D', description: 'Cellular/Voronoi noise', category: 'Advanced' },
-  { name: 'domainWarp2D', description: 'Domain warping for organic effects', category: 'Advanced' },
-]
+  // Noise functions list
+  const noiseFunctions = [
+    { name: 'simplexNoise2D', description: '2D simplex gradient noise', category: 'Basic' },
+    {
+      name: 'simplexNoise3d',
+      description: '3D simplex noise for volumetric effects',
+      category: 'Basic',
+      isNew: true,
+    },
+    {
+      name: 'simplexNoise4d',
+      description: '4D simplex for animated 3D noise',
+      category: 'Basic',
+      isNew: true,
+    },
+    {
+      name: 'perlinNoise3d',
+      description: 'Classic 3D Perlin noise',
+      category: 'Basic',
+      isNew: true,
+    },
+    { name: 'gradientNoise3D', description: '3D gradient noise', category: 'Basic' },
+    { name: 'valueNoise2D', description: 'Simple 2D value noise', category: 'Basic' },
+    { name: 'fbm2D / fbm3D', description: 'Fractal Brownian Motion', category: 'FBM' },
+    {
+      name: 'fbm3dSimplex',
+      description: 'FBM using 3D simplex with normalization',
+      category: 'FBM',
+      isNew: true,
+    },
+    {
+      name: 'ridgedFbm2d / ridgedFbm3d',
+      description: 'Sharp ridges for mountains/veins',
+      category: 'FBM',
+      isNew: true,
+    },
+    {
+      name: 'warpedFbmCoords',
+      description: 'Organic flowing warped patterns',
+      category: 'FBM',
+      isNew: true,
+    },
+    {
+      name: 'curlNoise3d',
+      description: 'Divergence-free flow fields',
+      category: 'Advanced',
+      isNew: true,
+    },
+    { name: 'turbulence2D', description: 'Absolute value of FBM', category: 'Advanced' },
+    {
+      name: 'turbulenceRotational',
+      description: 'XorDev-style rotational turbulence',
+      category: 'Advanced',
+      isNew: true,
+    },
+    { name: 'voronoi2D', description: 'Cellular/Voronoi noise', category: 'Advanced' },
+    {
+      name: 'domainWarp2D',
+      description: 'Domain warping for organic effects',
+      category: 'Advanced',
+    },
+  ]
 
-const noiseHelpers = [
-  { name: 'mod289Vec3 / mod289Vec4', description: 'Mod289 for precision in noise' },
-  { name: 'fade', description: 'Quintic fade for smooth interpolation' },
-  { name: 'permuteVec4 / permuteFloat', description: 'Permutation for pseudo-random values' },
-  { name: 'taylorInvSqrtVec4', description: 'Fast inverse sqrt for normalization' },
-  { name: 'grad4', description: '4D gradient for simplex noise' },
-  { name: 'hash21 / hash22 / hash33', description: 'Hash functions for randomness' },
-]
+  const noiseHelpers = [
+    { name: 'mod289Vec3 / mod289Vec4', description: 'Mod289 for precision in noise' },
+    { name: 'fade', description: 'Quintic fade for smooth interpolation' },
+    { name: 'permuteVec4 / permuteFloat', description: 'Permutation for pseudo-random values' },
+    { name: 'taylorInvSqrtVec4', description: 'Fast inverse sqrt for normalization' },
+    { name: 'grad4', description: '4D gradient for simplex noise' },
+    { name: 'hash21 / hash22 / hash33', description: 'Hash functions for randomness' },
+  ]
 
-// SDF functions list
-const sdfShapes = [
-  { name: 'sdSphere', description: 'Circle/Sphere SDF', params: 'uv, radius' },
-  { name: 'sdBox2d', description: '2D Box SDF', params: 'uv, size' },
-  { name: 'sdBox3d', description: '3D Box SDF', params: 'p, size' },
-  { name: 'sdDiamond', description: 'Diamond (rotated square)', params: 'uv, radius' },
-  { name: 'sdHexagon', description: 'Hexagon SDF', params: 'p, radius' },
-  { name: 'sdEquilateralTriangle', description: 'Equilateral triangle', params: 'p, radius' },
-  { name: 'sdTriangle', description: 'Simple triangle', params: 'p, size' },
-  { name: 'sdLine', description: 'Line SDF', params: 'p' },
-  { name: 'sdRing', description: 'Ring/annulus SDF', params: 'uv, radius' },
-  { name: 'sdParallelogram', description: 'Parallelogram with skew', params: 'p, options' },
-  { name: 'sdRhombus', description: 'Rhombus SDF', params: 'p, size' },
-]
+  // SDF functions list
+  const sdfShapes = [
+    { name: 'sdSphere', description: 'Circle/Sphere SDF', params: 'uv, radius' },
+    { name: 'sdBox2d', description: '2D Box SDF', params: 'uv, size' },
+    { name: 'sdBox3d', description: '3D Box SDF', params: 'p, size' },
+    { name: 'sdDiamond', description: 'Diamond (rotated square)', params: 'uv, radius' },
+    { name: 'sdHexagon', description: 'Hexagon SDF', params: 'p, radius' },
+    { name: 'sdEquilateralTriangle', description: 'Equilateral triangle', params: 'p, radius' },
+    { name: 'sdTriangle', description: 'Simple triangle', params: 'p, size' },
+    { name: 'sdLine', description: 'Line SDF', params: 'p' },
+    { name: 'sdRing', description: 'Ring/annulus SDF', params: 'uv, radius' },
+    { name: 'sdParallelogram', description: 'Parallelogram with skew', params: 'p, options' },
+    { name: 'sdRhombus', description: 'Rhombus SDF', params: 'p, size' },
+  ]
 
-const sdfOperations = [
-  { name: 'smin', description: 'Smooth minimum for blending', params: 'a, b, factor' },
-  { name: 'smax', description: 'Smooth maximum', params: 'a, b, factor' },
-]
+  const sdfOperations = [
+    { name: 'smin', description: 'Smooth minimum for blending', params: 'a, b, factor' },
+    { name: 'smax', description: 'Smooth maximum', params: 'a, b, factor' },
+  ]
 
-// Lighting functions
-const lightingFunctions = [
-  {
-    name: 'fresnel',
-    description: 'Rim lighting effect at grazing angles',
-    params: 'viewDir, normal, exponent',
-  },
-  {
-    name: 'hemi',
-    description: 'Hemispheric ambient lighting',
-    params: 'normal, groundColor, skyColor',
-  },
-  {
-    name: 'diffuse',
-    description: 'Lambertian diffuse lighting',
-    params: 'lightDir, normal, lightColor',
-  },
-  {
-    name: 'phongSpecular',
-    description: 'Phong specular highlights',
-    params: 'viewDir, normal, lightDir, shininess',
-  },
-  {
-    name: 'blinnPhongSpecular',
-    description: 'Blinn-Phong (more accurate)',
-    params: 'viewDir, normal, lightDir, shininess',
-  },
-  {
-    name: 'phongLighting',
-    description: 'Combined ambient+diffuse+specular',
-    params: 'viewDir, normal, lightDir, lightColor, options',
-  },
-]
+  // Lighting functions
+  const lightingFunctions = [
+    {
+      name: 'fresnel',
+      description: 'Rim lighting effect at grazing angles',
+      params: 'viewDir, normal, exponent',
+    },
+    {
+      name: 'hemi',
+      description: 'Hemispheric ambient lighting',
+      params: 'normal, groundColor, skyColor',
+    },
+    {
+      name: 'diffuse',
+      description: 'Lambertian diffuse lighting',
+      params: 'lightDir, normal, lightColor',
+    },
+    {
+      name: 'phongSpecular',
+      description: 'Phong specular highlights',
+      params: 'viewDir, normal, lightDir, shininess',
+    },
+    {
+      name: 'blinnPhongSpecular',
+      description: 'Blinn-Phong (more accurate)',
+      params: 'viewDir, normal, lightDir, shininess',
+    },
+    {
+      name: 'phongLighting',
+      description: 'Combined ambient+diffuse+specular',
+      params: 'viewDir, normal, lightDir, lightColor, options',
+    },
+  ]
 
-// Tonemapping functions
-const tonemappingFunctions = [
-  { name: 'reinhardTonemap', description: 'Simple, fast, general use', style: 'Standard' },
-  { name: 'reinhardExtendedTonemap', description: 'With white point control', style: 'Standard' },
-  { name: 'uncharted2Tonemap', description: 'Cinematic filmic look', style: 'Standard' },
-  { name: 'acesTonemap', description: 'Industry standard for film/TV', style: 'Standard' },
-  { name: 'unrealTonemap', description: 'Unreal Engine style', style: 'Standard' },
-  { name: 'tanhTonemap', description: 'Smooth S-curve with tanh', style: 'Standard' },
-  { name: 'crossProcessTonemap', description: 'Exaggerated color shifts', style: 'Stylized' },
-  { name: 'bleachBypassTonemap', description: 'High contrast, desaturated', style: 'Stylized' },
-  { name: 'technicolorTonemap', description: 'Retro film look', style: 'Stylized' },
-  { name: 'cinematicTonemap', description: 'S-curve with color shift', style: 'Stylized' },
-]
+  // Tonemapping functions
+  const tonemappingFunctions = [
+    { name: 'reinhardTonemap', description: 'Simple, fast, general use', style: 'Standard' },
+    { name: 'reinhardExtendedTonemap', description: 'With white point control', style: 'Standard' },
+    { name: 'uncharted2Tonemap', description: 'Cinematic filmic look', style: 'Standard' },
+    { name: 'acesTonemap', description: 'Industry standard for film/TV', style: 'Standard' },
+    { name: 'unrealTonemap', description: 'Unreal Engine style', style: 'Standard' },
+    { name: 'tanhTonemap', description: 'Smooth S-curve with tanh', style: 'Standard' },
+    { name: 'crossProcessTonemap', description: 'Exaggerated color shifts', style: 'Stylized' },
+    { name: 'bleachBypassTonemap', description: 'High contrast, desaturated', style: 'Stylized' },
+    { name: 'technicolorTonemap', description: 'Retro film look', style: 'Stylized' },
+    { name: 'cinematicTonemap', description: 'S-curve with color shift', style: 'Stylized' },
+  ]
 
-// Pattern functions
-const patternFunctions = [
-  { name: 'canvasWeavePattern', description: 'Organic woven fabric texture', isNew: true },
-  { name: 'ledPattern', description: 'LED screen dot grid', isNew: true },
-  { name: 'speckledNoisePattern', description: 'Scattered organic speckles', isNew: true },
-  { name: 'dotGridPattern', description: 'Regular dot grid', isNew: true },
-  { name: 'checkerPattern', description: 'Checkerboard pattern', isNew: true },
-  { name: 'stripePattern', description: 'Configurable stripes', isNew: true },
-]
+  // Pattern functions
+  const patternFunctions = [
+    { name: 'canvasWeavePattern', description: 'Organic woven fabric texture', isNew: true },
+    { name: 'ledPattern', description: 'LED screen dot grid', isNew: true },
+    { name: 'speckledNoisePattern', description: 'Scattered organic speckles', isNew: true },
+    { name: 'dotGridPattern', description: 'Regular dot grid', isNew: true },
+    { name: 'checkerPattern', description: 'Checkerboard pattern', isNew: true },
+    { name: 'stripePattern', description: 'Configurable stripes', isNew: true },
+  ]
 
-// Effects functions
-const effectFunctions = [
-  {
-    name: 'ledEffect',
-    description: 'LED screen post-processing',
-    params: 'input, inputUV, options',
-  },
-  {
-    name: 'pixellationEffect',
-    description: 'Mosaic/pixel art effect',
-    params: 'input, inputUV, options',
-  },
-  {
-    name: 'chromaticAberrationEffect',
-    description: 'RGB channel separation',
-    params: 'input, inputUV, options',
-  },
-  { name: 'bulgeEffect', description: 'Bulge/pinch distortion', params: 'input, inputUV, options' },
-  {
-    name: 'waveDistortionEffect',
-    description: 'Animated wave distortion',
-    params: 'input, inputUV, options',
-  },
-  {
-    name: 'swirlDistortionEffect',
-    description: 'Swirl/vortex distortion',
-    params: 'input, inputUV, options',
-  },
-]
+  // Effects functions
+  const effectFunctions = [
+    {
+      name: 'ledEffect',
+      description: 'LED screen post-processing',
+      params: 'input, inputUV, options',
+    },
+    {
+      name: 'pixellationEffect',
+      description: 'Mosaic/pixel art effect',
+      params: 'input, inputUV, options',
+    },
+    {
+      name: 'chromaticAberrationEffect',
+      description: 'RGB channel separation',
+      params: 'input, inputUV, options',
+    },
+    {
+      name: 'bulgeEffect',
+      description: 'Bulge/pinch distortion',
+      params: 'input, inputUV, options',
+    },
+    {
+      name: 'waveDistortionEffect',
+      description: 'Animated wave distortion',
+      params: 'input, inputUV, options',
+    },
+    {
+      name: 'swirlDistortionEffect',
+      description: 'Swirl/vortex distortion',
+      params: 'input, inputUV, options',
+    },
+  ]
 
-// Math functions
-const mathFunctions = [
-  { name: 'tanh', description: 'Hyperbolic tangent', category: 'Hyperbolic' },
-  { name: 'sinh', description: 'Hyperbolic sine', category: 'Hyperbolic' },
-  { name: 'cosh', description: 'Hyperbolic cosine', category: 'Hyperbolic' },
-  { name: 'complexMul', description: 'Complex multiplication', category: 'Complex' },
-  { name: 'complexDiv', description: 'Complex division', category: 'Complex' },
-  { name: 'complexLog', description: 'Complex logarithm', category: 'Complex' },
-  { name: 'complexPow', description: 'Complex power', category: 'Complex' },
-  {
-    name: 'complexSin / complexCos / complexTan',
-    description: 'Complex trig functions',
-    category: 'Complex',
-  },
-  { name: 'asPolar', description: 'Convert to polar form', category: 'Complex' },
-  { name: 'grad', description: 'Bilinear 4-color gradient', category: 'Coordinates' },
-  { name: 'cartesianToPolar', description: 'Cartesian to polar coords', category: 'Coordinates' },
-  { name: 'polarToCartesian', description: 'Polar to Cartesian coords', category: 'Coordinates' },
-]
+  // Math functions
+  const mathFunctions = [
+    { name: 'tanh', description: 'Hyperbolic tangent', category: 'Hyperbolic' },
+    { name: 'sinh', description: 'Hyperbolic sine', category: 'Hyperbolic' },
+    { name: 'cosh', description: 'Hyperbolic cosine', category: 'Hyperbolic' },
+    { name: 'complexMul', description: 'Complex multiplication', category: 'Complex' },
+    { name: 'complexDiv', description: 'Complex division', category: 'Complex' },
+    { name: 'complexLog', description: 'Complex logarithm', category: 'Complex' },
+    { name: 'complexPow', description: 'Complex power', category: 'Complex' },
+    {
+      name: 'complexSin / complexCos / complexTan',
+      description: 'Complex trig functions',
+      category: 'Complex',
+    },
+    { name: 'asPolar', description: 'Convert to polar form', category: 'Complex' },
+    { name: 'grad', description: 'Bilinear 4-color gradient', category: 'Coordinates' },
+    { name: 'cartesianToPolar', description: 'Cartesian to polar coords', category: 'Coordinates' },
+    { name: 'polarToCartesian', description: 'Polar to Cartesian coords', category: 'Coordinates' },
+  ]
 
-// UV functions
-const uvFunctions = [
-  { name: 'scaleUV', description: 'Scale UV from center' },
-  { name: 'rotateUV', description: 'Rotate UV around center' },
-  { name: 'translateUV', description: 'Translate UV offset' },
-  { name: 'tileUV', description: 'Tile/repeat UV' },
-  { name: 'mirrorUV', description: 'Mirror UV at edges' },
-  { name: 'toPolar / fromPolar', description: 'Polar coordinate conversion' },
-  { name: 'waveUV', description: 'Wave distortion' },
-  { name: 'rippleUV', description: 'Radial ripple distortion' },
-  { name: 'swirlUV', description: 'Swirl/vortex distortion' },
-  { name: 'barrelUV', description: 'Barrel/fisheye distortion' },
-  { name: 'pincushionUV', description: 'Pincushion distortion' },
-  { name: 'kaleidoscopeUV', description: 'Kaleidoscope effect' },
-  { name: 'zoomUV', description: 'Zoom from center' },
-  { name: 'bulgeUV', description: 'Bulge/pinch distortion', isNew: true },
-  { name: 'aspectCorrect', description: 'Correct for aspect ratio' },
-  { name: 'coverUV / containUV', description: 'CSS-like background sizing' },
-  { name: 'scrollUV', description: 'Infinite scroll animation' },
-  { name: 'parallaxUV', description: 'Parallax offset' },
-]
+  // UV functions
+  const uvFunctions = [
+    { name: 'scaleUV', description: 'Scale UV from center' },
+    { name: 'rotateUV', description: 'Rotate UV around center' },
+    { name: 'translateUV', description: 'Translate UV offset' },
+    { name: 'tileUV', description: 'Tile/repeat UV' },
+    { name: 'mirrorUV', description: 'Mirror UV at edges' },
+    { name: 'toPolar / fromPolar', description: 'Polar coordinate conversion' },
+    { name: 'waveUV', description: 'Wave distortion' },
+    { name: 'rippleUV', description: 'Radial ripple distortion' },
+    { name: 'swirlUV', description: 'Swirl/vortex distortion' },
+    { name: 'barrelUV', description: 'Barrel/fisheye distortion' },
+    { name: 'pincushionUV', description: 'Pincushion distortion' },
+    { name: 'kaleidoscopeUV', description: 'Kaleidoscope effect' },
+    { name: 'zoomUV', description: 'Zoom from center' },
+    { name: 'bulgeUV', description: 'Bulge/pinch distortion', isNew: true },
+    { name: 'aspectCorrect', description: 'Correct for aspect ratio' },
+    { name: 'coverUV / containUV', description: 'CSS-like background sizing' },
+    { name: 'scrollUV', description: 'Infinite scroll animation' },
+    { name: 'parallaxUV', description: 'Parallax offset' },
+  ]
 
-// Grain functions
-const grainFunctions = [
-  { name: 'grain', description: 'Simple film grain' },
-  { name: 'animatedGrain', description: 'Time-based animated grain' },
-  { name: 'coloredGrain', description: 'RGB colored grain' },
-  { name: 'bayer2x2 / bayer4x4', description: 'Bayer dithering matrices' },
-  { name: 'bayer8x8', description: '8x8 Bayer for high-quality dithering', isNew: true },
-  { name: 'dither8x8Color', description: 'Apply 8x8 dithering to color', isNew: true },
-  { name: 'ditherColor', description: 'Apply dithering to color' },
-  { name: 'scanlines', description: 'CRT scanlines' },
-  { name: 'interlace', description: 'Interlaced scanlines' },
-  { name: 'vignette', description: 'Circular vignette' },
-  { name: 'rectVignette', description: 'Rectangular vignette' },
-  { name: 'paperTexture', description: 'Paper texture noise' },
-  { name: 'halftone', description: 'Halftone dot pattern' },
-  { name: 'crtEffect', description: 'Full CRT effect combo' },
-]
+  // Grain functions
+  const grainFunctions = [
+    { name: 'grain', description: 'Simple film grain' },
+    { name: 'animatedGrain', description: 'Time-based animated grain' },
+    { name: 'coloredGrain', description: 'RGB colored grain' },
+    { name: 'bayer2x2 / bayer4x4', description: 'Bayer dithering matrices' },
+    { name: 'bayer8x8', description: '8x8 Bayer for high-quality dithering', isNew: true },
+    { name: 'dither8x8Color', description: 'Apply 8x8 dithering to color', isNew: true },
+    { name: 'ditherColor', description: 'Apply dithering to color' },
+    { name: 'scanlines', description: 'CRT scanlines' },
+    { name: 'interlace', description: 'Interlaced scanlines' },
+    { name: 'vignette', description: 'Circular vignette' },
+    { name: 'rectVignette', description: 'Rectangular vignette' },
+    { name: 'paperTexture', description: 'Paper texture noise' },
+    { name: 'halftone', description: 'Halftone dot pattern' },
+    { name: 'crtEffect', description: 'Full CRT effect combo' },
+  ]
 
-// Stats
-const totalNewFunctions = computed(() => {
-  let count = 0
-  noiseFunctions.forEach((f) => f.isNew && count++)
-  patternFunctions.forEach((f) => f.isNew && count++)
-  uvFunctions.forEach((f) => f.isNew && count++)
-  grainFunctions.forEach((f) => f.isNew && count++)
-  count += sdfShapes.length + sdfOperations.length
-  count += lightingFunctions.length
-  count += tonemappingFunctions.length
-  count += effectFunctions.length
-  count += mathFunctions.length
-  count += noiseHelpers.length
-  return count
-})
+  // Stats
+  const totalNewFunctions = computed(() => {
+    let count = 0
+    noiseFunctions.forEach((f) => f.isNew && count++)
+    patternFunctions.forEach((f) => f.isNew && count++)
+    uvFunctions.forEach((f) => f.isNew && count++)
+    grainFunctions.forEach((f) => f.isNew && count++)
+    count += sdfShapes.length + sdfOperations.length
+    count += lightingFunctions.length
+    count += tonemappingFunctions.length
+    count += effectFunctions.length
+    count += mathFunctions.length
+    count += noiseHelpers.length
+    return count
+  })
 </script>
 
+<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
+<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
+<!-- eslint-disable vue/no-template-key -->
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Shader Layer Demo"
@@ -463,7 +493,9 @@ const totalNewFunctions = computed(() => {
               to="/shader-pipeline"
               class="bg-linear-to-r from-violet-600/20 to-purple-600/20 backdrop-blur border border-violet-500/50 rounded-xl px-6 py-4 hover:border-violet-500 transition-colors group"
             >
-              <div class="text-lg font-bold text-white group-hover:text-violet-300 transition-colors">
+              <div
+                class="text-lg font-bold text-white group-hover:text-violet-300 transition-colors"
+              >
                 Shader Pipeline
               </div>
               <div class="text-sm text-gray-400">142 composable TSL blocks</div>
@@ -472,7 +504,9 @@ const totalNewFunctions = computed(() => {
               to="/shader-background"
               class="bg-linear-to-r from-violet-600/20 to-indigo-600/20 backdrop-blur border border-violet-500/50 rounded-xl px-6 py-4 hover:border-violet-500 transition-colors group"
             >
-              <div class="text-lg font-bold text-white group-hover:text-violet-300 transition-colors">
+              <div
+                class="text-lg font-bold text-white group-hover:text-violet-300 transition-colors"
+              >
                 Shader Backgrounds
               </div>
               <div class="text-sm text-gray-400">50+ pre-built background presets</div>
@@ -501,7 +535,7 @@ const totalNewFunctions = computed(() => {
                   ? 'bg-violet-600 border-violet-500 text-white'
                   : 'bg-gray-800/50 border-gray-700 text-gray-400 hover:border-gray-600 hover:text-white',
               ]"
-              @click="activeCategory = cat.id"
+              @click="() => (activeCategory = cat.id)"
             >
               <UIcon :name="cat.icon" />
               {{ cat.label }}
@@ -528,7 +562,7 @@ const totalNewFunctions = computed(() => {
                 v-for="cat in categories.filter((c) => c.id !== 'overview')"
                 :key="cat.id"
                 class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 hover:border-violet-500/50 transition-colors cursor-pointer group"
-                @click="activeCategory = cat.id"
+                @click="() => (activeCategory = cat.id)"
               >
                 <div
                   class="w-12 h-12 bg-violet-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-violet-500/20 transition-colors"
@@ -609,7 +643,7 @@ const totalNewFunctions = computed(() => {
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <!-- Shader Canvas (3 cols) -->
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-[500px] bg-gray-900 rounded-2xl overflow-hidden relative"
+                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
                 @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
               >
                 <ShaderDemoCanvas
@@ -646,7 +680,7 @@ const totalNewFunctions = computed(() => {
                       ? 'bg-violet-600/20 border-violet-500'
                       : 'bg-gray-800/50 border-gray-700 hover:border-gray-600',
                   ]"
-                  @click="activeNoiseDemo = option.id as DemoType"
+                  @click="() => (activeNoiseDemo = option.id as DemoType)"
                 >
                   <div class="flex items-center justify-between mb-1">
                     <span class="font-semibold">{{ option.name }}</span>
@@ -715,9 +749,9 @@ const totalNewFunctions = computed(() => {
                       simplexNoise2D
                     </code>
                     <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300">fbm</code>
-                    <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300"
-                      >hash21</code
-                    >
+                    <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300">
+                      hash21
+                    </code>
                   </div>
                 </div>
               </div>
@@ -755,7 +789,7 @@ const totalNewFunctions = computed(() => {
             <!-- Interactive Demo with Cards -->
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-[500px] bg-gray-900 rounded-2xl overflow-hidden relative"
+                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
                 @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
               >
                 <ShaderDemoCanvas
@@ -791,7 +825,7 @@ const totalNewFunctions = computed(() => {
                       ? 'bg-violet-600/20 border-violet-500'
                       : 'bg-gray-800/50 border-gray-700 hover:border-gray-600',
                   ]"
-                  @click="activeSdfDemo = option.id as DemoType"
+                  @click="() => (activeSdfDemo = option.id as DemoType)"
                 >
                   <div class="flex items-center justify-between mb-1">
                     <span class="font-semibold">{{ option.name }}</span>
@@ -856,9 +890,9 @@ const totalNewFunctions = computed(() => {
                     Active Functions
                   </h5>
                   <div class="flex flex-wrap gap-2">
-                    <code class="text-xs bg-gray-800 px-2 py-1 rounded text-cyan-300"
-                      >sdSphere</code
-                    >
+                    <code class="text-xs bg-gray-800 px-2 py-1 rounded text-cyan-300">
+                      sdSphere
+                    </code>
                     <code class="text-xs bg-gray-800 px-2 py-1 rounded text-cyan-300">smin</code>
                     <code class="text-xs bg-gray-800 px-2 py-1 rounded text-cyan-300">
                       smoothstep
@@ -894,7 +928,7 @@ const totalNewFunctions = computed(() => {
 
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-[500px] bg-gray-900 rounded-2xl overflow-hidden relative"
+                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
                 @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
               >
                 <ShaderDemoCanvas
@@ -931,7 +965,7 @@ const totalNewFunctions = computed(() => {
                       ? 'bg-violet-600/20 border-violet-500'
                       : 'bg-gray-800/50 border-gray-700 hover:border-gray-600',
                   ]"
-                  @click="activeLightingDemo = option.id as DemoType"
+                  @click="() => (activeLightingDemo = option.id as DemoType)"
                 >
                   <div class="flex items-center justify-between mb-1">
                     <span class="font-semibold">{{ option.name }}</span>
@@ -981,9 +1015,9 @@ const totalNewFunctions = computed(() => {
                   </h5>
                   <div class="flex flex-wrap gap-2">
                     <code class="text-xs bg-gray-800 px-2 py-1 rounded text-pink-300">fresnel</code>
-                    <code class="text-xs bg-gray-800 px-2 py-1 rounded text-pink-300"
-                      >normalize</code
-                    >
+                    <code class="text-xs bg-gray-800 px-2 py-1 rounded text-pink-300">
+                      normalize
+                    </code>
                     <code class="text-xs bg-gray-800 px-2 py-1 rounded text-pink-300">dot</code>
                   </div>
                 </div>
@@ -1014,7 +1048,7 @@ const totalNewFunctions = computed(() => {
 
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-[500px] bg-gray-900 rounded-2xl overflow-hidden relative"
+                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
                 @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
               >
                 <ShaderDemoCanvas
@@ -1046,7 +1080,7 @@ const totalNewFunctions = computed(() => {
                       ? 'bg-violet-600/20 border-violet-500'
                       : 'bg-gray-800/50 border-gray-700 hover:border-gray-600',
                   ]"
-                  @click="activeTonemappingDemo = option.id as DemoType"
+                  @click="() => (activeTonemappingDemo = option.id as DemoType)"
                 >
                   <div class="flex items-center justify-between mb-1">
                     <span class="font-semibold">{{ option.name }}</span>
@@ -1137,7 +1171,7 @@ const totalNewFunctions = computed(() => {
 
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-[500px] bg-gray-900 rounded-2xl overflow-hidden relative"
+                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
                 @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
               >
                 <ShaderDemoCanvas
@@ -1169,7 +1203,7 @@ const totalNewFunctions = computed(() => {
                       ? 'bg-violet-600/20 border-violet-500'
                       : 'bg-gray-800/50 border-gray-700 hover:border-gray-600',
                   ]"
-                  @click="activePatternDemo = option.id as DemoType"
+                  @click="() => (activePatternDemo = option.id as DemoType)"
                 >
                   <div class="flex items-center justify-between mb-1">
                     <span class="font-semibold">{{ option.name }}</span>
@@ -1257,7 +1291,7 @@ const totalNewFunctions = computed(() => {
 
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-[500px] bg-gray-900 rounded-2xl overflow-hidden relative"
+                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
                 @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
               >
                 <template v-if="activeEffectDemo === 'image'">
@@ -1301,7 +1335,7 @@ const totalNewFunctions = computed(() => {
                       ? 'bg-violet-600/20 border-violet-500'
                       : 'bg-gray-800/50 border-gray-700 hover:border-gray-600',
                   ]"
-                  @click="activeEffectDemo = option.id as DemoType"
+                  @click="() => (activeEffectDemo = option.id as DemoType)"
                 >
                   <div class="flex items-center justify-between mb-1">
                     <span class="font-semibold">{{ option.name }}</span>
@@ -1410,7 +1444,7 @@ const totalNewFunctions = computed(() => {
 
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-[500px] bg-gray-900 rounded-2xl overflow-hidden relative"
+                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
                 @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
               >
                 <ShaderDemoCanvas
@@ -1543,7 +1577,7 @@ const totalNewFunctions = computed(() => {
 
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-[500px] bg-gray-900 rounded-2xl overflow-hidden relative"
+                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
                 @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
               >
                 <template v-if="activeUvDemo === 'image'">
@@ -1587,7 +1621,7 @@ const totalNewFunctions = computed(() => {
                       ? 'bg-violet-600/20 border-violet-500'
                       : 'bg-gray-800/50 border-gray-700 hover:border-gray-600',
                   ]"
-                  @click="activeUvDemo = option.id as DemoType"
+                  @click="() => (activeUvDemo = option.id as DemoType)"
                 >
                   <div class="flex items-center justify-between mb-1">
                     <span class="font-semibold">{{ option.name }}</span>
@@ -1660,7 +1694,7 @@ const totalNewFunctions = computed(() => {
             <div class="grid lg:grid-cols-2 gap-8">
               <div>
                 <h3 class="text-xl font-semibold text-violet-400 mb-4">UV Functions</h3>
-                <div class="space-y-2 max-h-[400px] overflow-y-auto pr-2">
+                <div class="space-y-2 max-h-100 overflow-y-auto pr-2">
                   <div
                     v-for="fn in uvFunctions"
                     :key="fn.name"
@@ -1677,7 +1711,7 @@ const totalNewFunctions = computed(() => {
 
               <div>
                 <h3 class="text-xl font-semibold text-cyan-400 mb-4">Grain & Dithering</h3>
-                <div class="space-y-2 max-h-[400px] overflow-y-auto pr-2">
+                <div class="space-y-2 max-h-100 overflow-y-auto pr-2">
                   <div
                     v-for="fn in grainFunctions"
                     :key="fn.name"
@@ -1739,9 +1773,9 @@ const totalNewFunctions = computed(() => {
 </template>
 
 <style scoped>
-pre {
-  border-radius: 0.5rem;
-  background-color: oklch(0% 0% 0deg / 0.3);
-  padding: 1rem;
-}
+  pre {
+    border-radius: 0.5rem;
+    background-color: oklch(0% 0% 0deg / 0.3);
+    padding: 1rem;
+  }
 </style>

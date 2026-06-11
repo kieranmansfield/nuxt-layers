@@ -29,35 +29,38 @@
       name: 'useScriptLoader',
       icon: 'i-lucide-cloud-download',
       description: 'Load any third-party <script> with a strategy: onNuxtReady, idle, or manual',
-      snippet: `useScriptLoader({ src: 'https://...', strategy: 'idle' })`,
+      snippet: "useScriptLoader({ src: 'https://...', strategy: 'idle' })",
     },
     {
       name: 'useYoutubeEmbed',
       icon: 'i-lucide-youtube',
       description: 'Facade-pattern YouTube embed — loads the IFrame API only on interaction',
-      snippet: `useYoutubeEmbed(videoId)`,
+      snippet: 'useYoutubeEmbed(videoId)',
     },
     {
       name: 'useGtm',
       icon: 'i-lucide-bar-chart-3',
       description: 'Google Tag Manager wrapper around @nuxt/scripts',
-      snippet: `useGtm()`,
+      snippet: 'useGtm()',
     },
     {
       name: 'useAnalytics',
       icon: 'i-lucide-line-chart',
       description: 'Provider-agnostic analytics proxy (GA4 / Plausible / Fathom)',
-      snippet: `useAnalytics()`,
+      snippet: 'useAnalytics()',
     },
     {
       name: 'useScriptsConsent',
       icon: 'i-lucide-shield-check',
       description: 'Consent-gated script loading with localStorage persistence',
-      snippet: `useScriptsConsent()`,
+      snippet: 'useScriptsConsent()',
     },
   ]
 </script>
 
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Scripts Layer Demo"
@@ -81,10 +84,10 @@
           </p>
           <div class="flex flex-wrap gap-4 justify-center">
             <UButton size="lg" @click="$router.push('#consent')">Consent Demo</UButton>
-            <UButton size="lg" variant="outline" @click="$router.push('#embed')"
-              >YouTube Embed</UButton
-            >
-            <UButton size="lg" variant="ghost" @click="back()">
+            <UButton size="lg" variant="outline" @click="$router.push('#embed')">
+              YouTube Embed
+            </UButton>
+            <UButton size="lg" variant="ghost" @click="back">
               <UIcon name="i-lucide-arrow-left" class="mr-2" />
               Back
             </UButton>
@@ -93,7 +96,7 @@
       </section>
 
       <!-- Composables grid -->
-      <section class="py-24 bg-gray-900">
+      <section class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Composables</h2>
@@ -130,7 +133,7 @@
               consent
             </p>
           </div>
-          <div class="max-w-2xl mx-auto bg-gray-900 rounded-2xl p-8 border border-gray-800">
+          <div class="max-w-2xl mx-auto bg-gray-950 rounded-2xl p-8 border border-gray-800">
             <div class="grid sm:grid-cols-3 gap-4 mb-8">
               <div
                 v-for="row in consentRows"
@@ -156,7 +159,7 @@
       </section>
 
       <!-- YouTube Embed -->
-      <section id="embed" class="py-24 bg-gray-900">
+      <section id="embed" class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">YouTube Facade</h2>
@@ -208,7 +211,7 @@
               <p class="text-gray-400">Consent-aware analytics, GTM, and third-party embeds</p>
             </div>
             <div class="flex flex-wrap gap-4">
-              <UButton variant="outline" @click="back()">Back</UButton>
+              <UButton variant="outline" @click="back">Back</UButton>
               <UButton to="/">Home</UButton>
             </div>
           </div>

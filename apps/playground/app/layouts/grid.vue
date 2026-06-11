@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const { showHeader, showNav, showFooter, showGridDebug } = defineProps<{
-  showHeader?: boolean
-  showNav?: boolean
-  showFooter?: boolean
-  showGridDebug?: boolean
-}>()
+  const { showHeader, showNav, showFooter, showGridDebug } = defineProps<{
+    showHeader?: boolean
+    showNav?: boolean
+    showFooter?: boolean
+    showGridDebug?: boolean
+  }>()
 </script>
 
 <template>

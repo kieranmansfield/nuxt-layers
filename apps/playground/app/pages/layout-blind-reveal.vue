@@ -1,55 +1,57 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'grid' })
+  definePageMeta({ layout: 'grid' })
 
-const { setPageAccent } = useAccentColor()
-setPageAccent('amber')
-onUnmounted(() => setPageAccent(null))
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('amber')
+  onUnmounted(() => setPageAccent(null))
 
-const { gsap } = useGsap()
+  const { gsap } = useGsap()
 
-const contentStyle = { position: 'relative', zIndex: 2 }
+  const contentStyle = { position: 'relative', zIndex: 2 }
 
-const footerStyle = {
-  position: 'sticky',
-  bottom: '0',
-  zIndex: 1,
-  transformOrigin: 'bottom center',
-  willChange: 'transform',
-  display: 'grid',
-  alignSelf: 'end',
-}
+  const footerStyle = {
+    position: 'sticky',
+    bottom: '0',
+    zIndex: 1,
+    transformOrigin: 'bottom center',
+    willChange: 'transform',
+    display: 'grid',
+    alignSelf: 'end',
+  }
 
-let ctx: ReturnType<typeof gsap.context> | null = null
+  let ctx: ReturnType<typeof gsap.context> | null = null
 
-onMounted(() => {
-  const contentSections = Array.from(document.querySelectorAll<HTMLElement>('[data-blind-content]'))
-  const footer = document.querySelector<HTMLElement>('[data-blind-footer]')
-  if (!footer || contentSections.length === 0) return
-
-  const lastContent = contentSections[contentSections.length - 1]
-
-  ctx = gsap.context(() => {
-    gsap.fromTo(
-      footer,
-      { scale: 0.92 },
-      {
-        scale: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: lastContent,
-          start: 'bottom bottom',
-          end: 'bottom top',
-          scrub: true,
-        },
-      }
+  onMounted(() => {
+    const contentSections = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-blind-content]')
     )
-  })
-})
+    const footer = document.querySelector<HTMLElement>('[data-blind-footer]')
+    if (!footer || contentSections.length === 0) return
 
-onUnmounted(() => {
-  ctx?.revert()
-  ctx = null
-})
+    const lastContent = contentSections[contentSections.length - 1]
+
+    ctx = gsap.context(() => {
+      gsap.fromTo(
+        footer,
+        { scale: 0.92 },
+        {
+          scale: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: lastContent,
+            start: 'bottom bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        }
+      )
+    })
+  })
+
+  onUnmounted(() => {
+    ctx?.revert()
+    ctx = null
+  })
 </script>
 
 <template>
@@ -214,12 +216,12 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.stack-progress {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1000;
-  pointer-events: none;
-}
+  .stack-progress {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    pointer-events: none;
+  }
 </style>

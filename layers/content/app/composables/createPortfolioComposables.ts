@@ -7,7 +7,9 @@ export function createPortfolioComposables(collectionName: string) {
     const { featured, tags, limit } = options
 
     return useContentData(`${collectionName}-items`, async () => {
-      let items = await queryCollection(collectionName).order('year', 'DESC').all()
+      let items = (await queryCollection(collectionName).all()).sort(
+        (a, b) => (b.year ?? 0) - (a.year ?? 0)
+      )
 
       if (featured !== undefined) {
         items = items.filter((item) => item.featured === featured)

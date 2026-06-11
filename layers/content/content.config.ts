@@ -76,16 +76,16 @@ export const galleryCollectionSchema = z.object({
 })
 
 export const createContentCollection = (source = 'pages/**/*.md') =>
-  defineCollection({ type: 'page', source, schema: contentCollectionSchema })
+  defineCollection({ type: 'page', source })
 
 export const createBlogCollection = (source = 'blog/**/*.md') =>
-  defineCollection({ type: 'page', source, schema: blogCollectionSchema })
+  defineCollection({ type: 'page', source })
 
 export const createPortfolioCollection = (source = 'portfolio/**/*.md') =>
-  defineCollection({ type: 'page', source, schema: portfolioCollectionSchema })
+  defineCollection({ type: 'page', source })
 
 export const createGalleryCollection = (source = 'gallery/**/*.md') =>
-  defineCollection({ type: 'page', source, schema: galleryCollectionSchema })
+  defineCollection({ type: 'page', source })
 
 export default defineContentConfig({
   collections: {

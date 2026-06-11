@@ -1,50 +1,50 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'grid' })
+  definePageMeta({ layout: 'grid' })
 
-const { setPageAccent } = useAccentColor()
-setPageAccent('amber')
-onUnmounted(() => setPageAccent(null))
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('amber')
+  onUnmounted(() => setPageAccent(null))
 
-const { gsap } = useGsap()
+  const { gsap } = useGsap()
 
-const sectionStyles = [1, 2, 3, 4, 5].map((n) => ({
-  position: 'sticky',
-  top: '0px',
-  zIndex: n,
-  transformOrigin: 'top center',
-  willChange: n < 5 ? 'transform' : undefined,
-}))
+  const sectionStyles = [1, 2, 3, 4, 5].map((n) => ({
+    position: 'sticky',
+    top: '0px',
+    zIndex: n,
+    transformOrigin: 'top center',
+    willChange: n < 5 ? 'transform' : undefined,
+  }))
 
-let ctx: ReturnType<typeof gsap.context> | null = null
+  let ctx: ReturnType<typeof gsap.context> | null = null
 
-onMounted(() => {
-  const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-stack-section]'))
-  if (sections.length < 2) return
+  onMounted(() => {
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-stack-section]'))
+    if (sections.length < 2) return
 
-  ctx = gsap.context(() => {
-    sections.slice(0, -1).forEach((section, i) => {
-      gsap.fromTo(
-        section,
-        { scale: 1 },
-        {
-          scale: 0.88,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sections[i + 1],
-            start: 'top bottom',
-            end: 'top top',
-            scrub: true,
-          },
-        }
-      )
+    ctx = gsap.context(() => {
+      sections.slice(0, -1).forEach((section, i) => {
+        gsap.fromTo(
+          section,
+          { scale: 1 },
+          {
+            scale: 0.88,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sections[i + 1],
+              start: 'top bottom',
+              end: 'top top',
+              scrub: true,
+            },
+          }
+        )
+      })
     })
   })
-})
 
-onUnmounted(() => {
-  ctx?.revert()
-  ctx = null
-})
+  onUnmounted(() => {
+    ctx?.revert()
+    ctx = null
+  })
 </script>
 
 <template>
@@ -256,12 +256,12 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.stack-progress {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1000;
-  pointer-events: none;
-}
+  .stack-progress {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    pointer-events: none;
+  }
 </style>

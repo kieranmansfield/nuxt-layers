@@ -44,7 +44,7 @@
 
   const { ScrollTrigger } = useGsap()
 
-  const containerRef = useTemplateRef<HTMLElement | null>(null)
+  const containerRef = useTemplateRef<HTMLElement>('containerRef')
   const progress = ref(0)
   const active = ref(false)
 

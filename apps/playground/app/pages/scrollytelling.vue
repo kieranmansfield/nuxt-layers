@@ -1,51 +1,51 @@
 <script setup lang="ts">
-definePageMeta({ layout: false })
-const { setPageAccent } = useAccentColor()
-setPageAccent('violet')
-onUnmounted(() => setPageAccent(null))
+  definePageMeta({ layout: false })
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('violet')
+  onUnmounted(() => setPageAccent(null))
 
-const { velocity, progress: globalProgress } = useSmoothScroll()
+  const { velocity, progress: globalProgress } = useSmoothScroll()
 
-// --- Chapter 1: ScrollScene + ScrollStep ---
-const sceneProgress = ref(0)
-const sceneActive = ref(false)
-const currentChapter = ref(0)
+  // --- Chapter 1: ScrollScene + ScrollStep ---
+  const sceneProgress = ref(0)
+  const sceneActive = ref(false)
+  const currentChapter = ref(0)
 
-function onSceneProgress(p: number) {
-  sceneProgress.value = p
-}
+  function onSceneProgress(p: number) {
+    sceneProgress.value = p
+  }
 
-// --- Chapter 3: useSectionProgress debug ---
-const debugSectionRef = ref<HTMLElement | null>(null)
-const { progress: sectionProg, active: sectionActive } = useSectionProgress(debugSectionRef, {
-  start: 'top 80%',
-  end: 'bottom 20%',
-})
+  // --- Chapter 3: useSectionProgress debug ---
+  const debugSectionRef = useTemplateRef<HTMLElement>('debugSectionRef')
+  const { progress: sectionProg, active: sectionActive } = useSectionProgress(debugSectionRef, {
+    start: 'top 80%',
+    end: 'bottom 20%',
+  })
 
-const cards = [
-  {
-    title: 'Establish',
-    body: 'Set the scene. Introduce the subject before the journey begins.',
-    color: 'from-blue-600 to-blue-900',
-  },
-  {
-    title: 'Develop',
-    body: 'Build tension. Layer in evidence, context, and complexity as scroll advances.',
-    color: 'from-violet-600 to-violet-900',
-  },
-  {
-    title: 'Resolve',
-    body: 'Land the insight. The reader reaches the conclusion with earned understanding.',
-    color: 'from-pink-600 to-pink-900',
-  },
-]
+  const cards = [
+    {
+      title: 'Establish',
+      body: 'Set the scene. Introduce the subject before the journey begins.',
+      color: 'from-blue-600 to-blue-900',
+    },
+    {
+      title: 'Develop',
+      body: 'Build tension. Layer in evidence, context, and complexity as scroll advances.',
+      color: 'from-violet-600 to-violet-900',
+    },
+    {
+      title: 'Resolve',
+      body: 'Land the insight. The reader reaches the conclusion with earned understanding.',
+      color: 'from-pink-600 to-pink-900',
+    },
+  ]
 </script>
 
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
-  <LayoutPage
-    title="Scrollytelling"
-    description="Multi-chapter narrative scroll demos"
-  >
+  <LayoutPage title="Scrollytelling" description="Multi-chapter narrative scroll demos">
     <div class="scrollytelling-page">
       <!-- Hero -->
       <section
@@ -57,14 +57,13 @@ const cards = [
         <div class="text-center z-10 px-4">
           <h1 class="text-6xl sm:text-8xl md:text-9xl font-black text-white mb-6">
             <span
-              class="inline-block"
               v-gsap.from="{ y: 120, opacity: 0, rotateX: -90, duration: 1.2, ease: 'power3.out' }"
+              class="inline-block"
             >
               SCROLLY
             </span>
             <br />
             <span
-              class="inline-block text-violet-400"
               v-gsap.delay-100.from="{
                 y: 120,
                 opacity: 0,
@@ -72,6 +71,7 @@ const cards = [
                 duration: 1.2,
                 ease: 'power3.out',
               }"
+              class="inline-block text-violet-400"
             >
               TELLING
             </span>
@@ -107,7 +107,7 @@ const cards = [
       <!-- ─────────────────────────────────────────────────────────────────────
            Chapter 1: ScrollScene + ScrollStep (narrative reveal)
            ───────────────────────────────────────────────────────────────────── -->
-      <section class="py-24 bg-gray-900">
+      <section class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <UBadge color="primary" variant="subtle" class="mb-4">Chapter 1</UBadge>
@@ -204,7 +204,7 @@ const cards = [
       <!-- ─────────────────────────────────────────────────────────────────────
            Chapter 2: MotionPinnedSection (staggered card reveals)
            ───────────────────────────────────────────────────────────────────── -->
-      <section class="py-24 bg-gray-900">
+      <section class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <UBadge color="primary" variant="subtle" class="mb-4">Chapter 2</UBadge>
@@ -236,7 +236,7 @@ const cards = [
       <!-- ─────────────────────────────────────────────────────────────────────
            Chapter 3: useSectionProgress debug overlay
            ───────────────────────────────────────────────────────────────────── -->
-      <section ref="debugSectionRef" class="py-32 bg-gray-900">
+      <section ref="debugSectionRef" class="py-32 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <UBadge color="primary" variant="subtle" class="mb-4">Chapter 3</UBadge>

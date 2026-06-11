@@ -1,132 +1,142 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: { name: 'grid', props: { showHeader: true, showFooter: false, showGridDebug: true } },
-})
+  definePageMeta({
+    layout: false,
+  })
 
-const { setPageAccent } = useAccentColor()
-setPageAccent('amber')
-onUnmounted(() => setPageAccent(null))
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('amber')
+  onUnmounted(() => setPageAccent(null))
 
-const galleryItems = [
-  { id: 1, title: 'Item 1', color: 'bg-blue-500' },
-  { id: 2, title: 'Item 2', color: 'bg-green-500' },
-  { id: 3, title: 'Item 3', color: 'bg-purple-500' },
-  { id: 4, title: 'Item 4', color: 'bg-orange-500' },
-  { id: 5, title: 'Item 5', color: 'bg-pink-500' },
-  { id: 6, title: 'Item 6', color: 'bg-cyan-500' },
-]
+  const galleryItems = [
+    { id: 1, title: 'Item 1', color: 'bg-blue-500' },
+    { id: 2, title: 'Item 2', color: 'bg-green-500' },
+    { id: 3, title: 'Item 3', color: 'bg-purple-500' },
+    { id: 4, title: 'Item 4', color: 'bg-orange-500' },
+    { id: 5, title: 'Item 5', color: 'bg-pink-500' },
+    { id: 6, title: 'Item 6', color: 'bg-cyan-500' },
+  ]
 
-// Preset gallery data — mini-bar diagrams show the lg (18-col) layout
-const presetGroups = [
-  {
-    label: 'Full-width',
-    presets: [
-      { name: 'hero', desc: 'Full width · all 12 rows', lgStart: 1, lgSpan: 18 },
-      { name: 'fullWidth', desc: 'All columns, no bleed', lgStart: 1, lgSpan: 18 },
-      { name: 'superCentered', desc: 'Full width · content centered', lgStart: 1, lgSpan: 18 },
-    ],
-  },
-  {
-    label: 'Width variants',
-    presets: [
-      { name: 'wide', desc: 'lg: cols 2–17 · 16 cols', lgStart: 2, lgSpan: 16 },
-      { name: 'centered', desc: 'Full width · 12 rows (100vh)', lgStart: 1, lgSpan: 18 },
-      { name: 'prose', desc: 'lg: cols 5–14 · 10 cols', lgStart: 5, lgSpan: 10 },
-    ],
-  },
-  {
-    label: 'Sidebar pair',
-    presets: [
-      { name: 'sidebar', desc: 'lg: cols 1–4 · 4 cols', lgStart: 1, lgSpan: 4 },
-      { name: 'content', desc: 'lg: cols 5–18 · 14 cols', lgStart: 5, lgSpan: 14 },
-    ],
-  },
-  {
-    label: '50/50 vertical split',
-    presets: [
-      { name: 'splitLeft', desc: 'lg: cols 1–9', lgStart: 1, lgSpan: 9 },
-      { name: 'splitRight', desc: 'lg: cols 10–18', lgStart: 10, lgSpan: 9 },
-    ],
-  },
-  {
-    label: '25/75 vertical split',
-    presets: [
-      { name: 'quarterLeft', desc: 'lg: cols 1–5', lgStart: 1, lgSpan: 5 },
-      { name: 'threeQuarterRight', desc: 'lg: cols 6–18', lgStart: 6, lgSpan: 13 },
-      { name: 'threeQuarterLeft', desc: 'lg: cols 1–13', lgStart: 1, lgSpan: 13 },
-      { name: 'quarterRight', desc: 'lg: cols 14–18', lgStart: 14, lgSpan: 5 },
-    ],
-  },
-  {
-    label: 'Horizontal stacks',
-    presets: [
-      { name: 'halfTop', desc: 'Full width · rows 1–6', lgStart: 1, lgSpan: 18 },
-      { name: 'halfBottom', desc: 'Full width · rows 7–12', lgStart: 1, lgSpan: 18 },
-    ],
-  },
-]
+  // Preset gallery data — mini-bar diagrams show the lg (18-col) layout
+  const presetGroups = [
+    {
+      label: 'Full-width',
+      presets: [
+        { name: 'hero', desc: 'Full width · all 12 rows', lgStart: 1, lgSpan: 18 },
+        { name: 'fullWidth', desc: 'All columns, no bleed', lgStart: 1, lgSpan: 18 },
+        { name: 'superCentered', desc: 'Full width · content centered', lgStart: 1, lgSpan: 18 },
+      ],
+    },
+    {
+      label: 'Width variants',
+      presets: [
+        { name: 'wide', desc: 'lg: cols 2–17 · 16 cols', lgStart: 2, lgSpan: 16 },
+        { name: 'centered', desc: 'Full width · 12 rows (100vh)', lgStart: 1, lgSpan: 18 },
+        { name: 'prose', desc: 'lg: cols 5–14 · 10 cols', lgStart: 5, lgSpan: 10 },
+      ],
+    },
+    {
+      label: 'Sidebar pair',
+      presets: [
+        { name: 'sidebar', desc: 'lg: cols 1–4 · 4 cols', lgStart: 1, lgSpan: 4 },
+        { name: 'content', desc: 'lg: cols 5–18 · 14 cols', lgStart: 5, lgSpan: 14 },
+      ],
+    },
+    {
+      label: '50/50 vertical split',
+      presets: [
+        { name: 'splitLeft', desc: 'lg: cols 1–9', lgStart: 1, lgSpan: 9 },
+        { name: 'splitRight', desc: 'lg: cols 10–18', lgStart: 10, lgSpan: 9 },
+      ],
+    },
+    {
+      label: '25/75 vertical split',
+      presets: [
+        { name: 'quarterLeft', desc: 'lg: cols 1–5', lgStart: 1, lgSpan: 5 },
+        { name: 'threeQuarterRight', desc: 'lg: cols 6–18', lgStart: 6, lgSpan: 13 },
+        { name: 'threeQuarterLeft', desc: 'lg: cols 1–13', lgStart: 1, lgSpan: 13 },
+        { name: 'quarterRight', desc: 'lg: cols 14–18', lgStart: 14, lgSpan: 5 },
+      ],
+    },
+    {
+      label: 'Horizontal stacks',
+      presets: [
+        { name: 'halfTop', desc: 'Full width · rows 1–6', lgStart: 1, lgSpan: 18 },
+        { name: 'halfBottom', desc: 'Full width · rows 7–12', lgStart: 1, lgSpan: 18 },
+      ],
+    },
+  ]
 
-type PresetPart = { name: string; lgStart: number; lgSpan: number; colorClass: string }
+  type PresetPart = { name: string; lgStart: number; lgSpan: number; colorClass: string }
 
-// Paired presets — shown as combined 18-column visualizations (lg layout)
-const presetPairs: { label: string; note: string; parts: [PresetPart, PresetPart] }[] = [
-  {
-    label: 'Sidebar pair',
-    note: '4 + 14 = 18 ✓',
-    parts: [
-      { name: 'sidebar', lgStart: 1, lgSpan: 4, colorClass: 'bg-green-500/30' },
-      { name: 'content', lgStart: 5, lgSpan: 14, colorClass: 'bg-teal-500/30' },
-    ],
-  },
-  {
-    label: '50/50 vertical split',
-    note: '9 + 9 = 18 ✓',
-    parts: [
-      { name: 'splitLeft', lgStart: 1, lgSpan: 9, colorClass: 'bg-orange-500/30' },
-      { name: 'splitRight', lgStart: 10, lgSpan: 9, colorClass: 'bg-rose-500/30' },
-    ],
-  },
-  {
-    label: '25/75 vertical split',
-    note: '5 + 13 = 18 ✓',
-    parts: [
-      { name: 'quarterLeft', lgStart: 1, lgSpan: 5, colorClass: 'bg-indigo-500/30' },
-      { name: 'threeQuarterRight', lgStart: 6, lgSpan: 13, colorClass: 'bg-cyan-500/30' },
-    ],
-  },
-  {
-    label: '75/25 vertical split',
-    note: '13 + 5 = 18 ✓',
-    parts: [
-      { name: 'threeQuarterLeft', lgStart: 1, lgSpan: 13, colorClass: 'bg-emerald-500/30' },
-      { name: 'quarterRight', lgStart: 14, lgSpan: 5, colorClass: 'bg-pink-500/30' },
-    ],
-  },
-]
+  // Paired presets — shown as combined 18-column visualizations (lg layout)
+  const presetPairs: { label: string; note: string; parts: [PresetPart, PresetPart] }[] = [
+    {
+      label: 'Sidebar pair',
+      note: '4 + 14 = 18 ✓',
+      parts: [
+        { name: 'sidebar', lgStart: 1, lgSpan: 4, colorClass: 'bg-green-500/30' },
+        { name: 'content', lgStart: 5, lgSpan: 14, colorClass: 'bg-teal-500/30' },
+      ],
+    },
+    {
+      label: '50/50 vertical split',
+      note: '9 + 9 = 18 ✓',
+      parts: [
+        { name: 'splitLeft', lgStart: 1, lgSpan: 9, colorClass: 'bg-orange-500/30' },
+        { name: 'splitRight', lgStart: 10, lgSpan: 9, colorClass: 'bg-rose-500/30' },
+      ],
+    },
+    {
+      label: '25/75 vertical split',
+      note: '5 + 13 = 18 ✓',
+      parts: [
+        { name: 'quarterLeft', lgStart: 1, lgSpan: 5, colorClass: 'bg-indigo-500/30' },
+        { name: 'threeQuarterRight', lgStart: 6, lgSpan: 13, colorClass: 'bg-cyan-500/30' },
+      ],
+    },
+    {
+      label: '75/25 vertical split',
+      note: '13 + 5 = 18 ✓',
+      parts: [
+        { name: 'threeQuarterLeft', lgStart: 1, lgSpan: 13, colorClass: 'bg-emerald-500/30' },
+        { name: 'quarterRight', lgStart: 14, lgSpan: 5, colorClass: 'bg-pink-500/30' },
+      ],
+    },
+  ]
 </script>
 
 <!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Layout Layer"
     description="Demonstrating the Layout layer Swiss Grid system, sections, and page components"
   >
-    <LayoutSection>
-      <LayoutGridItem preset="centered">
-        <div class="space-y-12 py-8">
-          <!-- Header -->
-          <div class="flex items-center gap-4">
-            <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" />
-            <div>
-              <h1 class="text-3xl font-bold text-highlighted">Layout Layer</h1>
-              <p class="text-muted">Swiss Grid system, sections, and page components</p>
-            </div>
-            <div class="ml-auto">
-              <UBadge color="primary" variant="soft">Cmd+G to toggle grid</UBadge>
-            </div>
-          </div>
+    <div class="bg-gray-950 min-h-screen">
+      <LayoutGridDebug />
+      <DemoPageHero
+        name="LAYOUT"
+        description="Swiss Grid system — 18-column subgrid, hero sections, split layouts, and page composition components."
+      />
+      <LayoutMain>
+        <LayoutSection>
+          <LayoutGridItem preset="centered">
+            <div class="space-y-12 py-8">
+              <!-- Header -->
+              <div class="flex items-center gap-4">
+                <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" />
+                <div>
+                  <h1 class="text-3xl font-bold text-highlighted">Layout Layer</h1>
+                  <p class="text-muted">Swiss Grid system, sections, and page components</p>
+                </div>
+                <div class="ml-auto">
+                  <UBadge color="primary" variant="soft">Cmd+G to toggle grid</UBadge>
+                </div>
+              </div>
 
-          <!-- Page Component Section (LayoutPage) -->
+              <!-- Page Component Section (LayoutPage) -->
           <section class="space-y-8">
             <div>
               <h2 class="text-2xl font-bold mb-2">Page Components</h2>
@@ -563,7 +573,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                         <span class="text-xs text-muted shrink-0">{{ preset.desc }}</span>
                       </div>
                       <!-- 18-column mini bar (lg layout) -->
-                      <div class="flex gap-[2px]">
+                      <div class="flex gap-0.5">
                         <div
                           v-for="col in 18"
                           :key="col"
@@ -612,7 +622,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                   </div>
 
                   <!-- Combined 18-column bar -->
-                  <div class="flex gap-[2px]" style="height: 2.5rem">
+                  <div class="flex gap-0.5" style="height: 2.5rem">
                     <div
                       v-for="col in 18"
                       :key="col"
@@ -1131,8 +1141,20 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
               Core Layer Demo
             </UButton>
           </div>
-        </div>
-      </LayoutGridItem>
-    </LayoutSection>
+            </div>
+          </LayoutGridItem>
+        </LayoutSection>
+      </LayoutMain>
+      <DemoPageFooter
+        name="Layout Layer"
+        description="Swiss Grid system and page composition"
+        :links="[
+          { label: 'Core', to: '/core', icon: 'i-lucide-box' },
+          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Blind Reveal', to: '/layout-blind-reveal', icon: 'i-lucide-eye' },
+          { label: 'Stacking', to: '/layout-stacking', icon: 'i-lucide-stack' },
+        ]"
+      />
+    </div>
   </LayoutPage>
 </template>

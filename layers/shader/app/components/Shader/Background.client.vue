@@ -54,7 +54,7 @@
     ready: [renderer: any]
   }>()
 
-  const canvasRef = useTemplateRef<HTMLCanvasElement>()
+  const canvasRef = useTemplateRef<HTMLCanvasElement>('canvasRef')
   const { width, height } = useWindowSize()
 
   let renderer: any

@@ -12,8 +12,8 @@
 
   const { gsap } = useGsap()
 
-  const sectionRef = useTemplateRef<HTMLElement | null>(null)
-  const trackRef = useTemplateRef<HTMLElement | null>(null)
+  const sectionRef = useTemplateRef<HTMLElement>('sectionRef')
+  const trackRef = useTemplateRef<HTMLElement>('trackRef')
 
   let cleanup: (() => void) | null = null
 

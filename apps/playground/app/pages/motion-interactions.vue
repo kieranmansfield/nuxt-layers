@@ -1,30 +1,33 @@
 <script setup lang="ts">
-definePageMeta({ layout: false })
+  definePageMeta({ layout: false })
 
-const { velocity } = useSmoothScroll()
+  const { velocity } = useSmoothScroll()
 
-interface Stat {
-  to: number
-  label: string
-  duration: number
-  prefix?: string
-  suffix?: string
-  ease?: string
-}
+  interface Stat {
+    to: number
+    label: string
+    duration: number
+    prefix?: string
+    suffix?: string
+    ease?: string
+  }
 
-const stats: Stat[] = [
-  { to: 99, suffix: '+', label: 'Projects', duration: 1.5 },
-  { to: 4800000, prefix: '$', label: 'Revenue', duration: 2.5 },
-  { to: 100, suffix: '%', label: 'Uptime', duration: 2, ease: 'power1.out' },
-  { to: 12, suffix: ' yrs', label: 'Experience', duration: 1.2 },
-]
+  const stats: Stat[] = [
+    { to: 99, suffix: '+', label: 'Projects', duration: 1.5 },
+    { to: 4800000, prefix: '$', label: 'Revenue', duration: 2.5 },
+    { to: 100, suffix: '%', label: 'Uptime', duration: 2, ease: 'power1.out' },
+    { to: 12, suffix: ' yrs', label: 'Experience', duration: 1.2 },
+  ]
 
-const showCursor = ref(false)
-const cursorType = ref<'dot' | 'ring' | 'dot-ring' | 'glow'>('dot-ring')
-const cursorVisible = ref(true)
-const cursorSmoothing = ref(0.15)
+  const showCursor = ref(false)
+  const cursorType = ref<'dot' | 'ring' | 'dot-ring' | 'glow'>('dot-ring')
+  const cursorVisible = ref(true)
+  const cursorSmoothing = ref(0.15)
 </script>
 
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Motion Interactions"
@@ -35,18 +38,30 @@ const cursorSmoothing = ref(0.15)
       <section
         class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gray-950"
       >
-        <div class="absolute inset-0 bg-linear-to-b from-primary/10 via-transparent to-transparent" />
+        <div
+          class="absolute inset-0 bg-linear-to-b from-primary/10 via-transparent to-transparent"
+        />
         <div class="text-center z-10 px-4">
           <h1 class="text-6xl sm:text-8xl font-black text-white mb-6">
             <span
-              class="inline-block"
               v-gsap.from="{ y: 100, opacity: 0, rotateX: -80, duration: 1.2, ease: 'power3.out' }"
-            >MICRO</span>
+              class="inline-block"
+            >
+              MICRO
+            </span>
             <br />
             <span
+              v-gsap.delay-100.from="{
+                y: 100,
+                opacity: 0,
+                rotateX: -80,
+                duration: 1.2,
+                ease: 'power3.out',
+              }"
               class="inline-block text-primary"
-              v-gsap.delay-100.from="{ y: 100, opacity: 0, rotateX: -80, duration: 1.2, ease: 'power3.out' }"
-            >INTERACTIONS</span>
+            >
+              INTERACTIONS
+            </span>
           </h1>
           <p class="text-xl text-gray-400 max-w-xl mx-auto mb-10">
             Spring physics composables applied to mouse position, scroll velocity, and element
@@ -66,19 +81,21 @@ const cursorSmoothing = ref(0.15)
       </section>
 
       <!-- Velocity debug -->
-      <div class="fixed top-4 right-4 z-50 bg-black/80 text-white px-4 py-3 rounded-lg font-mono text-xs">
+      <div
+        class="fixed top-4 right-4 z-50 bg-black/80 text-white px-4 py-3 rounded-lg font-mono text-xs"
+      >
         Velocity: {{ velocity.toFixed(2) }}
       </div>
 
       <!-- ─── MotionMagnetic ──────────────────────────────────────────────────── -->
-      <section class="py-32 bg-gray-900">
+      <section class="py-32 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <UBadge color="primary" variant="subtle" class="mb-4">Magnetic</UBadge>
             <h2 class="text-4xl font-bold text-white mb-3">MotionMagnetic</h2>
             <p class="text-gray-400 max-w-lg mx-auto">
-              Move your cursor near each element — it springs toward you then snaps back.
-              Each button has a different <code class="text-primary">strength</code> and
+              Move your cursor near each element — it springs toward you then snaps back. Each
+              button has a different <code class="text-primary">strength</code> and
               <code class="text-primary">radius</code>.
             </p>
           </div>
@@ -104,12 +121,7 @@ const cursorSmoothing = ref(0.15)
               <p class="text-gray-500 text-xs font-mono mb-6">strength: 0.3 — default</p>
               <MotionMagnetic :strength="0.3" :radius="120">
                 <template #default="{ isActive }">
-                  <UButton
-                    size="xl"
-                    :class="isActive ? 'bg-primary' : ''"
-                  >
-                    Default Pull
-                  </UButton>
+                  <UButton size="xl" :class="isActive ? 'bg-primary' : ''"> Default Pull </UButton>
                 </template>
               </MotionMagnetic>
             </div>
@@ -133,12 +145,25 @@ const cursorSmoothing = ref(0.15)
 
           <!-- Icon magnets -->
           <div class="flex flex-wrap gap-16 justify-center">
-            <div v-for="icon in ['i-lucide-github', 'i-lucide-twitter', 'i-lucide-mail', 'i-lucide-external-link']" :key="icon" class="text-center">
+            <div
+              v-for="icon in [
+                'i-lucide-github',
+                'i-lucide-twitter',
+                'i-lucide-mail',
+                'i-lucide-external-link',
+              ]"
+              :key="icon"
+              class="text-center"
+            >
               <MotionMagnetic :strength="0.4" :radius="80" :stiffness="400">
                 <template #default="{ isActive }">
                   <div
                     class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-200 cursor-pointer"
-                    :class="isActive ? 'bg-primary border-primary text-white' : 'border-gray-600 text-gray-400 hover:border-gray-400'"
+                    :class="
+                      isActive
+                        ? 'bg-primary border-primary text-white'
+                        : 'border-gray-600 text-gray-400 hover:border-gray-400'
+                    "
                   >
                     <UIcon :name="icon" class="text-2xl" />
                   </div>
@@ -156,15 +181,17 @@ const cursorSmoothing = ref(0.15)
             <UBadge color="primary" variant="subtle" class="mb-4">Tilt</UBadge>
             <h2 class="text-4xl font-bold text-white mb-3">MotionTilt</h2>
             <p class="text-gray-400 max-w-lg mx-auto">
-              Hover over each card — it rotates in 3D following your cursor position.
-              Different <code class="text-primary">maxTilt</code> and spring values per card.
+              Hover over each card — it rotates in 3D following your cursor position. Different
+              <code class="text-primary">maxTilt</code> and spring values per card.
             </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <!-- Gentle tilt -->
             <MotionTilt :max-tilt="8" :stiffness="200">
-              <div class="h-64 rounded-2xl bg-linear-to-br from-blue-600 to-blue-900 flex flex-col items-center justify-center p-8 cursor-pointer select-none">
+              <div
+                class="h-64 rounded-2xl bg-linear-to-br from-blue-600 to-blue-900 flex flex-col items-center justify-center p-8 cursor-pointer select-none"
+              >
                 <UIcon name="i-lucide-feather" class="text-5xl text-white/80 mb-4" />
                 <h3 class="text-xl font-bold text-white">Gentle</h3>
                 <p class="text-blue-300 text-sm mt-1 font-mono">maxTilt: 8°</p>
@@ -173,7 +200,9 @@ const cursorSmoothing = ref(0.15)
 
             <!-- Default tilt -->
             <MotionTilt>
-              <div class="h-64 rounded-2xl bg-linear-to-br from-violet-600 to-violet-900 flex flex-col items-center justify-center p-8 cursor-pointer select-none">
+              <div
+                class="h-64 rounded-2xl bg-linear-to-br from-violet-600 to-violet-900 flex flex-col items-center justify-center p-8 cursor-pointer select-none"
+              >
                 <UIcon name="i-lucide-box" class="text-5xl text-white/80 mb-4" />
                 <h3 class="text-xl font-bold text-white">Default</h3>
                 <p class="text-violet-300 text-sm mt-1 font-mono">maxTilt: 15°</p>
@@ -182,7 +211,9 @@ const cursorSmoothing = ref(0.15)
 
             <!-- Dramatic tilt -->
             <MotionTilt :max-tilt="25" :stiffness="350" :damping="30">
-              <div class="h-64 rounded-2xl bg-linear-to-br from-pink-600 to-pink-900 flex flex-col items-center justify-center p-8 cursor-pointer select-none">
+              <div
+                class="h-64 rounded-2xl bg-linear-to-br from-pink-600 to-pink-900 flex flex-col items-center justify-center p-8 cursor-pointer select-none"
+              >
                 <UIcon name="i-lucide-zap" class="text-5xl text-white/80 mb-4" />
                 <h3 class="text-xl font-bold text-white">Dramatic</h3>
                 <p class="text-pink-300 text-sm mt-1 font-mono">maxTilt: 25°</p>
@@ -196,7 +227,9 @@ const cursorSmoothing = ref(0.15)
             <div class="flex justify-center">
               <MotionTilt :max-tilt="20" :perspective="600">
                 <MotionMagnetic :strength="0.25" :radius="150">
-                  <div class="w-48 h-48 rounded-3xl bg-linear-to-br from-amber-500 to-orange-600 flex items-center justify-center cursor-pointer select-none shadow-2xl shadow-amber-500/30">
+                  <div
+                    class="w-48 h-48 rounded-3xl bg-linear-to-br from-amber-500 to-orange-600 flex items-center justify-center cursor-pointer select-none shadow-2xl shadow-amber-500/30"
+                  >
                     <div class="text-center">
                       <UIcon name="i-lucide-sparkles" class="text-5xl text-white mb-2" />
                       <p class="text-white font-bold">Tilt + Magnetic</p>
@@ -210,14 +243,14 @@ const cursorSmoothing = ref(0.15)
       </section>
 
       <!-- ─── MotionCountUp ─────────────────────────────────────────────────── -->
-      <section class="py-32 bg-gray-900">
+      <section class="py-32 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <UBadge color="primary" variant="subtle" class="mb-4">Count Up</UBadge>
             <h2 class="text-4xl font-bold text-white mb-3">MotionCountUp</h2>
             <p class="text-gray-400 max-w-lg mx-auto">
-              Numbers count from zero when they scroll into view. Scroll back up and back down
-              to replay (or set <code class="text-primary">:once="false"</code>).
+              Numbers count from zero when they scroll into view. Scroll back up and back down to
+              replay (or set <code class="text-primary">:once="false"</code>).
             </p>
           </div>
 
@@ -267,8 +300,8 @@ const cursorSmoothing = ref(0.15)
             <UBadge color="primary" variant="subtle" class="mb-4">Velocity Effect</UBadge>
             <h2 class="text-4xl font-bold text-white mb-3">MotionVelocityEffect</h2>
             <p class="text-gray-400 max-w-lg mx-auto">
-              Scroll fast to trigger each effect. Now driven by the GSAP ticker with spring
-              physics instead of requestAnimationFrame.
+              Scroll fast to trigger each effect. Now driven by the GSAP ticker with spring physics
+              instead of requestAnimationFrame.
             </p>
           </div>
 
@@ -305,7 +338,7 @@ const cursorSmoothing = ref(0.15)
       </section>
 
       <!-- ─── MotionCursor ──────────────────────────────────────────────────── -->
-      <section class="py-32 bg-gray-900">
+      <section class="py-32 bg-gray-950">
         <UContainer>
           <div class="text-center mb-12">
             <UBadge color="primary" variant="subtle" class="mb-4">Cursor</UBadge>
@@ -325,18 +358,19 @@ const cursorSmoothing = ref(0.15)
 
           <!-- Controls -->
           <div class="max-w-xl mx-auto space-y-8">
-
             <!-- Enable toggle -->
             <div class="flex items-center justify-between bg-gray-800 rounded-2xl px-6 py-4">
               <div>
                 <p class="text-white font-medium">Cursor follower</p>
-                <p class="text-gray-500 text-xs mt-0.5">{{ showCursor ? 'Active — move your mouse' : 'Disabled' }}</p>
+                <p class="text-gray-500 text-xs mt-0.5">
+                  {{ showCursor ? 'Active — move your mouse' : 'Disabled' }}
+                </p>
               </div>
-              <UButton
-                :color="showCursor ? 'error' : 'primary'"
-                @click="showCursor = !showCursor"
-              >
-                <UIcon :name="showCursor ? 'i-lucide-x' : 'i-lucide-mouse-pointer-2'" class="mr-2" />
+              <UButton :color="showCursor ? 'error' : 'primary'" @click="showCursor = !showCursor">
+                <UIcon
+                  :name="showCursor ? 'i-lucide-x' : 'i-lucide-mouse-pointer-2'"
+                  class="mr-2"
+                />
                 {{ showCursor ? 'Disable' : 'Enable' }}
               </UButton>
             </div>
@@ -346,13 +380,15 @@ const cursorSmoothing = ref(0.15)
               <p class="text-gray-400 text-sm mb-4">Type</p>
               <div class="grid grid-cols-4 gap-2">
                 <button
-                  v-for="t in (['dot', 'ring', 'dot-ring', 'glow'] as const)"
+                  v-for="t in ['dot', 'ring', 'dot-ring', 'glow'] as const"
                   :key="t"
                   class="rounded-xl py-2.5 text-sm font-medium transition-colors"
-                  :class="cursorType === t
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'"
-                  @click="cursorType = t"
+                  :class="
+                    cursorType === t
+                      ? 'bg-primary text-white'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  "
+                  @click="() => (cursorType = t)"
                 >
                   {{ t }}
                 </button>
@@ -397,13 +433,12 @@ const cursorSmoothing = ref(0.15)
                 <span>0.5 — instant</span>
               </div>
             </div>
-
           </div>
         </UContainer>
       </section>
 
       <!-- Footer nav -->
-      <section class="py-16 bg-gray-900">
+      <section class="py-16 bg-gray-950">
         <UContainer>
           <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
             <div>

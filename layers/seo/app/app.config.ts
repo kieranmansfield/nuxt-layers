@@ -2,7 +2,7 @@
 export default defineAppConfig({
   seoLayer: {
     ogImage: {
-      component: 'OgImageBasic',
+      component: 'OgImageNuxtSeo',
       props: {} as Record<string, unknown>,
     },
     twitterCard: 'summary_large_image' as 'summary_large_image' | 'summary' | 'player' | 'app',

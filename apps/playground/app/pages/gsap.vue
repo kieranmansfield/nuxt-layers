@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/max-lines-per-block -->
 <script setup lang="ts">
   definePageMeta({ layout: false })
   const { setPageAccent } = useAccentColor()
@@ -427,6 +428,9 @@
   ]
 </script>
 
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="v-gsap Directive Guide"
@@ -517,18 +521,18 @@
             <h2 class="text-3xl font-bold mb-2">Basic Animations</h2>
             <p class="text-gray-500 dark:text-gray-400">
               These run immediately on mount. Use
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
-                >.from</code
+              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+                .from </code
               >,
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
-                >.to</code
+              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+                .to </code
               >,
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
-                >.fromTo</code
+              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+                .fromTo </code
               >, or
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
-                >.set</code
-              >
+              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+                .set
+              </code>
               as the animation type.
             </p>
           </div>
@@ -588,16 +592,17 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
-                  >Demo — .fromTo</span
-                >
+                <span class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                  Demo — .fromTo
+                </span>
                 <UButton
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('fromTo')"
-                  >Replay</UButton
                 >
+                  Replay
+                </UButton>
               </div>
               <div
                 :key="replayKeys['fromTo']"
@@ -640,16 +645,17 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
-                  >Demo — .infinitely</span
-                >
+                <span class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                  Demo — .infinitely
+                </span>
                 <UButton
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('infinitely')"
-                  >Replay</UButton
                 >
+                  Replay
+                </UButton>
               </div>
               <div
                 :key="replayKeys['infinitely']"
@@ -701,13 +707,13 @@
             <h2 class="text-3xl font-bold mb-2">Scroll-Triggered Entrances</h2>
             <p class="text-gray-500 dark:text-gray-400">
               Add
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
-                >.whenVisible</code
-              >
+              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+                .whenVisible
+              </code>
               to trigger animations when the element scrolls into view. Combine with
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
-                >.once</code
-              >
+              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+                .once
+              </code>
               to play once, or omit it to scrub with scroll.
             </p>
           </div>
@@ -718,16 +724,17 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
-                  >Demo — .whenVisible.once.from</span
-                >
+                <span class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                  Demo — .whenVisible.once.from
+                </span>
                 <UButton
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
                   @click="replay('whenVisibleOnce')"
-                  >Replay</UButton
                 >
+                  Replay
+                </UButton>
               </div>
               <div
                 :key="replayKeys['whenVisibleOnce']"
@@ -959,7 +966,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay(demo.id)"
+                  @click="() => replay(demo.id)"
                   >Replay</UButton
                 >
               </div>
@@ -970,66 +977,48 @@
                 <div
                   v-if="demo.id === 'entranceFade'"
                   v-gsap.entrance.fade
-                  :class="[
-                    'px-4 py-3 rounded-lg text-sm font-semibold',
-                    demo.bgClass,
-                    demo.textClass,
-                  ]"
+                  class="px-4 py-3 rounded-lg text-sm font-semibold"
+                  :class="[demo.bgClass, demo.textClass]"
                 >
                   {{ demo.text }}
                 </div>
                 <div
                   v-else-if="demo.id === 'entranceSlideLeft'"
                   v-gsap.entrance.slide-left
-                  :class="[
-                    'px-4 py-3 rounded-lg text-sm font-semibold',
-                    demo.bgClass,
-                    demo.textClass,
-                  ]"
+                  class="px-4 py-3 rounded-lg text-sm font-semibold"
+                  :class="[demo.bgClass, demo.textClass]"
                 >
                   {{ demo.text }}
                 </div>
                 <div
                   v-else-if="demo.id === 'entranceSlideRight'"
                   v-gsap.entrance.slide-right
-                  :class="[
-                    'px-4 py-3 rounded-lg text-sm font-semibold',
-                    demo.bgClass,
-                    demo.textClass,
-                  ]"
+                  class="px-4 py-3 rounded-lg text-sm font-semibold"
+                  :class="[demo.bgClass, demo.textClass]"
                 >
                   {{ demo.text }}
                 </div>
                 <div
                   v-else-if="demo.id === 'entranceSlideBottom'"
                   v-gsap.entrance.slide-bottom
-                  :class="[
-                    'px-4 py-3 rounded-lg text-sm font-semibold',
-                    demo.bgClass,
-                    demo.textClass,
-                  ]"
+                  class="px-4 py-3 rounded-lg text-sm font-semibold"
+                  :class="[demo.bgClass, demo.textClass]"
                 >
                   {{ demo.text }}
                 </div>
                 <div
                   v-else-if="demo.id === 'entranceScale'"
                   v-gsap.entrance.scale
-                  :class="[
-                    'px-4 py-3 rounded-lg text-sm font-semibold',
-                    demo.bgClass,
-                    demo.textClass,
-                  ]"
+                  class="px-4 py-3 rounded-lg text-sm font-semibold"
+                  :class="[demo.bgClass, demo.textClass]"
                 >
                   {{ demo.text }}
                 </div>
                 <div
                   v-else-if="demo.id === 'entranceScaleFull'"
                   v-gsap.entrance.scale-full
-                  :class="[
-                    'px-4 py-3 rounded-lg text-sm font-semibold',
-                    demo.bgClass,
-                    demo.textClass,
-                  ]"
+                  class="px-4 py-3 rounded-lg text-sm font-semibold"
+                  :class="[demo.bgClass, demo.textClass]"
                 >
                   {{ demo.text }}
                 </div>
@@ -1043,7 +1032,7 @@
                     size="xs"
                     variant="ghost"
                     :icon="copied === demo.id ? 'i-lucide-check' : 'i-lucide-copy'"
-                    @click="copy(snippets[demo.snip as keyof typeof snippets], demo.id)"
+                    @click="() => copy(snippets[demo.snip as keyof typeof snippets], demo.id)"
                   >
                     {{ copied === demo.id ? 'Copied!' : 'Copy' }}
                   </UButton>
@@ -2193,7 +2182,7 @@
                     { key: 'scale', type: 'number', def: '—', desc: 'Scale factor' },
                     { key: 'rotation', type: 'number', def: '—', desc: 'Rotation in degrees' },
                   ]"
-                  :key="key"
+                  :key
                   class="bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors"
                 >
                   <td class="px-4 py-3 font-mono text-violet-600 dark:text-violet-400 font-medium">

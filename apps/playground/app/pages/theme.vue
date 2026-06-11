@@ -1,73 +1,82 @@
 <script setup lang="ts">
-const {
-  activeAccent,
-  contrastOverride,
-  motionOverride,
-  transparencyOverride,
-  setContrastOverride,
-  setMotionOverride,
-  setTransparencyOverride,
-  effectiveHighContrast,
-  effectiveReducedMotion,
-  effectiveReducedTransparency,
-  systemContrast,
-  systemMotion,
-  systemTransparency,
-} = useTheme()
+  const {
+    activeAccent,
+    contrastOverride,
+    motionOverride,
+    transparencyOverride,
+    setContrastOverride,
+    setMotionOverride,
+    setTransparencyOverride,
+    effectiveHighContrast,
+    effectiveReducedMotion,
+    effectiveReducedTransparency,
+    systemContrast,
+    systemMotion,
+    systemTransparency,
+  } = useTheme()
 
-// Media query support detection (onMounted to avoid SSR window access)
-const contrastSupported = ref(false)
-const motionSupported = ref(false)
-const transparencySupported = ref(false)
+  // Media query support detection (onMounted to avoid SSR window access)
+  const contrastSupported = ref(false)
+  const motionSupported = ref(false)
+  const transparencySupported = ref(false)
 
-onMounted(() => {
-  contrastSupported.value = window.matchMedia('(prefers-contrast: more)').media !== 'not all'
-  motionSupported.value = window.matchMedia('(prefers-reduced-motion: reduce)').media !== 'not all'
-  transparencySupported.value =
-    window.matchMedia('(prefers-reduced-transparency: reduce)').media !== 'not all'
-})
+  onMounted(() => {
+    contrastSupported.value = window.matchMedia('(prefers-contrast: more)').media !== 'not all'
+    motionSupported.value =
+      window.matchMedia('(prefers-reduced-motion: reduce)').media !== 'not all'
+    transparencySupported.value =
+      window.matchMedia('(prefers-reduced-transparency: reduce)').media !== 'not all'
+  })
 
-// Toggle models — match ThemePicker/Menu.vue pattern
-const contrastModel = computed({
-  get: () => effectiveHighContrast.value,
-  set: (val: boolean) => setContrastOverride(val ? 'on' : 'system'),
-})
+  // Toggle models — match ThemePicker/Menu.vue pattern
+  const contrastModel = computed({
+    get: () => effectiveHighContrast.value,
+    set: (val: boolean) => setContrastOverride(val ? 'on' : 'system'),
+  })
 
-const motionModel = computed({
-  get: () => effectiveReducedMotion.value,
-  set: (val: boolean) => setMotionOverride(val ? 'on' : 'system'),
-})
+  const motionModel = computed({
+    get: () => effectiveReducedMotion.value,
+    set: (val: boolean) => setMotionOverride(val ? 'on' : 'system'),
+  })
 
-const transparencyModel = computed({
-  get: () => effectiveReducedTransparency.value,
-  set: (val: boolean) => setTransparencyOverride(val ? 'on' : 'system'),
-})
+  const transparencyModel = computed({
+    get: () => effectiveReducedTransparency.value,
+    set: (val: boolean) => setTransparencyOverride(val ? 'on' : 'system'),
+  })
 
-const COLOR_SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const
+  const COLOR_SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const
 
-const COLOR_ROLES = [
-  { key: 'primary', label: 'Primary' },
-  { key: 'secondary', label: 'Secondary' },
-  { key: 'info', label: 'Accent' },
-  { key: 'neutral', label: 'Neutral' },
-] as const
+  const COLOR_ROLES = [
+    { key: 'primary', label: 'Primary' },
+    { key: 'secondary', label: 'Secondary' },
+    { key: 'info', label: 'Accent' },
+    { key: 'neutral', label: 'Neutral' },
+  ] as const
 
-definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: true } } })
+  definePageMeta({ layout: false })
+
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('indigo')
+  onUnmounted(() => setPageAccent(null))
 </script>
 
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Theme Layer Demo"
     description="Demonstrating the Theme layer color system, palettes, and design tokens"
   >
-    <LayoutSection>
-      <LayoutGridItem preset="centered">
-        <div class="space-y-12 py-8">
-          <LayoutPageHeader
-            title="Theme Layer"
-            description="Color mode, accent colors, and accessibility preferences"
-            back="/"
-          />
+    <div class="bg-gray-950 min-h-screen">
+      <DemoPageHero
+        name="THEME"
+        description="Config-driven theme system with dark mode, accent colours, and CSS variable tokens."
+      />
+      <LayoutMain>
+        <LayoutSection>
+          <LayoutGridItem preset="centered">
+            <div class="space-y-12 py-8">
 
           <!-- Color Mode -->
           <section class="space-y-4">
@@ -291,8 +300,18 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
               </UCard>
             </div>
           </section>
-        </div>
-      </LayoutGridItem>
-    </LayoutSection>
+            </div>
+          </LayoutGridItem>
+        </LayoutSection>
+      </LayoutMain>
+      <DemoPageFooter
+        name="Theme Layer"
+        description="Design tokens and theming utilities"
+        :links="[
+          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Typography', to: '/typography', icon: 'i-lucide-type' },
+        ]"
+      />
+    </div>
   </LayoutPage>
 </template>

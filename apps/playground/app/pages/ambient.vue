@@ -1,74 +1,78 @@
+<!-- eslint-disable no-restricted-imports -->
 <script setup lang="ts">
-import ShaderHost from '#layers/shader/app/components/Shader/Host.client.vue'
-import ShaderRuntime from '#layers/shader/app/components/Shader/Runtime.client.vue'
-import type { Component } from 'vue'
+  import type { Component } from 'vue'
+  import ShaderHost from '#layers/shader/app/components/Shader/Host.client.vue'
+  import ShaderRuntime from '#layers/shader/app/components/Shader/Runtime.client.vue'
 
-definePageMeta({ ssr: false, layout: false })
+  definePageMeta({ ssr: false, layout: false })
 
-const { setPageAccent } = useAccentColor()
-setPageAccent('emerald')
-onUnmounted(() => setPageAccent(null))
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('emerald')
+  onUnmounted(() => setPageAccent(null))
 
-type PresetType = 'aurora' | 'nebula' | 'flow' | 'gradientMesh' | 'ocean'
+  type PresetType = 'aurora' | 'nebula' | 'flow' | 'gradientMesh' | 'ocean'
 
-const activePreset = ref<PresetType>('aurora')
-const speed = ref(1.0)
-const intensity = ref(1.0)
-const mouseInteraction = ref(true)
+  const activePreset = ref<PresetType>('aurora')
+  const speed = ref(1.0)
+  const intensity = ref(1.0)
+  const mouseInteraction = ref(true)
 
-// Map preset IDs to lazy-loaded components
-const presetComponents: Record<PresetType, Component> = {
-  aurora: defineAsyncComponent(
-    () => import('#layers/shader/app/components/Preset/Aurora.client.vue')
-  ),
-  nebula: defineAsyncComponent(
-    () => import('#layers/shader/app/components/Preset/Nebula.client.vue')
-  ),
-  flow: defineAsyncComponent(() => import('#layers/shader/app/components/Preset/Flow.client.vue')),
-  gradientMesh: defineAsyncComponent(
-    () => import('#layers/shader/app/components/Preset/GradientMesh.client.vue')
-  ),
-  ocean: defineAsyncComponent(
-    () => import('#layers/shader/app/components/Preset/Ocean.client.vue')
-  ),
-}
+  // Map preset IDs to lazy-loaded components
+  const presetComponents: Record<PresetType, Component> = {
+    aurora: defineAsyncComponent(
+      () => import('#layers/shader/app/components/Preset/Aurora.client.vue')
+    ),
+    nebula: defineAsyncComponent(
+      () => import('#layers/shader/app/components/Preset/Nebula.client.vue')
+    ),
+    flow: defineAsyncComponent(
+      () => import('#layers/shader/app/components/Preset/Flow.client.vue')
+    ),
+    gradientMesh: defineAsyncComponent(
+      () => import('#layers/shader/app/components/Preset/GradientMesh.client.vue')
+    ),
+    ocean: defineAsyncComponent(
+      () => import('#layers/shader/app/components/Preset/Ocean.client.vue')
+    ),
+  }
 
-const currentPresetComponent = computed(() => presetComponents[activePreset.value])
+  const currentPresetComponent = computed(() => presetComponents[activePreset.value])
 
-const presets = [
-  {
-    id: 'aurora' as PresetType,
-    name: 'Aurora Borealis',
-    description: 'Northern lights with flowing curtains',
-    colors: ['#0a0a20', '#00ff87', '#60efff'],
-  },
-  {
-    id: 'nebula' as PresetType,
-    name: 'Cosmic Nebula',
-    description: 'Deep space clouds with stars',
-    colors: ['#1a0a2e', '#ff6b6b', '#4ecdc4', '#ffe66d'],
-  },
-  {
-    id: 'flow' as PresetType,
-    name: 'Organic Flow',
-    description: 'Domain-warped flowing patterns',
-    colors: ['#134e5e', '#71b280', '#e8d5b7', '#fc5c7d'],
-  },
-  {
-    id: 'gradientMesh' as PresetType,
-    name: 'Gradient Mesh',
-    description: 'Smooth animated color blobs',
-    colors: ['#667eea', '#764ba2', '#f093fb', '#f5576c'],
-  },
-  {
-    id: 'ocean' as PresetType,
-    name: 'Deep Ocean',
-    description: 'Underwater caustics and waves',
-    colors: ['#0a1628', '#1e3a5f', '#7ec8e3'],
-  },
-]
+  const presets = [
+    {
+      id: 'aurora' as PresetType,
+      name: 'Aurora Borealis',
+      description: 'Northern lights with flowing curtains',
+      colors: ['#0a0a20', '#00ff87', '#60efff'],
+    },
+    {
+      id: 'nebula' as PresetType,
+      name: 'Cosmic Nebula',
+      description: 'Deep space clouds with stars',
+      colors: ['#1a0a2e', '#ff6b6b', '#4ecdc4', '#ffe66d'],
+    },
+    {
+      id: 'flow' as PresetType,
+      name: 'Organic Flow',
+      description: 'Domain-warped flowing patterns',
+      colors: ['#134e5e', '#71b280', '#e8d5b7', '#fc5c7d'],
+    },
+    {
+      id: 'gradientMesh' as PresetType,
+      name: 'Gradient Mesh',
+      description: 'Smooth animated color blobs',
+      colors: ['#667eea', '#764ba2', '#f093fb', '#f5576c'],
+    },
+    {
+      id: 'ocean' as PresetType,
+      name: 'Deep Ocean',
+      description: 'Underwater caustics and waves',
+      colors: ['#0a1628', '#1e3a5f', '#7ec8e3'],
+    },
+  ]
 </script>
 
+<!-- eslint-disable vue/max-template-depth -->
 <template>
   <LayoutPage
     title="Ambient Backgrounds"
@@ -89,9 +93,9 @@ const presets = [
           </div>
 
           <h1 class="text-4xl md:text-5xl font-black mb-4">
-            <span class="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400"
-              >Ambient</span
-            >
+            <span class="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">
+              Ambient
+            </span>
             Backgrounds
           </h1>
 
@@ -109,7 +113,7 @@ const presets = [
             <!-- Preview Canvas -->
             <div class="lg:col-span-2">
               <div class="aspect-video bg-gray-900 rounded-2xl overflow-hidden relative">
-                <ShaderRuntime :speed="speed" :mouse-smoothing="0.1">
+                <ShaderRuntime :speed :mouse-smoothing="0.1">
                   <ShaderHost
                     :preset="currentPresetComponent"
                     :transition-duration="1.0"
@@ -145,7 +149,7 @@ const presets = [
                       ? 'bg-violet-600/20 border-violet-500'
                       : 'bg-gray-800/50 border-gray-700 hover:border-gray-600',
                   ]"
-                  @click="activePreset = preset.id"
+                  @click="() => (activePreset = preset.id)"
                 >
                   <!-- Color preview -->
                   <div class="flex gap-1 mb-2">
@@ -232,21 +236,21 @@ const presets = [
                 <h4 class="text-sm font-semibold text-cyan-400 mb-3">TSL Functions</h4>
                 <div class="flex flex-wrap gap-2">
                   <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300">fbm2D</code>
-                  <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300"
-                    >simplexNoise2D</code
-                  >
-                  <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300"
-                    >cosinePalette</code
-                  >
-                  <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300"
-                    >voronoi2D</code
-                  >
-                  <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300"
-                    >ridgedFbm2d</code
-                  >
-                  <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300"
-                    >warpedFbmCoords</code
-                  >
+                  <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300">
+                    simplexNoise2D
+                  </code>
+                  <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300">
+                    cosinePalette
+                  </code>
+                  <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300">
+                    voronoi2D
+                  </code>
+                  <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300">
+                    ridgedFbm2d
+                  </code>
+                  <code class="text-xs bg-gray-800 px-2 py-1 rounded text-violet-300">
+                    warpedFbmCoords
+                  </code>
                 </div>
               </div>
 

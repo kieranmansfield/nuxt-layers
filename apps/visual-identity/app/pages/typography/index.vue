@@ -1,47 +1,47 @@
 <script setup lang="ts">
-import { DEFAULT_AXES, FONT_AXIS_META, type FontAxes } from '~/composables/useBrandState'
+  import { DEFAULT_AXES, FONT_AXIS_META, type FontAxes } from '~/composables/useBrandState'
 
-const { state, updateFontAxis } = useBrandState()
+  const { state, updateFontAxis } = useBrandState()
 
-const activeFont = ref(state.value.typography[0]?.id ?? 'heading')
+  const activeFont = ref(state.value.typography[0]?.id ?? 'heading')
 
-const currentFont = computed(
-  () => state.value.typography.find((f) => f.id === activeFont.value) ?? state.value.typography[0],
-)
+  const currentFont = computed(
+    () => state.value.typography.find((f) => f.id === activeFont.value) ?? state.value.typography[0]
+  )
 
-const previewText = ref('Aa')
-const previewSize = ref(220)
+  const previewText = ref('Aa')
+  const previewSize = ref(220)
 
-const variationSettingsString = computed(() => {
-  const font = currentFont.value
-  if (!font) return ''
-  return (Object.keys(font.axes) as (keyof FontAxes)[])
-    .map((k) => `'${k}' ${font.axes[k]}`)
-    .join(', ')
-})
+  const variationSettingsString = computed(() => {
+    const font = currentFont.value
+    if (!font) return ''
+    return (Object.keys(font.axes) as (keyof FontAxes)[])
+      .map((k) => `'${k}' ${font.axes[k]}`)
+      .join(', ')
+  })
 
-const previewStyle = computed(() => ({
-  fontFamily: `'${currentFont.value?.family ?? 'Roboto Flex'}', sans-serif`,
-  fontVariationSettings: variationSettingsString.value,
-  fontSize: `${previewSize.value}px`,
-  lineHeight: 1,
-}))
+  const previewStyle = computed(() => ({
+    fontFamily: `'${currentFont.value?.family ?? 'Roboto Flex'}', sans-serif`,
+    fontVariationSettings: variationSettingsString.value,
+    fontSize: `${previewSize.value}px`,
+    lineHeight: 1,
+  }))
 
-function resetAxes() {
-  if (!currentFont.value) return
-  for (const key of Object.keys(FONT_AXIS_META) as (keyof FontAxes)[]) {
-    updateFontAxis(currentFont.value.id, key, DEFAULT_AXES[key])
+  function resetAxes() {
+    if (!currentFont.value) return
+    for (const key of Object.keys(FONT_AXIS_META) as (keyof FontAxes)[]) {
+      updateFontAxis(currentFont.value.id, key, DEFAULT_AXES[key])
+    }
   }
-}
 
-function onAxisUpdate(axis: keyof FontAxes, v: number | undefined) {
-  if (!currentFont.value || v === undefined) return
-  updateFontAxis(currentFont.value.id, axis, v)
-}
+  function onAxisUpdate(axis: keyof FontAxes, v: number | undefined) {
+    if (!currentFont.value || v === undefined) return
+    updateFontAxis(currentFont.value.id, axis, v)
+  }
 
-const fontTabs = computed(() =>
-  state.value.typography.map((f) => ({ label: f.role, value: f.id })),
-)
+  const fontTabs = computed(() =>
+    state.value.typography.map((f) => ({ label: f.role, value: f.id }))
+  )
 </script>
 
 <template>
@@ -52,8 +52,7 @@ const fontTabs = computed(() =>
   <div class="flex flex-col md:flex-row h-full overflow-hidden">
     <!-- Preview — top on mobile, right on desktop -->
     <div
-      class="h-80 md:h-full md:flex-1 md:order-2 flex flex-col overflow-hidden bg-elevated
-             border-b border-default md:border-b-0"
+      class="h-80 md:h-full md:flex-1 md:order-2 flex flex-col overflow-hidden bg-elevated border-b border-default md:border-b-0"
     >
       <div class="flex-1 flex items-center justify-center overflow-hidden px-6 py-8 select-none">
         <div class="text-default transition-all duration-75 overflow-hidden" :style="previewStyle">
@@ -80,8 +79,7 @@ const fontTabs = computed(() =>
 
     <!-- Axes panel — bottom on mobile, left on desktop -->
     <div
-      class="flex-1 min-h-0 md:flex-none md:order-1 md:w-96 flex flex-col overflow-hidden
-             md:border-r border-default"
+      class="flex-1 min-h-0 md:flex-none md:order-1 md:w-96 flex flex-col overflow-hidden md:border-r border-default"
     >
       <!-- Header -->
       <div class="p-4 md:p-5 border-b border-default bg-default shrink-0">

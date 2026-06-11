@@ -1,10 +1,8 @@
 <script setup lang="ts">
   definePageMeta({ layout: false })
   const { setPageAccent } = useAccentColor()
-  setPageAccent('sky')
+  setPageAccent('teal')
   onUnmounted(() => setPageAccent(null))
-
-  const { back } = useBackNavigation('/forms')
 
   const { data: status, refresh: refreshStatus } = await useFetch('/api/forms/status')
 
@@ -75,43 +73,28 @@
   ]
 </script>
 
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Mailer Layer Demo"
     description="Resend-backed transactional email sending, runtime config, and lifecycle hooks"
   >
-    <div class="mailer-page">
-      <!-- Hero -->
-      <section
-        class="min-h-[70vh] flex items-center justify-center relative overflow-hidden bg-gray-950"
+    <div class="bg-gray-950 min-h-screen">
+      <DemoPageHero
+        name="MAILER LAYER"
+        description="Server-side transactional email via Resend — runtime config, a typed hook lifecycle, and the pipeline that powers the Forms layer's contact form."
       >
-        <div
-          class="absolute inset-0 bg-linear-to-b from-primary/10 via-transparent to-transparent"
-        />
-        <div class="text-center z-10 px-4">
-          <h1 class="text-5xl sm:text-7xl md:text-8xl font-black text-white mb-8">
-            <span class="text-primary">MAILER</span> LAYER
-          </h1>
-          <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            Server-side transactional email via Resend — runtime config, a typed hook lifecycle, and
-            the pipeline that powers the Forms layer's contact form.
-          </p>
-          <div class="flex flex-wrap gap-4 justify-center">
-            <UButton size="lg" @click="$router.push('#pipeline')">View Pipeline</UButton>
-            <UButton size="lg" variant="outline" to="/forms">
-              <UIcon name="i-lucide-file-input" class="mr-2" />
-              Forms Layer
-            </UButton>
-            <UButton size="lg" variant="ghost" @click="back()">
-              <UIcon name="i-lucide-arrow-left" class="mr-2" />
-              Back
-            </UButton>
-          </div>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <UButton size="lg" @click="$router.push('#pipeline')">View Pipeline</UButton>
+          <UButton size="lg" variant="outline" to="/forms">
+            <UIcon name="i-lucide-file-input" class="mr-2" />
+            Forms Layer
+          </UButton>
         </div>
-      </section>
+      </DemoPageHero>
 
       <!-- Status -->
-      <section class="py-24 bg-gray-900">
+      <section class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Runtime Configuration</h2>
@@ -185,7 +168,7 @@
       </section>
 
       <!-- Surface -->
-      <section class="py-24 bg-gray-900">
+      <section class="py-24 bg-gray-950">
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Server Surface</h2>
@@ -210,25 +193,13 @@
         </UContainer>
       </section>
 
-      <!-- Footer Nav -->
-      <section class="py-16 bg-gray-950">
-        <UContainer>
-          <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
-            <div>
-              <h2 class="text-2xl font-bold text-white mb-2">Mailer Layer</h2>
-              <p class="text-gray-400">Resend transactional email + lifecycle hooks</p>
-            </div>
-            <div class="flex flex-wrap gap-4">
-              <UButton variant="ghost" to="/forms">
-                <UIcon name="i-lucide-file-input" class="mr-2" />
-                Forms Layer
-              </UButton>
-              <UButton variant="outline" @click="back()">Back</UButton>
-              <UButton to="/">Home</UButton>
-            </div>
-          </div>
-        </UContainer>
-      </section>
+      <DemoPageFooter
+        name="Mailer Layer"
+        description="Resend transactional email + lifecycle hooks"
+        :links="[
+          { label: 'Forms Layer', to: '/forms', icon: 'i-lucide-file-input' },
+        ]"
+      />
     </div>
   </LayoutPage>
 </template>

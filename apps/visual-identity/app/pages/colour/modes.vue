@@ -1,76 +1,80 @@
 <script setup lang="ts">
-import type { BackgroundStyle, ColourScheme, ContrastLevel } from '~/composables/useBrandState'
+  import type { BackgroundStyle, ColourScheme, ContrastLevel } from '~/composables/useBrandState'
 
-const { state } = useBrandState()
+  const { state } = useBrandState()
 
-const schemeOptions: { label: string; value: ColourScheme; icon: string }[] = [
-  { label: 'Light', value: 'light', icon: 'i-lucide-sun' },
-  { label: 'Dark', value: 'dark', icon: 'i-lucide-moon' },
-]
+  const schemeOptions: { label: string; value: ColourScheme; icon: string }[] = [
+    { label: 'Light', value: 'light', icon: 'i-lucide-sun' },
+    { label: 'Dark', value: 'dark', icon: 'i-lucide-moon' },
+  ]
 
-const contrastOptions: { label: string; value: ContrastLevel; icon: string; description: string }[] = [
-  {
-    label: 'Standard',
-    value: 'standard',
-    icon: 'i-lucide-circle-half-stroke',
-    description: 'Balanced contrast for everyday reading.',
-  },
-  {
-    label: 'High',
-    value: 'high',
-    icon: 'i-lucide-contrast',
-    description: 'Maximum legibility — passes WCAG AAA.',
-  },
-]
+  const contrastOptions: {
+    label: string
+    value: ContrastLevel
+    icon: string
+    description: string
+  }[] = [
+    {
+      label: 'Standard',
+      value: 'standard',
+      icon: 'i-lucide-circle-half-stroke',
+      description: 'Balanced contrast for everyday reading.',
+    },
+    {
+      label: 'High',
+      value: 'high',
+      icon: 'i-lucide-contrast',
+      description: 'Maximum legibility — passes WCAG AAA.',
+    },
+  ]
 
-const bgOptions: { label: string; value: BackgroundStyle; description: string; icon: string }[] = [
-  {
-    label: 'Neutral',
-    value: 'neutral',
-    description: 'Pure white or dark grey — no colour influence on backgrounds.',
-    icon: 'i-lucide-square',
-  },
-  {
-    label: 'Tinted',
-    value: 'tinted',
-    description: 'A light hue of the primary colour washes the background.',
-    icon: 'i-lucide-droplets',
-  },
-  {
-    label: 'Blended',
-    value: 'blended',
-    description: 'A 50/50 mix of neutral and primary tint — subtle warmth.',
-    icon: 'i-lucide-blend',
-  },
-]
+  const bgOptions: { label: string; value: BackgroundStyle; description: string; icon: string }[] =
+    [
+      {
+        label: 'Neutral',
+        value: 'neutral',
+        description: 'Pure white or dark grey — no colour influence on backgrounds.',
+        icon: 'i-lucide-square',
+      },
+      {
+        label: 'Tinted',
+        value: 'tinted',
+        description: 'A light hue of the primary colour washes the background.',
+        icon: 'i-lucide-droplets',
+      },
+      {
+        label: 'Blended',
+        value: 'blended',
+        description: 'A 50/50 mix of neutral and primary tint — subtle warmth.',
+        icon: 'i-lucide-blend',
+      },
+    ]
 
-function toggleScheme(scheme: ColourScheme) {
-  const current = state.value.themeMode.schemes
-  if (current.includes(scheme)) {
-    // Keep at least one scheme active
-    if (current.length > 1) {
-      state.value.themeMode.schemes = current.filter((s) => s !== scheme)
+  function toggleScheme(scheme: ColourScheme) {
+    const current = state.value.themeMode.schemes
+    if (current.includes(scheme)) {
+      // Keep at least one scheme active
+      if (current.length > 1) {
+        state.value.themeMode.schemes = current.filter((s) => s !== scheme)
+      }
+    } else {
+      state.value.themeMode.schemes = [...current, scheme]
     }
   }
-  else {
-    state.value.themeMode.schemes = [...current, scheme]
-  }
-}
 
-function toggleContrast(level: ContrastLevel) {
-  const current = state.value.themeMode.contrastLevels
-  if (current.includes(level)) {
-    if (current.length > 1) {
-      state.value.themeMode.contrastLevels = current.filter((c) => c !== level)
+  function toggleContrast(level: ContrastLevel) {
+    const current = state.value.themeMode.contrastLevels
+    if (current.includes(level)) {
+      if (current.length > 1) {
+        state.value.themeMode.contrastLevels = current.filter((c) => c !== level)
+      }
+    } else {
+      state.value.themeMode.contrastLevels = [...current, level]
     }
   }
-  else {
-    state.value.themeMode.contrastLevels = [...current, level]
-  }
-}
 
-const activeSchemes = computed(() => state.value.themeMode.schemes)
-const highContrastActive = computed(() => state.value.themeMode.contrastLevels.includes('high'))
+  const activeSchemes = computed(() => state.value.themeMode.schemes)
+  const highContrastActive = computed(() => state.value.themeMode.contrastLevels.includes('high'))
 </script>
 
 <template>
@@ -199,10 +203,7 @@ const highContrastActive = computed(() => state.value.themeMode.contrastLevels.i
           <p class="text-sm font-medium text-default">High contrast</p>
         </div>
       </template>
-      <div
-        class="grid gap-3"
-        :class="activeSchemes.length > 1 ? 'sm:grid-cols-2' : 'grid-cols-1'"
-      >
+      <div class="grid gap-3" :class="activeSchemes.length > 1 ? 'sm:grid-cols-2' : 'grid-cols-1'">
         <ColourModePreview
           v-for="scheme in activeSchemes"
           :key="scheme"

@@ -1,151 +1,152 @@
 <script setup lang="ts">
-import { computeHarmony } from '~/composables/useColourHarmony'
-import type { HarmonyType, ThemeVariant } from '~/composables/useBrandState'
+  import type { HarmonyType, ThemeVariant } from '~/composables/useBrandState'
+  import { computeHarmony } from '~/composables/useColourHarmony'
 
-const { state, addColour, updateColour, addTheme, removeTheme, updateTheme, setThemeColour } = useBrandState()
+  const { state, addColour, updateColour, addTheme, removeTheme, updateTheme, setThemeColour } =
+    useBrandState()
 
-/** Add a hex to the palette and return its ID. Returns existing ID if hex already present. */
-function addToPalette(hex: string, name: string): string {
-  const norm = hex.toLowerCase()
-  const existing = state.value.colours.find((c) => c.hex.toLowerCase() === norm)
-  if (existing) return existing.id
+  /** Add a hex to the palette and return its ID. Returns existing ID if hex already present. */
+  function addToPalette(hex: string, name: string): string {
+    const norm = hex.toLowerCase()
+    const existing = state.value.colours.find((c) => c.hex.toLowerCase() === norm)
+    if (existing) return existing.id
 
-  addColour(hex)
-  const c = state.value.colours.at(-1)!
-  updateColour(c.id, { name, role: 'custom' })
-  return c.id
-}
-
-const roles: (keyof ThemeVariant['colourMappings'])[] = ['primary', 'secondary', 'accent', 'neutral']
-
-// ── Per-role helpers ──────────────────────────────────────────────────────
-
-/** Returns true when the role mapping holds a custom hex string. */
-function isCustom(theme: ThemeVariant, role: keyof ThemeVariant['colourMappings']) {
-  return (theme.colourMappings[role] ?? '').startsWith('#')
-}
-
-/** Value to show in the USelect (hides raw hex; returns '__custom__' for custom mode). */
-function selectValue(theme: ThemeVariant, role: keyof ThemeVariant['colourMappings']) {
-  const v = theme.colourMappings[role] ?? ''
-  return v.startsWith('#') ? '__custom__' : v
-}
-
-/** Resolved display hex for the live swatch. */
-function resolvedHex(theme: ThemeVariant, role: keyof ThemeVariant['colourMappings']): string {
-  const v = theme.colourMappings[role]
-  if (!v) return state.value.colours.find((c) => c.role === role)?.hex ?? '#e5e7eb'
-  if (v.startsWith('#')) return v
-  return state.value.colours.find((c) => c.id === v)?.hex ?? '#e5e7eb'
-}
-
-function onSelectChange(
-  themeId: string,
-  role: keyof ThemeVariant['colourMappings'],
-  value: string,
-) {
-  if (value === '__custom__') {
-    // Seed the custom picker with the colour that's currently resolved
-    const theme = state.value.themes.find((t) => t.id === themeId)!
-    setThemeColour(themeId, role, resolvedHex(theme, role))
+    addColour(hex)
+    const c = state.value.colours.at(-1)!
+    updateColour(c.id, { name, role: 'custom' })
+    return c.id
   }
-  else {
-    setThemeColour(themeId, role, value || null)
+
+  const roles: (keyof ThemeVariant['colourMappings'])[] = [
+    'primary',
+    'secondary',
+    'accent',
+    'neutral',
+  ]
+
+  // ── Per-role helpers ──────────────────────────────────────────────────────
+
+  /** Returns true when the role mapping holds a custom hex string. */
+  function isCustom(theme: ThemeVariant, role: keyof ThemeVariant['colourMappings']) {
+    return (theme.colourMappings[role] ?? '').startsWith('#')
   }
-}
 
-function onPickerInput(
-  themeId: string,
-  role: keyof ThemeVariant['colourMappings'],
-  e: Event,
-) {
-  setThemeColour(themeId, role, (e.target as HTMLInputElement).value)
-}
+  /** Value to show in the USelect (hides raw hex; returns '__custom__' for custom mode). */
+  function selectValue(theme: ThemeVariant, role: keyof ThemeVariant['colourMappings']) {
+    const v = theme.colourMappings[role] ?? ''
+    return v.startsWith('#') ? '__custom__' : v
+  }
 
-// ── Presets ───────────────────────────────────────────────────────────────
+  /** Resolved display hex for the live swatch. */
+  function resolvedHex(theme: ThemeVariant, role: keyof ThemeVariant['colourMappings']): string {
+    const v = theme.colourMappings[role]
+    if (!v) return state.value.colours.find((c) => c.role === role)?.hex ?? '#e5e7eb'
+    if (v.startsWith('#')) return v
+    return state.value.colours.find((c) => c.id === v)?.hex ?? '#e5e7eb'
+  }
 
-const presets = [
-  {
-    label: 'Swapped',
-    icon: 'i-lucide-arrow-left-right',
-    description: 'Primary ↔ secondary',
-    apply() {
-      const p = state.value.colours.find((c) => c.role === 'primary')
-      const s = state.value.colours.find((c) => c.role === 'secondary')
-      if (!p || !s) return
-      addTheme('Swapped')
-      const t = state.value.themes.at(-1)!
-      setThemeColour(t.id, 'primary', s.id)
-      setThemeColour(t.id, 'secondary', p.id)
-      // No new colours needed — just remapping existing IDs
+  function onSelectChange(
+    themeId: string,
+    role: keyof ThemeVariant['colourMappings'],
+    value: string
+  ) {
+    if (value === '__custom__') {
+      // Seed the custom picker with the colour that's currently resolved
+      const theme = state.value.themes.find((t) => t.id === themeId)!
+      setThemeColour(themeId, role, resolvedHex(theme, role))
+    } else {
+      setThemeColour(themeId, role, value || null)
+    }
+  }
+
+  function onPickerInput(themeId: string, role: keyof ThemeVariant['colourMappings'], e: Event) {
+    setThemeColour(themeId, role, (e.target as HTMLInputElement).value)
+  }
+
+  // ── Presets ───────────────────────────────────────────────────────────────
+
+  const presets = [
+    {
+      label: 'Swapped',
+      icon: 'i-lucide-arrow-left-right',
+      description: 'Primary ↔ secondary',
+      apply() {
+        const p = state.value.colours.find((c) => c.role === 'primary')
+        const s = state.value.colours.find((c) => c.role === 'secondary')
+        if (!p || !s) return
+        addTheme('Swapped')
+        const t = state.value.themes.at(-1)!
+        setThemeColour(t.id, 'primary', s.id)
+        setThemeColour(t.id, 'secondary', p.id)
+        // No new colours needed — just remapping existing IDs
+      },
     },
-  },
-  {
-    label: 'Complementary',
-    icon: 'i-lucide-circle-dot',
-    description: 'Complementary of primary',
-    apply() {
-      const p = state.value.colours.find((c) => c.role === 'primary')
-      if (!p) return
-      const [hex] = computeHarmony(p.hex, 'complementary')
-      if (!hex) return
-      // Add to palette first so it appears in scales
-      const id = addToPalette(hex, `${p.name} Comp`)
-      addTheme('Complementary')
-      const t = state.value.themes.at(-1)!
-      setThemeColour(t.id, 'primary', id)
+    {
+      label: 'Complementary',
+      icon: 'i-lucide-circle-dot',
+      description: 'Complementary of primary',
+      apply() {
+        const p = state.value.colours.find((c) => c.role === 'primary')
+        if (!p) return
+        const [hex] = computeHarmony(p.hex, 'complementary')
+        if (!hex) return
+        // Add to palette first so it appears in scales
+        const id = addToPalette(hex, `${p.name} Comp`)
+        addTheme('Complementary')
+        const t = state.value.themes.at(-1)!
+        setThemeColour(t.id, 'primary', id)
+      },
     },
-  },
-  {
-    label: 'Analogous',
-    icon: 'i-lucide-layers',
-    description: 'Analogous palette from primary',
-    apply() {
-      const p = state.value.colours.find((c) => c.role === 'primary')
-      if (!p) return
-      const [a, b] = computeHarmony(p.hex, 'analogous')
-      addTheme('Analogous')
-      const t = state.value.themes.at(-1)!
-      if (a) setThemeColour(t.id, 'secondary', addToPalette(a, `${p.name} Analog 1`))
-      if (b) setThemeColour(t.id, 'accent', addToPalette(b, `${p.name} Analog 2`))
+    {
+      label: 'Analogous',
+      icon: 'i-lucide-layers',
+      description: 'Analogous palette from primary',
+      apply() {
+        const p = state.value.colours.find((c) => c.role === 'primary')
+        if (!p) return
+        const [a, b] = computeHarmony(p.hex, 'analogous')
+        addTheme('Analogous')
+        const t = state.value.themes.at(-1)!
+        if (a) setThemeColour(t.id, 'secondary', addToPalette(a, `${p.name} Analog 1`))
+        if (b) setThemeColour(t.id, 'accent', addToPalette(b, `${p.name} Analog 2`))
+      },
     },
-  },
-  {
-    label: 'Triadic',
-    icon: 'i-lucide-triangle',
-    description: 'Triadic palette from primary',
-    apply() {
-      const p = state.value.colours.find((c) => c.role === 'primary')
-      if (!p) return
-      const [a, b] = computeHarmony(p.hex, 'triadic')
-      addTheme('Triadic')
-      const t = state.value.themes.at(-1)!
-      if (a) setThemeColour(t.id, 'secondary', addToPalette(a, `${p.name} Triadic 2`))
-      if (b) setThemeColour(t.id, 'accent', addToPalette(b, `${p.name} Triadic 3`))
+    {
+      label: 'Triadic',
+      icon: 'i-lucide-triangle',
+      description: 'Triadic palette from primary',
+      apply() {
+        const p = state.value.colours.find((c) => c.role === 'primary')
+        if (!p) return
+        const [a, b] = computeHarmony(p.hex, 'triadic')
+        addTheme('Triadic')
+        const t = state.value.themes.at(-1)!
+        if (a) setThemeColour(t.id, 'secondary', addToPalette(a, `${p.name} Triadic 2`))
+        if (b) setThemeColour(t.id, 'accent', addToPalette(b, `${p.name} Triadic 3`))
+      },
     },
-  },
-]
+  ]
 
-const canApplyPresets = computed(() => state.value.colours.length > 0)
+  const canApplyPresets = computed(() => state.value.colours.length > 0)
 
-// ── Add theme ─────────────────────────────────────────────────────────────
+  // ── Add theme ─────────────────────────────────────────────────────────────
 
-const newThemeName = ref('')
+  const newThemeName = ref('')
 
-function handleAdd() {
-  const name = newThemeName.value.trim()
-  if (!name) return
-  addTheme(name)
-  newThemeName.value = ''
-}
+  function handleAdd() {
+    const name = newThemeName.value.trim()
+    if (!name) return
+    addTheme(name)
+    newThemeName.value = ''
+  }
 
-// ── Select items ─────────────────────────────────────────────────────────
+  // ── Select items ─────────────────────────────────────────────────────────
 
-const colourSelectItems = computed(() => [
-  { label: 'Auto (matching role)', value: '' },
-  ...state.value.colours.map((c) => ({ label: `${c.name}  ${c.hex}`, value: c.id })),
-  { label: 'Custom hex…', value: '__custom__' },
-])
+  const colourSelectItems = computed(() => [
+    { label: 'Auto (matching role)', value: '' },
+    ...state.value.colours.map((c) => ({ label: `${c.name}  ${c.hex}`, value: c.id })),
+    { label: 'Custom hex…', value: '__custom__' },
+  ])
 </script>
 
 <template>
@@ -153,8 +154,7 @@ const colourSelectItems = computed(() => [
     <div class="mb-8">
       <h1 class="text-2xl font-semibold text-default mb-1">Theme Superset</h1>
       <p class="text-muted text-sm">
-        Define named theme variants that remap colours to different roles.
-        Each theme exports as a
+        Define named theme variants that remap colours to different roles. Each theme exports as a
         <code class="font-mono text-xs bg-elevated px-1 py-0.5 rounded">data-theme</code>
         CSS selector.
       </p>
@@ -191,11 +191,7 @@ const colourSelectItems = computed(() => [
         </template>
 
         <div class="flex flex-col gap-3">
-          <div
-            v-for="role in roles"
-            :key="role"
-            class="flex items-center gap-3 min-w-0"
-          >
+          <div v-for="role in roles" :key="role" class="flex items-center gap-3 min-w-0">
             <!-- Role label -->
             <p class="text-xs font-medium text-default capitalize w-16 sm:w-20 shrink-0">
               {{ role }}
@@ -274,10 +270,7 @@ const colourSelectItems = computed(() => [
       <p class="text-xs text-muted mb-4">
         Generate a new theme variant based on your existing palette.
       </p>
-      <div
-        v-if="!canApplyPresets"
-        class="text-xs text-muted italic"
-      >
+      <div v-if="!canApplyPresets" class="text-xs text-muted italic">
         Add brand colours on the Foundation page first.
       </div>
       <div v-else class="grid grid-cols-2 sm:grid-cols-4 gap-2">

@@ -1,109 +1,110 @@
+<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
-import type { FormSubmitEvent } from '@nuxt/ui'
-import { z } from 'zod'
+  import type { FormSubmitEvent } from '@nuxt/ui'
+  import { z } from 'zod'
 
-const { setPageAccent } = useAccentColor()
-setPageAccent('cyan')
-onUnmounted(() => setPageAccent(null))
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('cyan')
+  onUnmounted(() => setPageAccent(null))
 
-// Field types for demo
-const fieldTypes = [
-  { type: 'text', description: 'Basic text input' },
-  { type: 'name', description: 'Name with user icon' },
-  { type: 'email', description: 'Email with validation' },
-  { type: 'phone', description: 'Phone number input' },
-  { type: 'password', description: 'Password with lock icon' },
-  { type: 'url', description: 'URL with link icon' },
-  { type: 'textarea', description: 'Multi-line text' },
-  { type: 'number', description: 'Numeric input' },
-  { type: 'date', description: 'Date picker' },
-  { type: 'time', description: 'Time picker' },
-  { type: 'search', description: 'Search with icon' },
-  { type: 'currency', description: 'Currency formatting' },
-] as const
+  // Field types for demo
+  const fieldTypes = [
+    { type: 'text', description: 'Basic text input' },
+    { type: 'name', description: 'Name with user icon' },
+    { type: 'email', description: 'Email with validation' },
+    { type: 'phone', description: 'Phone number input' },
+    { type: 'password', description: 'Password with lock icon' },
+    { type: 'url', description: 'URL with link icon' },
+    { type: 'textarea', description: 'Multi-line text' },
+    { type: 'number', description: 'Numeric input' },
+    { type: 'date', description: 'Date picker' },
+    { type: 'time', description: 'Time picker' },
+    { type: 'search', description: 'Search with icon' },
+    { type: 'currency', description: 'Currency formatting' },
+  ] as const
 
-// Demo form states
-const fieldDemoValues = reactive<Record<string, string | number>>({
-  text: '',
-  name: '',
-  email: '',
-  phone: '',
-  password: '',
-  url: '',
-  textarea: '',
-  number: 0,
-  date: '',
-  time: '',
-  search: '',
-  currency: 0,
-})
+  // Demo form states
+  const fieldDemoValues = reactive<Record<string, string | number>>({
+    text: '',
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    url: '',
+    textarea: '',
+    number: 0,
+    date: '',
+    time: '',
+    search: '',
+    currency: 0,
+  })
 
-// Validation demo
-const validationSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-})
+  // Validation demo
+  const validationSchema = z.object({
+    email: z.string().email('Please enter a valid email address'),
+    password: z.string().min(8, 'Password must be at least 8 characters'),
+  })
 
-type ValidationState = z.infer<typeof validationSchema>
+  type ValidationState = z.infer<typeof validationSchema>
 
-const validationState = reactive<Partial<ValidationState>>({
-  email: '',
-  password: '',
-})
+  const validationState = reactive<Partial<ValidationState>>({
+    email: '',
+    password: '',
+  })
 
-const validationSubmitted = ref(false)
+  const validationSubmitted = ref(false)
 
-async function onValidationSubmit(_event: FormSubmitEvent<ValidationState>) {
-  validationSubmitted.value = true
-  setTimeout(() => {
-    validationSubmitted.value = false
-  }, 3000)
-}
-
-// Contact form demo state
-const contactSubmitted = ref(false)
-
-function onContactSubmit() {
-  contactSubmitted.value = true
-  setTimeout(() => {
-    contactSubmitted.value = false
-  }, 3000)
-}
-
-// Email integration
-interface EmailStatus {
-  configured: boolean
-  emailFrom: string | null
-  emailTo: string | null
-}
-
-const { data: emailStatus } = useFormsFetch<EmailStatus>('/status')
-
-const testEmailLoading = ref(false)
-const testEmailResult = ref<{ success: boolean; error?: string } | null>(null)
-
-async function sendTestEmail() {
-  testEmailLoading.value = true
-  testEmailResult.value = null
-  try {
-    await $fetch('/api/contact', {
-      method: 'POST',
-      body: {
-        name: 'Test User',
-        email: 'test@example.com',
-        message: 'This is a test message from the playground to verify Resend integration.',
-      },
-    })
-    testEmailResult.value = { success: true }
-  } catch (err: any) {
-    testEmailResult.value = { success: false, error: err.statusMessage || 'Send failed' }
-  } finally {
-    testEmailLoading.value = false
+  async function onValidationSubmit(_event: FormSubmitEvent<ValidationState>) {
+    validationSubmitted.value = true
+    setTimeout(() => {
+      validationSubmitted.value = false
+    }, 3000)
   }
-}
 
-// Code samples
-const fieldConfigCode = `// config/fields.ts
+  // Contact form demo state
+  const contactSubmitted = ref(false)
+
+  function onContactSubmit() {
+    contactSubmitted.value = true
+    setTimeout(() => {
+      contactSubmitted.value = false
+    }, 3000)
+  }
+
+  // Email integration
+  interface EmailStatus {
+    configured: boolean
+    emailFrom: string | null
+    emailTo: string | null
+  }
+
+  const { data: emailStatus } = useFormsFetch<EmailStatus>('/status')
+
+  const testEmailLoading = ref(false)
+  const testEmailResult = ref<{ success: boolean; error?: string } | null>(null)
+
+  async function sendTestEmail() {
+    testEmailLoading.value = true
+    testEmailResult.value = null
+    try {
+      await $fetch('/api/contact', {
+        method: 'POST',
+        body: {
+          name: 'Test User',
+          email: 'test@example.com',
+          message: 'This is a test message from the playground to verify Resend integration.',
+        },
+      })
+      testEmailResult.value = { success: true }
+    } catch (err: any) {
+      testEmailResult.value = { success: false, error: err.statusMessage || 'Send failed' }
+    } finally {
+      testEmailLoading.value = false
+    }
+  }
+
+  // Code samples
+  const fieldConfigCode = `// config/fields.ts
 export const fieldConfigs = {
   email: {
     icon: 'i-lucide-mail',
@@ -122,7 +123,7 @@ export const fieldConfigs = {
   // ... more field types
 }`
 
-const formFieldUsageCode = `<FormField
+  const formFieldUsageCode = `<FormField
   v-model="state.email"
   type="email"
   name="email"
@@ -130,7 +131,7 @@ const formFieldUsageCode = `<FormField
   required
 />`
 
-const zodSchemaCode = `import { z } from 'zod'
+  const zodSchemaCode = `import { z } from 'zod'
 import { fieldConfigs } from '~/config/fields'
 
 const schema = z.object({
@@ -146,24 +147,27 @@ const schema = z.object({
 // Type is automatically inferred
 type FormState = z.infer<typeof schema>`
 
-definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: true } } })
+  definePageMeta({ layout: false })
 </script>
 
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
+<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Forms Layer Demo"
     description="Config-driven form fields with Zod validation and type inference"
   >
-    <LayoutSection>
-      <LayoutGridItem preset="centered">
-        <div class="space-y-12 py-8">
-          <LayoutPageHeader
-            title="Forms Layer"
-            description="Config-driven form fields with Zod validation"
-            back="/"
-          />
-
-          <!-- Overview -->
+    <div class="bg-gray-950 min-h-screen">
+      <DemoPageHero
+        name="FORMS"
+        description="Config-driven form fields with Zod validation and full type inference."
+      />
+      <LayoutMain>
+        <LayoutSection>
+          <LayoutGridItem preset="centered">
+            <div class="space-y-12 py-8">
+              <!-- Overview -->
           <UCard>
             <template #header>
               <div class="flex items-center gap-2">
@@ -720,8 +724,8 @@ definePageMeta({ layout: { name: 'grid', props: { showHeader: true, showFooter: 
                     <pre>
 NUXT_FORMS_LAYER_RESEND_API_KEY=re_xxxx
 NUXT_FORMS_LAYER_EMAIL_FROM=contact@yourdomain.com
-NUXT_FORMS_LAYER_EMAIL_TO=you@example.com</pre
-                    >
+NUXT_FORMS_LAYER_EMAIL_TO=you@example.com
+                    </pre>
                   </div>
                 </div>
               </div>
@@ -808,13 +812,23 @@ NUXT_FORMS_LAYER_EMAIL_TO=you@example.com</pre
             </UCard>
           </section>
 
-          <!-- Navigation -->
-          <div class="flex gap-4 justify-center pt-4">
-            <UButton to="/ui" variant="outline" icon="i-lucide-arrow-left"> UI Layer Demo </UButton>
-            <UButton to="/" icon="i-lucide-home"> Back to Home </UButton>
-          </div>
-        </div>
-      </LayoutGridItem>
-    </LayoutSection>
+              <!-- Navigation -->
+              <div class="flex gap-4 justify-center pt-4">
+                <UButton to="/ui" variant="outline" icon="i-lucide-arrow-left"> UI Layer Demo </UButton>
+                <UButton to="/" icon="i-lucide-home"> Back to Home </UButton>
+              </div>
+            </div>
+          </LayoutGridItem>
+        </LayoutSection>
+      </LayoutMain>
+      <DemoPageFooter
+        name="Forms Layer"
+        description="Config-driven forms with Zod validation"
+        :links="[
+          { label: 'Mailer', to: '/mailer', icon: 'i-lucide-mail' },
+          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+        ]"
+      />
+    </div>
   </LayoutPage>
 </template>

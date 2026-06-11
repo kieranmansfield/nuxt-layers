@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const { setPageAccent } = useAccentColor()
-setPageAccent('sky')
-onUnmounted(() => setPageAccent(null))
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('indigo')
+  onUnmounted(() => setPageAccent(null))
 
-const { open } = useMastNav()
-const appConfig = useAppConfig()
+  const { open } = useMastNav()
+  const appConfig = useAppConfig()
 
-const configSnippet = `// apps/my-app/app/app.config.ts
+  const configSnippet = `// apps/my-app/app/app.config.ts
 export default defineAppConfig({
   mastNav: {
     scrollBehaviour: 'router', // or 'smooth-scroll'
@@ -19,7 +19,7 @@ export default defineAppConfig({
   },
 })`
 
-const layoutSnippet = `<!-- app/layouts/default.vue -->
+  const layoutSnippet = `<!-- app/layouts/default.vue -->
 <template>
   <LayoutMain>
     <MastNav />
@@ -27,7 +27,7 @@ const layoutSnippet = `<!-- app/layouts/default.vue -->
   </LayoutMain>
 </template>`
 
-const smoothScrollSnippet = `// Smooth scroll mode — scrolls to #section-id on the index page,
+  const smoothScrollSnippet = `// Smooth scroll mode — scrolls to #section-id on the index page,
 // navigates with router on all other pages.
 mastNav: {
   scrollBehaviour: 'smooth-scroll',
@@ -40,7 +40,7 @@ mastNav: {
 // The 'id' field is the scroll target — useSmoothScroll().scrollTo('#id')
 // The 'to' field is the fallback route when not on the index page`
 
-const composableSnippet = `// composables/mastNav.ts (in the ui layer)
+  const composableSnippet = `// composables/mastNav.ts (in the ui layer)
 import { createSharedComposable } from '@vueuse/core'
 
 function _useMastNav() {
@@ -63,29 +63,31 @@ function _useMastNav() {
 // createSharedComposable ensures overlay.create() runs only once
 export const useMastNav = createSharedComposable(_useMastNav)`
 
-const activeSectionSnippet = `// Your scroll composable writes to this key:
+  const activeSectionSnippet = `// Your scroll composable writes to this key:
 const activeSection = useState('activeSection', () => '')
 
 // NavModal reads it reactively to highlight the current section:
 :class="activeSection === link.id ? 'font-normal' : 'font-light'"`
 
-definePageMeta({
-  layout: { name: 'grid', props: { showNav: true, showHeader: false, showFooter: false } },
-})
+  definePageMeta({
+    layout: false,
+  })
 </script>
 
+<!-- eslint-disable vue/max-lines-per-block -->
+<!-- eslint-disable vue/max-template-depth -->
 <template>
   <LayoutPage title="MastNav Demo" description="Hamburger nav + full-screen overlay modal">
-    <LayoutSection>
-      <LayoutGridItem preset="centered">
-        <div class="space-y-12 py-8 pt-16">
-          <LayoutPageHeader
-            title="MastNav"
-            description="Hamburger button + full-screen overlay modal, driven by app.config.ts"
-            back="/"
-          />
-
-          <!-- Live demo callout -->
+    <div class="bg-gray-950 min-h-screen">
+      <DemoPageHero
+        name="NAVIGATION"
+        description="Mast/Site/Links navigation components with useMastNav and useSite composables."
+      />
+      <LayoutMain>
+        <LayoutSection>
+          <LayoutGridItem preset="centered">
+            <div class="space-y-12 py-8 pt-16">
+              <!-- Live demo callout -->
           <UAlert
             icon="lucide:mouse-pointer-click"
             color="info"
@@ -107,23 +109,29 @@ definePageMeta({
                 <UIcon name="lucide:settings-2" class="text-primary" />
                 <h3 class="text-xl font-semibold">Active configuration</h3>
               </div>
-              <p class="text-muted mt-1 text-sm">Links currently configured in the playground's app.config.ts</p>
+              <p class="text-muted mt-1 text-sm">
+                Links currently configured in the playground's app.config.ts
+              </p>
             </template>
             <div class="space-y-2">
               <div
                 v-for="link in appConfig.mastNav?.links"
                 :key="link.id"
-                class="bg-(--ui-bg-elevated) flex items-center justify-between rounded-lg px-4 py-3"
+                class="bg-elevated flex items-center justify-between rounded-lg px-4 py-3"
               >
                 <div class="flex items-center gap-3">
                   <code class="text-muted text-xs">id: {{ link.id }}</code>
-                  <span class="text-(--ui-text) font-medium">{{ link.label }}</span>
+                  <span class="text-default font-medium">{{ link.label }}</span>
                 </div>
-                <code class="text-primary text-xs">{{ typeof link.to === 'string' ? link.to : link.to.name }}</code>
+                <code class="text-primary text-xs">{{
+                  typeof link.to === 'string' ? link.to : link.to.name
+                }}</code>
               </div>
             </div>
             <template #footer>
-              <TypographyCodeBlock language="ts" class="text-sm">{{ configSnippet }}</TypographyCodeBlock>
+              <TypographyCodeBlock language="ts" class="text-sm">{{
+                configSnippet
+              }}</TypographyCodeBlock>
             </template>
           </UCard>
 
@@ -134,9 +142,14 @@ definePageMeta({
                 <UIcon name="lucide:layout-template" class="text-primary" />
                 <h3 class="text-xl font-semibold">Layout wiring</h3>
               </div>
-              <p class="text-muted mt-1 text-sm">Drop <code class="text-primary">&lt;MastNav /&gt;</code> anywhere in your layout — no further config needed</p>
+              <p class="text-muted mt-1 text-sm">
+                Drop <code class="text-primary">&lt;MastNav /&gt;</code> anywhere in your layout —
+                no further config needed
+              </p>
             </template>
-            <TypographyCodeBlock language="vue" class="text-sm">{{ layoutSnippet }}</TypographyCodeBlock>
+            <TypographyCodeBlock language="vue" class="text-sm">{{
+              layoutSnippet
+            }}</TypographyCodeBlock>
           </UCard>
 
           <!-- Scroll behaviour -->
@@ -149,22 +162,29 @@ definePageMeta({
             </template>
             <div class="space-y-6">
               <div class="grid gap-4 md:grid-cols-2">
-                <div class="bg-(--ui-bg-elevated) rounded-xl p-4">
+                <div class="bg-elevated rounded-xl p-4">
                   <div class="mb-2 flex items-center gap-2">
                     <UBadge color="success" variant="subtle">router</UBadge>
                     <span class="text-sm font-medium">Standard routing</span>
                   </div>
-                  <p class="text-muted text-sm">Always navigates with the Vue router. Good for multi-page apps.</p>
+                  <p class="text-muted text-sm">
+                    Always navigates with the Vue router. Good for multi-page apps.
+                  </p>
                 </div>
-                <div class="bg-(--ui-bg-elevated) rounded-xl p-4">
+                <div class="bg-elevated rounded-xl p-4">
                   <div class="mb-2 flex items-center gap-2">
                     <UBadge color="info" variant="subtle">smooth-scroll</UBadge>
                     <span class="text-sm font-medium">Lenis scroll</span>
                   </div>
-                  <p class="text-muted text-sm">Scrolls to <code class="text-primary">#section-id</code> when on the index route. Falls back to router on other pages.</p>
+                  <p class="text-muted text-sm">
+                    Scrolls to <code class="text-primary">#section-id</code> when on the index
+                    route. Falls back to router on other pages.
+                  </p>
                 </div>
               </div>
-              <TypographyCodeBlock language="ts" class="text-sm">{{ smoothScrollSnippet }}</TypographyCodeBlock>
+              <TypographyCodeBlock language="ts" class="text-sm">{{
+                smoothScrollSnippet
+              }}</TypographyCodeBlock>
             </div>
           </UCard>
 
@@ -175,9 +195,14 @@ definePageMeta({
                 <UIcon name="lucide:radio" class="text-primary" />
                 <h3 class="text-xl font-semibold">Active section highlighting</h3>
               </div>
-              <p class="text-muted mt-1 text-sm">NavModal reads <code class="text-primary">useState('activeSection')</code> to highlight the current section</p>
+              <p class="text-muted mt-1 text-sm">
+                NavModal reads <code class="text-primary">useState('activeSection')</code> to
+                highlight the current section
+              </p>
             </template>
-            <TypographyCodeBlock language="ts" class="text-sm">{{ activeSectionSnippet }}</TypographyCodeBlock>
+            <TypographyCodeBlock language="ts" class="text-sm">{{
+              activeSectionSnippet
+            }}</TypographyCodeBlock>
           </UCard>
 
           <!-- Composable internals -->
@@ -187,12 +212,28 @@ definePageMeta({
                 <UIcon name="lucide:code-2" class="text-primary" />
                 <h3 class="text-xl font-semibold">useMastNav internals</h3>
               </div>
-              <p class="text-muted mt-1 text-sm"><code class="text-primary">createSharedComposable</code> ensures the overlay is registered exactly once</p>
+              <p class="text-muted mt-1 text-sm">
+                <code class="text-primary">createSharedComposable</code> ensures the overlay is
+                registered exactly once
+              </p>
             </template>
-            <TypographyCodeBlock language="ts" class="text-sm">{{ composableSnippet }}</TypographyCodeBlock>
+            <TypographyCodeBlock language="ts" class="text-sm">{{
+              composableSnippet
+            }}</TypographyCodeBlock>
           </UCard>
-        </div>
-      </LayoutGridItem>
-    </LayoutSection>
+            </div>
+          </LayoutGridItem>
+        </LayoutSection>
+      </LayoutMain>
+      <DemoPageFooter
+        name="Navigation Layer"
+        description="Navigation components and composables"
+        :links="[
+          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
+          { label: 'Overlays', to: '/overlays', icon: 'i-lucide-layers' },
+        ]"
+      />
+    </div>
   </LayoutPage>
 </template>

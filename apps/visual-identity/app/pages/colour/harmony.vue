@@ -1,29 +1,30 @@
 <script setup lang="ts">
-import type { TabsItem } from '@nuxt/ui'
-import { HARMONY_LABELS, HARMONY_TYPES, computeHarmony } from '~/composables/useColourHarmony'
-import type { HarmonyType } from '~/composables/useBrandState'
+  import type { TabsItem } from '@nuxt/ui'
 
-const { state, updateColour } = useBrandState()
+  import type { HarmonyType } from '~/composables/useBrandState'
+  import { computeHarmony, HARMONY_LABELS, HARMONY_TYPES } from '~/composables/useColourHarmony'
 
-const harmonyHexes = (colour: { hex: string; harmonyType: HarmonyType | null }) => {
-  if (!colour.harmonyType) return []
-  return computeHarmony(colour.hex, colour.harmonyType)
-}
+  const { state, updateColour } = useBrandState()
 
-// UTabs items — shorter labels for compact display
-const harmonyTabs: TabsItem[] = [
-  { label: 'None', value: 'none' },
-  { label: 'Complement.', value: 'complementary' },
-  { label: 'Analogous', value: 'analogous' },
-  { label: 'Triadic', value: 'triadic' },
-  { label: 'Split', value: 'split-complementary' },
-  { label: 'Tetradic', value: 'tetradic' },
-]
+  const harmonyHexes = (colour: { hex: string; harmonyType: HarmonyType | null }) => {
+    if (!colour.harmonyType) return []
+    return computeHarmony(colour.hex, colour.harmonyType)
+  }
 
-function setHarmony(id: string, raw: string | number | undefined) {
-  const v = String(raw ?? 'none')
-  updateColour(id, { harmonyType: v === 'none' ? null : (v as HarmonyType) })
-}
+  // UTabs items — shorter labels for compact display
+  const harmonyTabs: TabsItem[] = [
+    { label: 'None', value: 'none' },
+    { label: 'Complement.', value: 'complementary' },
+    { label: 'Analogous', value: 'analogous' },
+    { label: 'Triadic', value: 'triadic' },
+    { label: 'Split', value: 'split-complementary' },
+    { label: 'Tetradic', value: 'tetradic' },
+  ]
+
+  function setHarmony(id: string, raw: string | number | undefined) {
+    const v = String(raw ?? 'none')
+    updateColour(id, { harmonyType: v === 'none' ? null : (v as HarmonyType) })
+  }
 </script>
 
 <template>
@@ -56,12 +57,12 @@ function setHarmony(id: string, raw: string | number | undefined) {
       </div>
 
       <!-- Wheel -->
-      <div class="flex-1 flex items-center justify-center" style="height: 70vh; padding: 1.5rem 2rem">
+      <div
+        class="flex-1 flex items-center justify-center"
+        style="height: 70vh; padding: 1.5rem 2rem"
+      >
         <div style="width: min(65vh, 88%)">
-          <ColourHarmonyWheel
-            :base-hex="colour.hex"
-            :harmony-hexes="harmonyHexes(colour)"
-          />
+          <ColourHarmonyWheel :base-hex="colour.hex" :harmony-hexes="harmonyHexes(colour)" />
         </div>
       </div>
 

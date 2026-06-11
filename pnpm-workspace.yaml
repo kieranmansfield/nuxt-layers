@@ -39,6 +39,7 @@ minimumReleaseAgeExclude:
   - nuxt@4.4.7
   - skills@1.5.10
   - eslint-plugin-vue@10.9.2
+  - pnpm@11.5.3
 
 overrides:
   # vue-tsc@3.3.1 / @vue/language-core@3.3.1 published 2026-05-19, blocked by minimumReleaseAge — remove once >24h old
@@ -74,7 +75,7 @@ catalog:
   '@nuxt/scripts': ^0.11.0
   '@nuxt/ui': latest
   '@nuxtjs/device': ^4.0.0
-  '@nuxtjs/seo': ^2.0.0
+  '@nuxtjs/seo': ^5.0.0
   '@oxc-parser/binding-darwin-arm64': ^0.134.0
   '@perplex-digital/stylelint-config': ^17.4.0
   '@pinia/nuxt': ^0.11.3
@@ -116,6 +117,7 @@ catalog:
   nuxt: ^4.4.7
   pinia: ^3.0.4
   playwright: ^1.60.0
+  pnpm: 11.5.3
   postcss-html: ^1.8.1
   prerender-buildhooks: https://6abe5a43-4668-4f72-b3f7-823e2d8bbbbf.netlify.app/packages/buildhooks.tgz
   prettier: ^3.8.3
@@ -157,5 +159,7 @@ catalogs:
     vue: ^3.5.35
   conflicts_conflicts_zod_h4_3_6_h4_4_3:
     zod: ^4.4.3
+  conflicts_conflicts_zod-to-json-schema_h3_25_1_h3_25_2:
+    zod-to-json-schema: ^3.25.2
 
 # minimumReleaseAge: 0
