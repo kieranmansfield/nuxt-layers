@@ -1,3 +1,131 @@
+# Agent Migration Guide — Update an app to nuxt-layers v2.2.x
+
+**Audience:** an AI coding agent (or developer) updating a downstream Nuxt app that consumes these layers.
+**Goal:** apply the breaking changes from the `feeds` / `site` / content-type work.
+
+> Adding feeds to your content sections is a **feature task**, not a breaking change — it has its own guide: [`FEEDS.md`](./FEEDS.md). Do the breaking changes below first, then follow that.
+
+Work top to bottom. Each change has a **Detect** step (how to tell if it applies) and an **Apply** step. Skip anything Detect doesn't find. Run the **Verify** checklist before declaring done. Where this summary and the detailed history sections below disagree, the code wins — check the cited files.
+
+## 0. Preconditions
+
+- Confirm the app extends these layers (an `extends` array, or a `LAYER_PATHS` / resolver block like the playground's, in `nuxt.config.ts`).
+- Confirm the layer checkout is at **v2.2.x** (`git -C <layers-repo> describe --tags`).
+- The app must use `@nuxt/content` v3 with a `content.config.ts` at the **app root** (Nuxt Content v3 resolves it from the app root, not the layer).
+
+## 1. BREAKING — Site metadata moved to top-level `site`
+
+Site metadata is no longer namespaced under `feedsLayer.site`. It now lives at the top-level `site` key in `app.config.ts`, typed by the **core** layer (`SiteConfig` in `layers/core/app/types/site.ts`). Any layer can read it via `useAppConfig().site`.
+
+**Detect:** grep the app for `feedsLayer.site` or a `feedsLayer: { site:` block in `app/app.config.ts`.
+
+**Apply:** move the object out to a top-level `site` key.
+
+```ts
+// app/app.config.ts — BEFORE
+export default defineAppConfig({
+  feedsLayer: {
+    site: { title: 'My Site', url: 'https://example.com', author: { name: 'Jane', email: 'jane@example.com' } },
+  },
+})
+
+// app/app.config.ts — AFTER
+export default defineAppConfig({
+  site: {
+    title: 'My Site',
+    description: 'Short description used in feed channels and meta tags',
+    url: 'https://example.com',           // canonical origin, NO trailing slash
+    author: { name: 'Jane', email: 'jane@example.com' },
+  },
+})
+```
+
+`SiteConfig` fields: `title`, `subtitle`, `description`, `url`, `author`, `image`, `favicon`, `copyright`. All optional, but feeds need at least `title` and `url` for valid channel metadata.
+
+> Reminder: `app.config.ts` MUST be inside `app/` (the srcDir). A root-level `app.config.ts` is silently ignored in Nuxt 4.
+
+## 2. BREAKING — `SiteAuthor` type renamed to `Author`
+
+**Detect:** grep for `SiteAuthor`.
+
+**Apply:** rename every import and annotation.
+
+```ts
+// BEFORE
+import type { SiteAuthor } from '#layers/core/app/types/site'
+const author: SiteAuthor = { name: 'Jane' }
+
+// AFTER
+import type { Author } from '#layers/core/app/types/site'
+const author: Author = { name: 'Jane' }
+```
+
+Shape is unchanged: `{ name: string; email?: string; link?: string }`.
+
+## 3. BREAKING — Content author `url` → `link`
+
+The author `url` field is renamed to `link` to match core's `Author`. This touches **three** places — change all of them or feeds/templates silently drop the author link.
+
+**Detect:** grep the app's `content.config.ts` and `content/**/*.md` frontmatter for `url:` inside an `authors` block.
+
+**3a. Zod schema** (app `content.config.ts`):
+
+```ts
+// BEFORE
+authors: z.array(z.object({ name: z.string(), avatar: z.string().optional(), url: z.string().optional() }))
+// AFTER
+authors: z.array(z.object({ name: z.string(), avatar: z.string().optional(), link: z.string().optional() }))
+```
+
+**3b. Markdown frontmatter** (every content file with authors):
+
+```yaml
+# BEFORE              # AFTER
+authors:              authors:
+  - name: Jane Doe      - name: Jane Doe
+    url: https://...      link: https://...
+```
+
+**3c. TypeScript** — `ContentAuthor` now extends `Author`. If the app defines its own author type, extend `Author` rather than redeclaring `url`.
+
+> Do NOT pass `schema:` to `defineCollection`. c12 uses jiti with `moduleCache:false`, so the validator never initializes. Define the Zod object inline in the collection, the established pattern in this repo.
+
+## 4. NON-BREAKING — `BaseContent` shared interface
+
+`BlogPost`, `PortfolioItem`, `GalleryItem`, and `ContentPage` now extend a shared `BaseContent` (`title`, `description?`, `image?`, `tags?`, `date?`, `draft?`) from `#layers/content/app/types/content`.
+
+**Apply only if** the app has custom content types that duplicate those fields — extend `BaseContent` instead:
+
+```ts
+import type { BaseContent } from '#layers/content/app/types/content'
+interface MyCustomPage extends BaseContent { featuredVideo?: string }
+```
+
+## 5. Next: add feeds (feature, not breaking)
+
+Once the breaking changes are applied and `site` is set, wire RSS/Atom/JSON feeds into your content sections by following [`FEEDS.md`](./FEEDS.md).
+
+## 6. Verify
+
+1. **Grep clean:** no remaining `SiteAuthor`, no `feedsLayer.site`, no `url:` inside `authors` blocks (frontmatter + Zod).
+2. **Typecheck:** `pnpm typecheck` passes (catches `Author`/`BaseContent`/`ContentAuthor` mismatches).
+3. **Lint:** `pnpm lint` passes (no semicolons, single quotes, ES5 trailing commas, ≤100 cols).
+4. **Dev smoke:** `pnpm dev` boots and content pages render with author links intact.
+
+## Quick reference
+
+| Change | Type | Action |
+|--------|------|--------|
+| `feedsLayer.site` → `site` | Breaking | Move to top-level `site` in `app/app.config.ts` |
+| `SiteAuthor` → `Author` | Breaking | Rename imports/annotations |
+| Author `url` → `link` | Breaking | Update Zod schema + frontmatter + TS (3 places) |
+| `BaseContent` | Additive | Extend it in custom content types |
+| Add feeds | Feature | Follow [`FEEDS.md`](./FEEDS.md) |
+
+The sections below are the detailed, chronological history these summaries were distilled from.
+
+---
+
 # Migration Guide: Feeds Layer, Site Config & Content Type Normalisation
 
 Four related changes landed together. None are strictly breaking for existing pages, but anything that reads `feedsLayer.site`, imports `SiteAuthor`, or uses the `authors[].url` frontmatter field needs updating.
