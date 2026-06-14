@@ -40,7 +40,7 @@
     :loading
     :fetchpriority
     :decoding
-    :provider
+    :provider="(provider as any)"
     :preset
     :densities
     :class="wrapperClass"
