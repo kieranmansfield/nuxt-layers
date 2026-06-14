@@ -1,1 +1,0 @@
-// Animated linear gradient layer

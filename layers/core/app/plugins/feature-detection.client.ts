@@ -14,21 +14,21 @@
 export default defineNuxtPlugin({
   name: 'core:feature-detection',
   setup() {
-  // Initialize feature detection
-  const features = useFeatures()
+    // Initialize feature detection
+    const features = useFeatures()
 
-  if (import.meta.dev && process.env.NODE_ENV === 'development') {
-    console.log('[Feature Detection] Initialized:', {
-      grid: features.grid.value,
-      subgrid: features.subgrid.value,
-      containerQueries: features.containerQueries.value,
-      has: features.has.value,
-      webGL: features.webGL.value,
-      darkMode: features.darkMode.value,
-      reducedMotion: features.reducedMotion.value,
-      webp: features.webp.value,
-      avif: features.avif.value,
-    })
-  }
+    if (import.meta.dev && process.env.NODE_ENV === 'development') {
+      console.log('[Feature Detection] Initialized:', {
+        grid: features.grid.value,
+        subgrid: features.subgrid.value,
+        containerQueries: features.containerQueries.value,
+        has: features.has.value,
+        webGL: features.webGL.value,
+        darkMode: features.darkMode.value,
+        reducedMotion: features.reducedMotion.value,
+        webp: features.webp.value,
+        avif: features.avif.value,
+      })
+    }
   },
 })

@@ -4,8 +4,8 @@ export function useGalleryItems(options: GalleryQueryOptions = {}) {
   const { tags, limit } = options
 
   return useContentData('gallery-items', async () => {
-    let items = (await queryCollection('gallery').all()).sort(
-      (a, b) => (b.date ?? '').localeCompare(a.date ?? '')
+    let items = (await queryCollection('gallery').all()).sort((a, b) =>
+      (b.date ?? '').localeCompare(a.date ?? '')
     )
 
     if (tags?.length) {

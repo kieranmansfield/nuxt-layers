@@ -1,1 +1,0 @@
-// Palette and color helper functions

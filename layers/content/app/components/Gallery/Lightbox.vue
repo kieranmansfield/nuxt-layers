@@ -57,7 +57,11 @@
           color="neutral"
           variant="ghost"
           class="absolute top-4 right-4 text-white"
-          @click="() => { open = false }"
+          @click="
+            () => {
+              open = false
+            }
+          "
         />
 
         <!-- Prev -->

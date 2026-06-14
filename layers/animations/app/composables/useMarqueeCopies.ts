@@ -3,7 +3,7 @@ import type { MaybeRef } from 'vue'
 export function useMarqueeCopies(
   containerRefs: Ref<HTMLElement[]>,
   copyRefs: Ref<HTMLSpanElement[]>,
-  rowCount: MaybeRef<number>,
+  rowCount: MaybeRef<number>
 ) {
   const copyWidths = ref<number[]>([])
   const calculatedCopies = ref<number[]>([])

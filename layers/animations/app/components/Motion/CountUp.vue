@@ -21,7 +21,8 @@
     as?: string
   }>()
 
-  const el = ref<HTMLElement | null>(null)
+  // const el = ref<HTMLElement | null>(null)
+  const el = useTemplateRef<HTMLElement | null>(null)
   const { displayValue, isComplete } = useCountUp(el, {
     to,
     from,

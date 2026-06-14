@@ -35,7 +35,9 @@
   const { gsap, ScrollTrigger } = useGsap()
   const { velocityFactor } = useMarqueeVelocity({ damping, stiffness, velocityMapping })
 
-  const containerRef = ref<HTMLElement[]>([])
+  // const containerRef = ref<HTMLElement[]>([])
+  const containerRef = useTemplateRef<HTMLElement[]>([])
+
   const copyRefs = ref<HTMLSpanElement[]>([])
 
   const { copyWidths, calculatedCopies } = useMarqueeCopies(
@@ -130,7 +132,7 @@
       :style="parallaxStyle"
     >
       <div
-        :class="`${scrollerClassName} font-styles-logo flex py-2 text-center font-sans text-4xl font-medium tracking-[-0.02em] whitespace-nowrap text-neutral drop-shadow md:text-[5rem] md:leading-[5rem]`"
+        :class="`${scrollerClassName} font-styles-logo flex py-2 text-center font-sans text-4xl font-medium tracking-[-0.02em] whitespace-nowrap text-neutral drop-shadow md:text-[5rem] md:leading-20`"
         :style="{ transform: `translateX(${scrollTransforms[index] ?? '0px'})`, ...scrollerStyle }"
       >
         <span

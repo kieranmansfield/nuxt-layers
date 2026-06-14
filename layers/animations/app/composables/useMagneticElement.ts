@@ -5,7 +5,7 @@ export function useMagneticElement(
     radius?: number
     damping?: number
     stiffness?: number
-  } = {},
+  } = {}
 ) {
   const { gsap } = useGsap()
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(elementRef)

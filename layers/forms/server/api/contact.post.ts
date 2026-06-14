@@ -1,6 +1,6 @@
-import { z } from 'zod'
 import { sendContactEmail } from '#layers/mailer/server/utils/email'
 import { mailerLayerHooks } from '#layers/mailer/server/utils/hooks'
+import { z } from 'zod'
 
 const contactSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters'),

@@ -1,1 +1,0 @@
-// Factory function to create TresJS ShaderMaterial with uniforms

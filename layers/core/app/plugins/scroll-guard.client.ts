@@ -23,34 +23,34 @@ type CoreLayerConfig = {
 export default defineNuxtPlugin({
   name: 'core:scroll-guard',
   setup() {
-  const config = useAppConfig()
-  const coreLayer = config.coreLayer as CoreLayerConfig | undefined
+    const config = useAppConfig()
+    const coreLayer = config.coreLayer as CoreLayerConfig | undefined
 
-  if (coreLayer?.scrollGuard?.enabled === false) {
-    if (import.meta.dev) {
-      console.log('[Scroll Guard] Disabled via config')
+    if (coreLayer?.scrollGuard?.enabled === false) {
+      if (import.meta.dev) {
+        console.log('[Scroll Guard] Disabled via config')
+      }
+      return
     }
-    return
-  }
 
-  const { enable, clampedCount } = useScrollGuard()
+    const { enable, clampedCount } = useScrollGuard()
 
-  enable()
+    enable()
 
-  if (import.meta.dev) {
-    console.log('[Scroll Guard] Initialized', {
-      strict: coreLayer?.scrollGuard?.strict ?? true,
-      debug: coreLayer?.scrollGuard?.debug ?? false,
-      excludeSelectors: coreLayer?.scrollGuard?.excludeSelectors ?? [
-        '.carousel',
-        '.overflow-intent',
-      ],
-    })
+    if (import.meta.dev) {
+      console.log('[Scroll Guard] Initialized', {
+        strict: coreLayer?.scrollGuard?.strict ?? true,
+        debug: coreLayer?.scrollGuard?.debug ?? false,
+        excludeSelectors: coreLayer?.scrollGuard?.excludeSelectors ?? [
+          '.carousel',
+          '.overflow-intent',
+        ],
+      })
 
-    // Log clamped count after initial scan settles
-    requestAnimationFrame(() => {
-      console.log(`[Scroll Guard] Clamped ${clampedCount.value} element(s)`)
-    })
-  }
+      // Log clamped count after initial scan settles
+      requestAnimationFrame(() => {
+        console.log(`[Scroll Guard] Clamped ${clampedCount.value} element(s)`)
+      })
+    }
   },
 })

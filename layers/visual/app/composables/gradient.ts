@@ -62,9 +62,8 @@ export function useGradient(
     const presets = (appConfig.uiLayer as Record<string, unknown> | undefined)?.['gradients'] as
       | Record<string, GradientConfig>
       | undefined
-    let resolved: GradientConfig = typeof raw === 'string'
-      ? (presets?.[raw] ?? DEFAULT_CONFIG)
-      : raw
+    let resolved: GradientConfig =
+      typeof raw === 'string' ? (presets?.[raw] ?? DEFAULT_CONFIG) : raw
 
     if (override) {
       resolved = { ...resolved, ...override }

@@ -5,7 +5,7 @@ export function useTiltEffect(
     perspective?: number
     damping?: number
     stiffness?: number
-  } = {},
+  } = {}
 ) {
   const { gsap } = useGsap()
   const { elementX, elementY, elementWidth, elementHeight, isOutside } =
