@@ -150,8 +150,8 @@ export type PictureProps = {
   fetchpriority?: 'high' | 'low' | 'auto'
 
   // Nuxt Image specific
-  /** Image provider - defaults to 'ipx' (Nuxt's built-in image optimizer) */
-  provider?: 'ipx'
+  /** Image provider override. Defaults to the app's configured Nuxt Image provider. */
+  provider?: string
   /** Nuxt Image preset name */
   preset?: string
   /**
