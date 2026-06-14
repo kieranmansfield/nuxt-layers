@@ -2,7 +2,6 @@ import {
   QUALITY_PRESETS,
   type QualityLevel,
   type QualitySettings,
-  type RendererBackend,
   type RendererCapabilities,
 } from '#layers/canvas/types/renderer'
 
