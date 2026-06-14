@@ -16,10 +16,10 @@ export function useAnalytics(): AnalyticsProxy {
 
   if (!provider || !id) return noop()
 
-  // Load immediately unless consent is required and not yet granted
-  const trigger = computed(() =>
-    consentRequired.value && !hasConsent.value ? 'manual' : 'onNuxtReady'
-  )
+  // Load on Nuxt ready unless consent is required and not yet granted
+  const trigger = consentRequired.value
+    ? useScriptTriggerConsent({ consent: hasConsent })
+    : 'onNuxtReady'
 
   if (provider === 'ga4') {
     const ga = useScriptGoogleAnalytics({ id, scriptOptions: { trigger } })
@@ -32,7 +32,7 @@ export function useAnalytics(): AnalyticsProxy {
   if (provider === 'plausible') {
     const pl = useScriptPlausibleAnalytics({ domain: id, scriptOptions: { trigger } })
     return {
-      track: (event) => pl.proxy.trackEvent(event),
+      track: (event, params) => pl.proxy.plausible(event, { props: params ?? {} }),
       load: () => pl.load(),
     }
   }
@@ -40,7 +40,7 @@ export function useAnalytics(): AnalyticsProxy {
   if (provider === 'fathom') {
     const fa = useScriptFathomAnalytics({ site: id, scriptOptions: { trigger } })
     return {
-      track: (event) => fa.proxy.trackEvent(event),
+      track: (event) => fa.proxy.trackEvent(event, { _value: 0 }),
       load: () => fa.load(),
     }
   }

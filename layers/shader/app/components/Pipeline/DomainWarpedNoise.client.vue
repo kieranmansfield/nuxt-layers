@@ -1,79 +1,72 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { float, mix, time, uniform, vec4 } from 'three/tsl'
 
   import { domainWarp2D } from '../../shaders/common/noise'
 
-  const props = withDefaults(
-    defineProps<{
-      colorA?: string
-      colorB?: string
-      scale?: number
-      warpStrength?: number
-      warpScale?: number
-      speed?: number
-      order?: number
-    }>(),
-    {
-      colorA: '#000000',
-      colorB: '#ffffff',
-      scale: 2,
-      warpStrength: 0.5,
-      warpScale: 2,
-      speed: 0.1,
-      order: 0,
-    }
-  )
+  const {
+    colorA = '#000000',
+    colorB = '#ffffff',
+    scale = 2,
+    warpStrength = 0.5,
+    warpScale = 2,
+    speed = 0.1,
+    order = 0,
+  } = defineProps<{
+    colorA?: string
+    colorB?: string
+    scale?: number
+    warpStrength?: number
+    warpScale?: number
+    speed?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorANode = toVec3Node(props.colorA)
-  const colorBNode = toVec3Node(props.colorB)
-  const scaleNode = uniform(props.scale)
-  const warpStrNode = uniform(props.warpStrength)
-  const warpScaleNode = uniform(props.warpScale)
-  const speedNode = uniform(props.speed)
+  const colorANode = toVec3Node(colorA)
+  const colorBNode = toVec3Node(colorB)
+  const scaleNode = uniform(scale)
+  const warpStrNode = uniform(warpStrength)
+  const warpScaleNode = uniform(warpScale)
+  const speedNode = uniform(speed)
   watch(
-    () => props.colorA,
+    () => colorA,
     (v) => {
       const c = new Color(v)
       colorANode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorB,
+    () => colorB,
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.scale,
+    () => scale,
     (v) => {
       scaleNode.value = v
     }
   )
   watch(
-    () => props.warpStrength,
+    () => warpStrength,
     (v) => {
       warpStrNode.value = v
     }
   )
   watch(
-    () => props.warpScale,
+    () => warpScale,
     (v) => {
       warpScaleNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -86,5 +79,5 @@
     const animated = uv.add(time.mul(speedNode))
     const n = domainWarp2D(animated.mul(scaleNode), warpStrNode, warpScaleNode).mul(0.5).add(0.5)
     return vec4(mix(colorANode, colorBNode, n), float(1))
-  }, props.order)
+  }, order)
 </script>

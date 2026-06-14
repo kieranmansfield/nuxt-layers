@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 
 // composables/useCache.ts
 import { useOnline } from '@vueuse/core'

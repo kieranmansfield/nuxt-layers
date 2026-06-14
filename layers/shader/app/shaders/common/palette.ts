@@ -1,8 +1,3 @@
-/* eslint-disable max-params */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Palette & Color Utilities
  * Provides composable color palette functions for shader effects
@@ -105,19 +100,23 @@ export function gradientMulti(t: TSLNode, stops: ColorStop[]): TSLNode {
 
   // Sort stops by position
   const sortedStops = [...stops].sort((a, b) => a.position - b.position)
+  const [firstStop] = sortedStops
+  if (!firstStop) {
+    throw new Error('Gradient requires at least 2 color stops')
+  }
 
-  let result = hexToVec3(sortedStops[0].color)
+  let result: TSLNode = hexToVec3(firstStop.color)
 
   for (let i = 1; i < sortedStops.length; i++) {
     const prevStop = sortedStops[i - 1]
     const currStop = sortedStops[i]
+    if (!prevStop || !currStop) continue
 
-    const prevColor = hexToVec3(prevStop.color)
     const currColor = hexToVec3(currStop.color)
 
     const localT = clamp(t.sub(prevStop.position).div(currStop.position - prevStop.position), 0, 1)
 
-    result = mix(result, currColor, step(prevStop.position, t).mul(localT)) as TSLNode
+    result = mix(result, currColor, step(prevStop.position, t).mul(localT))
   }
 
   return result
@@ -309,9 +308,9 @@ export function hslToRgb(hsl: TSLNode): TSLNode {
   const hue = fract(h).mul(6)
 
   // Choose color based on hue sector
-  const r = mix(mix(c, x, step(1, hue)), mix(float(0), x, step(4, hue)), step(2, hue))
-  const g = mix(mix(x, c, step(1, hue)), mix(x, float(0), step(4, hue)), step(2, hue))
-  const b = mix(float(0), mix(c, x, step(4, hue)), step(3, hue))
+  const r: TSLNode = mix(mix(c, x, step(1, hue)), mix(float(0), x, step(4, hue)), step(2, hue))
+  const g: TSLNode = mix(mix(x, c, step(1, hue)), mix(x, float(0), step(4, hue)), step(2, hue))
+  const b: TSLNode = mix(float(0), mix(c, x, step(4, hue)), step(3, hue))
 
   return vec3(r, g, b).add(m)
 }

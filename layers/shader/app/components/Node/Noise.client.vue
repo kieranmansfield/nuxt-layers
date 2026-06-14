@@ -1,7 +1,4 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck - TSL types
   import {
     fbm2D,
     fbm3dSimplex,

@@ -1,9 +1,5 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
-  import { float, floor, fract, uniform, vec3, vec4 } from 'three/tsl'
+  import { float, fract, uniform, vec3, vec4 } from 'three/tsl'
 
   /**
    * ShaderDebugger — dev-only visualization overlay for inspecting pipeline state.
@@ -17,38 +13,41 @@
    * Drop this at any `order` value to inspect that point in the pipeline.
    * Only renders in development — remove from production compositions.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Visualization mode */
-      mode?: 'uv' | 'normal' | 'grid' | 'pass'
-      /** Grid line count (grid mode) */
-      gridLines?: number
-      /** Grid line thickness */
-      gridThickness?: number
-      /** Blend with original output (0 = full debug, 1 = full original) */
-      blend?: number
-      order?: number
-    }>(),
-    { mode: 'uv', gridLines: 10, gridThickness: 0.02, blend: 0, order: 0 }
-  )
+  const {
+    mode = 'uv',
+    gridLines = 10,
+    gridThickness = 0.02,
+    blend = 0,
+    order = 0,
+  } = defineProps<{
+    /** Visualization mode */
+    mode?: 'uv' | 'normal' | 'grid' | 'pass'
+    /** Grid line count (grid mode) */
+    gridLines?: number
+    /** Grid line thickness */
+    gridThickness?: number
+    /** Blend with original output (0 = full debug, 1 = full original) */
+    blend?: number
+    order?: number
+  }>()
 
-  const gridLinesNode = uniform(props.gridLines)
-  const gridThickNode = uniform(props.gridThickness)
-  const blendNode = uniform(props.blend)
+  const gridLinesNode = uniform(gridLines)
+  const gridThickNode = uniform(gridThickness)
+  const blendNode = uniform(blend)
   watch(
-    () => props.gridLines,
+    () => gridLines,
     (v) => {
       gridLinesNode.value = v
     }
   )
   watch(
-    () => props.gridThickness,
+    () => gridThickness,
     (v) => {
       gridThickNode.value = v
     }
   )
   watch(
-    () => props.blend,
+    () => blend,
     (v) => {
       blendNode.value = v
     }
@@ -61,14 +60,14 @@
 
     let debugColour
 
-    if (props.mode === 'uv') {
+    if (mode === 'uv') {
       // Red = U, Green = V, Blue = 0
       debugColour = vec3(uv.x, uv.y, float(0))
-    } else if (props.mode === 'normal') {
+    } else if (mode === 'normal') {
       // Encodes centered UV — negative values become blue tones
       const centered = uv.sub(0.5)
       debugColour = vec3(centered.x.add(0.5), centered.y.add(0.5), float(0.5))
-    } else if (props.mode === 'grid') {
+    } else if (mode === 'grid') {
       // Grid lines via fract — line at every 1/gridLines interval
       const scaled = uv.mul(gridLinesNode)
       const fx = fract(scaled.x)
@@ -83,5 +82,5 @@
     }
 
     return vec4(prev.xyz.mix(debugColour, float(1).sub(blendNode)), prev.w)
-  }, props.order)
+  }, order)
 </script>

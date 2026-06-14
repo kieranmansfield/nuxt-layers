@@ -1,58 +1,57 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { mix, time, uniform, vec3, vec4 } from 'three/tsl'
 
   import { curlNoise3d } from '../../shaders/common/noise'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Colour to mix in at curl peak */
-      color?: string
-      /** Blend opacity */
-      opacity?: number
-      /** Input scale for the curl noise */
-      scale?: number
-      /** Animation speed */
-      speed?: number
-      order?: number
-    }>(),
-    { color: '#ffffff', opacity: 1, scale: 1.5, speed: 0.2, order: 0 }
-  )
+  const {
+    color = '#ffffff',
+    opacity = 1,
+    scale = 1.5,
+    speed = 0.2,
+    order = 0,
+  } = defineProps<{
+    /** Colour to mix in at curl peak */
+    color?: string
+    /** Blend opacity */
+    opacity?: number
+    /** Input scale for the curl noise */
+    scale?: number
+    /** Animation speed */
+    speed?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorNode = toVec3Node(props.color)
-  const opacityNode = uniform(props.opacity)
-  const scaleNode = uniform(props.scale)
-  const speedNode = uniform(props.speed)
+  const colorNode = toVec3Node(color)
+  const opacityNode = uniform(opacity)
+  const scaleNode = uniform(scale)
+  const speedNode = uniform(speed)
   watch(
-    () => props.color,
+    () => color,
     (v) => {
       const c = new Color(v)
       colorNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.opacity,
+    () => opacity,
     (v) => {
       opacityNode.value = v
     }
   )
   watch(
-    () => props.scale,
+    () => scale,
     (v) => {
       scaleNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -67,5 +66,5 @@
     const curl = curlNoise3d(p).x.mul(0.5).add(0.5)
     const blended = mix(prev.xyz, colorNode, curl.mul(opacityNode))
     return vec4(blended, prev.w)
-  }, props.order)
+  }, order)
 </script>

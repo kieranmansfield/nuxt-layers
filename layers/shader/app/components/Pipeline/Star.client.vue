@@ -1,73 +1,67 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { float, mix, uniform, vec4 } from 'three/tsl'
 
   import { star } from '../../shaders/common/shapes'
 
-  const props = withDefaults(
-    defineProps<{
-      colorA?: string
-      colorB?: string
-      radius?: number
-      /** Number of points */
-      points?: number
-      /** Inner radius ratio (0–1) */
-      innerRatio?: number
-      softness?: number
-      order?: number
-    }>(),
-    {
-      colorA: '#000000',
-      colorB: '#ffcc00',
-      radius: 0.35,
-      points: 5,
-      innerRatio: 0.45,
-      softness: 0.01,
-      order: 0,
-    }
-  )
+  const {
+    colorA = '#000000',
+    colorB = '#ffcc00',
+    radius = 0.35,
+    points = 5,
+    innerRatio = 0.45,
+    softness = 0.01,
+    order = 0,
+  } = defineProps<{
+    colorA?: string
+    colorB?: string
+    radius?: number
+    /** Number of points */
+    points?: number
+    /** Inner radius ratio (0–1) */
+    innerRatio?: number
+    softness?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorANode = toVec3Node(props.colorA)
-  const colorBNode = toVec3Node(props.colorB)
-  const radiusNode = uniform(props.radius)
-  const innerNode = uniform(props.innerRatio)
-  const softnessNode = uniform(props.softness)
+  const colorANode = toVec3Node(colorA)
+  const colorBNode = toVec3Node(colorB)
+  const radiusNode = uniform(radius)
+  const innerNode = uniform(innerRatio)
+  const softnessNode = uniform(softness)
   watch(
-    () => props.colorA,
+    () => colorA,
     (v) => {
       const c = new Color(v)
       colorANode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorB,
+    () => colorB,
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.radius,
+    () => radius,
     (v) => {
       radiusNode.value = v
     }
   )
   watch(
-    () => props.innerRatio,
+    () => innerRatio,
     (v) => {
       innerNode.value = v
     }
   )
   watch(
-    () => props.softness,
+    () => softness,
     (v) => {
       softnessNode.value = v
     }
@@ -77,7 +71,7 @@
 
   useShaderStage(() => {
     const uv = pipeline.uvNode.value
-    const mask = star(uv, [0.5, 0.5], radiusNode, props.points, innerNode, softnessNode)
+    const mask = star(uv, [0.5, 0.5], points, innerNode, radiusNode, softnessNode)
     return vec4(mix(colorANode, colorBNode, mask), float(1))
-  }, props.order)
+  }, order)
 </script>

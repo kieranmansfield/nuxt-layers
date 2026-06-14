@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 import { abs, dot, float, floor, Fn, fract, max, mix, mod, vec2, vec3, vec4 } from 'three/tsl'
 
 import type { FBMOptions, TSLNode } from '../../types'
@@ -9,14 +7,14 @@ import type { FBMOptions, TSLNode } from '../../types'
  */
 
 const hash22 = Fn(([p]: [TSLNode]) => {
-  const p3 = fract(p.mul(vec2(443.8975, 397.2973)))
-  const shifted = p3.add(dot(p3, p3.yx.add(19.19)))
+  const p3: TSLNode = fract(p.mul(vec2(443.8975, 397.2973)))
+  const shifted: TSLNode = p3.add(dot(p3, p3.yx.add(19.19)))
   return fract(vec2(shifted.x.mul(shifted.y), shifted.y.mul(shifted.x)))
 })
 
 const hash31 = Fn(([p]: [TSLNode]) => {
-  const p3 = fract(p.mul(vec3(443.8975, 397.2973, 491.1871)))
-  const shifted = p3.add(dot(p3, p3.yzx.add(19.19)))
+  const p3: TSLNode = fract(p.mul(vec3(443.8975, 397.2973, 491.1871)))
+  const shifted: TSLNode = p3.add(dot(p3, p3.yzx.add(19.19)))
   return fract(shifted.x.mul(shifted.y).mul(shifted.z))
 })
 
@@ -32,7 +30,7 @@ export const simplexNoise2D = Fn(([uv]: [TSLNode]) => {
   )
 
   // First corner
-  const i = floor(uv.add(dot(uv, C.yy)))
+  const i: TSLNode = floor(uv.add(dot(uv, C.yy)))
   const x0 = uv.sub(i).add(dot(i, C.xx))
 
   // Other corners
@@ -41,7 +39,7 @@ export const simplexNoise2D = Fn(([uv]: [TSLNode]) => {
   const x2 = x0.add(C.zz)
 
   // Permutations
-  const iMod = mod(i, 289.0)
+  const iMod: TSLNode = mod(i, 289.0)
   const p = mod(
     mod(iMod.y.add(vec3(0.0, i1.y, 1.0)), 289.0)
       .mul(34.0)
@@ -95,7 +93,7 @@ export const perlinNoise3D = Fn(([position]: [TSLNode]) => {
   const Pf = fract(position)
 
   // Quintic interpolation
-  const u = Pf.mul(Pf)
+  const u: TSLNode = Pf.mul(Pf)
     .mul(Pf)
     .mul(Pf.mul(Pf.mul(6.0).sub(15.0)).add(10.0))
 
@@ -180,9 +178,9 @@ export const curlNoise3D = Fn(([position]: [TSLNode]) => {
   const dz = vec3(0, 0, eps)
 
   // Compute derivatives
-  const px = perlinNoise3D(position.add(dx)).sub(perlinNoise3D(position.sub(dx)))
-  const py = perlinNoise3D(position.add(dy)).sub(perlinNoise3D(position.sub(dy)))
-  const pz = perlinNoise3D(position.add(dz)).sub(perlinNoise3D(position.sub(dz)))
+  const px: TSLNode = perlinNoise3D(position.add(dx)).sub(perlinNoise3D(position.sub(dx)))
+  const py: TSLNode = perlinNoise3D(position.add(dy)).sub(perlinNoise3D(position.sub(dy)))
+  const pz: TSLNode = perlinNoise3D(position.add(dz)).sub(perlinNoise3D(position.sub(dz)))
 
   // Curl = nabla x F
   const curlX = py.sub(pz)

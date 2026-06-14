@@ -1,47 +1,41 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { time, uniform, vec2 } from 'three/tsl'
 
   import { simplexNoise2D } from '../../shaders/common/noise'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Max rotation in degrees (default 720 = 2 full turns) */
-      rotationAmount?: number
-      /** Noise animation speed */
-      speed?: number
-      /** Noise spatial frequency */
-      noiseScale?: number
-      order?: number
-    }>(),
-    {
-      rotationAmount: 720,
-      speed: 0.1,
-      noiseScale: 1,
-      order: 0,
-    }
-  )
+  const {
+    rotationAmount = 720,
+    speed = 0.1,
+    noiseScale = 1,
+    order = 0,
+  } = defineProps<{
+    /** Max rotation in degrees (default 720 = 2 full turns) */
+    rotationAmount?: number
+    /** Noise animation speed */
+    speed?: number
+    /** Noise spatial frequency */
+    noiseScale?: number
+    order?: number
+  }>()
 
-  const rotAmountNode = uniform(props.rotationAmount)
-  const speedNode = uniform(props.speed)
-  const noiseScaleNode = uniform(props.noiseScale)
+  const rotAmountNode = uniform(rotationAmount)
+  const speedNode = uniform(speed)
+  const noiseScaleNode = uniform(noiseScale)
 
   watch(
-    () => props.rotationAmount,
+    () => rotationAmount,
     (v) => {
       rotAmountNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
   )
   watch(
-    () => props.noiseScale,
+    () => noiseScale,
     (v) => {
       noiseScaleNode.value = v
     }
@@ -67,7 +61,7 @@
         centered.x.mul(sinA).add(centered.y.mul(cosA))
       ).add(pivot)
     },
-    props.order,
+    order,
     'uv'
   )
 </script>

@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 // composables/useBrowser.ts
 
 type BrowserInfo = {

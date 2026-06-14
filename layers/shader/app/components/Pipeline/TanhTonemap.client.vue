@@ -1,30 +1,21 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { uniform, vec4 } from 'three/tsl'
 
   import { tanhTonemap } from '../../shaders/common/tonemapping'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Controls how aggressively values above 1 are compressed. dawn5 uses 2.5. */
-      exposure?: number
-      order?: number
-    }>(),
-    {
-      exposure: 1.0,
-      order: 0,
-    }
-  )
+  const { exposure = 1.0, order = 0 } = defineProps<{
+    /** Controls how aggressively values above 1 are compressed. dawn5 uses 2.5. */
+    exposure?: number
+    order?: number
+  }>()
 
-  const exposureNode = uniform(props.exposure)
+  const exposureNode = uniform(exposure)
   watch(
-    () => props.exposure,
+    () => exposure,
     (v) => {
       exposureNode.value = v
     }
   )
 
-  useShaderStage((prev) => vec4(tanhTonemap(prev.xyz.mul(exposureNode)), prev.w), props.order)
+  useShaderStage((prev) => vec4(tanhTonemap(prev.xyz.mul(exposureNode)), prev.w), order)
 </script>

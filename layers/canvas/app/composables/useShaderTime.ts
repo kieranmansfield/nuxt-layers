@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { uniform } from 'three/tsl'
 
@@ -136,11 +135,11 @@ export function useShaderTime(options: ShaderTimeOptions = {}) {
 /**
  * Simple global time singleton for basic use cases
  */
-let globalTime: ReturnType<typeof useShaderTime> | null = null
+const _globalTime = { instance: null as ReturnType<typeof useShaderTime> | null }
 
 export function useGlobalShaderTime() {
-  if (!globalTime) {
-    globalTime = useShaderTime({ autoStart: true })
+  if (!_globalTime.instance) {
+    _globalTime.instance = useShaderTime({ autoStart: true })
   }
-  return globalTime
+  return _globalTime.instance
 }

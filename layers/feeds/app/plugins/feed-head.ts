@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable no-restricted-syntax */
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin({
+  name: 'feeds:feed-head',
+  setup() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const appConfig = useAppConfig() as any
   const site = appConfig.site ?? {}
@@ -70,4 +70,5 @@ export default defineNuxtPlugin(() => {
 
     return { link: [...mainLinks, ...collectionLinks] }
   })
+  },
 })

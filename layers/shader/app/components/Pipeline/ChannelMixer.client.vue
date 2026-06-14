@@ -1,45 +1,38 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
-  import { float, uniform, vec3, vec4 } from 'three/tsl'
+  import { uniform, vec3, vec4 } from 'three/tsl'
 
   /**
    * Arbitrary RGB channel mixing matrix.
    * Each output channel is a weighted sum of all three input channels.
    * Identity: rr=1 gg=1 bb=1, all cross-terms = 0.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** R channel: [R contribution, G contribution, B contribution] */
-      rRow?: [number, number, number]
-      /** G channel: [R contribution, G contribution, B contribution] */
-      gRow?: [number, number, number]
-      /** B channel: [R contribution, G contribution, B contribution] */
-      bRow?: [number, number, number]
-      order?: number
-    }>(),
-    {
-      rRow: () => [1, 0, 0],
-      gRow: () => [0, 1, 0],
-      bRow: () => [0, 0, 1],
-      order: 0,
-    }
-  )
+  const {
+    rRow = [1, 0, 0],
+    gRow = [0, 1, 0],
+    bRow = [0, 0, 1],
+    order = 0,
+  } = defineProps<{
+    /** R channel: [R contribution, G contribution, B contribution] */
+    rRow?: [number, number, number]
+    /** G channel: [R contribution, G contribution, B contribution] */
+    gRow?: [number, number, number]
+    /** B channel: [R contribution, G contribution, B contribution] */
+    bRow?: [number, number, number]
+    order?: number
+  }>()
 
-  const rrNode = uniform(props.rRow[0])
-  const rgNode = uniform(props.rRow[1])
-  const rbNode = uniform(props.rRow[2])
-  const grNode = uniform(props.gRow[0])
-  const ggNode = uniform(props.gRow[1])
-  const gbNode = uniform(props.gRow[2])
-  const brNode = uniform(props.bRow[0])
-  const bgNode = uniform(props.bRow[1])
-  const bbNode = uniform(props.bRow[2])
+  const rrNode = uniform(rRow[0])
+  const rgNode = uniform(rRow[1])
+  const rbNode = uniform(rRow[2])
+  const grNode = uniform(gRow[0])
+  const ggNode = uniform(gRow[1])
+  const gbNode = uniform(gRow[2])
+  const brNode = uniform(bRow[0])
+  const bgNode = uniform(bRow[1])
+  const bbNode = uniform(bRow[2])
 
   watch(
-    () => props.rRow,
+    () => rRow,
     ([r, g, b]) => {
       rrNode.value = r
       rgNode.value = g
@@ -47,7 +40,7 @@
     }
   )
   watch(
-    () => props.gRow,
+    () => gRow,
     ([r, g, b]) => {
       grNode.value = r
       ggNode.value = g
@@ -55,7 +48,7 @@
     }
   )
   watch(
-    () => props.bRow,
+    () => bRow,
     ([r, g, b]) => {
       brNode.value = r
       bgNode.value = g
@@ -68,5 +61,5 @@
     const g = prev.r.mul(grNode).add(prev.g.mul(ggNode)).add(prev.b.mul(gbNode))
     const b = prev.r.mul(brNode).add(prev.g.mul(bgNode)).add(prev.b.mul(bbNode))
     return vec4(vec3(r, g, b), prev.w)
-  }, props.order)
+  }, order)
 </script>

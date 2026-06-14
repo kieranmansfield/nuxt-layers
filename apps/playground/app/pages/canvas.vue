@@ -1,4 +1,3 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
   definePageMeta({ layout: false })
   const { setPageAccent } = useAccentColor()
@@ -23,15 +22,13 @@
   const vignetteEnabled = ref(true)
 
   function onCanvasReady(context: any) {
-    if (context?.renderer) {
-      detectFromRenderer(context.renderer)
+    if (context?.renderer?.instance) {
+      detectFromRenderer(context.renderer.instance)
     }
   }
 </script>
 
 <template>
-  <!-- eslint-disable vue/prefer-true-attribute-shorthand -->
-  <!-- eslint-disable vue/v-on-handler-style -->
   <LayoutPage
     title="Canvas Layer Demo"
     description="WebGL/WebGPU rendering context — TresJS canvas, shader clock, and renderer capabilities"
@@ -60,7 +57,7 @@
           </ClientOnly>
         </template>
         <div class="flex flex-wrap gap-4 justify-center">
-          <UButton size="lg" @click="$router.push('#clock')">Shader Clock</UButton>
+          <UButton size="lg" @click="() => $router.push('#clock')">Shader Clock</UButton>
           <UButton size="lg" variant="outline" to="/shader">
             <UIcon name="i-lucide-shapes" class="mr-2" />
             Shader Layer
@@ -80,7 +77,9 @@
           </div>
           <div class="max-w-2xl mx-auto rounded-2xl border border-gray-800 overflow-hidden">
             <!-- Status bar -->
-            <div class="flex items-center justify-between px-6 py-4 bg-gray-900 border-b border-gray-800">
+            <div
+              class="flex items-center justify-between px-6 py-4 bg-gray-900 border-b border-gray-800"
+            >
               <div class="flex items-center gap-3">
                 <div
                   class="w-2 h-2 rounded-full transition-colors"
@@ -94,7 +93,7 @@
                 <UButton
                   size="sm"
                   :variant="isRunning ? 'outline' : 'solid'"
-                  @click="isRunning ? pause() : resume()"
+                  @click="() => (isRunning ? pause() : resume())"
                 >
                   <UIcon :name="isRunning ? 'i-lucide-pause' : 'i-lucide-play'" class="mr-1.5" />
                   {{ isRunning ? 'Pause' : 'Resume' }}
@@ -179,7 +178,9 @@
                 </div>
                 <div class="px-6 py-4 flex items-center justify-between">
                   <span class="text-sm text-gray-500">Precision</span>
-                  <span class="font-mono text-sm text-white">{{ capabilities?.precision ?? '…' }}</span>
+                  <span class="font-mono text-sm text-white">{{
+                    capabilities?.precision ?? '…'
+                  }}</span>
                 </div>
                 <div class="px-6 py-4 flex items-center justify-between">
                   <span class="text-sm text-gray-500">Pixel Ratio</span>
@@ -204,16 +205,18 @@
               <div class="divide-y divide-gray-800 bg-gray-950">
                 <div class="px-6 py-4 flex items-center justify-between">
                   <span class="text-sm text-gray-500">Particle Count</span>
-                  <span class="font-mono text-sm text-white">{{ qualitySettings.particleCount.toLocaleString() }}</span>
+                  <span class="font-mono text-sm text-white">{{
+                    qualitySettings.particleCount.toLocaleString()
+                  }}</span>
                 </div>
                 <div class="px-6 py-4 flex items-center justify-between">
                   <span class="text-sm text-gray-500">Shadows</span>
                   <UBadge
                     variant="subtle"
-                    :color="qualitySettings.shadowsEnabled ? 'success' : 'neutral'"
+                    :color="qualitySettings.shadows ? 'success' : 'neutral'"
                     size="xs"
                   >
-                    {{ qualitySettings.shadowsEnabled ? 'Enabled' : 'Disabled' }}
+                    {{ qualitySettings.shadows ? 'Enabled' : 'Disabled' }}
                   </UBadge>
                 </div>
               </div>
@@ -250,7 +253,7 @@
           <div class="max-w-3xl mx-auto rounded-2xl border border-gray-800 overflow-hidden">
             <ClientOnly>
               <div class="h-[420px]">
-                <ShaderImageDemo :rgb-shift="rgbShift" :distortion="distortion" :vignette="vignetteEnabled" />
+                <ShaderImageDemo :rgb-shift :distortion :vignette="vignetteEnabled" />
               </div>
             </ClientOnly>
             <!-- Controls -->
@@ -285,7 +288,7 @@
                 <UButton
                   :variant="vignetteEnabled ? 'solid' : 'ghost'"
                   class="w-full justify-center"
-                  @click="vignetteEnabled = !vignetteEnabled"
+                  @click="() => (vignetteEnabled = !vignetteEnabled)"
                 >
                   <UIcon
                     :name="vignetteEnabled ? 'i-lucide-circle-dot' : 'i-lucide-circle'"
@@ -302,9 +305,7 @@
       <DemoPageFooter
         name="Canvas Layer"
         description="WebGL/WebGPU foundation for the Shader layer"
-        :links="[
-          { label: 'Shader Layer', to: '/shader', icon: 'i-lucide-shapes' },
-        ]"
+        :links="[{ label: 'Shader Layer', to: '/shader', icon: 'i-lucide-shapes' }]"
       />
     </div>
   </LayoutPage>

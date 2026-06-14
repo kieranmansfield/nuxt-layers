@@ -1,56 +1,53 @@
 <script setup lang="ts">
-  const props = withDefaults(
-    defineProps<{
-      /**
-       * Base animation speed in pixels per second
-       */
-      speed?: number
-      /**
-       * Direction of scroll
-       */
-      direction?: 'left' | 'right'
-      /**
-       * Pause animation on hover
-       */
-      pauseOnHover?: boolean
-      /**
-       * Gap between repeated items
-       */
-      gap?: string
-      /**
-       * Enable velocity-based speed (scroll velocity affects marquee speed)
-       */
-      velocityBased?: boolean
-      /**
-       * How much scroll velocity affects speed (0-1)
-       * 0 = no effect, 1 = velocity fully controls speed
-       */
-      velocitySensitivity?: number
-      /**
-       * Reverse direction based on scroll direction
-       */
-      velocityDirection?: boolean
-      /**
-       * Minimum speed multiplier when using velocity
-       */
-      minSpeed?: number
-      /**
-       * Maximum speed multiplier when using velocity
-       */
-      maxSpeed?: number
-    }>(),
-    {
-      speed: 50,
-      direction: 'left',
-      pauseOnHover: true,
-      gap: '2rem',
-      velocityBased: false,
-      velocitySensitivity: 0.5,
-      velocityDirection: false,
-      minSpeed: 0.2,
-      maxSpeed: 5,
-    }
-  )
+  const {
+    speed = 50,
+    direction = 'left',
+    pauseOnHover = true,
+    gap = '2rem',
+    velocityBased = false,
+    velocitySensitivity = 0.5,
+    velocityDirection = false,
+    minSpeed = 0.2,
+    maxSpeed = 5,
+  } = defineProps<{
+    /**
+     * Base animation speed in pixels per second
+     */
+    speed?: number
+    /**
+     * Direction of scroll
+     */
+    direction?: 'left' | 'right'
+    /**
+     * Pause animation on hover
+     */
+    pauseOnHover?: boolean
+    /**
+     * Gap between repeated items
+     */
+    gap?: string
+    /**
+     * Enable velocity-based speed (scroll velocity affects marquee speed)
+     */
+    velocityBased?: boolean
+    /**
+     * How much scroll velocity affects speed (0-1)
+     * 0 = no effect, 1 = velocity fully controls speed
+     */
+    velocitySensitivity?: number
+    /**
+     * Reverse direction based on scroll direction
+     */
+    velocityDirection?: boolean
+    /**
+     * Minimum speed multiplier when using velocity
+     */
+    minSpeed?: number
+    /**
+     * Maximum speed multiplier when using velocity
+     */
+    maxSpeed?: number
+  }>()
 
   const { gsap } = useGsap()
   const { velocity: scrollVelocity, direction: scrollDirection } = useSmoothScroll()
@@ -70,14 +67,14 @@
 
     // Set up the infinite scroll animation
     tweenRef.value = gsap.to(content, {
-      x: props.direction === 'left' ? -contentWidth / 2 : contentWidth / 2,
-      duration: contentWidth / props.speed,
+      x: direction === 'left' ? -contentWidth / 2 : contentWidth / 2,
+      duration: contentWidth / speed,
       ease: 'none',
       repeat: -1,
       modifiers: {
         x: gsap.utils.unitize((x) => {
           const mod = contentWidth / 2
-          return props.direction === 'left' ? parseFloat(x) % mod : Math.abs(parseFloat(x) % mod)
+          return direction === 'left' ? parseFloat(x) % mod : Math.abs(parseFloat(x) % mod)
         }),
       },
     })
@@ -87,21 +84,21 @@
   watch(
     [scrollVelocity, scrollDirection],
     ([vel, dir]) => {
-      if (!props.velocityBased || !tweenRef.value || isPaused.value) return
+      if (!velocityBased || !tweenRef.value || isPaused.value) return
 
       // Calculate velocity multiplier
       const absVelocity = Math.abs(vel)
-      const velocityEffect = absVelocity * props.velocitySensitivity * 0.02
+      const velocityEffect = absVelocity * velocitySensitivity * 0.02
 
       // Base multiplier from velocity magnitude
       let multiplier = 1 + velocityEffect
 
       // Clamp to min/max
-      multiplier = Math.max(props.minSpeed, Math.min(props.maxSpeed, multiplier))
+      multiplier = Math.max(minSpeed, Math.min(maxSpeed, multiplier))
 
       // Optionally reverse direction based on scroll direction
-      if (props.velocityDirection && dir !== 0) {
-        const baseDirection = props.direction === 'left' ? 1 : -1
+      if (velocityDirection && dir !== 0) {
+        const baseDirection = direction === 'left' ? 1 : -1
         multiplier *= dir * baseDirection
       }
 
@@ -125,14 +122,14 @@
   })
 
   function handleMouseEnter() {
-    if (props.pauseOnHover && tweenRef.value) {
+    if (pauseOnHover && tweenRef.value) {
       gsap.to(tweenRef.value, { timeScale: 0, duration: 0.5 })
       isPaused.value = true
     }
   }
 
   function handleMouseLeave() {
-    if (props.pauseOnHover && tweenRef.value) {
+    if (pauseOnHover && tweenRef.value) {
       gsap.to(tweenRef.value, { timeScale: currentTimeScale.value, duration: 0.5 })
       isPaused.value = false
     }

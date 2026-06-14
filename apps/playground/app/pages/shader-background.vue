@@ -1,9 +1,3 @@
-<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
-<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
-<!-- eslint-disable vue/no-template-key -->
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <script setup lang="ts">
   definePageMeta({ ssr: false, layout: false })
 
@@ -640,15 +634,6 @@
   })
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
-<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
-<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
-<!-- eslint-disable vue/no-template-key -->
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <div class="min-h-screen bg-neutral-950 text-white flex flex-col">
     <!-- Header -->
@@ -699,7 +684,6 @@
                     :color4="theme.color4"
                   />
                   <!-- Grain overlays (same as pipeline path) -->
-                  <!-- eslint-disable-next-line vue/no-template-key -->
                   <template v-if="grainEnabled" :key="grainKey">
                     <PipelineGrain
                       v-if="grainState.type === 'fine'"
@@ -731,7 +715,6 @@
                       :blend-mode="grainState.blendMode"
                     />
                   </template>
-                  <!-- eslint-disable-next-line vue/no-template-key -->
                   <template v-if="grain2Enabled" :key="grain2Key">
                     <PipelineGrain
                       v-if="grain2State.type === 'fine'"
@@ -891,7 +874,6 @@
                 </template>
 
                 <!-- ══ MESH GRADIENTS ════════════════════════════════ -->
-                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'mesh'" :key="activeMesh">
                   <template v-if="activeMesh === 'classic'">
                     <PipelineBilinearGradient
@@ -1041,7 +1023,6 @@
                 </template>
 
                 <!-- ══ ANIMATED ══════════════════════════════════════ -->
-                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'animated'" :key="activeAnim">
                   <template v-if="activeAnim === 'flowing'">
                     <PipelineNoisyGradientBlend
@@ -1704,7 +1685,7 @@
                         ? 'bg-violet-500/25 text-violet-300'
                         : 'bg-white/5 text-white/40'
                     "
-                    @click="grad.vignette = !grad.vignette"
+                    @click="() => (grad.vignette = !grad.vignette)"
                   >
                     {{ grad.vignette ? 'On' : 'Off' }}
                   </button>
@@ -2319,14 +2300,14 @@
               label="Grain — Layer 1"
               :enabled="grainEnabled"
               :state="grainState"
-              @toggle="grainEnabled = !grainEnabled"
+              @toggle="() => (grainEnabled = !grainEnabled)"
             />
             <div class="h-px bg-white/5" />
             <DemoGrainLayerControls
               label="Grain — Layer 2"
               :enabled="grain2Enabled"
               :state="grain2State"
-              @toggle="grain2Enabled = !grain2Enabled"
+              @toggle="() => (grain2Enabled = !grain2Enabled)"
             />
           </div>
         </div>

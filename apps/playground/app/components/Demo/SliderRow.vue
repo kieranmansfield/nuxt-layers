@@ -1,6 +1,5 @@
-<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
-  const props = defineProps<{
+  const { min, max, step } = defineProps<{
     label: string
     min: number
     max: number
@@ -16,9 +15,9 @@
     <input
       v-model.number="model"
       type="range"
-      :min="props.min"
-      :max="props.max"
-      :step="props.step"
+      :min
+      :max
+      :step
       class="flex-1 h-0.5 accent-violet-400 cursor-pointer"
     />
     <span class="text-xs text-white/30 w-10 text-right tabular-nums">{{

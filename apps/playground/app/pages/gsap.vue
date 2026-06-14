@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/max-lines-per-block -->
 <script setup lang="ts">
   definePageMeta({ layout: false })
   const { setPageAccent } = useAccentColor()
@@ -428,9 +427,6 @@
   ]
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="v-gsap Directive Guide"
@@ -550,7 +546,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('from')"
+                  @click="() => replay('from')"
                   >Replay</UButton
                 >
               </div>
@@ -575,7 +571,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'from' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.from, 'from')"
+                  @click="() => copy(snippets.from, 'from')"
                 >
                   {{ copied === 'from' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -599,7 +595,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('fromTo')"
+                  @click="() => replay('fromTo')"
                 >
                   Replay
                 </UButton>
@@ -628,7 +624,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'fromTo' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.fromTo, 'fromTo')"
+                  @click="() => copy(snippets.fromTo, 'fromTo')"
                 >
                   {{ copied === 'fromTo' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -652,7 +648,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('infinitely')"
+                  @click="() => replay('infinitely')"
                 >
                   Replay
                 </UButton>
@@ -687,7 +683,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'infinitely' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.infinitely, 'infinitely')"
+                  @click="() => copy(snippets.infinitely, 'infinitely')"
                 >
                   {{ copied === 'infinitely' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -731,7 +727,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('whenVisibleOnce')"
+                  @click="() => replay('whenVisibleOnce')"
                 >
                   Replay
                 </UButton>
@@ -757,7 +753,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'whenVisibleOnce' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.whenVisibleOnce, 'whenVisibleOnce')"
+                  @click="() => copy(snippets.whenVisibleOnce, 'whenVisibleOnce')"
                 >
                   {{ copied === 'whenVisibleOnce' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -781,7 +777,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('whenVisibleReversible')"
+                  @click="() => replay('whenVisibleReversible')"
                   >Replay</UButton
                 >
               </div>
@@ -806,7 +802,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'whenVisibleReversible' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.whenVisibleReversible, 'whenVisibleReversible')"
+                  @click="() => copy(snippets.whenVisibleReversible, 'whenVisibleReversible')"
                 >
                   {{ copied === 'whenVisibleReversible' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -830,7 +826,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('whenVisibleScrub')"
+                  @click="() => replay('whenVisibleScrub')"
                   >Replay</UButton
                 >
               </div>
@@ -858,7 +854,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'whenVisibleScrub' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.whenVisibleScrub, 'whenVisibleScrub')"
+                  @click="() => copy(snippets.whenVisibleScrub, 'whenVisibleScrub')"
                 >
                   {{ copied === 'whenVisibleScrub' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -882,7 +878,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('whenVisibleDelay')"
+                  @click="() => replay('whenVisibleDelay')"
                   >Replay</UButton
                 >
               </div>
@@ -919,7 +915,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'whenVisibleDelay' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.whenVisibleDelay, 'whenVisibleDelay')"
+                  @click="() => copy(snippets.whenVisibleDelay, 'whenVisibleDelay')"
                 >
                   {{ copied === 'whenVisibleDelay' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -1081,7 +1077,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('splitChars')"
+                  @click="() => replay('splitChars')"
                   >Replay</UButton
                 >
               </div>
@@ -1111,7 +1107,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'splitChars' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.splitChars, 'splitChars')"
+                  @click="() => copy(snippets.splitChars, 'splitChars')"
                 >
                   {{ copied === 'splitChars' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -1135,7 +1131,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('splitWords')"
+                  @click="() => replay('splitWords')"
                   >Replay</UButton
                 >
               </div>
@@ -1165,7 +1161,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'splitWords' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.splitWords, 'splitWords')"
+                  @click="() => copy(snippets.splitWords, 'splitWords')"
                 >
                   {{ copied === 'splitWords' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -1189,7 +1185,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('splitLines')"
+                  @click="() => replay('splitLines')"
                   >Replay</UButton
                 >
               </div>
@@ -1219,7 +1215,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'splitLines' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.splitLines, 'splitLines')"
+                  @click="() => copy(snippets.splitLines, 'splitLines')"
                 >
                   {{ copied === 'splitLines' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -1243,7 +1239,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('splitMask')"
+                  @click="() => replay('splitMask')"
                   >Replay</UButton
                 >
               </div>
@@ -1273,7 +1269,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'splitMask' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.splitMask, 'splitMask')"
+                  @click="() => copy(snippets.splitMask, 'splitMask')"
                 >
                   {{ copied === 'splitMask' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -1327,7 +1323,7 @@
                     size="xs"
                     variant="ghost"
                     :icon="copied === 'whileHoverScale' ? 'i-lucide-check' : 'i-lucide-copy'"
-                    @click="copy(snippets.whileHoverScale, 'whileHoverScale')"
+                    @click="() => copy(snippets.whileHoverScale, 'whileHoverScale')"
                     >{{ copied === 'whileHoverScale' ? 'Copied!' : 'Copy' }}</UButton
                   >
                 </div>
@@ -1360,7 +1356,7 @@
                     size="xs"
                     variant="ghost"
                     :icon="copied === 'whileHoverRotate' ? 'i-lucide-check' : 'i-lucide-copy'"
-                    @click="copy(snippets.whileHoverRotate, 'whileHoverRotate')"
+                    @click="() => copy(snippets.whileHoverRotate, 'whileHoverRotate')"
                     >{{ copied === 'whileHoverRotate' ? 'Copied!' : 'Copy' }}</UButton
                   >
                 </div>
@@ -1393,7 +1389,7 @@
                     size="xs"
                     variant="ghost"
                     :icon="copied === 'whileHoverNoReverse' ? 'i-lucide-check' : 'i-lucide-copy'"
-                    @click="copy(snippets.whileHoverNoReverse, 'whileHoverNoReverse')"
+                    @click="() => copy(snippets.whileHoverNoReverse, 'whileHoverNoReverse')"
                     >{{ copied === 'whileHoverNoReverse' ? 'Copied!' : 'Copy' }}</UButton
                   >
                 </div>
@@ -1429,7 +1425,7 @@
                     size="xs"
                     variant="ghost"
                     :icon="copied === 'whileHoverFromTo' ? 'i-lucide-check' : 'i-lucide-copy'"
-                    @click="copy(snippets.whileHoverFromTo, 'whileHoverFromTo')"
+                    @click="() => copy(snippets.whileHoverFromTo, 'whileHoverFromTo')"
                     >{{ copied === 'whileHoverFromTo' ? 'Copied!' : 'Copy' }}</UButton
                   >
                 </div>
@@ -1483,7 +1479,7 @@
                     size="xs"
                     variant="ghost"
                     :icon="copied === 'parallaxSlower' ? 'i-lucide-check' : 'i-lucide-copy'"
-                    @click="copy(snippets.parallaxSlower, 'parallaxSlower')"
+                    @click="() => copy(snippets.parallaxSlower, 'parallaxSlower')"
                     >{{ copied === 'parallaxSlower' ? 'Copied!' : 'Copy' }}</UButton
                   >
                 </div>
@@ -1516,7 +1512,7 @@
                     size="xs"
                     variant="ghost"
                     :icon="copied === 'parallaxFaster' ? 'i-lucide-check' : 'i-lucide-copy'"
-                    @click="copy(snippets.parallaxFaster, 'parallaxFaster')"
+                    @click="() => copy(snippets.parallaxFaster, 'parallaxFaster')"
                     >{{ copied === 'parallaxFaster' ? 'Copied!' : 'Copy' }}</UButton
                   >
                 </div>
@@ -1558,7 +1554,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('stagger')"
+                  @click="() => replay('stagger')"
                   >Replay</UButton
                 >
               </div>
@@ -1614,7 +1610,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'stagger' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.stagger, 'stagger')"
+                  @click="() => copy(snippets.stagger, 'stagger')"
                 >
                   {{ copied === 'stagger' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -1661,7 +1657,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('timeline')"
+                  @click="() => replay('timeline')"
                   >Replay</UButton
                 >
               </div>
@@ -1703,7 +1699,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'timeline' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.timeline, 'timeline')"
+                  @click="() => copy(snippets.timeline, 'timeline')"
                 >
                   {{ copied === 'timeline' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -1780,7 +1776,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'magnetic' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.magnetic, 'magnetic')"
+                  @click="() => copy(snippets.magnetic, 'magnetic')"
                 >
                   {{ copied === 'magnetic' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -1853,7 +1849,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'draggableX' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.draggableX, 'draggableX')"
+                  @click="() => copy(snippets.draggableX, 'draggableX')"
                 >
                   {{ copied === 'draggableX' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -1899,7 +1895,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('animateText')"
+                  @click="() => replay('animateText')"
                   >Replay</UButton
                 >
               </div>
@@ -1936,7 +1932,7 @@
                   size="xs"
                   variant="ghost"
                   :icon="copied === 'animateText' ? 'i-lucide-check' : 'i-lucide-copy'"
-                  @click="copy(snippets.animateText, 'animateText')"
+                  @click="() => copy(snippets.animateText, 'animateText')"
                 >
                   {{ copied === 'animateText' ? 'Copied!' : 'Copy' }}
                 </UButton>
@@ -1972,7 +1968,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('responsive')"
+                  @click="() => replay('responsive')"
                   >Replay</UButton
                 >
               </div>
@@ -1999,7 +1995,7 @@
                     size="xs"
                     variant="ghost"
                     :icon="copied === 'desktopOnly' ? 'i-lucide-check' : 'i-lucide-copy'"
-                    @click="copy(snippets.desktopOnly, 'desktopOnly')"
+                    @click="() => copy(snippets.desktopOnly, 'desktopOnly')"
                     >{{ copied === 'desktopOnly' ? 'Copied!' : 'Copy' }}</UButton
                   >
                 </div>
@@ -2020,7 +2016,7 @@
                   size="xs"
                   variant="ghost"
                   icon="i-lucide-rotate-ccw"
-                  @click="replay('fromInvisible')"
+                  @click="() => replay('fromInvisible')"
                   >Replay</UButton
                 >
               </div>
@@ -2045,7 +2041,7 @@
                     size="xs"
                     variant="ghost"
                     :icon="copied === 'fromInvisible' ? 'i-lucide-check' : 'i-lucide-copy'"
-                    @click="copy(snippets.fromInvisible, 'fromInvisible')"
+                    @click="() => copy(snippets.fromInvisible, 'fromInvisible')"
                     >{{ copied === 'fromInvisible' ? 'Copied!' : 'Copy' }}</UButton
                   >
                 </div>
@@ -2086,7 +2082,7 @@
                     size="xs"
                     variant="ghost"
                     :icon="copied === 'pinned' ? 'i-lucide-check' : 'i-lucide-copy'"
-                    @click="copy(snippets.pinned, 'pinned')"
+                    @click="() => copy(snippets.pinned, 'pinned')"
                     >{{ copied === 'pinned' ? 'Copied!' : 'Copy' }}</UButton
                   >
                 </div>

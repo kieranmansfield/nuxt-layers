@@ -1,6 +1,3 @@
-/* eslint-disable max-params */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex
 import type { InjectionKey } from 'vue'
 import { mix as tslMix } from 'three/tsl'
 
@@ -64,12 +61,14 @@ export function useShaderGraph(): ShaderGraph {
     void version.value
 
     const sorted = [...entries.values()].sort((a, b) => a.order - b.order)
-    if (sorted.length === 0) return null
+    const [first] = sorted
+    if (!first) return null
 
-    let result = sorted[0].node
+    let result = first.node
 
     for (let i = 1; i < sorted.length; i++) {
       const entry = sorted[i]
+      if (!entry) continue
       result = applyBlend(result, entry.node, entry.blend, entry.opacity)
     }
 

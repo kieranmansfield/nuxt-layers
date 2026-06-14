@@ -1,76 +1,69 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector2, Vector3 } from 'three'
-  import { cos, float, sin, smoothstep, uniform, vec2, vec3, vec4 } from 'three/tsl'
+  import { cos, float, smoothstep, uniform, vec2, vec4 } from 'three/tsl'
 
   /**
    * Radial god rays — procedural volumetric light shafts emanating from a source point.
    * Uses angular spokes in UV space to approximate crepuscular rays.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Light source UV position */
-      position?: [number, number]
-      /** Ray colour */
-      color?: string
-      /** Ray brightness */
-      intensity?: number
-      /** Number of ray spokes */
-      rayCount?: number
-      /** Radial decay rate */
-      decay?: number
-      order?: number
-    }>(),
-    {
-      position: () => [0.5, 0.9],
-      color: '#fff9e0',
-      intensity: 0.35,
-      rayCount: 12,
-      decay: 2.0,
-      order: 0,
-    }
-  )
+  const {
+    position = [0.5, 0.9],
+    color = '#fff9e0',
+    intensity = 0.35,
+    rayCount = 12,
+    decay = 2.0,
+    order = 0,
+  } = defineProps<{
+    /** Light source UV position */
+    position?: [number, number]
+    /** Ray colour */
+    color?: string
+    /** Ray brightness */
+    intensity?: number
+    /** Number of ray spokes */
+    rayCount?: number
+    /** Radial decay rate */
+    decay?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const posNode = uniform(new Vector2(...props.position))
-  const colorNode = toVec3Node(props.color)
-  const intensityNode = uniform(props.intensity)
-  const rayCountNode = uniform(props.rayCount)
-  const decayNode = uniform(props.decay)
+  const posNode = uniform(new Vector2(...position))
+  const colorNode = toVec3Node(color)
+  const intensityNode = uniform(intensity)
+  const rayCountNode = uniform(rayCount)
+  const decayNode = uniform(decay)
   watch(
-    () => props.position,
+    () => position,
     ([x, y]) => {
       posNode.value.set(x, y)
     }
   )
   watch(
-    () => props.color,
+    () => color,
     (v) => {
       const c = new Color(v)
       colorNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       intensityNode.value = v
     }
   )
   watch(
-    () => props.rayCount,
+    () => rayCount,
     (v) => {
       rayCountNode.value = v
     }
   )
   watch(
-    () => props.decay,
+    () => decay,
     (v) => {
       decayNode.value = v
     }
@@ -94,5 +87,5 @@
 
     const rays = spoke.pow(3).mul(radialFade).mul(intensityNode)
     return vec4(prev.xyz.add(colorNode.mul(rays)), prev.w)
-  }, props.order)
+  }, order)
 </script>

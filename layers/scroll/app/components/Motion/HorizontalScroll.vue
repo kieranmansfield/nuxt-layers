@@ -43,7 +43,10 @@
       ease: 'none',
     })
 
-    cleanup = () => tween.kill()
+    cleanup = () => {
+      tween.scrollTrigger?.kill()
+      tween.kill()
+    }
   })
 
   onUnmounted(() => {

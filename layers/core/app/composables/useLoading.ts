@@ -1,9 +1,10 @@
-/* eslint-disable no-restricted-syntax */
 // composables/useLoading.ts
 
 // Timer IDs are non-reactive and intentionally module-scope (singleton)
-let progressInterval: ReturnType<typeof setInterval> | null = null
-let progressTimeout: ReturnType<typeof setTimeout> | null = null
+const _timers = {
+  progressInterval: null as ReturnType<typeof setInterval> | null,
+  progressTimeout: null as ReturnType<typeof setTimeout> | null,
+}
 
 /**
  * Loading state composable for app initialization and async operations
@@ -26,31 +27,31 @@ export function useLoading() {
     isLoading.value = true
     progress.value = 0
 
-    if (progressInterval) clearInterval(progressInterval)
-    if (progressTimeout) clearTimeout(progressTimeout)
+    if (_timers.progressInterval) clearInterval(_timers.progressInterval)
+    if (_timers.progressTimeout) clearTimeout(_timers.progressTimeout)
 
-    progressInterval = setInterval(() => {
+    _timers.progressInterval = setInterval(() => {
       if (progress.value < 90) {
         const increment = Math.random() * 5 + 3
         progress.value = Math.min(progress.value + increment, 90)
-      } else {
-        if (progressInterval) {
-          clearInterval(progressInterval)
-          progressInterval = null
-        }
+        return
+      }
+      if (_timers.progressInterval) {
+        clearInterval(_timers.progressInterval)
+        _timers.progressInterval = null
       }
     }, 150)
   }
 
   function stopLoading(): void {
-    if (progressInterval) {
-      clearInterval(progressInterval)
-      progressInterval = null
+    if (_timers.progressInterval) {
+      clearInterval(_timers.progressInterval)
+      _timers.progressInterval = null
     }
 
     progress.value = 100
 
-    progressTimeout = setTimeout(() => {
+    _timers.progressTimeout = setTimeout(() => {
       isLoading.value = false
     }, 100)
   }

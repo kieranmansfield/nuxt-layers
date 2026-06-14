@@ -1,24 +1,19 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
-  const props = withDefaults(
-    defineProps<{
-      width?: number
-      height?: number
-      widthSegments?: number
-      heightSegments?: number
-      position?: [number, number, number]
-      rotation?: [number, number, number]
-    }>(),
-    {
-      width: 2,
-      height: 2,
-      widthSegments: 1,
-      heightSegments: 1,
-      position: () => [0, 0, 0],
-      rotation: () => [0, 0, 0],
-    }
-  )
+  const {
+    width = 2,
+    height = 2,
+    widthSegments = 1,
+    heightSegments = 1,
+    position = [0, 0, 0],
+    rotation = [0, 0, 0],
+  } = defineProps<{
+    width?: number
+    height?: number
+    widthSegments?: number
+    heightSegments?: number
+    position?: [number, number, number]
+    rotation?: [number, number, number]
+  }>()
 </script>
 
 <template>

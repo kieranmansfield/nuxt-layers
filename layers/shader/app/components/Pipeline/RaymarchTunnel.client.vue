@@ -1,14 +1,9 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import {
     abs,
     Break,
     clamp,
-    cos,
     float,
     Fn,
     If,
@@ -21,61 +16,60 @@
     vec4,
   } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Tunnel inner radius */
-      radius?: number
-      /** How fast the camera flies forward */
-      speed?: number
-      /** Wall colour A */
-      colorA?: string
-      /** Wall colour B */
-      colorB?: string
-      /** Number of march steps (fixed at shader compile) */
-      steps?: number
-      order?: number
-    }>(),
-    {
-      radius: 0.8,
-      speed: 1,
-      colorA: '#1a0a3a',
-      colorB: '#ff4488',
-      steps: 64,
-      order: 0,
-    }
-  )
+  import type { TSLNode } from '../../shaders/types'
 
-  const radiusNode = uniform(props.radius)
-  const speedNode = uniform(props.speed)
+  const {
+    radius = 0.8,
+    speed = 1,
+    colorA = '#1a0a3a',
+    colorB = '#ff4488',
+    steps = 64,
+    order = 0,
+  } = defineProps<{
+    /** Tunnel inner radius */
+    radius?: number
+    /** How fast the camera flies forward */
+    speed?: number
+    /** Wall colour A */
+    colorA?: string
+    /** Wall colour B */
+    colorB?: string
+    /** Number of march steps (fixed at shader compile) */
+    steps?: number
+    order?: number
+  }>()
+
+  const radiusNode = uniform(radius)
+  const speedNode = uniform(speed)
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
-  const colorANode = toVec3Node(props.colorA)
-  const colorBNode = toVec3Node(props.colorB)
+  const colorANode = toVec3Node(colorA)
+  const colorBNode = toVec3Node(colorB)
 
   watch(
-    () => props.radius,
+    () => radius,
     (v) => {
       radiusNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
   )
   watch(
-    () => props.colorA,
+    () => colorA,
     (v) => {
       const c = new Color(v)
       colorANode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorB,
+    () => colorB,
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
@@ -85,7 +79,7 @@
   const pipeline = useShaderPipelineContext()
 
   // Fn defined once at setup — Loop/If/Break/toVar/addAssign require a Fn() stack at compile time
-  const raymarchFn = Fn(([ray]) => {
+  const raymarchFn = Fn(([ray]: [TSLNode]) => {
     // Three.js calls Fn bodies with null args during type-inference — bail out safely
     if (!ray) return vec4(0, 0, 0, 0)
 
@@ -98,7 +92,7 @@
     const colour = vec3(0, 0, 0).toVar()
     const hit = float(0).toVar()
 
-    Loop(props.steps, () => {
+    Loop(steps, () => {
       const p = ro.add(rd.mul(t))
 
       // Tunnel SDF: cylinder with twisted walls
@@ -141,5 +135,5 @@
       provided ?? (uvc ? vec3(uvc.sub(0.5).mul(2).x, uvc.sub(0.5).mul(2).y, float(1)) : null)
     if (!ray) return vec4(0, 0, 0, 0)
     return raymarchFn([ray])
-  }, props.order)
+  }, order)
 </script>

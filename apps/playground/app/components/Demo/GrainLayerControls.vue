@@ -42,8 +42,6 @@
 </script>
 
 <template>
-  <!-- eslint-disable vue/v-on-handler-style -->
-  <!-- eslint-disable vue/no-mutating-props -->
   <div class="space-y-3">
     <div class="flex items-center justify-between">
       <p class="text-xs font-semibold uppercase tracking-wider text-white/30">{{ label }}</p>
@@ -54,7 +52,7 @@
             ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
             : 'bg-white/5 text-white/40 hover:text-white/70'
         "
-        @click="emit('toggle')"
+        @click="() => emit('toggle')"
       >
         {{ enabled ? 'On' : 'Off' }}
       </button>

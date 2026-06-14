@@ -58,9 +58,6 @@
   ]
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Scripts Layer Demo"
@@ -83,8 +80,8 @@
             built on <code class="text-primary">@nuxt/scripts</code>.
           </p>
           <div class="flex flex-wrap gap-4 justify-center">
-            <UButton size="lg" @click="$router.push('#consent')">Consent Demo</UButton>
-            <UButton size="lg" variant="outline" @click="$router.push('#embed')">
+            <UButton size="lg" @click="() => $router.push('#consent')">Consent Demo</UButton>
+            <UButton size="lg" variant="outline" @click="() => $router.push('#embed')">
               YouTube Embed
             </UButton>
             <UButton size="lg" variant="ghost" @click="back">

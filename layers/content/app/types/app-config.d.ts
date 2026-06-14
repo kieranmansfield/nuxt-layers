@@ -1,5 +1,5 @@
 declare module '@nuxt/schema' {
-  type AppConfigInput = {
+  interface AppConfigInput {
     contentLayer?: {
       name?: string
       sections?: {
@@ -10,3 +10,5 @@ declare module '@nuxt/schema' {
     }
   }
 }
+
+export {}

@@ -1,23 +1,16 @@
-<!-- eslint-disable vue/no-unused-properties -->
-<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
   // Props
-  const props = withDefaults(
-    defineProps<{
-      name?: string
-      mode?: 'in-out' | 'out-in' | 'default'
-      duration?: number
-      delay?: number
-      easing?: string
-    }>(),
-    {
-      name: 'fade',
-      mode: 'default',
-      duration: 300,
-      delay: 0,
-      easing: 'ease-out',
-    }
-  )
+  const {
+    name = 'fade',
+    duration = 300,
+    delay = 0,
+    easing = 'ease-out',
+  } = defineProps<{
+    name?: string
+    duration?: number
+    delay?: number
+    easing?: string
+  }>()
 
   // State
   const isVisible = ref(false)
@@ -25,14 +18,14 @@
 
   // Computed classes
   const transitionClass = computed(() => {
-    return `transition-${props.name}`
+    return `transition-${name}`
   })
 
   const style = computed(() => {
     return {
-      transitionDuration: `${props.duration}ms`,
-      transitionDelay: `${props.delay}ms`,
-      transitionTimingFunction: props.easing,
+      transitionDuration: `${duration}ms`,
+      transitionDelay: `${delay}ms`,
+      transitionTimingFunction: easing,
     }
   })
 

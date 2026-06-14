@@ -1,8 +1,9 @@
-/* eslint-disable no-restricted-syntax */
 import { useFeatureFlags } from '../composables/useFeatureFlags'
 import type { FeatureValue } from '../types/routing'
 
-export default defineNuxtPlugin(async () => {
+export default defineNuxtPlugin({
+  name: 'routing:feature-flags',
+  async setup() {
   const { config } = useRoutingConfig()
   if (!config.runtimeFlags) return
 
@@ -13,4 +14,5 @@ export default defineNuxtPlugin(async () => {
   } catch (e) {
     if (config.debug) console.warn('[routing] Failed to fetch feature flags', e)
   }
+  },
 })

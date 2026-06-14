@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Stripe Gradient Shader Layer
  * Flowing gradient effect inspired by Stripe.com
@@ -9,7 +6,7 @@ import { Color } from 'three'
 import { float, mix, smoothstep, time as tslTime, uniform, uv, vec2, vec3 } from 'three/tsl'
 
 import { simplexNoise2D } from '../common/noise'
-import type { TSLNode } from '../types'
+import type { FloatUniform, TSLNode } from '../types'
 
 export type StripeGradientOptions = {
   /** Array of colors (3-5 recommended) */
@@ -29,13 +26,13 @@ export type StripeGradientOptions = {
 }
 
 export type StripeGradientUniforms = {
-  speed: ReturnType<typeof uniform>
-  noiseScale: ReturnType<typeof uniform>
-  flowAngle: ReturnType<typeof uniform>
-  mouseX: ReturnType<typeof uniform>
-  mouseY: ReturnType<typeof uniform>
-  mouseStrength: ReturnType<typeof uniform>
-  colors: Array<ReturnType<typeof uniform>>
+  speed: FloatUniform
+  noiseScale: FloatUniform
+  flowAngle: FloatUniform
+  mouseX: FloatUniform
+  mouseY: FloatUniform
+  mouseStrength: FloatUniform
+  colors: TSLNode[]
 }
 
 /**
@@ -97,14 +94,14 @@ export function stripeGradient(uniforms: StripeGradientUniforms, uvNode?: TSLNod
     .add(0.5)
 
   // Get colors from uniforms
-  const c0 = vec3(uniforms.colors[0] as unknown as TSLNode)
-  const c1 = vec3(uniforms.colors[1] as unknown as TSLNode)
-  const c2 = vec3(uniforms.colors[2] as unknown as TSLNode)
-  const c3 = vec3(uniforms.colors[3] as unknown as TSLNode)
-  const c4 = vec3(uniforms.colors[4] as unknown as TSLNode)
+  const c0 = vec3(uniforms.colors[0])
+  const c1 = vec3(uniforms.colors[1])
+  const c2 = vec3(uniforms.colors[2])
+  const c3 = vec3(uniforms.colors[3])
+  const c4 = vec3(uniforms.colors[4])
 
   // Blend multiple colors based on noise
-  let color = c0
+  let color: TSLNode = c0
   color = mix(color, c1, smoothstep(0, 0.5, n1))
   color = mix(color, c2, smoothstep(0.3, 0.7, n2))
   color = mix(color, c3, smoothstep(0.4, 0.8, n3))

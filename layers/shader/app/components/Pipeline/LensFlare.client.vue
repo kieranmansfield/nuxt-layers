@@ -1,56 +1,58 @@
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector2, Vector3 } from 'three'
-  import { float, smoothstep, uniform, vec2, vec3, vec4 } from 'three/tsl'
+  import { float, smoothstep, uniform, vec2, vec4 } from 'three/tsl'
 
   /**
    * Procedural lens flare — starburst + ghost circle artefacts along the flare axis.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Light source position in UV space */
-      position?: [number, number]
-      /** Flare colour */
-      color?: string
-      /** Overall brightness */
-      intensity?: number
-      /** How many ghost circles along the axis */
-      ghostCount?: number
-      order?: number
-    }>(),
-    { position: () => [0.7, 0.8], color: '#fffde0', intensity: 0.6, ghostCount: 4, order: 0 }
-  )
+  const {
+    position = [0.7, 0.8],
+    color = '#fffde0',
+    intensity = 0.6,
+    ghostCount = 4,
+    order = 0,
+  } = defineProps<{
+    /** Light source position in UV space */
+    position?: [number, number]
+    /** Flare colour */
+    color?: string
+    /** Overall brightness */
+    intensity?: number
+    /** How many ghost circles along the axis */
+    ghostCount?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const posNode = uniform(new Vector2(...props.position))
-  const colorNode = toVec3Node(props.color)
-  const intensityNode = uniform(props.intensity)
-  const ghostCountNode = uniform(props.ghostCount)
+  const posNode = uniform(new Vector2(...position))
+  const colorNode = toVec3Node(color)
+  const intensityNode = uniform(intensity)
+  const ghostCountNode = uniform(ghostCount)
   watch(
-    () => props.position,
+    () => position,
     ([x, y]) => {
       posNode.value.set(x, y)
     }
   )
   watch(
-    () => props.color,
+    () => color,
     (v) => {
       const c = new Color(v)
       colorNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       intensityNode.value = v
     }
   )
   watch(
-    () => props.ghostCount,
+    () => ghostCount,
     (v) => {
       ghostCountNode.value = v
     }
@@ -82,5 +84,5 @@
     const flare = colorNode.mul(burst.add(ghosts))
 
     return vec4(prev.xyz.add(flare), prev.w)
-  }, props.order)
+  }, order)
 </script>

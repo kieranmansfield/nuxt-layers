@@ -1,34 +1,32 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { float, sin, time, uniform, vec2 } from 'three/tsl'
 
   /**
    * Oscillating UV scale over time — the UV breathes in and out.
    * scale = 1 + sin(time * speed) * amount
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Pulse amplitude (fraction of UV range) */
-      amount?: number
-      /** Pulse speed in radians per second */
-      speed?: number
-      order?: number
-    }>(),
-    { amount: 0.1, speed: 2, order: 0 }
-  )
+  const {
+    amount = 0.1,
+    speed = 2,
+    order = 0,
+  } = defineProps<{
+    /** Pulse amplitude (fraction of UV range) */
+    amount?: number
+    /** Pulse speed in radians per second */
+    speed?: number
+    order?: number
+  }>()
 
-  const amountNode = uniform(props.amount)
-  const speedNode = uniform(props.speed)
+  const amountNode = uniform(amount)
+  const speedNode = uniform(speed)
   watch(
-    () => props.amount,
+    () => amount,
     (v) => {
       amountNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -40,7 +38,7 @@
       const centered = uvIn.sub(0.5).div(scale).add(0.5)
       return vec2(centered.x, centered.y)
     },
-    props.order,
+    order,
     'uv'
   )
 </script>

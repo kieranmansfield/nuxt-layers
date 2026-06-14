@@ -1,40 +1,37 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { mix, uniform, vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Shadow colour (low luminance) */
-      shadowColor?: string
-      /** Highlight colour (high luminance) */
-      highlightColor?: string
-      order?: number
-    }>(),
-    { shadowColor: '#1a0033', highlightColor: '#ffcc00', order: 0 }
-  )
+  const {
+    shadowColor = '#1a0033',
+    highlightColor = '#ffcc00',
+    order = 0,
+  } = defineProps<{
+    /** Shadow colour (low luminance) */
+    shadowColor?: string
+    /** Highlight colour (high luminance) */
+    highlightColor?: string
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const shadowNode = toVec3Node(props.shadowColor)
-  const highlightNode = toVec3Node(props.highlightColor)
+  const shadowNode = toVec3Node(shadowColor)
+  const highlightNode = toVec3Node(highlightColor)
   watch(
-    () => props.shadowColor,
+    () => shadowColor,
     (v) => {
       const c = new Color(v)
       shadowNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.highlightColor,
+    () => highlightColor,
     (v) => {
       const c = new Color(v)
       highlightNode.value.set(c.r, c.g, c.b)
@@ -44,5 +41,5 @@
   useShaderStage((prev) => {
     const lum = luminance(prev.xyz)
     return vec4(mix(shadowNode, highlightNode, lum), prev.w)
-  }, props.order)
+  }, order)
 </script>

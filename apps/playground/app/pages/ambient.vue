@@ -1,8 +1,12 @@
-<!-- eslint-disable no-restricted-imports -->
 <script setup lang="ts">
   import type { Component } from 'vue'
   import ShaderHost from '#layers/shader/app/components/Shader/Host.client.vue'
   import ShaderRuntime from '#layers/shader/app/components/Shader/Runtime.client.vue'
+  import AuroraPreset from '#layers/shader/app/components/Preset/Aurora.client.vue'
+  import NebulaPreset from '#layers/shader/app/components/Preset/Nebula.client.vue'
+  import FlowPreset from '#layers/shader/app/components/Preset/Flow.client.vue'
+  import GradientMeshPreset from '#layers/shader/app/components/Preset/GradientMesh.client.vue'
+  import OceanPreset from '#layers/shader/app/components/Preset/Ocean.client.vue'
 
   definePageMeta({ ssr: false, layout: false })
 
@@ -17,23 +21,14 @@
   const intensity = ref(1.0)
   const mouseInteraction = ref(true)
 
-  // Map preset IDs to lazy-loaded components
+  // Static imports ensure preset components mount and emit @node during setup,
+  // before ShaderBackground's onMounted fires — so compileAsync gets a live colorNode.
   const presetComponents: Record<PresetType, Component> = {
-    aurora: defineAsyncComponent(
-      () => import('#layers/shader/app/components/Preset/Aurora.client.vue')
-    ),
-    nebula: defineAsyncComponent(
-      () => import('#layers/shader/app/components/Preset/Nebula.client.vue')
-    ),
-    flow: defineAsyncComponent(
-      () => import('#layers/shader/app/components/Preset/Flow.client.vue')
-    ),
-    gradientMesh: defineAsyncComponent(
-      () => import('#layers/shader/app/components/Preset/GradientMesh.client.vue')
-    ),
-    ocean: defineAsyncComponent(
-      () => import('#layers/shader/app/components/Preset/Ocean.client.vue')
-    ),
+    aurora: AuroraPreset,
+    nebula: NebulaPreset,
+    flow: FlowPreset,
+    gradientMesh: GradientMeshPreset,
+    ocean: OceanPreset,
   }
 
   const currentPresetComponent = computed(() => presetComponents[activePreset.value])
@@ -72,7 +67,6 @@
   ]
 </script>
 
-<!-- eslint-disable vue/max-template-depth -->
 <template>
   <LayoutPage
     title="Ambient Backgrounds"

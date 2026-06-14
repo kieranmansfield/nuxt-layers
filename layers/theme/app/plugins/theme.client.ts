@@ -1,8 +1,8 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { AccentColor, PreferenceOverride } from '#layers/theme/app/types/theme'
 
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin({
+  name: 'theme:theme',
+  setup() {
   const { setAccent, activeAccent } = useAccentColor()
   const { setContrastOverride, effectiveHighContrast } = useThemeContrast()
   const { setMotionOverride, effectiveReducedMotion } = useThemeMotion()
@@ -54,4 +54,5 @@ export default defineNuxtPlugin(() => {
     },
     { immediate: true }
   )
+  },
 })

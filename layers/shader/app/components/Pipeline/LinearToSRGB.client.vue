@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  // @ts-nocheck
   import { float, pow, uniform, vec4 } from 'three/tsl'
 
   /**
@@ -7,18 +6,15 @@
    * Use as the last step in HDR pipelines before output.
    * Approximate form: pow(col, 1/2.2).
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Gamma exponent — 2.2 matches sRGB standard */
-      gamma?: number
-      order?: number
-    }>(),
-    { gamma: 2.2, order: 0 }
-  )
+  const { gamma = 2.2, order = 0 } = defineProps<{
+    /** Gamma exponent — 2.2 matches sRGB standard */
+    gamma?: number
+    order?: number
+  }>()
 
-  const gammaNode = uniform(props.gamma)
+  const gammaNode = uniform(gamma)
   watch(
-    () => props.gamma,
+    () => gamma,
     (v) => {
       gammaNode.value = v
     }
@@ -26,6 +22,6 @@
 
   useShaderStage(
     (prev) => vec4(pow(prev.xyz.max(float(0)), float(1).div(gammaNode)), prev.w),
-    props.order
+    order
   )
 </script>

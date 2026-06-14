@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Noise Utilities
  * Provides composable noise functions for shader effects
@@ -92,7 +89,7 @@ export function valueNoise2D(st: TSLNode): TSLNode {
   const d = hash21(i.add(vec2(1, 1)))
 
   // Smooth interpolation
-  const u = f.mul(f).mul(float(3).sub(f.mul(2)))
+  const u: TSLNode = f.mul(f).mul(float(3).sub(f.mul(2)))
 
   return mix(mix(a, b, u.x), mix(c, d, u.x), u.y)
 }
@@ -103,7 +100,7 @@ export function valueNoise2D(st: TSLNode): TSLNode {
 export function simplexNoise2D(v: TSLNode): TSLNode {
   const C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439)
 
-  const i = floor(v.add(dot(v, C.yy)))
+  const i: TSLNode = floor(v.add(dot(v, C.yy)))
   const x0 = v.sub(i).add(dot(i, C.xx))
 
   const i1x = step(x0.y, x0.x)
@@ -113,7 +110,7 @@ export function simplexNoise2D(v: TSLNode): TSLNode {
   const x12 = x0.xyxy.add(C.xxzz)
   const x12_mod = vec4(x12.x.sub(i1.x), x12.y.sub(i1.y), x12.z, x12.w)
 
-  const iMod = mod(i, 289)
+  const iMod: TSLNode = mod(i, 289)
   const p1 = mod(
     iMod.y
       .add(vec3(0, i1.y, 1))
@@ -151,11 +148,11 @@ export function simplexNoise2D(v: TSLNode): TSLNode {
   const ox = floor(x.add(0.5))
   const a0 = x.sub(ox)
 
-  const mMod = m4.mul(float(1.79284291400159).sub(a0.mul(a0).add(h.mul(h)).mul(0.85373472095314)))
+  const mMod: TSLNode = m4.mul(float(1.79284291400159).sub(a0.mul(a0).add(h.mul(h)).mul(0.85373472095314)))
 
-  const gx = a0.x.mul(x0.x).add(h.x.mul(x0.y))
-  const gy = a0.y.mul(x12_mod.x).add(h.y.mul(x12_mod.y))
-  const gz = a0.z.mul(x12_mod.z).add(h.z.mul(x12_mod.w))
+  const gx: TSLNode = a0.x.mul(x0.x).add(h.x.mul(x0.y))
+  const gy: TSLNode = a0.y.mul(x12_mod.x).add(h.y.mul(x12_mod.y))
+  const gz: TSLNode = a0.z.mul(x12_mod.z).add(h.z.mul(x12_mod.w))
 
   return dot(mMod, vec3(gx, gy, gz)).mul(130)
 }
@@ -170,7 +167,7 @@ export function simplexNoise2D(v: TSLNode): TSLNode {
 export function gradientNoise3D(p: TSLNode): TSLNode {
   const i = floor(p)
   const f = fract(p)
-  const u = f.mul(f).mul(float(3).sub(f.mul(2)))
+  const u: TSLNode = f.mul(f).mul(float(3).sub(f.mul(2)))
 
   return mix(
     mix(
@@ -221,9 +218,9 @@ export type FBMOptions = {
 export function fbm2D(p: TSLNode, options: FBMOptions = {}): TSLNode {
   const { octaves = 5, lacunarity = 2.0, gain = 0.5, amplitude = 0.5, frequency = 1.0 } = options
 
-  let value = float(0)
-  let amp = float(amplitude)
-  let freq = float(frequency)
+  let value: TSLNode = float(0)
+  let amp: TSLNode = float(amplitude)
+  let freq: TSLNode = float(frequency)
   const currentP = p
 
   for (let i = 0; i < octaves; i++) {
@@ -241,9 +238,9 @@ export function fbm2D(p: TSLNode, options: FBMOptions = {}): TSLNode {
 export function fbm3D(p: TSLNode, options: FBMOptions = {}): TSLNode {
   const { octaves = 5, lacunarity = 2.0, gain = 0.5, amplitude = 0.5, frequency = 1.0 } = options
 
-  let value = float(0)
-  let amp = float(amplitude)
-  let freq = float(frequency)
+  let value: TSLNode = float(0)
+  let amp: TSLNode = float(amplitude)
+  let freq: TSLNode = float(frequency)
 
   for (let i = 0; i < octaves; i++) {
     value = value.add(amp.mul(gradientNoise3D(p.mul(freq))))
@@ -271,8 +268,8 @@ export function voronoi2D(uv: TSLNode, scale: TSLNode | number = 1): VoronoiResu
   const i = floor(scaledUV)
   const f = fract(scaledUV)
 
-  let minDist = float(1)
-  let cellId = vec2(0, 0)
+  let minDist: TSLNode = float(1)
+  let cellId: TSLNode = vec2(0, 0)
 
   // Check 3x3 neighborhood
   for (let y = -1; y <= 1; y++) {
@@ -284,7 +281,7 @@ export function voronoi2D(uv: TSLNode, scale: TSLNode | number = 1): VoronoiResu
 
       const isCloser = step(dist, minDist)
       minDist = mix(minDist, dist, isCloser)
-      cellId = mix(cellId, i.add(neighbor), isCloser) as TSLNode
+      cellId = mix(cellId, i.add(neighbor), isCloser)
     }
   }
 
@@ -329,9 +326,9 @@ export function domainWarp2D(
 export function turbulence2D(p: TSLNode, options: FBMOptions = {}): TSLNode {
   const { octaves = 5, lacunarity = 2.0, gain = 0.5, amplitude = 0.5, frequency = 1.0 } = options
 
-  let value = float(0)
-  let amp = float(amplitude)
-  let freq = float(frequency)
+  let value: TSLNode = float(0)
+  let amp: TSLNode = float(amplitude)
+  let freq: TSLNode = float(frequency)
 
   for (let i = 0; i < octaves; i++) {
     value = value.add(amp.mul(abs(simplexNoise2D(p.mul(freq)))))
@@ -355,7 +352,7 @@ export function simplexNoise3d(v: TSLNode): TSLNode {
   const D = vec4(0.0, 0.5, 1.0, 2.0)
 
   const i = vec3(floor(v.add(dot(v, C.yyy)))).toVar()
-  const x0 = vec3(v.sub(i).add(dot(i, C.xxx))).toVar()
+  const x0: TSLNode = vec3(v.sub(i).add(dot(i, C.xxx))).toVar()
 
   const g = vec3(step(x0.yzx, x0.xyz)).toVar()
   const l = vec3(sub(1.0, g)).toVar()
@@ -384,14 +381,15 @@ export function simplexNoise3d(v: TSLNode): TSLNode {
   const y_ = vec4(floor(j.sub(mul(7.0, x_)))).toVar()
   const x = vec4(x_.mul(ns.x).add(ns.yyyy)).toVar()
   const y = vec4(y_.mul(ns.x).add(ns.yyyy)).toVar()
-  const h = vec4(sub(1.0, abs(x).sub(abs(y)))).toVar()
+  const h: TSLNode = vec4(sub(1.0, abs(x).sub(abs(y)))).toVar()
 
   const b0 = vec4(x.xy, y.xy).toVar()
   const b1 = vec4(x.zw, y.zw).toVar()
 
   const s0 = vec4(floor(b0).mul(2.0).add(1.0)).toVar()
   const s1 = vec4(floor(b1).mul(2.0).add(1.0)).toVar()
-  const sh = vec4(step(h, vec4(0.0)).negate()).toVar()
+  const zeroVec4: TSLNode = vec4(0.0)
+  const sh = vec4(step(h, zeroVec4).negate()).toVar()
 
   const a0 = vec4(b0.xzyw.add(s0.xzyw.mul(sh.xxyy))).toVar()
   const a1 = vec4(b1.xzyw.add(s1.xzyw.mul(sh.zzww))).toVar()
@@ -429,7 +427,7 @@ export function simplexNoise4d(v: TSLNode): TSLNode {
   const C = vec2(0.138196601125010504, 0.309016994374947451)
 
   const i = vec4(floor(v.add(dot(v, C.yyyy)))).toVar()
-  const x0 = vec4(v.sub(i).add(dot(i, C.xxxx))).toVar()
+  const x0: TSLNode = vec4(v.sub(i).add(dot(i, C.xxxx))).toVar()
 
   const i0 = vec4().toVar()
   const isX = vec3(step(x0.yzw, x0.xxx)).toVar()
@@ -529,19 +527,21 @@ export function perlinNoise3d(P: TSLNode): TSLNode {
   const ixy0 = vec4(permuteVec4(ixy.add(iz0))).toVar()
   const ixy1 = vec4(permuteVec4(ixy.add(iz1))).toVar()
 
-  const gx0 = vec4(ixy0.mul(1.0 / 7.0)).toVar()
-  const gy0 = vec4(fract(floor(gx0).mul(1.0 / 7.0)).sub(0.5)).toVar()
+  const gx0: TSLNode = vec4(ixy0.mul(1.0 / 7.0)).toVar()
+  const gy0: TSLNode = vec4(fract(floor(gx0).mul(1.0 / 7.0)).sub(0.5)).toVar()
   gx0.assign(fract(gx0))
-  const gz0 = vec4(vec4(0.5).sub(abs(gx0)).sub(abs(gy0))).toVar()
-  const sz0 = vec4(step(gz0, vec4(0.0))).toVar()
+  const gz0: TSLNode = vec4(vec4(0.5).sub(abs(gx0)).sub(abs(gy0))).toVar()
+  const zero0: TSLNode = vec4(0.0)
+  const sz0: TSLNode = vec4(step(gz0, zero0)).toVar()
   gx0.subAssign(sz0.mul(step(0.0, gx0).sub(0.5)))
   gy0.subAssign(sz0.mul(step(0.0, gy0).sub(0.5)))
 
-  const gx1 = vec4(ixy1.mul(1.0 / 7.0)).toVar()
-  const gy1 = vec4(fract(floor(gx1).mul(1.0 / 7.0)).sub(0.5)).toVar()
+  const gx1: TSLNode = vec4(ixy1.mul(1.0 / 7.0)).toVar()
+  const gy1: TSLNode = vec4(fract(floor(gx1).mul(1.0 / 7.0)).sub(0.5)).toVar()
   gx1.assign(fract(gx1))
-  const gz1 = vec4(vec4(0.5).sub(abs(gx1)).sub(abs(gy1))).toVar()
-  const sz1 = vec4(step(gz1, vec4(0.0))).toVar()
+  const gz1: TSLNode = vec4(vec4(0.5).sub(abs(gx1)).sub(abs(gy1))).toVar()
+  const zero1: TSLNode = vec4(0.0)
+  const sz1: TSLNode = vec4(step(gz1, zero1)).toVar()
   gx1.subAssign(sz1.mul(step(0.0, gx1).sub(0.5)))
   gy1.subAssign(sz1.mul(step(0.0, gy1).sub(0.5)))
 
@@ -649,10 +649,10 @@ export function curlNoise3d(inputA: TSLNode): TSLNode {
 export function ridgedFbm2d(p: TSLNode, options: FBMOptions = {}): TSLNode {
   const { octaves = 5, lacunarity = 2.0, gain = 0.5, amplitude = 0.5, frequency = 1.0 } = options
 
-  let value = float(0)
-  let amp = float(amplitude)
-  let freq = float(frequency)
-  let maxValue = float(0)
+  let value: TSLNode = float(0)
+  let amp: TSLNode = float(amplitude)
+  let freq: TSLNode = float(frequency)
+  let maxValue: TSLNode = float(0)
 
   for (let i = 0; i < octaves; i++) {
     // Sample noise and create ridges by taking absolute value and inverting
@@ -678,10 +678,10 @@ export function ridgedFbm2d(p: TSLNode, options: FBMOptions = {}): TSLNode {
 export function ridgedFbm3d(p: TSLNode, options: FBMOptions = {}): TSLNode {
   const { octaves = 5, lacunarity = 2.0, gain = 0.5, amplitude = 0.5, frequency = 1.0 } = options
 
-  let value = float(0)
-  let amp = float(amplitude)
-  let freq = float(frequency)
-  let maxValue = float(0)
+  let value: TSLNode = float(0)
+  let amp: TSLNode = float(amplitude)
+  let freq: TSLNode = float(frequency)
+  let maxValue: TSLNode = float(0)
 
   for (let i = 0; i < octaves; i++) {
     const noiseValue = simplexNoise3d(p.mul(freq))
@@ -779,7 +779,7 @@ export function turbulenceRotational(
   const amp = float(amplitude).toVar()
 
   // Turbulence rotation matrix
-  const rot = mat2(0.6, -0.8, 0.8, 0.6).toVar()
+  const rot: TSLNode = mat2(0.6, -0.8, 0.8, 0.6).toVar()
 
   // Loop through turbulence octaves
   Loop({ start: 0.0, end: octaves, type: 'float' }, ({ i }) => {
@@ -810,10 +810,10 @@ export function turbulenceRotational(
 export function fbm3dSimplex(p: TSLNode, options: FBMOptions = {}): TSLNode {
   const { octaves = 4, lacunarity = 2.0, gain = 0.5, amplitude = 1.0, frequency = 1.0 } = options
 
-  let value = float(0)
-  let amp = float(amplitude)
-  let freq = float(frequency)
-  let maxValue = float(0)
+  let value: TSLNode = float(0)
+  let amp: TSLNode = float(amplitude)
+  let freq: TSLNode = float(frequency)
+  let maxValue: TSLNode = float(0)
 
   for (let i = 0; i < octaves; i++) {
     value = value.add(simplexNoise3d(p.mul(freq)).mul(amp))

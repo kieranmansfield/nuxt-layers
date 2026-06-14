@@ -1,12 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex
 import type { InjectionKey } from 'vue'
 import { Color } from 'three'
 import { uniform } from 'three/tsl'
 
-import type { MousePositionOptions } from './useMousePosition'
-import type { ShaderTimeOptions } from './useShaderTime'
 
 export type ShaderRuntimeOptions = {
   speed?: number

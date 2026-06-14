@@ -1,6 +1,3 @@
-/* eslint-disable max-params */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Lighting Utilities
  * Provides common lighting models for shader effects

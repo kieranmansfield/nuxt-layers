@@ -1,5 +1,3 @@
-<!-- eslint-disable vue/require-default-prop -->
-<!-- eslint-disable vue/define-props-destructuring -->
 <script lang="ts" setup>
   import { useColor } from '../../composables/color'
   import type { UiColors } from '../../types/colors'
@@ -7,19 +5,18 @@
 
   defineOptions({ inheritAttrs: false })
 
-  const props = withDefaults(
-    defineProps<{
-      language?: string
-      color?: UiColors
-      size?: FontSize
-      class?: string
-    }>(),
-    {
-      class: '',
-      color: 'default',
-    }
-  )
-  const colorClass = useColor(props.color, 'text')
+  const {
+    language,
+    color = 'default',
+    size,
+    class: classProp = '',
+  } = defineProps<{
+    language?: string
+    color?: UiColors
+    size?: FontSize
+    class?: string
+  }>()
+  const colorClass = useColor(color, 'text')
 </script>
 
 <template>
@@ -27,16 +24,16 @@
     tag="pre"
     v-bind="{
       ...$attrs,
-      ...(props.size !== undefined && { size: props.size }),
-      ...(props.language !== undefined && { 'data-language': props.language }),
+      ...(size !== undefined && { size: size }),
+      ...(language !== undefined && { 'data-language': language }),
     }"
     class="overflow-x-auto"
-    :class="[props.class]"
+    :class="[classProp]"
   >
     <Typography
       tag="code"
       class="font-mono"
-      :class="[colorClass, props.language ? `language-${props.language}` : '']"
+      :class="[colorClass, language ? `language-${language}` : '']"
     >
       <slot />
     </Typography>

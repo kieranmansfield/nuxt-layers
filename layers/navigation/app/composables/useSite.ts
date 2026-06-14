@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { splitSpaces } from '../utils/regex'
 
 export function useSite() {

@@ -63,7 +63,6 @@
   ])
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
 <template>
   <LayoutPage
     title="SEO Layer Demo"
@@ -87,101 +86,99 @@
       <section class="bg-gray-950 pb-24">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="space-y-8 py-8">
-              <!-- Modules Overview -->
-              <UCard>
-                <template #header>
-                  <div class="flex items-center gap-2">
-                    <UIcon name="i-lucide-package" class="text-primary" />
-                    <h2 class="text-xl font-semibold">Included Modules</h2>
-                  </div>
-                  <p class="text-sm text-muted mt-1">
-                    Six @nuxtjs/seo sub-modules, configured via a single layer
-                  </p>
-                </template>
-
-                <div class="grid gap-4 md:grid-cols-2">
-                  <div
-                    v-for="mod in modules"
-                    :key="mod.name"
-                    class="p-4 rounded-lg bg-elevated border border-default"
-                  >
-                    <div class="flex items-center gap-2 mb-2">
-                      <UIcon :name="mod.icon" class="text-primary text-lg" />
-                      <code class="text-sm font-mono text-highlighted">{{ mod.name }}</code>
-                    </div>
-                    <p class="text-sm text-muted mb-3">{{ mod.description }}</p>
-                    <code class="text-xs text-muted bg-muted px-2 py-1 rounded block truncate">
-                      {{ mod.snippet }}
-                    </code>
-                  </div>
+            <!-- Modules Overview -->
+            <UCard>
+              <template #header>
+                <div class="flex items-center gap-2">
+                  <UIcon name="i-lucide-package" class="text-primary" />
+                  <h2 class="text-xl font-semibold">Included Modules</h2>
                 </div>
-              </UCard>
+                <p class="text-sm text-muted mt-1">
+                  Six @nuxtjs/seo sub-modules, configured via a single layer
+                </p>
+              </template>
 
-              <!-- Live Config -->
-              <UCard>
-                <template #header>
-                  <div class="flex items-center gap-2">
-                    <UIcon name="i-lucide-settings" class="text-primary" />
-                    <h2 class="text-xl font-semibold">useSeoConfig()</h2>
+              <div class="grid gap-4 md:grid-cols-2">
+                <div
+                  v-for="mod in modules"
+                  :key="mod.name"
+                  class="p-4 rounded-lg bg-elevated border border-default"
+                >
+                  <div class="flex items-center gap-2 mb-2">
+                    <UIcon :name="mod.icon" class="text-primary text-lg" />
+                    <code class="text-sm font-mono text-highlighted">{{ mod.name }}</code>
                   </div>
-                  <p class="text-sm text-muted mt-1">Current resolved SEO configuration</p>
-                </template>
-
-                <div class="space-y-2">
-                  <div
-                    v-for="row in configRows"
-                    :key="row.label"
-                    class="flex justify-between items-center py-2 border-b border-default last:border-0"
-                  >
-                    <span class="text-muted text-sm">{{ row.label }}</span>
-                    <span class="font-mono text-sm text-highlighted">{{ row.value }}</span>
-                  </div>
+                  <p class="text-sm text-muted mb-3">{{ mod.description }}</p>
+                  <code class="text-xs text-muted bg-muted px-2 py-1 rounded block truncate">
+                    {{ mod.snippet }}
+                  </code>
                 </div>
-              </UCard>
+              </div>
+            </UCard>
 
-              <!-- Usage Pattern -->
-              <UCard>
-                <template #header>
-                  <div class="flex items-center gap-2">
-                    <UIcon name="i-lucide-code-2" class="text-primary" />
-                    <h2 class="text-xl font-semibold">Usage</h2>
-                  </div>
-                </template>
+            <!-- Live Config -->
+            <UCard>
+              <template #header>
+                <div class="flex items-center gap-2">
+                  <UIcon name="i-lucide-settings" class="text-primary" />
+                  <h2 class="text-xl font-semibold">useSeoConfig()</h2>
+                </div>
+                <p class="text-sm text-muted mt-1">Current resolved SEO configuration</p>
+              </template>
 
-                <div class="space-y-4">
-                  <div>
-                    <h3 class="text-sm font-semibold text-highlighted mb-2">
-                      Per-page SEO meta
-                    </h3>
-                    <pre
-                      class="text-xs bg-muted p-4 rounded-lg overflow-x-auto text-muted leading-relaxed"
-                    ><code>useSeoMeta({
+              <div class="space-y-2">
+                <div
+                  v-for="row in configRows"
+                  :key="row.label"
+                  class="flex justify-between items-center py-2 border-b border-default last:border-0"
+                >
+                  <span class="text-muted text-sm">{{ row.label }}</span>
+                  <span class="font-mono text-sm text-highlighted">{{ row.value }}</span>
+                </div>
+              </div>
+            </UCard>
+
+            <!-- Usage Pattern -->
+            <UCard>
+              <template #header>
+                <div class="flex items-center gap-2">
+                  <UIcon name="i-lucide-code-2" class="text-primary" />
+                  <h2 class="text-xl font-semibold">Usage</h2>
+                </div>
+              </template>
+
+              <div class="space-y-4">
+                <div>
+                  <h3 class="text-sm font-semibold text-highlighted mb-2">Per-page SEO meta</h3>
+                  <pre
+                    class="text-xs bg-muted p-4 rounded-lg overflow-x-auto text-muted leading-relaxed"
+                  ><code>useSeoMeta({
   title: 'My Page Title',
   description: 'Page description for search engines',
   ogTitle: 'Open Graph title',
   ogImage: '/og-image.jpg',
 })</code></pre>
-                  </div>
-                  <div>
-                    <h3 class="text-sm font-semibold text-highlighted mb-2">
-                      Schema.org structured data
-                    </h3>
-                    <pre
-                      class="text-xs bg-muted p-4 rounded-lg overflow-x-auto text-muted leading-relaxed"
-                    ><code>useSchemaOrg([
+                </div>
+                <div>
+                  <h3 class="text-sm font-semibold text-highlighted mb-2">
+                    Schema.org structured data
+                  </h3>
+                  <pre
+                    class="text-xs bg-muted p-4 rounded-lg overflow-x-auto text-muted leading-relaxed"
+                  ><code>useSchemaOrg([
   defineWebPage({ name: 'My App' }),
   defineOrganization({ name: 'My Org', url: 'https://myapp.com' }),
 ])</code></pre>
-                  </div>
-                  <div>
-                    <h3 class="text-sm font-semibold text-highlighted mb-2">OG image generation</h3>
-                    <pre
-                      class="text-xs bg-muted p-4 rounded-lg overflow-x-auto text-muted leading-relaxed"
-                    ><code>// In a page component
-defineOgImage({ component: 'OgImageNuxtSeo', props: { title: 'My Page' } })</code></pre>
-                  </div>
                 </div>
-              </UCard>
+                <div>
+                  <h3 class="text-sm font-semibold text-highlighted mb-2">OG image generation</h3>
+                  <pre
+                    class="text-xs bg-muted p-4 rounded-lg overflow-x-auto text-muted leading-relaxed"
+                  ><code>// In a page component
+defineOgImage({ component: 'OgImageNuxtSeo', props: { title: 'My Page' } })</code></pre>
+                </div>
+              </div>
+            </UCard>
           </div>
         </div>
       </section>

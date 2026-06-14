@@ -1,7 +1,4 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { float, sin, smoothstep, time, uniform, vec2 } from 'three/tsl'
 
   /**
@@ -9,27 +6,28 @@
    * Uses a smoothstepped sine so the scale dwells at min/max rather than
    * passing through them instantly.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Max scale deviation from 1.0 */
-      amount?: number
-      /** Breath cycle speed in radians per second */
-      speed?: number
-      order?: number
-    }>(),
-    { amount: 0.05, speed: 0.8, order: 0 }
-  )
+  const {
+    amount = 0.05,
+    speed = 0.8,
+    order = 0,
+  } = defineProps<{
+    /** Max scale deviation from 1.0 */
+    amount?: number
+    /** Breath cycle speed in radians per second */
+    speed?: number
+    order?: number
+  }>()
 
-  const amountNode = uniform(props.amount)
-  const speedNode = uniform(props.speed)
+  const amountNode = uniform(amount)
+  const speedNode = uniform(speed)
   watch(
-    () => props.amount,
+    () => amount,
     (v) => {
       amountNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -43,7 +41,7 @@
       const centered = uvIn.sub(0.5).div(scale).add(0.5)
       return vec2(centered.x, centered.y)
     },
-    props.order,
+    order,
     'uv'
   )
 </script>

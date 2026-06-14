@@ -1,7 +1,4 @@
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   /**
    * SectionHero - Full-viewport hero section
    *

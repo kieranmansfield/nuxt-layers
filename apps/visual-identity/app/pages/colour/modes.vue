@@ -101,7 +101,7 @@
               ? 'border-primary bg-primary/5'
               : 'border-default hover:border-accented hover:bg-elevated'
           "
-          @click="toggleScheme(option.value)"
+          @click="() => toggleScheme(option.value)"
         >
           <UIcon :name="option.icon" class="size-5 sm:size-6 text-default shrink-0" />
           <span class="text-sm font-medium text-default">{{ option.label }}</span>
@@ -129,7 +129,7 @@
               ? 'border-primary bg-primary/5'
               : 'border-default hover:border-accented hover:bg-elevated'
           "
-          @click="toggleContrast(option.value)"
+          @click="() => toggleContrast(option.value)"
         >
           <UIcon :name="option.icon" class="size-5 text-default shrink-0 mt-0.5" />
           <div class="flex-1 min-w-0">
@@ -160,7 +160,7 @@
               ? 'border-primary bg-primary/5'
               : 'border-default hover:border-accented hover:bg-elevated'
           "
-          @click="state.themeMode.backgroundStyle = option.value"
+          @click="() => (state.themeMode.backgroundStyle = option.value)"
         >
           <UIcon :name="option.icon" class="size-5 text-default shrink-0 mt-0.5" />
           <div>
@@ -188,7 +188,7 @@
           v-for="scheme in activeSchemes"
           :key="scheme"
           :colours="state.colours"
-          :scheme="scheme"
+          :scheme
           contrast="standard"
           :background-style="state.themeMode.backgroundStyle"
         />
@@ -208,7 +208,7 @@
           v-for="scheme in activeSchemes"
           :key="scheme"
           :colours="state.colours"
-          :scheme="scheme"
+          :scheme
           contrast="high"
           :background-style="state.themeMode.backgroundStyle"
         />

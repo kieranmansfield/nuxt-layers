@@ -1,8 +1,4 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import {
     createAmbientUniforms,
     createThemeBubbleColorNode,
@@ -17,25 +13,23 @@
 
   type ThemeId = 'mesh' | 'wave' | 'lavalamp' | 'bubble' | 'plasma'
 
-  const props = withDefaults(
-    defineProps<{
-      themeId: ThemeId
-      speed?: number
-      intensity?: number
-      color1?: string
-      color2?: string
-      color3?: string
-      color4?: string
-    }>(),
-    {
-      speed: 1,
-      intensity: 1,
-      color1: '#8b5cf6',
-      color2: '#6366f1',
-      color3: '#a78bfa',
-      color4: '#38bdf8',
-    }
-  )
+  const {
+    themeId,
+    speed = 1,
+    intensity = 1,
+    color1 = '#8b5cf6',
+    color2 = '#6366f1',
+    color3 = '#a78bfa',
+    color4 = '#38bdf8',
+  } = defineProps<{
+    themeId: ThemeId
+    speed?: number
+    intensity?: number
+    color1?: string
+    color2?: string
+    color3?: string
+    color4?: string
+  }>()
 
   function hexToVec3Uniform(hex: string) {
     const c = new Color(hex)
@@ -44,10 +38,10 @@
 
   function makeColorUniforms() {
     return {
-      color1: hexToVec3Uniform(props.color1),
-      color2: hexToVec3Uniform(props.color2),
-      color3: hexToVec3Uniform(props.color3),
-      color4: hexToVec3Uniform(props.color4),
+      color1: hexToVec3Uniform(color1),
+      color2: hexToVec3Uniform(color2),
+      color3: hexToVec3Uniform(color3),
+      color4: hexToVec3Uniform(color4),
     }
   }
 
@@ -62,13 +56,13 @@
   // Mutable refs so color watchers update without material rebuild
   let colorUniforms = makeColorUniforms()
   let ambientUniforms = createAmbientUniforms({
-    speed: props.speed,
-    intensity: props.intensity,
+    speed: speed,
+    intensity: intensity,
     mouseInteraction: false,
   })
 
   function buildMaterial() {
-    const colorNode = NODE_CREATORS[props.themeId](ambientUniforms, colorUniforms)
+    const colorNode = NODE_CREATORS[themeId](ambientUniforms, colorUniforms)
     const mat = new MeshBasicNodeMaterial()
     mat.side = DoubleSide
     mat.colorNode = colorNode
@@ -79,12 +73,12 @@
 
   // Rebuild material + uniforms when preset switches
   watch(
-    () => props.themeId,
+    () => themeId,
     () => {
       colorUniforms = makeColorUniforms()
       ambientUniforms = createAmbientUniforms({
-        speed: props.speed,
-        intensity: props.intensity,
+        speed: speed,
+        intensity: intensity,
         mouseInteraction: false,
       })
       const old = material.value
@@ -95,41 +89,41 @@
 
   // Update color uniforms reactively (no material rebuild)
   watch(
-    () => props.color1,
+    () => color1,
     (v) => {
       const c = new Color(v)
       colorUniforms.color1.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.color2,
+    () => color2,
     (v) => {
       const c = new Color(v)
       colorUniforms.color2.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.color3,
+    () => color3,
     (v) => {
       const c = new Color(v)
       colorUniforms.color3.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.color4,
+    () => color4,
     (v) => {
       const c = new Color(v)
       colorUniforms.color4.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       ambientUniforms.speed.value = v
     }
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       ambientUniforms.intensity.value = v
     }
@@ -139,7 +133,6 @@
 </script>
 
 <template>
-  <!-- eslint-disable vue/prefer-true-attribute-shorthand -->
   <ShaderCanvas :webgpu="true" clear-color="#0a0a0a" :window-size="false" tone-mapping="aces">
     <TresOrthographicCamera :args="[-1, 1, 1, -1, 0.1, 100]" :position="[0, 0, 1]" />
     <TresMesh>

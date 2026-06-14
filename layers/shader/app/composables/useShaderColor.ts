@@ -1,9 +1,7 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex
 import { Color } from 'three'
 import { uniform } from 'three/tsl'
 
+import { oklchToColor } from '../utils/tsl/oklch'
 import type { TweenHandle } from '../utils/tsl/tween'
 
 /**
@@ -74,10 +72,10 @@ export function useShaderColor(initialHex: string) {
 
       if (rawT < 1) {
         requestAnimationFrame(tick)
-      } else {
-        hex.value = targetHex
-        resolvePromise()
+        return
       }
+      hex.value = targetHex
+      resolvePromise()
     }
 
     requestAnimationFrame(tick)

@@ -53,9 +53,6 @@
   ]
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Visual Layer Demo"
@@ -70,8 +67,8 @@
           <AccentScene preset="hero" class="absolute inset-0 opacity-60" />
         </template>
         <div class="flex flex-wrap gap-4 justify-center">
-          <UButton size="lg" @click="$router.push('#gradients')">Gradients & Tints</UButton>
-          <UButton size="lg" variant="outline" @click="$router.push('#progress')">
+          <UButton size="lg" @click="() => $router.push('#gradients')">Gradients & Tints</UButton>
+          <UButton size="lg" variant="outline" @click="() => $router.push('#progress')">
             Progress
           </UButton>
           <UButton size="lg" variant="ghost" to="/ui">

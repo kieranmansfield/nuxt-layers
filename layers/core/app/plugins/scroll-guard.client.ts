@@ -1,6 +1,3 @@
-/* eslint-disable complexity */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable no-restricted-syntax */
 // plugins/scroll-guard.client.ts
 
 import type { ScrollGuardConfig } from '#layers/core/app/types/scroll-guard'
@@ -23,7 +20,9 @@ type CoreLayerConfig = {
  * - `useScrollGuard().disable()` to turn off
  * - `useScrollGuard().enable()` to turn back on
  */
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin({
+  name: 'core:scroll-guard',
+  setup() {
   const config = useAppConfig()
   const coreLayer = config.coreLayer as CoreLayerConfig | undefined
 
@@ -53,4 +52,5 @@ export default defineNuxtPlugin(() => {
       console.log(`[Scroll Guard] Clamped ${clampedCount.value} element(s)`)
     })
   }
+  },
 })

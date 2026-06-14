@@ -1,8 +1,4 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { float, time, uniform, vec4 } from 'three/tsl'
 
   import { simplexNoise2D } from '../../shaders/common/noise'
@@ -13,54 +9,58 @@
    * where n, n2 are two simplex noise octaves at different frequencies.
    * Produces a noise-eroded cross/box silhouette. Outputs a float mask for CosinePalette.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Horizontal scale of the box */
-      scaleX?: number
-      /** Vertical scale of the box */
-      scaleY?: number
-      /** Noise frequency for the first octave (X distortion) */
-      noiseFreq1?: number
-      /** Noise frequency for the second octave (Y distortion) */
-      noiseFreq2?: number
-      /** Animation speed */
-      speed?: number
-      order?: number
-    }>(),
-    { scaleX: 2, scaleY: 2, noiseFreq1: 1.5, noiseFreq2: 2.3, speed: 0.2, order: 0 }
-  )
+  const {
+    scaleX = 2,
+    scaleY = 2,
+    noiseFreq1 = 1.5,
+    noiseFreq2 = 2.3,
+    speed = 0.2,
+    order = 0,
+  } = defineProps<{
+    /** Horizontal scale of the box */
+    scaleX?: number
+    /** Vertical scale of the box */
+    scaleY?: number
+    /** Noise frequency for the first octave (X distortion) */
+    noiseFreq1?: number
+    /** Noise frequency for the second octave (Y distortion) */
+    noiseFreq2?: number
+    /** Animation speed */
+    speed?: number
+    order?: number
+  }>()
 
-  const scaleXNode = uniform(props.scaleX)
-  const scaleYNode = uniform(props.scaleY)
-  const freq1Node = uniform(props.noiseFreq1)
-  const freq2Node = uniform(props.noiseFreq2)
-  const speedNode = uniform(props.speed)
+  const scaleXNode = uniform(scaleX)
+  const scaleYNode = uniform(scaleY)
+  const freq1Node = uniform(noiseFreq1)
+  const freq2Node = uniform(noiseFreq2)
+  const speedNode = uniform(speed)
   watch(
-    () => props.scaleX,
+    () => scaleX,
     (v) => {
       scaleXNode.value = v
     }
   )
   watch(
-    () => props.scaleY,
+    () => scaleY,
     (v) => {
       scaleYNode.value = v
     }
   )
   watch(
-    () => props.noiseFreq1,
+    () => noiseFreq1,
     (v) => {
       freq1Node.value = v
     }
   )
   watch(
-    () => props.noiseFreq2,
+    () => noiseFreq2,
     (v) => {
       freq2Node.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -83,5 +83,5 @@
       .max(float(0))
 
     return vec4(box, box, box, float(1))
-  }, props.order)
+  }, order)
 </script>

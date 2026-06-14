@@ -1,26 +1,22 @@
-<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
-  const props = withDefaults(
-    defineProps<{
-      /**
-       * Which stats to show
-       */
-      show?: ('velocity' | 'progress' | 'direction' | 'scrollY')[]
-      /**
-       * Position on screen
-       */
-      position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-      /**
-       * Use compact layout
-       */
-      compact?: boolean
-    }>(),
-    {
-      show: () => ['velocity', 'progress', 'direction'],
-      position: 'bottom-right',
-      compact: false,
-    }
-  )
+  const {
+    show = ['velocity', 'progress', 'direction'],
+    position = 'bottom-right',
+    compact = false,
+  } = defineProps<{
+    /**
+     * Which stats to show
+     */
+    show?: ('velocity' | 'progress' | 'direction' | 'scrollY')[]
+    /**
+     * Position on screen
+     */
+    position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+    /**
+     * Use compact layout
+     */
+    compact?: boolean
+  }>()
 
   const { velocity, progress, direction, scrollY } = useSmoothScroll()
 
@@ -28,7 +24,7 @@
 
   const positionClasses = computed(() => {
     const classes = ['fixed', 'z-50']
-    switch (props.position) {
+    switch (position) {
       case 'top-left':
         classes.push('top-4', 'left-4')
         break

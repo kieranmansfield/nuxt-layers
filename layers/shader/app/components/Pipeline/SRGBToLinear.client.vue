@@ -1,7 +1,4 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { float, pow, uniform, vec4 } from 'three/tsl'
 
   /**
@@ -9,22 +6,19 @@
    * Apply before any physically-based blending or tonemapping.
    * Approximate form: pow(col, 2.2).
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Gamma exponent — 2.2 matches sRGB standard */
-      gamma?: number
-      order?: number
-    }>(),
-    { gamma: 2.2, order: 0 }
-  )
+  const { gamma = 2.2, order = 0 } = defineProps<{
+    /** Gamma exponent — 2.2 matches sRGB standard */
+    gamma?: number
+    order?: number
+  }>()
 
-  const gammaNode = uniform(props.gamma)
+  const gammaNode = uniform(gamma)
   watch(
-    () => props.gamma,
+    () => gamma,
     (v) => {
       gammaNode.value = v
     }
   )
 
-  useShaderStage((prev) => vec4(pow(prev.xyz.max(float(0)), gammaNode), prev.w), props.order)
+  useShaderStage((prev) => vec4(pow(prev.xyz.max(float(0)), gammaNode), prev.w), order)
 </script>

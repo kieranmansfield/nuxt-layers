@@ -1,10 +1,6 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
-  import { float, mix, smoothstep, uniform, vec4 } from 'three/tsl'
+  import { float, smoothstep, uniform, vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
 
@@ -12,42 +8,44 @@
    * Red/warm glow bleed around highlight areas — the analogue film halation effect.
    * Bright areas bleed a coloured halo into their surroundings.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Glow colour */
-      color?: string
-      /** Luminance threshold above which glow starts */
-      threshold?: number
-      /** Glow intensity */
-      intensity?: number
-      order?: number
-    }>(),
-    { color: '#ff2200', threshold: 0.7, intensity: 0.4, order: 0 }
-  )
+  const {
+    color = '#ff2200',
+    threshold = 0.7,
+    intensity = 0.4,
+    order = 0,
+  } = defineProps<{
+    /** Glow colour */
+    color?: string
+    /** Luminance threshold above which glow starts */
+    threshold?: number
+    /** Glow intensity */
+    intensity?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorNode = toVec3Node(props.color)
-  const thresholdNode = uniform(props.threshold)
-  const intensityNode = uniform(props.intensity)
+  const colorNode = toVec3Node(color)
+  const thresholdNode = uniform(threshold)
+  const intensityNode = uniform(intensity)
   watch(
-    () => props.color,
+    () => color,
     (v) => {
       const c = new Color(v)
       colorNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.threshold,
+    () => threshold,
     (v) => {
       thresholdNode.value = v
     }
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       intensityNode.value = v
     }
@@ -57,5 +55,5 @@
     const lum = luminance(prev.xyz)
     const glow = smoothstep(thresholdNode, float(1), lum).mul(intensityNode)
     return vec4(prev.xyz.add(colorNode.mul(glow)), prev.w)
-  }, props.order)
+  }, order)
 </script>

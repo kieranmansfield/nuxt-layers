@@ -1,7 +1,4 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Vector2 } from 'three'
   import { uniform, vec2 } from 'three/tsl'
 
@@ -10,19 +7,16 @@
    * the whole field. This pulls individual UV coords toward the pointer position.
    * q += (pointer - uv) * influence * 0.2
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Pull strength toward the cursor */
-      influence?: number
-      order?: number
-    }>(),
-    { influence: 0.5, order: 0 }
-  )
+  const { influence = 0.5, order = 0 } = defineProps<{
+    /** Pull strength toward the cursor */
+    influence?: number
+    order?: number
+  }>()
 
   const mouse = uniform(new Vector2(0.5, 0.5))
-  const influenceNode = uniform(props.influence)
+  const influenceNode = uniform(influence)
   watch(
-    () => props.influence,
+    () => influence,
     (v) => {
       influenceNode.value = v
     }
@@ -41,7 +35,7 @@
       const pointer = vec2(mouse.x, mouse.y)
       return uvIn.add(pointer.sub(uvIn).mul(influenceNode).mul(0.2))
     },
-    props.order,
+    order,
     'uv'
   )
 </script>

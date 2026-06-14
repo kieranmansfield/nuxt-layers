@@ -1,8 +1,4 @@
-<!-- eslint-disable vue/require-name-property -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script lang="ts">
-  // @ts-nocheck
-  // eslint-disable-next-line no-restricted-imports
   import { cloneVNode, defineComponent, Fragment, h, ref, type VNode } from 'vue'
 
   export default defineComponent({

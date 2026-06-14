@@ -1,59 +1,58 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { clamp, float, mix, time, uniform, vec3, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Base flame colour (cool, inner) */
-      colorBase?: string
-      /** Tip flame colour (hot, outer) */
-      colorTip?: string
-      /** Flame height scale */
-      scale?: number
-      /** Rise speed */
-      speed?: number
-      order?: number
-    }>(),
-    { colorBase: '#ffcc00', colorTip: '#ff2200', scale: 3, speed: 1.5, order: 0 }
-  )
+  const {
+    colorBase = '#ffcc00',
+    colorTip = '#ff2200',
+    scale = 3,
+    speed = 1.5,
+    order = 0,
+  } = defineProps<{
+    /** Base flame colour (cool, inner) */
+    colorBase?: string
+    /** Tip flame colour (hot, outer) */
+    colorTip?: string
+    /** Flame height scale */
+    scale?: number
+    /** Rise speed */
+    speed?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorBaseNode = toVec3Node(props.colorBase)
-  const colorTipNode = toVec3Node(props.colorTip)
-  const scaleNode = uniform(props.scale)
-  const speedNode = uniform(props.speed)
+  const colorBaseNode = toVec3Node(colorBase)
+  const colorTipNode = toVec3Node(colorTip)
+  const scaleNode = uniform(scale)
+  const speedNode = uniform(speed)
   watch(
-    () => props.colorBase,
+    () => colorBase,
     (v) => {
       const c = new Color(v)
       colorBaseNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorTip,
+    () => colorTip,
     (v) => {
       const c = new Color(v)
       colorTipNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.scale,
+    () => scale,
     (v) => {
       scaleNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -71,5 +70,5 @@
     // Black background → tip colour → base colour
     const fireColor = mix(vec3(0, 0, 0), mix(colorTipNode, colorBaseNode, heat), heat)
     return vec4(fireColor, heat)
-  }, props.order)
+  }, order)
 </script>

@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 /**
  * Error logging composable for tracking and reporting errors
  *

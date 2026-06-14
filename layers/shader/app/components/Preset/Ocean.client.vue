@@ -1,36 +1,27 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck - TSL types
   import {
     createAmbientUniforms,
     createOceanColorNode,
   } from '#layers/shader/app/composables/useAmbientMaterials'
 
-  const props = withDefaults(
-    defineProps<{
-      speed?: number
-      intensity?: number
-      mouseInteraction?: boolean
-    }>(),
-    {
-      speed: 1.0,
-      intensity: 1.0,
-      mouseInteraction: true,
-    }
-  )
+  const {
+    speed = 1.0,
+    intensity = 1.0,
+    mouseInteraction = true,
+  } = defineProps<{
+    speed?: number
+    intensity?: number
+    mouseInteraction?: boolean
+  }>()
 
   const emit = defineEmits<{
     node: [colorNode: any]
   }>()
 
   const uniforms = createAmbientUniforms({
-    speed: props.speed,
-    intensity: props.intensity,
-    mouseInteraction: props.mouseInteraction,
+    speed: speed,
+    intensity: intensity,
+    mouseInteraction: mouseInteraction,
   })
 
   const colorNode = createOceanColorNode(uniforms)
@@ -50,19 +41,19 @@
   }
 
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       uniforms.speed.value = v
     }
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       uniforms.intensity.value = v
     }
   )
   watch(
-    () => props.mouseInteraction,
+    () => mouseInteraction,
     (v) => {
       uniforms.mouseStrength.value = v ? 0.5 : 0
     }

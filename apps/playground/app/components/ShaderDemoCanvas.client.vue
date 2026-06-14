@@ -1,48 +1,30 @@
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable vue/no-unused-properties -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable vue/max-lines-per-block -->
 <script setup lang="ts">
   import { OrbitControls } from '@tresjs/cientos'
   import { TresCanvas } from '@tresjs/core'
   import { Clock, Color, DoubleSide, ShaderMaterial } from 'three'
 
-  const props = withDefaults(
-    defineProps<{
-      activeDemo:
-        | 'noise'
-        | 'gradient'
-        | 'fresnel'
-        | 'mesh'
-        | 'stripe'
-        | 'aurora'
-        | 'radial'
-        | 'image'
-      /** Enable mouse interaction */
-      mouseInteraction?: boolean
-      /** Mouse X position (0-1) */
-      mouseX?: number
-      /** Mouse Y position (0-1) */
-      mouseY?: number
-      /** Disable zoom controls */
-      disableZoom?: boolean
-      /** Mouse interaction strength (0-2) */
-      mouseStrength?: number
-      /** Animation speed multiplier */
-      speed?: number
-      /** Noise/pattern scale */
-      scale?: number
-    }>(),
-    {
-      mouseInteraction: true,
-      mouseX: 0.5,
-      mouseY: 0.5,
-      disableZoom: false,
-      mouseStrength: 0.5,
-      speed: 1.0,
-      scale: 1.0,
-    }
-  )
+  const {
+    mouseInteraction = true,
+    mouseX = 0.5,
+    mouseY = 0.5,
+    disableZoom = false,
+    mouseStrength = 0.5,
+    speed = 1.0,
+  } = defineProps<{
+    activeDemo: 'noise' | 'gradient' | 'fresnel' | 'mesh' | 'stripe' | 'aurora' | 'radial' | 'image'
+    /** Enable mouse interaction */
+    mouseInteraction?: boolean
+    /** Mouse X position (0-1) */
+    mouseX?: number
+    /** Mouse Y position (0-1) */
+    mouseY?: number
+    /** Disable zoom controls */
+    disableZoom?: boolean
+    /** Mouse interaction strength (0-2) */
+    mouseStrength?: number
+    /** Animation speed multiplier */
+    speed?: number
+  }>()
 
   // ============================================
   // STRIPE GRADIENT (animated flowing gradient)
@@ -567,7 +549,7 @@ void main() {
 
   let animationId: number
   const animate = () => {
-    const elapsed = clock.getElapsedTime() * props.speed
+    const elapsed = clock.getElapsedTime() * speed
 
     // Update all time-based uniforms
     if (stripeMaterial.uniforms.uTime) stripeMaterial.uniforms.uTime.value = elapsed
@@ -579,10 +561,10 @@ void main() {
 
     // Update mouse uniforms
     materialsWithMouse.forEach((mat) => {
-      if (mat.uniforms.uMouseX) mat.uniforms.uMouseX.value = props.mouseX
-      if (mat.uniforms.uMouseY) mat.uniforms.uMouseY.value = props.mouseY
+      if (mat.uniforms.uMouseX) mat.uniforms.uMouseX.value = mouseX
+      if (mat.uniforms.uMouseY) mat.uniforms.uMouseY.value = mouseY
       if (mat.uniforms.uMouseStrength) {
-        mat.uniforms.uMouseStrength.value = props.mouseInteraction ? props.mouseStrength : 0
+        mat.uniforms.uMouseStrength.value = mouseInteraction ? mouseStrength : 0
       }
     })
 

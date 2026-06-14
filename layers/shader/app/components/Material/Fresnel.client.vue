@@ -1,8 +1,4 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, DoubleSide } from 'three'
   import {
     dot,
@@ -17,50 +13,49 @@
   } from 'three/tsl'
   import { MeshBasicNodeMaterial } from 'three/webgpu'
 
-  const props = withDefaults(
-    defineProps<{
-      baseColor?: string
-      fresnelColor?: string
-      power?: number
-      intensity?: number
-      transparent?: boolean
-    }>(),
-    {
-      baseColor: '#1e1b4b',
-      fresnelColor: '#22d3ee',
-      power: 2,
-      intensity: 1,
-      transparent: false,
-    }
-  )
+  import type { TSLNode } from '../../shaders/types'
+
+  const {
+    baseColor = '#1e1b4b',
+    fresnelColor = '#22d3ee',
+    power = 2,
+    intensity = 1,
+    transparent = false,
+  } = defineProps<{
+    baseColor?: string
+    fresnelColor?: string
+    power?: number
+    intensity?: number
+    transparent?: boolean
+  }>()
 
   // Create reactive uniforms
-  const baseColorUniform = uniform(new Color(props.baseColor))
-  const fresnelColorUniform = uniform(new Color(props.fresnelColor))
-  const powerUniform = uniform(props.power)
-  const intensityUniform = uniform(props.intensity)
+  const baseColorUniform: TSLNode = uniform(new Color(baseColor))
+  const fresnelColorUniform: TSLNode = uniform(new Color(fresnelColor))
+  const powerUniform = uniform(power)
+  const intensityUniform = uniform(intensity)
 
   // Watch prop changes
   watch(
-    () => props.baseColor,
+    () => baseColor,
     (val) => {
       baseColorUniform.value = new Color(val)
     }
   )
   watch(
-    () => props.fresnelColor,
+    () => fresnelColor,
     (val) => {
       fresnelColorUniform.value = new Color(val)
     }
   )
   watch(
-    () => props.power,
+    () => power,
     (val) => {
       powerUniform.value = val
     }
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (val) => {
       intensityUniform.value = val
     }
@@ -79,7 +74,7 @@
     const colorNode = mix(vec3(baseColorUniform), vec3(fresnelColorUniform), fresnelFactor)
 
     mat.colorNode = colorNode as any
-    mat.transparent = props.transparent
+    mat.transparent = transparent
     mat.side = DoubleSide
 
     return mat

@@ -1,6 +1,4 @@
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { screenSize, vec2 } from 'three/tsl'
 
   const { order = 0 } = defineProps<{ order?: number }>()

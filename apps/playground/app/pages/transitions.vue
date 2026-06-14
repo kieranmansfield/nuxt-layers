@@ -1,8 +1,3 @@
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <script setup lang="ts">
   definePageMeta({ layout: false })
   const { setPageAccent } = useAccentColor()
@@ -41,7 +36,7 @@
         description="Lightweight CSS transition classes and the MotionTransition wrapper for element-level enter/leave effects."
       >
         <div class="flex flex-wrap gap-4 justify-center">
-          <UButton size="lg" @click="$router.push('#demo')">View Demo</UButton>
+          <UButton size="lg" @click="() => $router.push('#demo')">View Demo</UButton>
           <UButton size="lg" variant="ghost" to="/page-transitions">
             <UIcon name="i-lucide-square-stack" class="mr-2" />
             Page Transitions
@@ -66,25 +61,29 @@
           <div class="grid lg:grid-cols-[280px_1fr] gap-8 max-w-5xl mx-auto">
             <!-- Controls -->
             <div class="space-y-4">
-              <div
+              <button
                 v-for="variant in variants"
                 :key="variant.name"
-                class="rounded-xl border p-4 cursor-pointer transition-colors"
+                type="button"
+                class="w-full rounded-xl border p-4 cursor-pointer transition-colors text-left"
                 :class="
                   activeVariant === variant.name
                     ? 'border-primary bg-primary/10'
                     : 'border-gray-800 bg-gray-800/50 hover:border-gray-700'
                 "
-                @click="() => (activeVariant = variant.name)"
+                @click="activeVariant = variant.name"
               >
                 <div class="font-semibold text-white">{{ variant.label }}</div>
                 <p class="text-sm text-gray-400">{{ variant.description }}</p>
                 <code class="text-xs text-primary">name="{{ variant.name }}"</code>
-              </div>
+              </button>
 
               <div class="rounded-xl border border-gray-800 bg-gray-800/50 p-4">
-                <label class="text-sm text-gray-400 block mb-2"> Duration: {{ duration }}ms </label>
+                <label for="transition-duration" class="text-sm text-gray-400 block mb-2">
+                  Duration: {{ duration }}ms
+                </label>
                 <input
+                  id="transition-duration"
                   v-model.number="duration"
                   type="range"
                   min="100"
@@ -106,7 +105,6 @@
                 <div
                   class="w-64 h-64 rounded-3xl bg-linear-to-br from-primary to-purple-600 flex items-center justify-center shadow-2xl shadow-primary/30"
                 >
-                  <!-- eslint-disable vue/max-template-depth -->
                   <div class="text-center text-white p-6">
                     <UIcon name="i-lucide-square-asterisk" class="text-5xl mb-3" />
                     <p class="text-lg font-bold">{{ activeVariant }}</p>

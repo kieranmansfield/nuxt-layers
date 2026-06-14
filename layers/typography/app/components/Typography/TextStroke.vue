@@ -1,32 +1,27 @@
-<!-- eslint-disable vue/define-props-destructuring -->
 <script lang="ts" setup>
-  const props = withDefaults(
-    defineProps<{
-      text: string
-      strokeWidth?: number
-      strokeColor?: string
-      fill?: string
-      linejoin?: 'round' | 'miter' | 'bevel'
-      tag?: string
-    }>(),
-    {
-      strokeWidth: 1.5,
-      strokeColor: 'currentColor',
-      fill: 'none',
-      linejoin: 'round',
-      tag: 'div',
-    }
-  )
+  const {
+    strokeWidth = 1.5,
+    strokeColor = 'currentColor',
+    fill = 'none',
+    linejoin = 'round',
+    tag = 'div',
+  } = defineProps<{
+    text: string
+    strokeWidth?: number
+    strokeColor?: string
+    fill?: string
+    linejoin?: 'round' | 'miter' | 'bevel'
+    tag?: string
+  }>()
   const id = useId()
   const contrast = usePreferredContrast()
 
   const effectiveStrokeWidth = computed(() =>
-    contrast.value === 'more' ? props.strokeWidth * 1.5 : props.strokeWidth
+    contrast.value === 'more' ? strokeWidth * 1.5 : strokeWidth
   )
 </script>
 
 <template>
-  <!-- eslint-disable vue/no-duplicate-attr-inheritance -->
   <component
     :is="tag"
     class="text-stroke inline-grid leading-none *:[grid-area:1/1]"

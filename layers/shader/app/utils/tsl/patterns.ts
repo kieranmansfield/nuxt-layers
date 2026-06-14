@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 import { abs, float, floor, Fn, fract, length, min, mod, sin, vec2 } from 'three/tsl'
 
 import type { TSLNode } from '../../types'
@@ -18,7 +16,7 @@ export const checker = Fn(([uv, scale]: [TSLNode, TSLNode]) => {
  * Grid lines pattern
  */
 export const grid = Fn(([uv, scale, lineWidth]: [TSLNode, TSLNode, TSLNode]) => {
-  const scaledUV = fract(uv.mul(scale))
+  const scaledUV: TSLNode = fract(uv.mul(scale))
   const halfWidth = lineWidth.mul(0.5)
   const xLine = scaledUV.x.lessThan(halfWidth).or(scaledUV.x.greaterThan(float(1.0).sub(halfWidth)))
   const yLine = scaledUV.y.lessThan(halfWidth).or(scaledUV.y.greaterThan(float(1.0).sub(halfWidth)))
@@ -117,7 +115,7 @@ export const bricks = Fn(([uv, scale, ratio, gap]: [TSLNode, TSLNode, TSLNode, T
 export const concentricCircles = Fn(
   ([uv, center, scale, width]: [TSLNode, TSLNode, TSLNode, TSLNode]) => {
     const dist = length(uv.sub(center))
-    const rings = fract(dist.mul(scale))
+    const rings: TSLNode = fract(dist.mul(scale))
     return rings.lessThan(width).select(float(1.0), float(0.0))
   }
 )
@@ -142,7 +140,7 @@ export const radialLines = Fn(
  */
 export const diamonds = Fn(([uv, scale]: [TSLNode, TSLNode]) => {
   const scaledUV = fract(uv.mul(scale))
-  const centered = abs(scaledUV.sub(0.5))
+  const centered: TSLNode = abs(scaledUV.sub(0.5))
   return centered.x.add(centered.y).lessThan(0.5).select(float(1.0), float(0.0))
 })
 
@@ -151,7 +149,7 @@ export const diamonds = Fn(([uv, scale]: [TSLNode, TSLNode]) => {
  */
 export const triangles = Fn(([uv, scale]: [TSLNode, TSLNode]) => {
   const scaledUV = uv.mul(scale)
-  const p = fract(scaledUV)
+  const p: TSLNode = fract(scaledUV)
   const row = floor(scaledUV.y)
   const flip = mod(row, 2.0)
 

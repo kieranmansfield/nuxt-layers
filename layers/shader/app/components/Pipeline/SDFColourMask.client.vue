@@ -1,8 +1,4 @@
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { clamp, float, uniform, vec4 } from 'three/tsl'
 
   /**
@@ -12,20 +8,21 @@
    *
    * Pipeline: RingField (order 0) → SDFColourMask (order 1) → CosinePalette (order 2, scalarSource: 'prev')
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Raise the mask to a power before applying — values > 1 increase contrast */
-      power?: number
-      /** Clamp the mask to [0, 1] before multiplying */
-      clampMask?: boolean
-      order?: number
-    }>(),
-    { power: 1, clampMask: true, order: 0 }
-  )
+  const {
+    power = 1,
+    clampMask = true,
+    order = 0,
+  } = defineProps<{
+    /** Raise the mask to a power before applying — values > 1 increase contrast */
+    power?: number
+    /** Clamp the mask to [0, 1] before multiplying */
+    clampMask?: boolean
+    order?: number
+  }>()
 
-  const powerNode = uniform(props.power)
+  const powerNode = uniform(power)
   watch(
-    () => props.power,
+    () => power,
     (v) => {
       powerNode.value = v
     }
@@ -33,7 +30,7 @@
 
   useShaderStage((prev) => {
     let mask = prev.x.pow(powerNode)
-    if (props.clampMask) mask = clamp(mask, float(0), float(1))
+    if (clampMask) mask = clamp(mask, float(0), float(1))
     return vec4(prev.xyz.mul(mask), prev.w)
-  }, props.order)
+  }, order)
 </script>

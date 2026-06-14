@@ -1,11 +1,4 @@
-<!-- eslint-disable no-restricted-imports -->
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck - TSL types
   import type { Component } from 'vue'
   import { tweenUniform } from '#layers/shader/app/utils/tsl/tween'
   import { DoubleSide } from 'three'
@@ -52,6 +45,10 @@
   const currentPreset = shallowRef<Component | null>(props.preset)
   const nextPreset = shallowRef<Component | null>(null)
 
+  function setCurrentPreset(preset: Component | null) {
+    currentPreset.value = preset
+  }
+
   // Material created once, updated via colorNode
   const material = new MeshBasicNodeMaterial()
   material.side = DoubleSide
@@ -87,8 +84,9 @@
       if (!newPreset || newPreset === oldPreset) return
 
       if (!currentPreset.value) {
-        // First preset — no transition
-        currentPreset.value = newPreset
+        // First preset — no transition (setter call sidesteps the null-narrowing
+        // TS applies to `currentPreset.value` inside this branch)
+        setCurrentPreset(newPreset)
         return
       }
 

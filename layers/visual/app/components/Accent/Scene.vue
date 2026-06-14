@@ -1,30 +1,25 @@
-<!-- eslint-disable vue/require-default-prop -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import type { AccentSceneConfig, BlobConfig } from '../../types/accent'
 
-  const props = withDefaults(
-    defineProps<{
-      preset?: string
-      blobs?: BlobConfig[]
-      tag?: string
-    }>(),
-    {
-      tag: 'div',
-    }
-  )
+  const {
+    preset,
+    blobs,
+    tag = 'div',
+  } = defineProps<{
+    preset?: string
+    blobs?: BlobConfig[]
+    tag?: string
+  }>()
 
   const appConfig = useAppConfig()
 
   const resolvedBlobs = computed((): BlobConfig[] => {
-    if (props.blobs) return props.blobs
-    if (props.preset) {
+    if (blobs) return blobs
+    if (preset) {
       const scenes = (appConfig.uiLayer as Record<string, unknown> | undefined)?.accentScenes as
         | Record<string, AccentSceneConfig>
         | undefined
-      return scenes?.[props.preset]?.blobs ?? []
+      return scenes?.[preset]?.blobs ?? []
     }
     return []
   })

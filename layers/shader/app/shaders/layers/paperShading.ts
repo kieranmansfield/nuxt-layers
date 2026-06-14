@@ -1,7 +1,3 @@
-/* eslint-disable complexity */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Paper Shading Shader Layer
  * Inspired by Paper Shaders - organic, hand-drawn aesthetic
@@ -11,7 +7,7 @@ import { abs, float, mix, smoothstep, time as tslTime, uniform, uv, vec3 } from 
 
 import { grain as grainFn, paperTexture } from '../common/grain'
 import { fbm2D, simplexNoise2D } from '../common/noise'
-import type { TSLNode } from '../types'
+import type { FloatUniform, TSLNode } from '../types'
 
 export type PaperShadingOptions = {
   /** Base paper color */
@@ -35,15 +31,15 @@ export type PaperShadingOptions = {
 }
 
 export type PaperShadingUniforms = {
-  paperColor: ReturnType<typeof uniform>
-  inkColor: ReturnType<typeof uniform>
-  inkColor2: ReturnType<typeof uniform>
-  speed: ReturnType<typeof uniform>
-  textureIntensity: ReturnType<typeof uniform>
-  flowIntensity: ReturnType<typeof uniform>
-  grainIntensity: ReturnType<typeof uniform>
-  bleed: ReturnType<typeof uniform>
-  edgeDarkness: ReturnType<typeof uniform>
+  paperColor: TSLNode
+  inkColor: TSLNode
+  inkColor2: TSLNode
+  speed: FloatUniform
+  textureIntensity: FloatUniform
+  flowIntensity: FloatUniform
+  grainIntensity: FloatUniform
+  bleed: FloatUniform
+  edgeDarkness: FloatUniform
 }
 
 /**
@@ -85,13 +81,13 @@ export function paperShading(uniforms: PaperShadingUniforms, uvNode?: TSLNode): 
   const time = tslTime.mul(uniforms.speed)
 
   // Paper texture base
-  const paper = vec3(uniforms.paperColor as unknown as TSLNode)
-  const ink1 = vec3(uniforms.inkColor as unknown as TSLNode)
-  const ink2 = vec3(uniforms.inkColor2 as unknown as TSLNode)
+  const paper = vec3(uniforms.paperColor)
+  const ink1 = vec3(uniforms.inkColor)
+  const ink2 = vec3(uniforms.inkColor2)
 
   // Paper fiber texture
   const fiberNoise = paperTexture(uvCoord, 20, uniforms.textureIntensity, time)
-  let color = paper.add(fiberNoise)
+  let color: TSLNode = paper.add(fiberNoise)
 
   // Ink flow simulation
   const flowNoise1 = fbm2D(uvCoord.mul(3).add(time.mul(0.5)), { octaves: 4 })
@@ -118,7 +114,7 @@ export function paperShading(uniforms: PaperShadingUniforms, uvNode?: TSLNode): 
   color = mix(color, ink2, inkShape2.mul(0.5))
 
   // Edge darkening (vignette-like)
-  const edgeDist = abs(uvCoord.sub(0.5)).mul(2)
+  const edgeDist: TSLNode = abs(uvCoord.sub(0.5)).mul(2)
   const edgeFactor = smoothstep(0.5, 1.2, edgeDist.x.add(edgeDist.y))
   color = color.mul(float(1).sub(edgeFactor.mul(uniforms.edgeDarkness)))
 

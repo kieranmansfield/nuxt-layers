@@ -1,7 +1,4 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { clamp, float, vec2 } from 'three/tsl'
 
   /**

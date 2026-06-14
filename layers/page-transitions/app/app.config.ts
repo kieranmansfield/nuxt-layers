@@ -6,7 +6,7 @@ export default defineAppConfig({
 })
 
 declare module '@nuxt/schema' {
-  type AppConfigInput = {
+  interface AppConfigInput {
     pageTransitions?: {
       default?: string
       duration?: number

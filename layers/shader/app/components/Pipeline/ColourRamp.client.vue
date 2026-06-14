@@ -1,8 +1,4 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { float, mix, smoothstep, uniform, vec4 } from 'three/tsl'
 
@@ -12,66 +8,63 @@
    * Maps input luminance to a three-stop colour ramp: shadow → midtone → highlight.
    * For a simple two-stop ramp use DuoTone instead.
    */
-  const props = withDefaults(
-    defineProps<{
-      shadowColor?: string
-      midtoneColor?: string
-      highlightColor?: string
-      /** Luminance threshold between shadow and midtone */
-      shadowPoint?: number
-      /** Luminance threshold between midtone and highlight */
-      highlightPoint?: number
-      order?: number
-    }>(),
-    {
-      shadowColor: '#000033',
-      midtoneColor: '#660066',
-      highlightColor: '#ffcc88',
-      shadowPoint: 0.33,
-      highlightPoint: 0.67,
-      order: 0,
-    }
-  )
+  const {
+    shadowColor = '#000033',
+    midtoneColor = '#660066',
+    highlightColor = '#ffcc88',
+    shadowPoint = 0.33,
+    highlightPoint = 0.67,
+    order = 0,
+  } = defineProps<{
+    shadowColor?: string
+    midtoneColor?: string
+    highlightColor?: string
+    /** Luminance threshold between shadow and midtone */
+    shadowPoint?: number
+    /** Luminance threshold between midtone and highlight */
+    highlightPoint?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const shadowNode = toVec3Node(props.shadowColor)
-  const midNode = toVec3Node(props.midtoneColor)
-  const highlightNode = toVec3Node(props.highlightColor)
-  const shadowPtNode = uniform(props.shadowPoint)
-  const highlightPtNode = uniform(props.highlightPoint)
+  const shadowNode = toVec3Node(shadowColor)
+  const midNode = toVec3Node(midtoneColor)
+  const highlightNode = toVec3Node(highlightColor)
+  const shadowPtNode = uniform(shadowPoint)
+  const highlightPtNode = uniform(highlightPoint)
   watch(
-    () => props.shadowColor,
+    () => shadowColor,
     (v) => {
       const c = new Color(v)
       shadowNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.midtoneColor,
+    () => midtoneColor,
     (v) => {
       const c = new Color(v)
       midNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.highlightColor,
+    () => highlightColor,
     (v) => {
       const c = new Color(v)
       highlightNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.shadowPoint,
+    () => shadowPoint,
     (v) => {
       shadowPtNode.value = v
     }
   )
   watch(
-    () => props.highlightPoint,
+    () => highlightPoint,
     (v) => {
       highlightPtNode.value = v
     }
@@ -83,5 +76,5 @@
     const t2 = smoothstep(shadowPtNode, highlightPtNode, lum)
     const colour = mix(mix(shadowNode, midNode, t1), mix(midNode, highlightNode, t2), t2)
     return vec4(colour, prev.w)
-  }, props.order)
+  }, order)
 </script>

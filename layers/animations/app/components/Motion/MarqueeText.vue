@@ -119,8 +119,8 @@
 <template>
   <section
     class="w-full overflow-x-hidden"
-    @mouseenter="isPaused = pauseOnHover"
-    @mouseleave="isPaused = false"
+    @mouseenter="() => (isPaused = pauseOnHover)"
+    @mouseleave="() => (isPaused = false)"
   >
     <div
       v-for="(text, index) in texts"

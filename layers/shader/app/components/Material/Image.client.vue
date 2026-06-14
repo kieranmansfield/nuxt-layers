@@ -1,8 +1,4 @@
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable no-console -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { DoubleSide, type Texture } from 'three'
   import {
     float,
@@ -22,117 +18,115 @@
   import type { TSLNode } from '../../types'
   import { simplexNoise2D } from '../../utils/tsl/noise'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Image source URL or path */
-      src: string
-      /** Distortion effect strength (0 = none) */
-      distortion?: number
-      /** Distortion speed */
-      distortionSpeed?: number
-      /** Enable mouse-reactive ripple effect */
-      mouseRipple?: boolean
-      /** Ripple strength */
-      rippleStrength?: number
-      /** Zoom level (1 = normal) */
-      zoom?: number
-      /** Grayscale amount (0-1) */
-      grayscale?: number
-      /** RGB shift/chromatic aberration amount */
-      rgbShift?: number
-      /** Enable vignette effect */
-      vignette?: boolean
-      /** Vignette intensity */
-      vignetteIntensity?: number
-      /** Transparent background */
-      transparent?: boolean
-      /** Mouse X position (0-1) for external control */
-      mouseX?: number
-      /** Mouse Y position (0-1) for external control */
-      mouseY?: number
-    }>(),
-    {
-      distortion: 0,
-      distortionSpeed: 1,
-      mouseRipple: false,
-      rippleStrength: 0.02,
-      zoom: 1,
-      grayscale: 0,
-      rgbShift: 0,
-      vignette: false,
-      vignetteIntensity: 0.5,
-      transparent: false,
-      mouseX: 0.5,
-      mouseY: 0.5,
-    }
-  )
+  const {
+    src,
+    distortion = 0,
+    distortionSpeed = 1,
+    mouseRipple = false,
+    rippleStrength = 0.02,
+    zoom = 1,
+    grayscale = 0,
+    rgbShift = 0,
+    vignette = false,
+    vignetteIntensity = 0.5,
+    transparent = false,
+    mouseX = 0.5,
+    mouseY = 0.5,
+  } = defineProps<{
+    /** Image source URL or path */
+    src: string
+    /** Distortion effect strength (0 = none) */
+    distortion?: number
+    /** Distortion speed */
+    distortionSpeed?: number
+    /** Enable mouse-reactive ripple effect */
+    mouseRipple?: boolean
+    /** Ripple strength */
+    rippleStrength?: number
+    /** Zoom level (1 = normal) */
+    zoom?: number
+    /** Grayscale amount (0-1) */
+    grayscale?: number
+    /** RGB shift/chromatic aberration amount */
+    rgbShift?: number
+    /** Enable vignette effect */
+    vignette?: boolean
+    /** Vignette intensity */
+    vignetteIntensity?: number
+    /** Transparent background */
+    transparent?: boolean
+    /** Mouse X position (0-1) for external control */
+    mouseX?: number
+    /** Mouse Y position (0-1) for external control */
+    mouseY?: number
+  }>()
 
   const loadedTexture = ref<Texture | null>(null)
   const isLoading = ref(true)
   const error = ref<Error | null>(null)
 
   // Reactive uniforms
-  const mouseXUniform = uniform(props.mouseX)
-  const mouseYUniform = uniform(props.mouseY)
-  const distortionUniform = uniform(props.distortion)
-  const distortionSpeedUniform = uniform(props.distortionSpeed)
-  const rippleStrengthUniform = uniform(props.rippleStrength)
-  const zoomUniform = uniform(props.zoom)
-  const grayscaleUniform = uniform(props.grayscale)
-  const rgbShiftUniform = uniform(props.rgbShift)
-  const vignetteIntensityUniform = uniform(props.vignetteIntensity)
+  const mouseXUniform = uniform(mouseX)
+  const mouseYUniform = uniform(mouseY)
+  const distortionUniform = uniform(distortion)
+  const distortionSpeedUniform = uniform(distortionSpeed)
+  const rippleStrengthUniform = uniform(rippleStrength)
+  const zoomUniform = uniform(zoom)
+  const grayscaleUniform = uniform(grayscale)
+  const rgbShiftUniform = uniform(rgbShift)
+  const vignetteIntensityUniform = uniform(vignetteIntensity)
 
   // Watch all prop changes for reactivity
   watch(
-    () => props.mouseX,
+    () => mouseX,
     (val) => {
       mouseXUniform.value = val
     }
   )
   watch(
-    () => props.mouseY,
+    () => mouseY,
     (val) => {
       mouseYUniform.value = val
     }
   )
   watch(
-    () => props.distortion,
+    () => distortion,
     (val) => {
       distortionUniform.value = val
     }
   )
   watch(
-    () => props.distortionSpeed,
+    () => distortionSpeed,
     (val) => {
       distortionSpeedUniform.value = val
     }
   )
   watch(
-    () => props.rippleStrength,
+    () => rippleStrength,
     (val) => {
       rippleStrengthUniform.value = val
     }
   )
   watch(
-    () => props.zoom,
+    () => zoom,
     (val) => {
       zoomUniform.value = val
     }
   )
   watch(
-    () => props.grayscale,
+    () => grayscale,
     (val) => {
       grayscaleUniform.value = val
     }
   )
   watch(
-    () => props.rgbShift,
+    () => rgbShift,
     (val) => {
       rgbShiftUniform.value = val
     }
   )
   watch(
-    () => props.vignetteIntensity,
+    () => vignetteIntensity,
     (val) => {
       vignetteIntensityUniform.value = val
     }
@@ -140,7 +134,7 @@
 
   // Load texture
   watch(
-    () => props.src,
+    () => src,
     async (src) => {
       if (!src) return
 
@@ -180,10 +174,10 @@
     const distortedUV = uvCoord.add(noiseVal.mul(distortionUniform).mul(0.1))
     // Use step to conditionally apply distortion
     const hasDistortion = distortionUniform.greaterThan(0.001)
-    uvCoord = mix(uvCoord, distortedUV, hasDistortion) as TSLNode
+    uvCoord = hasDistortion.select(distortedUV, uvCoord)
 
     // Apply mouse ripple effect
-    if (props.mouseRipple) {
+    if (mouseRipple) {
       const mousePos = vec2(mouseXUniform, mouseYUniform)
       const diff = uvCoord.sub(mousePos)
       const dist = diff.length()
@@ -209,7 +203,7 @@
     colorNode = vec4(blendedRgb.x, blendedRgb.y, blendedRgb.z, colorNode.w)
 
     // Apply vignette
-    if (props.vignette) {
+    if (vignette) {
       const center = vec2(0.5, 0.5)
       const dist = uv().sub(center).length()
       const vignetteAmount = smoothstep(0.2, 0.8, dist).mul(vignetteIntensityUniform)
@@ -217,7 +211,7 @@
     }
 
     mat.colorNode = colorNode
-    mat.transparent = props.transparent
+    mat.transparent = transparent
     mat.side = DoubleSide
 
     return mat

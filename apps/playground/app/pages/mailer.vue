@@ -73,7 +73,6 @@
   ]
 </script>
 
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Mailer Layer Demo"
@@ -85,7 +84,7 @@
         description="Server-side transactional email via Resend — runtime config, a typed hook lifecycle, and the pipeline that powers the Forms layer's contact form."
       >
         <div class="flex flex-wrap gap-4 justify-center">
-          <UButton size="lg" @click="$router.push('#pipeline')">View Pipeline</UButton>
+          <UButton size="lg" @click="() => $router.push('#pipeline')">View Pipeline</UButton>
           <UButton size="lg" variant="outline" to="/forms">
             <UIcon name="i-lucide-file-input" class="mr-2" />
             Forms Layer
@@ -196,9 +195,7 @@
       <DemoPageFooter
         name="Mailer Layer"
         description="Resend transactional email + lifecycle hooks"
-        :links="[
-          { label: 'Forms Layer', to: '/forms', icon: 'i-lucide-file-input' },
-        ]"
+        :links="[{ label: 'Forms Layer', to: '/forms', icon: 'i-lucide-file-input' }]"
       />
     </div>
   </LayoutPage>

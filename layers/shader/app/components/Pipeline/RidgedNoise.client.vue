@@ -1,54 +1,54 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { float, mix, time, uniform, vec4 } from 'three/tsl'
 
   import { ridgedFbm2d } from '../../shaders/common/noise'
 
-  const props = withDefaults(
-    defineProps<{
-      colorA?: string
-      colorB?: string
-      scale?: number
-      speed?: number
-      order?: number
-    }>(),
-    { colorA: '#000000', colorB: '#ffffff', scale: 2, speed: 0.1, order: 0 }
-  )
+  const {
+    colorA = '#000000',
+    colorB = '#ffffff',
+    scale = 2,
+    speed = 0.1,
+    order = 0,
+  } = defineProps<{
+    colorA?: string
+    colorB?: string
+    scale?: number
+    speed?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorANode = toVec3Node(props.colorA)
-  const colorBNode = toVec3Node(props.colorB)
-  const scaleNode = uniform(props.scale)
-  const speedNode = uniform(props.speed)
+  const colorANode = toVec3Node(colorA)
+  const colorBNode = toVec3Node(colorB)
+  const scaleNode = uniform(scale)
+  const speedNode = uniform(speed)
   watch(
-    () => props.colorA,
+    () => colorA,
     (v) => {
       const c = new Color(v)
       colorANode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorB,
+    () => colorB,
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.scale,
+    () => scale,
     (v) => {
       scaleNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -60,5 +60,5 @@
     const uv = pipeline.uvNode.value
     const n = ridgedFbm2d(uv.mul(scaleNode).add(time.mul(speedNode)))
     return vec4(mix(colorANode, colorBNode, n), float(1))
-  }, props.order)
+  }, order)
 </script>

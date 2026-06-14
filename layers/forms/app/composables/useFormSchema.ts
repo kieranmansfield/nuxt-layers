@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { z, type ZodObject, type ZodRawShape, type ZodTypeAny } from 'zod'
 
 import { fieldConfigs, type FieldType } from '../config/fields'

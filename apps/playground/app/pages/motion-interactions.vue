@@ -25,9 +25,6 @@
   const cursorSmoothing = ref(0.15)
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Motion Interactions"
@@ -366,7 +363,10 @@
                   {{ showCursor ? 'Active — move your mouse' : 'Disabled' }}
                 </p>
               </div>
-              <UButton :color="showCursor ? 'error' : 'primary'" @click="showCursor = !showCursor">
+              <UButton
+                :color="showCursor ? 'error' : 'primary'"
+                @click="() => (showCursor = !showCursor)"
+              >
                 <UIcon
                   :name="showCursor ? 'i-lucide-x' : 'i-lucide-mouse-pointer-2'"
                   class="mr-2"
@@ -405,7 +405,7 @@
               <button
                 class="w-12 h-6 rounded-full transition-colors relative"
                 :class="cursorVisible ? 'bg-primary' : 'bg-gray-600'"
-                @click="cursorVisible = !cursorVisible"
+                @click="() => (cursorVisible = !cursorVisible)"
               >
                 <span
                   class="absolute top-1 w-4 h-4 rounded-full bg-white transition-all"

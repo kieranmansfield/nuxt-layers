@@ -1,20 +1,17 @@
-<!-- eslint-disable vue/require-default-prop -->
-<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
   import type { GradientConfig } from '../../types/gradient'
 
-  const props = withDefaults(
-    defineProps<{
-      preset?: string
-      config?: GradientConfig
-      tag?: string
-    }>(),
-    {
-      tag: 'div',
-    }
-  )
+  const {
+    preset,
+    config,
+    tag = 'div',
+  } = defineProps<{
+    preset?: string
+    config?: GradientConfig
+    tag?: string
+  }>()
 
-  const { style } = useGradient(computed(() => props.preset ?? props.config ?? 'brand'))
+  const { style } = useGradient(computed(() => preset ?? config ?? 'brand'))
 </script>
 
 <template>

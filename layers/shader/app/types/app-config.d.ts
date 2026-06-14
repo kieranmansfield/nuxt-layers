@@ -1,5 +1,5 @@
 declare module '@nuxt/schema' {
-  type AppConfigInput = {
+  interface AppConfigInput {
     shaderLayer?: {
       name?: string
     }

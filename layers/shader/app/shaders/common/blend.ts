@@ -1,6 +1,3 @@
-/* eslint-disable max-params */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Color Blending Utilities
  * Provides composable blend mode functions for shader effects
@@ -194,7 +191,8 @@ export function blendLayers(
   let result = base
 
   for (const layer of layers) {
-    const blendFn = layer.blendMode || blendLinear
+    // Default to normal blending — blendWithOpacity already mixes with base by opacity
+    const blendFn = layer.blendMode ?? ((_base: TSLNode, blend: TSLNode) => blend)
     result = blendWithOpacity(result, layer.color, blendFn, layer.opacity)
   }
 

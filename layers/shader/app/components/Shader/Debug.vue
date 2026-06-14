@@ -1,17 +1,7 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  const props = withDefaults(
-    defineProps<{
-      show?: boolean
-    }>(),
-    {
-      show: true,
-    }
-  )
+  const { show = true } = defineProps<{
+    show?: boolean
+  }>()
 
   const config = useAppConfig()
   const shaderConfig = (config.shader || {}) as {
@@ -21,7 +11,7 @@
   const { $shader } = useNuxtApp() as { $shader?: { useWebGPU: boolean } }
 
   const showDebug = computed(() => {
-    if (!props.show) return false
+    if (!show) return false
     return import.meta.dev && shaderConfig.debugPanel !== false
   })
 

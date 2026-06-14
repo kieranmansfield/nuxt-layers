@@ -1,7 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable complexity */
-/* eslint-disable eqeqeq */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { Ref } from 'vue'
 import type LocomotiveScroll from 'locomotive-scroll'
 
@@ -31,7 +27,7 @@ export function useSmoothScroll() {
   )
 
   const isEnabled = computed(() => (appConfig.scroll?.smoothScroll ?? true) !== false)
-  const isReady = computed(() => locomotiveScroll.value != null)
+  const isReady = computed(() => locomotiveScroll.value !== null)
 
   const scrollState = computed(
     () =>
@@ -75,9 +71,9 @@ export function useSmoothScroll() {
         lock: options?.lock ?? false,
         ...(options?.onComplete !== undefined && { onComplete: options.onComplete }),
       })
-    } else {
-      nativeScrollTo(target, options)
+      return
     }
+    nativeScrollTo(target, options)
   }
 
   function scrollToTop(options?: { duration?: number; immediate?: boolean }) {
@@ -107,28 +103,29 @@ export function useSmoothScroll() {
   }
 }
 
-function nativeScrollTo(target: string | number | HTMLElement, options?: ScrollToOptions) {
-  let targetPosition: number
-
-  if (typeof target === 'number') {
-    targetPosition = target
-  } else if (typeof target === 'string') {
-    const element = document.querySelector(target)
-    if (!element) return
-    targetPosition = element.getBoundingClientRect().top + window.scrollY
-  } else {
-    targetPosition = target.getBoundingClientRect().top + window.scrollY
+function resolveScrollTarget(target: string | number | HTMLElement): number | null {
+  if (typeof target === 'number') return target
+  if (typeof target === 'string') {
+    const el = document.querySelector(target)
+    if (!el) return null
+    return el.getBoundingClientRect().top + window.scrollY
   }
+  return target.getBoundingClientRect().top + window.scrollY
+}
 
-  targetPosition += options?.offset ?? 0
+function nativeScrollTo(target: string | number | HTMLElement, options?: ScrollToOptions) {
+  const base = resolveScrollTarget(target)
+  if (base === null) return
+
+  const targetPosition = base + (options?.offset ?? 0)
 
   if (options?.immediate) {
     window.scrollTo(0, targetPosition)
     options?.onComplete?.()
-  } else {
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' })
-    if (options?.onComplete) {
-      setTimeout(options.onComplete, options?.duration ?? 500)
-    }
+    return
+  }
+  window.scrollTo({ top: targetPosition, behavior: 'smooth' })
+  if (options?.onComplete) {
+    setTimeout(options.onComplete, options?.duration ?? 500)
   }
 }

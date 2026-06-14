@@ -1,8 +1,4 @@
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck - TSL types are complex
   import { Color, DoubleSide } from 'three'
   import {
     add,
@@ -21,80 +17,78 @@
 
   import { fbm2D, ridgedFbm2d, warpedFbmCoords } from '../../shaders/common/noise'
   import { cosinePalette } from '../../shaders/common/palette'
+  import type { TSLNode } from '../../shaders/types'
 
-  const props = withDefaults(
-    defineProps<{
-      speed?: number
-      intensity?: number
-      color1?: string
-      color2?: string
-      color3?: string
-      color4?: string
-      mouseX?: number
-      mouseY?: number
-      mouseInteraction?: boolean
-      mouseStrength?: number
-    }>(),
-    {
-      speed: 1.0,
-      intensity: 1.0,
-      color1: '#134e5e',
-      color2: '#71b280',
-      color3: '#e8d5b7',
-      color4: '#fc5c7d',
-      mouseX: 0.5,
-      mouseY: 0.5,
-      mouseInteraction: true,
-      mouseStrength: 0.5,
-    }
-  )
+  const {
+    speed = 1.0,
+    intensity = 1.0,
+    color1 = '#134e5e',
+    color2 = '#71b280',
+    color3 = '#e8d5b7',
+    color4 = '#fc5c7d',
+    mouseX = 0.5,
+    mouseY = 0.5,
+    mouseInteraction = true,
+    mouseStrength = 0.5,
+  } = defineProps<{
+    speed?: number
+    intensity?: number
+    color1?: string
+    color2?: string
+    color3?: string
+    color4?: string
+    mouseX?: number
+    mouseY?: number
+    mouseInteraction?: boolean
+    mouseStrength?: number
+  }>()
 
   // Create reactive uniforms
-  const speedUniform = uniform(props.speed)
-  const intensityUniform = uniform(props.intensity)
-  const mouseXUniform = uniform(props.mouseX)
-  const mouseYUniform = uniform(props.mouseY)
-  const mouseStrengthUniform = uniform(props.mouseStrength)
-  const color1Uniform = uniform(new Color(props.color1))
-  const color2Uniform = uniform(new Color(props.color2))
-  const color3Uniform = uniform(new Color(props.color3))
-  const color4Uniform = uniform(new Color(props.color4))
+  const speedUniform = uniform(speed)
+  const intensityUniform = uniform(intensity)
+  const mouseXUniform = uniform(mouseX)
+  const mouseYUniform = uniform(mouseY)
+  const mouseStrengthUniform = uniform(mouseStrength)
+  const color1Uniform: TSLNode = uniform(new Color(color1))
+  const color2Uniform: TSLNode = uniform(new Color(color2))
+  const color3Uniform: TSLNode = uniform(new Color(color3))
+  const color4Uniform: TSLNode = uniform(new Color(color4))
 
   // Watch prop changes
   watch(
-    () => props.speed,
+    () => speed,
     (val) => (speedUniform.value = val)
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (val) => (intensityUniform.value = val)
   )
   watch(
-    () => props.mouseX,
+    () => mouseX,
     (val) => (mouseXUniform.value = val)
   )
   watch(
-    () => props.mouseY,
+    () => mouseY,
     (val) => (mouseYUniform.value = val)
   )
   watch(
-    () => props.mouseStrength,
+    () => mouseStrength,
     (val) => (mouseStrengthUniform.value = val)
   )
   watch(
-    () => props.color1,
+    () => color1,
     (val) => (color1Uniform.value = new Color(val))
   )
   watch(
-    () => props.color2,
+    () => color2,
     (val) => (color2Uniform.value = new Color(val))
   )
   watch(
-    () => props.color3,
+    () => color3,
     (val) => (color3Uniform.value = new Color(val))
   )
   watch(
-    () => props.color4,
+    () => color4,
     (val) => (color4Uniform.value = new Color(val))
   )
 
@@ -110,19 +104,16 @@
     // Mouse offset
     const mouseOffset = vec2(
       sub(mouseXUniform, 0.5)
-        .mul(props.mouseInteraction ? mouseStrengthUniform : 0)
+        .mul(mouseInteraction ? mouseStrengthUniform : 0)
         .mul(0.5),
       sub(mouseYUniform, 0.5)
-        .mul(props.mouseInteraction ? mouseStrengthUniform : 0)
+        .mul(mouseInteraction ? mouseStrengthUniform : 0)
         .mul(0.5)
     )
 
     // Domain warping - create flowing organic patterns
-    const warpedUV = warpedFbmCoords(uvCoord, time, {
-      warpStrength: 0.4,
-      warpScale: 2.0,
-      octaves: 3,
-    })
+    // warpedFbmCoords has no warp-strength options — defaults match the previous render output
+    const warpedUV = warpedFbmCoords(uvCoord, time)
 
     // Add mouse influence to warped coordinates
     const finalUV = add(warpedUV, mouseOffset)

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 /**
  * PWA composable for managing Progressive Web App functionality
  *

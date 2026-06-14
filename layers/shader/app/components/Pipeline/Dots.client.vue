@@ -1,70 +1,63 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { float, mix, uniform, vec4 } from 'three/tsl'
 
   import { dots } from '../../shaders/common/shapes'
 
-  const props = withDefaults(
-    defineProps<{
-      colorA?: string
-      colorB?: string
-      cellSize?: number
-      dotRadius?: number
-      softness?: number
-      order?: number
-    }>(),
-    {
-      colorA: '#000000',
-      colorB: '#ffffff',
-      cellSize: 0.08,
-      dotRadius: 0.025,
-      softness: 0.005,
-      order: 0,
-    }
-  )
+  const {
+    colorA = '#000000',
+    colorB = '#ffffff',
+    cellSize = 0.08,
+    dotRadius = 0.025,
+    softness = 0.005,
+    order = 0,
+  } = defineProps<{
+    colorA?: string
+    colorB?: string
+    cellSize?: number
+    dotRadius?: number
+    softness?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorANode = toVec3Node(props.colorA)
-  const colorBNode = toVec3Node(props.colorB)
-  const cellNode = uniform(props.cellSize)
-  const dotNode = uniform(props.dotRadius)
-  const softNode = uniform(props.softness)
+  const colorANode = toVec3Node(colorA)
+  const colorBNode = toVec3Node(colorB)
+  const cellNode = uniform(cellSize)
+  const dotNode = uniform(dotRadius)
+  const softNode = uniform(softness)
   watch(
-    () => props.colorA,
+    () => colorA,
     (v) => {
       const c = new Color(v)
       colorANode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorB,
+    () => colorB,
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.cellSize,
+    () => cellSize,
     (v) => {
       cellNode.value = v
     }
   )
   watch(
-    () => props.dotRadius,
+    () => dotRadius,
     (v) => {
       dotNode.value = v
     }
   )
   watch(
-    () => props.softness,
+    () => softness,
     (v) => {
       softNode.value = v
     }
@@ -76,5 +69,5 @@
     const uv = pipeline.uvNode.value
     const mask = dots(uv, cellNode, dotNode, softNode)
     return vec4(mix(colorANode, colorBNode, mask), float(1))
-  }, props.order)
+  }, order)
 </script>

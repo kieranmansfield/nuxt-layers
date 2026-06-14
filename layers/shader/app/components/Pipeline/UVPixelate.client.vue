@@ -1,22 +1,15 @@
-<!-- eslint-disable vue/no-unused-properties -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { uniform } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Number of pixel columns/rows — lower = chunkier pixels */
-      gridSize?: number
-      order?: number
-    }>(),
-    { gridSize: 64, order: 0 }
-  )
+  const { gridSize = 64, order = 0 } = defineProps<{
+    /** Number of pixel columns/rows — lower = chunkier pixels */
+    gridSize?: number
+    order?: number
+  }>()
 
-  const gridSizeNode = uniform(props.gridSize)
+  const gridSizeNode = uniform(gridSize)
   watch(
-    () => props.gridSize,
+    () => gridSize,
     (v) => {
       gridSizeNode.value = v
     }

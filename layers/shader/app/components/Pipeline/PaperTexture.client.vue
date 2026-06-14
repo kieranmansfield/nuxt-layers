@@ -1,9 +1,5 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
-  import { float, floor, time, uniform, vec4 } from 'three/tsl'
+  import { floor, time, uniform, vec4 } from 'three/tsl'
 
   import { paperTexture } from '../../shaders/common/grain'
 
@@ -11,36 +7,38 @@
    * Paper texture overlay — multi-octave grain that reads like coarse paper or canvas.
    * Adds tactile analogue feel to any underlying image.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Texture scale — higher = finer grain pattern */
-      scale?: number
-      /** Overlay intensity */
-      intensity?: number
-      /** Animate slowly for a living-paper effect (0 = static) */
-      speed?: number
-      order?: number
-    }>(),
-    { scale: 12, intensity: 0.08, speed: 0, order: 0 }
-  )
+  const {
+    scale = 12,
+    intensity = 0.08,
+    speed = 0,
+    order = 0,
+  } = defineProps<{
+    /** Texture scale — higher = finer grain pattern */
+    scale?: number
+    /** Overlay intensity */
+    intensity?: number
+    /** Animate slowly for a living-paper effect (0 = static) */
+    speed?: number
+    order?: number
+  }>()
 
-  const scaleNode = uniform(props.scale)
-  const intensityNode = uniform(props.intensity)
-  const speedNode = uniform(props.speed)
+  const scaleNode = uniform(scale)
+  const intensityNode = uniform(intensity)
+  const speedNode = uniform(speed)
   watch(
-    () => props.scale,
+    () => scale,
     (v) => {
       scaleNode.value = v
     }
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       intensityNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -54,5 +52,5 @@
 
     const tex = paperTexture(uv, scaleNode, intensityNode, seed)
     return vec4(prev.xyz.add(tex), prev.w)
-  }, props.order)
+  }, order)
 </script>

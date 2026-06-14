@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { Component } from 'vue'
 
 export type ModalController<P extends Record<string, unknown>> = {

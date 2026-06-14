@@ -1,53 +1,53 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
-  import { clamp, float, fract, mix, sin, time, uniform, vec2, vec4 } from 'three/tsl'
+  import { clamp, float, mix, time, uniform, vec2, vec4 } from 'three/tsl'
 
   import { blendOverlay, blendScreen, blendSoftLight } from '../../shaders/common/blend'
 
   type GrainBlendMode = 'add' | 'sub' | 'screen' | 'overlay' | 'soft-light'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Grain intensity — amplitude of the noise effect */
-      intensity?: number
-      /** Blend opacity — how strongly grain mixes into the output */
-      opacity?: number
-      /** UV scale — higher = finer dots, lower = coarser */
-      size?: number
-      fps?: number
-      blendMode?: GrainBlendMode
-      order?: number
-    }>(),
-    { intensity: 0.06, opacity: 1.0, size: 1.0, fps: 24, blendMode: 'sub', order: 0 }
-  )
+  const {
+    intensity = 0.06,
+    opacity = 1.0,
+    size = 1.0,
+    fps = 24,
+    blendMode = 'sub',
+    order = 0,
+  } = defineProps<{
+    /** Grain intensity — amplitude of the noise effect */
+    intensity?: number
+    /** Blend opacity — how strongly grain mixes into the output */
+    opacity?: number
+    /** UV scale — higher = finer dots, lower = coarser */
+    size?: number
+    fps?: number
+    blendMode?: GrainBlendMode
+    order?: number
+  }>()
 
-  const intensityNode = uniform(props.intensity)
-  const opacityNode = uniform(props.opacity)
-  const sizeNode = uniform(props.size)
-  const fpsNode = uniform(props.fps)
+  const intensityNode = uniform(intensity)
+  const opacityNode = uniform(opacity)
+  const sizeNode = uniform(size)
+  const fpsNode = uniform(fps)
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       intensityNode.value = v
     }
   )
   watch(
-    () => props.opacity,
+    () => opacity,
     (v) => {
       opacityNode.value = v
     }
   )
   watch(
-    () => props.size,
+    () => size,
     (v) => {
       sizeNode.value = v
     }
   )
   watch(
-    () => props.fps,
+    () => fps,
     (v) => {
       fpsNode.value = v
     }
@@ -70,7 +70,7 @@
 
     const mixFactor = intensityNode.mul(opacityNode)
     let blended
-    switch (props.blendMode) {
+    switch (blendMode) {
       case 'add':
         blended = prev.xyz.add(raw.sub(0.5).mul(intensityNode).mul(opacityNode))
         break
@@ -87,5 +87,5 @@
         blended = prev.xyz.sub(raw.mul(intensityNode).mul(opacityNode))
     }
     return vec4(clamp(blended, 0, 1), prev.w)
-  }, props.order)
+  }, order)
 </script>

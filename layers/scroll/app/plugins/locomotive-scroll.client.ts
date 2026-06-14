@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import LocomotiveScroll from 'locomotive-scroll'
 
@@ -10,7 +9,9 @@ export type ScrollState = {
   progress: number
 }
 
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin({
+  name: 'scroll:locomotive-scroll',
+  setup() {
   const scrollState = reactive<ScrollState>({
     scroll: 0,
     limit: 0,
@@ -53,6 +54,7 @@ export default defineNuxtPlugin(() => {
 
   if (smoothScroll === true) {
     nuxtApp.hook('app:mounted', () => nextTick(init))
+    nuxtApp.hook('page:finish', () => nextTick(() => ScrollTrigger.refresh()))
   } else if (Array.isArray(smoothScroll)) {
     addRouteMiddleware((to, from) => {
       if (smoothScroll.includes(to.path)) {
@@ -72,4 +74,5 @@ export default defineNuxtPlugin(() => {
       scrollState,
     },
   }
+  },
 })

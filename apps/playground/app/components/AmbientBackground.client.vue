@@ -1,6 +1,3 @@
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable vue/max-lines-per-block -->
 <script setup lang="ts">
   import { TresCanvas } from '@tresjs/core'
   import { Clock, Color, DoubleSide, ShaderMaterial, Vector2 } from 'three'
@@ -15,32 +12,29 @@
     | 'organicFlow'
     | 'etherealMist'
 
-  const props = withDefaults(
-    defineProps<{
-      preset?: PresetType
-      speed?: number
-      intensity?: number
-      color1?: string
-      color2?: string
-      color3?: string
-      color4?: string
-      mouseInteraction?: boolean
-      mouseX?: number
-      mouseY?: number
-    }>(),
-    {
-      preset: 'aurora',
-      speed: 1.0,
-      intensity: 1.0,
-      color1: '',
-      color2: '',
-      color3: '',
-      color4: '',
-      mouseInteraction: true,
-      mouseX: 0.5,
-      mouseY: 0.5,
-    }
-  )
+  const {
+    preset = 'aurora',
+    speed = 1.0,
+    intensity = 1.0,
+    color1 = '',
+    color2 = '',
+    color3 = '',
+    color4 = '',
+    mouseInteraction = true,
+    mouseX = 0.5,
+    mouseY = 0.5,
+  } = defineProps<{
+    preset?: PresetType
+    speed?: number
+    intensity?: number
+    color1?: string
+    color2?: string
+    color3?: string
+    color4?: string
+    mouseInteraction?: boolean
+    mouseX?: number
+    mouseY?: number
+  }>()
 
   // Shared vertex shader
   const vertexShader = `
@@ -735,21 +729,21 @@ void main() {
 
   // Create material based on preset
   const material = computed(() => {
-    const colors = presetColors[props.preset]
+    const colors = presetColors[preset]
 
     return new ShaderMaterial({
       vertexShader,
-      fragmentShader: fragmentShaders[props.preset],
+      fragmentShader: fragmentShaders[preset],
       uniforms: {
         uTime: { value: 0 },
-        uSpeed: { value: props.speed },
-        uIntensity: { value: props.intensity },
-        uColor1: { value: new Color(props.color1 || colors.c1) },
-        uColor2: { value: new Color(props.color2 || colors.c2) },
-        uColor3: { value: new Color(props.color3 || colors.c3) },
-        uColor4: { value: new Color(props.color4 || colors.c4) },
+        uSpeed: { value: speed },
+        uIntensity: { value: intensity },
+        uColor1: { value: new Color(color1 || colors.c1) },
+        uColor2: { value: new Color(color2 || colors.c2) },
+        uColor3: { value: new Color(color3 || colors.c3) },
+        uColor4: { value: new Color(color4 || colors.c4) },
         uMouse: { value: new Vector2(0.5, 0.5) },
-        uMouseStrength: { value: props.mouseInteraction ? 0.5 : 0 },
+        uMouseStrength: { value: mouseInteraction ? 0.5 : 0 },
       },
       side: DoubleSide,
     })
@@ -769,10 +763,10 @@ void main() {
       uniforms?.uMouseStrength
     ) {
       uniforms.uTime.value = clock.getElapsedTime()
-      uniforms.uSpeed.value = props.speed
-      uniforms.uIntensity.value = props.intensity
-      uniforms.uMouse.value.set(props.mouseX, props.mouseY)
-      uniforms.uMouseStrength.value = props.mouseInteraction ? 0.5 : 0
+      uniforms.uSpeed.value = speed
+      uniforms.uIntensity.value = intensity
+      uniforms.uMouse.value.set(mouseX, mouseY)
+      uniforms.uMouseStrength.value = mouseInteraction ? 0.5 : 0
     }
     animationId = requestAnimationFrame(animate)
   }

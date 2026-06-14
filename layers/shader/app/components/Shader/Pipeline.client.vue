@@ -1,10 +1,4 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck - TSL types are complex
   import { DoubleSide } from 'three'
   import { float, Fn, positionLocal, uv, vec3, vec4 } from 'three/tsl'
   import { MeshBasicNodeMaterial } from 'three/webgpu'

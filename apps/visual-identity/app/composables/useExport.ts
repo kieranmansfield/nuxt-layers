@@ -81,7 +81,7 @@ function colourBlock(
   return lines
 }
 
-function fontBlock(state: { typography: { role: string; family: string }[] }): string[] {
+function fontBlock(state: { typography: Array<{ role: string; family: string }> }): string[] {
   return state.typography.map((f) => `  --font-${f.role}: '${f.family}', sans-serif;`)
 }
 

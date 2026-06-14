@@ -1,64 +1,60 @@
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { float, mix, step, uniform, vec4 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      colorA?: string
-      colorB?: string
-      /** Optional third stop (defaults to colorB when omitted → 2-stop gradient) */
-      colorC?: string
-      /** Optional fourth stop (defaults to colorC when omitted → 3-stop gradient) */
-      colorD?: string
-      axis?: 'x' | 'y'
-      order?: number
-    }>(),
-    {
-      colorA: '#000000',
-      colorB: '#ffffff',
-      colorC: undefined,
-      colorD: undefined,
-      axis: 'y',
-      order: 0,
-    }
-  )
+  const {
+    colorA = '#000000',
+    colorB = '#ffffff',
+    colorC,
+    colorD,
+    axis = 'y',
+    order = 0,
+  } = defineProps<{
+    colorA?: string
+    colorB?: string
+    /** Optional third stop (defaults to colorB when omitted → 2-stop gradient) */
+    colorC?: string
+    /** Optional fourth stop (defaults to colorC when omitted → 3-stop gradient) */
+    colorD?: string
+    axis?: 'x' | 'y'
+    order?: number
+  }>()
 
   function toVec3U(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const cA = toVec3U(props.colorA)
-  const cB = toVec3U(props.colorB)
-  const cC = toVec3U(props.colorC ?? props.colorB)
-  const cD = toVec3U(props.colorD ?? props.colorC ?? props.colorB)
+  const cA = toVec3U(colorA)
+  const cB = toVec3U(colorB)
+  const cC = toVec3U(colorC ?? colorB)
+  const cD = toVec3U(colorD ?? colorC ?? colorB)
 
   watch(
-    () => props.colorA,
+    () => colorA,
     (v) => {
       const c = new Color(v)
       cA.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorB,
+    () => colorB,
     (v) => {
       const c = new Color(v)
       cB.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorC,
+    () => colorC,
     (v) => {
-      const c = new Color(v ?? props.colorB)
+      const c = new Color(v ?? colorB)
       cC.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorD,
+    () => colorD,
     (v) => {
-      const c = new Color(v ?? props.colorC ?? props.colorB)
+      const c = new Color(v ?? colorC ?? colorB)
       cD.value.set(c.r, c.g, c.b)
     }
   )
@@ -66,7 +62,7 @@
   const pipeline = useShaderPipelineContext()
 
   useShaderStage(() => {
-    const t = props.axis === 'x' ? pipeline.uvNode.value.x : pipeline.uvNode.value.y
+    const t = axis === 'x' ? pipeline.uvNode.value.x : pipeline.uvNode.value.y
 
     // Map t [0,1] to 3 equal segments, clamping so t=1 maps to lt=1 not lt=0
     const tN = t.mul(float(3)).min(float(2.9999))
@@ -85,5 +81,5 @@
     // Cascade: start with c01, replace with c12 at seg>=1, replace with c23 at seg>=2
     const col = mix(mix(c01, c12, inSeg1), c23, inSeg2)
     return vec4(col, float(1))
-  }, props.order)
+  }, order)
 </script>

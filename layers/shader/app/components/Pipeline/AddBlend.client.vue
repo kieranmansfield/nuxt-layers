@@ -1,31 +1,30 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color } from 'three'
   import { clamp, uniform, vec4 } from 'three/tsl'
 
   import { blendAdd } from '../../shaders/common/blend'
+  import type { TSLNode } from '../../shaders/types'
 
-  const props = withDefaults(
-    defineProps<{
-      color?: string
-      opacity?: number
-      order?: number
-    }>(),
-    { color: '#808080', opacity: 1, order: 0 }
-  )
+  const {
+    color = '#808080',
+    opacity = 1,
+    order = 0,
+  } = defineProps<{
+    color?: string
+    opacity?: number
+    order?: number
+  }>()
 
-  const colorNode = uniform(new Color(props.color))
-  const opacityNode = uniform(props.opacity)
+  const colorNode: TSLNode = uniform(new Color(color))
+  const opacityNode = uniform(opacity)
   watch(
-    () => props.color,
+    () => color,
     (v) => {
       colorNode.value.set(v)
     }
   )
   watch(
-    () => props.opacity,
+    () => opacity,
     (v) => {
       opacityNode.value = v
     }
@@ -33,6 +32,6 @@
 
   useShaderStage(
     (prev) => clamp(vec4(blendAdd(prev.xyz, colorNode, opacityNode), prev.w), 0, 1),
-    props.order
+    order
   )
 </script>

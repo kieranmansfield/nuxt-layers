@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Complex number arithmetic in TSL
  * Both functions operate on vec2 (x = real, y = imaginary).

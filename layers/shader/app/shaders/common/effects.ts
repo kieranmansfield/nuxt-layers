@@ -1,7 +1,3 @@
-/* eslint-disable complexity */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Post-Processing Effects
  * Provides effects that sample and process textures
@@ -237,18 +233,14 @@ export function waveDistortionEffect(
 
   const _uv = inputUV().toVar()
 
-  let distortedUV: TSLNode
+  const _eX = _uv.y.mul(_freq).add(_time).sin().mul(_amp)
+  const _eY = _uv.x.mul(_freq).add(_time.mul(1.3)).sin().mul(_amp)
+  let distortedUV: TSLNode = vec2(_uv.x.add(_eX), _uv.y.add(_eY))
 
   if (direction === 'x') {
-    const offsetX = _uv.y.mul(_freq).add(_time).sin().mul(_amp)
-    distortedUV = vec2(_uv.x.add(offsetX), _uv.y)
+    distortedUV = vec2(_uv.x.add(_eX), _uv.y)
   } else if (direction === 'y') {
-    const offsetY = _uv.x.mul(_freq).add(_time).sin().mul(_amp)
-    distortedUV = vec2(_uv.x, _uv.y.add(offsetY))
-  } else {
-    const offsetX = _uv.y.mul(_freq).add(_time).sin().mul(_amp)
-    const offsetY = _uv.x.mul(_freq).add(_time.mul(1.3)).sin().mul(_amp)
-    distortedUV = vec2(_uv.x.add(offsetX), _uv.y.add(offsetY))
+    distortedUV = vec2(_uv.x, _uv.y.add(_uv.x.mul(_freq).add(_time).sin().mul(_amp)))
   }
 
   return input.sample(distortedUV)

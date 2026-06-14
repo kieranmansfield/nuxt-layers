@@ -1,55 +1,46 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck - TSL types
   import {
     createAmbientUniforms,
     createThemeBubbleColorNode,
   } from '#layers/shader/app/composables/useAmbientMaterials'
 
-  const props = withDefaults(
-    defineProps<{
-      speed?: number
-      intensity?: number
-      mouseInteraction?: boolean
-      mouseStrength?: number
-      color1?: string
-      color2?: string
-      color3?: string
-      color4?: string
-    }>(),
-    {
-      speed: 1.0,
-      intensity: 1.0,
-      mouseInteraction: true,
-      mouseStrength: 0.3,
-      color1: '#8b5cf6',
-      color2: '#6366f1',
-      color3: '#a78bfa',
-      color4: '#38bdf8',
-    }
-  )
+  const {
+    speed = 1.0,
+    intensity = 1.0,
+    mouseInteraction = true,
+    mouseStrength = 0.3,
+    color1 = '#8b5cf6',
+    color2 = '#6366f1',
+    color3 = '#a78bfa',
+    color4 = '#38bdf8',
+  } = defineProps<{
+    speed?: number
+    intensity?: number
+    mouseInteraction?: boolean
+    mouseStrength?: number
+    color1?: string
+    color2?: string
+    color3?: string
+    color4?: string
+  }>()
 
   const emit = defineEmits<{
     node: [colorNode: any]
   }>()
 
   const uniforms = createAmbientUniforms({
-    speed: props.speed,
-    intensity: props.intensity,
-    mouseInteraction: props.mouseInteraction,
+    speed: speed,
+    intensity: intensity,
+    mouseInteraction: mouseInteraction,
   })
-  if (props.mouseInteraction) {
-    uniforms.mouseStrength.value = props.mouseStrength
+  if (mouseInteraction) {
+    uniforms.mouseStrength.value = mouseStrength
   }
 
-  const c1 = useShaderColor(props.color1)
-  const c2 = useShaderColor(props.color2)
-  const c3 = useShaderColor(props.color3)
-  const c4 = useShaderColor(props.color4)
+  const c1 = useShaderColor(color1)
+  const c2 = useShaderColor(color2)
+  const c3 = useShaderColor(color3)
+  const c4 = useShaderColor(color4)
 
   // color3/color4 accepted for API consistency but Bubble only uses color1+color2
   const colorNode = createThemeBubbleColorNode(uniforms, {
@@ -60,19 +51,19 @@
   })
 
   watch(
-    () => props.color1,
+    () => color1,
     (hex) => c1.tweenTo(hex, 0.8)
   )
   watch(
-    () => props.color2,
+    () => color2,
     (hex) => c2.tweenTo(hex, 0.8)
   )
   watch(
-    () => props.color3,
+    () => color3,
     (hex) => c3.tweenTo(hex, 0.8)
   )
   watch(
-    () => props.color4,
+    () => color4,
     (hex) => c4.tweenTo(hex, 0.8)
   )
 
@@ -91,27 +82,27 @@
   }
 
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       uniforms.speed.value = v
     }
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       uniforms.intensity.value = v
     }
   )
   watch(
-    () => props.mouseInteraction,
+    () => mouseInteraction,
     (v) => {
-      uniforms.mouseStrength.value = v ? props.mouseStrength : 0
+      uniforms.mouseStrength.value = v ? mouseStrength : 0
     }
   )
   watch(
-    () => props.mouseStrength,
+    () => mouseStrength,
     (v) => {
-      if (props.mouseInteraction) uniforms.mouseStrength.value = v
+      if (mouseInteraction) uniforms.mouseStrength.value = v
     }
   )
 

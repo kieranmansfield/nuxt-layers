@@ -60,7 +60,12 @@
         <template #header>
           <div class="flex items-center justify-between">
             <p class="text-sm font-medium text-default">Font sizes</p>
-            <UButton icon="i-lucide-plus" size="xs" variant="ghost" @click="addSize('sizeScale')" />
+            <UButton
+              icon="i-lucide-plus"
+              size="xs"
+              variant="ghost"
+              @click="() => addSize('sizeScale')"
+            />
           </div>
         </template>
         <div class="flex flex-col gap-2">
@@ -85,7 +90,7 @@
               type="number"
               size="sm"
               class="w-20"
-              @update:model-value="updateSize('sizeScale', i, Number($event))"
+              @update:model-value="($event) => updateSize('sizeScale', i, Number($event))"
             />
             <span class="text-xs text-muted">px</span>
             <UButton
@@ -94,7 +99,7 @@
               variant="ghost"
               color="neutral"
               :disabled="currentFont.sizeScale.length <= 1"
-              @click="removeSize('sizeScale', i)"
+              @click="() => removeSize('sizeScale', i)"
             />
           </div>
         </div>
@@ -109,7 +114,7 @@
               icon="i-lucide-plus"
               size="xs"
               variant="ghost"
-              @click="addSize('spacingScale')"
+              @click="() => addSize('spacingScale')"
             />
           </div>
         </template>
@@ -128,7 +133,7 @@
               type="number"
               size="sm"
               class="w-20"
-              @update:model-value="updateSize('spacingScale', i, Number($event))"
+              @update:model-value="($event) => updateSize('spacingScale', i, Number($event))"
             />
             <span class="text-xs text-muted">px</span>
             <UButton
@@ -137,7 +142,7 @@
               variant="ghost"
               color="neutral"
               :disabled="currentFont.spacingScale.length <= 1"
-              @click="removeSize('spacingScale', i)"
+              @click="() => removeSize('spacingScale', i)"
             />
           </div>
         </div>

@@ -58,7 +58,10 @@
         ],
         ease: 'none',
       })
-      cleanups.push(() => tween.kill())
+      cleanups.push(() => {
+        tween.scrollTrigger?.kill()
+        tween.kill()
+      })
     })
   })
 

@@ -1,4 +1,3 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script setup lang="ts">
   definePageMeta({ layout: false })
   const { setPageAccent } = useAccentColor()
@@ -76,9 +75,6 @@ const { progress } = useSmoothScroll()
   }
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Locomotive Scroll Deep Dive"
@@ -406,13 +402,14 @@ const { progress } = useSmoothScroll()
             <button
               v-for="tab in tabs"
               :key="tab.id"
+              type="button"
               class="flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all"
               :class="
                 activeTab === tab.id
                   ? 'bg-primary text-white shadow-lg shadow-primary/25'
                   : 'bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700'
               "
-              @click="() => (activeTab = tab.id)"
+              @click="activeTab = tab.id"
             >
               <UIcon :name="tab.icon" />
               {{ tab.label }}

@@ -1,6 +1,4 @@
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { vec4 } from 'three/tsl'
 
   import { acesTonemap } from '../../shaders/common/tonemapping'

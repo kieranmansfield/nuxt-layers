@@ -1,5 +1,3 @@
-<!-- eslint-disable vue/v-on-handler-style -->
-<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
   const {
     open = false,
@@ -32,7 +30,6 @@
 </script>
 
 <template>
-  <!-- eslint-disable vue/v-on-handler-style -->
   <BaseModal
     :open
     :title

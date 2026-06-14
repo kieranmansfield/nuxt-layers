@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable no-restricted-syntax */
 // plugins/loading.client.ts
 
 type LoadingConfig = {
@@ -25,7 +23,9 @@ type CoreLayerConfig = {
  * Configuration via app.config.ts:
  * - Set `coreLayer.loading.enabled: false` to disable
  */
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin({
+  name: 'core:loading',
+  setup(nuxtApp) {
   const config = useAppConfig()
   const coreLayer = config.coreLayer as CoreLayerConfig | undefined
 
@@ -53,4 +53,5 @@ export default defineNuxtPlugin((nuxtApp) => {
       stopLoading()
     }, 500) // 500ms delay to ensure component is visible
   })
+  },
 })

@@ -1,6 +1,3 @@
-/* eslint-disable max-params */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Shape Utilities
  * Provides composable shape functions for shader effects
@@ -18,6 +15,7 @@ import {
   mix,
   sin,
   smoothstep,
+  step,
   vec2,
 } from 'three/tsl'
 
@@ -110,7 +108,7 @@ export function roundedRect(
   const r = typeof cornerRadius === 'number' ? float(cornerRadius) : cornerRadius
   const s = typeof softness === 'number' ? float(softness) : softness
 
-  const p = abs(uv.sub(c)).sub(sz.div(2)).add(r)
+  const p: TSLNode = abs(uv.sub(c)).sub(sz.div(2)).add(r)
   const d = length(max(p, 0))
     .add(min(max(p.x, p.y), 0))
     .sub(r)
@@ -129,7 +127,7 @@ export function rect(
   const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
   const sz = Array.isArray(size) ? vec2(size[0], size[1]) : size
 
-  const p = abs(uv.sub(c))
+  const p: TSLNode = abs(uv.sub(c))
   const halfSize = sz.div(2)
 
   return step(p.x, halfSize.x).mul(step(p.y, halfSize.y))
@@ -230,7 +228,7 @@ export function grid(
   const size = typeof cellSize === 'number' ? float(cellSize) : cellSize
   const width = typeof lineWidth === 'number' ? float(lineWidth) : lineWidth
 
-  const gridUV = fract(uv.div(size))
+  const gridUV: TSLNode = fract(uv.div(size))
   const halfWidth = width.div(size).div(2)
 
   const xLine = step(gridUV.x, halfWidth).add(step(float(1).sub(halfWidth), gridUV.x))
@@ -245,15 +243,19 @@ export function grid(
 export function dots(
   uv: TSLNode,
   cellSize: TSLNode | number = 0.1,
-  dotRadius: TSLNode | number = 0.03
+  dotRadius: TSLNode | number = 0.03,
+  softness?: TSLNode | number
 ): TSLNode {
   const size = typeof cellSize === 'number' ? float(cellSize) : cellSize
   const radius = typeof dotRadius === 'number' ? float(dotRadius) : dotRadius
 
-  const gridUV = fract(uv.div(size)).sub(0.5)
+  const gridUV: TSLNode = fract(uv.div(size)).sub(0.5)
   const d = length(gridUV.mul(size))
 
-  return step(d, radius)
+  if (softness === undefined) return step(d, radius)
+
+  const soft = typeof softness === 'number' ? float(softness) : softness
+  return float(1).sub(smoothstep(radius.sub(soft), radius.add(soft), d))
 }
 
 /**
@@ -261,7 +263,7 @@ export function dots(
  */
 export function checker(uv: TSLNode, scale: TSLNode | number = 10): TSLNode {
   const s = typeof scale === 'number' ? float(scale) : scale
-  const scaledUV = floor(uv.mul(s))
+  const scaledUV: TSLNode = floor(uv.mul(s))
   return fract(scaledUV.x.add(scaledUV.y).mul(0.5)).mul(2)
 }
 
@@ -277,7 +279,8 @@ export function star(
   center: TSLNode | [number, number] = [0.5, 0.5],
   points: number = 5,
   innerRadius: TSLNode | number = 0.1,
-  outerRadius: TSLNode | number = 0.3
+  outerRadius: TSLNode | number = 0.3,
+  softness?: TSLNode | number
 ): TSLNode {
   const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
   const inner = typeof innerRadius === 'number' ? float(innerRadius) : innerRadius
@@ -297,7 +300,10 @@ export function star(
   const t = foldedAngle.div(halfSegment)
   const targetRadius = mix(outer, inner, t)
 
-  return step(dist, targetRadius)
+  if (softness === undefined) return step(dist, targetRadius)
+
+  const soft = typeof softness === 'number' ? float(softness) : softness
+  return float(1).sub(smoothstep(targetRadius.sub(soft), targetRadius.add(soft), dist))
 }
 
 /**
@@ -333,7 +339,7 @@ export function concentricCircles(
   const freq = typeof frequency === 'number' ? float(frequency) : frequency
   const t = typeof thickness === 'number' ? float(thickness) : thickness
 
-  const d = length(uv.sub(c))
+  const d: TSLNode = length(uv.sub(c))
   return step(fract(d.mul(freq)), t)
 }
 
@@ -349,7 +355,8 @@ export function polygon(
   center: TSLNode | [number, number] = [0.5, 0.5],
   sides: number = 6,
   radius: TSLNode | number = 0.3,
-  rotation: TSLNode | number = 0
+  rotation: TSLNode | number = 0,
+  softness?: TSLNode | number
 ): TSLNode {
   const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
   const r = typeof radius === 'number' ? float(radius) : radius
@@ -365,5 +372,8 @@ export function polygon(
   const foldedAngle = abs(fract(angle.div(segmentAngle).add(0.5)).sub(0.5)).mul(segmentAngle)
   const edgeDist = r.mul(cos(segmentAngle.div(2))).div(cos(foldedAngle))
 
-  return step(dist, edgeDist)
+  if (softness === undefined) return step(dist, edgeDist)
+
+  const soft = typeof softness === 'number' ? float(softness) : softness
+  return float(1).sub(smoothstep(edgeDist.sub(soft), edgeDist.add(soft), dist))
 }

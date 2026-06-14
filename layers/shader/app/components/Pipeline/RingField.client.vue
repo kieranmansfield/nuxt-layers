@@ -1,8 +1,7 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { abs, float, uniform, vec4 } from 'three/tsl'
+
+  import type { TSLNode } from '../../shaders/types'
 
   /**
    * Accumulates ring-shaped SDF fields into a single float mask.
@@ -16,47 +15,51 @@
    * <RingField :order="0" :ring-radius="0.3" :ring-count="3" />
    * <CosinePalette :order="1" scalar-source="prev" />
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Radius of the primary ring */
-      ringRadius?: number
-      /** Number of rings (stacked with equidistant offsets) */
-      ringCount?: number
-      /** Spacing between stacked rings */
-      ringSpread?: number
-      /** Sharpness multiplier applied per ring */
-      ringScale?: number
-      /** Vignette: oneMinus(length(uv * vignetteScale)) — 0 = disabled */
-      vignetteScale?: number
-      order?: number
-    }>(),
-    { ringRadius: 0.3, ringCount: 1, ringSpread: 0.15, ringScale: 4, vignetteScale: 0.8, order: 0 }
-  )
+  const {
+    ringRadius = 0.3,
+    ringCount = 1,
+    ringSpread = 0.15,
+    ringScale = 4,
+    vignetteScale = 0.8,
+    order = 0,
+  } = defineProps<{
+    /** Radius of the primary ring */
+    ringRadius?: number
+    /** Number of rings (stacked with equidistant offsets) */
+    ringCount?: number
+    /** Spacing between stacked rings */
+    ringSpread?: number
+    /** Sharpness multiplier applied per ring */
+    ringScale?: number
+    /** Vignette: oneMinus(length(uv * vignetteScale)) — 0 = disabled */
+    vignetteScale?: number
+    order?: number
+  }>()
 
-  const ringRadiusNode = uniform(props.ringRadius)
-  const ringSpreadNode = uniform(props.ringSpread)
-  const ringScaleNode = uniform(props.ringScale)
-  const vignetteScaleNode = uniform(props.vignetteScale)
+  const ringRadiusNode = uniform(ringRadius)
+  const ringSpreadNode = uniform(ringSpread)
+  const ringScaleNode = uniform(ringScale)
+  const vignetteScaleNode = uniform(vignetteScale)
   watch(
-    () => props.ringRadius,
+    () => ringRadius,
     (v) => {
       ringRadiusNode.value = v
     }
   )
   watch(
-    () => props.ringSpread,
+    () => ringSpread,
     (v) => {
       ringSpreadNode.value = v
     }
   )
   watch(
-    () => props.ringScale,
+    () => ringScale,
     (v) => {
       ringScaleNode.value = v
     }
   )
   watch(
-    () => props.vignetteScale,
+    () => vignetteScale,
     (v) => {
       vignetteScaleNode.value = v
     }
@@ -69,21 +72,21 @@
     const centered = uvCurrent.sub(0.5)
 
     // Accumulate rings at evenly-spaced radii
-    let acc = float(0)
-    for (let i = 0; i < props.ringCount; i++) {
-      const offset = ringSpreadNode.mul(float(i - (props.ringCount - 1) / 2))
+    let acc: TSLNode = float(0)
+    for (let i = 0; i < ringCount; i++) {
+      const offset = ringSpreadNode.mul(float(i - (ringCount - 1) / 2))
       const r = ringRadiusNode.add(offset)
       const d = abs(centered.length().sub(r)).mul(ringScaleNode).oneMinus().max(float(0))
       acc = acc.add(d)
     }
 
     // Optional vignette term
-    if (props.vignetteScale > 0) {
+    if (vignetteScale > 0) {
       const vignette = float(1).sub(centered.mul(vignetteScaleNode).length()).max(float(0))
       acc = acc.add(vignette)
     }
 
-    const t = acc.div(float(props.ringCount)).min(float(1))
+    const t = acc.div(float(ringCount)).min(float(1))
     return vec4(t, t, t, float(1))
-  }, props.order)
+  }, order)
 </script>

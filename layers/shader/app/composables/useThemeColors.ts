@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { oklchToColor, parseOKLCH } from '../utils/tsl/oklch'
 
 export function useThemeColors() {

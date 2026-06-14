@@ -29,12 +29,12 @@
           :model-value="state.meta.name"
           placeholder="Brand name"
           size="lg"
-          @update:model-value="state.meta.name = $event"
+          @update:model-value="($event) => (state.meta.name = $event)"
         />
         <UInput
           :model-value="state.meta.description"
           placeholder="Short description (optional)"
-          @update:model-value="state.meta.description = $event"
+          @update:model-value="($event) => (state.meta.description = $event)"
         />
       </div>
     </UCard>
@@ -54,12 +54,16 @@
           <!-- Row 1 (mobile) / start of row (desktop): picker + hex + swatch -->
           <div class="flex items-center gap-3">
             <label class="cursor-pointer shrink-0">
-              <input type="color" :value="colour.hex" @input="onHexInput(colour.id, $event)" />
+              <input
+                type="color"
+                :value="colour.hex"
+                @input="($event) => onHexInput(colour.id, $event)"
+              />
             </label>
             <UInput
               :model-value="colour.hex"
               class="w-28 font-mono text-sm shrink-0"
-              @update:model-value="updateColour(colour.id, { hex: $event })"
+              @update:model-value="($event) => updateColour(colour.id, { hex: $event })"
             />
             <ColourSwatch :hex="colour.hex" size="sm" class="shrink-0" />
             <!-- Remove button moves here on mobile -->
@@ -69,7 +73,7 @@
               variant="ghost"
               size="sm"
               class="sm:hidden ml-auto"
-              @click="removeColour(colour.id)"
+              @click="() => removeColour(colour.id)"
             />
           </div>
 
@@ -79,7 +83,7 @@
               :model-value="colour.name"
               placeholder="Name"
               class="flex-1 min-w-0"
-              @update:model-value="updateColour(colour.id, { name: $event })"
+              @update:model-value="($event) => updateColour(colour.id, { name: $event })"
             />
             <USelect
               :model-value="colour.role"
@@ -87,7 +91,9 @@
                 ROLES.map((r) => ({ label: r.charAt(0).toUpperCase() + r.slice(1), value: r }))
               "
               class="w-32 shrink-0"
-              @update:model-value="updateColour(colour.id, { role: $event as BrandColour['role'] })"
+              @update:model-value="
+                ($event) => updateColour(colour.id, { role: $event as BrandColour['role'] })
+              "
             />
             <!-- Remove button on desktop only -->
             <UButton
@@ -96,14 +102,14 @@
               variant="ghost"
               size="sm"
               class="hidden sm:flex shrink-0"
-              @click="removeColour(colour.id)"
+              @click="() => removeColour(colour.id)"
             />
           </div>
         </div>
       </div>
     </div>
 
-    <UButton icon="i-lucide-plus" variant="outline" @click="addColour()"> Add colour </UButton>
+    <UButton icon="i-lucide-plus" variant="outline" @click="addColour"> Add colour </UButton>
 
     <!-- Empty state -->
     <div

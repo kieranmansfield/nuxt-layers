@@ -1,82 +1,76 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { float, mix, sin, time, uniform, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
 
-  const props = withDefaults(
-    defineProps<{
-      colorA?: string
-      colorB?: string
-      /** Number of rings across the UV space */
-      ringFrequency?: number
-      /** Noise distortion scale */
-      noiseScale?: number
-      /** Noise displacement strength */
-      noiseStrength?: number
-      /** Very slow rotation speed for living wood effect */
-      speed?: number
-      order?: number
-    }>(),
-    {
-      colorA: '#8b5e3c',
-      colorB: '#4a2e1a',
-      ringFrequency: 12,
-      noiseScale: 3,
-      noiseStrength: 0.4,
-      speed: 0,
-      order: 0,
-    }
-  )
+  const {
+    colorA = '#8b5e3c',
+    colorB = '#4a2e1a',
+    ringFrequency = 12,
+    noiseScale = 3,
+    noiseStrength = 0.4,
+    speed = 0,
+    order = 0,
+  } = defineProps<{
+    colorA?: string
+    colorB?: string
+    /** Number of rings across the UV space */
+    ringFrequency?: number
+    /** Noise distortion scale */
+    noiseScale?: number
+    /** Noise displacement strength */
+    noiseStrength?: number
+    /** Very slow rotation speed for living wood effect */
+    speed?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorANode = toVec3Node(props.colorA)
-  const colorBNode = toVec3Node(props.colorB)
-  const ringFreqNode = uniform(props.ringFrequency)
-  const noiseScaleNode = uniform(props.noiseScale)
-  const noiseStrNode = uniform(props.noiseStrength)
-  const speedNode = uniform(props.speed)
+  const colorANode = toVec3Node(colorA)
+  const colorBNode = toVec3Node(colorB)
+  const ringFreqNode = uniform(ringFrequency)
+  const noiseScaleNode = uniform(noiseScale)
+  const noiseStrNode = uniform(noiseStrength)
+  const speedNode = uniform(speed)
   watch(
-    () => props.colorA,
+    () => colorA,
     (v) => {
       const c = new Color(v)
       colorANode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorB,
+    () => colorB,
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.ringFrequency,
+    () => ringFrequency,
     (v) => {
       ringFreqNode.value = v
     }
   )
   watch(
-    () => props.noiseScale,
+    () => noiseScale,
     (v) => {
       noiseScaleNode.value = v
     }
   )
   watch(
-    () => props.noiseStrength,
+    () => noiseStrength,
     (v) => {
       noiseStrNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -94,5 +88,5 @@
       .mul(0.5)
       .add(0.5)
     return vec4(mix(colorANode, colorBNode, ring), float(1))
-  }, props.order)
+  }, order)
 </script>

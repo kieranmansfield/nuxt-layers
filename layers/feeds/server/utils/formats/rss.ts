@@ -3,16 +3,24 @@ import { Feed } from 'feed'
 import type { FeedConfig, FeedItem } from '../types'
 
 export function toRSS(items: FeedItem[], config: FeedConfig): string {
+  const author = config.author
+    ? {
+        name: config.author.name,
+        ...(config.author.email ? { email: config.author.email } : {}),
+        ...(config.author.link ? { link: config.author.link } : {}),
+      }
+    : undefined
+
   const feed = new Feed({
     title: config.title,
     description: config.description,
     id: config.siteUrl,
     link: config.siteUrl,
-    image: config.image,
-    favicon: config.favicon,
+    ...(config.image ? { image: config.image } : {}),
+    ...(config.favicon ? { favicon: config.favicon } : {}),
     copyright: config.copyright ?? '',
     updated: items[0]?.date ?? new Date(),
-    author: config.author,
+    ...(author ? { author } : {}),
   })
 
   for (const item of items) {
@@ -20,9 +28,9 @@ export function toRSS(items: FeedItem[], config: FeedConfig): string {
       title: item.title,
       id: `${config.siteUrl}${item.id}`,
       link: `${config.siteUrl}${item.link}`,
-      description: item.description,
+      ...(item.description ? { description: item.description } : {}),
       date: item.date,
-      author: item.author ? [{ name: item.author }] : undefined,
+      ...(item.author ? { author: [{ name: item.author }] } : {}),
     })
   }
 

@@ -4,7 +4,7 @@ export default defineEventHandler(() => {
   const { resendApiKey, emailFrom, emailTo } = useMailerConfig()
 
   return {
-    configured: !!resendApiKey,
+    configured: Boolean(resendApiKey),
     emailFrom: emailFrom || null,
     emailTo: emailTo || null,
   }

@@ -1,51 +1,49 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
-  import { float, smoothstep, uniform, vec3, vec4 } from 'three/tsl'
+  import { float, smoothstep, uniform, vec4 } from 'three/tsl'
 
   /**
    * Edge haze — additive fog/bloom at screen boundaries.
    * Useful for dreamlike or atmospheric borders.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Haze tint colour */
-      color?: string
-      /** How far inward the haze reaches (0 = edge only, 1 = full screen) */
-      reach?: number
-      /** Haze brightness */
-      intensity?: number
-      order?: number
-    }>(),
-    { color: '#ffffff', reach: 0.4, intensity: 0.3, order: 0 }
-  )
+  const {
+    color = '#ffffff',
+    reach = 0.4,
+    intensity = 0.3,
+    order = 0,
+  } = defineProps<{
+    /** Haze tint colour */
+    color?: string
+    /** How far inward the haze reaches (0 = edge only, 1 = full screen) */
+    reach?: number
+    /** Haze brightness */
+    intensity?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorNode = toVec3Node(props.color)
-  const reachNode = uniform(props.reach)
-  const intensityNode = uniform(props.intensity)
+  const colorNode = toVec3Node(color)
+  const reachNode = uniform(reach)
+  const intensityNode = uniform(intensity)
   watch(
-    () => props.color,
+    () => color,
     (v) => {
       const c = new Color(v)
       colorNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.reach,
+    () => reach,
     (v) => {
       reachNode.value = v
     }
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       intensityNode.value = v
     }
@@ -67,5 +65,5 @@
 
     const edgeMask = edgeX.add(edgeY).clamp(0, 1).mul(intensityNode)
     return vec4(prev.xyz.add(colorNode.mul(edgeMask)), prev.w)
-  }, props.order)
+  }, order)
 </script>

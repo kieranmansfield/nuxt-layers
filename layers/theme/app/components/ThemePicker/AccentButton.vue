@@ -36,8 +36,6 @@
 </script>
 
 <template>
-  <!-- eslint-disable vue/v-on-handler-style -->
-
   <button
     class="size-8 rounded-full ring-1 ring-offset-2 transition-shadow duration-200"
     :class="[
@@ -48,6 +46,6 @@
     :style="bgStyle"
     :aria-label="`Set accent color to ${color}`"
     :aria-pressed="active"
-    @click="emit('select', color)"
+    @click="() => emit('select', color)"
   />
 </template>

@@ -18,13 +18,12 @@
 </script>
 
 <template>
-  <!-- eslint-disable vue/v-on-handler-style -->
   <BaseModal
     :open
     :title
     size="md"
-    @update:open="emit('update:open', $event)"
-    @close="emit('close')"
+    @update:open="($event) => emit('update:open', $event)"
+    @close="() => emit('close')"
   >
     <div class="flex gap-4">
       <div

@@ -1,6 +1,3 @@
-<!-- eslint-disable vue/no-boolean-default vue/no-duplicate-attr-inheritance -->
-<!-- eslint-disable vue/no-duplicate-attr-inheritance -->
-<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
   /**
    * PageContainer - Unified page wrapper component
@@ -98,7 +95,6 @@
   <!-- UPage Layout Mode - needs wrapper with MastMain -->
   <div v-else>
     <MastMain>
-      <!-- eslint-disable-next-line vue/no-duplicate-attr-inheritance -->
       <UPage v-bind="$attrs">
         <slot />
       </UPage>

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 import { abs, cos, float, Fn, mod, pow, sin } from 'three/tsl'
 
 import type { TSLNode } from '../../types'
@@ -29,6 +27,48 @@ export const loopTime = Fn(([time, duration]: [TSLNode, TSLNode]) => {
 })
 
 /**
+ * Bounce easing (standalone so `easing` does not reference itself)
+ */
+const easeOutBounceFn = Fn(([t]: [TSLNode]) => {
+    const n1 = 7.5625
+    const d1 = 2.75
+
+    const c1 = t.lessThan(1.0 / d1).select(t.mul(t).mul(n1), float(0.0))
+    const c2 = t
+      .greaterThanEqual(1.0 / d1)
+      .mul(t.lessThan(2.0 / d1))
+      .select(
+        t
+          .sub(1.5 / d1)
+          .mul(t.sub(1.5 / d1))
+          .mul(n1)
+          .add(0.75),
+        float(0.0)
+      )
+    const c3 = t
+      .greaterThanEqual(2.0 / d1)
+      .mul(t.lessThan(2.5 / d1))
+      .select(
+        t
+          .sub(2.25 / d1)
+          .mul(t.sub(2.25 / d1))
+          .mul(n1)
+          .add(0.9375),
+        float(0.0)
+      )
+    const c4 = t.greaterThanEqual(2.5 / d1).select(
+      t
+        .sub(2.625 / d1)
+        .mul(t.sub(2.625 / d1))
+        .mul(n1)
+        .add(0.984375),
+      float(0.0)
+    )
+
+    return c1.add(c2).add(c3).add(c4)
+  })
+
+/**
  * Easing functions
  */
 export const easing = {
@@ -36,33 +76,28 @@ export const easing = {
   easeInQuad: Fn(([t]: [TSLNode]) => t.mul(t)),
   easeOutQuad: Fn(([t]: [TSLNode]) => t.mul(float(2.0).sub(t))),
   easeInOutQuad: Fn(([t]: [TSLNode]) => {
-    return t
-      .lessThan(0.5)
-      .select(t.mul(t).mul(2.0), float(1.0).sub(float(-2.0).mul(t).add(2.0).pow(2.0).div(2.0)))
+    const inv: TSLNode = float(-2.0).mul(t).add(2.0)
+    return t.lessThan(0.5).select(t.mul(t).mul(2.0), float(1.0).sub(inv.pow(2.0).div(2.0)))
   }),
 
   // Cubic
   easeInCubic: Fn(([t]: [TSLNode]) => t.mul(t).mul(t)),
   easeOutCubic: Fn(([t]: [TSLNode]) => float(1.0).sub(pow(float(1.0).sub(t), 3.0))),
   easeInOutCubic: Fn(([t]: [TSLNode]) => {
+    const inv: TSLNode = float(-2.0).mul(t).add(2.0)
     return t
       .lessThan(0.5)
-      .select(
-        t.mul(t).mul(t).mul(4.0),
-        float(1.0).sub(pow(float(-2.0).mul(t).add(2.0), 3.0).div(2.0))
-      )
+      .select(t.mul(t).mul(t).mul(4.0), float(1.0).sub(inv.pow(3.0).div(2.0)))
   }),
 
   // Quartic
   easeInQuart: Fn(([t]: [TSLNode]) => t.mul(t).mul(t).mul(t)),
   easeOutQuart: Fn(([t]: [TSLNode]) => float(1.0).sub(pow(float(1.0).sub(t), 4.0))),
   easeInOutQuart: Fn(([t]: [TSLNode]) => {
+    const inv: TSLNode = float(-2.0).mul(t).add(2.0)
     return t
       .lessThan(0.5)
-      .select(
-        t.mul(t).mul(t).mul(t).mul(8.0),
-        float(1.0).sub(pow(float(-2.0).mul(t).add(2.0), 4.0).div(2.0))
-      )
+      .select(t.mul(t).mul(t).mul(t).mul(8.0), float(1.0).sub(inv.pow(4.0).div(2.0)))
   }),
 
   // Exponential
@@ -175,46 +210,9 @@ export const easing = {
   }),
 
   // Bounce
-  easeOutBounce: Fn(([t]: [TSLNode]) => {
-    const n1 = 7.5625
-    const d1 = 2.75
-
-    const c1 = t.lessThan(1.0 / d1).select(t.mul(t).mul(n1), float(0.0))
-    const c2 = t
-      .greaterThanEqual(1.0 / d1)
-      .mul(t.lessThan(2.0 / d1))
-      .select(
-        t
-          .sub(1.5 / d1)
-          .mul(t.sub(1.5 / d1))
-          .mul(n1)
-          .add(0.75),
-        float(0.0)
-      )
-    const c3 = t
-      .greaterThanEqual(2.0 / d1)
-      .mul(t.lessThan(2.5 / d1))
-      .select(
-        t
-          .sub(2.25 / d1)
-          .mul(t.sub(2.25 / d1))
-          .mul(n1)
-          .add(0.9375),
-        float(0.0)
-      )
-    const c4 = t.greaterThanEqual(2.5 / d1).select(
-      t
-        .sub(2.625 / d1)
-        .mul(t.sub(2.625 / d1))
-        .mul(n1)
-        .add(0.984375),
-      float(0.0)
-    )
-
-    return c1.add(c2).add(c3).add(c4)
-  }),
+  easeOutBounce: easeOutBounceFn,
   easeInBounce: Fn(([t]: [TSLNode]) => {
-    return float(1.0).sub(easing.easeOutBounce(float(1.0).sub(t)))
+    return float(1.0).sub(easeOutBounceFn(float(1.0).sub(t)))
   }),
 }
 

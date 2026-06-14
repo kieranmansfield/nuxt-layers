@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
   defineProps<{ label: string }>()
   const model = defineModel<string>()

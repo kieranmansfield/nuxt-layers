@@ -1,74 +1,67 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
-  import { float, mix, smoothstep, uniform, vec4 } from 'three/tsl'
+  import { float, mix, uniform, vec4 } from 'three/tsl'
 
   import { polygon } from '../../shaders/common/shapes'
 
-  const props = withDefaults(
-    defineProps<{
-      colorA?: string
-      colorB?: string
-      /** Number of sides */
-      sides?: number
-      radius?: number
-      softness?: number
-      /** Rotation offset in degrees */
-      rotation?: number
-      order?: number
-    }>(),
-    {
-      colorA: '#000000',
-      colorB: '#ffffff',
-      sides: 6,
-      radius: 0.35,
-      softness: 0.01,
-      rotation: 0,
-      order: 0,
-    }
-  )
+  const {
+    colorA = '#000000',
+    colorB = '#ffffff',
+    sides = 6,
+    radius = 0.35,
+    softness = 0.01,
+    rotation = 0,
+    order = 0,
+  } = defineProps<{
+    colorA?: string
+    colorB?: string
+    /** Number of sides */
+    sides?: number
+    radius?: number
+    softness?: number
+    /** Rotation offset in degrees */
+    rotation?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorANode = toVec3Node(props.colorA)
-  const colorBNode = toVec3Node(props.colorB)
-  const radiusNode = uniform(props.radius)
-  const softnessNode = uniform(props.softness)
-  const rotationNode = uniform((props.rotation * Math.PI) / 180)
+  const colorANode = toVec3Node(colorA)
+  const colorBNode = toVec3Node(colorB)
+  const radiusNode = uniform(radius)
+  const softnessNode = uniform(softness)
+  const rotationNode = uniform((rotation * Math.PI) / 180)
   watch(
-    () => props.colorA,
+    () => colorA,
     (v) => {
       const c = new Color(v)
       colorANode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorB,
+    () => colorB,
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.radius,
+    () => radius,
     (v) => {
       radiusNode.value = v
     }
   )
   watch(
-    () => props.softness,
+    () => softness,
     (v) => {
       softnessNode.value = v
     }
   )
   watch(
-    () => props.rotation,
+    () => rotation,
     (v) => {
       rotationNode.value = (v * Math.PI) / 180
     }
@@ -78,7 +71,7 @@
 
   useShaderStage(() => {
     const uv = pipeline.uvNode.value
-    const mask = polygon(uv, [0.5, 0.5], radiusNode, props.sides, softnessNode)
+    const mask = polygon(uv, [0.5, 0.5], sides, radiusNode, rotationNode, softnessNode)
     return vec4(mix(colorANode, colorBNode, mask), float(1))
-  }, props.order)
+  }, order)
 </script>

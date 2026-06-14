@@ -34,10 +34,6 @@
     else if (event.key === 'ArrowRight') next()
   }
 
-  function open() {
-    open = false
-  }
-
   onMounted(() => {
     globalThis.addEventListener('keydown', onKeydown)
   })
@@ -61,9 +57,8 @@
           color="neutral"
           variant="ghost"
           class="absolute top-4 right-4 text-white"
-          @click="open"
+          @click="() => (open = false)"
         />
-        <!-- @click="open = false" -->
 
         <!-- Prev -->
         <UButton

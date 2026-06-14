@@ -1,30 +1,28 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { float, uniform, vec4 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Scale factor for the radial distance — larger = tighter mask */
-      scale?: number
-      /** Softness of the mask edge */
-      softness?: number
-      order?: number
-    }>(),
-    { scale: 1.5, softness: 0.2, order: 0 }
-  )
+  const {
+    scale = 1.5,
+    softness = 0.2,
+    order = 0,
+  } = defineProps<{
+    /** Scale factor for the radial distance — larger = tighter mask */
+    scale?: number
+    /** Softness of the mask edge */
+    softness?: number
+    order?: number
+  }>()
 
-  const scaleNode = uniform(props.scale)
-  const softnessNode = uniform(props.softness)
+  const scaleNode = uniform(scale)
+  const softnessNode = uniform(softness)
   watch(
-    () => props.scale,
+    () => scale,
     (v) => {
       scaleNode.value = v
     }
   )
   watch(
-    () => props.softness,
+    () => softness,
     (v) => {
       softnessNode.value = v
     }
@@ -37,5 +35,5 @@
     const dist = uvCurrent.sub(0.5).mul(scaleNode).length()
     const mask = float(1).sub(dist).sub(softnessNode).max(0).div(float(1).sub(softnessNode))
     return vec4(prev.xyz, prev.w.mul(mask))
-  }, props.order)
+  }, order)
 </script>

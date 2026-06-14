@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts" generic="T">
   /**
    * SectionGallery - Auto-placing grid for collections

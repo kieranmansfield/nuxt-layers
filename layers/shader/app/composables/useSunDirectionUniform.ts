@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Vector2 } from 'three'
 import { float, time, uniform, vec3 } from 'three/tsl'
 
@@ -26,12 +25,10 @@ export function useSunDirectionUniform(options: SunDirectionOptions = {}) {
   const { speed = 0.05, useMouseY = false } = options
 
   if (useMouseY) {
-    // @ts-expect-error
     const mouse = uniform(new Vector2(0.5, 0.5))
 
     onMounted(() => {
       const onMove = (e: MouseEvent) => {
-        // @ts-expect-error
         mouse.value.set(e.clientX / window.innerWidth, e.clientY / window.innerHeight)
       }
       window.addEventListener('mousemove', onMove)
@@ -41,15 +38,12 @@ export function useSunDirectionUniform(options: SunDirectionOptions = {}) {
     // angle = -(mouseY - 0.5) — top of screen = sun high, bottom = sun low
     const angle = mouse.y.oneMinus().sub(0.5)
     const a = angle.mul(5).add(0.5)
-    // @ts-expect-error
     return vec3(float(0), a.sin().negate(), a.cos())
   }
 
   // Animated mode — pure TSL expression, no JS uniform needed
-  // @ts-expect-error
   const speedNode = uniform(speed)
   const angle = time.mul(speedNode).sin().div(8).sub(0.2)
   const a = angle.mul(5).add(0.5)
-  // @ts-expect-error
   return vec3(float(0), a.sin().negate(), a.cos())
 }

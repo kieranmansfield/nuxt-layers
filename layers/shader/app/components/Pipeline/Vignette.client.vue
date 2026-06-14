@@ -1,34 +1,28 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { uniform, vec4 } from 'three/tsl'
 
   import { vignette } from '../../shaders/common/grain'
 
-  const props = withDefaults(
-    defineProps<{
-      intensity?: number
-      smoothness?: number
-      order?: number
-    }>(),
-    {
-      intensity: 0.5,
-      smoothness: 0.5,
-      order: 0,
-    }
-  )
+  const {
+    intensity = 0.5,
+    smoothness = 0.5,
+    order = 0,
+  } = defineProps<{
+    intensity?: number
+    smoothness?: number
+    order?: number
+  }>()
 
-  const intensityNode = uniform(props.intensity)
-  const smoothnessNode = uniform(props.smoothness)
+  const intensityNode = uniform(intensity)
+  const smoothnessNode = uniform(smoothness)
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       intensityNode.value = v
     }
   )
   watch(
-    () => props.smoothness,
+    () => smoothness,
     (v) => {
       smoothnessNode.value = v
     }
@@ -39,5 +33,5 @@
   useShaderStage((prev) => {
     const v = vignette(uvNode.value, intensityNode, smoothnessNode)
     return vec4(prev.xyz.mul(v), prev.w)
-  }, props.order)
+  }, order)
 </script>

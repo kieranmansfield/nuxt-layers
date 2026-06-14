@@ -1,5 +1,3 @@
-/* eslint-disable complexity */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { SiteConfig } from '#layers/core/app/types/site'
 import type { H3Event } from 'h3'
 

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 import type { GalleryQueryOptions } from '../types/content'
 
 export function useGalleryItems(options: GalleryQueryOptions = {}) {

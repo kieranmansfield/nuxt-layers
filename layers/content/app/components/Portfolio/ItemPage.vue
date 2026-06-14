@@ -1,7 +1,9 @@
 <script setup lang="ts">
+  import type { PageCollections } from '@nuxt/content'
+
   const { slug, collection = 'portfolio' } = defineProps<{
     slug: string
-    collection?: string
+    collection?: keyof PageCollections
   }>()
   const { contentLayer } = useAppConfig()
   if (contentLayer?.sections?.portfolio === false) {

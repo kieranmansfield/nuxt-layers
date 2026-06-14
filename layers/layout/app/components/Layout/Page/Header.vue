@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
   /**
    * PageHeader - Standard page header component

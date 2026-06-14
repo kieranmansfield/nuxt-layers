@@ -1,10 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex
 import { DoubleSide } from 'three'
 import {
-  abs,
   add,
   exp,
   float,
@@ -13,7 +8,6 @@ import {
   mix,
   mul,
   pow,
-  sign,
   sin,
   smoothstep,
   sub,
@@ -34,6 +28,7 @@ import {
   voronoi2D,
 } from '../shaders/common/noise'
 import { cosinePalette } from '../shaders/common/palette'
+import type { TSLNode } from '../shaders/types'
 
 // ============================================
 // Types
@@ -600,13 +595,13 @@ export function createThemeWaveColorNode(
 
     // Wave warp (order matters: warped x feeds into y)
     const waveSpeed = mul(time, uSpeed, 2.0)
-    const wx = rx.add(sin(ry.mul(5.0).add(waveSpeed)).div(30.0))
-    const wy = ry.add(sin(wx.mul(7.5).add(waveSpeed)).div(15.0))
+    const wx: TSLNode = rx.add(sin(ry.mul(5.0).add(waveSpeed)).div(30.0))
+    const wy: TSLNode = ry.add(sin(wx.mul(7.5).add(waveSpeed)).div(15.0))
 
     // -5° rotation for layer blend
     const COS5 = Math.cos((-5 * Math.PI) / 180)
     const SIN5 = Math.sin((-5 * Math.PI) / 180)
-    const rotated5x = wx.mul(COS5).sub(wy.mul(SIN5))
+    const rotated5x: TSLNode = wx.mul(COS5).sub(wy.mul(SIN5))
 
     const layer1 = mix(colors.color1, colors.color2, smoothstep(-0.3, 0.2, rotated5x))
     const layer2 = mix(colors.color3, colors.color4, smoothstep(-0.3, 0.2, rotated5x))

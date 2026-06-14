@@ -1,37 +1,34 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
-  import { float, mix, uniform, vec3, vec4 } from 'three/tsl'
+  import { float, uniform, vec3, vec4 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /**
-       * Colour temperature shift:
-       * positive → warmer (orange), negative → cooler (blue). Range: -1 to 1.
-       */
-      temperature?: number
-      /**
-       * Tint shift:
-       * positive → green, negative → magenta. Range: -1 to 1.
-       */
-      tint?: number
-      order?: number
-    }>(),
-    { temperature: 0, tint: 0, order: 0 }
-  )
+  const {
+    temperature = 0,
+    tint = 0,
+    order = 0,
+  } = defineProps<{
+    /**
+     * Colour temperature shift:
+     * positive → warmer (orange), negative → cooler (blue). Range: -1 to 1.
+     */
+    temperature?: number
+    /**
+     * Tint shift:
+     * positive → green, negative → magenta. Range: -1 to 1.
+     */
+    tint?: number
+    order?: number
+  }>()
 
-  const tempNode = uniform(props.temperature)
-  const tintNode = uniform(props.tint)
+  const tempNode = uniform(temperature)
+  const tintNode = uniform(tint)
   watch(
-    () => props.temperature,
+    () => temperature,
     (v) => {
       tempNode.value = v
     }
   )
   watch(
-    () => props.tint,
+    () => tint,
     (v) => {
       tintNode.value = v
     }
@@ -47,5 +44,5 @@
       float(1).sub(tintNode.max(float(0)).mul(0.1))
     )
     return vec4(prev.xyz.mul(warm).mul(tinted), prev.w)
-  }, props.order)
+  }, order)
 </script>

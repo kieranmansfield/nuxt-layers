@@ -1,50 +1,50 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { time, uniform } from 'three/tsl'
 
   import { rippleUV } from '../../shaders/common/uv'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Ripple frequency */
-      frequency?: number
-      /** Ripple amplitude */
-      amplitude?: number
-      /** Falloff rate from center */
-      falloff?: number
-      /** Animation speed */
-      speed?: number
-      order?: number
-    }>(),
-    { frequency: 10, amplitude: 0.05, falloff: 1, speed: 1, order: 0 }
-  )
+  const {
+    frequency = 10,
+    amplitude = 0.05,
+    falloff = 1,
+    speed = 1,
+    order = 0,
+  } = defineProps<{
+    /** Ripple frequency */
+    frequency?: number
+    /** Ripple amplitude */
+    amplitude?: number
+    /** Falloff rate from center */
+    falloff?: number
+    /** Animation speed */
+    speed?: number
+    order?: number
+  }>()
 
-  const freqNode = uniform(props.frequency)
-  const ampNode = uniform(props.amplitude)
-  const falloffNode = uniform(props.falloff)
-  const speedNode = uniform(props.speed)
+  const freqNode = uniform(frequency)
+  const ampNode = uniform(amplitude)
+  const falloffNode = uniform(falloff)
+  const speedNode = uniform(speed)
   watch(
-    () => props.frequency,
+    () => frequency,
     (v) => {
       freqNode.value = v
     }
   )
   watch(
-    () => props.amplitude,
+    () => amplitude,
     (v) => {
       ampNode.value = v
     }
   )
   watch(
-    () => props.falloff,
+    () => falloff,
     (v) => {
       falloffNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -52,7 +52,7 @@
 
   useShaderStage(
     (uvIn) => rippleUV(uvIn, [0.5, 0.5], freqNode, ampNode, time.mul(speedNode), falloffNode),
-    props.order,
+    order,
     'uv'
   )
 </script>

@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import type {
   FontLeading,
   FontSize,
@@ -23,14 +22,17 @@ function normalizeAxis(
   const { prefix = '', fallback = '', numericFormatter } = options
 
   if (typeof value === 'number') {
-    return numericFormatter
-      ? numericFormatter(value)
-      : prefix
-        ? `${prefix}-[${value}]`
-        : `[${value}]`
+    if (numericFormatter) return numericFormatter(value)
+    if (prefix) return `${prefix}-[${value}]`
+    return `[${value}]`
   }
 
   return value ?? fallback
+}
+
+function getSizeClass(size: FontSize | undefined): string {
+  if (!size) return ''
+  return typeof size === 'number' ? `text-[${size}]` : `text-${size}`
 }
 
 export function useTypography(props: {
@@ -68,11 +70,7 @@ export function useTypography(props: {
         fallback: 'tracking-normal',
       }),
 
-      props.size
-        ? typeof props.size === 'number'
-          ? `text-[${props.size}]`
-          : `text-${props.size}`
-        : '',
+      getSizeClass(props.size),
 
       props.align ? `text-${props.align}` : '',
 

@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Mesh Gradient Shader Layer
  * Organic blob-based gradient effect
@@ -9,7 +6,7 @@ import { Color } from 'three'
 import { cos, float, mix, sin, time as tslTime, uniform, uv, vec2, vec3 } from 'three/tsl'
 
 import { blob } from '../common/shapes'
-import type { TSLNode } from '../types'
+import type { FloatUniform, TSLNode } from '../types'
 
 export type MeshGradientOptions = {
   /** Array of colors (4 recommended) */
@@ -29,13 +26,13 @@ export type MeshGradientOptions = {
 }
 
 export type MeshGradientUniforms = {
-  speed: ReturnType<typeof uniform>
-  blobScale: ReturnType<typeof uniform>
-  softness: ReturnType<typeof uniform>
-  mouseX: ReturnType<typeof uniform>
-  mouseY: ReturnType<typeof uniform>
-  mouseStrength: ReturnType<typeof uniform>
-  colors: Array<ReturnType<typeof uniform>>
+  speed: FloatUniform
+  blobScale: FloatUniform
+  softness: FloatUniform
+  mouseX: FloatUniform
+  mouseY: FloatUniform
+  mouseStrength: FloatUniform
+  colors: TSLNode[]
 }
 
 /**
@@ -117,13 +114,13 @@ export function meshGradient(uniforms: MeshGradientUniforms, uvNode?: TSLNode): 
   const b4 = blob(uvCoord, c4, uniforms.blobScale.mul(0.25), uniforms.softness.mul(0.72))
 
   // Get colors from uniforms
-  const col1 = vec3(uniforms.colors[0] as unknown as TSLNode)
-  const col2 = vec3(uniforms.colors[1] as unknown as TSLNode)
-  const col3 = vec3(uniforms.colors[2] as unknown as TSLNode)
-  const col4 = vec3(uniforms.colors[3] as unknown as TSLNode)
+  const col1 = vec3(uniforms.colors[0])
+  const col2 = vec3(uniforms.colors[1])
+  const col3 = vec3(uniforms.colors[2])
+  const col4 = vec3(uniforms.colors[3])
 
   // Mix colors based on blob influence
-  let color = col1
+  let color: TSLNode = col1
   color = mix(color, col2, b1)
   color = mix(color, col3, b2.mul(0.8))
   color = mix(color, col4, b3.mul(0.7))

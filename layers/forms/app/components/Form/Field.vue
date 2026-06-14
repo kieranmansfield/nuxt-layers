@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
   import { fieldConfigs, type FieldType } from '../../config/fields'
   import type { FieldSize } from '../../types/fields'

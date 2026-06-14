@@ -1,88 +1,81 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
-  import { clamp, dot, float, mix, pow, uniform, vec3, vec4 } from 'three/tsl'
+  import { clamp, dot, float, mix, pow, uniform, vec4 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Sky colour at the zenith */
-      zenith?: string
-      /** Sky colour at the horizon */
-      horizon?: string
-      /** Ground colour below horizon */
-      ground?: string
-      /** Sun direction — [x, y, z] world space (will be normalised) */
-      sunDirection?: [number, number, number]
-      /** Sun colour */
-      sunColor?: string
-      /** Sun disk sharpness (higher = smaller disk) */
-      sunPower?: number
-      order?: number
-    }>(),
-    {
-      zenith: '#1a3a8a',
-      horizon: '#7ab0d8',
-      ground: '#5a4a3a',
-      sunDirection: () => [0.3, 0.8, 0.5],
-      sunColor: '#fff8e0',
-      sunPower: 512,
-      order: 0,
-    }
-  )
+  const {
+    zenith = '#1a3a8a',
+    horizon = '#7ab0d8',
+    ground = '#5a4a3a',
+    sunDirection = [0.3, 0.8, 0.5],
+    sunColor = '#fff8e0',
+    sunPower = 512,
+    order = 0,
+  } = defineProps<{
+    /** Sky colour at the zenith */
+    zenith?: string
+    /** Sky colour at the horizon */
+    horizon?: string
+    /** Ground colour below horizon */
+    ground?: string
+    /** Sun direction — [x, y, z] world space (will be normalised) */
+    sunDirection?: [number, number, number]
+    /** Sun colour */
+    sunColor?: string
+    /** Sun disk sharpness (higher = smaller disk) */
+    sunPower?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const zenithNode = toVec3Node(props.zenith)
-  const horizonNode = toVec3Node(props.horizon)
-  const groundNode = toVec3Node(props.ground)
-  const sunColorNode = toVec3Node(props.sunColor)
-  const sunPowerNode = uniform(props.sunPower)
+  const zenithNode = toVec3Node(zenith)
+  const horizonNode = toVec3Node(horizon)
+  const groundNode = toVec3Node(ground)
+  const sunColorNode = toVec3Node(sunColor)
+  const sunPowerNode = uniform(sunPower)
 
-  const sunDir = new Vector3(...props.sunDirection).normalize()
+  const sunDir = new Vector3(...sunDirection).normalize()
   const sunDirNode = uniform(new Vector3(sunDir.x, sunDir.y, sunDir.z))
 
   watch(
-    () => props.zenith,
+    () => zenith,
     (v) => {
       const c = new Color(v)
       zenithNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.horizon,
+    () => horizon,
     (v) => {
       const c = new Color(v)
       horizonNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.ground,
+    () => ground,
     (v) => {
       const c = new Color(v)
       groundNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.sunColor,
+    () => sunColor,
     (v) => {
       const c = new Color(v)
       sunColorNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.sunPower,
+    () => sunPower,
     (v) => {
       sunPowerNode.value = v
     }
   )
   watch(
-    () => props.sunDirection,
+    () => sunDirection,
     ([x, y, z]) => {
       const d = new Vector3(x, y, z).normalize()
       sunDirNode.value.set(d.x, d.y, d.z)
@@ -104,5 +97,5 @@
     const sun = sunColorNode.mul(pow(sunDot, sunPowerNode))
 
     return vec4(colour.add(sun), 1.0)
-  }, props.order)
+  }, order)
 </script>

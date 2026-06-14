@@ -8,6 +8,17 @@ type ScriptLoaderOptions = {
   integrity?: string
 }
 
+function idleTrigger(): Promise<void> {
+  return new Promise((resolve) => {
+    if (!import.meta.client) return
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => resolve())
+      return
+    }
+    setTimeout(resolve, 1)
+  })
+}
+
 export function useScriptLoader(options: ScriptLoaderOptions) {
   const { src, key, strategy = 'onNuxtReady', crossorigin, integrity } = options
 
@@ -19,7 +30,7 @@ export function useScriptLoader(options: ScriptLoaderOptions) {
       integrity,
     },
     {
-      trigger: strategy,
+      trigger: strategy === 'idle' ? idleTrigger() : strategy,
     }
   )
 

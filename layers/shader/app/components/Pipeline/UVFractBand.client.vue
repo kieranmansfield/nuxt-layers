@@ -1,30 +1,28 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { clamp, uniform, vec4 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Number of bands across the UV Y axis */
-      frequency?: number
-      /** Brightness addend at band peaks */
-      scale?: number
-      order?: number
-    }>(),
-    { frequency: 8, scale: 0.15, order: 0 }
-  )
+  const {
+    frequency = 8,
+    scale = 0.15,
+    order = 0,
+  } = defineProps<{
+    /** Number of bands across the UV Y axis */
+    frequency?: number
+    /** Brightness addend at band peaks */
+    scale?: number
+    order?: number
+  }>()
 
-  const freqNode = uniform(props.frequency)
-  const scaleNode = uniform(props.scale)
+  const freqNode = uniform(frequency)
+  const scaleNode = uniform(scale)
   watch(
-    () => props.frequency,
+    () => frequency,
     (v) => {
       freqNode.value = v
     }
   )
   watch(
-    () => props.scale,
+    () => scale,
     (v) => {
       scaleNode.value = v
     }
@@ -37,5 +35,5 @@
     const band = uvCurrent.y.mul(freqNode).fract().mul(scaleNode)
     const rgb = clamp(prev.xyz.add(band), 0, 1)
     return vec4(rgb, prev.w)
-  }, props.order)
+  }, order)
 </script>

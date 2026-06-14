@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-boolean-default -->
 <script setup lang="ts">
   import { SCROLL_SCENE_KEY, type ScrollSceneContext } from '../../composables/useScrollSteps'
 

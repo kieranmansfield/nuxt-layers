@@ -1,25 +1,18 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { atan, float, uniform, vec3 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /**
-       * Field-of-view in radians for the fisheye projection.
-       * π = 180° hemisphere, π*2 = full sphere.
-       */
-      fov?: number
-      order?: number
-    }>(),
-    { fov: Math.PI, order: 0 }
-  )
+  const { fov = Math.PI, order = 0 } = defineProps<{
+    /**
+     * Field-of-view in radians for the fisheye projection.
+     * π = 180° hemisphere, π*2 = full sphere.
+     */
+    fov?: number
+    order?: number
+  }>()
 
-  const fovNode = uniform(props.fov)
+  const fovNode = uniform(fov)
   watch(
-    () => props.fov,
+    () => fov,
     (v) => {
       fovNode.value = v
     }
@@ -40,7 +33,7 @@
       const sinTheta = theta.sin()
       return vec3(phi.cos().mul(sinTheta), phi.sin().mul(sinTheta), theta.cos()).normalize()
     },
-    props.order,
+    order,
     'ray'
   )
 </script>

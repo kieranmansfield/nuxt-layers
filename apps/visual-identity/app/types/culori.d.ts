@@ -1,31 +1,31 @@
 // Culori v4 ships as TypeScript source but pnpm resolves to src/index.js without .d.ts.
 // This shim makes it importable; the functions work correctly at runtime.
 declare module 'culori' {
-  interface Color {
+  type Color = {
     mode: string
     alpha?: number
   }
 
-  interface RgbColor extends Color {
+  type RgbColor = {
     mode: 'rgb'
     r: number
     g: number
     b: number
-  }
+  } & Color
 
-  interface OklchColor extends Color {
+  type OklchColor = {
     mode: 'oklch'
     l: number
     c: number
     h: number | undefined
-  }
+  } & Color
 
-  interface HslColor extends Color {
+  type HslColor = {
     mode: 'hsl'
     h: number | undefined
     s: number
     l: number
-  }
+  } & Color
 
   type AnyColor = Color & Record<string, number | string | undefined>
 

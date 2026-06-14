@@ -1,4 +1,3 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
   import type { AccentColor } from '#layers/theme/app/types/theme'
 

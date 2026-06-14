@@ -1,94 +1,88 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { float, mix, sin, time, uniform, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Base (vein background) colour */
-      colorA?: string
-      /** Vein colour */
-      colorB?: string
-      /** Marble vein frequency */
-      frequency?: number
-      /** FBM noise scale for vein turbulence */
-      noiseScale?: number
-      /** Noise strength applied to sine input */
-      noiseStrength?: number
-      /** Vein sharpness — higher = thinner veins */
-      sharpness?: number
-      /** Animation speed */
-      speed?: number
-      order?: number
-    }>(),
-    {
-      colorA: '#f5f0e8',
-      colorB: '#6a5a4a',
-      frequency: 5,
-      noiseScale: 3,
-      noiseStrength: 8,
-      sharpness: 4,
-      speed: 0,
-      order: 0,
-    }
-  )
+  const {
+    colorA = '#f5f0e8',
+    colorB = '#6a5a4a',
+    frequency = 5,
+    noiseScale = 3,
+    noiseStrength = 8,
+    sharpness = 4,
+    speed = 0,
+    order = 0,
+  } = defineProps<{
+    /** Base (vein background) colour */
+    colorA?: string
+    /** Vein colour */
+    colorB?: string
+    /** Marble vein frequency */
+    frequency?: number
+    /** FBM noise scale for vein turbulence */
+    noiseScale?: number
+    /** Noise strength applied to sine input */
+    noiseStrength?: number
+    /** Vein sharpness — higher = thinner veins */
+    sharpness?: number
+    /** Animation speed */
+    speed?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorANode = toVec3Node(props.colorA)
-  const colorBNode = toVec3Node(props.colorB)
-  const freqNode = uniform(props.frequency)
-  const noiseScaleNode = uniform(props.noiseScale)
-  const noiseStrNode = uniform(props.noiseStrength)
-  const sharpNode = uniform(props.sharpness)
-  const speedNode = uniform(props.speed)
+  const colorANode = toVec3Node(colorA)
+  const colorBNode = toVec3Node(colorB)
+  const freqNode = uniform(frequency)
+  const noiseScaleNode = uniform(noiseScale)
+  const noiseStrNode = uniform(noiseStrength)
+  const sharpNode = uniform(sharpness)
+  const speedNode = uniform(speed)
   watch(
-    () => props.colorA,
+    () => colorA,
     (v) => {
       const c = new Color(v)
       colorANode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorB,
+    () => colorB,
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.frequency,
+    () => frequency,
     (v) => {
       freqNode.value = v
     }
   )
   watch(
-    () => props.noiseScale,
+    () => noiseScale,
     (v) => {
       noiseScaleNode.value = v
     }
   )
   watch(
-    () => props.noiseStrength,
+    () => noiseStrength,
     (v) => {
       noiseStrNode.value = v
     }
   )
   watch(
-    () => props.sharpness,
+    () => sharpness,
     (v) => {
       sharpNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -105,5 +99,5 @@
       .abs()
       .pow(sharpNode)
     return vec4(mix(colorANode, colorBNode, vein), float(1))
-  }, props.order)
+  }, order)
 </script>

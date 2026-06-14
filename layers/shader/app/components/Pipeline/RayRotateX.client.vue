@@ -1,21 +1,15 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { cos, sin, uniform, vec3 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Rotation angle in radians */
-      angle?: number
-      order?: number
-    }>(),
-    { angle: 0, order: 0 }
-  )
+  const { angle = 0, order = 0 } = defineProps<{
+    /** Rotation angle in radians */
+    angle?: number
+    order?: number
+  }>()
 
-  const angleNode = uniform(props.angle)
+  const angleNode = uniform(angle)
   watch(
-    () => props.angle,
+    () => angle,
     (v) => {
       angleNode.value = v
     }
@@ -27,7 +21,7 @@
       const s = sin(angleNode)
       return vec3(ray.x, ray.y.mul(c).sub(ray.z.mul(s)), ray.y.mul(s).add(ray.z.mul(c)))
     },
-    props.order,
+    order,
     'ray'
   )
 </script>

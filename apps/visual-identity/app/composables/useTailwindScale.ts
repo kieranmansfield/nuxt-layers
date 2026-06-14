@@ -1,6 +1,6 @@
 import { formatHex, oklch, parse } from 'culori'
 
-export interface ScaleEntry {
+export type ScaleEntry = {
   step: string
   hex: string
   oklchStr: string

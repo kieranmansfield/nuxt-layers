@@ -1,11 +1,9 @@
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
-  import type { PortfolioCollectionItem } from '@nuxt/content'
+  import type { PageCollections, PortfolioCollectionItem } from '@nuxt/content'
 
   const { slug, collection = 'portfolio' } = defineProps<{
     slug: string
-    collection?: string
+    collection?: keyof PageCollections
   }>()
 
   const asPortfolio = (item: unknown) => item as PortfolioCollectionItem

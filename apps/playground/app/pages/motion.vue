@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  /* eslint-disable vue/prefer-true-attribute-shorthand */
   definePageMeta({ layout: false })
 
   const { setPageAccent } = useAccentColor()
@@ -128,8 +127,6 @@
   const marqueeItemsAlt = ['PARALLAX', '•', 'PINNING', '•', 'SCRUB', '•', 'VELOCITY', '•']
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage title="Motion Layer Demo" description="GSAP animations + Locomotive Scroll v5">
     <div class="motion-page">
@@ -170,7 +167,7 @@
             effects.
           </p>
           <div class="flex flex-wrap gap-4 justify-center">
-            <UButton size="lg" @click="scrollToSection('#demos')"> View Demos </UButton>
+            <UButton size="lg" @click="() => scrollToSection('#demos')"> View Demos </UButton>
             <UButton size="lg" variant="outline" to="/"> Back Home </UButton>
             <UButton size="lg" variant="ghost" to="/gsap">
               <UIcon name="i-lucide-zap" class="mr-2" />
@@ -652,15 +649,18 @@
             </div>
 
             <div class="flex flex-wrap gap-4 justify-center">
-              <UButton variant="outline" @click="scrollTo('#demos', { duration: 1.5 })">
+              <UButton variant="outline" @click="() => scrollTo('#demos', { duration: 1.5 })">
                 <UIcon name="i-lucide-arrow-up" class="mr-2" />
                 Scroll to Demos
               </UButton>
-              <UButton variant="outline" @click="scrollTo('#horizontal-section', { duration: 2 })">
+              <UButton
+                variant="outline"
+                @click="() => scrollTo('#horizontal-section', { duration: 2 })"
+              >
                 <UIcon name="i-lucide-move-horizontal" class="mr-2" />
                 Horizontal Section
               </UButton>
-              <UButton @click="scrollToTop({ duration: 2.5 })">
+              <UButton @click="() => scrollToTop({ duration: 2.5 })">
                 <UIcon name="i-lucide-arrow-up-to-line" class="mr-2" />
                 Back to Top
               </UButton>
@@ -751,7 +751,7 @@
                 <UIcon name="i-lucide-text-cursor-input" class="mr-2" />
                 MarqueeText
               </UButton>
-              <UButton variant="outline" @click="scrollToTop({ duration: 2 })">
+              <UButton variant="outline" @click="() => scrollToTop({ duration: 2 })">
                 Back to Top
               </UButton>
               <UButton to="/"> Home </UButton>

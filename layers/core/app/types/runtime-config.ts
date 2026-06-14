@@ -25,7 +25,19 @@ export type CoreLayerRuntimeConfig = {
  * Augment Nuxt's RuntimeConfig
  */
 declare module 'nuxt/schema' {
-  type RuntimeConfig = {} & CoreLayerRuntimeConfig
+  interface RuntimeConfig {
+    secretKey?: string
+    apiSecretKey?: string
+    databaseUrl?: string
+  }
+
+  interface PublicRuntimeConfig {
+    apiUrl?: string
+    appName?: string
+    appVersion?: string
+    environment?: 'development' | 'staging' | 'production'
+    siteUrl?: string
+  }
 }
 
 export {}

@@ -1,19 +1,19 @@
 <script setup lang="ts">
-const { label, modelValue, min, max, step } = defineProps<{
-  label: string
-  modelValue: number
-  min: number
-  max: number
-  step?: number
-}>()
+  const { label, modelValue, min, max, step } = defineProps<{
+    label: string
+    modelValue: number
+    min: number
+    max: number
+    step?: number
+  }>()
 
-const emit = defineEmits<{
-  'update:modelValue': [value: number]
-}>()
+  const emit = defineEmits<{
+    'update:modelValue': [value: number]
+  }>()
 
-function onSliderUpdate(v: number | undefined) {
-  if (v !== undefined) emit('update:modelValue', v)
-}
+  function onSliderUpdate(v: number | undefined) {
+    if (v !== undefined) emit('update:modelValue', v)
+  }
 </script>
 
 <template>
@@ -23,9 +23,9 @@ function onSliderUpdate(v: number | undefined) {
       <p class="text-[10px] text-muted font-mono">{{ min }} – {{ max }}</p>
     </div>
     <USlider
-      :model-value="modelValue"
-      :min="min"
-      :max="max"
+      :model-value
+      :min
+      :max
       :step="step ?? 1"
       class="flex-1"
       @update:model-value="onSliderUpdate"

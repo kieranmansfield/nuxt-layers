@@ -1,34 +1,30 @@
-<!-- eslint-disable vue/no-dupe-keys -->
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { uniform, vec4 } from 'three/tsl'
 
   import { brightness, contrast } from '../../shaders/common/blend'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Additive brightness offset: 0 = unchanged, positive = brighter */
-      brightness?: number
-      /** Contrast multiplier: 1 = unchanged, >1 = more contrast */
-      contrast?: number
-      order?: number
-    }>(),
-    { brightness: 0, contrast: 1, order: 0 }
-  )
+  const {
+    brightness: brightnessProp = 0,
+    contrast: contrastProp = 1,
+    order = 0,
+  } = defineProps<{
+    /** Additive brightness offset: 0 = unchanged, positive = brighter */
+    brightness?: number
+    /** Contrast multiplier: 1 = unchanged, >1 = more contrast */
+    contrast?: number
+    order?: number
+  }>()
 
-  const brightnessNode = uniform(props.brightness)
-  const contrastNode = uniform(props.contrast)
+  const brightnessNode = uniform(brightnessProp)
+  const contrastNode = uniform(contrastProp)
   watch(
-    () => props.brightness,
+    () => brightnessProp,
     (v) => {
       brightnessNode.value = v
     }
   )
   watch(
-    () => props.contrast,
+    () => contrastProp,
     (v) => {
       contrastNode.value = v
     }
@@ -36,6 +32,6 @@
 
   useShaderStage(
     (prev) => vec4(brightness(contrast(prev.xyz, contrastNode), brightnessNode), prev.w),
-    props.order
+    order
   )
 </script>

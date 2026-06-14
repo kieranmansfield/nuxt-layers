@@ -1,6 +1,3 @@
-<!-- eslint-disable vue/require-default-prop -->
-<!-- eslint-disable vue/no-unused-properties -->
-<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
   import type { AccentBlobColor, BlobBlur } from '../../types/accent'
 

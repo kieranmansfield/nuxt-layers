@@ -1,7 +1,3 @@
-/* eslint-disable max-params */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Grain & Film Effects
  * Provides composable grain and texture overlay functions
@@ -73,7 +69,7 @@ export function coloredGrain(
  */
 export function bayer2x2(uv: TSLNode, scale: TSLNode | number = 1): TSLNode {
   const s = typeof scale === 'number' ? float(scale) : scale
-  const pos = floor(uv.mul(s)).mod(2)
+  const pos: TSLNode = floor(uv.mul(s)).mod(2)
   const matrix = vec2(0.25, 0.75)
   return mix(mix(matrix.x, matrix.y, pos.x), mix(matrix.y, matrix.x, pos.x), pos.y)
 }
@@ -83,7 +79,6 @@ export function bayer2x2(uv: TSLNode, scale: TSLNode | number = 1): TSLNode {
  */
 export function bayer4x4(uv: TSLNode, scale: TSLNode | number = 1): TSLNode {
   const s = typeof scale === 'number' ? float(scale) : scale
-  const pos = floor(uv.mul(s)).mod(4)
 
   // Simplified 4x4 Bayer matrix approximation
   const bayer2 = bayer2x2(uv, s)
@@ -427,7 +422,7 @@ function getBayer8x8Value(x: TSLNode, y: TSLNode): TSLNode {
  */
 export function bayer8x8(uv: TSLNode, scale: TSLNode | number = 1): TSLNode {
   const s = typeof scale === 'number' ? float(scale) : scale
-  const pos = floor(uv.mul(s)).mod(8)
+  const pos: TSLNode = floor(uv.mul(s)).mod(8)
   return getBayer8x8Value(pos.x, pos.y)
 }
 

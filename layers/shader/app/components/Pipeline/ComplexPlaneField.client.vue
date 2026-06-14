@@ -1,8 +1,4 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { cos, float, sin, time, uniform, vec2, vec4 } from 'three/tsl'
 
   import { complexDiv, complexLog } from '../../shaders/common/complex'
@@ -14,61 +10,58 @@
    * and extracts the imaginary component (winding angle) as a scalar float.
    * Outputs grayscale for CosinePalette (scalarSource: 'prev').
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Angle between the two poles in radians */
-      poleAngle?: number
-      /** Distance of poles from origin */
-      poleDistance?: number
-      /** Weight of the imaginary (winding) component */
-      imaginaryWeight?: number
-      /** Weight of the radial (exp) component */
-      radialWeight?: number
-      /** Animation speed */
-      speed?: number
-      order?: number
-    }>(),
-    {
-      poleAngle: Math.PI / 3,
-      poleDistance: 0.4,
-      imaginaryWeight: 0.6,
-      radialWeight: 0.4,
-      speed: 0.05,
-      order: 0,
-    }
-  )
+  const {
+    poleAngle = Math.PI / 3,
+    poleDistance = 0.4,
+    imaginaryWeight = 0.6,
+    radialWeight = 0.4,
+    speed = 0.05,
+    order = 0,
+  } = defineProps<{
+    /** Angle between the two poles in radians */
+    poleAngle?: number
+    /** Distance of poles from origin */
+    poleDistance?: number
+    /** Weight of the imaginary (winding) component */
+    imaginaryWeight?: number
+    /** Weight of the radial (exp) component */
+    radialWeight?: number
+    /** Animation speed */
+    speed?: number
+    order?: number
+  }>()
 
-  const poleAngleNode = uniform(props.poleAngle)
-  const poleDistNode = uniform(props.poleDistance)
-  const imagWeightNode = uniform(props.imaginaryWeight)
-  const radWeightNode = uniform(props.radialWeight)
-  const speedNode = uniform(props.speed)
+  const poleAngleNode = uniform(poleAngle)
+  const poleDistNode = uniform(poleDistance)
+  const imagWeightNode = uniform(imaginaryWeight)
+  const radWeightNode = uniform(radialWeight)
+  const speedNode = uniform(speed)
   watch(
-    () => props.poleAngle,
+    () => poleAngle,
     (v) => {
       poleAngleNode.value = v
     }
   )
   watch(
-    () => props.poleDistance,
+    () => poleDistance,
     (v) => {
       poleDistNode.value = v
     }
   )
   watch(
-    () => props.imaginaryWeight,
+    () => imaginaryWeight,
     (v) => {
       imagWeightNode.value = v
     }
   )
   watch(
-    () => props.radialWeight,
+    () => radialWeight,
     (v) => {
       radWeightNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -103,5 +96,5 @@
     const scalar = imagPart.add(radPart).mul(0.5).add(0.5)
 
     return vec4(scalar, scalar, scalar, float(1))
-  }, props.order)
+  }, order)
 </script>

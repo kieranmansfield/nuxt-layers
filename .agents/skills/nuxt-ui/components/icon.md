@@ -17,7 +17,7 @@ class: 'size-5'
 ::
 
 ::framework-only
-#nuxt
+# nuxt
 :::caution{to="/docs/getting-started/integrations/icons/nuxt#collections"}
 It's highly recommended to install the icons collections you need, read more about this.
 

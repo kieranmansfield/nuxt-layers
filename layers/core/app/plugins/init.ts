@@ -1,8 +1,3 @@
-/* eslint-disable complexity */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 /**
  * Core Layer Initialization Plugin
  *
@@ -14,7 +9,9 @@
  *
  * This runs before other plugins and ensures the app is ready.
  */
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin({
+  name: 'core:init',
+  setup(nuxtApp) {
   const config = useAppConfig()
   // const isDev = import.meta.dev
   const isDev = process.env.NODE_ENV === 'development'
@@ -177,4 +174,5 @@ export default defineNuxtPlugin((nuxtApp) => {
       },
     },
   }
+  },
 })

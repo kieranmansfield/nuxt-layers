@@ -1,66 +1,60 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { mix, sin, time, uniform, vec2, vec4 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      color?: string
-      opacity?: number
-      frequency?: number
-      speed?: number
-      warpStrength?: number
-      order?: number
-    }>(),
-    {
-      color: '#4488ff',
-      opacity: 0.8,
-      frequency: 3,
-      speed: 0.5,
-      warpStrength: 0.15,
-      order: 0,
-    }
-  )
+  const {
+    color = '#4488ff',
+    opacity = 0.8,
+    frequency = 3,
+    speed = 0.5,
+    warpStrength = 0.15,
+    order = 0,
+  } = defineProps<{
+    color?: string
+    opacity?: number
+    frequency?: number
+    speed?: number
+    warpStrength?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorNode = toVec3Node(props.color)
-  const opacityNode = uniform(props.opacity)
-  const freqNode = uniform(props.frequency)
-  const speedNode = uniform(props.speed)
-  const warpNode = uniform(props.warpStrength)
+  const colorNode = toVec3Node(color)
+  const opacityNode = uniform(opacity)
+  const freqNode = uniform(frequency)
+  const speedNode = uniform(speed)
+  const warpNode = uniform(warpStrength)
   watch(
-    () => props.color,
+    () => color,
     (v) => {
       const c = new Color(v)
       colorNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.opacity,
+    () => opacity,
     (v) => {
       opacityNode.value = v
     }
   )
   watch(
-    () => props.frequency,
+    () => frequency,
     (v) => {
       freqNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
   )
   watch(
-    () => props.warpStrength,
+    () => warpStrength,
     (v) => {
       warpNode.value = v
     }
@@ -85,5 +79,5 @@
     const alpha = band.mul(opacityNode)
 
     return vec4(mix(prev.xyz, colorNode, alpha), prev.w)
-  }, props.order)
+  }, order)
 </script>

@@ -19,9 +19,6 @@
   }
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Page Transitions Layer Demo"
@@ -33,7 +30,7 @@
         description="usePageTransition() exposes the active transition name + duration as shared reactive state, seeded from app.config.pageTransitions on every navigation."
       >
         <div class="flex flex-wrap gap-4 justify-center">
-          <UButton size="lg" @click="$router.push('#demo')">View Demo</UButton>
+          <UButton size="lg" @click="() => $router.push('#demo')">View Demo</UButton>
           <UButton size="lg" variant="ghost" to="/transitions">
             <UIcon name="i-lucide-square-asterisk" class="mr-2" />
             Transitions
@@ -146,4 +143,3 @@
     </div>
   </LayoutPage>
 </template>
-

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
 import type { Color, Matrix3, Matrix4, Texture, Vector2, Vector3, Vector4 } from 'three'
 
 export type UniformPrimitive = number | boolean | string

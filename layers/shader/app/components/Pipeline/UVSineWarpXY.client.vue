@@ -1,7 +1,4 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { time, uniform, vec2 } from 'three/tsl'
 
   /**
@@ -11,39 +8,36 @@
    * The 1.5× frequency on Y and halved amplitude on Y are intentional — they give
    * the characteristic flowing, non-repeating Grainient look.
    */
-  const props = withDefaults(
-    defineProps<{
-      frequency?: number
-      amplitude?: number
-      speed?: number
-      order?: number
-    }>(),
-    {
-      frequency: 5,
-      amplitude: 30,
-      speed: 2,
-      order: 0,
-    }
-  )
+  const {
+    frequency = 5,
+    amplitude = 30,
+    speed = 2,
+    order = 0,
+  } = defineProps<{
+    frequency?: number
+    amplitude?: number
+    speed?: number
+    order?: number
+  }>()
 
-  const freqNode = uniform(props.frequency)
-  const ampNode = uniform(props.amplitude)
-  const speedNode = uniform(props.speed)
+  const freqNode = uniform(frequency)
+  const ampNode = uniform(amplitude)
+  const speedNode = uniform(speed)
 
   watch(
-    () => props.frequency,
+    () => frequency,
     (v) => {
       freqNode.value = v
     }
   )
   watch(
-    () => props.amplitude,
+    () => amplitude,
     (v) => {
       ampNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -58,7 +52,7 @@
       const warpedY = uvIn.y.add(warpedX.mul(freqNode).mul(1.5).add(t).sin().div(ampNode.mul(0.5)))
       return vec2(warpedX, warpedY)
     },
-    props.order,
+    order,
     'uv'
   )
 </script>

@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { ComputedRef, CSSProperties, MaybeRefOrGetter } from 'vue'
 
 import type { GradientConfig, GradientStop } from '../types/gradient'
@@ -61,15 +59,12 @@ export function useGradient(
     const raw = toValue(config)
     const override = overrides ? toValue(overrides) : undefined
 
-    let resolved: GradientConfig
-    if (typeof raw === 'string') {
-      const preset = (appConfig.uiLayer as Record<string, unknown> | undefined)?.['gradients'] as
-        | Record<string, GradientConfig>
-        | undefined
-      resolved = preset?.[raw] ?? DEFAULT_CONFIG
-    } else {
-      resolved = raw
-    }
+    const presets = (appConfig.uiLayer as Record<string, unknown> | undefined)?.['gradients'] as
+      | Record<string, GradientConfig>
+      | undefined
+    let resolved: GradientConfig = typeof raw === 'string'
+      ? (presets?.[raw] ?? DEFAULT_CONFIG)
+      : raw
 
     if (override) {
       resolved = { ...resolved, ...override }

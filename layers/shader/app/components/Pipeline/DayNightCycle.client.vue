@@ -1,8 +1,4 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { abs, float, mix, pow, sign, time, uniform, vec4 } from 'three/tsl'
 
@@ -11,52 +7,55 @@
    * The phobon easing: t = (sign(cycle) * pow(abs(cycle), 0.6) + 1) / 2
    * where cycle = sin(time * speed).
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Colour during the light phase */
-      colorLight?: string
-      /** Colour during the dark phase */
-      colorDark?: string
-      /** Cycle speed in radians per second */
-      speed?: number
-      /** Mix opacity over prev colour */
-      opacity?: number
-      order?: number
-    }>(),
-    { colorLight: '#ffffff', colorDark: '#000033', speed: 0.3, opacity: 1, order: 0 }
-  )
+  const {
+    colorLight = '#ffffff',
+    colorDark = '#000033',
+    speed = 0.3,
+    opacity = 1,
+    order = 0,
+  } = defineProps<{
+    /** Colour during the light phase */
+    colorLight?: string
+    /** Colour during the dark phase */
+    colorDark?: string
+    /** Cycle speed in radians per second */
+    speed?: number
+    /** Mix opacity over prev colour */
+    opacity?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const lightNode = toVec3Node(props.colorLight)
-  const darkNode = toVec3Node(props.colorDark)
-  const speedNode = uniform(props.speed)
-  const opacityNode = uniform(props.opacity)
+  const lightNode = toVec3Node(colorLight)
+  const darkNode = toVec3Node(colorDark)
+  const speedNode = uniform(speed)
+  const opacityNode = uniform(opacity)
   watch(
-    () => props.colorLight,
+    () => colorLight,
     (v) => {
       const c = new Color(v)
       lightNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorDark,
+    () => colorDark,
     (v) => {
       const c = new Color(v)
       darkNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
   )
   watch(
-    () => props.opacity,
+    () => opacity,
     (v) => {
       opacityNode.value = v
     }
@@ -70,5 +69,5 @@
       .div(2)
     const colour = mix(darkNode, lightNode, t)
     return vec4(mix(prev.xyz, colour, opacityNode), prev.w)
-  }, props.order)
+  }, order)
 </script>

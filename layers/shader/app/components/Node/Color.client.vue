@@ -1,9 +1,8 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck - TSL types
   import { Color } from 'three'
   import { uniform, vec3 } from 'three/tsl'
+
+  import type { TSLNode } from '../../shaders/types'
 
   const props = withDefaults(
     defineProps<{
@@ -26,7 +25,7 @@
 
   // Create uniform once
   const colorValue = new Color(props.color)
-  const colorNode = uniform(colorValue)
+  const colorNode: TSLNode = uniform(colorValue)
 
   // Build TSL node once (references uniform by pointer)
   const node = vec3(colorNode)

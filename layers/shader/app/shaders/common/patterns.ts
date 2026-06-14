@@ -1,6 +1,3 @@
-/* eslint-disable complexity */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Pattern Utilities
  * Provides procedural texture patterns
@@ -37,7 +34,7 @@ export function canvasWeavePattern(uv: TSLNode): TSLNode {
 
   // Add noise to warp the grid itself
   const noiseOffset = fbm3dSimplex(vec3(uv.mul(30.0), 0.0), { octaves: 3 }).mul(0.1)
-  const warpedGrid = grid.add(noiseOffset)
+  const warpedGrid: TSLNode = grid.add(noiseOffset)
 
   // Create irregular weave pattern
   const weaveX = sin(

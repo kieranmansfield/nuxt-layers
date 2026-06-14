@@ -28,7 +28,6 @@
 </script>
 
 <template>
-  <!-- eslint-disable vue/no-duplicate-attr-inheritance -->
   <NuxtPicture
     :src
     :alt

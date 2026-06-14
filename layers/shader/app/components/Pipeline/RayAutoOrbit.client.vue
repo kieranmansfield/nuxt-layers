@@ -1,30 +1,28 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { cos, sin, time, uniform, vec3 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Orbit speed in radians per second (Y axis) */
-      speed?: number
-      /** Additional fixed pitch in radians (X axis) */
-      pitch?: number
-      order?: number
-    }>(),
-    { speed: 0.5, pitch: 0, order: 0 }
-  )
+  const {
+    speed = 0.5,
+    pitch = 0,
+    order = 0,
+  } = defineProps<{
+    /** Orbit speed in radians per second (Y axis) */
+    speed?: number
+    /** Additional fixed pitch in radians (X axis) */
+    pitch?: number
+    order?: number
+  }>()
 
-  const speedNode = uniform(props.speed)
-  const pitchNode = uniform(props.pitch)
+  const speedNode = uniform(speed)
+  const pitchNode = uniform(pitch)
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
   )
   watch(
-    () => props.pitch,
+    () => pitch,
     (v) => {
       pitchNode.value = v
     }
@@ -44,7 +42,7 @@
       const sp = sin(pitchNode)
       return vec3(rayY.x, rayY.y.mul(cp).sub(rayY.z.mul(sp)), rayY.y.mul(sp).add(rayY.z.mul(cp)))
     },
-    props.order,
+    order,
     'ray'
   )
 </script>

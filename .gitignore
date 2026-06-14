@@ -40,3 +40,8 @@ dist
 
 # Superpowers skills
 .superpowers/
+
+# Local debugging artifacts (not for commit)
+.playwright-mcp/
+/ambient-after-wait.png
+/ambient-page.png

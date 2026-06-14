@@ -1,8 +1,4 @@
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import {
     clamp,
     dot,
@@ -24,55 +20,52 @@
   type GrainBlendMode = 'add' | 'sub' | 'screen' | 'overlay' | 'soft-light'
   type GrainStyle = 'smooth' | 'dotted' | 'coarse'
 
-  const props = withDefaults(
-    defineProps<{
-      intensity?: number
-      opacity?: number
-      /** UV scale — higher = finer grain, lower = bigger dots */
-      size?: number
-      /** smooth = continuous noise, dotted = binary on/off specks, coarse = concentrated bright grit */
-      style?: GrainStyle
-      animated?: boolean
-      fps?: number
-      blendMode?: GrainBlendMode
-      order?: number
-    }>(),
-    {
-      intensity: 0.08,
-      opacity: 1.0,
-      size: 1.0,
-      style: 'smooth',
-      animated: true,
-      fps: 24,
-      blendMode: 'add',
-      order: 0,
-    }
-  )
+  const {
+    intensity = 0.08,
+    opacity = 1.0,
+    size = 1.0,
+    style = 'smooth',
+    animated = true,
+    fps = 24,
+    blendMode = 'add',
+    order = 0,
+  } = defineProps<{
+    intensity?: number
+    opacity?: number
+    /** UV scale — higher = finer grain, lower = bigger dots */
+    size?: number
+    /** smooth = continuous noise, dotted = binary on/off specks, coarse = concentrated bright grit */
+    style?: GrainStyle
+    animated?: boolean
+    fps?: number
+    blendMode?: GrainBlendMode
+    order?: number
+  }>()
 
-  const intensityNode = uniform(props.intensity)
-  const opacityNode = uniform(props.opacity)
-  const sizeNode = uniform(props.size)
-  const fpsNode = uniform(props.fps)
+  const intensityNode = uniform(intensity)
+  const opacityNode = uniform(opacity)
+  const sizeNode = uniform(size)
+  const fpsNode = uniform(fps)
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       intensityNode.value = v
     }
   )
   watch(
-    () => props.opacity,
+    () => opacity,
     (v) => {
       opacityNode.value = v
     }
   )
   watch(
-    () => props.size,
+    () => size,
     (v) => {
       sizeNode.value = v
     }
   )
   watch(
-    () => props.fps,
+    () => fps,
     (v) => {
       fpsNode.value = v
     }
@@ -82,22 +75,22 @@
 
   useShaderStage((prev) => {
     const uvScaled = uvNode.value.mul(sizeNode)
-    const seed = props.animated ? floor(time.mul(fpsNode)) : float(0)
+    const seed = animated ? floor(time.mul(fpsNode)) : float(0)
 
     // Raw [0,1] hash noise
     const raw = fract(sin(dot(uvScaled.add(seed), vec2(12.9898, 78.233))).mul(43758.5453))
 
     // Shape the noise based on style
     const shaped =
-      props.style === 'dotted'
+      style === 'dotted'
         ? step(float(0.65), raw) // binary: sparse bright specks
-        : props.style === 'coarse'
+        : style === 'coarse'
           ? pow(raw, float(4.0)).mul(2.5) // concentrated bright grit, rest dark
           : raw // smooth: continuous noise
 
     const mixFactor = intensityNode.mul(opacityNode)
     let blended
-    switch (props.blendMode) {
+    switch (blendMode) {
       case 'sub':
         blended = prev.xyz.sub(shaped.mul(intensityNode).mul(opacityNode))
         break
@@ -114,5 +107,5 @@
         blended = prev.xyz.add(shaped.sub(0.5).mul(intensityNode).mul(opacityNode))
     }
     return clamp(vec4(blended, prev.w), 0, 1)
-  }, props.order)
+  }, order)
 </script>

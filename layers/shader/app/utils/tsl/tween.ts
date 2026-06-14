@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable max-params */
 /**
  * GPU-friendly uniform tweening via requestAnimationFrame.
  * Updates uniform .value each frame -- no shader recompilation.
@@ -43,9 +41,9 @@ export function tweenUniform(
 
     if (rawT < 1) {
       requestAnimationFrame(tick)
-    } else {
-      resolvePromise()
+      return
     }
+    resolvePromise()
   }
 
   requestAnimationFrame(tick)

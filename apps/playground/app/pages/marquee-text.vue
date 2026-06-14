@@ -4,7 +4,6 @@
   const { velocity, progress } = useSmoothScroll()
 </script>
 
-<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
 <template>
   <LayoutPage
     title="MarqueeText"

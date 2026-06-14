@@ -1,11 +1,14 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
+import type { GridConfig } from './layouts'
+
 declare module '@nuxt/schema' {
-  type AppConfigInput = {
+  interface AppConfigInput {
     layoutLayer?: {
       name?: string
       ui?: {
-        grid?: import('./layouts').GridConfig
+        grid?: GridConfig
       }
     }
   }
 }
+
+export {}

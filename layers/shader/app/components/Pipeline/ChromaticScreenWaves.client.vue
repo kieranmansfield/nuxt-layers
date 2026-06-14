@@ -1,54 +1,55 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { float, sin, time, uniform, vec3, vec4 } from 'three/tsl'
+
+  import type { TSLNode } from '../../shaders/types'
 
   /**
    * Per-channel animated sine waves along the Y axis — the CRT chromatic oscillation effect.
    * Each RGB channel gets its own phase offset, producing subtle chromatic breathing.
    * Pattern: R: sin(freq/res * uv.y + (-time*speed - phaseOffset))
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Wave amplitude (fraction of screen) */
-      amplitude?: number
-      /** Number of wave cycles across the screen height */
-      frequency?: number
-      /** Wave scroll speed */
-      speed?: number
-      /** Phase separation between RGB channels (radians) */
-      phaseOffset?: number
-      order?: number
-    }>(),
-    { amplitude: 0.075, frequency: 20, speed: 2, phaseOffset: 0.4, order: 0 }
-  )
+  const {
+    amplitude = 0.075,
+    frequency = 20,
+    speed = 2,
+    phaseOffset = 0.4,
+    order = 0,
+  } = defineProps<{
+    /** Wave amplitude (fraction of screen) */
+    amplitude?: number
+    /** Number of wave cycles across the screen height */
+    frequency?: number
+    /** Wave scroll speed */
+    speed?: number
+    /** Phase separation between RGB channels (radians) */
+    phaseOffset?: number
+    order?: number
+  }>()
 
-  const ampNode = uniform(props.amplitude)
-  const freqNode = uniform(props.frequency)
-  const speedNode = uniform(props.speed)
-  const phaseNode = uniform(props.phaseOffset)
+  const ampNode = uniform(amplitude)
+  const freqNode = uniform(frequency)
+  const speedNode = uniform(speed)
+  const phaseNode = uniform(phaseOffset)
   watch(
-    () => props.amplitude,
+    () => amplitude,
     (v) => {
       ampNode.value = v
     }
   )
   watch(
-    () => props.frequency,
+    () => frequency,
     (v) => {
       freqNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
   )
   watch(
-    () => props.phaseOffset,
+    () => phaseOffset,
     (v) => {
       phaseNode.value = v
     }
@@ -61,14 +62,14 @@
     const t = time.mul(speedNode).negate()
 
     const base = freqNode.mul(uvCurrent.y)
-    const r = sin(base.add(t.sub(phaseNode)))
+    const r: TSLNode = sin(base.add(t.sub(phaseNode)))
       .mul(ampNode)
       .add(float(1).sub(ampNode))
-    const g = sin(base.add(t)).mul(ampNode).add(float(1).sub(ampNode))
-    const b = sin(base.add(t.add(phaseNode)))
+    const g: TSLNode = sin(base.add(t)).mul(ampNode).add(float(1).sub(ampNode))
+    const b: TSLNode = sin(base.add(t.add(phaseNode)))
       .mul(ampNode)
       .add(float(1).sub(ampNode))
 
     return vec4(prev.xyz.mul(vec3(r, g, b)), prev.w)
-  }, props.order)
+  }, order)
 </script>

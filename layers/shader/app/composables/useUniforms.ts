@@ -1,23 +1,39 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 
 import { reactive, ref, watch } from 'vue'
-import { Color, Vector2, Vector3 } from 'three'
+import { Color, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from 'three'
 import { uniform } from 'three/tsl'
 
-import type { UniformValue, UniformValues } from '../types'
+import type { TSLNode, UniformValue, UniformValues } from '../types'
+
+/**
+ * `uniform()` is typed with per-type overloads, so a `UniformValue` union
+ * needs narrowing before the call resolves.
+ */
+function createUniformNode(value: UniformValue): TSLNode {
+  if (typeof value === 'number') return uniform(value)
+  if (typeof value === 'boolean') return uniform(value)
+  if (value instanceof Vector2) return uniform(value)
+  if (value instanceof Vector3) return uniform(value)
+  if (value instanceof Vector4) return uniform(value)
+  if (value instanceof Matrix3) return uniform(value)
+  if (value instanceof Matrix4) return uniform(value)
+  if (value instanceof Color) return uniform(value)
+  // Strings (node type names) and textures are handled by uniform() at runtime
+  // but aren't covered by its typed overloads
+  const loose = uniform as unknown as (v: UniformValue) => TSLNode
+  return loose(value)
+}
 
 /**
  * Creates reactive uniforms that bridge Vue state to TSL shaders
  */
 export function useUniforms<T extends UniformValues>(initialValues: T) {
   const values = reactive({ ...initialValues }) as T
-  const nodes: Record<string, ReturnType<typeof uniform>> = {}
+  const nodes: Record<string, TSLNode> = {}
 
   // Create uniform nodes for each value
   for (const [key, value] of Object.entries(initialValues)) {
-    nodes[key] = uniform(value)
+    nodes[key] = createUniformNode(value)
   }
 
   // Watch for changes and update uniform nodes
@@ -79,7 +95,7 @@ export function useUniforms<T extends UniformValues>(initialValues: T) {
    * Get all uniform nodes as an object
    */
   function getNodes() {
-    return nodes as Record<keyof T, ReturnType<typeof uniform>>
+    return nodes as Record<keyof T, TSLNode>
   }
 
   return {
@@ -98,7 +114,7 @@ export function useUniforms<T extends UniformValues>(initialValues: T) {
  */
 export function useUniform<T extends UniformValue>(initialValue: T) {
   const value = ref(initialValue) as Ref<T>
-  const node = uniform(initialValue)
+  const node = createUniformNode(initialValue)
 
   watch(value, (newValue) => {
     node.value = newValue

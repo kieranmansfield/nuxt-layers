@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 import type { PortfolioQueryOptions } from '../types/content'
 
 export function usePortfolioItems(options: PortfolioQueryOptions = {}) {

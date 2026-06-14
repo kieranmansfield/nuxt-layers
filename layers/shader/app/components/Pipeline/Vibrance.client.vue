@@ -1,30 +1,24 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { uniform, vec4 } from 'three/tsl'
 
   import { vibrance } from '../../shaders/common/palette'
 
-  const props = withDefaults(
-    defineProps<{
-      /**
-       * Saturation boost that protects already-saturated colours.
-       * 0 = unchanged, positive = more vivid, negative = less.
-       */
-      amount?: number
-      order?: number
-    }>(),
-    { amount: 0.5, order: 0 }
-  )
+  const { amount = 0.5, order = 0 } = defineProps<{
+    /**
+     * Saturation boost that protects already-saturated colours.
+     * 0 = unchanged, positive = more vivid, negative = less.
+     */
+    amount?: number
+    order?: number
+  }>()
 
-  const amountNode = uniform(props.amount)
+  const amountNode = uniform(amount)
   watch(
-    () => props.amount,
+    () => amount,
     (v) => {
       amountNode.value = v
     }
   )
 
-  useShaderStage((prev) => vec4(vibrance(prev.xyz, amountNode), prev.w), props.order)
+  useShaderStage((prev) => vec4(vibrance(prev.xyz, amountNode), prev.w), order)
 </script>

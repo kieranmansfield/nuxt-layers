@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 // plugins/feature-detection.client.ts
 
 /**
@@ -14,7 +11,9 @@
  * This ensures feature detection happens automatically on every page load,
  * making feature flags available immediately to all components.
  */
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin({
+  name: 'core:feature-detection',
+  setup() {
   // Initialize feature detection
   const features = useFeatures()
 
@@ -31,4 +30,5 @@ export default defineNuxtPlugin(() => {
       avif: features.avif.value,
     })
   }
+  },
 })

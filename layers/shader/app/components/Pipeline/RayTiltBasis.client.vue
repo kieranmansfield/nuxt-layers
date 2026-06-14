@@ -1,39 +1,38 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { cos, sin, uniform, vec3 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Yaw offset in radians (horizontal look) */
-      yaw?: number
-      /** Pitch offset in radians (vertical tilt) */
-      pitch?: number
-      /** Roll offset in radians */
-      roll?: number
-      order?: number
-    }>(),
-    { yaw: 0, pitch: 0, roll: 0, order: 0 }
-  )
+  const {
+    yaw = 0,
+    pitch = 0,
+    roll = 0,
+    order = 0,
+  } = defineProps<{
+    /** Yaw offset in radians (horizontal look) */
+    yaw?: number
+    /** Pitch offset in radians (vertical tilt) */
+    pitch?: number
+    /** Roll offset in radians */
+    roll?: number
+    order?: number
+  }>()
 
-  const yawNode = uniform(props.yaw)
-  const pitchNode = uniform(props.pitch)
-  const rollNode = uniform(props.roll)
+  const yawNode = uniform(yaw)
+  const pitchNode = uniform(pitch)
+  const rollNode = uniform(roll)
   watch(
-    () => props.yaw,
+    () => yaw,
     (v) => {
       yawNode.value = v
     }
   )
   watch(
-    () => props.pitch,
+    () => pitch,
     (v) => {
       pitchNode.value = v
     }
   )
   watch(
-    () => props.roll,
+    () => roll,
     (v) => {
       rollNode.value = v
     }
@@ -56,7 +55,7 @@
       const sr = sin(rollNode)
       return vec3(r2.x.mul(cr).sub(r2.y.mul(sr)), r2.x.mul(sr).add(r2.y.mul(cr)), r2.z)
     },
-    props.order,
+    order,
     'ray'
   )
 </script>

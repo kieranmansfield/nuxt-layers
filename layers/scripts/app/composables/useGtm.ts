@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 export function useGtm() {
   const { scriptsLayer } = useAppConfig()
   const { hasConsent, consentRequired } = useScriptsConsent()
@@ -8,9 +7,10 @@ export function useGtm() {
     return { push: (_data: Record<string, unknown>) => {}, load: () => {} }
   }
 
-  const trigger = computed(() =>
-    consentRequired.value && !hasConsent.value ? 'manual' : 'onNuxtReady'
-  )
+  // Load on Nuxt ready unless consent is required and not yet granted
+  const trigger = consentRequired.value
+    ? useScriptTriggerConsent({ consent: hasConsent })
+    : 'onNuxtReady'
 
   const gtm = useScriptGoogleTagManager({ id: gtmConfig.id, scriptOptions: { trigger } })
 

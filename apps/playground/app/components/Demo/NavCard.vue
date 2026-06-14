@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
   const { to, icon, title, description, target } = defineProps<{
     to: string

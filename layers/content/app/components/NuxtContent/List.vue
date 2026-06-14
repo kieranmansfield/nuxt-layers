@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-boolean-default -->
 <script setup lang="ts">
   const {
     status,

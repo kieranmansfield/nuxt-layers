@@ -1,32 +1,27 @@
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
   import { OrbitControls } from '@tresjs/cientos'
   import { TresCanvas } from '@tresjs/core'
   import { Clock, DoubleSide, ShaderMaterial, TextureLoader, type Texture } from 'three'
 
-  const props = withDefaults(
-    defineProps<{
-      distortion?: number
-      mouseRipple?: boolean
-      grayscale?: number
-      rgbShift?: number
-      vignette?: boolean
-      mouseX?: number
-      mouseY?: number
-      disableZoom?: boolean
-    }>(),
-    {
-      distortion: 0.02,
-      mouseRipple: true,
-      grayscale: 0,
-      rgbShift: 0,
-      vignette: true,
-      mouseX: 0.5,
-      mouseY: 0.5,
-      disableZoom: false,
-    }
-  )
+  const {
+    distortion = 0.02,
+    mouseRipple = true,
+    grayscale = 0,
+    rgbShift = 0,
+    vignette = true,
+    mouseX = 0.5,
+    mouseY = 0.5,
+    disableZoom = false,
+  } = defineProps<{
+    distortion?: number
+    mouseRipple?: boolean
+    grayscale?: number
+    rgbShift?: number
+    vignette?: boolean
+    mouseX?: number
+    mouseY?: number
+    disableZoom?: boolean
+  }>()
 
   const loadedTexture = ref<Texture | null>(null)
 
@@ -148,16 +143,16 @@ void main() {
       uniforms: {
         uTexture: { value: loadedTexture.value },
         uTime: { value: 0 },
-        uDistortion: { value: props.distortion },
+        uDistortion: { value: distortion },
         uDistortionSpeed: { value: 1 },
-        uMouseX: { value: props.mouseX },
-        uMouseY: { value: props.mouseY },
+        uMouseX: { value: mouseX },
+        uMouseY: { value: mouseY },
         uRippleStrength: { value: 0.02 },
-        uGrayscale: { value: props.grayscale },
-        uRgbShift: { value: props.rgbShift },
+        uGrayscale: { value: grayscale },
+        uRgbShift: { value: rgbShift },
         uVignetteIntensity: { value: 0.5 },
-        uMouseRipple: { value: props.mouseRipple },
-        uVignette: { value: props.vignette },
+        uMouseRipple: { value: mouseRipple },
+        uVignette: { value: vignette },
         uZoom: { value: 1 },
       },
       side: DoubleSide,
@@ -173,13 +168,13 @@ void main() {
       const { uniforms } = material.value
       const elapsed = clock.getElapsedTime()
       if (uniforms.uTime) uniforms.uTime.value = elapsed
-      if (uniforms.uDistortion) uniforms.uDistortion.value = props.distortion
-      if (uniforms.uMouseX) uniforms.uMouseX.value = props.mouseX
-      if (uniforms.uMouseY) uniforms.uMouseY.value = props.mouseY
-      if (uniforms.uGrayscale) uniforms.uGrayscale.value = props.grayscale
-      if (uniforms.uRgbShift) uniforms.uRgbShift.value = props.rgbShift
-      if (uniforms.uMouseRipple) uniforms.uMouseRipple.value = props.mouseRipple
-      if (uniforms.uVignette) uniforms.uVignette.value = props.vignette
+      if (uniforms.uDistortion) uniforms.uDistortion.value = distortion
+      if (uniforms.uMouseX) uniforms.uMouseX.value = mouseX
+      if (uniforms.uMouseY) uniforms.uMouseY.value = mouseY
+      if (uniforms.uGrayscale) uniforms.uGrayscale.value = grayscale
+      if (uniforms.uRgbShift) uniforms.uRgbShift.value = rgbShift
+      if (uniforms.uMouseRipple) uniforms.uMouseRipple.value = mouseRipple
+      if (uniforms.uVignette) uniforms.uVignette.value = vignette
     }
     animationId = requestAnimationFrame(animate)
   }

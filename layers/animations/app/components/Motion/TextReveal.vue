@@ -1,6 +1,10 @@
 <script setup lang="ts">
-const props = withDefaults(
-  defineProps<{
+  const {
+    type = 'chars',
+    stagger = 0.03,
+    duration = 0.8,
+    start = 'top 80%',
+  } = defineProps<{
     /**
      * Text to animate
      */
@@ -21,19 +25,17 @@ const props = withDefaults(
      * Start position for scroll trigger
      */
     start?: string
-  }>(),
-  { type: 'chars', stagger: 0.03, duration: 0.8, start: 'top 80%' }
-)
+  }>()
 
-const animBinding = computed(() => ({
-  y: 40,
-  opacity: 0,
-  rotateX: -90,
-  stagger: props.stagger,
-  duration: props.duration,
-  ease: 'power3.out',
-  start: props.start,
-}))
+  const animBinding = computed(() => ({
+    y: 40,
+    opacity: 0,
+    rotateX: -90,
+    stagger: stagger,
+    duration: duration,
+    ease: 'power3.out',
+    start: start,
+  }))
 </script>
 
 <template>
@@ -58,9 +60,9 @@ const animBinding = computed(() => ({
 </template>
 
 <style scoped>
-.motion-text-reveal {
-  display: inline-flex;
-  flex-wrap: wrap;
-  perspective: 1000px;
-}
+  .motion-text-reveal {
+    display: inline-flex;
+    flex-wrap: wrap;
+    perspective: 1000px;
+  }
 </style>

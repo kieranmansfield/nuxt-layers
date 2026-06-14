@@ -1,7 +1,7 @@
 import type { MaybeRefOrGetter } from 'vue'
 import type { ScrollTrigger as GSAPScrollTrigger } from 'gsap/ScrollTrigger'
 
-interface UseCountUpOptions {
+type UseCountUpOptions = {
   to: number
   from?: number
   duration?: number

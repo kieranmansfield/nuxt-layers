@@ -65,7 +65,7 @@
           <!-- Collapse trigger -->
           <button
             class="w-full flex items-center gap-3 px-4 py-3 bg-elevated text-left"
-            @click="toggle(colour.id)"
+            @click="() => toggle(colour.id)"
           >
             <div
               class="size-5 rounded-full border border-black/10 shrink-0"
@@ -116,7 +116,7 @@
             <UBadge :label="colour.role" color="neutral" variant="soft" size="xs" />
             <span class="text-xs text-muted font-mono ml-auto">{{ colour.hex }}</span>
           </div>
-          <ColourScaleRow :name="colour.name" :scale="colour.scale" :show-oklch="showOklch" />
+          <ColourScaleRow :name="colour.name" :scale="colour.scale" :show-oklch />
         </div>
       </div>
     </div>

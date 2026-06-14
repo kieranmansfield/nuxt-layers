@@ -113,7 +113,7 @@
             :min="meta.min"
             :max="meta.max"
             :step="meta.step"
-            @update:model-value="onAxisUpdate(axis as keyof FontAxes, $event)"
+            @update:model-value="($event) => onAxisUpdate(axis as keyof FontAxes, $event)"
           />
         </template>
       </div>

@@ -1,7 +1,4 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { clamp, floor, mix, time, uniform, vec3, vec4 } from 'three/tsl'
 
   import { blendOverlay, blendScreen, blendSoftLight } from '../../shaders/common/blend'
@@ -9,58 +6,55 @@
 
   type GrainBlendMode = 'add' | 'sub' | 'screen' | 'overlay' | 'soft-light'
 
-  const props = withDefaults(
-    defineProps<{
-      scale?: number
-      strength?: number
-      opacity?: number
-      misregistration?: number
-      fps?: number
-      blendMode?: GrainBlendMode
-      order?: number
-    }>(),
-    {
-      scale: 0.6,
-      strength: 0.12,
-      opacity: 1.0,
-      misregistration: 0.003,
-      fps: 8,
-      blendMode: 'add',
-      order: 0,
-    }
-  )
+  const {
+    scale = 0.6,
+    strength = 0.12,
+    opacity = 1.0,
+    misregistration = 0.003,
+    fps = 8,
+    blendMode = 'add',
+    order = 0,
+  } = defineProps<{
+    scale?: number
+    strength?: number
+    opacity?: number
+    misregistration?: number
+    fps?: number
+    blendMode?: GrainBlendMode
+    order?: number
+  }>()
 
-  const scaleNode = uniform(props.scale)
-  const strengthNode = uniform(props.strength)
-  const opacityNode = uniform(props.opacity)
-  const misregNode = uniform(props.misregistration)
-  const fpsNode = uniform(props.fps)
+  const scaleNode = uniform(scale)
+  const strengthNode = uniform(strength)
+  const opacityNode = uniform(opacity)
+  const misregNode = uniform(misregistration)
+  const fpsNode = uniform(fps)
   watch(
-    () => props.scale,
+    () => scale,
     (v) => {
       scaleNode.value = v
     }
   )
   watch(
-    () => props.strength,
+    () => strength,
     (v) => {
       strengthNode.value = v
     }
   )
   watch(
-    () => props.opacity,
+    () => opacity,
     (v) => {
       opacityNode.value = v
     }
   )
   watch(
-    () => props.misregistration,
+    () => misregistration,
     (v) => {
       misregNode.value = v
     }
   )
   watch(
-    () => props.fps,
+    () => fps,
     (v) => {
       fpsNode.value = v
     }
@@ -87,7 +81,7 @@
 
     const mixFactor = strengthNode.mul(opacityNode)
     let blended
-    switch (props.blendMode) {
+    switch (blendMode) {
       case 'sub':
         blended = prev.xyz.sub(grainVec.abs().mul(opacityNode))
         break
@@ -104,5 +98,5 @@
         blended = prev.xyz.add(grainVec.mul(opacityNode))
     }
     return vec4(clamp(blended, 0, 1), prev.w)
-  }, props.order)
+  }, order)
 </script>

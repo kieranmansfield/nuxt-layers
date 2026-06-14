@@ -1,7 +1,4 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { cos, float, mix, sin, smoothstep, time, uniform, vec2, vec4 } from 'three/tsl'
 
@@ -15,42 +12,39 @@
    * Exposes all params individually so the pipeline can still intercept at any stage,
    * but provides a convenient self-contained starting point.
    */
-  const props = withDefaults(
-    defineProps<{
-      colorA?: string
-      colorB?: string
-      /** Noise input scale */
-      noiseScale?: number
-      /** Max rotation amount driven by noise (degrees) */
-      rotationAmount?: number
-      /** Sine warp frequency */
-      warpFrequency?: number
-      /** Sine warp amplitude (higher = subtler) */
-      warpAmplitude?: number
-      /** Gradient blend angle (degrees) */
-      blendAngle?: number
-      /** Smoothstep lower edge */
-      edge0?: number
-      /** Smoothstep upper edge */
-      edge1?: number
-      /** Animation speed */
-      speed?: number
-      order?: number
-    }>(),
-    {
-      colorA: '#1a0a5a',
-      colorB: '#ff6688',
-      noiseScale: 1,
-      rotationAmount: 720,
-      warpFrequency: 3,
-      warpAmplitude: 3,
-      blendAngle: 45,
-      edge0: 0.2,
-      edge1: 0.8,
-      speed: 0.3,
-      order: 0,
-    }
-  )
+  const {
+    colorA = '#1a0a5a',
+    colorB = '#ff6688',
+    noiseScale = 1,
+    rotationAmount = 720,
+    warpFrequency = 3,
+    warpAmplitude = 3,
+    blendAngle = 45,
+    edge0 = 0.2,
+    edge1 = 0.8,
+    speed = 0.3,
+    order = 0,
+  } = defineProps<{
+    colorA?: string
+    colorB?: string
+    /** Noise input scale */
+    noiseScale?: number
+    /** Max rotation amount driven by noise (degrees) */
+    rotationAmount?: number
+    /** Sine warp frequency */
+    warpFrequency?: number
+    /** Sine warp amplitude (higher = subtler) */
+    warpAmplitude?: number
+    /** Gradient blend angle (degrees) */
+    blendAngle?: number
+    /** Smoothstep lower edge */
+    edge0?: number
+    /** Smoothstep upper edge */
+    edge1?: number
+    /** Animation speed */
+    speed?: number
+    order?: number
+  }>()
 
   const DEG2RAD = Math.PI / 180
 
@@ -59,75 +53,75 @@
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorANode = toVec3Node(props.colorA)
-  const colorBNode = toVec3Node(props.colorB)
-  const noiseScaleNode = uniform(props.noiseScale)
-  const rotAmountNode = uniform(props.rotationAmount * DEG2RAD)
-  const warpFreqNode = uniform(props.warpFrequency)
-  const warpAmpNode = uniform(props.warpAmplitude)
-  const blendAngleNode = uniform(props.blendAngle * DEG2RAD)
-  const edge0Node = uniform(props.edge0)
-  const edge1Node = uniform(props.edge1)
-  const speedNode = uniform(props.speed)
+  const colorANode = toVec3Node(colorA)
+  const colorBNode = toVec3Node(colorB)
+  const noiseScaleNode = uniform(noiseScale)
+  const rotAmountNode = uniform(rotationAmount * DEG2RAD)
+  const warpFreqNode = uniform(warpFrequency)
+  const warpAmpNode = uniform(warpAmplitude)
+  const blendAngleNode = uniform(blendAngle * DEG2RAD)
+  const edge0Node = uniform(edge0)
+  const edge1Node = uniform(edge1)
+  const speedNode = uniform(speed)
 
   watch(
-    () => props.colorA,
+    () => colorA,
     (v) => {
       const c = new Color(v)
       colorANode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorB,
+    () => colorB,
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.noiseScale,
+    () => noiseScale,
     (v) => {
       noiseScaleNode.value = v
     }
   )
   watch(
-    () => props.rotationAmount,
+    () => rotationAmount,
     (v) => {
       rotAmountNode.value = v * DEG2RAD
     }
   )
   watch(
-    () => props.warpFrequency,
+    () => warpFrequency,
     (v) => {
       warpFreqNode.value = v
     }
   )
   watch(
-    () => props.warpAmplitude,
+    () => warpAmplitude,
     (v) => {
       warpAmpNode.value = v
     }
   )
   watch(
-    () => props.blendAngle,
+    () => blendAngle,
     (v) => {
       blendAngleNode.value = v * DEG2RAD
     }
   )
   watch(
-    () => props.edge0,
+    () => edge0,
     (v) => {
       edge0Node.value = v
     }
   )
   watch(
-    () => props.edge1,
+    () => edge1,
     (v) => {
       edge1Node.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -172,5 +166,5 @@
     const blend = smoothstep(edge0Node, edge1Node, rotX)
 
     return vec4(mix(colorANode, colorBNode, blend), float(1))
-  }, props.order)
+  }, order)
 </script>

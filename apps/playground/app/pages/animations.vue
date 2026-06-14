@@ -37,8 +37,10 @@
         description="GSAP-powered micro-interaction components — the pieces the Motion layer composes into its scrollytelling demos."
       >
         <div class="flex flex-wrap gap-4 justify-center">
-          <UButton size="lg" @click="$router.push('#interactive')">Interactions</UButton>
-          <UButton size="lg" variant="outline" @click="$router.push('#text')">Text & Counters</UButton>
+          <UButton size="lg" @click="() => $router.push('#interactive')">Interactions</UButton>
+          <UButton size="lg" variant="outline" @click="() => $router.push('#text')"
+            >Text & Counters</UButton
+          >
           <UButton size="lg" variant="ghost" to="/motion">
             <UIcon name="i-lucide-sparkles" class="mr-2" />
             Motion Layer
@@ -234,7 +236,11 @@
         name="Animations Layer"
         description="Micro-interaction primitives for the Motion layer"
         :links="[
-          { label: 'Motion Interactions', to: '/motion-interactions', icon: 'i-lucide-mouse-pointer-2' },
+          {
+            label: 'Motion Interactions',
+            to: '/motion-interactions',
+            icon: 'i-lucide-mouse-pointer-2',
+          },
           { label: 'MarqueeText', to: '/marquee-text', icon: 'i-lucide-text-cursor-input' },
           { label: 'Motion Layer', to: '/motion', icon: 'i-lucide-sparkles' },
         ]"

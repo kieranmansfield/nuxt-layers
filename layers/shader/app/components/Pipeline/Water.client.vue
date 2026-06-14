@@ -1,72 +1,66 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { float, mix, sin, time, uniform, vec4 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Deep water colour */
-      colorDeep?: string
-      /** Shallow/crest colour */
-      colorShallow?: string
-      /** Wave frequency */
-      frequency?: number
-      /** Wave height */
-      amplitude?: number
-      /** Animation speed */
-      speed?: number
-      order?: number
-    }>(),
-    {
-      colorDeep: '#003366',
-      colorShallow: '#66ccff',
-      frequency: 8,
-      amplitude: 0.5,
-      speed: 1,
-      order: 0,
-    }
-  )
+  const {
+    colorDeep = '#003366',
+    colorShallow = '#66ccff',
+    frequency = 8,
+    amplitude = 0.5,
+    speed = 1,
+    order = 0,
+  } = defineProps<{
+    /** Deep water colour */
+    colorDeep?: string
+    /** Shallow/crest colour */
+    colorShallow?: string
+    /** Wave frequency */
+    frequency?: number
+    /** Wave height */
+    amplitude?: number
+    /** Animation speed */
+    speed?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorDeepNode = toVec3Node(props.colorDeep)
-  const colorShallowNode = toVec3Node(props.colorShallow)
-  const freqNode = uniform(props.frequency)
-  const ampNode = uniform(props.amplitude)
-  const speedNode = uniform(props.speed)
+  const colorDeepNode = toVec3Node(colorDeep)
+  const colorShallowNode = toVec3Node(colorShallow)
+  const freqNode = uniform(frequency)
+  const ampNode = uniform(amplitude)
+  const speedNode = uniform(speed)
   watch(
-    () => props.colorDeep,
+    () => colorDeep,
     (v) => {
       const c = new Color(v)
       colorDeepNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorShallow,
+    () => colorShallow,
     (v) => {
       const c = new Color(v)
       colorShallowNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.frequency,
+    () => frequency,
     (v) => {
       freqNode.value = v
     }
   )
   watch(
-    () => props.amplitude,
+    () => amplitude,
     (v) => {
       ampNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -88,5 +82,5 @@
     const w3 = sin(uv.y.mul(freqNode.mul(1.3)).add(t.mul(1.1)))
     const wave = w1.add(w2).add(w3).div(3).mul(ampNode).mul(0.5).add(0.5)
     return vec4(mix(colorDeepNode, colorShallowNode, wave), float(1))
-  }, props.order)
+  }, order)
 </script>

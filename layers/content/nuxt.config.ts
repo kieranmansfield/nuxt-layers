@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 // Conditionally load nuxt-studio if installed (optional peer dependency) and in development
 const studioModule: string[] = []
 if (process.env.NODE_ENV === 'development') {

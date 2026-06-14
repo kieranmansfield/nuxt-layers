@@ -1,33 +1,31 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { uniform, vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
   import { halftone } from '../../shaders/common/grain'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Dot density — higher = finer dots */
-      scale?: number
-      /** Screen angle in radians */
-      angle?: number
-      order?: number
-    }>(),
-    { scale: 50, angle: 0, order: 0 }
-  )
+  const {
+    scale = 50,
+    angle = 0,
+    order = 0,
+  } = defineProps<{
+    /** Dot density — higher = finer dots */
+    scale?: number
+    /** Screen angle in radians */
+    angle?: number
+    order?: number
+  }>()
 
-  const scaleNode = uniform(props.scale)
-  const angleNode = uniform(props.angle)
+  const scaleNode = uniform(scale)
+  const angleNode = uniform(angle)
   watch(
-    () => props.scale,
+    () => scale,
     (v) => {
       scaleNode.value = v
     }
   )
   watch(
-    () => props.angle,
+    () => angle,
     (v) => {
       angleNode.value = v
     }
@@ -40,5 +38,5 @@
     const lum = luminance(prev.xyz)
     const dot = halftone(uvCurrent, lum, scaleNode, angleNode)
     return vec4(prev.xyz.mul(dot), prev.w)
-  }, props.order)
+  }, order)
 </script>

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { defu } from 'defu'
 
 import { ROUTING_PRESETS, type FeatureValue, type RoutingLayerConfig } from '../types/routing'

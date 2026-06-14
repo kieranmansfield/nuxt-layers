@@ -1,95 +1,89 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, DoubleSide } from 'three'
   import { mix, time as tslTime, uniform, uv, vec3 } from 'three/tsl'
   import { MeshBasicNodeMaterial } from 'three/webgpu'
 
+  import type { TSLNode } from '../../shaders/types'
   import { fbm, simplexNoise2D } from '../../utils/tsl/noise'
 
-  const props = withDefaults(
-    defineProps<{
-      scale?: number
-      speed?: number
-      octaves?: number
-      baseColor?: string
-      peakColor?: string
-      type?: 'simplex' | 'fbm'
-      transparent?: boolean
-      /** Mouse X position (0-1) for interaction */
-      mouseX?: number
-      /** Mouse Y position (0-1) for interaction */
-      mouseY?: number
-      /** Enable mouse interaction */
-      mouseInteraction?: boolean
-      /** Mouse interaction strength */
-      mouseStrength?: number
-    }>(),
-    {
-      scale: 3,
-      speed: 0.5,
-      octaves: 4,
-      baseColor: '#1e1b4b',
-      peakColor: '#c084fc',
-      type: 'simplex',
-      transparent: false,
-      mouseX: 0.5,
-      mouseY: 0.5,
-      mouseInteraction: false,
-      mouseStrength: 0.5,
-    }
-  )
+  const {
+    scale = 3,
+    speed = 0.5,
+    octaves = 4,
+    baseColor = '#1e1b4b',
+    peakColor = '#c084fc',
+    type = 'simplex',
+    transparent = false,
+    mouseX = 0.5,
+    mouseY = 0.5,
+    mouseInteraction = false,
+    mouseStrength = 0.5,
+  } = defineProps<{
+    scale?: number
+    speed?: number
+    octaves?: number
+    baseColor?: string
+    peakColor?: string
+    type?: 'simplex' | 'fbm'
+    transparent?: boolean
+    /** Mouse X position (0-1) for interaction */
+    mouseX?: number
+    /** Mouse Y position (0-1) for interaction */
+    mouseY?: number
+    /** Enable mouse interaction */
+    mouseInteraction?: boolean
+    /** Mouse interaction strength */
+    mouseStrength?: number
+  }>()
 
   // Create reactive uniforms
-  const scaleUniform = uniform(props.scale)
-  const speedUniform = uniform(props.speed)
-  const mouseXUniform = uniform(props.mouseX)
-  const mouseYUniform = uniform(props.mouseY)
-  const mouseStrengthUniform = uniform(props.mouseStrength)
-  const baseColorUniform = uniform(new Color(props.baseColor))
-  const peakColorUniform = uniform(new Color(props.peakColor))
+  const scaleUniform = uniform(scale)
+  const speedUniform = uniform(speed)
+  const mouseXUniform = uniform(mouseX)
+  const mouseYUniform = uniform(mouseY)
+  const mouseStrengthUniform = uniform(mouseStrength)
+  const baseColorUniform: TSLNode = uniform(new Color(baseColor))
+  const peakColorUniform: TSLNode = uniform(new Color(peakColor))
 
   // Watch prop changes
   watch(
-    () => props.scale,
+    () => scale,
     (val) => {
       scaleUniform.value = val
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (val) => {
       speedUniform.value = val
     }
   )
   watch(
-    () => props.mouseX,
+    () => mouseX,
     (val) => {
       mouseXUniform.value = val
     }
   )
   watch(
-    () => props.mouseY,
+    () => mouseY,
     (val) => {
       mouseYUniform.value = val
     }
   )
   watch(
-    () => props.mouseStrength,
+    () => mouseStrength,
     (val) => {
       mouseStrengthUniform.value = val
     }
   )
   watch(
-    () => props.baseColor,
+    () => baseColor,
     (val) => {
       baseColorUniform.value = new Color(val)
     }
   )
   watch(
-    () => props.peakColor,
+    () => peakColor,
     (val) => {
       peakColorUniform.value = new Color(val)
     }
@@ -102,7 +96,7 @@
     let animatedUV = uv().mul(scaleUniform).add(tslTime.mul(speedUniform))
 
     // Add mouse interaction
-    if (props.mouseInteraction) {
+    if (mouseInteraction) {
       const mouseOffset = vec3(
         mouseXUniform.sub(0.5).mul(mouseStrengthUniform),
         mouseYUniform.sub(0.5).mul(mouseStrengthUniform),
@@ -113,9 +107,9 @@
 
     // Generate noise based on type
     let noiseValue
-    if (props.type === 'fbm') {
+    if (type === 'fbm') {
       noiseValue = fbm(vec3(animatedUV.x, animatedUV.y, tslTime.mul(speedUniform.mul(0.1))), {
-        octaves: props.octaves,
+        octaves: octaves,
         lacunarity: 2.0,
         gain: 0.5,
         amplitude: 0.5,
@@ -132,7 +126,7 @@
     const colorNode = mix(vec3(baseColorUniform), vec3(peakColorUniform), normalizedNoise)
 
     mat.colorNode = colorNode as any
-    mat.transparent = props.transparent
+    mat.transparent = transparent
     mat.side = DoubleSide
 
     return mat

@@ -46,7 +46,7 @@
         color="error"
         size="sm"
         class="w-full justify-start"
-        @click="confirmOpen = true"
+        @click="() => (confirmOpen = true)"
       >
         Clear all
       </UButton>
@@ -61,7 +61,9 @@
     </template>
     <template #footer>
       <div class="flex justify-end gap-2">
-        <UButton variant="ghost" color="neutral" @click="confirmOpen = false">Cancel</UButton>
+        <UButton variant="ghost" color="neutral" @click="() => (confirmOpen = false)"
+          >Cancel</UButton
+        >
         <UButton color="error" @click="handleClear">Clear everything</UButton>
       </div>
     </template>

@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import {
   QUALITY_PRESETS,
   type QualityLevel,
@@ -8,7 +5,6 @@ import {
   type RendererBackend,
   type RendererCapabilities,
 } from '#layers/canvas/types/renderer'
-import type { WebGLRenderer } from 'three'
 
 /**
  * Detect and expose renderer capabilities
@@ -17,23 +13,36 @@ export function useRendererCapabilities() {
   const capabilities = ref<RendererCapabilities | null>(null)
   const isReady = ref(false)
 
-  function detectFromRenderer(renderer: WebGLRenderer) {
+  function detectFromRenderer(renderer: any) {
+    const isWebGPU = renderer.constructor?.name === 'WebGPURenderer'
     const glCaps = renderer.capabilities
 
-    // Check if WebGPU
-    const isWebGPU = 'gpu' in navigator && renderer.constructor.name === 'WebGPURenderer'
-
-    capabilities.value = {
-      backend: (isWebGPU ? 'webgpu' : 'webgl') as RendererBackend,
-      maxTextureSize: glCaps.maxTextureSize,
-      maxTextures: glCaps.maxTextures,
-      maxVertexUniforms: glCaps.maxVertexUniforms,
-      maxFragmentUniforms: glCaps.maxFragmentUniforms,
-      floatTextures: glCaps.isWebGL2 || false,
-      anisotropy: renderer.capabilities.getMaxAnisotropy(),
-      precision: glCaps.precision as 'lowp' | 'mediump' | 'highp',
-      devicePixelRatio: renderer.getPixelRatio(),
-      isWebGPU,
+    if (isWebGPU || !glCaps) {
+      capabilities.value = {
+        backend: 'webgpu',
+        maxTextureSize: 16384,
+        maxTextures: 16,
+        maxVertexUniforms: 256,
+        maxFragmentUniforms: 256,
+        floatTextures: true,
+        anisotropy: 16,
+        precision: 'highp',
+        devicePixelRatio: renderer.getPixelRatio?.() ?? 1,
+        isWebGPU: true,
+      }
+    } else {
+      capabilities.value = {
+        backend: 'webgl',
+        maxTextureSize: glCaps.maxTextureSize,
+        maxTextures: glCaps.maxTextures,
+        maxVertexUniforms: glCaps.maxVertexUniforms,
+        maxFragmentUniforms: glCaps.maxFragmentUniforms,
+        floatTextures: glCaps.isWebGL2 || false,
+        anisotropy: glCaps.getMaxAnisotropy(),
+        precision: glCaps.precision as 'lowp' | 'mediump' | 'highp',
+        devicePixelRatio: renderer.getPixelRatio(),
+        isWebGPU: false,
+      }
     }
 
     isReady.value = true
@@ -96,14 +105,13 @@ export function useAutoQuality() {
     const cores = navigator.hardwareConcurrency || 2
 
     // Determine quality
+    quality.value = 'ultra'
     if (isMobile || cores <= 2) {
       quality.value = 'low'
     } else if (dpr <= 1 || cores <= 4) {
       quality.value = 'medium'
     } else if (dpr <= 2) {
       quality.value = 'high'
-    } else {
-      quality.value = 'ultra'
     }
   })
 

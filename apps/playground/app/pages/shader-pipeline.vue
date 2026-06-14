@@ -247,9 +247,6 @@
   })
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <div class="min-h-screen bg-neutral-950 text-white flex flex-col">
     <!-- Header -->
@@ -317,7 +314,6 @@
               <div class="hidden pointer-events-none" aria-hidden="true">
                 <!-- ── 1. Generators ── -->
                 <!-- :key on template forces block remount when ringCount changes (structural TSL graph change) -->
-                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-if="activeCategory === 'generators'" :key="gen.ringCount">
                   <PipelineRingField
                     :order="0"
@@ -339,7 +335,6 @@
                 </template>
 
                 <!-- ── 2. Noise ── -->
-                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'noise'" :key="noise.octaves">
                   <PipelineFBMNoise
                     :order="0"
@@ -465,7 +460,6 @@
                 </template>
 
                 <!-- ── 8. Noise FX ── -->
-                <!-- eslint-disable vue/no-template-key -->
                 <template v-else-if="activeCategory === 'noise_fx'" :key="noiseFxSub">
                   <template v-if="noiseFxSub === 'fbm'" :key="noiseFx.octaves">
                     <PipelineFBMNoise
@@ -862,7 +856,6 @@
               </div>
 
               <!-- Canvas — ShaderPipeline is childless; it only attaches the material -->
-              <!-- eslint-disable-next-line vue/prefer-true-attribute-shorthand -->
               <ShaderCanvas clear-color="#0a0a0a" :window-size="false" :webgpu="true">
                 <TresOrthographicCamera :args="[-1, 1, 1, -1, 0.1, 100]" :position="[0, 0, 1]" />
                 <TresMesh>

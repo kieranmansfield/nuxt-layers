@@ -1,8 +1,8 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { checkWebGPUSupport } from '#layers/canvas/app/composables/useRendererCapabilities'
 
-export default defineNuxtPlugin(async () => {
+export default defineNuxtPlugin({
+  name: 'shader:shader',
+  async setup() {
   const config = useAppConfig()
   const shaderConfig = (config.shader || {}) as {
     preferWebGPU?: boolean
@@ -28,4 +28,5 @@ export default defineNuxtPlugin(async () => {
       },
     },
   }
+  },
 })

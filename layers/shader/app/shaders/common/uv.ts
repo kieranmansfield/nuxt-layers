@@ -1,17 +1,16 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable complexity */
-/* eslint-disable max-params */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL UV Manipulation Utilities
  * Provides composable UV transformation functions
  */
-import { abs, atan, cos, float, floor, fract, length, pow, sin, smoothstep, vec2 } from 'three/tsl'
+import { abs, atan, cos, float, floor, fract, length, mix, pow, sin, smoothstep, vec2 } from 'three/tsl'
 
 import type { TSLNode } from '../types'
+
+function toVec2Node(val: TSLNode | number | [number, number]): TSLNode {
+  if (typeof val === 'number') return vec2(val, val)
+  if (Array.isArray(val)) return vec2(val[0], val[1])
+  return val
+}
 
 // ============================================
 // Basic Transformations
@@ -26,12 +25,7 @@ export function scaleUV(
   center: TSLNode | [number, number] = [0.5, 0.5]
 ): TSLNode {
   const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const s =
-    typeof scale === 'number'
-      ? vec2(scale, scale)
-      : Array.isArray(scale)
-        ? vec2(scale[0], scale[1])
-        : scale
+  const s = toVec2Node(scale)
 
   return uv.sub(c).div(s).add(c)
 }
@@ -71,12 +65,7 @@ export function translateUV(uv: TSLNode, offset: TSLNode | [number, number]): TS
  * Tile UV (repeat)
  */
 export function tileUV(uv: TSLNode, tiles: TSLNode | number | [number, number]): TSLNode {
-  const t =
-    typeof tiles === 'number'
-      ? vec2(tiles, tiles)
-      : Array.isArray(tiles)
-        ? vec2(tiles[0], tiles[1])
-        : tiles
+  const t = toVec2Node(tiles)
 
   return fract(uv.mul(t))
 }
@@ -118,10 +107,12 @@ export function fromPolar(
   center: TSLNode | [number, number] = [0.5, 0.5]
 ): TSLNode {
   const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const radius = polar.x
-  const angle = polar.y.mul(Math.PI * 2).sub(Math.PI)
+  const radius: TSLNode = polar.x
+  const angle: TSLNode = polar.y.mul(Math.PI * 2).sub(Math.PI)
 
-  return vec2(cos(angle).mul(radius), sin(angle).mul(radius)).add(c)
+  const x: TSLNode = cos(angle).mul(radius)
+  const y: TSLNode = sin(angle).mul(radius)
+  return vec2(x, y).add(c)
 }
 
 // ============================================
@@ -145,14 +136,14 @@ export function waveUV(
   if (direction === 'x') {
     const offset = sin(uv.y.mul(freq).add(t)).mul(amp)
     return vec2(uv.x.add(offset), uv.y)
-  } else if (direction === 'y') {
+  }
+  if (direction === 'y') {
     const offset = sin(uv.x.mul(freq).add(t)).mul(amp)
     return vec2(uv.x, uv.y.add(offset))
-  } else {
-    const offsetX = sin(uv.y.mul(freq).add(t)).mul(amp)
-    const offsetY = sin(uv.x.mul(freq).add(t.mul(1.3))).mul(amp)
-    return vec2(uv.x.add(offsetX), uv.y.add(offsetY))
   }
+  const offsetX = sin(uv.y.mul(freq).add(t)).mul(amp)
+  const offsetY = sin(uv.x.mul(freq).add(t.mul(1.3))).mul(amp)
+  return vec2(uv.x.add(offsetX), uv.y.add(offsetY))
 }
 
 /**
@@ -173,7 +164,7 @@ export function rippleUV(
   const fall = typeof falloff === 'number' ? float(falloff) : falloff
 
   const diff = uv.sub(c)
-  const dist = length(diff)
+  const dist: TSLNode = length(diff)
 
   const ripple = sin(dist.mul(freq).sub(t)).mul(amp)
   const falloffValue = pow(float(1).sub(dist.mul(fall)), 2).max(0)

@@ -1,39 +1,40 @@
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
   import { BackSide, DoubleSide, FrontSide } from 'three'
   import { MeshBasicNodeMaterial, MeshStandardNodeMaterial } from 'three/webgpu'
 
   import type { TSLNode } from '../../types'
 
-  const props = withDefaults(
-    defineProps<{
-      type?: 'basic' | 'standard'
-      colorNode?: TSLNode
-      opacityNode?: TSLNode
-      normalNode?: TSLNode
-      emissiveNode?: TSLNode
-      metalnessNode?: TSLNode
-      roughnessNode?: TSLNode
-      positionNode?: TSLNode
-      transparent?: boolean
-      side?: 'front' | 'back' | 'double'
-      wireframe?: boolean
-      flatShading?: boolean
-      depthTest?: boolean
-      depthWrite?: boolean
-    }>(),
-    {
-      type: 'basic',
-      transparent: false,
-      side: 'front',
-      wireframe: false,
-      flatShading: false,
-      depthTest: true,
-      depthWrite: true,
-    }
-  )
+  const {
+    type = 'basic',
+    colorNode,
+    opacityNode,
+    normalNode,
+    emissiveNode,
+    metalnessNode,
+    roughnessNode,
+    positionNode,
+    transparent = false,
+    side = 'front',
+    wireframe = false,
+    flatShading = false,
+    depthTest = true,
+    depthWrite = true,
+  } = defineProps<{
+    type?: 'basic' | 'standard'
+    colorNode?: TSLNode
+    opacityNode?: TSLNode
+    normalNode?: TSLNode
+    emissiveNode?: TSLNode
+    metalnessNode?: TSLNode
+    roughnessNode?: TSLNode
+    positionNode?: TSLNode
+    transparent?: boolean
+    side?: 'front' | 'back' | 'double'
+    wireframe?: boolean
+    flatShading?: boolean
+    depthTest?: boolean
+    depthWrite?: boolean
+  }>()
 
   const sideMap = {
     front: FrontSide,
@@ -42,32 +43,31 @@
   }
 
   const material = computed(() => {
-    const mat =
-      props.type === 'standard' ? new MeshStandardNodeMaterial() : new MeshBasicNodeMaterial()
+    const mat = type === 'standard' ? new MeshStandardNodeMaterial() : new MeshBasicNodeMaterial()
 
     // Apply node properties
-    if (props.colorNode) mat.colorNode = props.colorNode
-    if (props.opacityNode) {
-      mat.opacityNode = props.opacityNode
+    if (colorNode) mat.colorNode = colorNode
+    if (opacityNode) {
+      mat.opacityNode = opacityNode
       mat.transparent = true
     }
-    if (props.normalNode) mat.normalNode = props.normalNode
-    if (props.positionNode) mat.positionNode = props.positionNode
+    if (normalNode) mat.normalNode = normalNode
+    if (positionNode) mat.positionNode = positionNode
 
     // Standard material specific
     if (mat instanceof MeshStandardNodeMaterial) {
-      if (props.emissiveNode) mat.emissiveNode = props.emissiveNode
-      if (props.metalnessNode) mat.metalnessNode = props.metalnessNode
-      if (props.roughnessNode) mat.roughnessNode = props.roughnessNode
-      mat.flatShading = props.flatShading
+      if (emissiveNode) mat.emissiveNode = emissiveNode
+      if (metalnessNode) mat.metalnessNode = metalnessNode
+      if (roughnessNode) mat.roughnessNode = roughnessNode
+      mat.flatShading = flatShading
     }
 
     // Standard properties
-    mat.transparent = props.transparent || !!props.opacityNode
-    mat.side = sideMap[props.side]
-    mat.wireframe = props.wireframe
-    mat.depthTest = props.depthTest
-    mat.depthWrite = props.depthWrite
+    mat.transparent = transparent || !!opacityNode
+    mat.side = sideMap[side]
+    mat.wireframe = wireframe
+    mat.depthTest = depthTest
+    mat.depthWrite = depthWrite
 
     return mat
   })

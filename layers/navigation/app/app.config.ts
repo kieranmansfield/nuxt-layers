@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 export default defineAppConfig({
   site: {
     title: '',
@@ -18,7 +17,7 @@ export default defineAppConfig({
 })
 
 declare module '@nuxt/schema' {
-  type AppConfigInput = {
+  interface AppConfigInput {
     site?: {
       title?: string
       subtitle?: string

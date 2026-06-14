@@ -1,4 +1,4 @@
-export interface BrandColour {
+export type BrandColour = {
   id: string
   name: string
   hex: string
@@ -13,7 +13,7 @@ export type HarmonyType =
   | 'split-complementary'
   | 'tetradic'
 
-export interface FontAxes {
+export type FontAxes = {
   wght: number // 100–900
   wdth: number // 25–151
   opsz: number // 8–144
@@ -29,7 +29,7 @@ export interface FontAxes {
   YTFI: number // 560–788
 }
 
-export interface FontConfig {
+export type FontConfig = {
   id: string
   role: 'heading' | 'body' | 'mono' | 'custom'
   family: string
@@ -42,7 +42,7 @@ export type BackgroundStyle = 'neutral' | 'tinted' | 'blended'
 export type ColourScheme = 'light' | 'dark'
 export type ContrastLevel = 'standard' | 'high'
 
-export interface ThemeMode {
+export type ThemeMode = {
   schemes: ColourScheme[]
   contrastLevels: ContrastLevel[]
   backgroundStyle: BackgroundStyle
@@ -50,7 +50,7 @@ export interface ThemeMode {
 
 // A theme variant remaps which brand colours fill each semantic role.
 // null = use the BrandColour whose role matches the slot.
-export interface ThemeVariant {
+export type ThemeVariant = {
   id: string
   name: string
   isDefault: boolean
@@ -62,7 +62,7 @@ export interface ThemeVariant {
   }
 }
 
-export interface BrandState {
+export type BrandState = {
   meta: { name: string; description: string }
   colours: BrandColour[]
   typography: FontConfig[]

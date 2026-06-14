@@ -1,20 +1,18 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Vector2 } from 'three'
   import { cos, sin, uniform, vec3 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Multiplier for horizontal mouse sweep → yaw range (radians) */
-      yawRange?: number
-      /** Multiplier for vertical mouse sweep → pitch range (radians) */
-      pitchRange?: number
-      order?: number
-    }>(),
-    { yawRange: Math.PI, pitchRange: Math.PI / 3, order: 0 }
-  )
+  const {
+    yawRange = Math.PI,
+    pitchRange = Math.PI / 3,
+    order = 0,
+  } = defineProps<{
+    /** Multiplier for horizontal mouse sweep → yaw range (radians) */
+    yawRange?: number
+    /** Multiplier for vertical mouse sweep → pitch range (radians) */
+    pitchRange?: number
+    order?: number
+  }>()
 
   const mouse = uniform(new Vector2(0.5, 0.5))
 
@@ -26,16 +24,16 @@
     onUnmounted(() => window.removeEventListener('mousemove', onMove))
   })
 
-  const yawRangeNode = uniform(props.yawRange)
-  const pitchRangeNode = uniform(props.pitchRange)
+  const yawRangeNode = uniform(yawRange)
+  const pitchRangeNode = uniform(pitchRange)
   watch(
-    () => props.yawRange,
+    () => yawRange,
     (v) => {
       yawRangeNode.value = v
     }
   )
   watch(
-    () => props.pitchRange,
+    () => pitchRange,
     (v) => {
       pitchRangeNode.value = v
     }
@@ -56,7 +54,7 @@
       const sp = sin(pitch)
       return vec3(rayY.x, rayY.y.mul(cp).sub(rayY.z.mul(sp)), rayY.y.mul(sp).add(rayY.z.mul(cp)))
     },
-    props.order,
+    order,
     'ray'
   )
 </script>

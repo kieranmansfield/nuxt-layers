@@ -1,22 +1,37 @@
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
+  import type { Collections } from '@nuxt/content'
+
   import type { PortfolioQueryOptions } from '../../types/content'
 
   const { options = {}, collection = 'portfolio' } = defineProps<{
     options?: PortfolioQueryOptions
-    collection?: string
+    collection?: keyof Collections
   }>()
 
   const { useItems } = createPortfolioComposables(collection)
   const { data: items, status } = await useItems(options)
+
+  // Items may come from any collection — normalize the portfolio-style
+  // metadata so the template works on a single shape
+  const cards = computed(() =>
+    (items.value ?? []).map((item) => ({
+      id: item.id,
+      title: item.title,
+      description: item.description,
+      path: item.path,
+      image: 'image' in item ? item.image : undefined,
+      client: 'client' in item ? item.client : undefined,
+      year: 'year' in item ? item.year : undefined,
+      tags: 'tags' in item ? (item.tags ?? []) : [],
+    }))
+  )
 </script>
 
 <template>
-  <NuxtContentList :status :has-items="!!items?.length" empty-message="No items found">
+  <NuxtContentList :status :has-items="!!cards.length" empty-message="No items found">
     <UPageGrid>
       <UPageCard
-        v-for="item in items"
+        v-for="item in cards"
         :key="item.id"
         :title="item.title"
         variant="outline"

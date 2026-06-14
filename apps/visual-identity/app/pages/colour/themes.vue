@@ -170,7 +170,7 @@
               :disabled="theme.isDefault"
               class="flex-1"
               size="sm"
-              @update:model-value="updateTheme(theme.id, { name: $event })"
+              @update:model-value="($event) => updateTheme(theme.id, { name: $event })"
             />
             <UBadge
               v-if="theme.isDefault"
@@ -185,7 +185,7 @@
               variant="ghost"
               color="error"
               size="xs"
-              @click="removeTheme(theme.id)"
+              @click="() => removeTheme(theme.id)"
             />
           </div>
         </template>
@@ -203,20 +203,20 @@
                 <input
                   type="color"
                   :value="theme.colourMappings[role] ?? '#6366f1'"
-                  @input="onPickerInput(theme.id, role, $event)"
+                  @input="($event) => onPickerInput(theme.id, role, $event)"
                 />
               </label>
               <UInput
                 :model-value="theme.colourMappings[role] ?? ''"
                 class="flex-1 min-w-0 font-mono text-sm"
                 size="sm"
-                @update:model-value="setThemeColour(theme.id, role, $event || null)"
+                @update:model-value="($event) => setThemeColour(theme.id, role, $event || null)"
               />
               <UButton
                 size="xs"
                 variant="ghost"
                 color="neutral"
-                @click="setThemeColour(theme.id, role, null)"
+                @click="() => setThemeColour(theme.id, role, null)"
               >
                 Auto
               </UButton>
@@ -230,7 +230,7 @@
                 :disabled="theme.isDefault"
                 class="flex-1 min-w-0"
                 size="sm"
-                @update:model-value="onSelectChange(theme.id, role, $event as string)"
+                @update:model-value="($event) => onSelectChange(theme.id, role, $event as string)"
               />
             </template>
 
@@ -278,7 +278,7 @@
           v-for="preset in presets"
           :key="preset.label"
           class="flex flex-col items-start gap-1.5 p-3 rounded-xl border border-default hover:border-accented hover:bg-elevated transition-colors text-left cursor-pointer"
-          @click="preset.apply()"
+          @click="() => preset.apply()"
         >
           <UIcon :name="preset.icon" class="size-4 text-muted" />
           <p class="text-xs font-medium text-default">{{ preset.label }}</p>

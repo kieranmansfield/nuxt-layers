@@ -77,7 +77,7 @@
           variant="link"
           size="sm"
           class="mb-5 w-full"
-          @update:model-value="setHarmony(colour.id, $event)"
+          @update:model-value="($event) => setHarmony(colour.id, $event)"
         />
 
         <!-- Swatches -->

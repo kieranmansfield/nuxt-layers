@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 // composables/useScrollGuard.ts
 
 import type { ScrollGuardConfig } from '#layers/core/app/types/scroll-guard'
@@ -22,16 +21,17 @@ const clampedElements = new WeakMap<HTMLElement, SavedStyles>()
 /** Live set so we can iterate and restore on disable */
 const clampedSet = new Set<HTMLElement>()
 
-let observer: MutationObserver | null = null
-let debouncedGuard: (() => void) | null = null
-let resizeHandler: (() => void) | null = null
-let savedHtmlOverflowX = ''
-let savedBodyOverflowX = ''
-let savedBodyMaxWidth = ''
-let savedBodyTransition = ''
-
-// Current resolved options (set by enable())
-let opts: ScrollGuardConfig | null = null
+// Singleton DOM tracking (non-reactive, client-only)
+const _s = {
+  observer: null as MutationObserver | null,
+  debouncedGuard: null as (() => void) | null,
+  resizeHandler: null as (() => void) | null,
+  savedHtmlOverflowX: '',
+  savedBodyOverflowX: '',
+  savedBodyMaxWidth: '',
+  savedBodyTransition: '',
+  opts: null as ScrollGuardConfig | null,
+}
 
 // ---------------------------------------------------------------------------
 // Composable
@@ -58,8 +58,8 @@ export function useScrollGuard() {
   const clampedCount = useState('core:scroll-guard:clamped', () => 0)
 
   function shouldExclude(el: HTMLElement): boolean {
-    if (!opts) return true
-    return opts.excludeSelectors.some((sel) => {
+    if (!_s.opts) return true
+    return _s.opts.excludeSelectors.some((sel) => {
       try {
         return el.matches(sel)
       } catch {
@@ -69,7 +69,7 @@ export function useScrollGuard() {
   }
 
   function clampElement(el: HTMLElement) {
-    if (!opts || clampedElements.has(el) || shouldExclude(el)) return
+    if (!_s.opts || clampedElements.has(el) || shouldExclude(el)) return
     if (el.scrollWidth <= window.innerWidth) return
 
     clampedElements.set(el, {
@@ -80,11 +80,11 @@ export function useScrollGuard() {
     })
     clampedSet.add(el)
 
-    el.style.transition = `max-width ${opts.transitionDuration}ms ease`
+    el.style.transition = `max-width ${_s.opts.transitionDuration}ms ease`
     el.style.maxWidth = '100%'
     el.style.boxSizing = 'border-box'
 
-    if (opts.debug) {
+    if (_s.opts.debug) {
       el.style.outline = '2px dashed red'
       setTimeout(() => {
         el.style.outline = ''
@@ -95,7 +95,7 @@ export function useScrollGuard() {
   }
 
   function guard() {
-    if (!isEnabled.value || !opts) return
+    if (!isEnabled.value || !_s.opts) return
 
     const html = document.documentElement
     const body = document.body
@@ -104,7 +104,7 @@ export function useScrollGuard() {
     body.style.overflowX = 'clip'
     body.style.maxWidth = '100vw'
 
-    if (!opts.strict) return
+    if (!_s.opts.strict) return
 
     const elements = document.body.querySelectorAll<HTMLElement>('*')
     for (const el of elements) {
@@ -115,10 +115,10 @@ export function useScrollGuard() {
   }
 
   function startObservers() {
-    if (!opts) return
+    if (!_s.opts) return
 
-    observer = new MutationObserver((mutations) => {
-      if (!isEnabled.value || !opts?.strict) return
+    _s.observer = new MutationObserver((mutations) => {
+      if (!isEnabled.value || !_s.opts?.strict) return
       for (const m of mutations) {
         for (const node of m.addedNodes) {
           if (node instanceof HTMLElement) {
@@ -130,22 +130,22 @@ export function useScrollGuard() {
         }
       }
     })
-    observer.observe(document.body, { childList: true, subtree: true })
+    _s.observer.observe(document.body, { childList: true, subtree: true })
 
-    debouncedGuard = debounce(guard, opts.resizeDebounce)
-    resizeHandler = debouncedGuard
-    window.addEventListener('resize', resizeHandler)
+    _s.debouncedGuard = debounce(guard, _s.opts.resizeDebounce)
+    _s.resizeHandler = _s.debouncedGuard
+    window.addEventListener('resize', _s.resizeHandler)
   }
 
   function stopObservers() {
-    if (observer) {
-      observer.disconnect()
-      observer = null
+    if (_s.observer) {
+      _s.observer.disconnect()
+      _s.observer = null
     }
-    if (resizeHandler) {
-      window.removeEventListener('resize', resizeHandler)
-      resizeHandler = null
-      debouncedGuard = null
+    if (_s.resizeHandler) {
+      window.removeEventListener('resize', _s.resizeHandler)
+      _s.resizeHandler = null
+      _s.debouncedGuard = null
     }
   }
 
@@ -165,10 +165,10 @@ export function useScrollGuard() {
 
     const html = document.documentElement
     const body = document.body
-    html.style.overflowX = savedHtmlOverflowX
-    body.style.overflowX = savedBodyOverflowX
-    body.style.maxWidth = savedBodyMaxWidth
-    body.style.transition = savedBodyTransition
+    html.style.overflowX = _s.savedHtmlOverflowX
+    body.style.overflowX = _s.savedBodyOverflowX
+    body.style.maxWidth = _s.savedBodyMaxWidth
+    body.style.transition = _s.savedBodyTransition
   }
 
   function enable(config?: Partial<ScrollGuardConfig>) {
@@ -180,7 +180,7 @@ export function useScrollGuard() {
       appConfig.coreLayer as { scrollGuard?: Partial<ScrollGuardConfig> } | undefined
     )?.scrollGuard
 
-    opts = {
+    _s.opts = {
       enabled: true,
       excludeSelectors: ['.carousel', '.overflow-intent'],
       strict: true,
@@ -193,10 +193,10 @@ export function useScrollGuard() {
 
     const html = document.documentElement
     const body = document.body
-    savedHtmlOverflowX = html.style.overflowX
-    savedBodyOverflowX = body.style.overflowX
-    savedBodyMaxWidth = body.style.maxWidth
-    savedBodyTransition = body.style.transition
+    _s.savedHtmlOverflowX = html.style.overflowX
+    _s.savedBodyOverflowX = body.style.overflowX
+    _s.savedBodyMaxWidth = body.style.maxWidth
+    _s.savedBodyTransition = body.style.transition
 
     isEnabled.value = true
     guard()
@@ -210,15 +210,15 @@ export function useScrollGuard() {
     isEnabled.value = false
     stopObservers()
     restoreAll()
-    opts = null
+    _s.opts = null
   }
 
   function toggle() {
     if (isEnabled.value) {
       disable()
-    } else {
-      enable()
+      return
     }
+    enable()
   }
 
   function scan() {

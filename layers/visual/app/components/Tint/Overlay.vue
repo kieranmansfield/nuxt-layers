@@ -1,5 +1,3 @@
-<!-- eslint-disable vue/no-unused-properties -->
-<!-- eslint-disable vue/define-props-destructuring -->
 <script setup lang="ts">
   import type { ColorShade, TintColorSlot, TintLevel } from '../../types/tint'
 

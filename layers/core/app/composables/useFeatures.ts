@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 // composables/useFeatures.ts
 import type { FeatureDetection } from '#layers/core/app/types/detection'
 import {

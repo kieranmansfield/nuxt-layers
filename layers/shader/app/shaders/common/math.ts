@@ -1,6 +1,3 @@
-/* eslint-disable max-params */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Math Utilities
  * Provides hyperbolic functions, complex number operations, and coordinate utilities
@@ -8,13 +5,16 @@
 import {
   abs,
   add,
+  atan,
   clamp,
   cos,
   div,
   exp,
+  float,
   If,
   length,
   log,
+  mix,
   mul,
   PI,
   pow,
@@ -127,7 +127,9 @@ export function complexPow(v: TSLNode, p: TSLNode | number): TSLNode {
  * @returns Sine in complex form
  */
 export function complexSin(a: TSLNode): TSLNode {
-  return vec2(sin(a.x).mul(cosh(a.y)), cos(a.x).mul(sinh(a.y)))
+  const re: TSLNode = sin(a.x).mul(cosh(a.y))
+  const im: TSLNode = cos(a.x).mul(sinh(a.y))
+  return vec2(re, im)
 }
 
 /**
@@ -136,7 +138,9 @@ export function complexSin(a: TSLNode): TSLNode {
  * @returns Cosine in complex form
  */
 export function complexCos(a: TSLNode): TSLNode {
-  return vec2(cos(a.x).mul(cosh(a.y)), sin(a.x).mul(sinh(a.y)).negate())
+  const re: TSLNode = cos(a.x).mul(cosh(a.y))
+  const im: TSLNode = sin(a.x).mul(sinh(a.y)).negate()
+  return vec2(re, im)
 }
 
 /**
@@ -223,10 +227,10 @@ export function grad(
   t.assign(smoothstep(0.0, 1.0, t))
   u.assign(smoothstep(0.0, 1.0, u))
 
-  const colorA = vec4(_color0.xyz.mix(_color1.xyz, u), 1.0).toVar()
-  const colorB = vec4(_color2.xyz.mix(_color3.xyz, u), 1.0).toVar()
+  const colorA: TSLNode = vec4(mix(_color0.xyz, _color1.xyz, u), 1.0).toVar()
+  const colorB: TSLNode = vec4(mix(_color2.xyz, _color3.xyz, u), 1.0).toVar()
 
-  return colorA.xyz.mix(colorB.xyz, t)
+  return mix(colorA.xyz, colorB.xyz, t)
 }
 
 /**

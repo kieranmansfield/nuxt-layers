@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
   /**
    * BaseModal — overlay-compatible modal shell.

@@ -1,5 +1,6 @@
-/* eslint-disable no-restricted-syntax */
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin({
+  name: 'routing:scroll-routing',
+  setup() {
   const { config } = useRoutingConfig()
   if (!config.scrollRouting.enabled) return
 
@@ -19,4 +20,5 @@ export default defineNuxtPlugin(() => {
   onNuxtReady(() => {
     document.querySelectorAll('[data-section]').forEach((el) => observer.observe(el))
   })
+  },
 })

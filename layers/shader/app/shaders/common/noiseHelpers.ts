@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL Noise Helper Functions
  * Provides primitive functions required by 3D/4D noise algorithms
@@ -100,16 +98,18 @@ export function taylorInvSqrtFloat(r: TSLNode): TSLNode {
  */
 export function grad4(j: TSLNode, ip: TSLNode): TSLNode {
   const ones = vec4(1.0, 1.0, 1.0, -1.0)
-  const p = vec4().toVar()
-  const s = vec4().toVar()
+  const p: TSLNode = vec4().toVar()
+  const s: TSLNode = vec4().toVar()
 
   p.xyz.assign(
     floor(fract(vec3(j).mul(ip.xyz)).mul(7.0))
       .mul(ip.z)
       .sub(1.0)
   )
-  p.w.assign(sub(1.5, dot(abs(p.xyz), ones.xyz)))
-  s.assign(vec4(lessThan(p, vec4(0.0))))
+  const pAbs: TSLNode = abs(p.xyz)
+  p.w.assign(sub(1.5, dot(pAbs, ones.xyz)))
+  const zero4: TSLNode = vec4(0.0)
+  s.assign(vec4(lessThan(p, zero4)))
   p.xyz.assign(p.xyz.add(s.xyz.mul(2.0).sub(1.0).mul(s.www)))
 
   return p

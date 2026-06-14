@@ -1,5 +1,6 @@
-/* eslint-disable no-restricted-syntax */
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin({
+  name: 'page-transitions:page-transitions',
+  setup(nuxtApp) {
   const appConfig = useAppConfig()
 
   const defaultTransition = appConfig.pageTransitions?.default ?? 'fade'
@@ -11,4 +12,5 @@ export default defineNuxtPlugin((nuxtApp) => {
       duration,
     }
   })
+  },
 })

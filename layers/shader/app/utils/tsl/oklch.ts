@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex
 /**
  * OKLCH color space utilities for both TSL (GPU) and JS (CPU) use.
  */
@@ -53,15 +51,16 @@ export function oklchToLinearSRGB(l: TSLNode, c: TSLNode, h: TSLNode): TSLNode {
  */
 export function parseOKLCH(str: string): [number, number, number] {
   const match = str.match(/oklch\(\s*([\d.]+%?)\s+([\d.]+)\s+([\d.]+)\s*\)/)
-  if (!match) {
+  const [, lRaw, cRaw, hRaw] = match ?? []
+  if (!lRaw || !cRaw || !hRaw) {
     throw new Error(`Invalid OKLCH string: ${str}`)
   }
 
-  let l = parseFloat(match[1])
-  if (match[1].endsWith('%')) l /= 100
+  let l = parseFloat(lRaw)
+  if (lRaw.endsWith('%')) l /= 100
 
-  const c = parseFloat(match[2])
-  const h = parseFloat(match[3])
+  const c = parseFloat(cRaw)
+  const h = parseFloat(hRaw)
 
   return [l, c, h]
 }

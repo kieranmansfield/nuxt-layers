@@ -6,19 +6,22 @@
   }>()
 
   const asBlog = (item: unknown) => item as BlogCollectionItem
+
+  function formatDate(date?: string) {
+    if (!date) return ''
+    return new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  }
 </script>
 
 <template>
   <NuxtContentDetail collection="blog" :slug not-found-message="Blog post not found">
     <template #headline="{ item }">
       <div class="flex items-center gap-3 text-sm text-muted">
-        <time v-if="asBlog(item).date">{{
-          new Date(asBlog(item).date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })
-        }}</time>
+        <time v-if="asBlog(item).date">{{ formatDate(asBlog(item).date) }}</time>
         <UBadge v-if="asBlog(item).badge" color="primary" variant="subtle">
           {{ asBlog(item).badge }}
         </UBadge>

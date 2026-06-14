@@ -1,7 +1,4 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import {
     dot,
     float,
@@ -16,49 +13,54 @@
     vec4,
   } from 'three/tsl'
 
+  import type { TSLNode } from '../../shaders/types'
+
   /**
    * Hash-based procedural starfield.
    * Each cell on a grid may contain a star whose brightness twinkles over time.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Grid density — higher = more stars */
-      density?: number
-      /** Star brightness */
-      brightness?: number
-      /** Twinkle animation speed */
-      twinkleSpeed?: number
-      /** Star size (sharpness) */
-      size?: number
-      order?: number
-    }>(),
-    { density: 80, brightness: 1.0, twinkleSpeed: 1.0, size: 0.4, order: 0 }
-  )
+  const {
+    density = 80,
+    brightness = 1.0,
+    twinkleSpeed = 1.0,
+    size = 0.4,
+    order = 0,
+  } = defineProps<{
+    /** Grid density — higher = more stars */
+    density?: number
+    /** Star brightness */
+    brightness?: number
+    /** Twinkle animation speed */
+    twinkleSpeed?: number
+    /** Star size (sharpness) */
+    size?: number
+    order?: number
+  }>()
 
-  const densityNode = uniform(props.density)
-  const brightnessNode = uniform(props.brightness)
-  const twinkleNode = uniform(props.twinkleSpeed)
-  const sizeNode = uniform(props.size)
+  const densityNode = uniform(density)
+  const brightnessNode = uniform(brightness)
+  const twinkleNode = uniform(twinkleSpeed)
+  const sizeNode = uniform(size)
   watch(
-    () => props.density,
+    () => density,
     (v) => {
       densityNode.value = v
     }
   )
   watch(
-    () => props.brightness,
+    () => brightness,
     (v) => {
       brightnessNode.value = v
     }
   )
   watch(
-    () => props.twinkleSpeed,
+    () => twinkleSpeed,
     (v) => {
       twinkleNode.value = v
     }
   )
   watch(
-    () => props.size,
+    () => size,
     (v) => {
       sizeNode.value = v
     }
@@ -72,7 +74,7 @@
 
     // Scale UV into grid cells
     const scaled = uv.mul(densityNode)
-    const cell = floor(scaled)
+    const cell: TSLNode = floor(scaled)
     const local = fract(scaled).sub(0.5)
 
     // Hash per cell → star position offset and brightness
@@ -95,5 +97,5 @@
 
     const colour = vec3(star.mul(brightnessNode))
     return vec4(prev.xyz.add(colour), prev.w)
-  }, props.order)
+  }, order)
 </script>

@@ -1,53 +1,52 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
-  import { float, floor, fract, sin, time, uniform, vec3, vec4 } from 'three/tsl'
+  import { floor, fract, sin, time, uniform, vec3, vec4 } from 'three/tsl'
 
   /**
    * VHS colour bleed + horizontal noise drift.
    * Shifts R/B channels horizontally by a noise-driven amount and adds scanline banding.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Channel bleed strength */
-      bleedStrength?: number
-      /** Horizontal noise frequency */
-      noiseFreq?: number
-      /** Tracking error intensity */
-      trackingNoise?: number
-      /** Animation speed */
-      speed?: number
-      order?: number
-    }>(),
-    { bleedStrength: 0.015, noiseFreq: 8, trackingNoise: 0.3, speed: 1, order: 0 }
-  )
+  const {
+    bleedStrength = 0.015,
+    noiseFreq = 8,
+    trackingNoise = 0.3,
+    speed = 1,
+    order = 0,
+  } = defineProps<{
+    /** Channel bleed strength */
+    bleedStrength?: number
+    /** Horizontal noise frequency */
+    noiseFreq?: number
+    /** Tracking error intensity */
+    trackingNoise?: number
+    /** Animation speed */
+    speed?: number
+    order?: number
+  }>()
 
-  const bleedNode = uniform(props.bleedStrength)
-  const noiseFreqNode = uniform(props.noiseFreq)
-  const trackingNode = uniform(props.trackingNoise)
-  const speedNode = uniform(props.speed)
+  const bleedNode = uniform(bleedStrength)
+  const noiseFreqNode = uniform(noiseFreq)
+  const trackingNode = uniform(trackingNoise)
+  const speedNode = uniform(speed)
   watch(
-    () => props.bleedStrength,
+    () => bleedStrength,
     (v) => {
       bleedNode.value = v
     }
   )
   watch(
-    () => props.noiseFreq,
+    () => noiseFreq,
     (v) => {
       noiseFreqNode.value = v
     }
   )
   watch(
-    () => props.trackingNoise,
+    () => trackingNoise,
     (v) => {
       trackingNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -74,5 +73,5 @@
       .add(1)
 
     return vec4(vec3(rBleed, prev.g, bBleed).mul(scanBrightness), prev.w)
-  }, props.order)
+  }, order)
 </script>

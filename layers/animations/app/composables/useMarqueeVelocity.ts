@@ -1,11 +1,11 @@
 import type { MaybeRef } from 'vue'
 
-interface VelocityMapping {
+type VelocityMapping = {
   input: [number, number]
   output: [number, number]
 }
 
-interface UseMarqueeVelocityOptions {
+type UseMarqueeVelocityOptions = {
   damping?: MaybeRef<number>
   stiffness?: MaybeRef<number>
   velocityMapping?: MaybeRef<VelocityMapping>

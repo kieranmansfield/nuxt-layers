@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 export default defineAppConfig({
   seoLayer: {
     ogImage: {

@@ -1,6 +1,3 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable vue/require-default-prop -->
-<!-- eslint-disable vue/no-unused-properties -->
 <script lang="ts" setup>
   import { useColor } from '../../composables/color'
   import { useTypography } from '../../composables/typography'
@@ -47,7 +44,6 @@
 </script>
 
 <template>
-  <!-- eslint-disable-next-line vue/no-duplicate-attr-inheritance -->
   <component :is="tag" :class="[classes, colorClass]" v-bind="$attrs">
     <slot />
   </component>

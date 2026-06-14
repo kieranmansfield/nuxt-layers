@@ -1,28 +1,22 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { uniform, vec2 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Rotation in degrees */
-      angle?: number
-      pivotX?: number
-      pivotY?: number
-      order?: number
-    }>(),
-    {
-      angle: 0,
-      pivotX: 0.5,
-      pivotY: 0.5,
-      order: 0,
-    }
-  )
+  const {
+    angle = 0,
+    pivotX = 0.5,
+    pivotY = 0.5,
+    order = 0,
+  } = defineProps<{
+    /** Rotation in degrees */
+    angle?: number
+    pivotX?: number
+    pivotY?: number
+    order?: number
+  }>()
 
-  const angleNode = uniform(props.angle * (Math.PI / 180))
+  const angleNode = uniform(angle * (Math.PI / 180))
   watch(
-    () => props.angle,
+    () => angle,
     (v) => {
       angleNode.value = v * (Math.PI / 180)
     }
@@ -30,7 +24,7 @@
 
   useShaderStage(
     (uvIn) => {
-      const pivot = vec2(props.pivotX, props.pivotY)
+      const pivot = vec2(pivotX, pivotY)
       const cosA = angleNode.cos()
       const sinA = angleNode.sin()
       const centered = uvIn.sub(pivot)
@@ -39,7 +33,7 @@
         centered.x.mul(sinA).add(centered.y.mul(cosA))
       ).add(pivot)
     },
-    props.order,
+    order,
     'uv'
   )
 </script>

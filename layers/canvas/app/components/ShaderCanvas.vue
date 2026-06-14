@@ -1,9 +1,4 @@
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
-  // @ts-nocheck - Three.js WebGPU types + TresJS renderer factory
   import { TresCanvas } from '@tresjs/core'
   import {
     ACESFilmicToneMapping,
@@ -16,33 +11,30 @@
   } from 'three'
   import { WebGPURenderer } from 'three/webgpu'
 
-  const props = withDefaults(
-    defineProps<{
-      clearColor?: string
-      toneMapping?: 'aces' | 'reinhard' | 'cineon' | 'linear'
-      outputColorSpace?: 'srgb' | 'linear'
-      shadows?: boolean
-      antialias?: boolean
-      alpha?: boolean
-      preserveDrawingBuffer?: boolean
-      powerPreference?: 'default' | 'high-performance' | 'low-power'
-      windowSize?: boolean
-      /** Use WebGPURenderer (required for node materials / TSL shaders) */
-      webgpu?: boolean
-    }>(),
-    {
-      clearColor: '#000000',
-      toneMapping: 'aces',
-      outputColorSpace: 'srgb',
-      shadows: false,
-      antialias: true,
-      alpha: false,
-      preserveDrawingBuffer: false,
-      powerPreference: 'high-performance',
-      windowSize: true,
-      webgpu: false,
-    }
-  )
+  const {
+    clearColor = '#000000',
+    toneMapping = 'aces',
+    outputColorSpace = 'srgb',
+    shadows = false,
+    antialias = true,
+    alpha = false,
+    preserveDrawingBuffer = false,
+    powerPreference = 'high-performance',
+    windowSize = true,
+    webgpu = false,
+  } = defineProps<{
+    clearColor?: string
+    toneMapping?: 'aces' | 'reinhard' | 'cineon' | 'linear'
+    outputColorSpace?: 'srgb' | 'linear'
+    shadows?: boolean
+    antialias?: boolean
+    alpha?: boolean
+    preserveDrawingBuffer?: boolean
+    powerPreference?: 'default' | 'high-performance' | 'low-power'
+    windowSize?: boolean
+    /** Use WebGPURenderer (required for node materials / TSL shaders) */
+    webgpu?: boolean
+  }>()
 
   const emit = defineEmits<{
     ready: [context: any]
@@ -62,12 +54,12 @@
   }
 
   const resolvedToneMapping = computed(() => {
-    const key = props.toneMapping || shaderConfig.toneMapping || 'aces'
+    const key = toneMapping || shaderConfig.toneMapping || 'aces'
     return toneMappingMap[key] ?? ACESFilmicToneMapping
   })
 
   const resolvedColorSpace = computed(() => {
-    return props.outputColorSpace === 'srgb' ? SRGBColorSpace : 'srgb-linear'
+    return outputColorSpace === 'srgb' ? SRGBColorSpace : 'srgb-linear'
   })
 
   const maxDpr = computed(() => {
@@ -77,20 +69,21 @@
 
   // WebGPU renderer factory — TresJS v5 calls renderer.init() automatically
   // when the returned object has isRenderer === true (three/webgpu Renderer base class)
-  const webgpuRendererFactory = props.webgpu
-    ? ({ canvas }: { canvas: any }) => {
-        const r = new WebGPURenderer({
-          canvas: unref(canvas),
-          antialias: props.antialias,
-          powerPreference: props.powerPreference,
-        })
-        r.setPixelRatio(Math.min(window.devicePixelRatio, maxDpr.value))
-        r.setClearColor(new Color(props.clearColor))
-        r.toneMapping = resolvedToneMapping.value
-        r.outputColorSpace = resolvedColorSpace.value
-        return r
-      }
-    : undefined
+  function webgpuRendererFactory({ canvas }: { canvas: any }) {
+    const r = new WebGPURenderer({
+      canvas: unref(canvas),
+      antialias,
+      // WebGPU has no 'default' power preference — omit to let the browser decide
+      ...(powerPreference === 'default' ? {} : { powerPreference }),
+    })
+    r.setPixelRatio(Math.min(window.devicePixelRatio, maxDpr.value))
+    r.setClearColor(new Color(clearColor))
+    r.toneMapping = resolvedToneMapping.value
+    r.outputColorSpace = resolvedColorSpace.value
+    return r
+  }
+
+  const rendererBinding = computed(() => (webgpu ? { renderer: webgpuRendererFactory } : {}))
 
   function onReady(context: any) {
     emit('ready', context)
@@ -109,7 +102,7 @@
     :power-preference
     :window-size
     :dpr="maxDpr"
-    :renderer="webgpuRendererFactory"
+    v-bind="rendererBinding"
     class="shader-canvas"
     @ready="onReady"
   >

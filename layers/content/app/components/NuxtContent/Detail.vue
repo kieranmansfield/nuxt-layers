@@ -1,14 +1,13 @@
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
-<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
-  // @ts-nocheck
+  import type { PageCollections } from '@nuxt/content'
+
   const {
     collection,
     slug,
     notFoundMessage = 'Content not found',
     hideToc = false,
   } = defineProps<{
-    collection: string
+    collection: keyof PageCollections
     slug: string
     notFoundMessage?: string
     hideToc?: boolean

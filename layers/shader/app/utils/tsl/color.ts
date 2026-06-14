@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 import { abs, clamp, float, Fn, max, min, mix, mod, vec3 } from 'three/tsl'
 
 import type { GradientStop, TSLNode } from '../../types'
@@ -10,15 +7,17 @@ import { circularDistance } from './math'
  * Linear gradient with multiple color stops
  */
 export const gradientLinear = Fn(([t, stops]: [TSLNode, GradientStop[]]) => {
-  if (stops.length === 0) return vec3(0.0)
-  if (stops.length === 1) return stops[0]?.color
+  const [firstStop] = stops
+  if (!firstStop) return vec3(0.0)
+  if (stops.length === 1) return firstStop.color
 
-  let result: TSLNode = stops[0]?.color
+  let result: TSLNode = firstStop.color
 
   for (let i = 1; i < stops.length; i++) {
-    const prevStop = stops[i - 1]!
-    const currStop = stops[i]!
-    const localT = clamp(
+    const prevStop = stops[i - 1]
+    const currStop = stops[i]
+    if (!prevStop || !currStop) continue
+    const localT: TSLNode = clamp(
       t.sub(prevStop.position).div(currStop.position - prevStop.position),
       0.0,
       1.0
@@ -31,8 +30,10 @@ export const gradientLinear = Fn(([t, stops]: [TSLNode, GradientStop[]]) => {
   }
 
   // Handle end
-  const lastStop = stops[stops.length - 1]!
-  result = mix(result, lastStop.color, t.greaterThanEqual(lastStop.position))
+  const lastStop = stops[stops.length - 1]
+  if (lastStop) {
+    result = mix(result, lastStop.color, t.greaterThanEqual(lastStop.position))
+  }
 
   return result
 })
@@ -118,13 +119,13 @@ export const hslToRgb = Fn(([hsl]: [TSLNode]) => {
   const s = hsl.y
   const l = hsl.z
 
-  const c = float(1.0)
+  const c: TSLNode = float(1.0)
     .sub(abs(l.mul(2.0).sub(1.0)))
     .mul(s)
-  const x = c.mul(float(1.0).sub(abs(mod(h.mul(6.0), 2.0).sub(1.0))))
+  const x: TSLNode = c.mul(float(1.0).sub(abs(mod(h.mul(6.0), 2.0).sub(1.0))))
   const m = l.sub(c.mul(0.5))
 
-  const h6 = h.mul(6.0)
+  const h6: TSLNode = h.mul(6.0)
 
   const rgb0 = h6.lessThan(1.0).select(vec3(c, x, 0.0), vec3(0.0))
   const rgb1 = h6
@@ -152,7 +153,7 @@ export const hslToRgb = Fn(([hsl]: [TSLNode]) => {
  * Shift hue by an amount (0-1)
  */
 export const hueShift = Fn(([rgb, shift]: [TSLNode, TSLNode]) => {
-  const hsl = rgbToHsl(rgb)
+  const hsl: TSLNode = rgbToHsl(rgb)
   const newH = mod(hsl.x.add(shift), 1.0)
   return hslToRgb(vec3(newH, hsl.y, hsl.z))
 })
@@ -161,8 +162,8 @@ export const hueShift = Fn(([rgb, shift]: [TSLNode, TSLNode]) => {
  * Adjust saturation
  */
 export const adjustSaturation = Fn(([rgb, amount]: [TSLNode, TSLNode]) => {
-  const hsl = rgbToHsl(rgb)
-  const newS = clamp(hsl.y.mul(amount), 0.0, 1.0)
+  const hsl: TSLNode = rgbToHsl(rgb)
+  const newS: TSLNode = clamp(hsl.y.mul(amount), 0.0, 1.0)
   return hslToRgb(vec3(hsl.x, newS, hsl.z))
 })
 
@@ -187,7 +188,7 @@ export const adjustVibrance = Fn(([rgb, vibrance]: [TSLNode, TSLNode]) => {
   const maxC = max(max(rgb.x, rgb.y), rgb.z)
   const minC = min(min(rgb.x, rgb.y), rgb.z)
   const sat = maxC.sub(minC)
-  const satFactor = float(1.0).sub(sat).mul(vibrance)
-  const gray = rgb.x.mul(0.299).add(rgb.y.mul(0.587)).add(rgb.z.mul(0.114))
+  const satFactor: TSLNode = float(1.0).sub(sat).mul(vibrance)
+  const gray: TSLNode = rgb.x.mul(0.299).add(rgb.y.mul(0.587)).add(rgb.z.mul(0.114))
   return mix(vec3(gray), rgb, float(1.0).add(satFactor))
 })

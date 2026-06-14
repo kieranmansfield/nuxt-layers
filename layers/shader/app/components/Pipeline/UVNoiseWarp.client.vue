@@ -1,41 +1,40 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { time, uniform, vec2 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Warp strength in UV units */
-      strength?: number
-      /** Noise input scale */
-      scale?: number
-      /** Animation speed */
-      speed?: number
-      order?: number
-    }>(),
-    { strength: 0.3, scale: 2, speed: 0.2, order: 0 }
-  )
+  const {
+    strength = 0.3,
+    scale = 2,
+    speed = 0.2,
+    order = 0,
+  } = defineProps<{
+    /** Warp strength in UV units */
+    strength?: number
+    /** Noise input scale */
+    scale?: number
+    /** Animation speed */
+    speed?: number
+    order?: number
+  }>()
 
-  const strengthNode = uniform(props.strength)
-  const scaleNode = uniform(props.scale)
-  const speedNode = uniform(props.speed)
+  const strengthNode = uniform(strength)
+  const scaleNode = uniform(scale)
+  const speedNode = uniform(speed)
   watch(
-    () => props.strength,
+    () => strength,
     (v) => {
       strengthNode.value = v
     }
   )
   watch(
-    () => props.scale,
+    () => scale,
     (v) => {
       scaleNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -48,7 +47,7 @@
       const warpY = fbm2D(uvIn.mul(scaleNode).add(vec2(5.2, 1.3)).add(t))
       return uvIn.add(vec2(warpX, warpY).mul(strengthNode))
     },
-    props.order,
+    order,
     'uv'
   )
 </script>

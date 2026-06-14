@@ -1,6 +1,4 @@
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import type { GalleryQueryOptions } from '../../types/content'
 
   const { options = {} } = defineProps<{

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 import { atan, cos, float, Fn, fract, length, sin, vec2 } from 'three/tsl'
 
 import type { TSLNode } from '../../types'
@@ -48,17 +46,19 @@ export const polarUV = Fn(([uv, center]: [TSLNode, TSLNode]) => {
  * Convert polar coordinates back to cartesian
  */
 export const cartesianUV = Fn(([polar, center]: [TSLNode, TSLNode]) => {
-  const angle = polar.x.sub(0.5).mul(Math.PI * 2)
+  const angle: TSLNode = polar.x.sub(0.5).mul(Math.PI * 2)
   const radius = polar.y
-  return vec2(cos(angle).mul(radius), sin(angle).mul(radius)).add(center)
+  const x: TSLNode = cos(angle).mul(radius)
+  const y: TSLNode = sin(angle).mul(radius)
+  return vec2(x, y).add(center)
 })
 
 /**
  * Wave distortion on UV
  */
 export const waveUV = Fn(([uv, freq, amp, time]: [TSLNode, TSLNode, TSLNode, TSLNode]) => {
-  const waveX = sin(uv.y.mul(freq).add(time)).mul(amp)
-  const waveY = sin(uv.x.mul(freq).add(time)).mul(amp)
+  const waveX: TSLNode = sin(uv.y.mul(freq).add(time)).mul(amp)
+  const waveY: TSLNode = sin(uv.x.mul(freq).add(time)).mul(amp)
   return uv.add(vec2(waveX, waveY))
 })
 

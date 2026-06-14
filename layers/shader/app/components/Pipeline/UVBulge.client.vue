@@ -1,32 +1,30 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { uniform } from 'three/tsl'
 
   import { bulgeUV } from '../../shaders/common/uv'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Positive = bulge outward, negative = pinch inward */
-      strength?: number
-      /** Effective radius of the distortion */
-      radius?: number
-      order?: number
-    }>(),
-    { strength: 0.5, radius: 0.5, order: 0 }
-  )
+  const {
+    strength = 0.5,
+    radius = 0.5,
+    order = 0,
+  } = defineProps<{
+    /** Positive = bulge outward, negative = pinch inward */
+    strength?: number
+    /** Effective radius of the distortion */
+    radius?: number
+    order?: number
+  }>()
 
-  const strengthNode = uniform(props.strength)
-  const radiusNode = uniform(props.radius)
+  const strengthNode = uniform(strength)
+  const radiusNode = uniform(radius)
   watch(
-    () => props.strength,
+    () => strength,
     (v) => {
       strengthNode.value = v
     }
   )
   watch(
-    () => props.radius,
+    () => radius,
     (v) => {
       radiusNode.value = v
     }
@@ -34,7 +32,7 @@
 
   useShaderStage(
     (uvIn) => bulgeUV(uvIn, { strength: strengthNode, radius: radiusNode }),
-    props.order,
+    order,
     'uv'
   )
 </script>

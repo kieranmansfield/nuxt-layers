@@ -1,64 +1,57 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
   import { mix, uniform, vec4 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Bottom-left corner colour */
-      bottomLeft?: string
-      /** Bottom-right corner colour */
-      bottomRight?: string
-      /** Top-left corner colour */
-      topLeft?: string
-      /** Top-right corner colour */
-      topRight?: string
-      order?: number
-    }>(),
-    {
-      bottomLeft: '#000000',
-      bottomRight: '#ff0000',
-      topLeft: '#0000ff',
-      topRight: '#ffffff',
-      order: 0,
-    }
-  )
+  const {
+    bottomLeft = '#000000',
+    bottomRight = '#ff0000',
+    topLeft = '#0000ff',
+    topRight = '#ffffff',
+    order = 0,
+  } = defineProps<{
+    /** Bottom-left corner colour */
+    bottomLeft?: string
+    /** Bottom-right corner colour */
+    bottomRight?: string
+    /** Top-left corner colour */
+    topLeft?: string
+    /** Top-right corner colour */
+    topRight?: string
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const blNode = toVec3Node(props.bottomLeft)
-  const brNode = toVec3Node(props.bottomRight)
-  const tlNode = toVec3Node(props.topLeft)
-  const trNode = toVec3Node(props.topRight)
+  const blNode = toVec3Node(bottomLeft)
+  const brNode = toVec3Node(bottomRight)
+  const tlNode = toVec3Node(topLeft)
+  const trNode = toVec3Node(topRight)
   watch(
-    () => props.bottomLeft,
+    () => bottomLeft,
     (v) => {
       const c = new Color(v)
       blNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.bottomRight,
+    () => bottomRight,
     (v) => {
       const c = new Color(v)
       brNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.topLeft,
+    () => topLeft,
     (v) => {
       const c = new Color(v)
       tlNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.topRight,
+    () => topRight,
     (v) => {
       const c = new Color(v)
       trNode.value.set(c.r, c.g, c.b)
@@ -73,5 +66,5 @@
     const top = mix(tlNode, trNode, uvCurrent.x)
     const colour = mix(bottom, top, uvCurrent.y)
     return vec4(colour, 1.0)
-  }, props.order)
+  }, order)
 </script>

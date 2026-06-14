@@ -1,19 +1,14 @@
-/* eslint-disable complexity */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * ShaderGradient-inspired Shader Layer
  * 3D morphing gradient effect similar to shadergradient.co
  */
 import { Color } from 'three'
-import { cos, mix, pow, smoothstep, time as tslTime, uniform, uv, vec2, vec3 } from 'three/tsl'
+import { cos, mix, pow, sin, smoothstep, time as tslTime, uniform, uv, vec2, vec3 } from 'three/tsl'
 
 import { fbm2D, simplexNoise2D } from '../common/noise'
-import type { TSLNode } from '../types'
+import type { FloatUniform, TSLNode } from '../types'
 
-export interface ShaderGradientOptions {
+export type ShaderGradientOptions = {
   /** Primary color */
   color1?: string
   /** Secondary color */
@@ -36,17 +31,17 @@ export interface ShaderGradientOptions {
   zoom?: number
 }
 
-export interface ShaderGradientUniforms {
-  color1: ReturnType<typeof uniform>
-  color2: ReturnType<typeof uniform>
-  color3: ReturnType<typeof uniform>
-  speed: ReturnType<typeof uniform>
-  morphIntensity: ReturnType<typeof uniform>
-  grain: ReturnType<typeof uniform>
-  lightX: ReturnType<typeof uniform>
-  lightY: ReturnType<typeof uniform>
-  brightness: ReturnType<typeof uniform>
-  zoom: ReturnType<typeof uniform>
+export type ShaderGradientUniforms = {
+  color1: TSLNode
+  color2: TSLNode
+  color3: TSLNode
+  speed: FloatUniform
+  morphIntensity: FloatUniform
+  grain: FloatUniform
+  lightX: FloatUniform
+  lightY: FloatUniform
+  brightness: FloatUniform
+  zoom: FloatUniform
 }
 
 /**
@@ -114,12 +109,12 @@ export function shaderGradient(uniforms: ShaderGradientUniforms, uvNode?: TSLNod
   const lightFalloff = smoothstep(1.5, 0, lightDist)
 
   // Color blending with noise
-  const col1 = vec3(uniforms.color1 as unknown as TSLNode)
-  const col2 = vec3(uniforms.color2 as unknown as TSLNode)
-  const col3 = vec3(uniforms.color3 as unknown as TSLNode)
+  const col1 = vec3(uniforms.color1)
+  const col2 = vec3(uniforms.color2)
+  const col3 = vec3(uniforms.color3)
 
   // Complex color mixing
-  let color = mix(col1, col2, noise1)
+  let color: TSLNode = mix(col1, col2, noise1)
   color = mix(color, col3, noise2.mul(0.7))
   color = mix(color, col1, noise3.mul(0.3).mul(lightFalloff))
 

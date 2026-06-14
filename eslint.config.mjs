@@ -24,9 +24,22 @@ export default defineConfigWithVueTs(
       '**/.vscode/**',
       '**/.turbo/**',
       '**/.playground/**',
+      '**/.netlify/**',
       '**/dist/**',
       '**/oldApp/**',
       '**/package-lock.json',
+      // Vendored agent-skill content — not project source
+      '.agents/**',
+      '.claude/**',
+      // Vendored TSL shader reference dumps (tracked for removal in #42)
+      'layers/shader/modular-tsl-shaders-for-claude/**',
+      'layers/shader/additional-modular-tsl-shaders-for-claude/**',
+      // jiti reproduction scratch file
+      'layers/content/_jiti_test.ts',
+      // tsconfig files use JSONC comments the JSON language parser rejects
+      '**/tsconfig.json',
+      '**/tsconfig.*.json',
+      '**/jsconfig.json',
     ],
   },
 
@@ -41,8 +54,15 @@ export default defineConfigWithVueTs(
   // linting at the root project file that already covers every layer instead.
   // Scoped to `layers/**` only — apps keep their own working `.nuxt` project chain,
   // which `tsconfig.typecheck.json` does not include.
+  // Scoped to `layers/*/app/**` — that's what tsconfig.typecheck.json includes;
+  // layer `server/` files are not part of that project and would fail to parse.
   {
-    files: ['layers/**/*.ts', 'layers/**/*.tsx', 'layers/**/*.mts', 'layers/**/*.vue'],
+    files: [
+      'layers/*/app/**/*.ts',
+      'layers/*/app/**/*.tsx',
+      'layers/*/app/**/*.mts',
+      'layers/*/app/**/*.vue',
+    ],
     languageOptions: {
       parserOptions: {
         projectService: false,
@@ -66,7 +86,7 @@ export default defineConfigWithVueTs(
     },
     plugins: {
       vue,
-      '@typescript-eslint': typescript,
+
       prettier,
       compat,
     },
@@ -80,8 +100,10 @@ export default defineConfigWithVueTs(
       'no-var': 'error',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-explicit-any': 'warn',
 
       // Disable formatting rules that conflict with Prettier
+      'vue/html-closing-bracket-newline': 'off',
       'vue/max-attributes-per-line': 'off',
       'vue/singleline-html-element-content-newline': 'off',
       'vue/multiline-html-element-content-newline': 'off',
@@ -145,7 +167,9 @@ export default defineConfigWithVueTs(
       'vue/no-deprecated-v-bind-sync': 'error',
       'vue/prefer-prop-type-boolean-first': 'error',
       'vue/no-required-prop-with-default': 'error',
-      'vue/v-on-handler-style': ['error', ['method', 'inline-function']],
+      // Off: the rule demands named wrapper methods for every trivial handler
+      // (`@click="emit('close')"` etc.) — noise for demo-heavy pages.
+      'vue/v-on-handler-style': 'off',
       'vue/no-this-in-before-route-enter': 'error',
       'vue/require-emit-validator': 'warn',
       'vue/require-typed-object-prop': 'error',
@@ -160,7 +184,9 @@ export default defineConfigWithVueTs(
       'vue/no-watch-after-await': 'error',
       'vue/no-expose-after-await': 'error',
       'vue/require-name-property': 'error',
-      'vue/no-boolean-default': ['error', 'default-false'],
+      // The component APIs intentionally ship default-true booleans
+      // (e.g. `antialias`, `windowSize`) — flipping them would break consumers.
+      'vue/no-boolean-default': 'off',
       'vue/no-unused-emit-declarations': 'error',
       'vue/no-unused-vars': 'error',
       'vue/no-template-shadow': 'error',
@@ -173,11 +199,17 @@ export default defineConfigWithVueTs(
         { module: 'vue', path: 'inject', message: 'inject() must be called before any await.' },
       ],
 
-      'no-restricted-imports': [
+      // The @typescript-eslint variant allows `import type { ... } from 'vue'` —
+      // Vue *types* are not auto-imported by Nuxt, only runtime APIs are.
+      '@typescript-eslint/no-restricted-imports': [
         'error',
         {
           paths: [
-            { name: 'vue', message: 'Vue APIs are auto-imported by Nuxt. Remove this import.' },
+            {
+              name: 'vue',
+              message: 'Vue APIs are auto-imported by Nuxt. Remove this import.',
+              allowTypeImports: true,
+            },
             { name: '#imports', message: 'Already auto-imported by Nuxt.' },
             { name: '#components', message: 'Components are auto-imported by Nuxt.' },
           ],
@@ -200,7 +232,7 @@ export default defineConfigWithVueTs(
       },
     },
     plugins: {
-      '@typescript-eslint': typescript,
+
       prettier,
       compat,
     },
@@ -214,7 +246,9 @@ export default defineConfigWithVueTs(
       'no-unneeded-ternary': 'error',
       'max-params': ['warn', { max: 3 }],
 
-      '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'never' }],
+      // 'never' is unworkable here: TSL node graphs, Nuxt app-config generics and
+      // h3 utilities all need occasional `as` bridges. Ban only angle-bracket style.
+      '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'as' }],
       '@typescript-eslint/consistent-type-imports': [
         'error',
         { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
@@ -242,7 +276,8 @@ export default defineConfigWithVueTs(
           selector: 'IfStatement > :not(IfStatement).alternate',
           message: 'Avoid else. Use early returns.',
         },
-        { selector: 'TryStatement', message: 'Use tryCatch() instead of try/catch.' },
+        // (TryStatement ban removed — the prescribed tryCatch() helper was never
+        // implemented, so the rule was unsatisfiable and only generated disables.)
         {
           selector:
             "VariableDeclarator[id.type='Identifier'][id.name='props'][init.callee.name='defineProps']",
@@ -308,7 +343,7 @@ export default defineConfigWithVueTs(
       sourceType: 'module',
     },
     plugins: {
-      '@typescript-eslint': typescript,
+
       prettier,
       compat,
     },
@@ -348,5 +383,42 @@ export default defineConfigWithVueTs(
   {
     files: ['**/nuxt.config.ts', '**/*.config.ts', '**/*.config.mts'],
     ...typescript.configs['flat/disable-type-checked'],
+  },
+
+  // Layer server/ files are Nitro code outside tsconfig.typecheck.json's project,
+  // so type-aware rules can't run on them either.
+  {
+    files: ['layers/*/server/**/*.ts', 'layers/*/shared/**/*.ts'],
+    ...typescript.configs['flat/disable-type-checked'],
+  },
+
+  // Demo/showcase pages legitimately nest deep and run long — the structural
+  // budgets are meant for the reusable layer components, not kitchen-sink demos.
+  {
+    files: ['apps/*/app/**/*.vue'],
+    rules: {
+      'vue/max-template-depth': 'off',
+      'vue/max-lines-per-block': 'off',
+    },
+  },
+
+  // Render-function component — needs real `cloneVNode`/`Fragment` imports,
+  // which Nuxt does not auto-import.
+  {
+    files: ['layers/navigation/app/components/Links/Group.vue'],
+    rules: {
+      '@typescript-eslint/no-restricted-imports': 'off',
+    },
+  },
+
+  // Module augmentation (`declare module`) only works through interface merging —
+  // converting these to `type` aliases silently breaks AppConfig/RuntimeConfig and
+  // Nuxt Content collection typing. Keep `interface` allowed in the files that
+  // augment external modules.
+  {
+    files: ['**/*.d.ts', '**/app.config.ts', '**/types/runtime-config.ts'],
+    rules: {
+      '@typescript-eslint/consistent-type-definitions': 'off',
+    },
   }
 )

@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
   const { open = false, onSubmit } = defineProps<{
     open?: boolean
@@ -34,14 +33,13 @@
 </script>
 
 <template>
-  <!-- eslint-disable vue/v-on-handler-style -->
   <BaseModal
     :open
     title="Send a message"
     description="We'll get back to you within 24 hours."
     size="md"
-    @update:open="emit('update:open', $event)"
-    @close="emit('close')"
+    @update:open="($event) => emit('update:open', $event)"
+    @close="() => emit('close')"
   >
     <div class="space-y-4">
       <UFormField label="Name" required>

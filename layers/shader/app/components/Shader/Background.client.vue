@@ -1,11 +1,4 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
-
 <script setup lang="ts">
-  // @ts-nocheck - Three.js WebGPU types
   import { useWindowSize } from '@vueuse/core'
   import {
     ACESFilmicToneMapping,
@@ -22,33 +15,30 @@
   } from 'three'
   import { WebGPURenderer } from 'three/webgpu'
 
-  const props = withDefaults(
-    defineProps<{
-      /** The TSL node material to render */
-      material?: any
-      /** Background clear color */
-      clearColor?: string
-      /** Tone mapping algorithm */
-      toneMapping?: 'aces' | 'reinhard' | 'cineon' | 'linear'
-      /** Enable antialiasing */
-      antialias?: boolean
-      /** Fixed position (covers viewport) */
-      fixed?: boolean
-      /** Z-index for the background */
-      zIndex?: number
-      /** Pointer events on the canvas */
-      pointerEvents?: 'none' | 'auto'
-    }>(),
-    {
-      material: null,
-      clearColor: '#000000',
-      toneMapping: 'aces',
-      antialias: true,
-      fixed: true,
-      zIndex: -1,
-      pointerEvents: 'none',
-    }
-  )
+  const {
+    material = null,
+    clearColor = '#000000',
+    toneMapping = 'aces',
+    antialias = true,
+    fixed = true,
+    zIndex = -1,
+    pointerEvents = 'none',
+  } = defineProps<{
+    /** The TSL node material to render */
+    material?: any
+    /** Background clear color */
+    clearColor?: string
+    /** Tone mapping algorithm */
+    toneMapping?: 'aces' | 'reinhard' | 'cineon' | 'linear'
+    /** Enable antialiasing */
+    antialias?: boolean
+    /** Fixed position (covers viewport) */
+    fixed?: boolean
+    /** Z-index for the background */
+    zIndex?: number
+    /** Pointer events on the canvas */
+    pointerEvents?: 'none' | 'auto'
+  }>()
 
   const emit = defineEmits<{
     ready: [renderer: any]
@@ -63,6 +53,8 @@
   let planeMesh: Mesh
   let animationId: number
   let initialized = false
+  let initStarted = false
+  let disposed = false
 
   const toneMappingMap: Record<string, number> = {
     aces: ACESFilmicToneMapping,
@@ -72,13 +64,13 @@
   }
 
   const containerStyle = computed<Record<string, string | number>>(() => ({
-    position: props.fixed ? 'fixed' : 'absolute',
+    position: fixed ? 'fixed' : 'absolute',
     top: 0,
     left: 0,
-    width: props.fixed ? '100vw' : '100%',
-    height: props.fixed ? '100vh' : '100%',
-    zIndex: props.zIndex,
-    pointerEvents: props.pointerEvents,
+    width: fixed ? '100vw' : '100%',
+    height: fixed ? '100vh' : '100%',
+    zIndex: zIndex,
+    pointerEvents: pointerEvents,
     overflow: 'hidden',
   }))
 
@@ -94,6 +86,9 @@
   }
 
   function animate() {
+    // Bail if the component unmounted — guards against a frame scheduled just
+    // before teardown rendering on a disposed renderer.
+    if (disposed) return
     animationId = requestAnimationFrame(animate)
     if (renderer && scene && camera) {
       renderer.render(scene, camera)
@@ -102,41 +97,67 @@
 
   async function init() {
     const canvas = canvasRef.value
-    if (!canvas) return
+    if (!canvas || disposed) return
 
-    // WebGPURenderer falls back to WebGL2 if WebGPU is unavailable
-    renderer = new WebGPURenderer({ canvas, antialias: props.antialias })
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setSize(width.value, height.value)
-    renderer.setClearColor(new Color(props.clearColor))
-    renderer.toneMapping = toneMappingMap[props.toneMapping] ?? ACESFilmicToneMapping
-    renderer.outputColorSpace = SRGBColorSpace
+    try {
+      // WebGPURenderer falls back to WebGL2 if WebGPU is unavailable
+      renderer = new WebGPURenderer({ canvas, antialias: antialias })
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+      renderer.setSize(width.value, height.value)
+      renderer.setClearColor(new Color(clearColor))
+      renderer.toneMapping = toneMappingMap[toneMapping] ?? ACESFilmicToneMapping
+      renderer.outputColorSpace = SRGBColorSpace
 
-    // Required async init for WebGPU context setup
-    await renderer.init()
+      // Required async init for WebGPU context setup
+      await renderer.init()
 
-    scene = new Scene()
-    camera = new PerspectiveCamera(75, width.value / (height.value || 1), 0.1, 100)
-    camera.position.set(0, 0, 1)
+      // The component can unmount while the await above is pending (navigating
+      // away before WebGPU finishes initializing). onUnmounted already ran and
+      // disposed the renderer, so abort before starting the animation loop —
+      // otherwise we leak a throwing rAF loop rendering on a disposed renderer.
+      if (disposed) {
+        renderer.dispose()
+        return
+      }
 
-    const { width: pw, height: ph } = getPlaneSize(width.value, height.value)
-    const geometry = new PlaneGeometry(pw, ph)
-    planeMesh = new Mesh(geometry, props.material ?? new MeshBasicMaterial({ color: 0x000000 }))
-    scene.add(planeMesh)
+      scene = new Scene()
+      camera = new PerspectiveCamera(75, width.value / (height.value || 1), 0.1, 100)
+      camera.position.set(0, 0, 1)
 
-    // Pre-compile the shader pipeline asynchronously before starting the render loop.
-    // Without this, the first render() call uses device.createRenderPipeline() which
-    // blocks the main thread for 1-5s on first visit (cold WebGPU pipeline cache).
-    // compileAsync() uses device.createRenderPipelineAsync() instead, which is non-blocking.
-    await renderer.compileAsync(scene, camera)
+      const { width: pw, height: ph } = getPlaneSize(width.value, height.value)
+      const geometry = new PlaneGeometry(pw, ph)
+      planeMesh = new Mesh(geometry, material ?? new MeshBasicMaterial({ color: 0x000000 }))
+      scene.add(planeMesh)
 
-    initialized = true
-    emit('ready', renderer)
-    animate()
+      // Pre-compile the shader pipeline only when the material's colorNode is already
+      // set (i.e. the preset component mounted and emitted @node before us). Without
+      // a colorNode the compilation produces a black fallback and a later needsUpdate
+      // won't reliably trigger a GPU pipeline rebuild in all drivers.
+      // When colorNode is absent we skip pre-compilation and let the first render()
+      // call compile lazily — the browser may stutter once, but the output is correct.
+      if (material?.colorNode) {
+        await renderer.compileAsync(scene, camera)
+        if (disposed) {
+          renderer.dispose()
+          return
+        }
+      }
+
+      initialized = true
+      emit('ready', renderer)
+    } catch (e) {
+      console.error('[ShaderBackground] init() failed:', e)
+    }
+
+    // Always start the animation loop even if pre-compilation failed — Three.js
+    // will compile lazily on the first render() call.
+    if (scene && camera) {
+      animate()
+    }
   }
 
   watch(
-    () => props.material,
+    () => material,
     (mat) => {
       if (planeMesh && mat) {
         planeMesh.material = mat
@@ -145,7 +166,7 @@
   )
 
   watch(
-    () => props.clearColor,
+    () => clearColor,
     (color) => {
       if (renderer && initialized) {
         renderer.setClearColor(new Color(color))
@@ -165,11 +186,24 @@
     }
   })
 
-  onMounted(() => {
-    init()
-  })
+  // As a `.client.vue` component, the real <canvas> can attach a tick after this
+  // component's onMounted fires, leaving canvasRef.value null. Drive init() off the
+  // template ref so it runs the moment the canvas element actually binds.
+  watch(
+    canvasRef,
+    (canvas) => {
+      if (canvas && !initStarted) {
+        initStarted = true
+        init()
+      }
+    },
+    { immediate: true, flush: 'post' }
+  )
 
   onUnmounted(() => {
+    // Mark disposed first so an in-flight async init() aborts instead of
+    // starting the animation loop after teardown.
+    disposed = true
     cancelAnimationFrame(animationId)
     planeMesh?.geometry.dispose()
     renderer?.dispose()

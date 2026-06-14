@@ -9,10 +9,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
-    "vite": "^7.3.2"
+    "prettier": "catalog:conflicts_conflicts_prettier_3_8_3_h3_7_4",
+    "vite": "catalog:"
   },
   "dependencies": {
-    "three": "^0.181.2"
+    "three": "catalog:conflicts_three_h0_181_2"
   }
 }

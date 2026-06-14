@@ -41,9 +41,6 @@
   ]
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage title="Scrollytelling" description="Multi-chapter narrative scroll demos">
     <div class="scrollytelling-page">
@@ -124,8 +121,8 @@
         end="+=250%"
         :scrub="1"
         @progress="onSceneProgress"
-        @enter="sceneActive = true"
-        @leave="sceneActive = false"
+        @enter="() => (sceneActive = true)"
+        @leave="() => (sceneActive = false)"
       >
         <div class="min-h-screen flex flex-col items-center justify-center bg-gray-950 px-4">
           <!-- Progress arc -->
@@ -139,7 +136,11 @@
           </div>
 
           <!-- Step 0 -->
-          <MotionScrollStep :index="0" class="w-full max-w-3xl mb-8" @enter="currentChapter = 0">
+          <MotionScrollStep
+            :index="0"
+            class="w-full max-w-3xl mb-8"
+            @enter="() => (currentChapter = 0)"
+          >
             <template #default="{ isActive }">
               <div
                 class="rounded-3xl p-12 border-2 transition-all duration-700"
@@ -170,7 +171,7 @@
           </MotionScrollStep>
 
           <!-- Step 1 -->
-          <MotionScrollStep :index="1" class="w-full max-w-3xl" @enter="currentChapter = 1">
+          <MotionScrollStep :index="1" class="w-full max-w-3xl" @enter="() => (currentChapter = 1)">
             <template #default="{ isActive }">
               <div
                 class="rounded-3xl p-12 border-2 transition-all duration-700"

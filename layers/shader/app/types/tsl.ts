@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * TSL Node types
  * Using generic types for flexibility across Three.js versions

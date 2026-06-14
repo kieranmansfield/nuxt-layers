@@ -1,15 +1,8 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck - TSL types
   import {
     createAmbientUniforms,
     createAuroraColorNode,
   } from '#layers/shader/app/composables/useAmbientMaterials'
-  import { uniform } from 'three/tsl'
 
   const props = withDefaults(
     defineProps<{

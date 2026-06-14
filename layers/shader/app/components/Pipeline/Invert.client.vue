@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  // @ts-nocheck
   import { vec4 } from 'three/tsl'
 
   import { invert } from '../../shaders/common/blend'

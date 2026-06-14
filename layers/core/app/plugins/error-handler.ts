@@ -1,5 +1,6 @@
-/* eslint-disable no-restricted-syntax */
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin({
+  name: 'core:error-handler',
+  setup(nuxtApp) {
   const { logError } = useErrorLog()
 
   // Global Vue error handler
@@ -44,4 +45,5 @@ export default defineNuxtPlugin((nuxtApp) => {
       console.log('✅ Error cleared')
     }
   })
+  },
 })

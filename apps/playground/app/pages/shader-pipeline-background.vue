@@ -1,6 +1,3 @@
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <script setup lang="ts">
   definePageMeta({ ssr: false, layout: false })
 
@@ -541,9 +538,6 @@
   })
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <div class="min-h-screen bg-neutral-950 text-white flex flex-col">
     <!-- Header -->
@@ -1843,7 +1837,7 @@
                       ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
                       : 'bg-white/5 text-white/40 hover:text-white/70'
                   "
-                  @click="grainEnabled = !grainEnabled"
+                  @click="() => (grainEnabled = !grainEnabled)"
                 >
                   {{ grainEnabled ? 'On' : 'Off' }}
                 </button>

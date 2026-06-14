@@ -1,6 +1,4 @@
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import type { UiColors } from '#layers/typography/types/colors'
 
   const {
@@ -20,8 +18,6 @@
 </script>
 
 <template>
-  <!-- eslint-disable-next-line vue/no-duplicate-attr-inheritance -->
-  <!-- eslint-disable vue/no-duplicate-attr-inheritance -->
   <ULink
     :to="{ name: name, params: params, query: query }"
     :variant

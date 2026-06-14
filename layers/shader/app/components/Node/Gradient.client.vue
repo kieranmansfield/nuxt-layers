@@ -1,45 +1,39 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck - TSL types
   import { cosinePalette } from '#layers/shader/app/shaders/common/palette'
   import { add, mul, time, uniform, uv } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      id?: string
-      /** Cosine palette type or 'linear' for UV-based gradient */
-      type?: 'rainbow' | 'sunset' | 'ocean' | 'fire' | 'ice' | 'neon' | 'pastel' | 'custom'
-      speed?: number
-      /** Custom brightness for cosine palette [r,g,b] */
-      brightness?: [number, number, number]
-      /** Custom contrast for cosine palette [r,g,b] */
-      contrast?: [number, number, number]
-      /** Custom frequency for cosine palette [r,g,b] */
-      frequency?: [number, number, number]
-      /** Custom phase for cosine palette [r,g,b] */
-      phase?: [number, number, number]
-      order?: number
-      blend?: 'normal' | 'add' | 'multiply' | 'screen' | 'overlay' | 'mix'
-      opacity?: number
-    }>(),
-    {
-      id: 'gradient',
-      type: 'rainbow',
-      speed: 0.1,
-      brightness: () => [0.5, 0.5, 0.5],
-      contrast: () => [0.5, 0.5, 0.5],
-      frequency: () => [1.0, 1.0, 1.0],
-      phase: () => [0.0, 0.33, 0.67],
-      order: 0,
-      blend: 'normal',
-      opacity: 1.0,
-    }
-  )
+  const {
+    id = 'gradient',
+    type = 'rainbow',
+    speed = 0.1,
+    brightness = [0.5, 0.5, 0.5],
+    contrast = [0.5, 0.5, 0.5],
+    frequency = [1.0, 1.0, 1.0],
+    phase = [0.0, 0.33, 0.67],
+    order = 0,
+    blend = 'normal',
+    opacity = 1.0,
+  } = defineProps<{
+    id?: string
+    /** Cosine palette type or 'linear' for UV-based gradient */
+    type?: 'rainbow' | 'sunset' | 'ocean' | 'fire' | 'ice' | 'neon' | 'pastel' | 'custom'
+    speed?: number
+    /** Custom brightness for cosine palette [r,g,b] */
+    brightness?: [number, number, number]
+    /** Custom contrast for cosine palette [r,g,b] */
+    contrast?: [number, number, number]
+    /** Custom frequency for cosine palette [r,g,b] */
+    frequency?: [number, number, number]
+    /** Custom phase for cosine palette [r,g,b] */
+    phase?: [number, number, number]
+    order?: number
+    blend?: 'normal' | 'add' | 'multiply' | 'screen' | 'overlay' | 'mix'
+    opacity?: number
+  }>()
 
   const graph = useShaderGraphContext()
 
-  const uSpeed = uniform(props.speed)
+  const uSpeed = uniform(speed)
 
   // Palette presets
   const palettePresets: Record<
@@ -99,20 +93,20 @@
     const uvCoord = uv()
     const t = add(uvCoord.x, mul(time, uSpeed))
 
-    const preset = palettePresets[props.type]
+    const preset = palettePresets[type]
     if (preset) {
       return cosinePalette(t, preset[0], preset[1], preset[2], preset[3])
     }
 
     // Custom
-    return cosinePalette(t, props.brightness, props.contrast, props.frequency, props.phase)
+    return cosinePalette(t, brightness, contrast, frequency, phase)
   }
 
   let node = buildNode()
-  graph.register(props.id, node, props.order, props.blend, props.opacity)
+  graph.register(id, node, order, blend, opacity)
 
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       uSpeed.value = v
     }
@@ -120,15 +114,15 @@
 
   // Rebuild on type or custom param changes
   watch(
-    () => [props.type, props.brightness, props.contrast, props.frequency, props.phase] as const,
+    () => [type, brightness, contrast, frequency, phase] as const,
     () => {
       node = buildNode()
-      graph.update(props.id, node)
+      graph.update(id, node)
     }
   )
 
   onUnmounted(() => {
-    graph.unregister(props.id)
+    graph.unregister(id)
   })
 </script>
 

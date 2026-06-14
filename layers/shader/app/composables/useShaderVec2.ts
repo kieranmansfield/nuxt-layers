@@ -1,7 +1,3 @@
-/* eslint-disable max-params */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex
 import { Vector2 } from 'three'
 import { uniform } from 'three/tsl'
 
@@ -66,11 +62,11 @@ export function useShaderVec2(initialX = 0, initialY = 0) {
 
       if (rawT < 1) {
         requestAnimationFrame(tick)
-      } else {
-        x.value = targetX
-        y.value = targetY
-        resolvePromise()
+        return
       }
+      x.value = targetX
+      y.value = targetY
+      resolvePromise()
     }
 
     requestAnimationFrame(tick)

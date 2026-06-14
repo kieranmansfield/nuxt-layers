@@ -1,5 +1,3 @@
-<!-- eslint-disable vue/require-default-prop -->
-<!-- eslint-disable vue/define-props-destructuring -->
 <script lang="ts" setup>
   import { useColor } from '../../composables/color'
   import { useTypography } from '../../composables/typography'
@@ -17,36 +15,35 @@
 
   defineOptions({ inheritAttrs: false })
 
-  const props = withDefaults(
-    defineProps<{
-      level?: 1 | 2 | 3 | 4 | 5 | 6
-      weight?: FontWeight
-      width?: FontWidth
-      slant?: FontSlant
-      leading?: FontLeading
-      tracking?: FontTracking
-      align?: TextAlign
-      transform?: TextTransform
-      color?: UiColors
-      size?: FontSize
-      class?: string
-    }>(),
-    {
-      level: 1,
-      weight: 'font-bold',
-      width: 'font-stretch-normal',
-      slant: 'normal',
-      leading: 'leading-tight',
-      tracking: 'tracking-tight',
-      align: 'left',
-      transform: 'none',
-      class: '',
-    }
-  )
-  const tag = computed(() => `h${props.level}` as const)
+  const {
+    level = 1,
+    weight = 'font-bold',
+    width = 'font-stretch-normal',
+    slant = 'normal',
+    leading = 'leading-tight',
+    tracking = 'tracking-tight',
+    align = 'left',
+    transform = 'none',
+    color,
+    size,
+    class: classProp = '',
+  } = defineProps<{
+    level?: 1 | 2 | 3 | 4 | 5 | 6
+    weight?: FontWeight
+    width?: FontWidth
+    slant?: FontSlant
+    leading?: FontLeading
+    tracking?: FontTracking
+    align?: TextAlign
+    transform?: TextTransform
+    color?: UiColors
+    size?: FontSize
+    class?: string
+  }>()
+  const tag = computed(() => `h${level}` as const)
 
   const sizeClass = computed(() => {
-    if (props.size) return null
+    if (size) return null
 
     const sizes: Record<number, string> = {
       1: 'text-4xl sm:text-5xl',
@@ -56,34 +53,34 @@
       5: 'text-lg sm:text-xl',
       6: 'text-base sm:text-lg',
     }
-    return sizes[props.level]
+    return sizes[level]
   })
 
   const { classes } = useTypography({
-    weight: props.weight,
-    width: props.width,
-    slant: props.slant,
-    leading: props.leading,
-    tracking: props.tracking,
-    align: props.align,
-    transform: props.transform,
-    ...(props.size !== undefined && { size: props.size }),
+    weight: weight,
+    width: width,
+    slant: slant,
+    leading: leading,
+    tracking: tracking,
+    align: align,
+    transform: transform,
+    ...(size !== undefined && { size: size }),
   })
-  const colorClass = useColor(props.color, 'text')
+  const colorClass = useColor(color, 'text')
 </script>
 
 <template>
   <Typography
     :tag
-    :weight="props.weight"
-    :width="props.width"
-    :slant="props.slant"
-    :leading="props.leading"
-    :tracking="props.tracking"
-    :align="props.align"
-    :transform="props.transform"
-    :class="[sizeClass, classes, colorClass, props.class]"
-    v-bind="{ ...(props.size !== undefined && { size: props.size }), ...$attrs }"
+    :weight
+    :width
+    :slant
+    :leading
+    :tracking
+    :align
+    :transform
+    :class="[sizeClass, classes, colorClass, classProp]"
+    v-bind="{ ...(size !== undefined && { size: size }), ...$attrs }"
   >
     <slot />
   </Typography>

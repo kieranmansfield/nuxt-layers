@@ -1,5 +1,3 @@
-/* eslint-disable complexity */
-/* eslint-disable no-restricted-syntax */
 import { onUnmounted, shallowRef } from 'vue'
 import { MeshBasicNodeMaterial, MeshStandardNodeMaterial } from 'three/webgpu'
 
@@ -25,10 +23,9 @@ export function useShader(options: UseShaderOptions = {}) {
 
   function createMaterial() {
     try {
+      material.value = new MeshBasicNodeMaterial()
       if (type === 'standard') {
         material.value = new MeshStandardNodeMaterial()
-      } else {
-        material.value = new MeshBasicNodeMaterial()
       }
 
       applyConfig(config)

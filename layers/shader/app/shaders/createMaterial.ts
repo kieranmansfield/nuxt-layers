@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable complexity */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Material Factory
  * Creates Three.js TSL materials from shader layer functions
@@ -9,6 +5,8 @@
 import { BackSide, DoubleSide, FrontSide, type Side } from 'three'
 import { vec4 } from 'three/tsl'
 import { MeshBasicNodeMaterial } from 'three/webgpu'
+
+import type { TSLNode } from './types'
 
 import {
   aurora,
@@ -47,7 +45,6 @@ import {
   type StripeGradientUniforms,
 } from './layers/stripe'
 
-type TSLNode = ShaderNodeObject<Node>
 
 // ============================================
 // Types

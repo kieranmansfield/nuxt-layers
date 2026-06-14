@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
 export default defineAppConfig({
   uiLayer: {
     gradients: {
@@ -105,7 +104,7 @@ export default defineAppConfig({
 })
 
 declare module '@nuxt/schema' {
-  type AppConfigInput = {
+  interface AppConfigInput {
     uiLayer?: {
       name?: string
       gradients?: Record<string, import('./types/gradient').GradientConfig>

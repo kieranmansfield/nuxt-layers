@@ -1,9 +1,5 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
-  import { clamp, float, floor, fract, sin, time, uniform, vec3, vec4 } from 'three/tsl'
+  import { clamp, float, floor, time, uniform, vec3, vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
   import { grain, vignette } from '../../shaders/common/grain'
@@ -12,45 +8,48 @@
    * Preset: combines grain + warm tone shift + vignette + slight fade.
    * A convenient one-stop aged film look.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Overall intensity: 0 = no effect, 1 = full aged look */
-      intensity?: number
-      /** Grain strength */
-      grainStrength?: number
-      /** Vignette darkness */
-      vignetteStrength?: number
-      /** Warm shadow tint amount */
-      warmth?: number
-      order?: number
-    }>(),
-    { intensity: 1, grainStrength: 0.04, vignetteStrength: 0.5, warmth: 0.15, order: 0 }
-  )
+  const {
+    intensity = 1,
+    grainStrength = 0.04,
+    vignetteStrength = 0.5,
+    warmth = 0.15,
+    order = 0,
+  } = defineProps<{
+    /** Overall intensity: 0 = no effect, 1 = full aged look */
+    intensity?: number
+    /** Grain strength */
+    grainStrength?: number
+    /** Vignette darkness */
+    vignetteStrength?: number
+    /** Warm shadow tint amount */
+    warmth?: number
+    order?: number
+  }>()
 
-  const intensityNode = uniform(props.intensity)
-  const grainNode = uniform(props.grainStrength)
-  const vigNode = uniform(props.vignetteStrength)
-  const warmthNode = uniform(props.warmth)
+  const intensityNode = uniform(intensity)
+  const grainNode = uniform(grainStrength)
+  const vigNode = uniform(vignetteStrength)
+  const warmthNode = uniform(warmth)
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       intensityNode.value = v
     }
   )
   watch(
-    () => props.grainStrength,
+    () => grainStrength,
     (v) => {
       grainNode.value = v
     }
   )
   watch(
-    () => props.vignetteStrength,
+    () => vignetteStrength,
     (v) => {
       vigNode.value = v
     }
   )
   watch(
-    () => props.warmth,
+    () => warmth,
     (v) => {
       warmthNode.value = v
     }
@@ -79,5 +78,5 @@
 
     const result = clamp(faded.mul(vig).add(g), 0, 1)
     return vec4(result.mix(prev.xyz, float(1).sub(intensityNode)), prev.w)
-  }, props.order)
+  }, order)
 </script>

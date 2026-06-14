@@ -256,7 +256,8 @@
     },
     {
       name: 'Visual',
-      description: 'Gradient backgrounds, accent blobs, tint overlays, and visual identity components',
+      description:
+        'Gradient backgrounds, accent blobs, tint overlays, and visual identity components',
       loaded: true,
       icon: 'i-lucide-eye',
       to: '/visual',
@@ -282,7 +283,8 @@
     },
     {
       name: 'Animations',
-      description: 'Marquee, Cursor, Tilt, Magnetic, CountUp, and TextReveal micro-interaction components',
+      description:
+        'Marquee, Cursor, Tilt, Magnetic, CountUp, and TextReveal micro-interaction components',
       loaded: true,
       icon: 'i-lucide-wand-sparkles',
       to: '/animations',
@@ -295,7 +297,8 @@
     },
     {
       name: 'Transitions',
-      description: 'CSS transition classes and MotionTransition component for enter/leave animations',
+      description:
+        'CSS transition classes and MotionTransition component for enter/leave animations',
       loaded: true,
       icon: 'i-lucide-shuffle',
       to: '/transitions',
@@ -394,17 +397,17 @@
       icon: 'i-lucide-eye',
       layer: 'Layout',
     },
-    { label: 'Layout: Stacking', to: '/layout-stacking', icon: 'i-lucide-stack', layer: 'Layout' },
+    { label: 'Layout: Stacking', to: '/layout-stacking', icon: 'i-lucide-square-stack', layer: 'Layout' },
     { label: 'Routing: Scroll', to: '/routing-scroll', icon: 'i-lucide-scroll', layer: 'Routing' },
     {
       label: 'Shader Gradient',
       to: '/shader-gradient',
-      icon: 'i-lucide-gradient',
+      icon: 'i-lucide-blend',
       layer: 'Shader',
     },
   ]
 
-  const layerDemoColors: Record<string, { icon: string, border: string, bg: string }> = {
+  const layerDemoColors: Record<string, { icon: string; border: string; bg: string }> = {
     Motion: { icon: 'text-emerald-500', border: 'border-emerald-500/50', bg: 'bg-emerald-500/10' },
     Shader: { icon: 'text-violet-500', border: 'border-violet-500/50', bg: 'bg-violet-500/10' },
     UI: { icon: 'text-pink-500', border: 'border-pink-500/50', bg: 'bg-pink-500/10' },
@@ -416,9 +419,6 @@
   definePageMeta({ layout: { name: 'grid', props: { showHeader: false, showFooter: false } } })
 </script>
 
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Nuxt Layers Playground"
@@ -506,14 +506,18 @@
                 :key="demo.to"
                 :to="demo.to"
                 class="flex flex-col gap-3 p-4 rounded-xl border-2 transition-colors group"
-                :class="layerDemoColors[demo.layer]
-                  ? [layerDemoColors[demo.layer].border, layerDemoColors[demo.layer].bg]
-                  : ['border-default', 'bg-elevated', 'hover:bg-muted']"
+                :class="
+                  layerDemoColors[demo.layer]
+                    ? [layerDemoColors[demo.layer].border, layerDemoColors[demo.layer].bg]
+                    : ['border-default', 'bg-elevated', 'hover:bg-muted']
+                "
               >
                 <UIcon
                   :name="demo.icon"
                   class="text-2xl transition-colors"
-                  :class="layerDemoColors[demo.layer]?.icon ?? 'text-muted group-hover:text-primary'"
+                  :class="
+                    layerDemoColors[demo.layer]?.icon ?? 'text-muted group-hover:text-primary'
+                  "
                 />
                 <div>
                   <div class="font-semibold text-sm text-highlighted leading-tight">

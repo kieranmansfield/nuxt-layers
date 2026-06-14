@@ -1,10 +1,6 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { Color, Vector3 } from 'three'
-  import { clamp, float, mix, sin, time, uniform, vec2, vec3, vec4 } from 'three/tsl'
+  import { clamp, float, mix, time, uniform, vec2, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
 
@@ -12,78 +8,75 @@
    * Aurora borealis — layered animated colour bands across the upper screen.
    * Uses FBM noise to create organic ribbon-like curtains of light.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Primary aurora colour */
-      colorA?: string
-      /** Secondary aurora colour */
-      colorB?: string
-      /** Vertical position of aurora band centre */
-      bandY?: number
-      /** Vertical band height */
-      bandHeight?: number
-      /** Animation speed */
-      speed?: number
-      /** Effect intensity */
-      intensity?: number
-      order?: number
-    }>(),
-    {
-      colorA: '#00ff88',
-      colorB: '#8844ff',
-      bandY: 0.7,
-      bandHeight: 0.3,
-      speed: 0.3,
-      intensity: 0.7,
-      order: 0,
-    }
-  )
+  const {
+    colorA = '#00ff88',
+    colorB = '#8844ff',
+    bandY = 0.7,
+    bandHeight = 0.3,
+    speed = 0.3,
+    intensity = 0.7,
+    order = 0,
+  } = defineProps<{
+    /** Primary aurora colour */
+    colorA?: string
+    /** Secondary aurora colour */
+    colorB?: string
+    /** Vertical position of aurora band centre */
+    bandY?: number
+    /** Vertical band height */
+    bandHeight?: number
+    /** Animation speed */
+    speed?: number
+    /** Effect intensity */
+    intensity?: number
+    order?: number
+  }>()
 
   function toVec3Node(hex: string) {
     const c = new Color(hex)
     return uniform(new Vector3(c.r, c.g, c.b))
   }
 
-  const colorANode = toVec3Node(props.colorA)
-  const colorBNode = toVec3Node(props.colorB)
-  const bandYNode = uniform(props.bandY)
-  const bandHNode = uniform(props.bandHeight)
-  const speedNode = uniform(props.speed)
-  const intensityNode = uniform(props.intensity)
+  const colorANode = toVec3Node(colorA)
+  const colorBNode = toVec3Node(colorB)
+  const bandYNode = uniform(bandY)
+  const bandHNode = uniform(bandHeight)
+  const speedNode = uniform(speed)
+  const intensityNode = uniform(intensity)
   watch(
-    () => props.colorA,
+    () => colorA,
     (v) => {
       const c = new Color(v)
       colorANode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.colorB,
+    () => colorB,
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
     }
   )
   watch(
-    () => props.bandY,
+    () => bandY,
     (v) => {
       bandYNode.value = v
     }
   )
   watch(
-    () => props.bandHeight,
+    () => bandHeight,
     (v) => {
       bandHNode.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       intensityNode.value = v
     }
@@ -113,5 +106,5 @@
 
     const contribution = aurora.mul(bandMask.pow(2)).mul(intensityNode)
     return vec4(prev.xyz.add(contribution), prev.w)
-  }, props.order)
+  }, order)
 </script>

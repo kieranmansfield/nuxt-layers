@@ -1,25 +1,19 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { cos, sin, time, uniform, vec2 } from 'three/tsl'
 
   /**
    * Rotates UV around a centre point continuously over time.
    * Distinct from UVRotate (static angle) — this is always animated.
    */
-  const props = withDefaults(
-    defineProps<{
-      /** Orbit speed in radians per second */
-      speed?: number
-      order?: number
-    }>(),
-    { speed: 0.5, order: 0 }
-  )
+  const { speed = 0.5, order = 0 } = defineProps<{
+    /** Orbit speed in radians per second */
+    speed?: number
+    order?: number
+  }>()
 
-  const speedNode = uniform(props.speed)
+  const speedNode = uniform(speed)
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       speedNode.value = v
     }
@@ -36,7 +30,7 @@
         centered.x.mul(s).add(centered.y.mul(c))
       ).add(0.5)
     },
-    props.order,
+    order,
     'uv'
   )
 </script>

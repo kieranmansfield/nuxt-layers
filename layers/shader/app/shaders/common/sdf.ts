@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Modular TSL SDF (Signed Distance Field) Utilities
  * Provides 2D/3D SDF shapes and operations for procedural geometry
@@ -8,6 +6,9 @@ import {
   abs,
   add,
   clamp,
+  dot,
+  float,
+  If,
   length,
   max,
   min,
@@ -93,9 +94,10 @@ export function sdHexagon(p: TSLNode, r: TSLNode | number = 0.5): TSLNode {
   const radius = typeof r === 'number' ? float(r) : r
   const k = vec3(-0.866025404, 0.5, 0.577350269)
 
-  const _p = abs(p).toVar()
+  const _p: TSLNode = abs(p).toVar()
   _p.subAssign(float(2.0).mul(min(dot(k.xy, _p), 0.0).mul(k.xy)))
-  _p.subAssign(vec2(clamp(_p.x, k.z.negate().mul(radius), k.z.mul(radius)), radius))
+  const clampedX: TSLNode = clamp(_p.x, k.z.negate().mul(radius), k.z.mul(radius))
+  _p.subAssign(vec2(clampedX, radius))
 
   return length(_p).mul(sign(_p.y))
 }
@@ -108,13 +110,15 @@ export function sdHexagon(p: TSLNode, r: TSLNode | number = 0.5): TSLNode {
 export function sdEquilateralTriangle(p: TSLNode, r: TSLNode | number = 0.1): TSLNode {
   const radius = typeof r === 'number' ? float(r) : r
   const k = sqrt(3.0)
-  const _p = (p ?? vec2(0)).toVar()
+  const _p: TSLNode = (p ?? vec2(0)).toVar()
 
   _p.x = abs(_p.x).sub(radius).toVar()
   _p.y = _p.y.add(radius.div(k)).toVar()
 
   If(_p.x.add(k.mul(_p.y)).greaterThan(0), () => {
-    _p.assign(vec2(_p.x.sub(k.mul(_p.y)), k.negate().mul(_p.x).sub(_p.y)).div(2))
+    const foldedX: TSLNode = _p.x.sub(k.mul(_p.y))
+    const foldedY: TSLNode = k.negate().mul(_p.x).sub(_p.y)
+    _p.assign(vec2(foldedX, foldedY).div(2))
   })
 
   _p.x.subAssign(clamp(_p.x, radius.mul(-2), 0.0))
@@ -221,6 +225,6 @@ export function sdTriangle(p: TSLNode, size: TSLNode | number = 0.4): TSLNode {
  */
 export function sdBox3d(p: TSLNode, b: TSLNode | [number, number, number] = [0, 0, 0]): TSLNode {
   const size = Array.isArray(b) ? vec3(b[0], b[1], b[2]) : b
-  const q = abs(p).sub(size)
+  const q: TSLNode = abs(p).sub(size)
   return length(max(q, 0.0)).add(min(max(q.x, max(q.y, q.z)), 0.0))
 }

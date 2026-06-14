@@ -20,6 +20,7 @@ export type QualitySettings = {
   antialias: boolean
   shadows: boolean
   postProcessing: boolean
+  particleCount: number
 }
 
 export const QUALITY_PRESETS: Record<QualityLevel, QualitySettings> = {
@@ -28,23 +29,27 @@ export const QUALITY_PRESETS: Record<QualityLevel, QualitySettings> = {
     antialias: false,
     shadows: false,
     postProcessing: false,
+    particleCount: 500,
   },
   medium: {
     pixelRatio: 1.5,
     antialias: true,
     shadows: false,
     postProcessing: true,
+    particleCount: 2500,
   },
   high: {
     pixelRatio: 2,
     antialias: true,
     shadows: true,
     postProcessing: true,
+    particleCount: 10000,
   },
   ultra: {
     pixelRatio: 2,
     antialias: true,
     shadows: true,
     postProcessing: true,
+    particleCount: 50000,
   },
 }

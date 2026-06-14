@@ -1,27 +1,21 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
-  import { uniform } from 'three/tsl'
+  import { uniform, vec2 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      scale?: number
-      pivotX?: number
-      pivotY?: number
-      order?: number
-    }>(),
-    {
-      scale: 1,
-      pivotX: 0.5,
-      pivotY: 0.5,
-      order: 0,
-    }
-  )
+  const {
+    scale = 1,
+    pivotX = 0.5,
+    pivotY = 0.5,
+    order = 0,
+  } = defineProps<{
+    scale?: number
+    pivotX?: number
+    pivotY?: number
+    order?: number
+  }>()
 
-  const scaleNode = uniform(props.scale)
+  const scaleNode = uniform(scale)
   watch(
-    () => props.scale,
+    () => scale,
     (v) => {
       scaleNode.value = v
     }
@@ -29,10 +23,10 @@
 
   useShaderStage(
     (uvIn) => {
-      const pivot = vec2(props.pivotX, props.pivotY)
+      const pivot = vec2(pivotX, pivotY)
       return uvIn.sub(pivot).div(scaleNode).add(pivot)
     },
-    props.order,
+    order,
     'uv'
   )
 </script>

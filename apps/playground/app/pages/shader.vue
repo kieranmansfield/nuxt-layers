@@ -1,6 +1,3 @@
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <script setup lang="ts">
   definePageMeta({ ssr: false, layout: false })
 
@@ -41,6 +38,10 @@
     const rect = element.getBoundingClientRect()
     mouseX.value = (e.clientX - rect.left) / rect.width
     mouseY.value = 1 - (e.clientY - rect.top) / rect.height
+  }
+
+  function onCanvasMouseMove(e: MouseEvent) {
+    if (e.currentTarget instanceof HTMLElement) handleMouseMove(e, e.currentTarget)
   }
 
   // Shader control settings
@@ -435,12 +436,6 @@
   })
 </script>
 
-<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
-<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
-<!-- eslint-disable vue/no-template-key -->
-<!-- eslint-disable vue/max-lines-per-block -->
-<!-- eslint-disable vue/max-template-depth -->
-<!-- eslint-disable vue/v-on-handler-style -->
 <template>
   <LayoutPage
     title="Shader Layer Demo"
@@ -644,7 +639,7 @@
               <!-- Shader Canvas (3 cols) -->
               <div
                 class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
-                @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
+                @mousemove="onCanvasMouseMove"
               >
                 <ShaderDemoCanvas
                   :active-demo="activeNoiseDemo"
@@ -790,7 +785,7 @@
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
                 class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
-                @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
+                @mousemove="onCanvasMouseMove"
               >
                 <ShaderDemoCanvas
                   :active-demo="activeSdfDemo"
@@ -929,7 +924,7 @@
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
                 class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
-                @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
+                @mousemove="onCanvasMouseMove"
               >
                 <ShaderDemoCanvas
                   :active-demo="activeLightingDemo"
@@ -1049,7 +1044,7 @@
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
                 class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
-                @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
+                @mousemove="onCanvasMouseMove"
               >
                 <ShaderDemoCanvas
                   :active-demo="activeTonemappingDemo"
@@ -1172,7 +1167,7 @@
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
                 class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
-                @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
+                @mousemove="onCanvasMouseMove"
               >
                 <ShaderDemoCanvas
                   :active-demo="activePatternDemo"
@@ -1292,7 +1287,7 @@
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
                 class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
-                @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
+                @mousemove="onCanvasMouseMove"
               >
                 <template v-if="activeEffectDemo === 'image'">
                   <ShaderImageDemo
@@ -1445,7 +1440,7 @@
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
                 class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
-                @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
+                @mousemove="onCanvasMouseMove"
               >
                 <ShaderDemoCanvas
                   :active-demo="activeMathDemo"
@@ -1578,7 +1573,7 @@
             <div class="grid lg:grid-cols-5 gap-6 mb-12">
               <div
                 class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-gray-900 rounded-2xl overflow-hidden relative"
-                @mousemove="(e) => handleMouseMove(e, e.currentTarget as HTMLElement)"
+                @mousemove="onCanvasMouseMove"
               >
                 <template v-if="activeUvDemo === 'image'">
                   <ShaderImageDemo

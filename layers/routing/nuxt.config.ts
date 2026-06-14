@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 type RoutePage = {
   file?: string
   meta?: Record<string, unknown>

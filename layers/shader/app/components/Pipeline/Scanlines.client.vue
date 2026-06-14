@@ -1,41 +1,40 @@
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck
   import { time, uniform, vec4 } from 'three/tsl'
 
   import { scanlines } from '../../shaders/common/grain'
 
-  const props = withDefaults(
-    defineProps<{
-      /** Number of scanlines across the screen */
-      density?: number
-      /** Darkness of the lines: 0 = invisible, 1 = full black */
-      intensity?: number
-      /** Animate the lines — speed in lines/second */
-      scrollSpeed?: number
-      order?: number
-    }>(),
-    { density: 400, intensity: 0.25, scrollSpeed: 0, order: 0 }
-  )
+  const {
+    density = 400,
+    intensity = 0.25,
+    scrollSpeed = 0,
+    order = 0,
+  } = defineProps<{
+    /** Number of scanlines across the screen */
+    density?: number
+    /** Darkness of the lines: 0 = invisible, 1 = full black */
+    intensity?: number
+    /** Animate the lines — speed in lines/second */
+    scrollSpeed?: number
+    order?: number
+  }>()
 
-  const densityNode = uniform(props.density)
-  const intensityNode = uniform(props.intensity)
-  const scrollSpeedNode = uniform(props.scrollSpeed)
+  const densityNode = uniform(density)
+  const intensityNode = uniform(intensity)
+  const scrollSpeedNode = uniform(scrollSpeed)
   watch(
-    () => props.density,
+    () => density,
     (v) => {
       densityNode.value = v
     }
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       intensityNode.value = v
     }
   )
   watch(
-    () => props.scrollSpeed,
+    () => scrollSpeed,
     (v) => {
       scrollSpeedNode.value = v
     }
@@ -48,5 +47,5 @@
     const offset = time.mul(scrollSpeedNode)
     const factor = scanlines(uvCurrent, densityNode, intensityNode, offset)
     return vec4(prev.xyz.mul(factor), prev.w)
-  }, props.order)
+  }, order)
 </script>

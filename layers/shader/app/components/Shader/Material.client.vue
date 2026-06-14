@@ -1,33 +1,21 @@
-<!-- eslint-disable vue/no-unused-properties -->
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
-<!-- eslint-disable vue/no-boolean-default -->
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-<!-- eslint-disable vue/define-props-destructuring -->
-<!-- eslint-disable @typescript-eslint/ban-ts-comment -->
 <script setup lang="ts">
-  // @ts-nocheck - TSL types
-  import { DoubleSide } from 'three'
+  import { BackSide, DoubleSide, FrontSide } from 'three'
   import { MeshBasicNodeMaterial } from 'three/webgpu'
 
-  const props = withDefaults(
-    defineProps<{
-      transparent?: boolean
-      side?: 'front' | 'back' | 'double'
-    }>(),
-    {
-      transparent: false,
-      side: 'double',
-    }
-  )
+  const { transparent = false, side = 'double' } = defineProps<{
+    transparent?: boolean
+    side?: 'front' | 'back' | 'double'
+  }>()
 
   // Create the shader graph context for child nodes
   const graph = useShaderGraph()
 
   // Create material ONCE in setup -- never recreated
   const material = new MeshBasicNodeMaterial()
-  material.side = DoubleSide
+  const sideMap = { front: FrontSide, back: BackSide, double: DoubleSide } as const
+  material.side = sideMap[side]
 
-  if (props.transparent) {
+  if (transparent) {
     material.transparent = true
   }
 

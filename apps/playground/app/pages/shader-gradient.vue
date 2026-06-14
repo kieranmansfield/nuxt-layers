@@ -1,6 +1,3 @@
-<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
-<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
   import ThemeBubble from '#layers/shader/app/components/Preset/ThemeBubble.client.vue'
   import ThemeGradient from '#layers/shader/app/components/Preset/ThemeGradient.client.vue'
@@ -117,14 +114,13 @@
   const isDark = computed(() => colorMode.value === 'dark')
 </script>
 
-<!-- eslint-disable vue/prefer-true-attribute-shorthand -->
 <template>
   <ShaderRuntime>
     <ShaderHost
       :preset="activePreset"
       :preset-props
       :fixed="true"
-      :z-index="-1"
+      :z-index="0"
       :clear-color
       tone-mapping="aces"
     />
@@ -327,7 +323,7 @@
                     ? 'bg-white/20'
                     : 'bg-black/20'
               "
-              @click="mouseInteraction = !mouseInteraction"
+              @click="() => (mouseInteraction = !mouseInteraction)"
             >
               <span
                 class="inline-block h-3.5 w-3.5 rounded-full transition-transform duration-200"

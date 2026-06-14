@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck - TSL types are complex and not fully exported from three/tsl
 /**
  * Aurora Shader Layer
  * Northern lights / aurora borealis effect
@@ -9,7 +6,7 @@ import { Color } from 'three'
 import { float, mix, pow, smoothstep, time as tslTime, uniform, uv, vec2, vec3 } from 'three/tsl'
 
 import { simplexNoise2D } from '../common/noise'
-import type { TSLNode } from '../types'
+import type { FloatUniform, TSLNode } from '../types'
 
 export type AuroraOptions = {
   /** Array of colors (3 recommended) */
@@ -31,14 +28,14 @@ export type AuroraOptions = {
 }
 
 export type AuroraUniforms = {
-  speed: ReturnType<typeof uniform>
-  density: ReturnType<typeof uniform>
-  fadePower: ReturnType<typeof uniform>
-  glowIntensity: ReturnType<typeof uniform>
-  mouseX: ReturnType<typeof uniform>
-  mouseStrength: ReturnType<typeof uniform>
-  skyColor: ReturnType<typeof uniform>
-  colors: Array<ReturnType<typeof uniform>>
+  speed: FloatUniform
+  density: FloatUniform
+  fadePower: FloatUniform
+  glowIntensity: FloatUniform
+  mouseX: FloatUniform
+  mouseStrength: FloatUniform
+  skyColor: TSLNode
+  colors: TSLNode[]
 }
 
 /**
@@ -106,13 +103,13 @@ export function aurora(uniforms: AuroraUniforms, uvNode?: TSLNode): TSLNode {
   const auroraSmooth = smoothstep(-0.2, 0.8, auroraValue)
 
   // Get colors
-  const col1 = vec3(uniforms.colors[0] as unknown as TSLNode)
-  const col2 = vec3(uniforms.colors[1] as unknown as TSLNode)
-  const col3 = vec3(uniforms.colors[2] as unknown as TSLNode)
-  const sky = vec3(uniforms.skyColor as unknown as TSLNode)
+  const col1 = vec3(uniforms.colors[0])
+  const col2 = vec3(uniforms.colors[1])
+  const col3 = vec3(uniforms.colors[2])
+  const sky = vec3(uniforms.skyColor)
 
   // Color mixing
-  let color = mix(col1, col2, auroraSmooth)
+  let color: TSLNode = mix(col1, col2, auroraSmooth)
   color = mix(color, col3, curtain2.mul(fade).mul(0.5))
 
   // Add glow
