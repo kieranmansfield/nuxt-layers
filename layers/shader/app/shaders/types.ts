@@ -8,6 +8,7 @@
 
 import type { UniformNode } from 'three/webgpu'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TSLNode = any
 
 /**

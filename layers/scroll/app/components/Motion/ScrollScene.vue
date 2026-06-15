@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import type { ScrollTrigger as GSAPScrollTrigger } from 'gsap/ScrollTrigger'
   import { SCROLL_SCENE_KEY, type ScrollSceneContext } from '../../composables/useScrollSteps'
 
   const {
@@ -72,7 +73,7 @@
     unregisterStep,
   })
 
-  let st: { kill: () => void } | null = null
+  let st: GSAPScrollTrigger | null = null
 
   onMounted(() => {
     if (!containerRef.value) return

@@ -1,3 +1,4 @@
+import type { ScrollTrigger } from 'gsap/ScrollTrigger'
 import type { MaybeRef } from 'vue'
 
 type SectionProgressOptions = {
@@ -27,7 +28,7 @@ export function useSectionProgress(
   const entering = computed(() => active.value && direction.value > 0)
   const leaving = computed(() => active.value && direction.value < 0)
 
-  let st: { kill: () => void } | null = null
+  let st: ScrollTrigger | null = null
 
   onMounted(() => {
     const el = unref(trigger)

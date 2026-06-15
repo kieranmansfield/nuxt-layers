@@ -123,6 +123,7 @@ catalog:
   '@vueuse/core': ^14.3.0
   '@vueuse/nuxt': ^14.3.0
   '@webgpu/glslang': ^0.0.15
+  '@webgpu/types': ^0.1.70
   aria-hidden: 1.2.6
   bail: 2.0.2
   baseline-buildhooks: https://b0650beb-2bfb-4a53-af8a-b8f14c4decaf.netlify.app/packages/buildhooks.tgz
@@ -130,6 +131,7 @@ catalog:
   birpc: 2.9.0
   browserslist: ^4.28.2
   ccount: 2.0.1
+  csstype: ^3.2.3
   changesets: ^1.0.2
   char-regex: 1.0.2
   character-entities: 2.0.2
@@ -305,6 +307,7 @@ catalog:
   tailwindcss: ^4.3.0
   three: ^0.184.0
   trim-lines: 3.0.1
+  type-fest: ^5.7.0
   trim-trailing-lines: 2.1.0
   trough: 2.2.0
   turbo: ^2.9.16
