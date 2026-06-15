@@ -22,6 +22,7 @@
     "./apps/playground/.nuxt/imports.d.ts",
     "./apps/playground/.nuxt/types/*.d.ts",
     "./apps/playground/.nuxt/content/types.d.ts",
-    "./layers/*/app/**/*"
+    "./layers/*/app/**/*",
+    "./types/**/*"
   ]
 }

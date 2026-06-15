@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { TresCanvas } from '@tresjs/core'
+  import { TresCanvas, type TresContext } from '@tresjs/core'
   import {
     ACESFilmicToneMapping,
     CineonToneMapping,
@@ -37,7 +37,7 @@
   }>()
 
   const emit = defineEmits<{
-    ready: [context: any]
+    ready: [context: TresContext]
   }>()
 
   const config = useAppConfig()
@@ -85,7 +85,7 @@
 
   const rendererBinding = computed(() => (webgpu ? { renderer: webgpuRendererFactory } : {}))
 
-  function onReady(context: any) {
+  function onReady(context: TresContext) {
     emit('ready', context)
   }
 </script>

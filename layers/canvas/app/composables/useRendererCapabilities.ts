@@ -70,7 +70,7 @@ export async function checkWebGPUSupport(): Promise<boolean> {
   }
 
   try {
-    const adapter = await (navigator as any).gpu.requestAdapter()
+    const adapter = await navigator.gpu.requestAdapter()
     return adapter !== null
   } catch {
     return false
