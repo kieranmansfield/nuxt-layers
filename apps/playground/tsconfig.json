@@ -18,7 +18,9 @@
   "compilerOptions": {
     "paths": {
       "#layers/theme": ["../../layers/theme"],
-      "#layers/theme/*": ["../../layers/theme/*"]
+      "#layers/theme/*": ["../../layers/theme/*"],
+      "#types": ["../../types"],
+      "#types/*": ["../../types/*"]
     }
   },
   "exclude": ["node_modules"]
