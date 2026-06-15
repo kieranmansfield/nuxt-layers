@@ -4,38 +4,35 @@
 
   import type { TSLNode } from '../../shaders/types'
 
-  const props = withDefaults(
-    defineProps<{
-      id?: string
-      color?: string
-      order?: number
-      blend?: 'normal' | 'add' | 'multiply' | 'screen' | 'overlay' | 'mix'
-      opacity?: number
-    }>(),
-    {
-      id: 'color',
-      color: '#ffffff',
-      order: 0,
-      blend: 'normal',
-      opacity: 1.0,
-    }
-  )
+  const {
+    id = 'color',
+    color = '#ffffff',
+    order = 0,
+    blend = 'normal',
+    opacity = 1.0,
+  } = defineProps<{
+    id?: string
+    color?: string
+    order?: number
+    blend?: 'normal' | 'add' | 'multiply' | 'screen' | 'overlay' | 'mix'
+    opacity?: number
+  }>()
 
   const graph = useShaderGraphContext()
 
   // Create uniform once
-  const colorValue = new Color(props.color)
+  const colorValue = new Color(color)
   const colorNode: TSLNode = uniform(colorValue)
 
   // Build TSL node once (references uniform by pointer)
   const node = vec3(colorNode)
 
   // Register in graph
-  graph.register(props.id, node, props.order, props.blend, props.opacity)
+  graph.register(id, node, order, blend, opacity)
 
   // Watch props to update uniform value (no recompilation)
   watch(
-    () => props.color,
+    () => color,
     (hex) => {
       colorValue.set(hex)
       colorNode.value = colorValue
@@ -43,7 +40,7 @@
   )
 
   onUnmounted(() => {
-    graph.unregister(props.id)
+    graph.unregister(id)
   })
 </script>
 

@@ -5,12 +5,12 @@
   const {
     type = 'text',
     name,
-    label,
+    label = undefined,
     required = false,
     size = 'md',
-    placeholder,
-    icon,
-    class: className,
+    placeholder = undefined,
+    icon = undefined,
+    class: className = undefined,
   } = defineProps<{
     /** Field type determines validation, icon, and input behavior */
     type?: FieldType

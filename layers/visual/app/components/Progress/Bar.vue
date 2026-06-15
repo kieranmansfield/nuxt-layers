@@ -1,12 +1,12 @@
 <script setup lang="ts">
   const {
     progress = null,
-    color,
-    size,
-    orientation,
-    status,
-    animation,
-    inverted,
+    color = undefined,
+    size = undefined,
+    orientation = undefined,
+    status = undefined,
+    animation = undefined,
+    inverted = undefined,
   } = defineProps<{
     progress?: number | null
     color?: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral'

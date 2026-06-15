@@ -2,9 +2,9 @@
   const {
     src,
     alt = '',
-    caption,
-    width,
-    height,
+    caption = undefined,
+    width = undefined,
+    height = undefined,
   } = defineProps<{
     src: string
     alt?: string

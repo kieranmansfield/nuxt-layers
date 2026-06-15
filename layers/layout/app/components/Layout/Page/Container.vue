@@ -38,6 +38,8 @@
    * </PageContainer>
    */
 
+  defineOptions({ inheritAttrs: false })
+
   interface Props {
     title: string
     description?: string
@@ -49,11 +51,11 @@
 
   const {
     title,
-    description,
+    description = undefined,
     showHeader = true,
     headerPreset = 'centered',
     layout = 'grid',
-    back,
+    back = undefined,
   } = defineProps<Props>()
 
   // Set page metadata for SEO and browser tab

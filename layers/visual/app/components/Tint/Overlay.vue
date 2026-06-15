@@ -1,20 +1,19 @@
 <script setup lang="ts">
   import type { ColorShade, TintColorSlot, TintLevel } from '../../types/tint'
 
-  const props = withDefaults(
-    defineProps<{
-      color: TintColorSlot
-      level: TintLevel
-      shade?: ColorShade
-      tag?: string
-    }>(),
-    {
-      shade: 500,
-      tag: 'div',
-    }
-  )
+  const {
+    color,
+    level,
+    shade = 500,
+    tag = 'div',
+  } = defineProps<{
+    color: TintColorSlot
+    level: TintLevel
+    shade?: ColorShade
+    tag?: string
+  }>()
 
-  const { style } = useTint(props)
+  const { style } = useTint(() => ({ color, level, shade }))
 </script>
 
 <template>

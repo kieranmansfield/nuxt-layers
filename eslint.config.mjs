@@ -1,9 +1,9 @@
 import { fileURLToPath } from 'node:url'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import json from '@eslint/json'
 import markdown from '@eslint/markdown'
 import typescript from '@typescript-eslint/eslint-plugin'
 import typescriptParser from '@typescript-eslint/parser'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import compat from 'eslint-plugin-compat'
 // import pluginOxlint from 'eslint-plugin-oxlint'
 import { configs as pnpmConfigs } from 'eslint-plugin-pnpm'
@@ -232,7 +232,6 @@ export default defineConfigWithVueTs(
       },
     },
     plugins: {
-
       prettier,
       compat,
     },
@@ -292,7 +291,8 @@ export default defineConfigWithVueTs(
         {
           selector:
             "CallExpression[callee.name='watch'] > MemberExpression.arguments:first-child[object.name='props']",
-          message: 'watch(props.x, …) captures the value once. Use a getter: watch(() => props.x, …).',
+          message:
+            'watch(props.x, …) captures the value once. Use a getter: watch(() => props.x, …).',
         },
         {
           selector:
@@ -343,7 +343,6 @@ export default defineConfigWithVueTs(
       sourceType: 'module',
     },
     plugins: {
-
       prettier,
       compat,
     },

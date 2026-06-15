@@ -6,9 +6,9 @@
   defineOptions({ inheritAttrs: false })
 
   const {
-    language,
+    language = undefined,
     color = 'default',
-    size,
+    size = undefined,
     class: classProp = '',
   } = defineProps<{
     language?: string

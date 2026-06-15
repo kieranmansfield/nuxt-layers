@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const { surround } = defineProps<{
+  const { surround = undefined } = defineProps<{
     surround?: unknown[]
   }>()
 </script>

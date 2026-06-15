@@ -21,7 +21,7 @@
     back?: string
   }
 
-  defineProps<Props>()
+  const { title, description = undefined, back = undefined } = defineProps<Props>()
 </script>
 
 <template>

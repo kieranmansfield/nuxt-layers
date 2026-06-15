@@ -40,7 +40,7 @@
     showHeader?: boolean
   }
 
-  const { title, description, showHeader = false } = defineProps<Props>()
+  const { title, description = undefined, showHeader = false } = defineProps<Props>()
 
   useHead({
     title,

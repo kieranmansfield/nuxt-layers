@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+  defineOptions({ inheritAttrs: false })
+
   const {
     strokeWidth = 1.5,
     strokeColor = 'currentColor',

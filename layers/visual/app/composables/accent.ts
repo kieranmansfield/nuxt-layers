@@ -1,4 +1,5 @@
-import type { ComputedRef, CSSProperties } from 'vue'
+import type { ComputedRef, CSSProperties, MaybeRefOrGetter } from 'vue'
+import { toValue } from 'vue'
 
 import type { BlobBlur, BlobConfig } from '../types/accent'
 
@@ -25,22 +26,23 @@ function resolveColor(config: BlobConfig): string {
   return `var(--ui-color-${color}-${shade})`
 }
 
-export function useAccentBlob(config: BlobConfig): {
+export function useAccentBlob(config: MaybeRefOrGetter<BlobConfig>): {
   style: ComputedRef<CSSProperties>
 } {
   const style = computed((): CSSProperties => {
-    const size = config.size ?? '40rem'
-    const opacity = (config.opacity ?? 25) / 100
-    const blurPx = resolveBlurPx(config.blur)
+    const resolved = toValue(config)
+    const size = resolved.size ?? '40rem'
+    const opacity = (resolved.opacity ?? 25) / 100
+    const blurPx = resolveBlurPx(resolved.blur)
 
     return {
       position: 'absolute',
-      left: `${config.x}%`,
-      top: `${config.y}%`,
+      left: `${resolved.x}%`,
+      top: `${resolved.y}%`,
       transform: 'translate(-50%, -50%)',
       width: size,
       height: size,
-      backgroundColor: resolveColor(config),
+      backgroundColor: resolveColor(resolved),
       opacity,
       borderRadius: '9999px',
       filter: blurPx > 0 ? `blur(${blurPx}px)` : undefined,

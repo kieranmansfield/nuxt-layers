@@ -2,8 +2,8 @@
   import type { GradientConfig } from '../../types/gradient'
 
   const {
-    preset,
-    config,
+    preset = undefined,
+    config = undefined,
     tag = 'span',
   } = defineProps<{
     preset?: string

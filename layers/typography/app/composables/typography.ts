@@ -1,3 +1,6 @@
+import type { MaybeRefOrGetter } from 'vue'
+import { toValue } from 'vue'
+
 import type {
   FontLeading,
   FontSize,
@@ -35,50 +38,53 @@ function getSizeClass(size: FontSize | undefined): string {
   return typeof size === 'number' ? `text-[${size}]` : `text-${size}`
 }
 
-export function useTypography(props: {
-  weight?: FontWeight
-  slant?: FontSlant
-  width?: FontWidth
-  leading?: FontLeading
-  tracking?: FontTracking
-  align?: TextAlign
-  transform?: TextTransform
-  size?: FontSize
-}) {
-  const classes = computed(() =>
-    [
-      normalizeAxis(props.weight, {
+export function useTypography(
+  props: MaybeRefOrGetter<{
+    weight?: FontWeight
+    slant?: FontSlant
+    width?: FontWidth
+    leading?: FontLeading
+    tracking?: FontTracking
+    align?: TextAlign
+    transform?: TextTransform
+    size?: FontSize
+  }>
+) {
+  const classes = computed(() => {
+    const p = toValue(props)
+    return [
+      normalizeAxis(p.weight, {
         prefix: 'font',
         fallback: 'font-normal',
       }),
 
-      normalizeAxis(props.width, {
+      normalizeAxis(p.width, {
         numericFormatter: (v) => `font-stretch-[${v}%]`,
       }),
 
-      normalizeAxis(props.slant, {
+      normalizeAxis(p.slant, {
         fallback: 'not-italic',
       }),
 
-      normalizeAxis(props.leading, {
+      normalizeAxis(p.leading, {
         prefix: 'leading',
         fallback: 'leading-normal',
       }),
 
-      normalizeAxis(props.tracking, {
+      normalizeAxis(p.tracking, {
         prefix: 'tracking',
         fallback: 'tracking-normal',
       }),
 
-      getSizeClass(props.size),
+      getSizeClass(p.size),
 
-      props.align ? `text-${props.align}` : '',
+      p.align ? `text-${p.align}` : '',
 
-      props.transform && props.transform !== 'none' ? props.transform : '',
+      p.transform && p.transform !== 'none' ? p.transform : '',
     ]
       .filter(Boolean)
       .join(' ')
-  )
+  })
 
   return { classes }
 }

@@ -4,29 +4,22 @@
     createAuroraColorNode,
   } from '#layers/shader/app/composables/useAmbientMaterials'
 
-  const props = withDefaults(
-    defineProps<{
-      speed?: number
-      intensity?: number
-      mouseInteraction?: boolean
-    }>(),
-    {
-      speed: 1.0,
-      intensity: 1.0,
-      mouseInteraction: true,
-    }
-  )
+  const {
+    speed = 1.0,
+    intensity = 1.0,
+    mouseInteraction = true,
+  } = defineProps<{
+    speed?: number
+    intensity?: number
+    mouseInteraction?: boolean
+  }>()
 
   const emit = defineEmits<{
     node: [colorNode: any]
   }>()
 
   // Create uniforms once
-  const uniforms = createAmbientUniforms({
-    speed: props.speed,
-    intensity: props.intensity,
-    mouseInteraction: props.mouseInteraction,
-  })
+  const uniforms = createAmbientUniforms({ speed, intensity, mouseInteraction })
 
   // Build the TSL color node (references uniforms by pointer)
   const colorNode = createAuroraColorNode(uniforms)
@@ -48,19 +41,19 @@
 
   // Watch props to update uniforms (no recompilation)
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       uniforms.speed.value = v
     }
   )
   watch(
-    () => props.intensity,
+    () => intensity,
     (v) => {
       uniforms.intensity.value = v
     }
   )
   watch(
-    () => props.mouseInteraction,
+    () => mouseInteraction,
     (v) => {
       uniforms.mouseStrength.value = v ? 0.5 : 0
     }

@@ -1,12 +1,12 @@
 <script setup lang="ts">
   const {
     title,
-    description,
-    date,
-    image,
-    badge,
+    description = undefined,
+    date = undefined,
+    image = undefined,
+    badge = undefined,
     authors = [],
-    to,
+    to = undefined,
   } = defineProps<{
     title: string
     description?: string

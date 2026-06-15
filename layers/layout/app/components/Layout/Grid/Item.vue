@@ -65,26 +65,40 @@
     aspect?: AspectRatio
   }
 
-  const props = defineProps<Props>()
-
-  const { as = 'div' } = props
+  const {
+    preset: presetProp = undefined,
+    as = 'div',
+    colStart: colStartProp = undefined,
+    colSpan: colSpanProp = undefined,
+    rowStart: rowStartProp = undefined,
+    rowSpan: rowSpanProp = undefined,
+    align: alignProp = undefined,
+    justify: justifyProp = undefined,
+    container: containerProp = undefined,
+    gap: gapProp = undefined,
+    density: densityProp = undefined,
+    z = undefined,
+    layer = undefined,
+    bleed = undefined,
+    aspect = undefined,
+  } = defineProps<Props>()
 
   // Get preset configuration if preset prop is provided
   const { getPreset } = useGridConfig()
-  const presetConfig = computed(() => (props.preset ? getPreset(props.preset) : undefined))
+  const presetConfig = computed(() => (presetProp ? getPreset(presetProp) : undefined))
 
   // Merge preset values with explicit props (explicit props take precedence)
-  const colStart = computed(() => props.colStart ?? presetConfig.value?.colStart)
-  const colSpan = computed(() => props.colSpan ?? presetConfig.value?.colSpan ?? 'full')
-  const rowStart = computed(() => props.rowStart ?? presetConfig.value?.rowStart)
-  const rowSpan = computed(() => props.rowSpan ?? presetConfig.value?.rowSpan ?? 1)
+  const colStart = computed(() => colStartProp ?? presetConfig.value?.colStart)
+  const colSpan = computed(() => colSpanProp ?? presetConfig.value?.colSpan ?? 'full')
+  const rowStart = computed(() => rowStartProp ?? presetConfig.value?.rowStart)
+  const rowSpan = computed(() => rowSpanProp ?? presetConfig.value?.rowSpan ?? 1)
 
   // Preset-aware alignment computed refs
-  const align = computed(() => props.align ?? presetConfig.value?.align)
-  const justify = computed(() => props.justify ?? presetConfig.value?.justify)
-  const container = computed(() => props.container ?? presetConfig.value?.container)
-  const gap = computed(() => props.gap ?? presetConfig.value?.gap)
-  const density = computed(() => props.density ?? presetConfig.value?.density)
+  const align = computed(() => alignProp ?? presetConfig.value?.align)
+  const justify = computed(() => justifyProp ?? presetConfig.value?.justify)
+  const container = computed(() => containerProp ?? presetConfig.value?.container)
+  const gap = computed(() => gapProp ?? presetConfig.value?.gap)
+  const density = computed(() => densityProp ?? presetConfig.value?.density)
 
   const layerZIndex: Record<LayerName, number> = {
     back: 0,
@@ -133,15 +147,15 @@
     const rowStartVal = getDefaultValue(rowStart.value, undefined)
     const rowSpanVal = getDefaultValue(rowSpan.value, 1)
 
-    if (props.bleed) {
-      if (props.bleed === 'both') {
+    if (bleed) {
+      if (bleed === 'both') {
         styles.gridColumn = '1 / -1'
         styles.marginInline = 'calc(-1 * var(--grid-padding))'
-      } else if (props.bleed === 'left') {
+      } else if (bleed === 'left') {
         const spanNum = typeof colSpanVal === 'number' ? colSpanVal : undefined
         styles.gridColumn = spanNum ? `1 / span ${spanNum}` : '1 / -1'
         styles.marginInlineStart = 'calc(-1 * var(--grid-padding))'
-      } else if (props.bleed === 'right') {
+      } else if (bleed === 'right') {
         styles.gridColumn = `${colStartVal ?? 'auto'} / -1`
         styles.marginInlineEnd = 'calc(-1 * var(--grid-padding))'
       }
@@ -218,7 +232,7 @@
     }
 
     // Z-index
-    const zIndex = props.z ?? (props.layer ? layerZIndex[props.layer] : undefined)
+    const zIndex = z ?? (layer ? layerZIndex[layer] : undefined)
     if (zIndex !== undefined) styles.zIndex = String(zIndex)
 
     return styles
@@ -227,7 +241,7 @@
   const classes = computed(() => {
     const classList: string[] = ['gi-placed', '@container', '@container/item']
 
-    if (props.aspect) classList.push(aspectClasses[props.aspect])
+    if (aspect) classList.push(aspectClasses[aspect])
     if (container.value) classList.push(`layout-container-${container.value}`)
 
     return classList.join(' ')

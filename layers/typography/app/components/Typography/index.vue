@@ -14,33 +14,33 @@
     TypographyTag,
   } from '../../types/typography'
 
-  const props = withDefaults(
-    defineProps<{
-      tag?: TypographyTag
-      weight?: FontWeight
-      width?: FontWidth
-      slant?: FontSlant
-      leading?: FontLeading
-      tracking?: FontTracking
-      align?: TextAlign
-      transform?: TextTransform
-      color?: UiColors
-      size?: FontSize
-    }>(),
-    {
-      tag: 'p',
-      weight: 'font-normal',
-      width: 'font-stretch-normal',
-      slant: 'normal',
-      leading: 'leading-normal',
-      tracking: 'tracking-normal',
-      align: 'left',
-      transform: 'none',
-      size: 'base',
-    }
-  )
-  const { classes } = useTypography(props)
-  const colorClass = useColor(props.color, 'text')
+  defineOptions({ inheritAttrs: false })
+
+  const {
+    tag = 'p',
+    weight = 'font-normal',
+    width = 'font-stretch-normal',
+    slant = 'normal',
+    leading = 'leading-normal',
+    tracking = 'tracking-normal',
+    align = 'left',
+    transform = 'none',
+    color = undefined,
+    size = 'base',
+  } = defineProps<{
+    tag?: TypographyTag
+    weight?: FontWeight
+    width?: FontWidth
+    slant?: FontSlant
+    leading?: FontLeading
+    tracking?: FontTracking
+    align?: TextAlign
+    transform?: TextTransform
+    color?: UiColors
+    size?: FontSize
+  }>()
+  const { classes } = useTypography(() => ({ weight, width, slant, leading, tracking, align, transform, size }))
+  const colorClass = useColor(color, 'text')
 </script>
 
 <template>

@@ -2,6 +2,7 @@
   import { cloneVNode, defineComponent, Fragment, h, ref, type VNode } from 'vue'
 
   export default defineComponent({
+    name: 'LinksGroup',
     inheritAttrs: false,
     props: {
       tag: { type: String, default: 'div' },

@@ -5,8 +5,8 @@
   const {
     colorA = '#000000',
     colorB = '#ffffff',
-    colorC,
-    colorD,
+    colorC = undefined,
+    colorD = undefined,
     axis = 'y',
     order = 0,
   } = defineProps<{

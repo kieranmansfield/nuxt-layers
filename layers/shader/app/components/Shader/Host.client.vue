@@ -5,32 +5,29 @@
   import { mix as tslMix, uniform } from 'three/tsl'
   import { MeshBasicNodeMaterial } from 'three/webgpu'
 
-  const props = withDefaults(
-    defineProps<{
-      /** The active preset component */
-      preset?: Component | null
-      /** Crossfade duration in seconds */
-      transitionDuration?: number
-      /** Props forwarded to the active preset component */
-      presetProps?: Record<string, any>
-      /** ShaderBackground props */
-      clearColor?: string
-      toneMapping?: 'aces' | 'reinhard' | 'cineon' | 'linear'
-      fixed?: boolean
-      zIndex?: number
-      pointerEvents?: 'none' | 'auto'
-    }>(),
-    {
-      preset: null,
-      transitionDuration: 1.0,
-      presetProps: () => ({}),
-      clearColor: '#000000',
-      toneMapping: 'aces',
-      fixed: true,
-      zIndex: -1,
-      pointerEvents: 'none',
-    }
-  )
+  const {
+    preset = null,
+    transitionDuration = 1.0,
+    presetProps = () => ({}),
+    clearColor = '#000000',
+    toneMapping = 'aces',
+    fixed = true,
+    zIndex = -1,
+    pointerEvents = 'none',
+  } = defineProps<{
+    /** The active preset component */
+    preset?: Component | null
+    /** Crossfade duration in seconds */
+    transitionDuration?: number
+    /** Props forwarded to the active preset component */
+    presetProps?: Record<string, any>
+    /** ShaderBackground props */
+    clearColor?: string
+    toneMapping?: 'aces' | 'reinhard' | 'cineon' | 'linear'
+    fixed?: boolean
+    zIndex?: number
+    pointerEvents?: 'none' | 'auto'
+  }>()
 
   const emit = defineEmits<{
     transitionStart: []
@@ -42,7 +39,7 @@
   const isTransitioning = ref(false)
 
   // Current and next preset tracking
-  const currentPreset = shallowRef<Component | null>(props.preset)
+  const currentPreset = shallowRef<Component | null>(preset)
   const nextPreset = shallowRef<Component | null>(null)
 
   function setCurrentPreset(preset: Component | null) {
@@ -79,7 +76,7 @@
 
   // Watch preset changes for crossfade
   watch(
-    () => props.preset,
+    () => preset,
     async (newPreset, oldPreset) => {
       if (!newPreset || newPreset === oldPreset) return
 
@@ -100,7 +97,7 @@
         transitionProgress,
         0,
         1,
-        props.transitionDuration,
+        transitionDuration,
         (t) => t * t * (3 - 2 * t) // smoothstep
       )
 

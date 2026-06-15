@@ -20,7 +20,7 @@
     description?: string
   }
 
-  defineProps<Props>()
+  const { title, description = undefined } = defineProps<Props>()
 </script>
 
 <template>

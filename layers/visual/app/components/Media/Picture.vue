@@ -2,6 +2,8 @@
   import { usePicture } from '../../composables/picture'
   import type { PictureProps } from '../../types/media'
 
+  defineOptions({ inheritAttrs: false })
+
   const {
     src,
     alt,

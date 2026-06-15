@@ -8,34 +8,31 @@
   } from '#layers/shader/app/shaders/common/noise'
   import { add, mul, time, uniform, uv, vec2, vec3 } from 'three/tsl'
 
-  const props = withDefaults(
-    defineProps<{
-      id?: string
-      type?: 'simplex' | 'fbm' | 'voronoi' | 'ridged' | 'fbm3d'
-      scale?: number
-      speed?: number
-      octaves?: number
-      order?: number
-      blend?: 'normal' | 'add' | 'multiply' | 'screen' | 'overlay' | 'mix'
-      opacity?: number
-    }>(),
-    {
-      id: 'noise',
-      type: 'simplex',
-      scale: 3.0,
-      speed: 0.2,
-      octaves: 4,
-      order: 0,
-      blend: 'normal',
-      opacity: 1.0,
-    }
-  )
+  const {
+    id = 'noise',
+    type = 'simplex',
+    scale = 3.0,
+    speed = 0.2,
+    octaves = 4,
+    order = 0,
+    blend = 'normal',
+    opacity = 1.0,
+  } = defineProps<{
+    id?: string
+    type?: 'simplex' | 'fbm' | 'voronoi' | 'ridged' | 'fbm3d'
+    scale?: number
+    speed?: number
+    octaves?: number
+    order?: number
+    blend?: 'normal' | 'add' | 'multiply' | 'screen' | 'overlay' | 'mix'
+    opacity?: number
+  }>()
 
   const graph = useShaderGraphContext()
 
   // Create uniforms once
-  const uScale = uniform(props.scale)
-  const uSpeed = uniform(props.speed)
+  const uScale = uniform(scale)
+  const uSpeed = uniform(speed)
 
   // Build TSL node
   function buildNode() {
@@ -46,9 +43,9 @@
 
     let noiseValue
 
-    switch (props.type) {
+    switch (type) {
       case 'fbm':
-        noiseValue = fbm2D(animatedUV, { octaves: props.octaves, frequency: 1.0 }).mul(0.5).add(0.5)
+        noiseValue = fbm2D(animatedUV, { octaves, frequency: 1.0 }).mul(0.5).add(0.5)
         break
       case 'voronoi': {
         const { distance } = voronoi2D(animatedUV, 1.0)
@@ -56,10 +53,10 @@
         break
       }
       case 'ridged':
-        noiseValue = ridgedFbm2d(animatedUV, { octaves: props.octaves, frequency: 1.0 })
+        noiseValue = ridgedFbm2d(animatedUV, { octaves, frequency: 1.0 })
         break
       case 'fbm3d':
-        noiseValue = fbm3dSimplex(vec3(scaledUV, t), { octaves: props.octaves }).mul(0.5).add(0.5)
+        noiseValue = fbm3dSimplex(vec3(scaledUV, t), { octaves }).mul(0.5).add(0.5)
         break
       case 'simplex':
       default:
@@ -71,17 +68,17 @@
   }
 
   const node = buildNode()
-  graph.register(props.id, node, props.order, props.blend, props.opacity)
+  graph.register(id, node, order, blend, opacity)
 
   // Watch uniform-driven props (no recompilation)
   watch(
-    () => props.scale,
+    () => scale,
     (v) => {
       uScale.value = v
     }
   )
   watch(
-    () => props.speed,
+    () => speed,
     (v) => {
       uSpeed.value = v
     }
@@ -89,15 +86,15 @@
 
   // Watch topology-changing props (requires graph update)
   watch(
-    () => [props.type, props.octaves] as const,
+    () => [type, octaves] as const,
     () => {
       const newNode = buildNode()
-      graph.update(props.id, newNode)
+      graph.update(id, newNode)
     }
   )
 
   onUnmounted(() => {
-    graph.unregister(props.id)
+    graph.unregister(id)
   })
 </script>
 

@@ -16,8 +16,8 @@
    */
   const {
     open = false,
-    title,
-    description,
+    title = undefined,
+    description = undefined,
     size = 'md',
   } = defineProps<{
     open?: boolean

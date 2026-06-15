@@ -25,7 +25,7 @@
     tracking = 'tracking-tight',
     align = 'left',
     transform = 'none',
-    color,
+    color = undefined,
     class: classProp = '',
   } = defineProps<{
     level?: 1 | 2 | 3 | 4 | 5 | 6

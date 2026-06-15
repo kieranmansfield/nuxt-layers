@@ -2,8 +2,8 @@
   import type { AccentSceneConfig, BlobConfig } from '../../types/accent'
 
   const {
-    preset,
-    blobs,
+    preset = undefined,
+    blobs = undefined,
     tag = 'div',
   } = defineProps<{
     preset?: string

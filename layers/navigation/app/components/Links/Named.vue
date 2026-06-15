@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import type { UiColors } from '#layers/typography/types/colors'
 
+  defineOptions({ inheritAttrs: false })
+
   const {
     name,
     params = undefined,
