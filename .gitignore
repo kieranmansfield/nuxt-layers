@@ -45,3 +45,4 @@ dist
 .playwright-mcp/
 /ambient-after-wait.png
 /ambient-page.png
+.pnpm-store/
