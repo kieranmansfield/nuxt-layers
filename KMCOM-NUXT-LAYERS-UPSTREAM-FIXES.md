@@ -1,58 +1,28 @@
-# kmcom-nuxt-layers Upstream Fixes
+# kmcom-nuxt-layers Patch Handoff
 
-This document captures the package-side changes needed for consumers like `KMCOMv5/frontend`.
+This is the current patch target for `kmcom-nuxt-layers` after the frontend started surfacing 1847 type errors from the package.
 
-## What is not the problem
+## What is already fixed in `2.2.9`
 
-The frontend `tsconfig.json` `exclude` list is not the reason this package shows up in typechecking.
+The installed `2.2.9` package already contains these package-distribution fixes:
 
-TypeScript only uses `exclude` to decide which files become root inputs. Once Nuxt generates layer aliases like `#layers/theme` and the app imports one of those paths, TypeScript follows the resolved package files under `node_modules` and typechecks them.
+- `./layers/feeds` is exported from the root `package.json`
+- `layers/*/server/**` is included in the published `files`
 
-That is expected behavior.
+So the remaining breakage is not coming from those two items anymore.
 
-## Required changes in `kmcom-nuxt-layers`
+## What is still broken
 
-### 1. Widen the image provider prop
-
-File: `layers/visual/app/types/media.ts`
-
-Problem: `PictureProps.provider` is typed too narrowly as `'ipx'`, which breaks apps that configure a different Nuxt Image provider.
-
-Change the prop type to `string` and keep the runtime pass-through unchanged.
-
-```ts
-// BEFORE
-provider?: 'ipx'
-
-// AFTER
-provider?: string
-```
-
-### 2. Export the feeds layer
+### 1. `#types` is still missing from the published tarball
 
 File: root `package.json`
 
-Problem: `package.json` exports do not include `./layers/feeds`, so consumers cannot extend the feeds layer reliably.
+`layers/core/nuxt.config.ts` aliases `#types` to `../../types`, but the package tarball does not publish the root `types/` directory. That makes type-only imports fail in layer files such as:
 
-Add the missing export entry:
+- `layers/theme/app/types/theme.ts`
+- `layers/typography/app/types/colors.ts`
 
-```json
-"exports": {
-  "./layers/core": "./layers/core/nuxt.config.ts",
-  "./layers/ui": "./layers/ui/nuxt.config.ts",
-  "./layers/content": "./layers/content/nuxt.config.ts",
-  "./layers/feeds": "./layers/feeds/nuxt.config.ts",
-  "./layers/routing": "./layers/routing/nuxt.config.ts"
-}
-```
-
-### 3. Ship feed server routes in the npm tarball
-
-File: root `package.json`
-
-Problem: the published `files` list needs to include `layers/*/server/**`. Without that, feed handlers are stripped from the package and the feed routes 404 in consuming apps.
-
-Add the server glob to `files`:
+Add the package-level types tree to `files`:
 
 ```json
 "files": [
@@ -63,22 +33,48 @@ Add the server glob to `files`:
   "layers/*/tailwind.config.*",
   "layers/*/app/**",
   "layers/*/server/**",
+  "types/**",
   "docs/"
 ]
 ```
 
-## Consumer impact
+### 2. `TSLNode` is too generic for the shader layer
 
-After these changes land in `kmcom-nuxt-layers`, the frontend should:
+File: `layers/shader/app/types/tsl.ts`
 
-1. Bump the dependency version in `package.json`.
-2. Reinstall dependencies.
-3. Re-run `pnpm typecheck`.
-4. Re-check feed routes such as `/feed/rss` and `/feed/blog/json`.
+`export type TSLNode = Node` resolves to `Node<unknown>` in the `three` typings. That removes the chaining methods the shader helpers depend on, which is why the first cascade starts in:
 
-## Verification in the package repo
+- `layers/shader/app/utils/tsl/uv.ts`
+- `layers/shader/app/utils/tsl/animation.ts`
+- `layers/shader/app/shaders/common/*.ts`
 
-1. Run the package typecheck.
-2. Run a package publish dry-run or inspect the packed tarball.
-3. Confirm `layers/feeds/server/**` is present in the published output.
-4. Confirm consumers can extend `kmcom-nuxt-layers/layers/feeds` without a package exports warning.
+Replace the alias with a concrete node type that preserves numeric/vector/color chaining.
+
+Suggested direction:
+
+```ts
+import type { FloatVecType, Node, NumType } from 'three/webgpu'
+
+export type TSLNode = Node<NumType | FloatVecType | 'color'>
+```
+
+Keep matrix aliases separate if they are needed:
+
+- `TSLMat3`
+- `TSLMat4`
+
+Do not leave the catch-all alias as bare `Node`.
+
+## Why this matters
+
+The frontend `exclude` list is not the issue. Nuxt generates aliases into `kmcom-nuxt-layers`, the app imports those aliases, and TypeScript follows them into the package source. If the package ships broken types, the consumer typecheck will still fail.
+
+## Verification
+
+After patching the package:
+
+1. Run the package publish dry-run or inspect the packed tarball.
+2. Confirm `types/**` is included in the published output.
+3. Reinstall the frontend dependency.
+4. Re-run `pnpm typecheck`.
+5. Confirm the first errors no longer point at `layers/theme/app/types/theme.ts`, `layers/typography/app/types/colors.ts`, or `layers/shader/app/utils/tsl/uv.ts`.
