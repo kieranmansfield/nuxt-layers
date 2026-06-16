@@ -7,16 +7,15 @@
 // This provides flexibility while maintaining code readability
 
 import type { UniformNode } from 'three/webgpu'
+import type { Vector3 } from 'three'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type TSLNode = any
+export type { TSLNode } from '../types/tsl'
 
-/**
- * Float uniform with full TSL operator support.
- * `ReturnType<typeof uniform>` collapses to `UniformNode<unknown, unknown>`,
- * which has no operator methods — use this concrete type instead.
- */
+/** Float uniform: `uniform(someNumber)` */
 export type FloatUniform = UniformNode<'float', number>
+
+/** Vec3 uniform: `uniform(new Vector3(...))` */
+export type Vec3Uniform = UniformNode<'vec3', Vector3>
 
 // Re-export common Three types
 export type { Color, Texture, Vector2, Vector3, Vector4 } from 'three'

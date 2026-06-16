@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { clamp, float, mix, time, uniform, vec3, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorBase = '#ffcc00',
@@ -22,13 +23,8 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const colorBaseNode = toVec3Node(colorBase)
-  const colorTipNode = toVec3Node(colorTip)
+  const colorBaseNode = hexToVec3Uniform(colorBase)
+  const colorTipNode = hexToVec3Uniform(colorTip)
   const scaleNode = uniform(scale)
   const speedNode = uniform(speed)
   watch(

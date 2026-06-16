@@ -39,7 +39,16 @@
     color?: UiColors
     size?: FontSize
   }>()
-  const { classes } = useTypography(() => ({ weight, width, slant, leading, tracking, align, transform, size }))
+  const { classes } = useTypography(() => ({
+    weight,
+    width,
+    slant,
+    leading,
+    tracking,
+    align,
+    transform,
+    size,
+  }))
   const colorClass = useColor(color, 'text')
 </script>
 

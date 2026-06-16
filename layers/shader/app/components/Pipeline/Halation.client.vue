@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { float, smoothstep, uniform, vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
    * Red/warm glow bleed around highlight areas — the analogue film halation effect.
@@ -23,12 +24,7 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const colorNode = toVec3Node(color)
+  const colorNode = hexToVec3Uniform(color)
   const thresholdNode = uniform(threshold)
   const intensityNode = uniform(intensity)
   watch(

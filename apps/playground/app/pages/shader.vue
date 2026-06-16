@@ -1304,7 +1304,7 @@
                 <template v-else>
                   <ShaderDemoCanvas
                     :active-demo="activeEffectDemo"
-                    :mouse-interaction="true"
+                    mouse-interaction
                     :mouse-x
                     :mouse-y
                     :disable-zoom="!effectControls.enableZoom"

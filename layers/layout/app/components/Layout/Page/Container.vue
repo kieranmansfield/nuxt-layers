@@ -40,15 +40,6 @@
 
   defineOptions({ inheritAttrs: false })
 
-  interface Props {
-    title: string
-    description?: string
-    showHeader?: boolean
-    headerPreset?: string
-    layout?: 'grid' | 'upage'
-    back?: string
-  }
-
   const {
     title,
     description = undefined,
@@ -56,7 +47,14 @@
     headerPreset = 'centered',
     layout = 'grid',
     back = undefined,
-  } = defineProps<Props>()
+  } = defineProps<{
+    title: string
+    description?: string
+    showHeader?: boolean
+    headerPreset?: string
+    layout?: 'grid' | 'upage'
+    back?: string
+  }>()
 
   // Set page metadata for SEO and browser tab
   useHead({

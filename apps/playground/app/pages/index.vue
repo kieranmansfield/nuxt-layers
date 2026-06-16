@@ -397,7 +397,12 @@
       icon: 'i-lucide-eye',
       layer: 'Layout',
     },
-    { label: 'Layout: Stacking', to: '/layout-stacking', icon: 'i-lucide-square-stack', layer: 'Layout' },
+    {
+      label: 'Layout: Stacking',
+      to: '/layout-stacking',
+      icon: 'i-lucide-square-stack',
+      layer: 'Layout',
+    },
     { label: 'Routing: Scroll', to: '/routing-scroll', icon: 'i-lucide-scroll', layer: 'Routing' },
     {
       label: 'Shader Gradient',

@@ -10,7 +10,8 @@
     "dev:prepare": "nuxt prepare .playground",
     "build": "FEEDS_STANDALONE=true nuxi build",
     "generate": "FEEDS_STANDALONE=true nuxi generate",
-    "preview": "nuxt preview .playground"
+    "preview": "nuxt preview .playground",
+    "lint": "eslint ."
   },
   "dependencies": {
     "feed": "catalog:"

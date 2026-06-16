@@ -146,7 +146,7 @@
         loadedTexture.value = await loader.loadAsync(src)
       } catch (e) {
         error.value = e as Error
-        console.error('Failed to load texture:', e)
+        void e
       } finally {
         isLoading.value = false
       }

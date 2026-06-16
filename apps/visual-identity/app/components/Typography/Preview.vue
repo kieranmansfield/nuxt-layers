@@ -1,7 +1,11 @@
 <script setup lang="ts">
   import type { FontAxes } from '~/composables/useBrandState'
 
-  const { axes, family } = defineProps<{
+  const {
+    axes,
+    family = 'Roboto Flex',
+    previewText = 'Aa',
+  } = defineProps<{
     axes: FontAxes
     family?: string
     previewText?: string
@@ -12,8 +16,6 @@
       .map(([k, v]) => `'${k}' ${v}`)
       .join(', ')
   })
-
-  const family = computed(() => family ?? 'Roboto Flex')
 </script>
 
 <template>
@@ -24,6 +26,6 @@
       fontVariationSettings: variationSettings,
     }"
   >
-    {{ previewText ?? 'Aa' }}
+    {{ previewText }}
   </div>
 </template>

@@ -174,12 +174,14 @@ export type PictureProps = {
   decoding?: 'sync' | 'async' | 'auto'
 }
 
+import type { ComputedRef } from 'vue'
+
 /**
  * Return type for usePicture composable
  */
 export type UsePictureReturn = {
   /** Computed sizes attribute string */
-  sizesString: import('vue').ComputedRef<string>
+  sizesString: ComputedRef<string>
   /** Computed format string */
-  computedFormat: import('vue').ComputedRef<string>
+  computedFormat: ComputedRef<string>
 }

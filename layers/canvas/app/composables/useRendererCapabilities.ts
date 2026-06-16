@@ -1,3 +1,5 @@
+import type { WebGPURenderer } from 'three/webgpu'
+import type { WebGLRenderer } from 'three'
 import {
   QUALITY_PRESETS,
   type QualityLevel,
@@ -12,7 +14,7 @@ export function useRendererCapabilities() {
   const capabilities = ref<RendererCapabilities | null>(null)
   const isReady = ref(false)
 
-  function detectFromRenderer(renderer: any) {
+  function detectFromRenderer(renderer: WebGPURenderer | WebGLRenderer) {
     const isWebGPU = renderer.constructor?.name === 'WebGPURenderer'
     const glCaps = renderer.capabilities
 
@@ -29,19 +31,21 @@ export function useRendererCapabilities() {
         devicePixelRatio: renderer.getPixelRatio?.() ?? 1,
         isWebGPU: true,
       }
-    } else {
-      capabilities.value = {
-        backend: 'webgl',
-        maxTextureSize: glCaps.maxTextureSize,
-        maxTextures: glCaps.maxTextures,
-        maxVertexUniforms: glCaps.maxVertexUniforms,
-        maxFragmentUniforms: glCaps.maxFragmentUniforms,
-        floatTextures: glCaps.isWebGL2 || false,
-        anisotropy: glCaps.getMaxAnisotropy(),
-        precision: glCaps.precision as 'lowp' | 'mediump' | 'highp',
-        devicePixelRatio: renderer.getPixelRatio(),
-        isWebGPU: false,
-      }
+      isReady.value = true
+      return
+    }
+
+    capabilities.value = {
+      backend: 'webgl',
+      maxTextureSize: glCaps.maxTextureSize,
+      maxTextures: glCaps.maxTextures,
+      maxVertexUniforms: glCaps.maxVertexUniforms,
+      maxFragmentUniforms: glCaps.maxFragmentUniforms,
+      floatTextures: glCaps.isWebGL2 || false,
+      anisotropy: glCaps.getMaxAnisotropy(),
+      precision: glCaps.precision as 'lowp' | 'mediump' | 'highp',
+      devicePixelRatio: renderer.getPixelRatio(),
+      isWebGPU: false,
     }
 
     isReady.value = true

@@ -1,5 +1,9 @@
 <script setup lang="ts">
-  defineProps<{
+  const {
+    hex,
+    label = '',
+    size = 'md',
+  } = defineProps<{
     hex: string
     label?: string
     size?: 'sm' | 'md' | 'lg'

@@ -59,7 +59,7 @@ Traditional grid systems require duplicating grid definitions at every level. **
 
 ### Component Hierarchy
 
-```
+```text
 Default layout (MastMain → <div class="mastmain"> — root grid container)
   └── LayoutPage (fragment — SEO only, no wrapper element)
        └── LayoutSection (subgrid, 12 rows, basesection)

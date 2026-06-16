@@ -680,6 +680,7 @@
                 </template>
 
                 <!-- ══ MESH GRADIENTS ════════════════════════════════ -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'mesh'" :key="activeMesh">
                   <template v-if="activeMesh === 'classic'">
                     <PipelineBilinearGradient
@@ -797,6 +798,7 @@
                 </template>
 
                 <!-- ══ ANIMATED ══════════════════════════════════════ -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'animated'" :key="activeAnim">
                   <template v-if="activeAnim === 'flowing'">
                     <PipelineNoisyGradientBlend
@@ -868,6 +870,7 @@
                       :speed="0.5"
                     />
                   </template>
+                  <!-- eslint-disable-next-line vue/no-template-key -->
                   <template v-else-if="activeAnim === 'fbm-flow'" :key="anim.fbmOctaves">
                     <PipelineFBMNoise
                       :order="0"
@@ -898,10 +901,13 @@
                 </template>
 
                 <!-- ══ NOISE BACKGROUNDS ═════════════════════════════ -->
+                <!-- eslint-disable vue/no-template-key -->
                 <template
                   v-else-if="activeCategory === 'noise_bg'"
                   :key="activeNoiseBg + noiseBg.octaves"
                 >
+                  <!-- eslint-enable vue/no-template-key -->
+                  <!-- eslint-disable-next-line vue/no-template-key -->
                   <template v-if="activeNoiseBg === 'fbm-classic'" :key="noiseBg.octaves">
                     <PipelineFBMNoise
                       :order="0"
@@ -976,6 +982,7 @@
                 </template>
 
                 <!-- ══ ATMOSPHERIC ═══════════════════════════════════ -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'atmospheric'" :key="activeAtmo">
                   <template v-if="activeAtmo === 'night-sky'">
                     <PipelineSolidColour :order="0" color="#020408" />
@@ -1060,6 +1067,7 @@
                 </template>
 
                 <!-- ══ ABSTRACT ══════════════════════════════════════ -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'abstract'" :key="activeAbstract">
                   <template v-if="activeAbstract === 'tunnel'">
                     <PipelineRaymarchTunnel
@@ -1124,6 +1132,7 @@
                 </template>
 
                 <!-- ══ GLOBAL GRAIN OVERLAY (order 99 — always last) ═══════ -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-if="grainEnabled" :key="grainKey">
                   <PipelineGrain
                     v-if="grainState.type === 'fine'"
@@ -1151,7 +1160,7 @@
                 </template>
               </div>
 
-              <ShaderCanvas clear-color="#0a0a0a" :window-size="false" :webgpu="true">
+              <ShaderCanvas clear-color="#0a0a0a" :window-size="false" webgpu>
                 <TresOrthographicCamera :args="[-1, 1, 1, -1, 0.1, 100]" :position="[0, 0, 1]" />
                 <TresMesh>
                   <TresPlaneGeometry :args="[2, 2]" />

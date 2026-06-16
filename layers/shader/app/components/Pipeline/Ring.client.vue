@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { float, mix, uniform, vec4 } from 'three/tsl'
 
   import { ring } from '../../shaders/common/shapes'
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorA = '#000000',
@@ -20,13 +21,8 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const colorANode = toVec3Node(colorA)
-  const colorBNode = toVec3Node(colorB)
+  const colorANode = hexToVec3Uniform(colorA)
+  const colorBNode = hexToVec3Uniform(colorB)
   const innerNode = uniform(innerRadius)
   const outerNode = uniform(outerRadius)
   const softnessNode = uniform(softness)

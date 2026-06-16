@@ -252,8 +252,8 @@ catalogs:
       specifier: ^4.3.0
       version: 4.3.0
     turbo:
-      specifier: ^2.9.16
-      version: 2.9.16
+      specifier: ^2.9.18
+      version: 2.9.18
     type-fest:
       specifier: ^5.7.0
       version: 5.7.0
@@ -308,7 +308,7 @@ importers:
         version: 0.11.13(@netlify/blobs@10.7.9)(@unhead/vue@2.1.15(vue@3.5.35(typescript@6.0.3)))(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(ioredis@5.11.0)(magicast@0.5.3)(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3))
       '@nuxtjs/seo':
         specifier: ^5.0.0
-        version: 5.2.0(82503c668cdd260e2a3ddd36a4f27209)
+        version: 5.2.0(ba0d1438d6db71939643788d154c55be)
       '@tresjs/cientos':
         specifier: ^5.7.2
         version: 5.7.2(@tresjs/core@5.8.1(three@0.184.0)(vue@3.5.35(typescript@6.0.3)))(@types/three@0.184.1)(react@19.2.7)(three@0.184.0)(vue@3.5.35(typescript@6.0.3))
@@ -528,7 +528,7 @@ importers:
         version: 4.3.0
       turbo:
         specifier: 'catalog:'
-        version: 2.9.16
+        version: 2.9.18
       type-fest:
         specifier: 'catalog:'
         version: 5.7.0
@@ -558,7 +558,7 @@ importers:
     dependencies:
       nuxt:
         specifier: 'catalog:'
-        version: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
+        version: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
       vue:
         specifier: 3.5.35
         version: 3.5.35(typescript@6.0.3)
@@ -576,7 +576,7 @@ importers:
         version: 12.10.0
       nuxt:
         specifier: 'catalog:'
-        version: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
+        version: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
       vue:
         specifier: 3.5.35
         version: 3.5.35(typescript@6.0.3)
@@ -597,7 +597,7 @@ importers:
         version: 4.0.2
       nuxt:
         specifier: 'catalog:'
-        version: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
+        version: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
       vue:
         specifier: 3.5.35
         version: 3.5.35(typescript@6.0.3)
@@ -650,7 +650,7 @@ importers:
     devDependencies:
       '@nuxt/content':
         specifier: 'catalog:'
-        version: 3.14.0(@electric-sql/pglite@0.3.16)(@valibot/to-json-schema@1.7.1(valibot@1.4.1(typescript@5.9.3)))(better-sqlite3@12.10.0)(magicast@0.5.3)(valibot@1.4.1(typescript@5.9.3))
+        version: 3.14.0(@electric-sql/pglite@0.3.16)(@valibot/to-json-schema@1.7.1(valibot@1.4.1(typescript@6.0.3)))(better-sqlite3@12.10.0)(magicast@0.5.3)(valibot@1.4.1(typescript@6.0.3))
 
   layers/core:
     devDependencies:
@@ -666,7 +666,7 @@ importers:
     devDependencies:
       nuxt:
         specifier: 'catalog:'
-        version: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
+        version: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
       vue:
         specifier: 3.5.35
         version: 3.5.35(typescript@6.0.3)
@@ -721,7 +721,7 @@ importers:
     dependencies:
       '@nuxtjs/seo':
         specifier: 'catalog:'
-        version: 5.2.0(8d54da03d58bc3a7c4c5aacb20c7932c)
+        version: 5.2.0(cd6d7a8bc1d06a645cea226f96a69d7a)
 
   layers/shader:
     dependencies:
@@ -4661,33 +4661,33 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
-  '@turbo/darwin-64@2.9.16':
-    resolution: {integrity: sha512-jLjApWTSNd7JZ5JaLYfelW1ytnGQOvB7ivl+2RD1xQvJTbi8I9gBjzcga7tDZVPyaxpl10YTfJt3BrYXR18KDw==}
+  '@turbo/darwin-64@2.9.18':
+    resolution: {integrity: sha512-9f27peFu16ur8c0v9nUFUEyBnbKuuFsUTjHFWfmwGfzySBXbHwzU44QhZon6Mznz0cHsIr3984NQj/bVrnGSRw==}
     cpu: [x64]
     os: [darwin]
 
-  '@turbo/darwin-arm64@2.9.16':
-    resolution: {integrity: sha512-YPgrn+5HIGzrx0O2a631SV4MBQUe4W/DafMFUuBVgaU32PW9/OTT0ehviF0QSxTXuRJlHvW2eUTemddF5/spmw==}
+  '@turbo/darwin-arm64@2.9.18':
+    resolution: {integrity: sha512-9A6TMRq/Ib+QnbhLlgkhOm+624wO4pzSQ/yQviQfWHOlFvaYxdnIAYmu2H6TS6y7kSVL0DvzNe04NbESTOzFVQ==}
     cpu: [arm64]
     os: [darwin]
 
-  '@turbo/linux-64@2.9.16':
-    resolution: {integrity: sha512-vAEf1H6l26lTpl9FJ/peQo1NUB8RC0sbEJJz5mPcUhHA2bPDup2x3CZPgo/bH8S4cUcBLm4FN3UHd5iUO2RAew==}
+  '@turbo/linux-64@2.9.18':
+    resolution: {integrity: sha512-zCdIDtz69AnbYh913elJRRoF3QY5aa2HNnf+4rAkc7bQ+tWujiDkCNV7stazOUPggaDvhKIf2Z87qHftTeXSkw==}
     cpu: [x64]
     os: [linux]
 
-  '@turbo/linux-arm64@2.9.16':
-    resolution: {integrity: sha512-xDBLR2PZg4BrQOchfG6svgpv5FCNJ2TOtT2psLdEJcdKo1BH+pnPs9Xj6pvUjgfkHbuvBOfeE4R6tvxMoQKDHQ==}
+  '@turbo/linux-arm64@2.9.18':
+    resolution: {integrity: sha512-Va1kXI04naMgYwqv/5Dfa36dTDx8015U7oaQAjrXa45ua9OoFjSV4OmvkML4EmXvUclQHCiBRbY8bvd0jV7eAg==}
     cpu: [arm64]
     os: [linux]
 
-  '@turbo/windows-64@2.9.16':
-    resolution: {integrity: sha512-NBAJnaUiGdgkSzQwUIdOvkCkcpTSu58G/sBGa0mvBtzfvFOOgrQwepKOOQ8cp6sWM6OcKDNFj2p1dsZA1OWjPg==}
+  '@turbo/windows-64@2.9.18':
+    resolution: {integrity: sha512-m0kDhZANxSNz9ck1ybogFscHabriAsp4eDFNrN/1H5WrgTF7b3VlcPZnhuO3v2+E2KnCbeAc+UUT10BZZHdDKw==}
     cpu: [x64]
     os: [win32]
 
-  '@turbo/windows-arm64@2.9.16':
-    resolution: {integrity: sha512-Y7SJppD0Z8wjO3Ec0ZGd9KQ4Yv0BMnA8CIowj5Vp+OEVsosXDG2weK6/t1RRLfJmc2Ozrnd6y4DOgQys+mn3WQ==}
+  '@turbo/windows-arm64@2.9.18':
+    resolution: {integrity: sha512-nUdR8WqoomUys9iIQmG45TMiizJ+5BV8egSeLLZba/AWblyp3fVBcIH1kSE58OtK4g2YzbMJEth6Ttv9w5rqMA==}
     cpu: [arm64]
     os: [win32]
 
@@ -11409,8 +11409,8 @@ packages:
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
-  turbo@2.9.16:
-    resolution: {integrity: sha512-NqgRQy6j6dPYcdSdv0q1g9QsZg7SWg87RERM8otw/1AtKU2yTFVClOM7cbwKzOonZr/Ek1blTBucw64L9H0Bwg==}
+  turbo@2.9.18:
+    resolution: {integrity: sha512-bwabv6PupzeavybzEoArBAkwq5fnzwf8OFnRtpHwnviFWuwJPFxtyH+aVp36TmIqK3aYYgtTJ3J0m2ysxxSzQg==}
     hasBin: true
 
   tweetnacl@0.14.5:
@@ -13682,12 +13682,6 @@ snapshots:
       eslint: 10.4.1(jiti@2.7.0)(supports-color@10.2.2)
       eslint-visitor-keys: 3.4.3
 
-  '@eslint-community/eslint-utils@4.9.1(eslint@10.4.1(jiti@2.7.0))':
-    dependencies:
-      eslint: 10.4.1(jiti@2.7.0)
-      eslint-visitor-keys: 3.4.3
-    optional: true
-
   '@eslint-community/regexpp@4.12.2': {}
 
   '@eslint/compat@2.1.0(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))':
@@ -13695,15 +13689,6 @@ snapshots:
       '@eslint/core': 1.2.1
     optionalDependencies:
       eslint: 10.4.1(jiti@2.7.0)(supports-color@10.2.2)
-
-  '@eslint/config-array@0.23.5':
-    dependencies:
-      '@eslint/object-schema': 3.0.5
-      debug: 4.4.3
-      minimatch: 10.2.5
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
 
   '@eslint/config-array@0.23.5(supports-color@10.2.2)':
     dependencies:
@@ -14770,68 +14755,6 @@ snapshots:
       - magicast
       - supports-color
 
-  '@nuxt/content@3.14.0(@electric-sql/pglite@0.3.16)(@valibot/to-json-schema@1.7.1(valibot@1.4.1(typescript@5.9.3)))(better-sqlite3@12.10.0)(magicast@0.5.3)(valibot@1.4.1(typescript@5.9.3))':
-    dependencies:
-      '@nuxt/kit': 4.4.7(magicast@0.5.3)
-      '@nuxtjs/mdc': 0.22.0(magicast@0.5.3)
-      '@shikijs/langs': 4.1.0
-      '@sqlite.org/sqlite-wasm': 3.50.4-build1
-      '@standard-schema/spec': 1.1.0
-      '@webcontainer/env': 1.1.1
-      c12: 3.3.4(magicast@0.5.3)
-      chokidar: 5.0.0
-      consola: 3.4.2
-      db0: 0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0)
-      defu: 6.1.7
-      destr: 2.0.5
-      git-url-parse: 16.1.0
-      hookable: 5.5.3
-      isomorphic-git: 1.38.3
-      jiti: 2.7.0
-      json-schema-to-typescript-lite: 15.0.0
-      mdast-util-to-hast: 13.2.1
-      mdast-util-to-string: 4.0.0
-      micromark: 4.0.2
-      micromark-util-character: 2.1.1
-      micromark-util-chunked: 2.0.1
-      micromark-util-resolve-all: 2.0.1
-      micromark-util-sanitize-uri: 2.0.1
-      micromatch: 4.0.8
-      minimark: 0.2.0
-      minimatch: 10.2.5
-      nuxt-component-meta: 0.17.2(magicast@0.5.3)
-      nypm: 0.6.6
-      ohash: 2.0.11
-      pathe: 2.0.3
-      pkg-types: 2.3.1
-      remark-mdc: 3.11.0
-      scule: 1.3.0
-      shiki: 4.1.0
-      slugify: 1.6.9
-      socket.io-client: 4.8.3
-      std-env: 4.1.0
-      tinyglobby: 0.2.17
-      ufo: 1.6.4
-      unctx: 2.5.0
-      unified: 11.0.5
-      unist-util-stringify-position: 4.0.0
-      unist-util-visit: 5.1.0
-      unplugin: 3.0.0
-      zod: 3.25.76
-      zod-to-json-schema: 3.25.2(zod@3.25.76)
-    optionalDependencies:
-      '@electric-sql/pglite': 0.3.16
-      '@valibot/to-json-schema': 1.7.1(valibot@1.4.1(typescript@5.9.3))
-      better-sqlite3: 12.10.0
-      valibot: 1.4.1(typescript@5.9.3)
-    transitivePeerDependencies:
-      - bufferutil
-      - drizzle-orm
-      - magicast
-      - mysql2
-      - supports-color
-      - utf-8-validate
-
   '@nuxt/content@3.14.0(@electric-sql/pglite@0.3.16)(@valibot/to-json-schema@1.7.1(valibot@1.4.1(typescript@6.0.3)))(better-sqlite3@12.10.0)(magicast@0.5.3)(valibot@1.4.1(typescript@6.0.3))':
     dependencies:
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
@@ -15326,7 +15249,7 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@nuxt/nitro-server@4.4.7(792301494ae584f19aa19fa2a664b58e)':
+  '@nuxt/nitro-server@4.4.7(5dfaf7202ff2cca9d3e2723763b164d5)':
     dependencies:
       '@nuxt/devalue': 2.0.2
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
@@ -15344,7 +15267,7 @@ snapshots:
       klona: 2.0.6
       mocked-exports: 0.1.1
       nitropack: 2.13.4(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(better-sqlite3@12.10.0)(oxc-parser@0.133.0)(rolldown@1.0.3)(srvx@0.11.16)
-      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
+      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
       nypm: 0.6.6
       ohash: 2.0.11
       pathe: 2.0.3
@@ -15397,7 +15320,7 @@ snapshots:
       - uploadthing
       - xml2js
 
-  '@nuxt/nitro-server@4.4.7(83e711646b0d6ef6c265e0f90d8edddb)':
+  '@nuxt/nitro-server@4.4.7(792301494ae584f19aa19fa2a664b58e)':
     dependencies:
       '@nuxt/devalue': 2.0.2
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
@@ -15415,7 +15338,7 @@ snapshots:
       klona: 2.0.6
       mocked-exports: 0.1.1
       nitropack: 2.13.4(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(better-sqlite3@12.10.0)(oxc-parser@0.133.0)(rolldown@1.0.3)(srvx@0.11.16)
-      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
+      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
       nypm: 0.6.6
       ohash: 2.0.11
       pathe: 2.0.3
@@ -15758,7 +15681,7 @@ snapshots:
       - vue
       - yjs
 
-  '@nuxt/vite-builder@4.4.7(patch_hash=c5ef553d3209b3d74cbf3082c74f391b4b7c0218416dbfc9cd9107ca118c50bb)(07be1402986c66f36471173cb1699b39)':
+  '@nuxt/vite-builder@4.4.7(patch_hash=c5ef553d3209b3d74cbf3082c74f391b4b7c0218416dbfc9cd9107ca118c50bb)(7da277ea2df7d5a98c94cbcc36bffa53)':
     dependencies:
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
       '@rollup/plugin-replace': 6.0.3(rollup@4.61.0)
@@ -15776,7 +15699,7 @@ snapshots:
       magic-string: 0.30.21
       mlly: 1.8.2
       mocked-exports: 0.1.1
-      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
+      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
       nypm: 0.6.6
       pathe: 2.0.3
       pkg-types: 2.3.1
@@ -15787,7 +15710,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       vite: 7.3.5(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.9.0)
       vite-node: 5.3.0(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.9.0)
-      vite-plugin-checker: 0.14.1(eslint@10.4.1(jiti@2.7.0))(meow@14.1.0)(optionator@0.9.4)(stylelint@17.12.0(typescript@6.0.3))(typescript@6.0.3)(vite@7.3.5(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))
+      vite-plugin-checker: 0.14.1(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(meow@14.1.0)(optionator@0.9.4)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(typescript@6.0.3)(vite@7.3.5(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))
       vue: 3.5.35(typescript@6.0.3)
       vue-bundle-renderer: 2.2.0
     optionalDependencies:
@@ -15939,6 +15862,27 @@ snapshots:
       - magicast
       - supports-color
 
+  '@nuxtjs/robots@6.0.9(1f2f6a3883efae56dfc366ba6a07c720)':
+    dependencies:
+      '@fingerprintjs/botd': 2.0.0
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
+      consola: 3.4.2
+      defu: 6.1.7
+      h3: 1.15.11
+      nuxt-site-config: 4.0.8(1f2f6a3883efae56dfc366ba6a07c720)
+      nuxtseo-shared: 5.2.0(9b9f98f20584e3552d851b8f1591b879)
+      pathe: 2.0.3
+      pkg-types: 2.3.1
+      ufo: 1.6.4
+    optionalDependencies:
+      zod: 4.4.3
+    transitivePeerDependencies:
+      - '@nuxt/schema'
+      - magicast
+      - nuxt
+      - vite
+      - vue
+
   '@nuxtjs/robots@6.0.9(dee0914738165c119f38121d9b595d07)':
     dependencies:
       '@fingerprintjs/botd': 2.0.0
@@ -15960,35 +15904,14 @@ snapshots:
       - vite
       - vue
 
-  '@nuxtjs/robots@6.0.9(ea2d6d2196e523d612f3a92355b0c786)':
-    dependencies:
-      '@fingerprintjs/botd': 2.0.0
-      '@nuxt/kit': 4.4.7(magicast@0.5.3)
-      consola: 3.4.2
-      defu: 6.1.7
-      h3: 1.15.11
-      nuxt-site-config: 4.0.8(ea2d6d2196e523d612f3a92355b0c786)
-      nuxtseo-shared: 5.2.0(2a6b85643c6762bb3ba22ed99f6c2cc1)
-      pathe: 2.0.3
-      pkg-types: 2.3.1
-      ufo: 1.6.4
-    optionalDependencies:
-      zod: 4.4.3
-    transitivePeerDependencies:
-      - '@nuxt/schema'
-      - magicast
-      - nuxt
-      - vite
-      - vue
-
-  '@nuxtjs/seo@5.2.0(82503c668cdd260e2a3ddd36a4f27209)':
+  '@nuxtjs/seo@5.2.0(ba0d1438d6db71939643788d154c55be)':
     dependencies:
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
       '@nuxtjs/robots': 6.0.9(dee0914738165c119f38121d9b595d07)
       '@nuxtjs/sitemap': 8.1.0(dee0914738165c119f38121d9b595d07)
       nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
       nuxt-link-checker: 5.0.10(b3d9bb431066d81fe636fd7f5c60bea5)
-      nuxt-og-image: 6.5.3(6764af23eac43c4d91f75f0c13d9f858)
+      nuxt-og-image: 6.5.3(b0534c0c92e02508ecfeae8b9e0a6974)
       nuxt-schema-org: 6.1.3(39a239307fba8feed0b73a1ef32d4ac2)
       nuxt-seo-utils: 8.2.1(fd302b6a646ac26cbb02de46d9b29b4c)
       nuxt-site-config: 4.0.8(dee0914738165c119f38121d9b595d07)
@@ -16047,18 +15970,18 @@ snapshots:
       - webpack
       - zod
 
-  '@nuxtjs/seo@5.2.0(8d54da03d58bc3a7c4c5aacb20c7932c)':
+  '@nuxtjs/seo@5.2.0(cd6d7a8bc1d06a645cea226f96a69d7a)':
     dependencies:
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
-      '@nuxtjs/robots': 6.0.9(ea2d6d2196e523d612f3a92355b0c786)
-      '@nuxtjs/sitemap': 8.1.0(ea2d6d2196e523d612f3a92355b0c786)
-      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
-      nuxt-link-checker: 5.0.10(22b07eccbef6aa91fbb9801da1ccd643)
-      nuxt-og-image: 6.5.3(ad65ab09799e92312d897b6ebd8a4b77)
-      nuxt-schema-org: 6.1.3(10f7d7f101f62ef4005511b03a6972c8)
-      nuxt-seo-utils: 8.2.1(ff829f47e9dd26f79b99b5de24cd7f0b)
-      nuxt-site-config: 4.0.8(ea2d6d2196e523d612f3a92355b0c786)
-      nuxtseo-shared: 5.2.0(2a6b85643c6762bb3ba22ed99f6c2cc1)
+      '@nuxtjs/robots': 6.0.9(1f2f6a3883efae56dfc366ba6a07c720)
+      '@nuxtjs/sitemap': 8.1.0(1f2f6a3883efae56dfc366ba6a07c720)
+      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
+      nuxt-link-checker: 5.0.10(1f29b20bdf85d8387a78b291a26ea8e7)
+      nuxt-og-image: 6.5.3(b6bd5fa4678dbfb7031935a32d231cf3)
+      nuxt-schema-org: 6.1.3(63d10cb805cc4abec04ab15757f142bb)
+      nuxt-seo-utils: 8.2.1(472325b8bceabec3de7ebf453a5abcfb)
+      nuxt-site-config: 4.0.8(1f2f6a3883efae56dfc366ba6a07c720)
+      nuxtseo-shared: 5.2.0(9b9f98f20584e3552d851b8f1591b879)
     transitivePeerDependencies:
       - '@azure/app-configuration'
       - '@azure/cosmos'
@@ -16113,14 +16036,14 @@ snapshots:
       - webpack
       - zod
 
-  '@nuxtjs/sitemap@8.1.0(dee0914738165c119f38121d9b595d07)':
+  '@nuxtjs/sitemap@8.1.0(1f2f6a3883efae56dfc366ba6a07c720)':
     dependencies:
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
       consola: 3.4.2
       defu: 6.1.7
       fast-xml-parser: 5.8.0
-      nuxt-site-config: 4.0.8(dee0914738165c119f38121d9b595d07)
-      nuxtseo-shared: 5.2.0(1d421baf611c1166bb9df41f27bac3b1)
+      nuxt-site-config: 4.0.8(1f2f6a3883efae56dfc366ba6a07c720)
+      nuxtseo-shared: 5.2.0(9b9f98f20584e3552d851b8f1591b879)
       ofetch: 1.5.1
       pathe: 2.0.3
       pkg-types: 2.3.1
@@ -16136,14 +16059,14 @@ snapshots:
       - vite
       - vue
 
-  '@nuxtjs/sitemap@8.1.0(ea2d6d2196e523d612f3a92355b0c786)':
+  '@nuxtjs/sitemap@8.1.0(dee0914738165c119f38121d9b595d07)':
     dependencies:
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
       consola: 3.4.2
       defu: 6.1.7
       fast-xml-parser: 5.8.0
-      nuxt-site-config: 4.0.8(ea2d6d2196e523d612f3a92355b0c786)
-      nuxtseo-shared: 5.2.0(2a6b85643c6762bb3ba22ed99f6c2cc1)
+      nuxt-site-config: 4.0.8(dee0914738165c119f38121d9b595d07)
+      nuxtseo-shared: 5.2.0(1d421baf611c1166bb9df41f27bac3b1)
       ofetch: 1.5.1
       pathe: 2.0.3
       pkg-types: 2.3.1
@@ -17633,22 +17556,22 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
-  '@turbo/darwin-64@2.9.16':
+  '@turbo/darwin-64@2.9.18':
     optional: true
 
-  '@turbo/darwin-arm64@2.9.16':
+  '@turbo/darwin-arm64@2.9.18':
     optional: true
 
-  '@turbo/linux-64@2.9.16':
+  '@turbo/linux-64@2.9.18':
     optional: true
 
-  '@turbo/linux-arm64@2.9.16':
+  '@turbo/linux-arm64@2.9.18':
     optional: true
 
-  '@turbo/windows-64@2.9.16':
+  '@turbo/windows-64@2.9.18':
     optional: true
 
-  '@turbo/windows-arm64@2.9.16':
+  '@turbo/windows-arm64@2.9.18':
     optional: true
 
   '@tweenjs/tween.js@23.1.3': {}
@@ -18086,11 +18009,6 @@ snapshots:
     optional: true
 
   '@unrs/resolver-binding-win32-x64-msvc@1.12.2':
-    optional: true
-
-  '@valibot/to-json-schema@1.7.1(valibot@1.4.1(typescript@5.9.3))':
-    dependencies:
-      valibot: 1.4.1(typescript@5.9.3)
     optional: true
 
   '@valibot/to-json-schema@1.7.1(valibot@1.4.1(typescript@6.0.3))':
@@ -20314,44 +20232,6 @@ snapshots:
   eslint-visitor-keys@4.2.1: {}
 
   eslint-visitor-keys@5.0.1: {}
-
-  eslint@10.4.1(jiti@2.7.0):
-    dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@10.4.1(jiti@2.7.0))
-      '@eslint-community/regexpp': 4.12.2
-      '@eslint/config-array': 0.23.5
-      '@eslint/config-helpers': 0.6.0
-      '@eslint/core': 1.2.1
-      '@eslint/plugin-kit': 0.7.2
-      '@humanfs/node': 0.16.8
-      '@humanwhocodes/module-importer': 1.0.1
-      '@humanwhocodes/retry': 0.4.3
-      '@types/estree': 1.0.9
-      ajv: 6.15.0
-      cross-spawn: 7.0.6
-      debug: 4.4.3
-      escape-string-regexp: 4.0.0
-      eslint-scope: 9.1.2
-      eslint-visitor-keys: 5.0.1
-      espree: 11.2.0
-      esquery: 1.7.0
-      esutils: 2.0.3
-      fast-deep-equal: 3.1.3
-      file-entry-cache: 8.0.0
-      find-up: 5.0.0
-      glob-parent: 6.0.2
-      ignore: 5.3.2
-      imurmurhash: 0.1.4
-      is-glob: 4.0.3
-      json-stable-stringify-without-jsonify: 1.0.1
-      minimatch: 10.2.5
-      natural-compare: 1.4.0
-      optionator: 0.9.4
-    optionalDependencies:
-      jiti: 2.7.0
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
 
   eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2):
     dependencies:
@@ -23338,7 +23218,7 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  nuxt-link-checker@5.0.10(22b07eccbef6aa91fbb9801da1ccd643):
+  nuxt-link-checker@5.0.10(1f29b20bdf85d8387a78b291a26ea8e7):
     dependencies:
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
       '@vueuse/core': 14.3.0(vue@3.5.35(typescript@6.0.3))
@@ -23346,9 +23226,9 @@ snapshots:
       diff: 9.0.0
       fuse.js: 7.4.0
       magic-string: 0.30.21
-      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
-      nuxt-site-config: 4.0.8(ea2d6d2196e523d612f3a92355b0c786)
-      nuxtseo-shared: 5.2.0(2a6b85643c6762bb3ba22ed99f6c2cc1)
+      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
+      nuxt-site-config: 4.0.8(1f2f6a3883efae56dfc366ba6a07c720)
+      nuxtseo-shared: 5.2.0(9b9f98f20584e3552d851b8f1591b879)
       ofetch: 1.5.1
       pathe: 2.0.3
       pkg-types: 2.3.1
@@ -23426,7 +23306,7 @@ snapshots:
       - vue
       - zod
 
-  nuxt-og-image@6.5.3(6764af23eac43c4d91f75f0c13d9f858):
+  nuxt-og-image@6.5.3(b0534c0c92e02508ecfeae8b9e0a6974):
     dependencies:
       '@clack/prompts': 1.5.1
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
@@ -23466,7 +23346,7 @@ snapshots:
       '@resvg/resvg-js': 2.6.2
       '@resvg/resvg-wasm': 2.6.2
       fontless: 0.2.1(@netlify/blobs@10.7.9)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(ioredis@5.11.0)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
-      nitropack: 2.13.4(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(better-sqlite3@12.10.0)(oxc-parser@0.134.0)(rolldown@1.0.3)(srvx@0.11.16)
+      nitropack: 2.13.4(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(better-sqlite3@12.10.0)(oxc-parser@0.133.0)(rolldown@1.0.3)(srvx@0.11.16)
       playwright-core: 1.60.0
       sharp: 0.34.5
       tailwindcss: 4.3.0
@@ -23480,7 +23360,7 @@ snapshots:
       - vite
       - vue
 
-  nuxt-og-image@6.5.3(ad65ab09799e92312d897b6ebd8a4b77):
+  nuxt-og-image@6.5.3(b6bd5fa4678dbfb7031935a32d231cf3):
     dependencies:
       '@clack/prompts': 1.5.1
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
@@ -23498,8 +23378,8 @@ snapshots:
       magic-string: 0.30.21
       magicast: 0.5.3
       mocked-exports: 0.1.1
-      nuxt-site-config: 4.0.8(ea2d6d2196e523d612f3a92355b0c786)
-      nuxtseo-shared: 5.2.0(2a6b85643c6762bb3ba22ed99f6c2cc1)
+      nuxt-site-config: 4.0.8(1f2f6a3883efae56dfc366ba6a07c720)
+      nuxtseo-shared: 5.2.0(9b9f98f20584e3552d851b8f1591b879)
       nypm: 0.6.6
       ofetch: 1.5.1
       ohash: 2.0.11
@@ -23534,30 +23414,6 @@ snapshots:
       - vite
       - vue
 
-  nuxt-schema-org@6.1.3(10f7d7f101f62ef4005511b03a6972c8):
-    dependencies:
-      '@nuxt/kit': 4.4.7(magicast@0.5.3)
-      '@unhead/schema-org': 3.1.3(@unhead/vue@2.1.15(vue@3.5.35(typescript@6.0.3)))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
-      '@unhead/schema-org-v2': '@unhead/schema-org@2.1.15(@unhead/vue@2.1.15(vue@3.5.35(typescript@6.0.3)))'
-      defu: 6.1.7
-      nuxt-site-config: 4.0.8(ea2d6d2196e523d612f3a92355b0c786)
-      nuxtseo-shared: 5.2.0(2a6b85643c6762bb3ba22ed99f6c2cc1)
-      pkg-types: 2.3.1
-      ufo: 1.6.4
-    optionalDependencies:
-      '@unhead/vue': 2.1.15(vue@3.5.35(typescript@6.0.3))
-      unhead: 3.1.3(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
-      zod: 4.4.3
-    transitivePeerDependencies:
-      - '@nuxt/schema'
-      - '@unhead/react'
-      - '@unhead/solid-js'
-      - '@unhead/svelte'
-      - magicast
-      - nuxt
-      - vite
-      - vue
-
   nuxt-schema-org@6.1.3(39a239307fba8feed0b73a1ef32d4ac2):
     dependencies:
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
@@ -23581,6 +23437,68 @@ snapshots:
       - nuxt
       - vite
       - vue
+
+  nuxt-schema-org@6.1.3(63d10cb805cc4abec04ab15757f142bb):
+    dependencies:
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
+      '@unhead/schema-org': 3.1.3(@unhead/vue@2.1.15(vue@3.5.35(typescript@6.0.3)))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
+      '@unhead/schema-org-v2': '@unhead/schema-org@2.1.15(@unhead/vue@2.1.15(vue@3.5.35(typescript@6.0.3)))'
+      defu: 6.1.7
+      nuxt-site-config: 4.0.8(1f2f6a3883efae56dfc366ba6a07c720)
+      nuxtseo-shared: 5.2.0(9b9f98f20584e3552d851b8f1591b879)
+      pkg-types: 2.3.1
+      ufo: 1.6.4
+    optionalDependencies:
+      '@unhead/vue': 2.1.15(vue@3.5.35(typescript@6.0.3))
+      unhead: 3.1.3(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
+      zod: 4.4.3
+    transitivePeerDependencies:
+      - '@nuxt/schema'
+      - '@unhead/react'
+      - '@unhead/solid-js'
+      - '@unhead/svelte'
+      - magicast
+      - nuxt
+      - vite
+      - vue
+
+  nuxt-seo-utils@8.2.1(472325b8bceabec3de7ebf453a5abcfb):
+    dependencies:
+      '@nuxt/kit': 4.4.7(magicast@0.5.3)
+      '@unhead/bundler': 3.1.3(crossws@0.4.5(srvx@0.11.16))(esbuild@0.28.0)(lightningcss@1.32.0)(rolldown@1.0.3)(typescript@6.0.3)(unhead@3.1.3(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0)))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
+      citty: 0.2.2
+      defu: 6.1.7
+      escape-string-regexp: 5.0.0
+      exsolve: 1.0.8
+      image-size: 2.0.2
+      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
+      nuxt-site-config: 4.0.8(1f2f6a3883efae56dfc366ba6a07c720)
+      nuxtseo-shared: 5.2.0(9b9f98f20584e3552d851b8f1591b879)
+      pathe: 2.0.3
+      pkg-types: 2.3.1
+      scule: 1.3.0
+      tinyglobby: 0.2.17
+      ufo: 1.6.4
+    optionalDependencies:
+      '@unhead/vue': 2.1.15(vue@3.5.35(typescript@6.0.3))
+      esbuild: 0.28.0
+      lightningcss: 1.32.0
+      rolldown: 1.0.3
+      sharp: 0.34.5
+      unhead: 3.1.3(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
+    transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
+      - '@nuxt/schema'
+      - '@unhead/cli'
+      - bufferutil
+      - crossws
+      - magicast
+      - typescript
+      - utf-8-validate
+      - vite
+      - vue
+      - webpack
+      - zod
 
   nuxt-seo-utils@8.2.1(fd302b6a646ac26cbb02de46d9b29b4c):
     dependencies:
@@ -23620,44 +23538,6 @@ snapshots:
       - webpack
       - zod
 
-  nuxt-seo-utils@8.2.1(ff829f47e9dd26f79b99b5de24cd7f0b):
-    dependencies:
-      '@nuxt/kit': 4.4.7(magicast@0.5.3)
-      '@unhead/bundler': 3.1.3(crossws@0.4.5(srvx@0.11.16))(esbuild@0.28.0)(lightningcss@1.32.0)(rolldown@1.0.3)(typescript@6.0.3)(unhead@3.1.3(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0)))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
-      citty: 0.2.2
-      defu: 6.1.7
-      escape-string-regexp: 5.0.0
-      exsolve: 1.0.8
-      image-size: 2.0.2
-      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
-      nuxt-site-config: 4.0.8(ea2d6d2196e523d612f3a92355b0c786)
-      nuxtseo-shared: 5.2.0(2a6b85643c6762bb3ba22ed99f6c2cc1)
-      pathe: 2.0.3
-      pkg-types: 2.3.1
-      scule: 1.3.0
-      tinyglobby: 0.2.17
-      ufo: 1.6.4
-    optionalDependencies:
-      '@unhead/vue': 2.1.15(vue@3.5.35(typescript@6.0.3))
-      esbuild: 0.28.0
-      lightningcss: 1.32.0
-      rolldown: 1.0.3
-      sharp: 0.34.5
-      unhead: 3.1.3(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
-    transitivePeerDependencies:
-      - '@modelcontextprotocol/sdk'
-      - '@nuxt/schema'
-      - '@unhead/cli'
-      - bufferutil
-      - crossws
-      - magicast
-      - typescript
-      - utf-8-validate
-      - vite
-      - vue
-      - webpack
-      - zod
-
   nuxt-site-config-kit@4.0.8(magicast@0.5.3)(vue@3.5.35(typescript@6.0.3)):
     dependencies:
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
@@ -23668,12 +23548,12 @@ snapshots:
       - magicast
       - vue
 
-  nuxt-site-config@4.0.8(dee0914738165c119f38121d9b595d07):
+  nuxt-site-config@4.0.8(1f2f6a3883efae56dfc366ba6a07c720):
     dependencies:
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
       h3: 1.15.11
       nuxt-site-config-kit: 4.0.8(magicast@0.5.3)(vue@3.5.35(typescript@6.0.3))
-      nuxtseo-shared: 5.2.0(1d421baf611c1166bb9df41f27bac3b1)
+      nuxtseo-shared: 5.2.0(9b9f98f20584e3552d851b8f1591b879)
       pathe: 2.0.3
       pkg-types: 2.3.1
       site-config-stack: 4.0.8(vue@3.5.35(typescript@6.0.3))
@@ -23686,12 +23566,12 @@ snapshots:
       - vue
       - zod
 
-  nuxt-site-config@4.0.8(ea2d6d2196e523d612f3a92355b0c786):
+  nuxt-site-config@4.0.8(dee0914738165c119f38121d9b595d07):
     dependencies:
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
       h3: 1.15.11
       nuxt-site-config-kit: 4.0.8(magicast@0.5.3)(vue@3.5.35(typescript@6.0.3))
-      nuxtseo-shared: 5.2.0(2a6b85643c6762bb3ba22ed99f6c2cc1)
+      nuxtseo-shared: 5.2.0(1d421baf611c1166bb9df41f27bac3b1)
       pathe: 2.0.3
       pkg-types: 2.3.1
       site-config-stack: 4.0.8(vue@3.5.35(typescript@6.0.3))
@@ -23833,16 +23713,16 @@ snapshots:
       - xml2js
       - yaml
 
-  nuxt@4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0):
+  nuxt@4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0):
     dependencies:
       '@dxup/nuxt': 0.4.1(magicast@0.5.3)(typescript@6.0.3)
       '@nuxt/cli': 3.35.2(@nuxt/schema@4.4.7)(cac@6.7.14)(magicast@0.5.3)
       '@nuxt/devtools': 3.2.4(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.35(typescript@6.0.3))
       '@nuxt/kit': 4.4.7(magicast@0.5.3)
-      '@nuxt/nitro-server': 4.4.7(83e711646b0d6ef6c265e0f90d8edddb)
+      '@nuxt/nitro-server': 4.4.7(5dfaf7202ff2cca9d3e2723763b164d5)
       '@nuxt/schema': 4.4.7
       '@nuxt/telemetry': 2.8.0(@nuxt/kit@4.4.7(magicast@0.5.3))
-      '@nuxt/vite-builder': 4.4.7(patch_hash=c5ef553d3209b3d74cbf3082c74f391b4b7c0218416dbfc9cd9107ca118c50bb)(07be1402986c66f36471173cb1699b39)
+      '@nuxt/vite-builder': 4.4.7(patch_hash=c5ef553d3209b3d74cbf3082c74f391b4b7c0218416dbfc9cd9107ca118c50bb)(7da277ea2df7d5a98c94cbcc36bffa53)
       '@unhead/vue': 2.1.15(vue@3.5.35(typescript@6.0.3))
       '@vue/shared': 3.5.35
       chokidar: 5.0.0
@@ -23987,7 +23867,7 @@ snapshots:
       - magicast
       - vite
 
-  nuxtseo-shared@5.2.0(2a6b85643c6762bb3ba22ed99f6c2cc1):
+  nuxtseo-shared@5.2.0(9b9f98f20584e3552d851b8f1591b879):
     dependencies:
       '@clack/prompts': 1.5.1
       '@nuxt/devtools-kit': 4.0.0-alpha.3(magicast@0.5.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
@@ -23996,7 +23876,7 @@ snapshots:
       birpc: 4.0.0
       consola: 3.4.2
       defu: 6.1.7
-      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
+      nuxt: 4.4.7(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7))(@electric-sql/pglite@0.3.16)(@netlify/blobs@10.7.9)(@parcel/watcher@2.5.6)(@rollup/plugin-babel@6.1.0(@babel/core@7.29.7)(rollup@4.61.0))(@types/node@25.9.1)(@vue/compiler-sfc@3.5.35)(better-sqlite3@12.10.0)(cac@6.7.14)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0))(eslint@10.4.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.0)(lightningcss@1.32.0)(magicast@0.5.3)(meow@14.1.0)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.61.0))(rollup@4.61.0)(srvx@0.11.16)(stylelint@17.12.0(supports-color@10.2.2)(typescript@6.0.3))(terser@5.48.0)(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3))(yaml@2.9.0)
       ofetch: 1.5.1
       pathe: 2.0.3
       pkg-types: 2.3.1
@@ -24006,7 +23886,7 @@ snapshots:
       ufo: 1.6.4
       vue: 3.5.35(typescript@6.0.3)
     optionalDependencies:
-      nuxt-site-config: 4.0.8(ea2d6d2196e523d612f3a92355b0c786)
+      nuxt-site-config: 4.0.8(dee0914738165c119f38121d9b595d07)
       zod: 4.4.3
     transitivePeerDependencies:
       - magicast
@@ -26223,48 +26103,6 @@ snapshots:
       - supports-color
       - typescript
 
-  stylelint@17.12.0(typescript@6.0.3):
-    dependencies:
-      '@csstools/css-calc': 3.2.1(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
-      '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
-      '@csstools/css-syntax-patches-for-csstree': 1.1.4(css-tree@3.2.1)
-      '@csstools/css-tokenizer': 4.0.0
-      '@csstools/media-query-list-parser': 5.0.0(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
-      '@csstools/selector-resolve-nested': 4.0.0(postcss-selector-parser@7.1.1)
-      '@csstools/selector-specificity': 6.0.0(postcss-selector-parser@7.1.1)
-      colord: 2.9.3
-      cosmiconfig: 9.0.1(typescript@6.0.3)
-      css-functions-list: 3.3.3
-      css-tree: 3.2.1
-      debug: 4.4.3
-      fast-glob: 3.3.3
-      fastest-levenshtein: 1.0.16
-      file-entry-cache: 11.1.3
-      global-modules: 2.0.0
-      globby: 16.2.0
-      globjoin: 0.1.4
-      html-tags: 5.1.0
-      ignore: 7.0.5
-      import-meta-resolve: 4.2.0
-      mathml-tag-names: 4.0.0
-      meow: 14.1.0
-      micromatch: 4.0.8
-      normalize-path: 3.0.0
-      picocolors: 1.1.1
-      postcss: 8.5.15
-      postcss-safe-parser: 7.0.1(postcss@8.5.15)
-      postcss-selector-parser: 7.1.1
-      postcss-value-parser: 4.2.0
-      string-width: 8.2.1
-      supports-hyperlinks: 4.4.0
-      svg-tags: 1.0.0
-      table: 6.9.0
-      write-file-atomic: 7.0.1
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
-    optional: true
-
   superjson@2.2.6:
     dependencies:
       copy-anything: 4.0.5
@@ -26568,14 +26406,14 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  turbo@2.9.16:
+  turbo@2.9.18:
     optionalDependencies:
-      '@turbo/darwin-64': 2.9.16
-      '@turbo/darwin-arm64': 2.9.16
-      '@turbo/linux-64': 2.9.16
-      '@turbo/linux-arm64': 2.9.16
-      '@turbo/windows-64': 2.9.16
-      '@turbo/windows-arm64': 2.9.16
+      '@turbo/darwin-64': 2.9.18
+      '@turbo/darwin-arm64': 2.9.18
+      '@turbo/linux-64': 2.9.18
+      '@turbo/linux-arm64': 2.9.18
+      '@turbo/windows-64': 2.9.18
+      '@turbo/windows-arm64': 2.9.18
 
   tweetnacl@0.14.5: {}
 
@@ -27026,11 +26864,6 @@ snapshots:
 
   v8-compile-cache-lib@3.0.1: {}
 
-  valibot@1.4.1(typescript@5.9.3):
-    optionalDependencies:
-      typescript: 5.9.3
-    optional: true
-
   valibot@1.4.1(typescript@6.0.3):
     optionalDependencies:
       typescript: 6.0.3
@@ -27146,24 +26979,6 @@ snapshots:
       meow: 14.1.0
       optionator: 0.9.4
       stylelint: 17.12.0(supports-color@10.2.2)(typescript@6.0.3)
-      typescript: 6.0.3
-      vue-tsc: 3.3.3(typescript@6.0.3)
-
-  vite-plugin-checker@0.14.1(eslint@10.4.1(jiti@2.7.0))(meow@14.1.0)(optionator@0.9.4)(stylelint@17.12.0(typescript@6.0.3))(typescript@6.0.3)(vite@7.3.5(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.9.0))(vue-tsc@3.3.3(typescript@6.0.3)):
-    dependencies:
-      '@babel/code-frame': 7.29.7
-      chokidar: 5.0.0
-      npm-run-path: 6.0.0
-      picocolors: 1.1.1
-      picomatch: 4.0.4
-      proper-lockfile: 4.1.2
-      tiny-invariant: 1.3.3
-      vite: 7.3.5(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.9.0)
-    optionalDependencies:
-      eslint: 10.4.1(jiti@2.7.0)
-      meow: 14.1.0
-      optionator: 0.9.4
-      stylelint: 17.12.0(typescript@6.0.3)
       typescript: 6.0.3
       vue-tsc: 3.3.3(typescript@6.0.3)
 

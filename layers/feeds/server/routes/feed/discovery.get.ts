@@ -1,6 +1,5 @@
 export default defineEventHandler((event) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const appConfig = useAppConfig() as any
+  const appConfig = useAppConfig()
   const feedConfig = appConfig.feedsLayer?.feed ?? {}
   const collections: string[] = feedConfig.collections ?? ['blog']
 

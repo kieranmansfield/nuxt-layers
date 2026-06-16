@@ -28,10 +28,10 @@ colors:
     usage: Success states
 typography:
   - name: Geist
-    weights: ["400", "500", "700"]
+    weights: 400 500 700
     usage: Everything — UI, headings, body
   - name: Geist Mono
-    weights: ["400"]
+    weights: 400
     usage: Prices, sizes, stock codes
 ---
 

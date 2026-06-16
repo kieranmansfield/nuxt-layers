@@ -1,6 +1,8 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { mix, sin, time, uniform, vec2, vec4 } from 'three/tsl'
+
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     color = '#4488ff',
@@ -18,12 +20,7 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const colorNode = toVec3Node(color)
+  const colorNode = hexToVec3Uniform(color)
   const opacityNode = uniform(opacity)
   const freqNode = uniform(frequency)
   const speedNode = uniform(speed)
