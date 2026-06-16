@@ -2,7 +2,7 @@
   import type { TabsItem } from '@nuxt/ui'
 
   import type { HarmonyType } from '~/composables/useBrandState'
-  import { computeHarmony, HARMONY_LABELS, HARMONY_TYPES } from '~/composables/useColourHarmony'
+  import { computeHarmony } from '~/composables/useColourHarmony'
 
   const { state, updateColour } = useBrandState()
 

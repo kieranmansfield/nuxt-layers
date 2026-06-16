@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  /* eslint-disable vue/no-mutating-props */
   type GrainType = 'fine' | 'film' | 'riso'
   type GrainBlend = 'add' | 'sub' | 'screen' | 'overlay' | 'soft-light'
   type GrainStyle = 'smooth' | 'dotted' | 'coarse'

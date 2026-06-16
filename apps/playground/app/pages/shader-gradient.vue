@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import type { Component } from 'vue'
   import ThemeBubble from '#layers/shader/app/components/Preset/ThemeBubble.client.vue'
   import ThemeGradient from '#layers/shader/app/components/Preset/ThemeGradient.client.vue'
   import ThemeLavaLamp from '#layers/shader/app/components/Preset/ThemeLavaLamp.client.vue'
@@ -33,7 +34,7 @@
 
   // Pattern selector
   type PatternKey = 'mesh' | 'wave' | 'lavalamp' | 'bubble' | 'plasma'
-  const PATTERNS: { key: PatternKey; label: string; component: any }[] = [
+  const PATTERNS: { key: PatternKey; label: string; component: Component }[] = [
     { key: 'mesh', label: 'Mesh', component: ThemeGradient },
     { key: 'wave', label: 'Wave', component: ThemeWave },
     { key: 'lavalamp', label: 'Lava', component: ThemeLavaLamp },
@@ -119,7 +120,7 @@
     <ShaderHost
       :preset="activePreset"
       :preset-props
-      :fixed="true"
+      fixed
       :z-index="0"
       :clear-color
       tone-mapping="aces"

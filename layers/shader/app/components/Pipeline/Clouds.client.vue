@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { float, mix, smoothstep, time, uniform, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorSky = '#5588cc',
@@ -28,13 +29,8 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const colorSkyNode = toVec3Node(colorSky)
-  const colorCloudNode = toVec3Node(colorCloud)
+  const colorSkyNode = hexToVec3Uniform(colorSky)
+  const colorCloudNode = hexToVec3Uniform(colorCloud)
   const scaleNode = uniform(scale)
   const coverageNode = uniform(coverage)
   const softnessNode = uniform(softness)

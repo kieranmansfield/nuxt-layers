@@ -1,5 +1,6 @@
 <script setup lang="ts">
-  import type { ColorShade, TintColorSlot, TintLevel } from '../../types/tint'
+  import type { ColorShade } from '../../types/gradient'
+  import type { TintColorSlot, TintLevel } from '../../types/tint'
 
   const {
     color,

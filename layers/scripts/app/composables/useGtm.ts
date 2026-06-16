@@ -4,7 +4,7 @@ export function useGtm() {
 
   const gtmConfig = scriptsLayer?.gtm
   if (!gtmConfig?.enabled || !gtmConfig?.id) {
-    return { push: (_data: Record<string, unknown>) => {}, load: () => {} }
+    return { push: () => {}, load: () => {} }
   }
 
   // Load on Nuxt ready unless consent is required and not yet granted

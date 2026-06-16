@@ -7,5 +7,8 @@
     "gsap": "catalog:",
     "locomotive-scroll": "catalog:",
     "v-gsap-nuxt": "catalog:"
+  },
+  "scripts": {
+    "lint": "eslint ."
   }
 }

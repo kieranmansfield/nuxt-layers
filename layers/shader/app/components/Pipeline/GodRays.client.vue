@@ -1,6 +1,8 @@
 <script setup lang="ts">
-  import { Color, Vector2, Vector3 } from 'three'
+  import { Color, Vector2 } from 'three'
   import { cos, float, smoothstep, uniform, vec2, vec4 } from 'three/tsl'
+
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
    * Radial god rays — procedural volumetric light shafts emanating from a source point.
@@ -27,13 +29,8 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
   const posNode = uniform(new Vector2(...position))
-  const colorNode = toVec3Node(color)
+  const colorNode = hexToVec3Uniform(color)
   const intensityNode = uniform(intensity)
   const rayCountNode = uniform(rayCount)
   const decayNode = uniform(decay)

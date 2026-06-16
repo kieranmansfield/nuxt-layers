@@ -6,7 +6,10 @@
     createThemeLavaLampColorNode,
     createThemePlasmaColorNode,
     createThemeWaveColorNode,
+    type AmbientUniforms,
+    type ThemeColorUniforms,
   } from '#layers/shader/app/composables/useAmbientMaterials'
+  import type { TSLNode } from '#layers/shader/app/types/tsl'
   import { Color, Vector3 } from 'three'
   import { uniform } from 'three/tsl'
 
@@ -88,7 +91,7 @@
     }
   )
 
-  const creators: Record<ThemeId, (u: any, c: any) => any> = {
+  const creators: Record<ThemeId, (u: AmbientUniforms, c: ThemeColorUniforms) => TSLNode> = {
     mesh: createThemeGradientColorNode,
     wave: createThemeWaveColorNode,
     lavalamp: createThemeLavaLampColorNode,

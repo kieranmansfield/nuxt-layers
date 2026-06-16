@@ -1,6 +1,6 @@
 export type LoadStrategy = 'onNuxtReady' | 'idle' | 'manual'
 
-export interface ScriptLoaderOptions {
+export type ScriptLoaderOptions = {
   src: string
   key?: string
   strategy?: LoadStrategy
@@ -8,7 +8,7 @@ export interface ScriptLoaderOptions {
   integrity?: string
 }
 
-export interface AnalyticsProxy {
+export type AnalyticsProxy = {
   track: (event: string, params?: Record<string, unknown>) => void
   load: () => void
 }

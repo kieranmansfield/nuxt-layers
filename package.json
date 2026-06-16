@@ -94,7 +94,7 @@
   "keywords": [],
   "author": "Kieran Mansfield",
   "license": "ISC",
-  "packageManager": "pnpm@11.6.0",
+  "packageManager": "pnpm@11.7.0",
   "workspaces": [
     "layers/*",
     "apps/*",

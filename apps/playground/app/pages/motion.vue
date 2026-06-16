@@ -205,7 +205,7 @@
           direction="left"
           :pause-on-hover="false"
           gap="3rem"
-          :velocity-based="true"
+          velocity-based
           :velocity-sensitivity="0.8"
           :max-speed="4"
         >
@@ -343,8 +343,8 @@
           :velocity-sensitivity="1"
           :min-speed="0.3"
           :max-speed="3"
-          :velocity-based="true"
-          :velocity-direction="true"
+          velocity-based
+          velocity-direction
         >
           <span
             v-for="(item, i) in marqueeItemsAlt"
@@ -414,8 +414,8 @@
         <MotionMarquee
           :speed="30"
           direction="left"
-          :pause-on-hover="true"
-          :velocity-based="true"
+          pause-on-hover
+          velocity-based
           gap="4rem"
           :velocity-sensitivity="1.5"
           :max-speed="6"

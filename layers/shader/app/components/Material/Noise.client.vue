@@ -125,7 +125,7 @@
     // Mix colors based on noise using reactive uniforms
     const colorNode = mix(vec3(baseColorUniform), vec3(peakColorUniform), normalizedNoise)
 
-    mat.colorNode = colorNode as any
+    mat.colorNode = colorNode as TSLNode
     mat.transparent = transparent
     mat.side = DoubleSide
 

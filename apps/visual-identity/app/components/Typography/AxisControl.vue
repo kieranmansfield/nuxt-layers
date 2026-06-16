@@ -1,5 +1,11 @@
 <script setup lang="ts">
-  const { label, modelValue, min, max, step } = defineProps<{
+  const {
+    label,
+    modelValue,
+    min,
+    max,
+    step = 1,
+  } = defineProps<{
     label: string
     modelValue: number
     min: number

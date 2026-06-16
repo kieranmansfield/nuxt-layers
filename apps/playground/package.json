@@ -9,7 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare || true",
     "build:netlify": "netlify build",
-    "dev:netlify": "netlify dev"
+    "dev:netlify": "netlify dev",
+    "lint": "eslint ."
   },
   "devDependencies": {},
   "dependencies": {

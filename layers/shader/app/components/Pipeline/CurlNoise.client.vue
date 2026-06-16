@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { mix, time, uniform, vec3, vec4 } from 'three/tsl'
 
   import { curlNoise3d } from '../../shaders/common/noise'
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     color = '#ffffff',
@@ -22,12 +23,7 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const colorNode = toVec3Node(color)
+  const colorNode = hexToVec3Uniform(color)
   const opacityNode = uniform(opacity)
   const scaleNode = uniform(scale)
   const speedNode = uniform(speed)

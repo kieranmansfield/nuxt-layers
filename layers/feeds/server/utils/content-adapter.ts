@@ -3,14 +3,15 @@ import type { H3Event } from 'h3'
 
 import type { FeedItem } from './types'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AnyContent = Record<string, any>
+type AnyContent = Record<string, unknown>
 
 export async function getContentFeedItems(
   event: H3Event,
   collection: string = 'blog',
   limit: number = 30
 ): Promise<FeedItem[]> {
+  // queryCollection's first argument is typed as a const collection name, but we pass
+  // a dynamic string at runtime — the cast is intentional and safe here.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const raw: AnyContent[] = await (queryCollection as any)(event, collection).all()
 

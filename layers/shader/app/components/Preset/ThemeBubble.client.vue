@@ -1,8 +1,7 @@
 <script setup lang="ts">
-  import {
-    createAmbientUniforms,
-    createThemeBubbleColorNode,
-  } from '#layers/shader/app/composables/useAmbientMaterials'
+  import { createThemeBubbleColorNode } from '#layers/shader/app/composables/useAmbientMaterials'
+  import { type ThemePresetProps } from '#layers/shader/app/composables/useThemePreset'
+  import type { TSLNode } from '#layers/shader/app/types/tsl'
 
   const {
     speed = 1.0,
@@ -13,98 +12,38 @@
     color2 = '#6366f1',
     color3 = '#a78bfa',
     color4 = '#38bdf8',
-  } = defineProps<{
-    speed?: number
-    intensity?: number
-    mouseInteraction?: boolean
-    mouseStrength?: number
-    color1?: string
-    color2?: string
-    color3?: string
-    color4?: string
-  }>()
+  } = defineProps<ThemePresetProps>()
 
   const emit = defineEmits<{
-    node: [colorNode: any]
+    node: [colorNode: TSLNode]
   }>()
 
-  const uniforms = createAmbientUniforms({
-    speed: speed,
-    intensity: intensity,
-    mouseInteraction: mouseInteraction,
+  const { uniforms, colorNode } = useThemePreset(createThemeBubbleColorNode, {
+    get speed() {
+      return speed
+    },
+    get intensity() {
+      return intensity
+    },
+    get mouseInteraction() {
+      return mouseInteraction
+    },
+    get mouseStrength() {
+      return mouseStrength
+    },
+    get color1() {
+      return color1
+    },
+    get color2() {
+      return color2
+    },
+    get color3() {
+      return color3
+    },
+    get color4() {
+      return color4
+    },
   })
-  if (mouseInteraction) {
-    uniforms.mouseStrength.value = mouseStrength
-  }
-
-  const c1 = useShaderColor(color1)
-  const c2 = useShaderColor(color2)
-  const c3 = useShaderColor(color3)
-  const c4 = useShaderColor(color4)
-
-  // color3/color4 accepted for API consistency but Bubble only uses color1+color2
-  const colorNode = createThemeBubbleColorNode(uniforms, {
-    color1: c1.node,
-    color2: c2.node,
-    color3: c3.node,
-    color4: c4.node,
-  })
-
-  watch(
-    () => color1,
-    (hex) => c1.tweenTo(hex, 0.8)
-  )
-  watch(
-    () => color2,
-    (hex) => c2.tweenTo(hex, 0.8)
-  )
-  watch(
-    () => color3,
-    (hex) => c3.tweenTo(hex, 0.8)
-  )
-  watch(
-    () => color4,
-    (hex) => c4.tweenTo(hex, 0.8)
-  )
-
-  try {
-    const runtime = useShaderRuntimeContext()
-    watch(
-      () => [runtime.mouse.mouseX.value, runtime.mouse.mouseY.value],
-      ([mx, my]) => {
-        uniforms.mouseX.value = mx
-        uniforms.mouseY.value = my
-      },
-      { immediate: true }
-    )
-  } catch {
-    // No runtime context
-  }
-
-  watch(
-    () => speed,
-    (v) => {
-      uniforms.speed.value = v
-    }
-  )
-  watch(
-    () => intensity,
-    (v) => {
-      uniforms.intensity.value = v
-    }
-  )
-  watch(
-    () => mouseInteraction,
-    (v) => {
-      uniforms.mouseStrength.value = v ? mouseStrength : 0
-    }
-  )
-  watch(
-    () => mouseStrength,
-    (v) => {
-      if (mouseInteraction) uniforms.mouseStrength.value = v
-    }
-  )
 
   emit('node', colorNode)
   defineExpose({ uniforms, colorNode })

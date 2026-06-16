@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { float, mix, smoothstep, uniform, vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
    * Maps input luminance to a three-stop colour ramp: shadow → midtone → highlight.
@@ -26,14 +27,9 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const shadowNode = toVec3Node(shadowColor)
-  const midNode = toVec3Node(midtoneColor)
-  const highlightNode = toVec3Node(highlightColor)
+  const shadowNode = hexToVec3Uniform(shadowColor)
+  const midNode = hexToVec3Uniform(midtoneColor)
+  const highlightNode = hexToVec3Uniform(highlightColor)
   const shadowPtNode = uniform(shadowPoint)
   const highlightPtNode = uniform(highlightPoint)
   watch(

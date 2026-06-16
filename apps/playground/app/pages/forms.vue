@@ -95,8 +95,11 @@
         },
       })
       testEmailResult.value = { success: true }
-    } catch (err: any) {
-      testEmailResult.value = { success: false, error: err.statusMessage || 'Send failed' }
+    } catch (err: unknown) {
+      testEmailResult.value = {
+        success: false,
+        error: (err as { statusMessage?: string }).statusMessage || 'Send failed',
+      }
     } finally {
       testEmailLoading.value = false
     }

@@ -1,4 +1,5 @@
 import type { Color, Matrix3, Matrix4, Texture, Vector2, Vector3, Vector4 } from 'three'
+import type { TSLNode } from './tsl'
 
 export type UniformPrimitive = number | boolean | string
 export type UniformVector = Vector2 | Vector3 | Vector4
@@ -17,5 +18,5 @@ export type UniformValues = Record<string, UniformValue>
 
 export type UniformsState<T extends UniformValues> = {
   values: T
-  nodes: Record<keyof T, import('./tsl').TSLNode>
+  nodes: Record<keyof T, TSLNode>
 }

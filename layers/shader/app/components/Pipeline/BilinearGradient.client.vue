@@ -1,6 +1,8 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
-  import { mix, uniform, vec4 } from 'three/tsl'
+  import { Color } from 'three'
+  import { mix, vec4 } from 'three/tsl'
+
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     bottomLeft = '#000000',
@@ -20,15 +22,10 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const blNode = toVec3Node(bottomLeft)
-  const brNode = toVec3Node(bottomRight)
-  const tlNode = toVec3Node(topLeft)
-  const trNode = toVec3Node(topRight)
+  const blNode = hexToVec3Uniform(bottomLeft)
+  const brNode = hexToVec3Uniform(bottomRight)
+  const tlNode = hexToVec3Uniform(topLeft)
+  const trNode = hexToVec3Uniform(topRight)
   watch(
     () => bottomLeft,
     (v) => {

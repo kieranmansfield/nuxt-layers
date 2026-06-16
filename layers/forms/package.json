@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nuxi dev",
     "dev:playground": "PLAYGROUND_LAYERS=core,mailer,forms pnpm -F playground dev",
-    "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json"
+    "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json",
+    "lint": "eslint ."
   },
   "dependencies": {
     "zod": "catalog:conflicts_conflicts_zod_h4_3_6_h4_4_3"

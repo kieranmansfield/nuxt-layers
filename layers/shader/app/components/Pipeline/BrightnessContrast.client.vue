@@ -1,7 +1,10 @@
 <script setup lang="ts">
   import { uniform, vec4 } from 'three/tsl'
 
-  import { brightness, contrast } from '../../shaders/common/blend'
+  import {
+    brightness as brightnessEffect,
+    contrast as contrastEffect,
+  } from '../../shaders/common/blend'
 
   const {
     brightness: brightnessProp = 0,
@@ -31,7 +34,8 @@
   )
 
   useShaderStage(
-    (prev) => vec4(brightness(contrast(prev.xyz, contrastNode), brightnessNode), prev.w),
+    (prev) =>
+      vec4(brightnessEffect(contrastEffect(prev.xyz, contrastNode), brightnessNode), prev.w),
     order
   )
 </script>

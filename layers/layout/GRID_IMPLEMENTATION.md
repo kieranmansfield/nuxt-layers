@@ -418,7 +418,7 @@ To use it standalone (outside of `LayoutPage`):
 
 ## Quick reference
 
-```
+```text
 LayoutPage              — root page wrapper (SEO + grid root + debug)
   └─ LayoutSection      — full-viewport section (subgrid, 12 rows)
        └─ LayoutGridItem — positioned content (cols + rows + layer)

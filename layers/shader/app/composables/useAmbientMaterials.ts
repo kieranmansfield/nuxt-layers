@@ -28,7 +28,35 @@ import {
   voronoi2D,
 } from '../shaders/common/noise'
 import { cosinePalette } from '../shaders/common/palette'
-import type { TSLNode } from '../shaders/types'
+import type { FloatUniform, TSLNode, Vec3Uniform } from '../shaders/types'
+
+// ============================================
+// Private helpers
+// ============================================
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function buildFlowWarpedUV(uvCoord: any, t: any, mouseOffset: any): {
+  warpedUV: TSLNode
+  n1: TSLNode
+  n2: TSLNode
+} {
+  const warpCoarse1 = simplexNoise2D(add(mul(uvCoord, 1.5), t))
+  const warpCoarse2 = simplexNoise2D(add(mul(uvCoord, 1.5), mul(t, -0.5), 7.0))
+  const warpedUV1 = add(uvCoord, mul(vec2(warpCoarse1, warpCoarse2), 0.25), mouseOffset)
+
+  const warpMed1 = simplexNoise2D(add(mul(warpedUV1, 3.0), mul(t, 0.7)))
+  const warpMed2 = simplexNoise2D(add(mul(warpedUV1, 3.0), mul(t, -0.3), 15.0))
+  const warpedUV2 = add(warpedUV1, mul(vec2(warpMed1, warpMed2), 0.12))
+
+  const warpFine1 = simplexNoise2D(add(mul(warpedUV2, 5.0), mul(t, 1.2)))
+  const warpFine2 = simplexNoise2D(add(mul(warpedUV2, 5.0), mul(t, -0.8), 25.0))
+  const warpedUV = add(warpedUV2, mul(vec2(warpFine1, warpFine2), 0.05))
+
+  const n1 = fbm2D(warpedUV, { octaves: 5, frequency: 2.0 }).mul(0.5).add(0.5)
+  const n2 = ridgedFbm2d(warpedUV, { octaves: 4, frequency: 1.5 })
+
+  return { warpedUV, n1, n2 }
+}
 
 // ============================================
 // Types
@@ -42,11 +70,11 @@ export type AmbientMaterialOptions = {
 }
 
 export type AmbientUniforms = {
-  speed: any
-  intensity: any
-  mouseX: any
-  mouseY: any
-  mouseStrength: any
+  speed: FloatUniform
+  intensity: FloatUniform
+  mouseX: FloatUniform
+  mouseY: FloatUniform
+  mouseStrength: FloatUniform
 }
 
 export type AmbientMaterialResult = {
@@ -55,7 +83,7 @@ export type AmbientMaterialResult = {
 }
 
 export type AmbientNodeResult = {
-  colorNode: any
+  colorNode: TSLNode
   uniforms: AmbientUniforms
 }
 
@@ -78,7 +106,7 @@ export function createAmbientUniforms(options: AmbientMaterialOptions = {}): Amb
 // Color Node Creators (TSL node, no material)
 // ============================================
 
-export function createAuroraColorNode(uniforms: AmbientUniforms): any {
+export function createAuroraColorNode(uniforms: AmbientUniforms): TSLNode {
   const {
     speed: uSpeed,
     intensity: uIntensity,
@@ -137,7 +165,7 @@ export function createAuroraColorNode(uniforms: AmbientUniforms): any {
   })()
 }
 
-export function createNebulaColorNode(uniforms: AmbientUniforms): any {
+export function createNebulaColorNode(uniforms: AmbientUniforms): TSLNode {
   const {
     speed: uSpeed,
     intensity: uIntensity,
@@ -205,7 +233,7 @@ export function createNebulaColorNode(uniforms: AmbientUniforms): any {
   })()
 }
 
-export function createFlowColorNode(uniforms: AmbientUniforms): any {
+export function createFlowColorNode(uniforms: AmbientUniforms): TSLNode {
   const {
     speed: uSpeed,
     intensity: uIntensity,
@@ -223,20 +251,7 @@ export function createFlowColorNode(uniforms: AmbientUniforms): any {
       mul(sub(uMouseY, 0.5), uMouseStrength, 0.3)
     )
 
-    const warpCoarse1 = simplexNoise2D(add(mul(uvCoord, 1.5), t))
-    const warpCoarse2 = simplexNoise2D(add(mul(uvCoord, 1.5), mul(t, -0.5), 7.0))
-    const warpedUV1 = add(uvCoord, mul(vec2(warpCoarse1, warpCoarse2), 0.25), mouseOffset)
-
-    const warpMed1 = simplexNoise2D(add(mul(warpedUV1, 3.0), mul(t, 0.7)))
-    const warpMed2 = simplexNoise2D(add(mul(warpedUV1, 3.0), mul(t, -0.3), 15.0))
-    const warpedUV2 = add(warpedUV1, mul(vec2(warpMed1, warpMed2), 0.12))
-
-    const warpFine1 = simplexNoise2D(add(mul(warpedUV2, 5.0), mul(t, 1.2)))
-    const warpFine2 = simplexNoise2D(add(mul(warpedUV2, 5.0), mul(t, -0.8), 25.0))
-    const warpedUV = add(warpedUV2, mul(vec2(warpFine1, warpFine2), 0.05))
-
-    const n1 = fbm2D(warpedUV, { octaves: 5, frequency: 2.0 }).mul(0.5).add(0.5)
-    const n2 = ridgedFbm2d(warpedUV, { octaves: 4, frequency: 1.5 })
+    const { n1, n2 } = buildFlowWarpedUV(uvCoord, t, mouseOffset)
 
     const color1 = vec3(0.075, 0.306, 0.369)
     const color2 = vec3(0.443, 0.698, 0.502)
@@ -266,7 +281,7 @@ export function createFlowColorNode(uniforms: AmbientUniforms): any {
   })()
 }
 
-export function createGradientMeshColorNode(uniforms: AmbientUniforms): any {
+export function createGradientMeshColorNode(uniforms: AmbientUniforms): TSLNode {
   const {
     speed: uSpeed,
     intensity: uIntensity,
@@ -353,16 +368,16 @@ export function createGradientMeshColorNode(uniforms: AmbientUniforms): any {
 }
 
 export type ThemeColorUniforms = {
-  color1: any // TSL uniform node wrapping a THREE.Color
-  color2: any
-  color3: any
-  color4: any
+  color1: Vec3Uniform
+  color2: Vec3Uniform
+  color3: Vec3Uniform
+  color4: Vec3Uniform
 }
 
 export function createThemeGradientColorNode(
   uniforms: AmbientUniforms,
   colors: ThemeColorUniforms
-): any {
+): TSLNode {
   const {
     speed: uSpeed,
     intensity: uIntensity,
@@ -453,7 +468,7 @@ export function createThemeGradientColorNode(
 export function createThemeFlowColorNode(
   uniforms: AmbientUniforms,
   colors: ThemeColorUniforms
-): any {
+): TSLNode {
   const {
     speed: uSpeed,
     intensity: uIntensity,
@@ -471,20 +486,7 @@ export function createThemeFlowColorNode(
       mul(sub(uMouseY, 0.5), uMouseStrength, 0.3)
     )
 
-    const warpCoarse1 = simplexNoise2D(add(mul(uvCoord, 1.5), t))
-    const warpCoarse2 = simplexNoise2D(add(mul(uvCoord, 1.5), mul(t, -0.5), 7.0))
-    const warpedUV1 = add(uvCoord, mul(vec2(warpCoarse1, warpCoarse2), 0.25), mouseOffset)
-
-    const warpMed1 = simplexNoise2D(add(mul(warpedUV1, 3.0), mul(t, 0.7)))
-    const warpMed2 = simplexNoise2D(add(mul(warpedUV1, 3.0), mul(t, -0.3), 15.0))
-    const warpedUV2 = add(warpedUV1, mul(vec2(warpMed1, warpMed2), 0.12))
-
-    const warpFine1 = simplexNoise2D(add(mul(warpedUV2, 5.0), mul(t, 1.2)))
-    const warpFine2 = simplexNoise2D(add(mul(warpedUV2, 5.0), mul(t, -0.8), 25.0))
-    const warpedUV = add(warpedUV2, mul(vec2(warpFine1, warpFine2), 0.05))
-
-    const n1 = fbm2D(warpedUV, { octaves: 5, frequency: 2.0 }).mul(0.5).add(0.5)
-    const n2 = ridgedFbm2d(warpedUV, { octaves: 4, frequency: 1.5 })
+    const { n1, n2 } = buildFlowWarpedUV(uvCoord, t, mouseOffset)
 
     let colorNode = mix(colors.color1, colors.color2, n1)
     colorNode = mix(colorNode, colors.color3, mul(n2, 0.5))
@@ -506,7 +508,7 @@ export function createThemeFlowColorNode(
 export function createThemeAuroraColorNode(
   uniforms: AmbientUniforms,
   colors: ThemeColorUniforms
-): any {
+): TSLNode {
   const {
     speed: uSpeed,
     intensity: uIntensity,
@@ -563,7 +565,7 @@ export function createThemeAuroraColorNode(
 export function createThemeWaveColorNode(
   uniforms: AmbientUniforms,
   colors: ThemeColorUniforms
-): any {
+): TSLNode {
   const {
     speed: uSpeed,
     intensity: uIntensity,
@@ -613,7 +615,7 @@ export function createThemeWaveColorNode(
 export function createThemeLavaLampColorNode(
   uniforms: AmbientUniforms,
   colors: ThemeColorUniforms
-): any {
+): TSLNode {
   const {
     speed: uSpeed,
     intensity: uIntensity,
@@ -681,7 +683,7 @@ export function createThemeLavaLampColorNode(
 export function createThemeBubbleColorNode(
   uniforms: AmbientUniforms,
   colors: ThemeColorUniforms
-): any {
+): TSLNode {
   const {
     speed: uSpeed,
     intensity: uIntensity,
@@ -716,7 +718,7 @@ export function createThemeBubbleColorNode(
 export function createThemePlasmaColorNode(
   uniforms: AmbientUniforms,
   colors: ThemeColorUniforms
-): any {
+): TSLNode {
   const {
     speed: uSpeed,
     intensity: uIntensity,
@@ -770,7 +772,7 @@ export function createThemePlasmaColorNode(
   })()
 }
 
-export function createOceanColorNode(uniforms: AmbientUniforms): any {
+export function createOceanColorNode(uniforms: AmbientUniforms): TSLNode {
   const {
     speed: uSpeed,
     intensity: uIntensity,

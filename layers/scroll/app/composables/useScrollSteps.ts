@@ -1,15 +1,8 @@
-import type { ComputedRef, Ref } from 'vue'
+import type { ScrollSceneContext } from '../types/scroll'
 
 export const SCROLL_SCENE_KEY = Symbol('motionScrollScene')
 
-export type ScrollSceneContext = {
-  progress: Ref<number>
-  active: Ref<boolean>
-  name: string
-  stepCount: ComputedRef<number>
-  registerStep: (index: number) => void
-  unregisterStep: (index: number) => void
-}
+export type { ScrollSceneContext }
 
 /**
  * Step/waypoint state tracking — must be used inside a MotionScrollScene.

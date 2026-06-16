@@ -1,12 +1,12 @@
 <script setup lang="ts">
   import type { Component } from 'vue'
-  import ShaderHost from '#layers/shader/app/components/Shader/Host.client.vue'
-  import ShaderRuntime from '#layers/shader/app/components/Shader/Runtime.client.vue'
   import AuroraPreset from '#layers/shader/app/components/Preset/Aurora.client.vue'
-  import NebulaPreset from '#layers/shader/app/components/Preset/Nebula.client.vue'
   import FlowPreset from '#layers/shader/app/components/Preset/Flow.client.vue'
   import GradientMeshPreset from '#layers/shader/app/components/Preset/GradientMesh.client.vue'
+  import NebulaPreset from '#layers/shader/app/components/Preset/Nebula.client.vue'
   import OceanPreset from '#layers/shader/app/components/Preset/Ocean.client.vue'
+  import ShaderHost from '#layers/shader/app/components/Shader/Host.client.vue'
+  import ShaderRuntime from '#layers/shader/app/components/Shader/Runtime.client.vue'
 
   definePageMeta({ ssr: false, layout: false })
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const { open = false, onSubmit } = defineProps<{
+  const { open = false, onSubmit = undefined } = defineProps<{
     open?: boolean
     onSubmit?: (data: { name: string; email: string; message: string }) => void
   }>()

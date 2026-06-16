@@ -1,5 +1,11 @@
 <script setup lang="ts">
-  const { to, icon, title, description, target } = defineProps<{
+  const {
+    to,
+    icon,
+    title,
+    description,
+    target = undefined,
+  } = defineProps<{
     to: string
     icon: string
     title: string

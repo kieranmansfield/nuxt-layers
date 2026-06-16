@@ -27,12 +27,10 @@ export function useMagneticElement(
     let targetX = 0
     let targetY = 0
 
+    isActive.value = dist < radius
     if (dist < radius) {
-      isActive.value = true
       targetX = dx * strength
       targetY = dy * strength
-    } else {
-      isActive.value = false
     }
 
     currentX.value += (targetX - currentX.value) * stiffness

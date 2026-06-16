@@ -314,6 +314,7 @@
               <div class="hidden pointer-events-none" aria-hidden="true">
                 <!-- ── 1. Generators ── -->
                 <!-- :key on template forces block remount when ringCount changes (structural TSL graph change) -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-if="activeCategory === 'generators'" :key="gen.ringCount">
                   <PipelineRingField
                     :order="0"
@@ -335,6 +336,7 @@
                 </template>
 
                 <!-- ── 2. Noise ── -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'noise'" :key="noise.octaves">
                   <PipelineFBMNoise
                     :order="0"
@@ -460,7 +462,9 @@
                 </template>
 
                 <!-- ── 8. Noise FX ── -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'noise_fx'" :key="noiseFxSub">
+                  <!-- eslint-disable-next-line vue/no-template-key -->
                   <template v-if="noiseFxSub === 'fbm'" :key="noiseFx.octaves">
                     <PipelineFBMNoise
                       :order="0"
@@ -516,6 +520,7 @@
                 </template>
 
                 <!-- ── 9. SDF Shapes ── -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'sdf'" :key="sdfSub">
                   <template v-if="sdfSub === 'circle'">
                     <PipelineCircle
@@ -590,6 +595,7 @@
                 </template>
 
                 <!-- ── 10. Lighting ── -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'lighting'" :key="lightingSub">
                   <PipelineFBMNoise
                     :order="0"
@@ -619,6 +625,7 @@
                 </template>
 
                 <!-- ── 11. Tonemapping ── -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'tonemapping'" :key="tonemappingSub">
                   <PipelineFBMNoise
                     :order="0"
@@ -645,6 +652,7 @@
                 </template>
 
                 <!-- ── 12. Patterns ── -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'patterns'" :key="patternsSub">
                   <template v-if="patternsSub === 'checkerboard'">
                     <PipelineCheckerboard
@@ -709,6 +717,7 @@
                 </template>
 
                 <!-- ── 13. Effects ── -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'effects'" :key="effectsSub">
                   <PipelineFBMNoise
                     :order="0"
@@ -769,6 +778,7 @@
                 </template>
 
                 <!-- ── 15. UV & Grain ── -->
+                <!-- eslint-disable-next-line vue/no-template-key -->
                 <template v-else-if="activeCategory === 'uv_grain'" :key="uvGrainSub">
                   <template v-if="uvGrainSub === 'rotate'">
                     <PipelineUVRotate :order="0" :angle="uvGrain.rotateAngle" />
@@ -856,7 +866,7 @@
               </div>
 
               <!-- Canvas — ShaderPipeline is childless; it only attaches the material -->
-              <ShaderCanvas clear-color="#0a0a0a" :window-size="false" :webgpu="true">
+              <ShaderCanvas clear-color="#0a0a0a" :window-size="false" webgpu>
                 <TresOrthographicCamera :args="[-1, 1, 1, -1, 0.1, 100]" :position="[0, 0, 1]" />
                 <TresMesh>
                   <TresPlaneGeometry :args="[2, 2]" />

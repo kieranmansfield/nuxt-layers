@@ -3,6 +3,7 @@
     createAmbientUniforms,
     createAuroraColorNode,
   } from '#layers/shader/app/composables/useAmbientMaterials'
+  import type { TSLNode } from '#layers/shader/app/types/tsl'
 
   const {
     speed = 1.0,
@@ -15,7 +16,7 @@
   }>()
 
   const emit = defineEmits<{
-    node: [colorNode: any]
+    node: [colorNode: TSLNode]
   }>()
 
   // Create uniforms once

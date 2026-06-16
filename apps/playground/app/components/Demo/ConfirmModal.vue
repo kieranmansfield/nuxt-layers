@@ -4,7 +4,7 @@
     title = 'Are you sure?',
     description = 'This action cannot be undone.',
     confirmLabel = 'Confirm',
-    onConfirm,
+    onConfirm = undefined,
   } = defineProps<{
     open?: boolean
     title?: string

@@ -1,13 +1,15 @@
 <script setup lang="ts">
+  import type { ContentSurroundLink } from '@nuxt/ui'
+
   const { surround = undefined } = defineProps<{
-    surround?: unknown[]
+    surround?: ContentSurroundLink[]
   }>()
 </script>
 
 <template>
   <UContentSurround
     v-if="surround"
-    :surround="surround as any"
+    :surround
     prev-icon="i-lucide-arrow-left"
     next-icon="i-lucide-arrow-right"
   />

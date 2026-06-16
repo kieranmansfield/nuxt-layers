@@ -6,7 +6,7 @@
   onUnmounted(() => setPageAccent(null))
 
   const { velocity, progress } = useSmoothScroll()
-  const { gsap } = useGsap()
+  useGsap()
 
   const composables = [
     {

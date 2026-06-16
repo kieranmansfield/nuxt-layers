@@ -310,7 +310,7 @@ catalog:
   type-fest: ^5.7.0
   trim-trailing-lines: 2.1.0
   trough: 2.2.0
-  turbo: ^2.9.16
+  turbo: ^2.9.18
   typescript: ^6
   ufo: 1.6.4
   unhead: 2.1.15

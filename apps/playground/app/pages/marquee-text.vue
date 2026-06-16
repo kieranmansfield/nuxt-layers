@@ -210,10 +210,7 @@
             </p>
           </div>
         </UContainer>
-        <MotionMarqueeText
-          :texts="['HOVER TO PAUSE ✦', 'MOVE AWAY TO RESUME ✦']"
-          :pause-on-hover="true"
-        />
+        <MotionMarqueeText :texts="['HOVER TO PAUSE ✦', 'MOVE AWAY TO RESUME ✦']" pause-on-hover />
       </section>
 
       <!-- ─── Custom styling ────────────────────────────────────────────────── -->
@@ -253,7 +250,7 @@
           :damping="30"
           :stiffness="600"
           :velocity-mapping="{ input: [0, 500], output: [0, 8] }"
-          :pause-on-hover="true"
+          pause-on-hover
         />
       </section>
 

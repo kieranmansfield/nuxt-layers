@@ -1,7 +1,13 @@
-import { abs, clamp, float, Fn, max, min, mix, mod, vec3 } from 'three/tsl'
+import { Color, Vector3 } from 'three'
+import { abs, clamp, float, Fn, max, min, mix, mod, uniform, vec3 } from 'three/tsl'
 
 import type { GradientStop, TSLNode } from '../../types'
 import { circularDistance } from './math'
+
+export function hexToVec3Uniform(hex: string) {
+  const c = new Color(hex)
+  return uniform(new Vector3(c.r, c.g, c.b))
+}
 
 /**
  * Linear gradient with multiple color stops

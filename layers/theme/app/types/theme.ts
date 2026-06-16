@@ -5,24 +5,9 @@
  * and the theme preferences interface.
  */
 
-export type AccentColor =
-  | 'red'
-  | 'orange'
-  | 'amber'
-  | 'yellow'
-  | 'lime'
-  | 'green'
-  | 'emerald'
-  | 'teal'
-  | 'cyan'
-  | 'sky'
-  | 'blue'
-  | 'indigo'
-  | 'violet'
-  | 'purple'
-  | 'fuchsia'
-  | 'pink'
-  | 'rose'
+import type { AccentColor } from '#types'
+
+export type { AccentColor }
 
 export type PreferenceOverride = 'system' | 'on' | 'off'
 
