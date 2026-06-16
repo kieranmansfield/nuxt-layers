@@ -150,7 +150,7 @@ const initScript = `(function(){
 export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hook('render:html', (html) => {
     html.head.unshift(
-      `<style id="theme-accent-css">${accentCSS}</style>` + `<script>${initScript}</script>`
+      `<style id="theme-accent-css">${accentCSS}</style><script>${initScript}</script>`
     )
   })
 })

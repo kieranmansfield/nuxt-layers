@@ -1,10 +1,8 @@
 <script setup lang="ts">
-  import type { AccentColor } from '#layers/theme/app/types/theme'
-
   const appConfig = useAppConfig()
   const { activeAccent, setAccent } = useAccentColor()
 
-  const accents = computed(() => ((appConfig as any).themeLayer?.accents as AccentColor[]) ?? [])
+  const accents = computed(() => appConfig.themeLayer?.accents ?? [])
 </script>
 
 <template>

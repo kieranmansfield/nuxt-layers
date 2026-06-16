@@ -1,9 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { mix, uniform, vec4 } from 'three/tsl'
-
   import { blendOverlay } from '../../shaders/common/blend'
-  import type { TSLNode } from '../../shaders/types'
 
   const {
     color = '#808080',
@@ -15,23 +11,10 @@
     order?: number
   }>()
 
-  const colorNode: TSLNode = uniform(new Color(color))
-  const opacityNode = uniform(opacity)
-  watch(
+  useShaderMixBlend(
+    blendOverlay,
     () => color,
-    (v) => {
-      colorNode.value.set(v)
-    }
-  )
-  watch(
     () => opacity,
-    (v) => {
-      opacityNode.value = v
-    }
-  )
-
-  useShaderStage(
-    (prev) => vec4(mix(prev.xyz, blendOverlay(prev.xyz, colorNode), opacityNode), prev.w),
     order
   )
 </script>

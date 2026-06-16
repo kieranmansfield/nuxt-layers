@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { float, smoothstep, uniform, vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     shadowColor = '#1a2a5a',
@@ -22,13 +23,8 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const shadowNode = toVec3Node(shadowColor)
-  const highlightNode = toVec3Node(highlightColor)
+  const shadowNode = hexToVec3Uniform(shadowColor)
+  const highlightNode = hexToVec3Uniform(highlightColor)
   const balanceNode = uniform(balance)
   const opacityNode = uniform(opacity)
   watch(

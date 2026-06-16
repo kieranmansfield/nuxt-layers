@@ -29,7 +29,12 @@
     fullHeight?: boolean
   }
 
-  const { items = undefined, columns = 3, itemRowSpan = 4, fullHeight = false } = defineProps<Props<T>>()
+  const {
+    items = undefined,
+    columns = 3,
+    itemRowSpan = 4,
+    fullHeight = false,
+  } = defineProps<Props<T>>()
 
   // Responsive column spans that work across 6/12/18 column grids
   const columnSpan = computed(() => {

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import type { TresContext } from '@tresjs/core'
+
   definePageMeta({ layout: false })
   const { setPageAccent } = useAccentColor()
   setPageAccent('cyan')
@@ -21,7 +23,7 @@
   const distortion = ref(0.03)
   const vignetteEnabled = ref(true)
 
-  function onCanvasReady(context: any) {
+  function onCanvasReady(context: TresContext) {
     if (context?.renderer?.instance) {
       detectFromRenderer(context.renderer.instance)
     }
@@ -43,7 +45,7 @@
             <ShaderCanvas
               clear-color="#050505"
               class="absolute inset-0"
-              :webgpu="true"
+              webgpu
               @ready="onCanvasReady"
             >
               <TresPerspectiveCamera :position="[0, 0, 3]" />

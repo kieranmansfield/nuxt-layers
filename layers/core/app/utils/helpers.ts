@@ -18,30 +18,32 @@ export function safeJsonParse<T>(json: string, fallback: T): T {
 /**
  * Debounce function execution
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function debounce<T extends (...args: any[]) => any>(
   fn: T,
   delay: number
 ): (...args: Parameters<T>) => void {
   let timeoutId: ReturnType<typeof setTimeout>
 
-  return function (this: any, ...args: Parameters<T>) {
+  return function (...args: Parameters<T>) {
     clearTimeout(timeoutId)
-    timeoutId = setTimeout(() => fn.apply(this, args), delay)
+    timeoutId = setTimeout(() => fn(...args), delay)
   }
 }
 
 /**
  * Throttle function execution
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function throttle<T extends (...args: any[]) => any>(
   fn: T,
   limit: number
 ): (...args: Parameters<T>) => void {
   let inThrottle: boolean
 
-  return function (this: any, ...args: Parameters<T>) {
+  return function (...args: Parameters<T>) {
     if (!inThrottle) {
-      fn.apply(this, args)
+      fn(...args)
       inThrottle = true
       setTimeout(() => (inThrottle = false), limit)
     }
@@ -68,7 +70,7 @@ export async function retry<T>(
 ): Promise<T> {
   const { maxAttempts = 3, delay = 1000, backoff = 2 } = options
 
-  let lastError: Error
+  let lastError: Error = new Error('All retry attempts failed')
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
@@ -83,7 +85,7 @@ export async function retry<T>(
     }
   }
 
-  throw lastError!
+  throw lastError
 }
 
 /**
@@ -123,8 +125,8 @@ export function formatBytes(bytes: number, decimals = 2): string {
 export function deepClone<T>(obj: T): T {
   if (obj === null || typeof obj !== 'object') return obj
 
-  if (obj instanceof Date) return new Date(obj.getTime()) as any
-  if (obj instanceof Array) return obj.map((item) => deepClone(item)) as any
+  if (obj instanceof Date) return new Date(obj.getTime()) as unknown as T
+  if (obj instanceof Array) return obj.map((item) => deepClone(item)) as unknown as T
   if (obj instanceof Object) {
     const clonedObj = {} as T
     for (const key in obj) {
@@ -182,8 +184,8 @@ export function truncate(str: string, length: number, suffix = '...'): string {
 /**
  * Remove undefined/null values from object
  */
-export function removeEmpty<T extends Record<string, any>>(obj: T): Partial<T> {
-  const result: any = {}
+export function removeEmpty<T extends Record<string, unknown>>(obj: T): Partial<T> {
+  const result: Partial<T> = {}
 
   for (const key in obj) {
     if (obj[key] !== undefined && obj[key] !== null) {
@@ -214,7 +216,7 @@ export function groupBy<T>(array: T[], key: keyof T): Record<string, T[]> {
 /**
  * Pick specific keys from object
  */
-export function pick<T extends Record<string, any>, K extends keyof T>(
+export function pick<T extends Record<string, unknown>, K extends keyof T>(
   obj: T,
   keys: K[]
 ): Pick<T, K> {
@@ -232,7 +234,7 @@ export function pick<T extends Record<string, any>, K extends keyof T>(
 /**
  * Omit specific keys from object
  */
-export function omit<T extends Record<string, any>, K extends keyof T>(
+export function omit<T extends Record<string, unknown>, K extends keyof T>(
   obj: T,
   keys: K[]
 ): Omit<T, K> {

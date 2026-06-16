@@ -78,7 +78,7 @@
   const { canInstall, isInstalled, needRefresh, install, updateServiceWorker } = usePWAInfo()
 
   // Loading demo
-  const { isLoading: demoLoading, progress: demoProgress, startLoading, stopLoading } = useLoading()
+  const { progress: demoProgress, startLoading, stopLoading } = useLoading()
 
   const showLoadingDemo = ref(false)
 

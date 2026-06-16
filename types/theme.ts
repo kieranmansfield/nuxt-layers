@@ -12,9 +12,23 @@ export type TransparencyPreference = 'full' | 'reduced' | 'none'
 
 /** @consumers theme, visual, typography */
 export type AccentColor =
-  | 'red' | 'orange' | 'amber' | 'yellow' | 'lime' | 'green' | 'emerald'
-  | 'teal' | 'cyan' | 'sky' | 'blue' | 'indigo' | 'violet' | 'purple'
-  | 'fuchsia' | 'pink' | 'rose'
+  | 'red'
+  | 'orange'
+  | 'amber'
+  | 'yellow'
+  | 'lime'
+  | 'green'
+  | 'emerald'
+  | 'teal'
+  | 'cyan'
+  | 'sky'
+  | 'blue'
+  | 'indigo'
+  | 'violet'
+  | 'purple'
+  | 'fuchsia'
+  | 'pink'
+  | 'rose'
 
 /** @consumers theme, visual */
 export interface ThemeState {
@@ -38,4 +52,9 @@ export type UiStatusColor = 'info' | 'success' | 'warning' | 'error'
 export type UiDefaultNuxtUiColors = 'primary' | 'neutral'
 export type UiCustomColors = 'secondary' | 'accent'
 export type UiBaseColor = 'black' | 'white'
-export type UiColors = UiSemanticColor | UiStatusColor | UiDefaultNuxtUiColors | UiCustomColors | UiBaseColor
+export type UiColors =
+  | UiSemanticColor
+  | UiStatusColor
+  | UiDefaultNuxtUiColors
+  | UiCustomColors
+  | UiBaseColor

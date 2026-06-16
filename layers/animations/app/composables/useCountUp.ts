@@ -10,7 +10,10 @@ type UseCountUpOptions = {
   once?: boolean
 }
 
-export function useCountUp(elementRef: MaybeRefOrGetter<HTMLElement | null>, opts: UseCountUpOptions) {
+export function useCountUp(
+  elementRef: MaybeRefOrGetter<HTMLElement | null>,
+  opts: UseCountUpOptions
+) {
   const { gsap, ScrollTrigger } = useGsap()
 
   const displayValue = ref(String(opts.from ?? 0))

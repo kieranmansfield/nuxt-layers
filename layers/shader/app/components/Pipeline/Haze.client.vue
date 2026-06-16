@@ -1,6 +1,8 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { float, smoothstep, uniform, vec4 } from 'three/tsl'
+
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
    * Edge haze — additive fog/bloom at screen boundaries.
@@ -21,12 +23,7 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const colorNode = toVec3Node(color)
+  const colorNode = hexToVec3Uniform(color)
   const reachNode = uniform(reach)
   const intensityNode = uniform(intensity)
   watch(

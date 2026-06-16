@@ -2,6 +2,8 @@
   import { Color, Vector3 } from 'three'
   import { clamp, dot, float, mix, pow, uniform, vec4 } from 'three/tsl'
 
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
+
   const {
     zenith = '#1a3a8a',
     horizon = '#7ab0d8',
@@ -26,15 +28,10 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const zenithNode = toVec3Node(zenith)
-  const horizonNode = toVec3Node(horizon)
-  const groundNode = toVec3Node(ground)
-  const sunColorNode = toVec3Node(sunColor)
+  const zenithNode = hexToVec3Uniform(zenith)
+  const horizonNode = hexToVec3Uniform(horizon)
+  const groundNode = hexToVec3Uniform(ground)
+  const sunColorNode = hexToVec3Uniform(sunColor)
   const sunPowerNode = uniform(sunPower)
 
   const sunDir = new Vector3(...sunDirection).normalize()

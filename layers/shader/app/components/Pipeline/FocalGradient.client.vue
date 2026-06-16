@@ -1,6 +1,8 @@
 <script setup lang="ts">
-  import { Color, Vector2, Vector3 } from 'three'
+  import { Color, Vector2 } from 'three'
   import { float, mix, uniform, vec2, vec4 } from 'three/tsl'
+
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /** Radial gradient with an offset focal point — asymmetric radial. */
   const {
@@ -19,13 +21,8 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const colorANode = toVec3Node(colorA)
-  const colorBNode = toVec3Node(colorB)
+  const colorANode = hexToVec3Uniform(colorA)
+  const colorBNode = hexToVec3Uniform(colorB)
   const focalNode = uniform(new Vector2(...focal))
   const radiusNode = uniform(radius)
   watch(

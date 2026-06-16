@@ -73,7 +73,7 @@
     // Mix colors based on fresnel using reactive uniforms
     const colorNode = mix(vec3(baseColorUniform), vec3(fresnelColorUniform), fresnelFactor)
 
-    mat.colorNode = colorNode as any
+    mat.colorNode = colorNode as TSLNode
     mat.transparent = transparent
     mat.side = DoubleSide
 

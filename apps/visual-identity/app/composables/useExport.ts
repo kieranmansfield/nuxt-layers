@@ -1,5 +1,5 @@
 import { formatHex, oklch, parse } from 'culori'
-import type { BrandColour, ColourScheme, ContrastLevel, ThemeVariant } from './useBrandState'
+import type { BrandColour, ContrastLevel, ThemeVariant } from './useBrandState'
 import { generateScale } from './useTailwindScale'
 import type { ScaleEntry } from './useTailwindScale'
 
@@ -32,12 +32,9 @@ function contrastScale(entries: ScaleEntry[], contrast: ContrastLevel): ScaleEnt
     if (!base) return entry
 
     const l = base.l
-    let newL: number
-    let newC: number
-
     // Push extremes further apart, boost chroma
-    newL = l > 0.5 ? Math.min(0.99, l + (l - 0.5) * 0.35) : Math.max(0.01, l - (0.5 - l) * 0.35)
-    newC = Math.min((base.c ?? 0) * 1.25, 0.42)
+    const newL = l > 0.5 ? Math.min(0.99, l + (l - 0.5) * 0.35) : Math.max(0.01, l - (0.5 - l) * 0.35)
+    const newC = Math.min((base.c ?? 0) * 1.25, 0.42)
 
     return {
       ...entry,
@@ -91,7 +88,7 @@ export function useExport() {
   const { state } = useBrandState()
 
   function generateCssVars(): string {
-    const { schemes, contrastLevels, backgroundStyle } = state.value.themeMode
+    const { schemes, contrastLevels } = state.value.themeMode
     const lines: string[] = []
 
     // :root — default theme, standard contrast, light values

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { TresCanvas, type TresContext } from '@tresjs/core'
+  import { TresCanvas, type TresContext, type TresRendererSetupContext } from '@tresjs/core'
   import {
     ACESFilmicToneMapping,
     CineonToneMapping,
@@ -69,7 +69,7 @@
 
   // WebGPU renderer factory — TresJS v5 calls renderer.init() automatically
   // when the returned object has isRenderer === true (three/webgpu Renderer base class)
-  function webgpuRendererFactory({ canvas }: { canvas: any }) {
+  function webgpuRendererFactory({ canvas }: TresRendererSetupContext) {
     const r = new WebGPURenderer({
       canvas: unref(canvas),
       antialias,

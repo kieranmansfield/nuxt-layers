@@ -8,10 +8,9 @@ export function useTint(config: MaybeRefOrGetter<TintConfig>): {
 } {
   const style = computed((): CSSProperties => {
     const { color, shade = 500, level } = toValue(config)
-    let backgroundColor: string
+    let backgroundColor = `var(--ui-color-${color}-${shade})`
     if (color === 'white') backgroundColor = '#ffffff'
-    else if (color === 'black') backgroundColor = '#000000'
-    else backgroundColor = `var(--ui-color-${color}-${shade})`
+    if (color === 'black') backgroundColor = '#000000'
 
     const opacity = TINT_LEVEL_OPACITY[level] / 100
     return { backgroundColor, opacity }

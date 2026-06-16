@@ -6,7 +6,10 @@
     createThemeLavaLampColorNode,
     createThemePlasmaColorNode,
     createThemeWaveColorNode,
+    type AmbientUniforms,
+    type ThemeColorUniforms,
   } from '#layers/shader/app/composables/useAmbientMaterials'
+  import type { TSLNode } from '#layers/shader/app/types/tsl'
   import { Color, DoubleSide, Vector3 } from 'three'
   import { uniform } from 'three/tsl'
   import { MeshBasicNodeMaterial } from 'three/webgpu'
@@ -45,7 +48,7 @@
     }
   }
 
-  const NODE_CREATORS: Record<ThemeId, (u: any, c: any) => any> = {
+  const NODE_CREATORS: Record<ThemeId, (u: AmbientUniforms, c: ThemeColorUniforms) => TSLNode> = {
     mesh: createThemeGradientColorNode,
     wave: createThemeWaveColorNode,
     lavalamp: createThemeLavaLampColorNode,
@@ -133,7 +136,7 @@
 </script>
 
 <template>
-  <ShaderCanvas :webgpu="true" clear-color="#0a0a0a" :window-size="false" tone-mapping="aces">
+  <ShaderCanvas webgpu clear-color="#0a0a0a" :window-size="false" tone-mapping="aces">
     <TresOrthographicCamera :args="[-1, 1, 1, -1, 0.1, 100]" :position="[0, 0, 1]" />
     <TresMesh>
       <TresPlaneGeometry :args="[2, 2]" />

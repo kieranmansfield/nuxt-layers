@@ -94,9 +94,9 @@ export function useErrorLog() {
     const { externalUrl, externalToken } = config.value
 
     if (!externalUrl) {
-      process.env.NODE_ENV === 'development'
-        ? console.warn('Error logging enabled but no externalUrl configured')
-        : ''
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Error logging enabled but no externalUrl configured')
+      }
       return
     }
 
@@ -118,10 +118,8 @@ export function useErrorLog() {
       })
     } catch (loggingError) {
       // Don't let logging errors crash the app
-      if (import.meta.dev) {
-        process.env.NODE_ENV === 'development'
-          ? console.error('Failed to send error to external service:', loggingError)
-          : ''
+      if (import.meta.dev && process.env.NODE_ENV === 'development') {
+        console.error('Failed to send error to external service:', loggingError)
       }
     }
   }
@@ -130,8 +128,8 @@ export function useErrorLog() {
    * Log a warning (non-critical error)
    */
   const logWarning = (message: string, context?: ErrorContext) => {
-    if (config.value.logToConsole && import.meta.dev) {
-      process.env.NODE_ENV === 'development' ? console.warn('⚠️  Warning:', message, context) : ''
+    if (config.value.logToConsole && import.meta.dev && process.env.NODE_ENV === 'development') {
+      console.warn('⚠️  Warning:', message, context)
     }
   }
 
@@ -139,8 +137,8 @@ export function useErrorLog() {
    * Log info (for debugging)
    */
   const logInfo = (message: string, data?: unknown) => {
-    if (config.value.logToConsole && import.meta.dev) {
-      process.env.NODE_ENV === 'development' ? console.log('ℹ️  Info:', message, data) : ''
+    if (config.value.logToConsole && import.meta.dev && process.env.NODE_ENV === 'development') {
+      console.log('ℹ️  Info:', message, data)
     }
   }
 

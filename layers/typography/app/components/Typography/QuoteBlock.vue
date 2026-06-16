@@ -5,7 +5,10 @@
 
   defineOptions({ inheritAttrs: false })
 
-  const { color = undefined, size = undefined } = defineProps<{ color?: UiColors; size?: FontSize }>()
+  const { color = undefined, size = undefined } = defineProps<{
+    color?: UiColors
+    size?: FontSize
+  }>()
   const colorClass = useColor(color, 'text')
 </script>
 

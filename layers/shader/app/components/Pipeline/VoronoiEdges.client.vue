@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { float, mix, smoothstep, time, uniform, vec4 } from 'three/tsl'
 
   import { voronoi2D } from '../../shaders/common/noise'
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /** Voronoi cell edge lines only — the cell boundaries as thin lines. */
   const {
@@ -24,13 +25,8 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const colorANode = toVec3Node(colorA)
-  const colorBNode = toVec3Node(colorB)
+  const colorANode = hexToVec3Uniform(colorA)
+  const colorBNode = hexToVec3Uniform(colorB)
   const scaleNode = uniform(scale)
   const edgeNode = uniform(edgeWidth)
   const speedNode = uniform(speed)

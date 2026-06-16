@@ -1,6 +1,8 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { cos, float, mix, sin, uniform, vec4 } from 'three/tsl'
+
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorA = '#000000',
@@ -15,13 +17,8 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const colorANode = toVec3Node(colorA)
-  const colorBNode = toVec3Node(colorB)
+  const colorANode = hexToVec3Uniform(colorA)
+  const colorBNode = hexToVec3Uniform(colorB)
   const angleNode = uniform((angle * Math.PI) / 180)
   watch(
     () => colorA,

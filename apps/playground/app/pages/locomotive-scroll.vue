@@ -4,7 +4,7 @@
   setPageAccent('emerald')
   onUnmounted(() => setPageAccent(null))
 
-  const { scrollTo, scrollToTop, velocity, progress, direction, scrollY } = useSmoothScroll()
+  const { velocity, progress, direction, scrollY } = useSmoothScroll()
 
   // Derived state for display
   const isScrolling = computed(() => Math.abs(velocity.value) > 0.01)

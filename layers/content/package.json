@@ -10,7 +10,8 @@
     "dev:prepare": "nuxt prepare .playground",
     "build": "CONTENT_STANDALONE=true nuxi build",
     "generate": "CONTENT_STANDALONE=true nuxi generate",
-    "preview": "nuxt preview .playground"
+    "preview": "nuxt preview .playground",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@nuxt/content": "catalog:"

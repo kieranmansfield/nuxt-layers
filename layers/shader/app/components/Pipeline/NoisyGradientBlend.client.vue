@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { cos, float, mix, sin, smoothstep, time, uniform, vec2, vec4 } from 'three/tsl'
 
   import { simplexNoise2D } from '../../shaders/common/noise'
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
    * Self-contained Grainient/Shadertoy gradient pattern.
@@ -48,13 +49,8 @@
 
   const DEG2RAD = Math.PI / 180
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const colorANode = toVec3Node(colorA)
-  const colorBNode = toVec3Node(colorB)
+  const colorANode = hexToVec3Uniform(colorA)
+  const colorBNode = hexToVec3Uniform(colorB)
   const noiseScaleNode = uniform(noiseScale)
   const rotAmountNode = uniform(rotationAmount * DEG2RAD)
   const warpFreqNode = uniform(warpFrequency)

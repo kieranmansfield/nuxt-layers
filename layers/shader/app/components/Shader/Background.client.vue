@@ -13,7 +13,7 @@
     Scene,
     SRGBColorSpace,
   } from 'three'
-  import { WebGPURenderer } from 'three/webgpu'
+  import { MeshBasicNodeMaterial, WebGPURenderer } from 'three/webgpu'
 
   const {
     material = null,
@@ -25,7 +25,7 @@
     pointerEvents = 'none',
   } = defineProps<{
     /** The TSL node material to render */
-    material?: any
+    material?: MeshBasicNodeMaterial | null
     /** Background clear color */
     clearColor?: string
     /** Tone mapping algorithm */
@@ -41,13 +41,13 @@
   }>()
 
   const emit = defineEmits<{
-    ready: [renderer: any]
+    ready: [renderer: WebGPURenderer]
   }>()
 
   const canvasRef = useTemplateRef<HTMLCanvasElement>('canvasRef')
   const { width, height } = useWindowSize()
 
-  let renderer: any
+  let renderer: WebGPURenderer | undefined
   let scene: Scene
   let camera: PerspectiveCamera
   let planeMesh: Mesh

@@ -1,6 +1,8 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { mix, uniform, vec4 } from 'three/tsl'
+
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
    * Height-based exponential fog: exp2(-ray.y * density).
@@ -22,12 +24,7 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const fogColorNode = toVec3Node(fogColor)
+  const fogColorNode = hexToVec3Uniform(fogColor)
   const densityNode = uniform(density)
   const horizonBiasNode = uniform(horizonBias)
   watch(

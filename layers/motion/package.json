@@ -8,6 +8,7 @@
     "dev": "nuxi dev .playground",
     "dev:prepare": "nuxt prepare .playground",
     "build": "nuxt build .playground",
-    "preview": "nuxt preview .playground"
+    "preview": "nuxt preview .playground",
+    "lint": "eslint ."
   }
 }

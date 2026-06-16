@@ -28,13 +28,13 @@ colors:
     usage: Secondary accent
 typography:
   - name: Fraunces
-    weights: ["400", "700"]
+    weights: 400 700
     usage: Display & headings
   - name: Inter
-    weights: ["400", "500"]
+    weights: 400 500
     usage: Body
   - name: IBM Plex Mono
-    weights: ["400"]
+    weights: 400
     usage: Labels & data
 ---
 

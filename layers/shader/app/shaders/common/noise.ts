@@ -26,6 +26,7 @@ import {
   vec4,
 } from 'three/tsl'
 
+import type { FBMOptions } from '../../types/tsl'
 import type { TSLNode } from '../types'
 import {
   fade,
@@ -204,13 +205,7 @@ export function gradientNoise3D(p: TSLNode): TSLNode {
 // FBM (Fractal Brownian Motion)
 // ============================================
 
-export type FBMOptions = {
-  octaves?: number
-  lacunarity?: number
-  gain?: number
-  amplitude?: number
-  frequency?: number
-}
+export type { FBMOptions }
 
 /**
  * 2D Fractal Brownian Motion

@@ -1,6 +1,8 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { abs, float, mix, pow, sign, time, uniform, vec4 } from 'three/tsl'
+
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
    * Sinusoidal interpolation between a light and dark colour over time.
@@ -25,13 +27,8 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const lightNode = toVec3Node(colorLight)
-  const darkNode = toVec3Node(colorDark)
+  const lightNode = hexToVec3Uniform(colorLight)
+  const darkNode = hexToVec3Uniform(colorDark)
   const speedNode = uniform(speed)
   const opacityNode = uniform(opacity)
   watch(

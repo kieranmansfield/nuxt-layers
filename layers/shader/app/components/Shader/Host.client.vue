@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import type { Component } from 'vue'
+  import type { TSLNode } from '#layers/shader/app/types/tsl'
   import { tweenUniform } from '#layers/shader/app/utils/tsl/tween'
   import { DoubleSide } from 'three'
   import { mix as tslMix, uniform } from 'three/tsl'
@@ -8,7 +9,7 @@
   const {
     preset = null,
     transitionDuration = 1.0,
-    presetProps = () => ({}),
+    presetProps = {} as Record<string, unknown>,
     clearColor = '#000000',
     toneMapping = 'aces',
     fixed = true,
@@ -20,7 +21,7 @@
     /** Crossfade duration in seconds */
     transitionDuration?: number
     /** Props forwarded to the active preset component */
-    presetProps?: Record<string, any>
+    presetProps?: Record<string, unknown>
     /** ShaderBackground props */
     clearColor?: string
     toneMapping?: 'aces' | 'reinhard' | 'cineon' | 'linear'
@@ -51,15 +52,15 @@
   material.side = DoubleSide
 
   // Current and next graph nodes (set by preset via @node event)
-  let currentNode: any = null
-  let nextNode: any = null
+  let currentNode: TSLNode | null = null
+  let nextNode: TSLNode | null = null
 
-  function setCurrentNode(node: any) {
+  function setCurrentNode(node: TSLNode) {
     currentNode = node
     updateMaterialNode()
   }
 
-  function setNextNode(node: any) {
+  function setNextNode(node: TSLNode) {
     nextNode = node
     updateMaterialNode()
   }

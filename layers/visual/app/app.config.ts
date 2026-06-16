@@ -1,3 +1,6 @@
+import type { GradientConfig } from './types/gradient'
+import type { AccentSceneConfig } from './types/accent'
+
 export default defineAppConfig({
   uiLayer: {
     gradients: {
@@ -107,8 +110,8 @@ declare module '@nuxt/schema' {
   interface AppConfigInput {
     uiLayer?: {
       name?: string
-      gradients?: Record<string, import('./types/gradient').GradientConfig>
-      accentScenes?: Record<string, import('./types/accent').AccentSceneConfig>
+      gradients?: Record<string, GradientConfig>
+      accentScenes?: Record<string, AccentSceneConfig>
     }
   }
 }

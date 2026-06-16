@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import type { HarmonyType, ThemeVariant } from '~/composables/useBrandState'
+  import type { ThemeVariant } from '~/composables/useBrandState'
   import { computeHarmony } from '~/composables/useColourHarmony'
 
   const { state, addColour, updateColour, addTheme, removeTheme, updateTheme, setThemeColour } =

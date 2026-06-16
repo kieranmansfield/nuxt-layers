@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Color } from 'three'
   import { clamp, float, mix, time, uniform, vec2, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
+  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
    * Aurora borealis — layered animated colour bands across the upper screen.
@@ -32,13 +33,8 @@
     order?: number
   }>()
 
-  function toVec3Node(hex: string) {
-    const c = new Color(hex)
-    return uniform(new Vector3(c.r, c.g, c.b))
-  }
-
-  const colorANode = toVec3Node(colorA)
-  const colorBNode = toVec3Node(colorB)
+  const colorANode = hexToVec3Uniform(colorA)
+  const colorBNode = hexToVec3Uniform(colorB)
   const bandYNode = uniform(bandY)
   const bandHNode = uniform(bandHeight)
   const speedNode = uniform(speed)

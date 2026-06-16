@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import type { PageCollections } from '@nuxt/content'
+  import type { ContentSurroundLink } from '@nuxt/ui'
 
   const {
     collection,
@@ -16,6 +17,9 @@
   const { data: item, status } = await useCollectionItem(collection, slug)
   const { data: surround } = await useCollectionSurround(collection, slug)
 
+  const surroundLinks = computed(
+    () => (surround.value ?? undefined) as ContentSurroundLink[] | undefined
+  )
   const itemImage = computed(() => (item.value as { image?: string } | null)?.image)
 
   useSeoMeta({
@@ -47,7 +51,7 @@
         <slot name="after-content" :item />
 
         <USeparator class="my-8" />
-        <NuxtContentSurround :surround="surround as any" />
+        <NuxtContentSurround :surround="surroundLinks" />
       </UPageBody>
 
       <template v-if="!hideToc" #right>

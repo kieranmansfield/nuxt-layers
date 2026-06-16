@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import type { ScaleEntry } from '~/composables/useTailwindScale'
 
-  defineProps<{
+  const { name, scale, showOklch } = defineProps<{
     name: string
     scale: ScaleEntry[]
     showOklch?: boolean

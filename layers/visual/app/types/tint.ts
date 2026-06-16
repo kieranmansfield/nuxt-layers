@@ -1,3 +1,5 @@
+import type { ColorShade } from './gradient'
+
 export type TintLevel = 'subtle' | 'light' | 'medium' | 'strong' | 'heavy'
 export type TintColorSlot =
   | 'primary'
@@ -8,7 +10,6 @@ export type TintColorSlot =
   | 'error'
   | 'white'
   | 'black'
-export type ColorShade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950
 
 export const TINT_LEVEL_OPACITY: Record<TintLevel, number> = {
   subtle: 5,

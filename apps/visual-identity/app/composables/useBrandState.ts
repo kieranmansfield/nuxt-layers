@@ -157,8 +157,11 @@ function migrateState(raw: Record<string, unknown>): BrandState {
   // Old format: themeMode.mode = 'light-only' | 'dark-only' | 'both'
   if (s.themeMode && 'mode' in s.themeMode && !('schemes' in s.themeMode)) {
     const old: string = s.themeMode.mode
+    let schemes = ['light', 'dark']
+    if (old === 'light-only') schemes = ['light']
+    if (old === 'dark-only') schemes = ['dark']
     s.themeMode = {
-      schemes: old === 'light-only' ? ['light'] : old === 'dark-only' ? ['dark'] : ['light', 'dark'],
+      schemes,
       contrastLevels: ['standard'],
       backgroundStyle: s.themeMode.backgroundStyle ?? 'neutral',
     }
@@ -208,17 +211,17 @@ export function useBrandState() {
     const norm = hex.toLowerCase()
     if (state.value.colours.some((c) => c.hex.toLowerCase() === norm)) return
 
-    const role =
-      state.value.colours.length === 0 ? 'primary'
-      : state.value.colours.length === 1 ? 'secondary'
-      : state.value.colours.length === 2 ? 'accent'
-      : 'custom'
+    const len = state.value.colours.length
+    let role: BrandColour['role'] = 'custom'
+    if (len === 0) role = 'primary'
+    else if (len === 1) role = 'secondary'
+    else if (len === 2) role = 'accent'
 
     state.value.colours.push({
       id: crypto.randomUUID(),
       name: role.charAt(0).toUpperCase() + role.slice(1),
       hex,
-      role: role as BrandColour['role'],
+      role,
       harmonyType: null,
     })
   }
@@ -229,7 +232,8 @@ export function useBrandState() {
 
   function updateColour(id: string, patch: Partial<BrandColour>) {
     const idx = state.value.colours.findIndex((c) => c.id === id)
-    if (idx >= 0) Object.assign(state.value.colours[idx]!, patch)
+    const colour = state.value.colours[idx]
+    if (colour) Object.assign(colour, patch)
   }
 
   // ── Typography ───────────────────────────────────────────────────────
@@ -237,7 +241,8 @@ export function useBrandState() {
   function updateFontAxis(id: string, axis: keyof FontAxes, value: number) {
     const idx = state.value.typography.findIndex((f) => f.id === id)
     if (idx < 0) return
-    const font = state.value.typography[idx]!
+    const font = state.value.typography[idx]
+    if (!font) return
     state.value.typography[idx] = { ...font, axes: { ...font.axes, [axis]: value } }
   }
 
@@ -263,7 +268,8 @@ export function useBrandState() {
 
   function updateTheme(id: string, patch: Partial<Pick<ThemeVariant, 'name' | 'colourMappings'>>) {
     const idx = state.value.themes.findIndex((t) => t.id === id)
-    if (idx >= 0) Object.assign(state.value.themes[idx]!, patch)
+    const theme = state.value.themes[idx]
+    if (theme) Object.assign(theme, patch)
   }
 
   function setThemeColour(
