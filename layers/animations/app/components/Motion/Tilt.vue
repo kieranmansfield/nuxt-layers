@@ -11,8 +11,7 @@
     stiffness?: number
   }>()
 
-  // const el = ref<HTMLElement | null>(null)
-  const el = useTemplateRef<HTMLElement | null>(null)
+  const el = useTemplateRef<HTMLElement>('el')
   useTiltEffect(el, { maxTilt, perspective, damping, stiffness })
 </script>
 

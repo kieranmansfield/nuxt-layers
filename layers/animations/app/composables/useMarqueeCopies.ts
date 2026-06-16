@@ -1,7 +1,7 @@
-import type { MaybeRef } from 'vue'
+import type { MaybeRef, ShallowRef } from 'vue'
 
 export function useMarqueeCopies(
-  containerRefs: Ref<HTMLElement[]>,
+  containerRefs: Readonly<ShallowRef<HTMLElement[] | null>>,
   copyRefs: Ref<HTMLSpanElement[]>,
   rowCount: MaybeRef<number>
 ) {
@@ -14,7 +14,7 @@ export function useMarqueeCopies(
     const n = unref(rowCount)
     for (let i = 0; i < n; i++) {
       const copy = copyRefs.value[i]
-      const container = containerRefs.value[i]
+      const container = containerRefs.value?.[i]
       if (!copy || !container) continue
       const singleWidth = copy.offsetWidth
       if (singleWidth === 0) continue

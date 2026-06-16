@@ -35,8 +35,7 @@
   const { gsap, ScrollTrigger } = useGsap()
   const { velocityFactor } = useMarqueeVelocity({ damping, stiffness, velocityMapping })
 
-  // const containerRef = ref<HTMLElement[]>([])
-  const containerRef = useTemplateRef<HTMLElement[]>([])
+  const containerRef = useTemplateRef<HTMLElement[]>('containerRef')
 
   const copyRefs = ref<HTMLSpanElement[]>([])
 

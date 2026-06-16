@@ -52,11 +52,8 @@
   const { gsap } = useGsap()
   const { velocity: scrollVelocity, direction: scrollDirection } = useSmoothScroll()
 
-  // const containerRef = ref<HTMLElement | null>(null)
-  const containerRef = useTemplateRef<HTMLElement | null>(null)
-
-  // const contentRef = ref<HTMLElement | null>(null)
-  const contentRef = useTemplateRef<HTMLElement | null>(null)
+  const containerRef = useTemplateRef<HTMLElement>('containerRef')
+  const contentRef = useTemplateRef<HTMLElement>('contentRef')
 
   const tweenRef = ref<gsap.core.Tween | null>(null)
 

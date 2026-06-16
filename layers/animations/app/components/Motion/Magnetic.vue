@@ -11,8 +11,7 @@
     stiffness?: number
   }>()
 
-  // const el = ref<HTMLElement | null>(null)
-  const el = useTemplateRef<HTMLElement | null>(null)
+  const el = useTemplateRef<HTMLElement>('el')
   const { isActive } = useMagneticElement(el, { strength, radius, damping, stiffness })
 </script>
 
