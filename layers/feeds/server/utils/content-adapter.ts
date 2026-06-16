@@ -3,38 +3,77 @@ import type { H3Event } from 'h3'
 
 import type { FeedItem } from './types'
 
-type AnyContent = Record<string, unknown>
+type FeedSourceAuthor = {
+  name?: string | undefined
+}
+
+type FeedSourceItem = {
+  draft?: boolean | undefined
+  title?: string | undefined
+  description?: string | undefined
+  stem?: string | undefined
+  path?: string | undefined
+  _path?: string | undefined
+  date?: string | number | Date | undefined
+  createdAt?: string | number | Date | undefined
+  author?: FeedSourceAuthor | string | undefined
+  authors?: FeedSourceAuthor[] | undefined
+  tags?: string[] | undefined
+}
+
+type FeedCollectionQuery = {
+  all(): Promise<FeedSourceItem[]>
+}
+
+const getFeedCollection = queryCollection as unknown as (
+  event: H3Event,
+  collection: string
+) => FeedCollectionQuery
+
+function resolveFeedAuthor(item: FeedSourceItem): string | undefined {
+  const firstAuthor = item.authors?.[0]
+  if (typeof firstAuthor?.name === 'string' && firstAuthor.name.length > 0) {
+    return firstAuthor.name
+  }
+
+  if (typeof item.author === 'string' && item.author.length > 0) {
+    return item.author
+  }
+
+  if (item.author && typeof item.author === 'object' && typeof item.author.name === 'string') {
+    return item.author.name
+  }
+
+  return undefined
+}
+
+function resolveFeedDate(item: FeedSourceItem): Date {
+  return new Date(item.date ?? item.createdAt ?? Date.now())
+}
 
 export async function getContentFeedItems(
   event: H3Event,
   collection: string = 'blog',
   limit: number = 30
 ): Promise<FeedItem[]> {
-  // queryCollection's first argument is typed as a const collection name, but we pass
-  // a dynamic string at runtime — the cast is intentional and safe here.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const raw: AnyContent[] = await (queryCollection as any)(event, collection).all()
+  // queryCollection is keyed by literal collection names, but feed routes accept
+  // a runtime collection string; keep the unsafe bridge local here.
+  const raw = await getFeedCollection(event, collection).all()
 
   return raw
     .filter((item) => !item.draft)
-    .sort(
-      (a, b) =>
-        new Date(b.date ?? b.createdAt ?? 0).getTime() -
-        new Date(a.date ?? a.createdAt ?? 0).getTime()
-    )
+    .sort((a, b) => resolveFeedDate(b).getTime() - resolveFeedDate(a).getTime())
     .slice(0, limit)
-    .map((item) => {
-      const firstAuthor = Array.isArray(item.authors)
-        ? item.authors[0]?.name
-        : (item.author?.name ?? (typeof item.author === 'string' ? item.author : undefined))
+    .map((item): FeedItem => {
+      const link = item.path ?? item._path ?? ''
       return {
         title: item.title ?? item.stem ?? '',
         description: item.description,
-        link: item.path ?? item._path ?? '',
-        id: item.path ?? item._path ?? '',
-        date: new Date(item.date ?? item.createdAt ?? Date.now()),
-        author: firstAuthor ?? undefined,
-        tags: Array.isArray(item.tags) ? item.tags : undefined,
+        link,
+        id: link,
+        date: resolveFeedDate(item),
+        author: resolveFeedAuthor(item),
+        tags: item.tags,
       }
     })
 }

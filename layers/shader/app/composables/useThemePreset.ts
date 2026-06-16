@@ -51,8 +51,8 @@ export function useThemePreset(
     watch(
       () => [runtime.mouse.mouseX.value, runtime.mouse.mouseY.value],
       ([mx, my]) => {
-        uniforms.mouseX.value = mx
-        uniforms.mouseY.value = my
+        uniforms.mouseX.value = mx ?? 0.5
+        uniforms.mouseY.value = my ?? 0.5
       },
       { immediate: true }
     )

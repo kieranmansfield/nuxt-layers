@@ -99,7 +99,7 @@
     directionFactors.value = new Array(texts.length).fill(1)
     animLastTime = performance.now()
 
-    const firstContainer = containerRef.value[0]
+    const firstContainer = containerRef.value?.[0]
     if (firstContainer) {
       scrollTriggerInstance = ScrollTrigger.create({
         trigger: firstContainer,

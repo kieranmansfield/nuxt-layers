@@ -15,10 +15,7 @@ export function useRendererCapabilities() {
   const isReady = ref(false)
 
   function detectFromRenderer(renderer: WebGPURenderer | WebGLRenderer) {
-    const isWebGPU = renderer.constructor?.name === 'WebGPURenderer'
-    const glCaps = renderer.capabilities
-
-    if (isWebGPU || !glCaps) {
+    if (!('capabilities' in renderer)) {
       capabilities.value = {
         backend: 'webgpu',
         maxTextureSize: 16384,
@@ -34,6 +31,8 @@ export function useRendererCapabilities() {
       isReady.value = true
       return
     }
+
+    const glCaps = renderer.capabilities
 
     capabilities.value = {
       backend: 'webgl',

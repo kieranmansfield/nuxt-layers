@@ -12,6 +12,7 @@
     ReinhardToneMapping,
     Scene,
     SRGBColorSpace,
+    type ToneMapping,
   } from 'three'
   import { MeshBasicNodeMaterial, WebGPURenderer } from 'three/webgpu'
 
@@ -56,7 +57,7 @@
   let initStarted = false
   let disposed = false
 
-  const toneMappingMap: Record<string, number> = {
+  const toneMappingMap: Record<'aces' | 'reinhard' | 'cineon' | 'linear', ToneMapping> = {
     aces: ACESFilmicToneMapping,
     reinhard: ReinhardToneMapping,
     cineon: CineonToneMapping,
@@ -175,7 +176,7 @@
   )
 
   watch([width, height], ([w, h]) => {
-    if (!initialized) return
+    if (!initialized || !renderer) return
     camera.aspect = w / (h || 1)
     camera.updateProjectionMatrix()
     renderer.setSize(w, h)

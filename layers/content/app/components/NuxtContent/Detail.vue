@@ -17,8 +17,8 @@
   const { data: item, status } = await useCollectionItem(collection, slug)
   const { data: surround } = await useCollectionSurround(collection, slug)
 
-  const surroundLinks = computed(
-    () => (surround.value ?? undefined) as ContentSurroundLink[] | undefined
+  const surroundLinks = computed<ContentSurroundLink[] | undefined>(
+    () => surround.value ?? undefined
   )
   const itemImage = computed(() => (item.value as { image?: string } | null)?.image)
 
@@ -51,7 +51,7 @@
         <slot name="after-content" :item />
 
         <USeparator class="my-8" />
-        <NuxtContentSurround :surround="surroundLinks" />
+        <NuxtContentSurround v-bind="surroundLinks?.length ? { surround: surroundLinks } : {}" />
       </UPageBody>
 
       <template v-if="!hideToc" #right>

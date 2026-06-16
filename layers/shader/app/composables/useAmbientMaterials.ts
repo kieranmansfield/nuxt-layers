@@ -28,7 +28,7 @@ import {
   voronoi2D,
 } from '../shaders/common/noise'
 import { cosinePalette } from '../shaders/common/palette'
-import type { FloatUniform, TSLNode, Vec3Uniform } from '../shaders/types'
+import type { ColorUniform, FloatUniform, TSLNode, Vec3Uniform } from '../shaders/types'
 
 // ============================================
 // Private helpers
@@ -368,10 +368,10 @@ export function createGradientMeshColorNode(uniforms: AmbientUniforms): TSLNode 
 }
 
 export type ThemeColorUniforms = {
-  color1: Vec3Uniform
-  color2: Vec3Uniform
-  color3: Vec3Uniform
-  color4: Vec3Uniform
+  color1: ColorUniform | Vec3Uniform
+  color2: ColorUniform | Vec3Uniform
+  color3: ColorUniform | Vec3Uniform
+  color4: ColorUniform | Vec3Uniform
 }
 
 export function createThemeGradientColorNode(
@@ -448,10 +448,10 @@ export function createThemeGradientColorNode(
       add(0.7, mul(nm4, 0.3))
     )
 
-    let colorNode = mul(colors.color1, d1)
-    colorNode = add(colorNode, mul(colors.color2, d2))
-    colorNode = add(colorNode, mul(colors.color3, d3))
-    colorNode = add(colorNode, mul(colors.color4, d4))
+    let colorNode = mul(colors.color1.rgb, d1)
+    colorNode = add(colorNode, mul(colors.color2.rgb, d2))
+    colorNode = add(colorNode, mul(colors.color3.rgb, d3))
+    colorNode = add(colorNode, mul(colors.color4.rgb, d4))
 
     // Normalise first, then vignette, then intensity
     const totalWeight = add(d1, d2, d3, d4, 0.01)
@@ -555,8 +555,8 @@ export function createThemeAuroraColorNode(
     const colorDriver = add(mul(curtain2, 0.6), mul(curtain3, 0.4))
     const auroraColor = mix(colors.color1, colors.color2, colorDriver)
 
-    const skyColor = mul(colors.color1, 0.04)
-    const shimmerColor = mul(colors.color3, mul(shimmer, mul(aurora, 0.15)))
+    const skyColor = mul(colors.color1.rgb, 0.04)
+    const shimmerColor = mul(colors.color3.rgb, mul(shimmer, mul(aurora, 0.15)))
 
     return add(mix(skyColor, auroraColor, aurora), shimmerColor)
   })()
@@ -667,10 +667,10 @@ export function createThemeLavaLampColorNode(
 
     // Weighted colour blend
     const colorNode = add(
-      mul(colors.color1, w1),
-      mul(colors.color2, w2),
-      mul(colors.color3, w3),
-      mul(colors.color4, w4)
+      mul(colors.color1.rgb, w1),
+      mul(colors.color2.rgb, w2),
+      mul(colors.color3.rgb, w3),
+      mul(colors.color4.rgb, w4)
     ).div(wTotal.add(0.001))
 
     // Darken space between blobs
