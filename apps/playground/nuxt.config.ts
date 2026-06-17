@@ -244,6 +244,7 @@ export default defineNuxtConfig({
   modules: [
     '@netlify/nuxt',
     '@nuxt/ui',
+    '@nuxt/test-utils/module',
     '@vueuse/nuxt',
     '@nuxtjs/device',
     '@nuxt/content',

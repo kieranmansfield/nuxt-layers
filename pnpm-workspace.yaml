@@ -167,6 +167,7 @@ catalog:
   estree-walker: 2.0.2
   extend: 3.0.2
   fallow: ^2.92.1
+  happy-dom: ^20.10.3
   feed: ^5.2.1
   flat: 6.0.1
   github-slugger: 2.0.0
@@ -250,6 +251,7 @@ catalog:
   node-gyp: ^12.3.0
   npm-check-updates: ^22.2.2
   nuxt: ^4.4.7
+  '@nuxt/test-utils': ^4.0.3
   oniguruma-parser: 0.12.2
   oniguruma-to-es: 4.3.6
   parse-entities: 4.0.2
@@ -258,7 +260,7 @@ catalog:
   peberminta: 0.9.0
   perfect-debounce: 2.1.0
   pinia: ^3.0.4
-  playwright: ^1.60.0
+  '@vitejs/plugin-vue': ^6.0.7
   pnpm: 11.5.3
   postcss-html: ^1.8.1
   prerender-buildhooks: https://6abe5a43-4668-4f72-b3f7-823e2d8bbbbf.netlify.app/packages/buildhooks.tgz
@@ -331,6 +333,7 @@ catalog:
   vite-plugin-checker: ^0.14.1
   vitest: ^4.1.8
   vue: ^3.5.35
+  '@vue/test-utils': ^2.4.10
   vue-bundle-renderer: 2.2.0
   vue-router: ^5.1.0
   vue-tsc: 3.3.3
