@@ -1,8 +1,7 @@
 import { fileURLToPath } from 'node:url'
-
-import vue from '@vitejs/plugin-vue'
-import { defineVitestProject } from '@nuxt/test-utils/config'
 import { toRaw } from 'vue'
+import { defineVitestProject } from '@nuxt/test-utils/config'
+import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vitest/config'
 
 const nuxtRootDir = fileURLToPath(new URL('./apps/playground', import.meta.url))
@@ -107,7 +106,9 @@ async function withStructuredCloneFallback<T>(callback: () => Promise<T>): Promi
         .flat(Infinity)
         .filter(
           (plugin): plugin is { name: string } =>
-            Boolean(plugin) && typeof plugin === 'object' && typeof (plugin as { name?: unknown }).name === 'string'
+            Boolean(plugin) &&
+            typeof plugin === 'object' &&
+            typeof (plugin as { name?: unknown }).name === 'string'
         )
     }
 
@@ -137,14 +138,14 @@ export default defineConfig({
       },
       await withStructuredCloneFallback(() =>
         defineVitestProject({
-        test: {
-          name: 'nuxt',
-          include: ['tests/nuxt/**/*.{test,spec}.ts'],
-          hookTimeout: 30000,
-          environmentOptions: {
-            nuxt: {
-              rootDir: nuxtRootDir,
-              domEnvironment: 'happy-dom',
+          test: {
+            name: 'nuxt',
+            include: ['tests/nuxt/**/*.{test,spec}.ts'],
+            hookTimeout: 30000,
+            environmentOptions: {
+              nuxt: {
+                rootDir: nuxtRootDir,
+                domEnvironment: 'happy-dom',
               },
             },
           },

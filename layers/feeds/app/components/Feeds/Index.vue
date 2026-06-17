@@ -26,7 +26,7 @@
         class="absolute -left-20 bottom-0 h-80 w-80 rounded-full bg-sky-400/12 blur-3xl dark:bg-sky-500/10"
       />
       <div
-        class="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-orange-400/35 to-transparent"
+        class="absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-orange-400/35 to-transparent"
       />
     </div>
 
