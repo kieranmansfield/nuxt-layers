@@ -1,3 +1,5 @@
+import type { PageCollections } from '@nuxt/content'
+
 export default defineAppConfig({
   feedsLayer: {
     feed: {
@@ -14,9 +16,9 @@ declare module '@nuxt/schema' {
       feed?: {
         limit?: number
         /** Collection names to expose as feeds. Default: ['blog'] */
-        collections?: string[]
+        collections?: Array<keyof PageCollections>
         /** Collection used by the shorthand /feed/rss routes. Default: 'blog' */
-        defaultCollection?: string
+        defaultCollection?: keyof PageCollections
       }
     }
   }

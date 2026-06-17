@@ -5,6 +5,13 @@ export default defineAppConfig({
     url: 'https://nuxtlayers.netlify.app/',
     author: { name: 'Kieran Mansfield' },
   },
+  feedsLayer: {
+    feed: {
+      limit: 30,
+      collections: ['blog', 'portfolio', 'gallery'],
+      defaultCollection: 'blog',
+    },
+  },
   mastNav: {
     scrollBehaviour: 'router',
     links: [

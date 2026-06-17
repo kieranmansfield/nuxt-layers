@@ -17,6 +17,7 @@
     "feed": "catalog:"
   },
   "devDependencies": {
+    "@nuxt/content": "catalog:",
     "nuxt": "catalog:",
     "vue": "catalog:conflicts_conflicts_vue_latest_h3_5_35",
     "vue-router": "catalog:"

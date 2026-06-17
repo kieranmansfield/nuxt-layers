@@ -570,7 +570,7 @@
             <!-- Navigation -->
             <div class="flex gap-4 justify-center pt-4">
               <UButton to="/" variant="outline" icon="i-lucide-arrow-left">Back to Home</UButton>
-              <UButton to="/feeds" trailing-icon="i-lucide-arrow-right">Feeds Layer Demo</UButton>
+              <UButton to="/feeds" trailing-icon="i-lucide-arrow-right">Feeds</UButton>
             </div>
           </div>
         </div>

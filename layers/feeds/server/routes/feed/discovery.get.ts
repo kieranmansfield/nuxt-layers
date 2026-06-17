@@ -1,28 +1,30 @@
+import contentManifest from '#content/manifest'
+
+import { createFeedCatalog } from '../../../app/utils/feed-catalog'
+
 export default defineEventHandler((event) => {
   const appConfig = useAppConfig()
-  const feedConfig = appConfig.feedsLayer?.feed ?? {}
-  const collections: string[] = feedConfig.collections ?? ['blog']
 
   const requestUrl = getRequestURL(event)
   // Always use the request origin so discovery URLs are reachable from wherever
   // the request came from, not the configured canonical site URL.
   const baseUrl = `${requestUrl.protocol}//${requestUrl.host}`
 
+  const catalog = createFeedCatalog({
+    site: appConfig.site,
+    feed: appConfig.feedsLayer?.feed,
+    manifest: contentManifest,
+  })
+
   setHeader(event, 'Cache-Control', 'public, max-age=300, s-maxage=3600')
 
-  const formats = [
-    { format: 'RSS 2.0', ext: 'rss', contentType: 'application/rss+xml' },
-    { format: 'Atom 1.0', ext: 'atom', contentType: 'application/atom+xml' },
-    { format: 'JSON Feed 1.1', ext: 'json', contentType: 'application/feed+json' },
-  ]
-
   return {
-    feeds: collections.flatMap((collection) =>
-      formats.map(({ format, ext, contentType }) => ({
-        collection,
-        format,
-        url: `${baseUrl}/feed/${collection}/${ext}`,
-        contentType,
+    feeds: catalog.collectionGroups.flatMap((group) =>
+      group.routes.map((route) => ({
+        collection: group.collection,
+        format: route.label,
+        url: `${baseUrl}${route.path}`,
+        contentType: route.contentType ?? 'application/octet-stream',
       }))
     ),
   }
