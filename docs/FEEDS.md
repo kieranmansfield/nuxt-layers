@@ -106,7 +106,6 @@ Plus site-wide shorthand and index routes:
 |-----|---------|
 | `/feed/rss`, `/feed/atom`, `/feed/json` | Shorthand → serves `defaultCollection` |
 | `/feed` | JSON index of all configured feeds |
-| `/feed/discovery` | Machine-readable feed discovery document |
 | `/feed/style.xsl` | Browser stylesheet (applied automatically) |
 
 Opening any feed URL in a browser shows a styled page thanks to the XSLT stylesheet — no app work required.
@@ -115,7 +114,7 @@ Opening any feed URL in a browser shows a styled page thanks to the XSLT stylesh
 
 ## Step 4 — Prerender collection routes (required for static / Netlify)
 
-Feed routes are **server routes**. The prerender crawler can't discover `/feed/:collection/*` because nothing links to them with an `<a href>`. The feeds layer already prerenders the **shorthand** routes (`/feed`, `/feed/rss`, `/feed/atom`, `/feed/json`, `/feed/style.xsl`, `/feed/discovery`). You must list the **collection-specific** routes in your app's `nuxt.config.ts` — one trio per collection in `feedsLayer.feed.collections`:
+Feed routes are **server routes**. The prerender crawler can't discover `/feed/:collection/*` because nothing links to them with an `<a href>`. The feeds layer already prerenders the **shorthand** routes (`/feed`, `/feed/rss`, `/feed/atom`, `/feed/json`, `/feed/style.xsl`). You must list the **collection-specific** routes in your app's `nuxt.config.ts` — one trio per collection in `feedsLayer.feed.collections`:
 
 ```ts
 // nuxt.config.ts

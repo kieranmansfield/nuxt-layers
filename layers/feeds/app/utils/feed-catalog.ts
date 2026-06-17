@@ -27,7 +27,7 @@ export type FeedCatalogInput = {
 }
 
 export type FeedRoute = {
-  kind: 'index' | 'discovery' | 'format'
+  kind: 'index' | 'format'
   label: string
   path: string
   format?: FeedFormatKey
@@ -117,7 +117,6 @@ function resolveFeedState(
 function resolveSiteRoutes(): FeedRoute[] {
   return [
     { kind: 'index', label: 'Feed index', path: '/feed' },
-    { kind: 'discovery', label: 'Discovery index', path: '/feed/discovery' },
     ...FEED_FORMATS.map(
       (format) =>
         ({
@@ -133,9 +132,11 @@ function resolveSiteRoutes(): FeedRoute[] {
 
 function resolveCollectionGroups(
   collections: string[],
-  availableCollections: string[]
+  availableCollections: string[],
+  defaultCollection: string
 ): FeedCollectionGroup[] {
   return collections
+    .filter((collection) => collection !== defaultCollection)
     .filter((collection) => availableCollections.includes(collection))
     .map((collection) => ({
       collection,
@@ -174,6 +175,10 @@ export function createFeedCatalog(input: FeedCatalogInput = {}): FeedCatalog {
     },
     feed,
     siteRoutes: resolveSiteRoutes(),
-    collectionGroups: resolveCollectionGroups(feed.collections, availableCollections),
+    collectionGroups: resolveCollectionGroups(
+      feed.collections,
+      availableCollections,
+      feed.defaultCollection
+    ),
   }
 }

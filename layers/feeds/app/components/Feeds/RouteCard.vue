@@ -7,7 +7,7 @@
   }>()
 
   const routeThemes: Record<
-    'index' | 'discovery' | 'rss' | 'atom' | 'json',
+    'index' | 'rss' | 'atom' | 'json',
     {
       strip: string
       dot: string
@@ -16,10 +16,6 @@
     index: {
       strip: 'bg-slate-400',
       dot: 'bg-slate-500',
-    },
-    discovery: {
-      strip: 'bg-sky-400',
-      dot: 'bg-sky-500',
     },
     rss: {
       strip: 'bg-orange-400',
@@ -42,10 +38,6 @@
   function getRouteDescription() {
     if (route.kind === 'index') {
       return 'Human landing page for the feed catalog.'
-    }
-
-    if (route.kind === 'discovery') {
-      return 'JSON manifest of every exposed collection feed.'
     }
 
     return route.contentType ?? 'Reader-friendly syndicated feed.'

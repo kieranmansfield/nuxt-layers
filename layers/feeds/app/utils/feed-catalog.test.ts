@@ -32,17 +32,20 @@ describe('createFeedCatalog', () => {
     expect(catalog.feed.missingCollections).toEqual([])
     expect(catalog.siteRoutes.map((route) => route.path)).toEqual([
       '/feed',
-      '/feed/discovery',
       '/feed/rss',
       '/feed/atom',
       '/feed/json',
     ])
-    expect(catalog.collectionGroups).toHaveLength(3)
-    expect(catalog.collectionGroups[1]).toMatchObject({
+    expect(catalog.collectionGroups).toHaveLength(2)
+    expect(catalog.collectionGroups.map((group) => group.collection)).toEqual([
+      'portfolio',
+      'gallery',
+    ])
+    expect(catalog.collectionGroups[0]).toMatchObject({
       collection: 'portfolio',
       label: 'Portfolio',
     })
-    expect(catalog.collectionGroups[1]?.routes.map((route) => route.path)).toEqual([
+    expect(catalog.collectionGroups[0]?.routes.map((route) => route.path)).toEqual([
       '/feed/portfolio/rss',
       '/feed/portfolio/atom',
       '/feed/portfolio/json',

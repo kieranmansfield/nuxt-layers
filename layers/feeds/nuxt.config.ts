@@ -19,7 +19,6 @@ export default defineNuxtConfig({
       // Collection-specific routes (/feed/blog/rss etc.) must be added to
       // nitro.prerender.routes in the consuming app's nuxt.config.ts.
       routes: [
-        '/feed/discovery',
         '/feed/demo',
         '/feed/rss',
         '/feed/atom',
