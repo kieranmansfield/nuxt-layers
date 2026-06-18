@@ -32,6 +32,11 @@
    * </BaseGridItem>
    */
 
+  import {
+    buildGridPlacementClasses,
+    buildGridPlacementStyle,
+  } from '#layers/layout/app/utils/gridPlacementStyle'
+
   type ColSpanValue = number | 'full'
   type Alignment = 'start' | 'center' | 'end' | 'stretch'
   type LayerName = 'back' | 'mid' | 'front' | 'top'
@@ -100,152 +105,30 @@
   const gap = computed(() => gapProp ?? presetConfig.value?.gap)
   const density = computed(() => densityProp ?? presetConfig.value?.density)
 
-  const layerZIndex: Record<LayerName, number> = {
-    back: 0,
-    mid: 10,
-    front: 20,
-    top: 30,
-  }
+  const style = computed(() =>
+    buildGridPlacementStyle({
+      colStart: colStart.value,
+      colSpan: colSpan.value as ColSpanValue | ResponsiveValue<number> | undefined,
+      rowStart: rowStart.value,
+      rowSpan: rowSpan.value,
+      align: align.value,
+      justify: justify.value,
+      container: container.value,
+      gap: gap.value,
+      density: density.value,
+      z,
+      layer,
+      bleed,
+      aspect,
+    })
+  )
 
-  const aspectClasses: Record<AspectRatio, string> = {
-    '1/1': 'aspect-square',
-    '4/3': 'aspect-[4/3]',
-    '3/4': 'aspect-[3/4]',
-    '16/9': 'aspect-video',
-    '9/16': 'aspect-[9/16]',
-    '2/1': 'aspect-[2/1]',
-    '1/2': 'aspect-[1/2]',
-  }
-
-  const getDefaultValue = <T,>(value: T | ResponsiveValue<T> | undefined, defaultVal: T): T => {
-    if (value === undefined) return defaultVal
-    if (typeof value === 'object' && value !== null && 'default' in value) {
-      return value.default
-    }
-    return value as T
-  }
-
-  const getResponsiveValue = <T,>(
-    value: T | ResponsiveValue<T> | undefined,
-    breakpoint: 'md' | 'lg'
-  ): T | undefined => {
-    if (value === undefined) return undefined
-    if (typeof value === 'object' && value !== null && 'default' in value) {
-      return value[breakpoint]
-    }
-    return undefined
-  }
-
-  const style = computed(() => {
-    const styles: Record<string, string> = {}
-
-    const colStartVal = getDefaultValue(colStart.value, undefined)
-    const colSpanVal = getDefaultValue(
-      colSpan.value as ColSpanValue | ResponsiveValue<number> | undefined,
-      'full' as ColSpanValue
-    )
-    const rowStartVal = getDefaultValue(rowStart.value, undefined)
-    const rowSpanVal = getDefaultValue(rowSpan.value, 1)
-
-    if (bleed) {
-      if (bleed === 'both') {
-        styles.gridColumn = '1 / -1'
-        styles.marginInline = 'calc(-1 * var(--grid-padding))'
-      } else if (bleed === 'left') {
-        const spanNum = typeof colSpanVal === 'number' ? colSpanVal : undefined
-        styles.gridColumn = spanNum ? `1 / span ${spanNum}` : '1 / -1'
-        styles.marginInlineStart = 'calc(-1 * var(--grid-padding))'
-      } else if (bleed === 'right') {
-        styles.gridColumn = `${colStartVal ?? 'auto'} / -1`
-        styles.marginInlineEnd = 'calc(-1 * var(--grid-padding))'
-      }
-      styles.gridRow = `${rowStartVal ?? 'auto'} / span ${rowSpanVal}`
-    } else if (colSpanVal === 'full') {
-      // 'full' span: use inline gridColumn directly (no CSS var approach needed)
-      styles.gridColumn = `${colStartVal ?? 1} / -1`
-      // Still set row vars for responsive row support
-      styles['--_rs'] = String(rowStartVal ?? 'auto')
-      styles['--_re'] = String(rowSpanVal)
-
-      const mdRowStart = getResponsiveValue(rowStart.value, 'md')
-      const lgRowStart = getResponsiveValue(rowStart.value, 'lg')
-      const mdRowSpan = getResponsiveValue(rowSpan.value, 'md')
-      const lgRowSpan = getResponsiveValue(rowSpan.value, 'lg')
-
-      if (mdRowStart !== undefined) styles['--_md-rs'] = String(mdRowStart)
-      if (lgRowStart !== undefined) styles['--_lg-rs'] = String(lgRowStart)
-      if (mdRowSpan !== undefined) styles['--_md-re'] = String(mdRowSpan)
-      if (lgRowSpan !== undefined) styles['--_lg-re'] = String(lgRowSpan)
-    } else {
-      // Set CSS custom properties instead of grid-column/grid-row directly.
-      // The <style> block below reads these vars and applies them at each breakpoint,
-      // which correctly cascades without inline-style specificity conflicts.
-      styles['--_cs'] = String(colStartVal ?? 'auto')
-      styles['--_ce'] = String(colSpanVal)
-      styles['--_rs'] = String(rowStartVal ?? 'auto')
-      styles['--_re'] = String(rowSpanVal)
-
-      const mdColStart = getResponsiveValue(colStart.value, 'md')
-      const lgColStart = getResponsiveValue(colStart.value, 'lg')
-      const mdColSpan = getResponsiveValue(
-        colSpan.value as ResponsiveValue<number> | undefined,
-        'md'
-      )
-      const lgColSpan = getResponsiveValue(
-        colSpan.value as ResponsiveValue<number> | undefined,
-        'lg'
-      )
-      const mdRowStart = getResponsiveValue(rowStart.value, 'md')
-      const lgRowStart = getResponsiveValue(rowStart.value, 'lg')
-      const mdRowSpan = getResponsiveValue(rowSpan.value, 'md')
-      const lgRowSpan = getResponsiveValue(rowSpan.value, 'lg')
-
-      if (mdColStart !== undefined) styles['--_md-cs'] = String(mdColStart)
-      if (lgColStart !== undefined) styles['--_lg-cs'] = String(lgColStart)
-      if (mdColSpan !== undefined) styles['--_md-ce'] = String(mdColSpan)
-      if (lgColSpan !== undefined) styles['--_lg-ce'] = String(lgColSpan)
-      if (mdRowStart !== undefined) styles['--_md-rs'] = String(mdRowStart)
-      if (lgRowStart !== undefined) styles['--_lg-rs'] = String(lgRowStart)
-      if (mdRowSpan !== undefined) styles['--_md-re'] = String(mdRowSpan)
-      if (lgRowSpan !== undefined) styles['--_lg-re'] = String(lgRowSpan)
-    }
-
-    // Content alignment
-    if (align.value || justify.value) {
-      styles.display = 'grid'
-      styles.width = '100%'
-      styles.height = '100%'
-      styles.placeItems = `${align.value ?? 'stretch'} ${justify.value ?? 'stretch'}`
-    }
-
-    // Gap override — cascades to nested content via --grid-gap
-    if (gap.value) styles['--grid-gap'] = gap.value
-
-    // Density — sets --rhythm base unit for child spacing utilities
-    if (density.value) {
-      const rhythmMap: Record<Density, string> = {
-        compact: '0.125rem',
-        normal: '0.25rem',
-        relaxed: '0.5rem',
-      }
-      styles['--rhythm'] = rhythmMap[density.value]
-    }
-
-    // Z-index
-    const zIndex = z ?? (layer ? layerZIndex[layer] : undefined)
-    if (zIndex !== undefined) styles.zIndex = String(zIndex)
-
-    return styles
-  })
-
-  const classes = computed(() => {
-    const classList: string[] = ['gi-placed', '@container', '@container/item']
-
-    if (aspect) classList.push(aspectClasses[aspect])
-    if (container.value) classList.push(`layout-container-${container.value}`)
-
-    return classList.join(' ')
-  })
+  const classes = computed(() =>
+    buildGridPlacementClasses({
+      aspect,
+      container: container.value,
+    })
+  )
 </script>
 
 <template>

@@ -5,6 +5,7 @@
 
   import type { TSLNode } from '../../shaders/types'
   import { fbm, simplexNoise2D } from '../../utils/tsl/noise'
+  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
 
   const {
     scale = 3,
@@ -45,49 +46,14 @@
   const baseColorUniform: TSLNode = uniform(new Color(baseColor))
   const peakColorUniform: TSLNode = uniform(new Color(peakColor))
 
-  // Watch prop changes
-  watch(
-    () => scale,
-    (val) => {
-      scaleUniform.value = val
-    }
-  )
-  watch(
-    () => speed,
-    (val) => {
-      speedUniform.value = val
-    }
-  )
-  watch(
-    () => mouseX,
-    (val) => {
-      mouseXUniform.value = val
-    }
-  )
-  watch(
-    () => mouseY,
-    (val) => {
-      mouseYUniform.value = val
-    }
-  )
-  watch(
-    () => mouseStrength,
-    (val) => {
-      mouseStrengthUniform.value = val
-    }
-  )
-  watch(
-    () => baseColor,
-    (val) => {
-      baseColorUniform.value = new Color(val)
-    }
-  )
-  watch(
-    () => peakColor,
-    (val) => {
-      peakColorUniform.value = new Color(val)
-    }
-  )
+  // fallow-ignore-next-line code-duplication
+  watchUniformProp(() => scale, scaleUniform)
+  watchUniformProp(() => speed, speedUniform)
+  watchUniformProp(() => mouseX, mouseXUniform)
+  watchUniformProp(() => mouseY, mouseYUniform)
+  watchUniformProp(() => mouseStrength, mouseStrengthUniform)
+  watchUniformProp(() => baseColor, baseColorUniform, (val) => new Color(val))
+  watchUniformProp(() => peakColor, peakColorUniform, (val) => new Color(val))
 
   const material = computed(() => {
     const mat = new MeshBasicNodeMaterial()

@@ -24,13 +24,9 @@ function normalizeAxis(
 ) {
   const { prefix = '', fallback = '', numericFormatter } = options
 
-  if (typeof value === 'number') {
-    if (numericFormatter) return numericFormatter(value)
-    if (prefix) return `${prefix}-[${value}]`
-    return `[${value}]`
-  }
-
-  return value ?? fallback
+  return typeof value === 'number'
+    ? numericFormatter?.(value) ?? (prefix ? `${prefix}-[${value}]` : `[${value}]`)
+    : value ?? fallback
 }
 
 function getSizeClass(size: FontSize | undefined): string {

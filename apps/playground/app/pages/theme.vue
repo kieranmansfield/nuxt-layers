@@ -1,19 +1,10 @@
 <script setup lang="ts">
-  const {
-    activeAccent,
-    contrastOverride,
-    motionOverride,
-    transparencyOverride,
-    setContrastOverride,
-    setMotionOverride,
-    setTransparencyOverride,
-    effectiveHighContrast,
-    effectiveReducedMotion,
-    effectiveReducedTransparency,
-    systemContrast,
-    systemMotion,
-    systemTransparency,
-  } = useTheme()
+  import { useThemePreferenceModels } from '#layers/theme/app/composables/useThemePreferenceModels'
+
+  const { activeAccent, contrastOverride, motionOverride, transparencyOverride, contrastModel, motionModel, transparencyModel } =
+    useThemePreferenceModels()
+
+  const { systemContrast, systemMotion, systemTransparency } = useTheme()
 
   // Media query support detection (onMounted to avoid SSR window access)
   const contrastSupported = ref(false)
@@ -26,22 +17,6 @@
       window.matchMedia('(prefers-reduced-motion: reduce)').media !== 'not all'
     transparencySupported.value =
       window.matchMedia('(prefers-reduced-transparency: reduce)').media !== 'not all'
-  })
-
-  // Toggle models — match ThemePicker/Menu.vue pattern
-  const contrastModel = computed({
-    get: () => effectiveHighContrast.value,
-    set: (val: boolean) => setContrastOverride(val ? 'on' : 'system'),
-  })
-
-  const motionModel = computed({
-    get: () => effectiveReducedMotion.value,
-    set: (val: boolean) => setMotionOverride(val ? 'on' : 'system'),
-  })
-
-  const transparencyModel = computed({
-    get: () => effectiveReducedTransparency.value,
-    set: (val: boolean) => setTransparencyOverride(val ? 'on' : 'system'),
   })
 
   const COLOR_SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const

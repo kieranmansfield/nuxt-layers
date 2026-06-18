@@ -17,6 +17,7 @@
 
   import type { TSLNode } from '../../types'
   import { simplexNoise2D } from '../../utils/tsl/noise'
+  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
 
   const {
     src,
@@ -76,61 +77,15 @@
   const rgbShiftUniform = uniform(rgbShift)
   const vignetteIntensityUniform = uniform(vignetteIntensity)
 
-  // Watch all prop changes for reactivity
-  watch(
-    () => mouseX,
-    (val) => {
-      mouseXUniform.value = val
-    }
-  )
-  watch(
-    () => mouseY,
-    (val) => {
-      mouseYUniform.value = val
-    }
-  )
-  watch(
-    () => distortion,
-    (val) => {
-      distortionUniform.value = val
-    }
-  )
-  watch(
-    () => distortionSpeed,
-    (val) => {
-      distortionSpeedUniform.value = val
-    }
-  )
-  watch(
-    () => rippleStrength,
-    (val) => {
-      rippleStrengthUniform.value = val
-    }
-  )
-  watch(
-    () => zoom,
-    (val) => {
-      zoomUniform.value = val
-    }
-  )
-  watch(
-    () => grayscale,
-    (val) => {
-      grayscaleUniform.value = val
-    }
-  )
-  watch(
-    () => rgbShift,
-    (val) => {
-      rgbShiftUniform.value = val
-    }
-  )
-  watch(
-    () => vignetteIntensity,
-    (val) => {
-      vignetteIntensityUniform.value = val
-    }
-  )
+  watchUniformProp(() => mouseX, mouseXUniform)
+  watchUniformProp(() => mouseY, mouseYUniform)
+  watchUniformProp(() => distortion, distortionUniform)
+  watchUniformProp(() => distortionSpeed, distortionSpeedUniform)
+  watchUniformProp(() => rippleStrength, rippleStrengthUniform)
+  watchUniformProp(() => zoom, zoomUniform)
+  watchUniformProp(() => grayscale, grayscaleUniform)
+  watchUniformProp(() => rgbShift, rgbShiftUniform)
+  watchUniformProp(() => vignetteIntensity, vignetteIntensityUniform)
 
   // Load texture
   watch(

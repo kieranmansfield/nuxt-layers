@@ -1,3 +1,5 @@
+import { resolvePointerSpring, usePointerMotionFrame } from '../utils/pointerMotion'
+
 export function useTiltEffect(
   elementRef: Ref<HTMLElement | null>,
   opts: {
@@ -7,7 +9,6 @@ export function useTiltEffect(
     stiffness?: number
   } = {}
 ) {
-  const { gsap } = useGsap()
   const { elementX, elementY, elementWidth, elementHeight, isOutside } =
     useMouseInElement(elementRef)
 
@@ -33,10 +34,14 @@ export function useTiltEffect(
       targetRotateX = -ny * maxTilt
     }
 
-    currentRotateX.value += (targetRotateX - currentRotateX.value) * stiffness
-    currentRotateX.value *= 1 - damping
-    currentRotateY.value += (targetRotateY - currentRotateY.value) * stiffness
-    currentRotateY.value *= 1 - damping
+    currentRotateX.value = resolvePointerSpring(currentRotateX.value, targetRotateX, {
+      damping,
+      stiffness,
+    })
+    currentRotateY.value = resolvePointerSpring(currentRotateY.value, targetRotateY, {
+      damping,
+      stiffness,
+    })
 
     if (elementRef.value) {
       gsap.set(elementRef.value, {
@@ -47,10 +52,7 @@ export function useTiltEffect(
     }
   }
 
-  onMounted(() => gsap.ticker.add(tick))
-
-  onUnmounted(() => {
-    gsap.ticker.remove(tick)
+  const { gsap } = usePointerMotionFrame(tick, () => {
     if (elementRef.value) gsap.set(elementRef.value, { rotateX: 0, rotateY: 0 })
   })
 

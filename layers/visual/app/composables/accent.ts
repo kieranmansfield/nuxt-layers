@@ -2,6 +2,7 @@ import type { ComputedRef, CSSProperties, MaybeRefOrGetter } from 'vue'
 import { toValue } from 'vue'
 
 import type { BlobBlur, BlobConfig } from '../types/accent'
+import { resolveUiColorToken } from '../utils/colorTokens'
 
 const BLUR_PX_MAP: Record<string, number> = {
   none: 0,
@@ -16,14 +17,6 @@ const BLUR_PX_MAP: Record<string, number> = {
 function resolveBlurPx(blur: BlobBlur = '3xl'): number {
   if (typeof blur === 'number') return blur
   return BLUR_PX_MAP[blur] ?? 64
-}
-
-function resolveColor(config: BlobConfig): string {
-  const { color = 'primary', shade = 500, customColor } = config
-  if (color === 'custom') return customColor ?? 'transparent'
-  if (color === 'white') return '#ffffff'
-  if (color === 'black') return '#000000'
-  return `var(--ui-color-${color}-${shade})`
 }
 
 export function useAccentBlob(config: MaybeRefOrGetter<BlobConfig>): {
@@ -42,7 +35,7 @@ export function useAccentBlob(config: MaybeRefOrGetter<BlobConfig>): {
       transform: 'translate(-50%, -50%)',
       width: size,
       height: size,
-      backgroundColor: resolveColor(resolved),
+      backgroundColor: resolveUiColorToken(resolved),
       opacity,
       borderRadius: '9999px',
       filter: blurPx > 0 ? `blur(${blurPx}px)` : undefined,

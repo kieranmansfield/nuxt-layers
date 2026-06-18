@@ -2,6 +2,7 @@ import { queryCollection } from '@nuxt/content/nitro'
 import type { H3Event } from 'h3'
 
 import type { FeedItem } from './types'
+import { resolveFeedAuthor, resolveFeedDate } from './feed-author'
 
 type FeedSourceAuthor = {
   name?: string | undefined
@@ -29,27 +30,6 @@ const getFeedCollection = queryCollection as unknown as (
   event: H3Event,
   collection: string
 ) => FeedCollectionQuery
-
-function resolveFeedAuthor(item: FeedSourceItem): string | undefined {
-  const firstAuthor = item.authors?.[0]
-  if (typeof firstAuthor?.name === 'string' && firstAuthor.name.length > 0) {
-    return firstAuthor.name
-  }
-
-  if (typeof item.author === 'string' && item.author.length > 0) {
-    return item.author
-  }
-
-  if (item.author && typeof item.author === 'object' && typeof item.author.name === 'string') {
-    return item.author.name
-  }
-
-  return undefined
-}
-
-function resolveFeedDate(item: FeedSourceItem): Date {
-  return new Date(item.date ?? item.createdAt ?? Date.now())
-}
 
 export async function getContentFeedItems(
   event: H3Event,

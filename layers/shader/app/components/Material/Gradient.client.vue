@@ -4,6 +4,7 @@
   import { MeshBasicNodeMaterial } from 'three/webgpu'
 
   import type { TSLNode } from '../../types'
+  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
 
   const {
     colors = ['#4f46e5', '#7c3aed', '#ec4899'],
@@ -49,37 +50,11 @@
     uniform(new Color(colors[4] || '#ec4899')),
   ]
 
-  // Watch prop changes and update uniforms
-  watch(
-    () => angle,
-    (val) => {
-      angleUniform.value = val
-    }
-  )
-  watch(
-    () => speed,
-    (val) => {
-      speedUniform.value = val
-    }
-  )
-  watch(
-    () => mouseX,
-    (val) => {
-      mouseXUniform.value = val
-    }
-  )
-  watch(
-    () => mouseY,
-    (val) => {
-      mouseYUniform.value = val
-    }
-  )
-  watch(
-    () => mouseStrength,
-    (val) => {
-      mouseStrengthUniform.value = val
-    }
-  )
+  watchUniformProp(() => angle, angleUniform)
+  watchUniformProp(() => speed, speedUniform)
+  watchUniformProp(() => mouseX, mouseXUniform)
+  watchUniformProp(() => mouseY, mouseYUniform)
+  watchUniformProp(() => mouseStrength, mouseStrengthUniform)
 
   watch(
     () => colors,
@@ -93,14 +68,10 @@
     { deep: true }
   )
 
-  const material = computed(() => {
-    const mat = new MeshBasicNodeMaterial()
-    const colorCount = colors.length
-
-    // Get UV coordinates
+  // fallow-ignore-next-line complexity
+  function resolveGradientT() {
     let t: TSLNode = uv().y
 
-    // Apply angle rotation for linear gradient (using uniform for reactivity)
     if (type === 'linear') {
       const rad = angleUniform.mul(Math.PI / 180)
       const cosVal = rad.cos()
@@ -108,10 +79,8 @@
       t = uv().x.mul(sinVal).add(uv().y.mul(cosVal))
     }
 
-    // Radial gradient uses distance from center
     if (type === 'radial') {
       let center = uv().sub(0.5)
-      // Add mouse interaction offset
       if (mouseInteraction) {
         const mouseOffset = vec3(
           mouseXUniform.sub(0.5).mul(mouseStrengthUniform),
@@ -123,18 +92,20 @@
       t = center.length().mul(2)
     }
 
-    // Add mouse interaction for linear gradients
     if (type === 'linear' && mouseInteraction) {
       t = t.add(mouseXUniform.sub(0.5).mul(mouseStrengthUniform))
     }
 
-    // Add animation
     if (animated) {
       t = t.add(sin(tslTime.mul(speedUniform)).mul(0.2))
     }
 
-    // Build gradient from colors using uniforms
-    // Use type assertion since we know the array is initialized
+    return t
+  }
+
+  // fallow-ignore-next-line complexity
+  function buildGradientColorNode(t: TSLNode) {
+    const colorCount = colors.length
     const c0 = colorUniforms[0]
     const c1 = colorUniforms[1]
     const c2 = colorUniforms[2]
@@ -144,9 +115,10 @@
     let colorNode: TSLNode = vec3(c0)
 
     if (colorCount === 2) {
-      colorNode = mix(vec3(c0), vec3(c1), t)
-    } else if (colorCount >= 3) {
-      // Multi-stop gradient using pre-extracted uniforms
+      return mix(vec3(c0), vec3(c1), t)
+    }
+
+    if (colorCount >= 3) {
       const uniforms = [c0, c1, c2, c3, c4]
       const segments = colorCount - 1
 
@@ -167,6 +139,13 @@
       }
     }
 
+    return colorNode
+  }
+
+  const material = computed(() => {
+    const mat = new MeshBasicNodeMaterial()
+
+    const colorNode = buildGradientColorNode(resolveGradientT())
     mat.colorNode = colorNode
     mat.transparent = transparent
     mat.side = DoubleSide

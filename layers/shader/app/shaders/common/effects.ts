@@ -244,6 +244,7 @@ export function waveDistortionEffect(
   options: WaveDistortionOptions = {}
 ): TSLNode {
   const { frequency = 10, amplitude = 0.02, time = 0, direction = 'both' } = options
+  type WaveDirection = NonNullable<WaveDistortionOptions['direction']>
 
   const _freq = toScalarNode(frequency)
   const _amp = toScalarNode(amplitude)
@@ -257,7 +258,7 @@ export function waveDistortionEffect(
     both: vec2(_uv.x.add(_eX), _uv.y.add(_eY)),
     x: vec2(_uv.x.add(_eX), _uv.y),
     y: vec2(_uv.x, _uv.y.add(_uv.x.mul(_freq).add(_time).sin().mul(_amp))),
-  } satisfies Record<WaveDistortionOptions['direction'], TSLNode>
+  } satisfies Record<WaveDirection, TSLNode>
 
   return input.sample(distortedUVMap[direction])
 }

@@ -1,21 +1,14 @@
-export function useGtm() {
+import { createGtmClient, resolveScriptTrigger, type GtmClient } from '../utils/scriptClients'
+
+export function useGtm(): GtmClient {
   const { scriptsLayer } = useAppConfig()
   const { hasConsent, consentRequired } = useScriptsConsent()
 
   const gtmConfig = scriptsLayer?.gtm
-  if (!gtmConfig?.enabled || !gtmConfig?.id) {
+  if (!gtmConfig?.enabled) {
     return { push: () => {}, load: () => {} }
   }
 
-  // Load on Nuxt ready unless consent is required and not yet granted
-  const trigger = consentRequired.value
-    ? useScriptTriggerConsent({ consent: hasConsent })
-    : 'onNuxtReady'
-
-  const gtm = useScriptGoogleTagManager({ id: gtmConfig.id, scriptOptions: { trigger } })
-
-  return {
-    push: (data: Record<string, unknown>) => gtm.proxy.dataLayer.push(data),
-    load: () => gtm.load(),
-  }
+  const trigger = resolveScriptTrigger(consentRequired, hasConsent)
+  return createGtmClient(gtmConfig.id, trigger)
 }

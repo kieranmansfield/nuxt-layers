@@ -1,5 +1,6 @@
 // composables/useFeatures.ts
 import type { FeatureDetection } from '#layers/core/app/types/detection'
+import { getFeatureClassNames, removeFeatureClasses } from '#layers/core/app/utils/featureClasses'
 import {
   usePreferredContrast,
   usePreferredDark,
@@ -139,34 +140,9 @@ async function checkImageFormat(format: 'webp' | 'avif'): Promise<boolean> {
 function applyFeatureClasses(features: FeatureDetection) {
   if (!import.meta.client || !document.documentElement) return
 
-  // Remove old classes first
   const htmlClasses = document.documentElement.classList
-  const classesToRemove = Array.from(htmlClasses).filter(
-    (cls) => cls.startsWith('supports-') || cls.startsWith('no-') || cls.startsWith('has-')
-  )
-  htmlClasses.remove(...classesToRemove)
-
-  const classes: string[] = []
-
-  // CSS features
-  classes.push(features.grid ? 'supports-grid' : 'no-grid')
-  classes.push(features.subgrid ? 'supports-subgrid' : 'no-subgrid')
-  classes.push(features.containerQueries ? 'supports-container-queries' : 'no-container-queries')
-  classes.push(features.has ? 'supports-has' : 'no-has')
-  classes.push(features.aspectRatio ? 'supports-aspect-ratio' : 'no-aspect-ratio')
-  classes.push(features.backdropFilter ? 'supports-backdrop-filter' : 'no-backdrop-filter')
-
-  // JS APIs
-  if (features.intersectionObserver) classes.push('has-intersection-observer')
-  if (features.resizeObserver) classes.push('has-resize-observer')
-  if (features.serviceWorker) classes.push('has-service-worker')
-  if (features.webGL) classes.push('has-webgl')
-
-  // Image formats
-  if (features.webp) classes.push('supports-webp')
-  if (features.avif) classes.push('supports-avif')
-
-  htmlClasses.add(...classes)
+  removeFeatureClasses(htmlClasses)
+  htmlClasses.add(...getFeatureClassNames(features))
 }
 
 /**

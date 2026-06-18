@@ -1,63 +1,9 @@
-// composables/useBrowser.ts
-
-type BrowserInfo = {
-  name: string
-  version: string
-  engine: string
-  os: string
-}
-
-/**
- * Parse user agent to detect browser information
- */
-function parseBrowserInfo(): BrowserInfo {
-  if (!import.meta.client) {
-    return {
-      name: 'unknown',
-      version: '0',
-      engine: 'unknown',
-      os: 'unknown',
-    }
-  }
-
-  const ua = navigator.userAgent
-  let name = 'unknown'
-  let version = '0'
-  let engine = 'unknown'
-  let os = 'unknown'
-
-  // Detect OS
-  if (ua.includes('Win')) os = 'windows'
-  else if (ua.includes('Mac')) os = 'macos'
-  else if (ua.includes('Linux')) os = 'linux'
-  else if (ua.includes('Android')) os = 'android'
-  else if (ua.includes('iOS') || ua.includes('iPhone') || ua.includes('iPad')) os = 'ios'
-
-  // Detect browser (order matters - check most specific first)
-  if (ua.includes('Edg/')) {
-    name = 'edge'
-    engine = 'blink'
-    version = ua.match(/Edg\/([\d.]+)/)?.[1] || '0'
-  } else if (ua.includes('Chrome/') && !ua.includes('Edg')) {
-    name = 'chrome'
-    engine = 'blink'
-    version = ua.match(/Chrome\/([\d.]+)/)?.[1] || '0'
-  } else if (ua.includes('Safari/') && !ua.includes('Chrome')) {
-    name = 'safari'
-    engine = 'webkit'
-    version = ua.match(/Version\/([\d.]+)/)?.[1] || '0'
-  } else if (ua.includes('Firefox/')) {
-    name = 'firefox'
-    engine = 'gecko'
-    version = ua.match(/Firefox\/([\d.]+)/)?.[1] || '0'
-  } else if (ua.includes('Opera/') || ua.includes('OPR/')) {
-    name = 'opera'
-    engine = 'blink'
-    version = ua.match(/(?:Opera|OPR)\/([\d.]+)/)?.[1] || '0'
-  }
-
-  return { name, version, engine, os }
-}
+import {
+  getBrowserVersionParts,
+  isBrowserAtLeast,
+  parseBrowserInfo,
+  type BrowserInfo,
+} from '#layers/core/app/utils/browserInfo'
 
 /**
  * Browser detection composable
@@ -93,15 +39,11 @@ export function useBrowser() {
 
   // Version helpers
   const majorVersion = computed(() => {
-    const parts = info.value.version.split('.')
-    const major = parts[0]
-    return major ? parseInt(major, 10) : 0
+    return getBrowserVersionParts(info.value.version).major
   })
 
   const minorVersion = computed(() => {
-    const parts = info.value.version.split('.')
-    const minor = parts[1] || '0'
-    return parseInt(minor, 10)
+    return getBrowserVersionParts(info.value.version).minor
   })
 
   /**
@@ -109,22 +51,7 @@ export function useBrowser() {
    * @param minVersion - Minimum version string (e.g., "100" or "100.0")
    */
   const isAtLeast = (minVersion: string): boolean => {
-    const parts = minVersion.split('.')
-    const minMajor = parts[0]
-    const minMinor = parts[1] || '0'
-
-    if (!minMajor) return false
-
-    const major = majorVersion.value
-    const minor = minorVersion.value
-
-    const minMajorNum = parseInt(minMajor, 10)
-    const minMinorNum = parseInt(minMinor, 10)
-
-    if (major > minMajorNum) return true
-    if (major === minMajorNum && minor >= minMinorNum) return true
-
-    return false
+    return isBrowserAtLeast(info.value.version, minVersion)
   }
 
   return {

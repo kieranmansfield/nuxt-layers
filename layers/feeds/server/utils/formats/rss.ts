@@ -1,16 +1,15 @@
 import { Feed } from 'feed'
 
 import type { FeedConfig, FeedItem } from '../types'
+import {
+  applyFeedStylesheet,
+  resolveFeedAuthorPayload,
+  resolveFeedItemId,
+  resolveFeedItemLink,
+} from '../feed-xml'
 
 export function toRSS(items: FeedItem[], config: FeedConfig): string {
-  const author = config.author
-    ? {
-        name: config.author.name,
-        ...(config.author.email ? { email: config.author.email } : {}),
-        ...(config.author.link ? { link: config.author.link } : {}),
-      }
-    : undefined
-
+  const author = resolveFeedAuthorPayload(config.author)
   const feed = new Feed({
     title: config.title,
     description: config.description,
@@ -26,17 +25,13 @@ export function toRSS(items: FeedItem[], config: FeedConfig): string {
   for (const item of items) {
     feed.addItem({
       title: item.title,
-      id: `${config.siteUrl}${item.id}`,
-      link: `${config.siteUrl}${item.link}`,
+      id: resolveFeedItemId(config.siteUrl, item),
+      link: resolveFeedItemLink(config.siteUrl, item),
       ...(item.description ? { description: item.description } : {}),
       date: item.date,
       ...(item.author ? { author: [{ name: item.author }] } : {}),
     })
   }
 
-  const raw = feed.rss2()
-  return raw.replace(
-    /<\?xml version="1\.0" encoding="utf-8"\?>/i,
-    '<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="/feed/style.xsl"?>'
-  )
+  return applyFeedStylesheet(feed.rss2())
 }

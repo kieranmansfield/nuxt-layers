@@ -18,6 +18,7 @@
   import { fbm2D, ridgedFbm2d, warpedFbmCoords } from '../../shaders/common/noise'
   import { cosinePalette } from '../../shaders/common/palette'
   import type { TSLNode } from '../../shaders/types'
+  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
 
   const {
     speed = 1.0,
@@ -54,43 +55,15 @@
   const color3Uniform: TSLNode = uniform(new Color(color3))
   const color4Uniform: TSLNode = uniform(new Color(color4))
 
-  // Watch prop changes
-  watch(
-    () => speed,
-    (val) => (speedUniform.value = val)
-  )
-  watch(
-    () => intensity,
-    (val) => (intensityUniform.value = val)
-  )
-  watch(
-    () => mouseX,
-    (val) => (mouseXUniform.value = val)
-  )
-  watch(
-    () => mouseY,
-    (val) => (mouseYUniform.value = val)
-  )
-  watch(
-    () => mouseStrength,
-    (val) => (mouseStrengthUniform.value = val)
-  )
-  watch(
-    () => color1,
-    (val) => (color1Uniform.value = new Color(val))
-  )
-  watch(
-    () => color2,
-    (val) => (color2Uniform.value = new Color(val))
-  )
-  watch(
-    () => color3,
-    (val) => (color3Uniform.value = new Color(val))
-  )
-  watch(
-    () => color4,
-    (val) => (color4Uniform.value = new Color(val))
-  )
+  watchUniformProp(() => speed, speedUniform)
+  watchUniformProp(() => intensity, intensityUniform)
+  watchUniformProp(() => mouseX, mouseXUniform)
+  watchUniformProp(() => mouseY, mouseYUniform)
+  watchUniformProp(() => mouseStrength, mouseStrengthUniform)
+  watchUniformProp(() => color1, color1Uniform, (val) => new Color(val))
+  watchUniformProp(() => color2, color2Uniform, (val) => new Color(val))
+  watchUniformProp(() => color3, color3Uniform, (val) => new Color(val))
+  watchUniformProp(() => color4, color4Uniform, (val) => new Color(val))
 
   const material = computed(() => {
     const mat = new MeshBasicNodeMaterial()

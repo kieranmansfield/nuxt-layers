@@ -23,6 +23,22 @@
     disableZoom?: boolean
   }>()
 
+  type ShaderImageUniforms = {
+    uTexture: { value: Texture }
+    uTime: { value: number }
+    uDistortion: { value: number }
+    uDistortionSpeed: { value: number }
+    uMouseX: { value: number }
+    uMouseY: { value: number }
+    uRippleStrength: { value: number }
+    uGrayscale: { value: number }
+    uRgbShift: { value: number }
+    uVignetteIntensity: { value: number }
+    uMouseRipple: { value: boolean }
+    uVignette: { value: boolean }
+    uZoom: { value: number }
+  }
+
   const loadedTexture = ref<Texture | null>(null)
 
   // Load a sample image
@@ -163,19 +179,23 @@ void main() {
   const clock = new Clock()
   let animationId: number
 
+  function updateUniforms() {
+    const uniforms = material.value?.uniforms as ShaderImageUniforms | undefined
+    if (!uniforms) return
+
+    const elapsed = clock.getElapsedTime()
+    uniforms.uTime.value = elapsed
+    uniforms.uDistortion.value = distortion
+    uniforms.uMouseX.value = mouseX
+    uniforms.uMouseY.value = mouseY
+    uniforms.uGrayscale.value = grayscale
+    uniforms.uRgbShift.value = rgbShift
+    uniforms.uMouseRipple.value = mouseRipple
+    uniforms.uVignette.value = vignette
+  }
+
   const animate = () => {
-    if (material.value?.uniforms) {
-      const { uniforms } = material.value
-      const elapsed = clock.getElapsedTime()
-      if (uniforms.uTime) uniforms.uTime.value = elapsed
-      if (uniforms.uDistortion) uniforms.uDistortion.value = distortion
-      if (uniforms.uMouseX) uniforms.uMouseX.value = mouseX
-      if (uniforms.uMouseY) uniforms.uMouseY.value = mouseY
-      if (uniforms.uGrayscale) uniforms.uGrayscale.value = grayscale
-      if (uniforms.uRgbShift) uniforms.uRgbShift.value = rgbShift
-      if (uniforms.uMouseRipple) uniforms.uMouseRipple.value = mouseRipple
-      if (uniforms.uVignette) uniforms.uVignette.value = vignette
-    }
+    updateUniforms()
     animationId = requestAnimationFrame(animate)
   }
 

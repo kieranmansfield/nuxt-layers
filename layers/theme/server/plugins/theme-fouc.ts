@@ -1,6 +1,4 @@
-import twColors from 'tailwindcss/colors'
-
-type DefaultColors = typeof twColors
+import { buildAccentCSS } from '../utils/accent-css'
 
 /**
  * Nitro render hook — prevents FOUC for all theme preferences by injecting:
@@ -23,95 +21,6 @@ type DefaultColors = typeof twColors
  * script runs after stylesheets have downloaded. Nuxt Color Mode's script will then
  * set the same value again — this is idempotent and safe.
  */
-
-const ACCENTS = [
-  'red',
-  'orange',
-  'amber',
-  'yellow',
-  'lime',
-  'green',
-  'emerald',
-  'teal',
-  'cyan',
-  'sky',
-  'blue',
-  'indigo',
-  'violet',
-  'purple',
-  'fuchsia',
-  'pink',
-  'rose',
-] as const
-
-type AccentName = (typeof ACCENTS)[number]
-
-const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const
-
-/**
- * Coordinated three-colour palettes. Each accent colour selects a
- * secondary and info (accent) colour that sit in the same temperature
- * zone and feel cohesive together.
- *
- *   primary  = the user-selected accent
- *   secondary = a related colour in the same hue family
- *   info      = a third complementary accent
- */
-const ACCENT_PALETTES: Record<AccentName, { secondary: AccentName; info: AccentName }> = {
-  red: { secondary: 'rose', info: 'orange' },
-  orange: { secondary: 'amber', info: 'red' },
-  amber: { secondary: 'orange', info: 'yellow' },
-  yellow: { secondary: 'lime', info: 'amber' },
-  lime: { secondary: 'green', info: 'yellow' },
-  green: { secondary: 'teal', info: 'emerald' },
-  emerald: { secondary: 'green', info: 'teal' },
-  teal: { secondary: 'cyan', info: 'emerald' },
-  cyan: { secondary: 'sky', info: 'teal' },
-  sky: { secondary: 'blue', info: 'cyan' },
-  blue: { secondary: 'indigo', info: 'sky' },
-  indigo: { secondary: 'violet', info: 'blue' },
-  violet: { secondary: 'purple', info: 'indigo' },
-  purple: { secondary: 'fuchsia', info: 'violet' },
-  fuchsia: { secondary: 'pink', info: 'purple' },
-  pink: { secondary: 'rose', info: 'fuchsia' },
-  rose: { secondary: 'pink', info: 'red' },
-}
-
-function getShades(name: AccentName): Record<number, string> | null {
-  const p = (twColors as DefaultColors)[name]
-  return !p || typeof p === 'string' ? null : (p as Record<number, string>)
-}
-
-// Pre-compute all CSS rules at startup (once)
-function buildAccentCSS(): string {
-  let css = ''
-  for (const accent of ACCENTS) {
-    const primary = getShades(accent)
-    if (!primary) continue
-
-    const { secondary: secName, info: infoName } = ACCENT_PALETTES[accent]
-    const secondary = getShades(secName)
-    const info = getShades(infoName)
-
-    let vars = ''
-    for (const s of SHADES) {
-      vars += `--ui-color-primary-${s}:${primary[s]};`
-    }
-    if (secondary) {
-      for (const s of SHADES) {
-        vars += `--ui-color-secondary-${s}:${secondary[s]};`
-      }
-    }
-    if (info) {
-      for (const s of SHADES) {
-        vars += `--ui-color-info-${s}:${info[s]};`
-      }
-    }
-
-    css += `html[data-theme-colour="${accent}"]{${vars}}`
-  }
-  return css
-}
 
 const accentCSS = buildAccentCSS()
 

@@ -1,13 +1,12 @@
 import type { Ref } from 'vue'
 import type LocomotiveScroll from 'locomotive-scroll'
 
-type ScrollToOptions = {
-  offset?: number
-  duration?: number
-  immediate?: boolean
-  lock?: boolean
-  onComplete?: () => void
-}
+import {
+  runLocomotiveScroll,
+  runNativeScroll,
+  type ScrollTarget,
+  type ScrollToOptions,
+} from '../utils/scroll'
 
 /**
  * Unified scroll composable using Locomotive Scroll v5 smooth scrolling
@@ -60,20 +59,14 @@ export function useSmoothScroll() {
     locomotiveScroll.value?.start()
   }
 
-  function scrollTo(target: string | number | HTMLElement, options?: ScrollToOptions) {
+  function scrollTo(target: ScrollTarget, options?: ScrollToOptions) {
     if (!import.meta.client) return
 
     if (locomotiveScroll.value) {
-      locomotiveScroll.value.scrollTo(target, {
-        offset: options?.offset ?? 0,
-        duration: options?.duration ?? 1.2,
-        immediate: options?.immediate ?? false,
-        lock: options?.lock ?? false,
-        ...(options?.onComplete !== undefined && { onComplete: options.onComplete }),
-      })
+      runLocomotiveScroll(locomotiveScroll.value, target, options)
       return
     }
-    nativeScrollTo(target, options)
+    runNativeScroll(target, options)
   }
 
   function scrollToTop(options?: { duration?: number; immediate?: boolean }) {
@@ -100,32 +93,5 @@ export function useSmoothScroll() {
     snapToTop,
     lockScrolling,
     unlockScrolling,
-  }
-}
-
-function resolveScrollTarget(target: string | number | HTMLElement): number | null {
-  if (typeof target === 'number') return target
-  if (typeof target === 'string') {
-    const el = document.querySelector(target)
-    if (!el) return null
-    return el.getBoundingClientRect().top + window.scrollY
-  }
-  return target.getBoundingClientRect().top + window.scrollY
-}
-
-function nativeScrollTo(target: string | number | HTMLElement, options?: ScrollToOptions) {
-  const base = resolveScrollTarget(target)
-  if (base === null) return
-
-  const targetPosition = base + (options?.offset ?? 0)
-
-  if (options?.immediate) {
-    window.scrollTo(0, targetPosition)
-    options?.onComplete?.()
-    return
-  }
-  window.scrollTo({ top: targetPosition, behavior: 'smooth' })
-  if (options?.onComplete) {
-    setTimeout(options.onComplete, options?.duration ?? 500)
   }
 }

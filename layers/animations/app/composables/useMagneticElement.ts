@@ -1,3 +1,5 @@
+import { resolvePointerSpring, usePointerMotionFrame } from '../utils/pointerMotion'
+
 export function useMagneticElement(
   elementRef: Ref<HTMLElement | null>,
   opts: {
@@ -7,7 +9,6 @@ export function useMagneticElement(
     stiffness?: number
   } = {}
 ) {
-  const { gsap } = useGsap()
   const { elementX, elementY, elementWidth, elementHeight } = useMouseInElement(elementRef)
 
   const currentX = ref(0)
@@ -33,20 +34,21 @@ export function useMagneticElement(
       targetY = dy * strength
     }
 
-    currentX.value += (targetX - currentX.value) * stiffness
-    currentX.value *= 1 - damping
-    currentY.value += (targetY - currentY.value) * stiffness
-    currentY.value *= 1 - damping
+    currentX.value = resolvePointerSpring(currentX.value, targetX, {
+      damping,
+      stiffness,
+    })
+    currentY.value = resolvePointerSpring(currentY.value, targetY, {
+      damping,
+      stiffness,
+    })
 
     if (elementRef.value) {
       gsap.set(elementRef.value, { x: currentX.value, y: currentY.value })
     }
   }
 
-  onMounted(() => gsap.ticker.add(tick))
-
-  onUnmounted(() => {
-    gsap.ticker.remove(tick)
+  const { gsap } = usePointerMotionFrame(tick, () => {
     if (elementRef.value) gsap.set(elementRef.value, { x: 0, y: 0 })
   })
 

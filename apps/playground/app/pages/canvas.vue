@@ -42,20 +42,23 @@
       >
         <template #background>
           <ClientOnly>
-            <ShaderCanvas
-              clear-color="#050505"
-              class="absolute inset-0"
-              webgpu
-              @ready="onCanvasReady"
-            >
-              <TresPerspectiveCamera :position="[0, 0, 3]" />
-              <TresAmbientLight :intensity="0.6" />
-              <TresDirectionalLight :position="[2, 2, 2]" :intensity="1" />
-              <TresMesh :rotation="[elapsed * 0.3, elapsed * 0.5, 0]">
-                <TresIcosahedronGeometry :args="[1, 0]" />
-                <TresMeshStandardMaterial color="#06b6d4" :wireframe="false" />
-              </TresMesh>
-            </ShaderCanvas>
+            <div class="absolute inset-0">
+              <ShaderCanvas
+                clear-color="#050505"
+                :window-size="false"
+                style="pointer-events: none"
+                webgpu
+                @ready="onCanvasReady"
+              >
+                <TresPerspectiveCamera :position="[0, 0, 3]" />
+                <TresAmbientLight :intensity="0.6" />
+                <TresDirectionalLight :position="[2, 2, 2]" :intensity="1" />
+                <TresMesh :rotation="[elapsed * 0.3, elapsed * 0.5, 0]">
+                  <TresIcosahedronGeometry :args="[1, 0]" />
+                  <TresMeshStandardMaterial color="#06b6d4" :wireframe="false" />
+                </TresMesh>
+              </ShaderCanvas>
+            </div>
           </ClientOnly>
         </template>
         <div class="flex flex-wrap gap-4 justify-center">

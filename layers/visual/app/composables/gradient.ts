@@ -1,6 +1,7 @@
 import type { ComputedRef, CSSProperties, MaybeRefOrGetter } from 'vue'
 
-import type { GradientConfig, GradientStop } from '../types/gradient'
+import type { GradientConfig } from '../types/gradient'
+import { buildGradientStyle } from '../utils/gradientStyle'
 
 const DEFAULT_CONFIG: GradientConfig = {
   shape: 'linear',
@@ -9,44 +10,41 @@ const DEFAULT_CONFIG: GradientConfig = {
   to: { color: 'secondary', shade: 500 },
 }
 
-const DIRECTION_MAP: Record<string, string> = {
-  'to-t': 'to top',
-  'to-tr': 'to top right',
-  'to-r': 'to right',
-  'to-br': 'to bottom right',
-  'to-b': 'to bottom',
-  'to-bl': 'to bottom left',
-  'to-l': 'to left',
-  'to-tl': 'to top left',
+function resolveGradientConfig(
+  raw: GradientConfig | string,
+  override: Partial<GradientConfig> | undefined,
+  appConfig: ReturnType<typeof useAppConfig>
+): GradientConfig {
+  return mergeGradientOverride(resolveGradientPreset(raw, appConfig), override)
 }
 
-function resolveColor(stop: GradientStop): string {
-  const { color, shade = 500, opacity } = stop
-  if (color === 'transparent') return 'transparent'
-  if (color === 'white') {
-    return opacity !== undefined ? `rgb(255 255 255 / ${opacity / 100})` : '#ffffff'
-  }
-  if (color === 'black') {
-    return opacity !== undefined ? `rgb(0 0 0 / ${opacity / 100})` : '#000000'
-  }
-  const v = `var(--ui-color-${color}-${shade})`
-  return opacity !== undefined ? `color-mix(in srgb, ${v} ${opacity}%, transparent)` : v
+function resolveGradientPreset(
+  raw: GradientConfig | string,
+  appConfig: ReturnType<typeof useAppConfig>
+): GradientConfig {
+  if (typeof raw !== 'string') return raw
+
+  return resolveGradientPresetByName(raw, getGradientPresetMap(appConfig))
 }
 
-function buildStyle(cfg: GradientConfig): CSSProperties {
-  const from = resolveColor(cfg.from)
-  const to = resolveColor(cfg.to)
-  const via = cfg.via ? resolveColor(cfg.via) : undefined
-  const stops = via ? `${from}, ${via}, ${to}` : `${from}, ${to}`
+function getGradientPresetMap(appConfig: ReturnType<typeof useAppConfig>) {
+  return (appConfig.uiLayer as Record<string, unknown> | undefined)?.['gradients'] as
+    | Record<string, GradientConfig>
+    | undefined
+}
 
-  if (cfg.shape === 'radial') {
-    return { backgroundImage: `radial-gradient(circle, ${stops})` }
-  }
-  if (cfg.shape === 'conic') {
-    return { backgroundImage: `conic-gradient(${stops})` }
-  }
-  const dir = DIRECTION_MAP[cfg.direction ?? 'to-br'] ?? 'to bottom right'
-  return { backgroundImage: `linear-gradient(${dir}, ${stops})` }
+function resolveGradientPresetByName(
+  name: string,
+  presets: Record<string, GradientConfig> | undefined
+) {
+  return presets?.[name] ?? DEFAULT_CONFIG
+}
+
+function mergeGradientOverride(
+  resolved: GradientConfig,
+  override: Partial<GradientConfig> | undefined
+): GradientConfig {
+  return override ? { ...resolved, ...override } : resolved
 }
 
 export function useGradient(
@@ -58,18 +56,7 @@ export function useGradient(
   const style = computed((): CSSProperties => {
     const raw = toValue(config)
     const override = overrides ? toValue(overrides) : undefined
-
-    const presets = (appConfig.uiLayer as Record<string, unknown> | undefined)?.['gradients'] as
-      | Record<string, GradientConfig>
-      | undefined
-    let resolved: GradientConfig =
-      typeof raw === 'string' ? (presets?.[raw] ?? DEFAULT_CONFIG) : raw
-
-    if (override) {
-      resolved = { ...resolved, ...override }
-    }
-
-    return buildStyle(resolved)
+    return buildGradientStyle(resolveGradientConfig(raw, override, appConfig))
   })
 
   return { style }

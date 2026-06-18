@@ -15,6 +15,7 @@
     type ToneMapping,
   } from 'three'
   import * as ThreeWebGPU from 'three/webgpu'
+  import { MeshBasicNodeMaterial } from 'three/webgpu'
 
   const {
     material = null,
@@ -86,6 +87,38 @@
     }
   }
 
+  function createRenderer(canvas: HTMLCanvasElement) {
+    const nextRenderer = new ThreeWebGPU.WebGPURenderer({ canvas, antialias: antialias })
+    nextRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    nextRenderer.setSize(width.value, height.value)
+    nextRenderer.setClearColor(new Color(clearColor))
+    nextRenderer.toneMapping = toneMappingMap[toneMapping] ?? ACESFilmicToneMapping
+    nextRenderer.outputColorSpace = SRGBColorSpace
+    return nextRenderer
+  }
+
+  function createSceneAndCamera() {
+    const nextScene = new Scene()
+    const nextCamera = new PerspectiveCamera(75, width.value / (height.value || 1), 0.1, 100)
+    nextCamera.position.set(0, 0, 1)
+    return { nextScene, nextCamera }
+  }
+
+  function createPlaneMesh() {
+    const { width: pw, height: ph } = getPlaneSize(width.value, height.value)
+    const geometry = new PlaneGeometry(pw, ph)
+    return new Mesh(geometry, material ?? new MeshBasicMaterial({ color: 0x000000 }))
+  }
+
+  // fallow-ignore-next-line complexity
+  async function compileMaterialIfReady() {
+    if (!renderer || !scene || !camera || !material?.colorNode) return
+    await renderer.compileAsync(scene, camera)
+    if (disposed && renderer) {
+      renderer.dispose()
+    }
+  }
+
   function animate() {
     // Bail if the component unmounted — guards against a frame scheduled just
     // before teardown rendering on a disposed renderer.
@@ -102,12 +135,7 @@
 
     try {
       // WebGPURenderer falls back to WebGL2 if WebGPU is unavailable
-      renderer = new ThreeWebGPU.WebGPURenderer({ canvas, antialias: antialias })
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-      renderer.setSize(width.value, height.value)
-      renderer.setClearColor(new Color(clearColor))
-      renderer.toneMapping = toneMappingMap[toneMapping] ?? ACESFilmicToneMapping
-      renderer.outputColorSpace = SRGBColorSpace
+      renderer = createRenderer(canvas)
 
       // Required async init for WebGPU context setup
       await renderer.init()
@@ -121,13 +149,10 @@
         return
       }
 
-      scene = new Scene()
-      camera = new PerspectiveCamera(75, width.value / (height.value || 1), 0.1, 100)
-      camera.position.set(0, 0, 1)
-
-      const { width: pw, height: ph } = getPlaneSize(width.value, height.value)
-      const geometry = new PlaneGeometry(pw, ph)
-      planeMesh = new Mesh(geometry, material ?? new MeshBasicMaterial({ color: 0x000000 }))
+      const { nextScene, nextCamera } = createSceneAndCamera()
+      scene = nextScene
+      camera = nextCamera
+      planeMesh = createPlaneMesh()
       scene.add(planeMesh)
 
       // Pre-compile the shader pipeline only when the material's colorNode is already
@@ -136,13 +161,8 @@
       // won't reliably trigger a GPU pipeline rebuild in all drivers.
       // When colorNode is absent we skip pre-compilation and let the first render()
       // call compile lazily — the browser may stutter once, but the output is correct.
-      if (material?.colorNode) {
-        await renderer.compileAsync(scene, camera)
-        if (disposed) {
-          renderer.dispose()
-          return
-        }
-      }
+      await compileMaterialIfReady()
+      if (disposed) return
 
       initialized = true
       emit('ready', renderer)

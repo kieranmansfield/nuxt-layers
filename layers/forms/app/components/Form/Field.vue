@@ -1,6 +1,12 @@
 <script setup lang="ts">
   import { fieldConfigs, type FieldType } from '../../config/fields'
   import type { FieldSize } from '../../types/fields'
+  import {
+    buildBaseInputProps,
+    buildFormFieldProps,
+    buildNumberInputProps,
+    buildTextInputProps,
+  } from '../../utils/fieldProps'
 
   const {
     type = 'text',
@@ -40,36 +46,6 @@
   const isTextarea = computed(() => config.value.component === 'UTextarea')
   const isNumber = computed(() => config.value.component === 'UInputNumber')
 
-  const formFieldProps = computed(() => ({
-    name,
-    required,
-    size,
-    ...(label !== undefined && { label }),
-    ...(className !== undefined && { class: className }),
-  }))
-
-  const baseInputProps = computed(() => ({
-    size,
-    ...(resolvedPlaceholder.value !== undefined && { placeholder: resolvedPlaceholder.value }),
-    ...(resolvedIcon.value !== undefined && { leadingIcon: resolvedIcon.value }),
-  }))
-
-  const numberInputProps = computed(() => ({
-    size,
-    ...(resolvedPlaceholder.value !== undefined && { placeholder: resolvedPlaceholder.value }),
-    ...(resolvedIcon.value !== undefined && { leadingIcon: resolvedIcon.value }),
-    ...(currencyOptions.value !== undefined && { formatOptions: currencyOptions.value }),
-  }))
-
-  const textInputProps = computed(() => ({
-    type: config.value.inputType,
-    size,
-    ...(config.value.inputMode !== undefined && { inputmode: config.value.inputMode }),
-    ...(config.value.autocomplete !== undefined && { autocomplete: config.value.autocomplete }),
-    ...(resolvedPlaceholder.value !== undefined && { placeholder: resolvedPlaceholder.value }),
-    ...(resolvedIcon.value !== undefined && { leadingIcon: resolvedIcon.value }),
-  }))
-
   const currencyOptions = computed((): Intl.NumberFormatOptions | undefined => {
     if (config.value.format === 'currency') {
       return {
@@ -79,6 +55,42 @@
     }
     return undefined
   })
+
+  const formFieldProps = computed(() =>
+    buildFormFieldProps({
+      name,
+      required,
+      size,
+      label,
+      className,
+    })
+  )
+
+  const baseInputProps = computed(() =>
+    buildBaseInputProps({
+      size,
+      placeholder: resolvedPlaceholder.value,
+      icon: resolvedIcon.value,
+    })
+  )
+
+  const numberInputProps = computed(() =>
+    buildNumberInputProps({
+      size,
+      placeholder: resolvedPlaceholder.value,
+      icon: resolvedIcon.value,
+      formatOptions: currencyOptions.value,
+    })
+  )
+
+  const textInputProps = computed(() =>
+    buildTextInputProps({
+      config: config.value,
+      size,
+      placeholder: resolvedPlaceholder.value,
+      icon: resolvedIcon.value,
+    })
+  )
 </script>
 
 <template>

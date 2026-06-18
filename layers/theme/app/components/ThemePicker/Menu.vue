@@ -1,30 +1,8 @@
 <script setup lang="ts">
-  const {
-    contrastOverride,
-    motionOverride,
-    transparencyOverride,
-    setContrastOverride,
-    setMotionOverride,
-    setTransparencyOverride,
-    effectiveHighContrast,
-    effectiveReducedMotion,
-    effectiveReducedTransparency,
-  } = useTheme()
+  import { useThemePreferenceModels } from '../../composables/useThemePreferenceModels'
 
-  const contrastModel = computed({
-    get: () => effectiveHighContrast.value,
-    set: (val: boolean) => setContrastOverride(val ? 'on' : 'system'),
-  })
-
-  const motionModel = computed({
-    get: () => effectiveReducedMotion.value,
-    set: (val: boolean) => setMotionOverride(val ? 'on' : 'system'),
-  })
-
-  const transparencyModel = computed({
-    get: () => effectiveReducedTransparency.value,
-    set: (val: boolean) => setTransparencyOverride(val ? 'on' : 'system'),
-  })
+  const { contrastOverride, motionOverride, transparencyOverride, contrastModel, motionModel, transparencyModel } =
+    useThemePreferenceModels()
 </script>
 
 <template>

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { formatHex, oklch, parse } from 'culori'
-
   import type {
     BackgroundStyle,
     BrandColour,
@@ -8,6 +6,7 @@
     ContrastLevel,
   } from '~/composables/useBrandState'
   import { generateScale } from '~/composables/useTailwindScale'
+  import { mixOklch } from '~/utils/oklchMix'
 
   const { colours, scheme, contrast, backgroundStyle } = defineProps<{
     colours: BrandColour[]
@@ -27,20 +26,6 @@
     if (contrast === 'high') return { bg: 10, text: 0, accent: 4 }
     return { bg: 9, text: 1, accent: 4 }
   })
-
-  function mixOklch(hexA: string, hexB: string, t: number): string {
-    const a = oklch(parse(hexA) ?? { mode: 'rgb', r: 1, g: 1, b: 1 })
-    const b = oklch(parse(hexB) ?? { mode: 'rgb', r: 0, g: 0, b: 0 })
-    if (!a || !b) return hexA
-    return (
-      formatHex({
-        mode: 'oklch',
-        l: a.l + (b.l - a.l) * t,
-        c: (a.c ?? 0) + ((b.c ?? 0) - (a.c ?? 0)) * t,
-        h: (a.h ?? 0) + ((b.h ?? 0) - (a.h ?? 0)) * t,
-      }) ?? hexA
-    )
-  }
 
   const neutralBg = computed(() => {
     if (!dark.value) return contrast === 'high' ? '#ffffff' : '#fafafa'

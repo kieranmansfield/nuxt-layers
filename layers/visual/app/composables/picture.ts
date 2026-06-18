@@ -1,12 +1,7 @@
 import type { MaybeRefOrGetter } from 'vue'
 
-import {
-  BREAKPOINT_VALUES,
-  DEVICE_BREAKPOINT_VALUES,
-  PHONE_BREAKPOINT_VALUES,
-  TABLET_BREAKPOINT_VALUES,
-} from '../types/breakpoints'
 import type { PictureProps, ResponsiveSizes, UsePictureReturn } from '../types/media'
+import { buildResponsiveSizesQueries } from '../utils/responsiveSizes'
 
 /**
  * Convert ResponsiveSizes object to CSS sizes attribute string
@@ -32,79 +27,7 @@ import type { PictureProps, ResponsiveSizes, UsePictureReturn } from '../types/m
  * ```
  */
 function responsiveSizesToString(sizes: ResponsiveSizes): string {
-  // Combine all min-width breakpoints with their values
-  const breakpointEntries: Array<{ key: keyof ResponsiveSizes; value: number }> = []
-
-  // Add Tailwind breakpoints
-  const tailwindBreakpoints: Array<keyof typeof BREAKPOINT_VALUES> = ['2xl', 'xl', 'lg', 'md', 'sm']
-  for (const bp of tailwindBreakpoints) {
-    if (sizes[bp]) {
-      breakpointEntries.push({ key: bp, value: BREAKPOINT_VALUES[bp] })
-    }
-  }
-
-  // Add device breakpoints (skip mobile as it's 0px - handled by default)
-  const deviceBreakpoints: Array<keyof typeof DEVICE_BREAKPOINT_VALUES> = [
-    'wide',
-    'desktop',
-    'tablet',
-  ]
-  for (const bp of deviceBreakpoints) {
-    if (sizes[bp]) {
-      breakpointEntries.push({ key: bp, value: DEVICE_BREAKPOINT_VALUES[bp] })
-    }
-  }
-
-  // Add phone breakpoints
-  const phoneBreakpoints: Array<keyof typeof PHONE_BREAKPOINT_VALUES> = [
-    'phone-lg',
-    'phone-md',
-    'phone-sm',
-  ]
-  for (const bp of phoneBreakpoints) {
-    if (sizes[bp]) {
-      breakpointEntries.push({ key: bp, value: PHONE_BREAKPOINT_VALUES[bp] })
-    }
-  }
-
-  // Add tablet breakpoints
-  const tabletBreakpoints: Array<keyof typeof TABLET_BREAKPOINT_VALUES> = [
-    'tablet-lg',
-    'tablet-md',
-    'tablet-sm',
-  ]
-  for (const bp of tabletBreakpoints) {
-    if (sizes[bp]) {
-      breakpointEntries.push({ key: bp, value: TABLET_BREAKPOINT_VALUES[bp] })
-    }
-  }
-
-  // Sort by value descending (largest to smallest)
-  breakpointEntries.sort((a, b) => b.value - a.value)
-
-  // Build media queries
-  const mediaQueries: string[] = []
-
-  // Add orientation breakpoints first (these are feature queries, not min-width)
-  if (sizes.landscape) {
-    mediaQueries.push(`(orientation: landscape) ${sizes.landscape}`)
-  }
-  if (sizes.portrait) {
-    mediaQueries.push(`(orientation: portrait) ${sizes.portrait}`)
-  }
-
-  // Add min-width breakpoints
-  for (const entry of breakpointEntries) {
-    const size = sizes[entry.key]
-    if (size) {
-      mediaQueries.push(`(min-width: ${entry.value}px) ${size}`)
-    }
-  }
-
-  // Add default size at the end (no media query)
-  mediaQueries.push(sizes.default)
-
-  return mediaQueries.join(', ')
+  return buildResponsiveSizesQueries(sizes).join(', ')
 }
 
 /**

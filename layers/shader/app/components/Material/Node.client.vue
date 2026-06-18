@@ -42,10 +42,12 @@
     double: DoubleSide,
   }
 
-  const material = computed(() => {
-    const mat = type === 'standard' ? new MeshStandardNodeMaterial() : new MeshBasicNodeMaterial()
+  function createMaterialInstance() {
+    return type === 'standard' ? new MeshStandardNodeMaterial() : new MeshBasicNodeMaterial()
+  }
 
-    // Apply node properties
+  // fallow-ignore-next-line complexity
+  function applyNodeProperties(mat: MeshBasicNodeMaterial | MeshStandardNodeMaterial) {
     if (colorNode) mat.colorNode = colorNode
     if (opacityNode) {
       mat.opacityNode = opacityNode
@@ -53,22 +55,33 @@
     }
     if (normalNode) mat.normalNode = normalNode
     if (positionNode) mat.positionNode = positionNode
+  }
 
-    // Standard material specific
+  // fallow-ignore-next-line complexity
+  function applyStandardProperties(mat: MeshBasicNodeMaterial | MeshStandardNodeMaterial) {
     if (mat instanceof MeshStandardNodeMaterial) {
       if (emissiveNode) mat.emissiveNode = emissiveNode
       if (metalnessNode) mat.metalnessNode = metalnessNode
       if (roughnessNode) mat.roughnessNode = roughnessNode
       mat.flatShading = flatShading
     }
+  }
 
-    // Standard properties
+  function applySharedProperties(mat: MeshBasicNodeMaterial | MeshStandardNodeMaterial) {
     mat.transparent = transparent || !!opacityNode
     mat.side = sideMap[side]
     mat.wireframe = wireframe
     mat.depthTest = depthTest
     mat.depthWrite = depthWrite
 
+    return mat
+  }
+
+  const material = computed(() => {
+    const mat = createMaterialInstance()
+    applyNodeProperties(mat)
+    applyStandardProperties(mat)
+    applySharedProperties(mat)
     return mat
   })
 

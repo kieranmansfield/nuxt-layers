@@ -36,6 +36,14 @@
     mouseY?: number
   }>()
 
+  type AmbientBackgroundUniforms = {
+    uTime: { value: number }
+    uSpeed: { value: number }
+    uIntensity: { value: number }
+    uMouse: { value: Vector2 }
+    uMouseStrength: { value: number }
+  }
+
   // Shared vertex shader
   const vertexShader = `
 varying vec2 vUv;
@@ -753,21 +761,19 @@ void main() {
   const clock = new Clock()
   let animationId: number
 
+  function updateUniforms() {
+    const uniforms = material.value?.uniforms as AmbientBackgroundUniforms | undefined
+    if (!uniforms) return
+
+    uniforms.uTime.value = clock.getElapsedTime()
+    uniforms.uSpeed.value = speed
+    uniforms.uIntensity.value = intensity
+    uniforms.uMouse.value.set(mouseX, mouseY)
+    uniforms.uMouseStrength.value = mouseInteraction ? 0.5 : 0
+  }
+
   const animate = () => {
-    const uniforms = material.value?.uniforms
-    if (
-      uniforms?.uTime &&
-      uniforms?.uSpeed &&
-      uniforms?.uIntensity &&
-      uniforms?.uMouse &&
-      uniforms?.uMouseStrength
-    ) {
-      uniforms.uTime.value = clock.getElapsedTime()
-      uniforms.uSpeed.value = speed
-      uniforms.uIntensity.value = intensity
-      uniforms.uMouse.value.set(mouseX, mouseY)
-      uniforms.uMouseStrength.value = mouseInteraction ? 0.5 : 0
-    }
+    updateUniforms()
     animationId = requestAnimationFrame(animate)
   }
 

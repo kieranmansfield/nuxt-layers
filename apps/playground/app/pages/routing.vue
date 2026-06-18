@@ -1,10 +1,10 @@
 <script setup lang="ts">
+  import { type FeatureValue, type RoutingLayerConfig, type RoutingPreset } from '#layers/routing/app/types/routing'
   import {
-    ROUTING_PRESETS,
-    type FeatureValue,
-    type RoutingLayerConfig,
-    type RoutingPreset,
-  } from '#layers/routing/app/types/routing'
+    buildPresetFlags,
+    resolveRoutingConfig,
+    simulateRoutingOutcome,
+  } from '~/utils/routingSimulation'
 
   definePageMeta({ layout: false })
 
@@ -15,27 +15,9 @@
   const appConfig = useAppConfig()
 
   // Reactive merged config — manual merge so we don't need to import defu here
-  const config = computed<RoutingLayerConfig>(() => {
-    const r = appConfig.routingLayer as Partial<RoutingLayerConfig>
-    const p = ROUTING_PRESETS[r.preset ?? 'simple']
-    return {
-      preset: r.preset ?? 'simple',
-      strictDefaultDeny: r.strictDefaultDeny ?? p.strictDefaultDeny,
-      layerDefaultDeny: r.layerDefaultDeny ?? p.layerDefaultDeny,
-      betaRedirect: r.betaRedirect ?? p.betaRedirect,
-      runtimeFlags: r.runtimeFlags ?? p.runtimeFlags,
-      debug: r.debug ?? p.debug,
-      maintenance: {
-        enabled: r.maintenance?.enabled ?? p.maintenance.enabled,
-        allowRoutes: r.maintenance?.allowRoutes ?? p.maintenance.allowRoutes,
-      },
-      scrollRouting: {
-        enabled: r.scrollRouting?.enabled ?? p.scrollRouting.enabled,
-        mode: r.scrollRouting?.mode ?? p.scrollRouting.mode,
-      },
-      features: { ...(r.features ?? {}) },
-    }
-  })
+  const config = computed<RoutingLayerConfig>(() =>
+    resolveRoutingConfig(appConfig.routingLayer as Partial<RoutingLayerConfig>)
+  )
 
   // Preset cards
   const PRESETS: RoutingPreset[] = ['simple', 'marketing', 'product', 'enterprise']
@@ -75,14 +57,7 @@
   }
 
   function presetFlags(preset: RoutingPreset): string[] {
-    const p = ROUTING_PRESETS[preset]
-    const flags: string[] = []
-    if (p.layerDefaultDeny) flags.push('layerDefaultDeny')
-    if (p.strictDefaultDeny) flags.push('strictDefaultDeny')
-    if (p.runtimeFlags) flags.push('runtimeFlags')
-    if (p.maintenance.enabled) flags.push('maintenance')
-    if (p.scrollRouting.enabled) flags.push('scrollRouting')
-    return flags
+    return buildPresetFlags(preset)
   }
 
   // Feature flags panel
@@ -124,92 +99,12 @@
   const simFromLayer = ref(false)
 
   const simResult = computed(() => {
-    const cfg = config.value
-    const feature = simFeature.value || undefined
-    const fromLayer = simFromLayer.value
-    const steps: Array<{ label: string; status: 'pass' | 'block' | 'redirect'; note: string }> = []
-
-    // 1. Maintenance check
-    if (cfg.maintenance.enabled) {
-      const allowed = cfg.maintenance.allowRoutes.some((r) => simPath.value.startsWith(r))
-      if (!allowed) {
-        steps.push({
-          label: 'Maintenance mode',
-          status: 'redirect',
-          note: `Redirect → ${cfg.maintenance.allowRoutes[0]}`,
-        })
-        return {
-          steps,
-          final: 'redirect' as const,
-          finalNote: `→ ${cfg.maintenance.allowRoutes[0]}`,
-        }
-      }
-      steps.push({ label: 'Maintenance mode', status: 'pass', note: 'Path is in allowRoutes' })
-    }
-
-    // 2. Strict default-deny
-    if (cfg.strictDefaultDeny) {
-      if (!feature) {
-        steps.push({
-          label: 'Strict mode (strictDefaultDeny)',
-          status: 'block',
-          note: 'No feature declared → 404',
-        })
-        return { steps, final: '404' as const, finalNote: 'strictDefaultDeny with no feature' }
-      }
-      steps.push({
-        label: 'Strict mode (strictDefaultDeny)',
-        status: 'pass',
-        note: 'Feature declared ✓',
-      })
-    }
-
-    // 3. Layer default-deny
-    if (cfg.layerDefaultDeny && fromLayer) {
-      if (!feature) {
-        steps.push({
-          label: 'Layer default-deny (layerDefaultDeny)',
-          status: 'block',
-          note: 'Layer route without feature → 404',
-        })
-        return {
-          steps,
-          final: '404' as const,
-          finalNote: 'layerDefaultDeny: layer route with no feature',
-        }
-      }
-      steps.push({
-        label: 'Layer default-deny (layerDefaultDeny)',
-        status: 'pass',
-        note: 'Layer route has feature ✓',
-      })
-    }
-
-    // 4. Feature resolution
-    if (!feature) {
-      steps.push({ label: 'Feature gate', status: 'pass', note: 'No feature required — allow' })
-      return { steps, final: 'allow' as const, finalNote: 'Allowed' }
-    }
-
-    const variant = cfg.features[feature] ?? 'disabled'
-    if (variant === 'disabled') {
-      steps.push({
-        label: `Feature "${feature}"`,
-        status: 'block',
-        note: 'Resolved: disabled → 404',
-      })
-      return { steps, final: '404' as const, finalNote: 'Feature disabled' }
-    }
-    if (variant === 'beta' || variant === 'coming-soon') {
-      steps.push({
-        label: `Feature "${feature}"`,
-        status: 'redirect',
-        note: `Resolved: ${variant} → /coming-soon`,
-      })
-      return { steps, final: 'redirect' as const, finalNote: '→ /coming-soon' }
-    }
-    steps.push({ label: `Feature "${feature}"`, status: 'pass', note: 'Resolved: enabled' })
-    return { steps, final: 'allow' as const, finalNote: 'Allowed' }
+    return simulateRoutingOutcome(
+      config.value,
+      simPath.value,
+      simFeature.value || undefined,
+      simFromLayer.value
+    )
   })
 
   // Maintenance toggle
