@@ -14,11 +14,9 @@ export type TweenHandle = {
  */
 export function tweenUniform(
   uniformNode: { value: number },
-  from: number,
-  to: number,
-  duration: number,
-  easing?: (t: number) => number
+  ...args: [from: number, to: number, duration: number, easing?: (t: number) => number]
 ): TweenHandle {
+  const [from, to, duration, easing] = args
   let startTime: number | null = null
   let cancelled = false
   let resolvePromise: () => void

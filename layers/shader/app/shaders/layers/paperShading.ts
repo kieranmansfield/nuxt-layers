@@ -9,6 +9,18 @@ import { grain as grainFn, paperTexture } from '../common/grain'
 import { fbm2D, simplexNoise2D } from '../common/noise'
 import type { FloatUniform, TSLNode } from '../types'
 
+const DEFAULT_PAPER_SHADING_OPTIONS = {
+  paperColor: '#f5f0e6',
+  inkColor: '#1a1a1a',
+  inkColor2: '#3d5a80',
+  speed: 0.1,
+  textureIntensity: 0.15,
+  flowIntensity: 1,
+  grainIntensity: 0.08,
+  bleed: 0.5,
+  edgeDarkness: 0.3,
+} as const
+
 export type PaperShadingOptions = {
   /** Base paper color */
   paperColor?: string
@@ -49,16 +61,16 @@ export function createPaperShadingUniforms(
   options: PaperShadingOptions = {}
 ): PaperShadingUniforms {
   const {
-    paperColor = '#f5f0e6',
-    inkColor = '#1a1a1a',
-    inkColor2 = '#3d5a80',
-    speed = 0.1,
-    textureIntensity = 0.15,
-    flowIntensity = 1,
-    grainIntensity = 0.08,
-    bleed = 0.5,
-    edgeDarkness = 0.3,
-  } = options
+    paperColor,
+    inkColor,
+    inkColor2,
+    speed,
+    textureIntensity,
+    flowIntensity,
+    grainIntensity,
+    bleed,
+    edgeDarkness,
+  } = { ...DEFAULT_PAPER_SHADING_OPTIONS, ...options }
 
   return {
     paperColor: uniform(new Color(paperColor)),

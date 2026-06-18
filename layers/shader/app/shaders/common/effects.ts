@@ -17,6 +17,7 @@ import {
 } from 'three/tsl'
 
 import type { TSLNode } from '../types'
+import { toScalarNode, toVec2Node } from './nodes'
 
 // ============================================
 // LED Effect
@@ -28,6 +29,13 @@ export type LEDEffectOptions = {
   exponent?: TSLNode | number
   edge?: TSLNode | number
 }
+
+const DEFAULT_LED_EFFECT_OPTIONS = {
+  scalar: 100,
+  zoom: 2,
+  exponent: 1.2,
+  edge: 0.1,
+} as const
 
 /**
  * LED screen effect for post-processing
@@ -41,12 +49,15 @@ export function ledEffect(
   inputUV: () => TSLNode = uv,
   options: LEDEffectOptions = {}
 ): TSLNode {
-  const { scalar = 100, zoom = 2, exponent = 1.2, edge = 0.1 } = options
+  const { scalar, zoom, exponent, edge } = {
+    ...DEFAULT_LED_EFFECT_OPTIONS,
+    ...options,
+  }
 
-  const _scalar = typeof scalar === 'number' ? float(scalar) : scalar
-  const _zoom = typeof zoom === 'number' ? float(zoom) : zoom
-  const _exponent = typeof exponent === 'number' ? float(exponent) : exponent
-  const _edge = typeof edge === 'number' ? float(edge) : edge
+  const _scalar = toScalarNode(scalar)
+  const _zoom = toScalarNode(zoom)
+  const _exponent = toScalarNode(exponent)
+  const _edge = toScalarNode(edge)
 
   const _uv = inputUV().toVar()
 
@@ -168,6 +179,13 @@ export type BulgeEffectOptions = {
   center?: TSLNode | [number, number]
 }
 
+const DEFAULT_BULGE_EFFECT_OPTIONS = {
+  strength: 0.5,
+  radius: 0.5,
+  power: 1,
+  center: [0.5, 0.5] as [number, number],
+} as const
+
 /**
  * Bulge/pinch distortion effect for post-processing
  * @param input - Input texture
@@ -179,12 +197,12 @@ export function bulgeEffect(
   inputUV: () => TSLNode = uv,
   options: BulgeEffectOptions = {}
 ): TSLNode {
-  const { strength = 0.5, radius = 0.5, power = 1.0, center = [0.5, 0.5] } = options
+  const { strength, radius, power, center } = { ...DEFAULT_BULGE_EFFECT_OPTIONS, ...options }
 
-  const _strength = typeof strength === 'number' ? float(strength) : strength
-  const _radius = typeof radius === 'number' ? float(radius) : radius
-  const _power = typeof power === 'number' ? float(power) : power
-  const _center = Array.isArray(center) ? vec2(center[0], center[1]) : center
+  const _strength = toScalarNode(strength)
+  const _radius = toScalarNode(radius)
+  const _power = toScalarNode(power)
+  const _center = toVec2Node(center)
 
   const _uv = inputUV().toVar()
   const offset = _uv.sub(_center).toVar()
@@ -227,23 +245,21 @@ export function waveDistortionEffect(
 ): TSLNode {
   const { frequency = 10, amplitude = 0.02, time = 0, direction = 'both' } = options
 
-  const _freq = typeof frequency === 'number' ? float(frequency) : frequency
-  const _amp = typeof amplitude === 'number' ? float(amplitude) : amplitude
-  const _time = typeof time === 'number' ? float(time) : time
+  const _freq = toScalarNode(frequency)
+  const _amp = toScalarNode(amplitude)
+  const _time = toScalarNode(time)
 
   const _uv = inputUV().toVar()
 
   const _eX = _uv.y.mul(_freq).add(_time).sin().mul(_amp)
   const _eY = _uv.x.mul(_freq).add(_time.mul(1.3)).sin().mul(_amp)
-  let distortedUV: TSLNode = vec2(_uv.x.add(_eX), _uv.y.add(_eY))
+  const distortedUVMap = {
+    both: vec2(_uv.x.add(_eX), _uv.y.add(_eY)),
+    x: vec2(_uv.x.add(_eX), _uv.y),
+    y: vec2(_uv.x, _uv.y.add(_uv.x.mul(_freq).add(_time).sin().mul(_amp))),
+  } satisfies Record<WaveDistortionOptions['direction'], TSLNode>
 
-  if (direction === 'x') {
-    distortedUV = vec2(_uv.x.add(_eX), _uv.y)
-  } else if (direction === 'y') {
-    distortedUV = vec2(_uv.x, _uv.y.add(_uv.x.mul(_freq).add(_time).sin().mul(_amp)))
-  }
-
-  return input.sample(distortedUV)
+  return input.sample(distortedUVMap[direction])
 }
 
 // ============================================

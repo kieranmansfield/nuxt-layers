@@ -5,6 +5,7 @@
 import { clamp, dot, float, floor, fract, mix, sin, smoothstep, vec2, vec3 } from 'three/tsl'
 
 import type { TSLNode } from '../types'
+import { toScalarNode } from './nodes'
 
 // ============================================
 // Basic Grain
@@ -31,11 +32,11 @@ export function grain(
 export function animatedGrain(
   uv: TSLNode,
   time: TSLNode,
-  intensity: TSLNode | number = 0.1,
-  speed: TSLNode | number = 1
+  ...args: [intensity?: TSLNode | number, speed?: TSLNode | number]
 ): TSLNode {
-  const int = typeof intensity === 'number' ? float(intensity) : intensity
-  const spd = typeof speed === 'number' ? float(speed) : speed
+  const [intensity = 0.1, speed = 1] = args
+  const int = toScalarNode(intensity)
+  const spd = toScalarNode(speed)
 
   // Use time as seed for animation
   const seed = floor(time.mul(spd).mul(24)) // 24 fps grain
@@ -93,11 +94,11 @@ export function bayer4x4(uv: TSLNode, scale: TSLNode | number = 1): TSLNode {
 export function ditherColor(
   color: TSLNode,
   uv: TSLNode,
-  levels: TSLNode | number = 16,
-  strength: TSLNode | number = 1
+  ...args: [levels?: TSLNode | number, strength?: TSLNode | number]
 ): TSLNode {
-  const lvl = typeof levels === 'number' ? float(levels) : levels
-  const str = typeof strength === 'number' ? float(strength) : strength
+  const [levels = 16, strength = 1] = args
+  const lvl = toScalarNode(levels)
+  const str = toScalarNode(strength)
 
   const threshold = bayer4x4(uv, 4).mul(str).div(lvl)
   const dithered = floor(color.mul(lvl).add(threshold)).div(lvl)
@@ -114,13 +115,12 @@ export function ditherColor(
  */
 export function scanlines(
   uv: TSLNode,
-  density: TSLNode | number = 400,
-  intensity: TSLNode | number = 0.25,
-  offset: TSLNode | number = 0
+  ...args: [density?: TSLNode | number, intensity?: TSLNode | number, offset?: TSLNode | number]
 ): TSLNode {
-  const d = typeof density === 'number' ? float(density) : density
-  const int = typeof intensity === 'number' ? float(intensity) : intensity
-  const off = typeof offset === 'number' ? float(offset) : offset
+  const [density = 400, intensity = 0.25, offset = 0] = args
+  const d = toScalarNode(density)
+  const int = toScalarNode(intensity)
+  const off = toScalarNode(offset)
 
   const line = sin(uv.y.add(off).mul(d).mul(Math.PI)).mul(0.5).add(0.5)
   return float(1).sub(line.mul(int))
@@ -131,13 +131,12 @@ export function scanlines(
  */
 export function interlace(
   uv: TSLNode,
-  density: TSLNode | number = 400,
-  intensity: TSLNode | number = 0.5,
-  frame: TSLNode | number = 0
+  ...args: [density?: TSLNode | number, intensity?: TSLNode | number, frame?: TSLNode | number]
 ): TSLNode {
-  const d = typeof density === 'number' ? float(density) : density
-  const int = typeof intensity === 'number' ? float(intensity) : intensity
-  const f = typeof frame === 'number' ? float(frame) : frame
+  const [density = 400, intensity = 0.5, frame = 0] = args
+  const d = toScalarNode(density)
+  const int = toScalarNode(intensity)
+  const f = toScalarNode(frame)
 
   const line = floor(uv.y.mul(d)).add(f).mod(2)
   return float(1).sub(line.mul(int))
@@ -152,13 +151,12 @@ export function interlace(
  */
 export function vignette(
   uv: TSLNode,
-  intensity: TSLNode | number = 0.5,
-  smoothness: TSLNode | number = 0.5,
-  roundness: TSLNode | number = 1
+  ...args: [intensity?: TSLNode | number, smoothness?: TSLNode | number, roundness?: TSLNode | number]
 ): TSLNode {
-  const int = typeof intensity === 'number' ? float(intensity) : intensity
-  const smooth = typeof smoothness === 'number' ? float(smoothness) : smoothness
-  const round = typeof roundness === 'number' ? float(roundness) : roundness
+  const [intensity = 0.5, smoothness = 0.5, roundness = 1] = args
+  const int = toScalarNode(intensity)
+  const smooth = toScalarNode(smoothness)
+  const round = toScalarNode(roundness)
 
   const center = uv.sub(0.5)
   const dist = center.length().mul(round)
@@ -192,13 +190,12 @@ export function rectVignette(
  */
 export function paperTexture(
   uv: TSLNode,
-  scale: TSLNode | number = 10,
-  intensity: TSLNode | number = 0.1,
-  seed: TSLNode | number = 0
+  ...args: [scale?: TSLNode | number, intensity?: TSLNode | number, seed?: TSLNode | number]
 ): TSLNode {
-  const s = typeof scale === 'number' ? float(scale) : scale
-  const int = typeof intensity === 'number' ? float(intensity) : intensity
-  const sd = typeof seed === 'number' ? float(seed) : seed
+  const [scale = 10, intensity = 0.1, seed = 0] = args
+  const s = toScalarNode(scale)
+  const int = toScalarNode(intensity)
+  const sd = toScalarNode(seed)
 
   // Multi-octave noise for paper texture
   const noise1 = grain(uv.mul(s), 1, sd)
@@ -214,11 +211,11 @@ export function paperTexture(
 export function halftone(
   uv: TSLNode,
   value: TSLNode,
-  scale: TSLNode | number = 50,
-  angle: TSLNode | number = 0
+  ...args: [scale?: TSLNode | number, angle?: TSLNode | number]
 ): TSLNode {
-  const s = typeof scale === 'number' ? float(scale) : scale
-  const a = typeof angle === 'number' ? float(angle) : angle
+  const [scale = 50, angle = 0] = args
+  const s = toScalarNode(scale)
+  const a = toScalarNode(angle)
 
   // Rotate UV
   const cosA = a.cos()
@@ -245,9 +242,9 @@ export function halftone(
 export function applyGrain(
   color: TSLNode,
   uv: TSLNode,
-  intensity: TSLNode | number = 0.05,
-  seed: TSLNode | number = 0
+  ...args: [intensity?: TSLNode | number, seed?: TSLNode | number]
 ): TSLNode {
+  const [intensity = 0.05, seed = 0] = args
   const grainValue = grain(uv, intensity, seed)
   return clamp(color.add(grainValue), 0, 1)
 }
@@ -258,9 +255,9 @@ export function applyGrain(
 export function applyColoredGrain(
   color: TSLNode,
   uv: TSLNode,
-  intensity: TSLNode | number = 0.05,
-  seed: TSLNode | number = 0
+  ...args: [intensity?: TSLNode | number, seed?: TSLNode | number]
 ): TSLNode {
+  const [intensity = 0.05, seed = 0] = args
   const grainValue = coloredGrain(uv, intensity, seed)
   return clamp(color.add(grainValue), 0, 1)
 }
@@ -271,8 +268,9 @@ export function applyColoredGrain(
 export function applyVignette(
   color: TSLNode,
   uv: TSLNode,
-  intensity: TSLNode | number = 0.5
+  ...args: [intensity?: TSLNode | number]
 ): TSLNode {
+  const [intensity = 0.5] = args
   const vignetteValue = vignette(uv, intensity)
   return color.mul(vignetteValue)
 }
@@ -283,9 +281,9 @@ export function applyVignette(
 export function applyScanlines(
   color: TSLNode,
   uv: TSLNode,
-  density: TSLNode | number = 400,
-  intensity: TSLNode | number = 0.25
+  ...args: [density?: TSLNode | number, intensity?: TSLNode | number]
 ): TSLNode {
+  const [density = 400, intensity = 0.25] = args
   const scanlineValue = scanlines(uv, density, intensity)
   return color.mul(scanlineValue)
 }
@@ -437,13 +435,12 @@ export function bayer8x8(uv: TSLNode, scale: TSLNode | number = 1): TSLNode {
 export function dither8x8Color(
   color: TSLNode,
   uv: TSLNode,
-  levels: TSLNode | number = 16,
-  strength: TSLNode | number = 1,
-  bias: TSLNode | number = 0.5
+  ...args: [levels?: TSLNode | number, strength?: TSLNode | number, bias?: TSLNode | number]
 ): TSLNode {
-  const lvl = typeof levels === 'number' ? float(levels) : levels
-  const str = typeof strength === 'number' ? float(strength) : strength
-  const b = typeof bias === 'number' ? float(bias) : bias
+  const [levels = 16, strength = 1, bias = 0.5] = args
+  const lvl = toScalarNode(levels)
+  const str = toScalarNode(strength)
+  const b = toScalarNode(bias)
 
   const threshold = bayer8x8(uv, 8).sub(b).mul(str).div(lvl)
   const dithered = floor(color.mul(lvl).add(threshold)).div(lvl)

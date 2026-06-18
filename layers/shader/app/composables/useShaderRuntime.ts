@@ -2,7 +2,6 @@ import type { InjectionKey } from 'vue'
 import { Color } from 'three'
 import { uniform } from 'three/tsl'
 
-
 export type ShaderRuntimeOptions = {
   speed?: number
   accentColor?: string

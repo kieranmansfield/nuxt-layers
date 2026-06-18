@@ -106,6 +106,94 @@ const sideMap: Record<string, Side> = {
   double: DoubleSide,
 }
 
+function createShaderUniforms<T extends ShaderType>(
+  type: T,
+  shaderOptions?: ShaderOptions<T>
+): ShaderUniforms<T> {
+  switch (type) {
+    case 'stripe':
+      return createStripeGradientUniforms(shaderOptions as StripeGradientOptions) as ShaderUniforms<T>
+    case 'meshGradient':
+      return createMeshGradientUniforms(shaderOptions as MeshGradientOptions) as ShaderUniforms<T>
+    case 'aurora':
+      return createAuroraUniforms(shaderOptions as AuroraOptions) as ShaderUniforms<T>
+    case 'shaderGradient':
+      return createShaderGradientUniforms(shaderOptions as ShaderGradientOptions) as ShaderUniforms<T>
+    case 'paperShading':
+      return createPaperShadingUniforms(shaderOptions as PaperShadingOptions) as ShaderUniforms<T>
+  }
+}
+
+function createShaderColorNode<T extends ShaderType>(type: T, uniforms: ShaderUniforms<T>): TSLNode {
+  switch (type) {
+    case 'stripe':
+      return stripeGradient(uniforms as StripeGradientUniforms)
+    case 'meshGradient':
+      return meshGradient(uniforms as MeshGradientUniforms)
+    case 'aurora':
+      return aurora(uniforms as AuroraUniforms)
+    case 'shaderGradient':
+      return shaderGradient(uniforms as ShaderGradientUniforms)
+    case 'paperShading':
+      return paperShading(uniforms as PaperShadingUniforms)
+  }
+}
+
+function updateShaderUniforms<T extends ShaderType>(
+  type: T,
+  uniforms: ShaderUniforms<T>,
+  options: Partial<ShaderOptions<T>>
+): void {
+  switch (type) {
+    case 'stripe':
+      updateStripeGradientUniforms(
+        uniforms as StripeGradientUniforms,
+        options as Partial<StripeGradientOptions>
+      )
+      return
+    case 'meshGradient':
+      updateMeshGradientUniforms(
+        uniforms as MeshGradientUniforms,
+        options as Partial<MeshGradientOptions>
+      )
+      return
+    case 'aurora':
+      updateAuroraUniforms(uniforms as AuroraUniforms, options as Partial<AuroraOptions>)
+      return
+    case 'shaderGradient':
+      updateShaderGradientUniforms(
+        uniforms as ShaderGradientUniforms,
+        options as Partial<ShaderGradientOptions>
+      )
+      return
+    case 'paperShading':
+      updatePaperShadingUniforms(
+        uniforms as PaperShadingUniforms,
+        options as Partial<PaperShadingOptions>
+      )
+  }
+}
+
+function applyMaterialOptions(
+  material: MeshBasicNodeMaterial,
+  colorNode: TSLNode,
+  options?: MaterialOptions
+): void {
+  const {
+    transparent = false,
+    side = 'double',
+    opacity = 1,
+    depthTest = true,
+    depthWrite = true,
+  } = options || {}
+
+  material.transparent = transparent
+  material.side = sideMap[side] || DoubleSide
+  material.depthTest = depthTest
+  material.depthWrite = depthWrite
+  material.colorNode = transparent ? vec4(colorNode, opacity) : colorNode
+}
+
 // ============================================
 // Factory Functions
 // ============================================
@@ -118,90 +206,16 @@ export function createShaderMaterial<T extends ShaderType>(
   shaderOptions?: ShaderOptions<T>,
   materialOptions?: MaterialOptions
 ): ShaderMaterialResult<T> {
-  const {
-    transparent = false,
-    side = 'double',
-    opacity = 1,
-    depthTest = true,
-    depthWrite = true,
-  } = materialOptions || {}
-
-  let uniforms: ShaderUniforms<T>
-  let colorNode: TSLNode
-
-  // Create uniforms and color node based on type
-  switch (type) {
-    case 'stripe':
-      uniforms = createStripeGradientUniforms(
-        shaderOptions as StripeGradientOptions
-      ) as ShaderUniforms<T>
-      colorNode = stripeGradient(uniforms as StripeGradientUniforms)
-      break
-    case 'meshGradient':
-      uniforms = createMeshGradientUniforms(
-        shaderOptions as MeshGradientOptions
-      ) as ShaderUniforms<T>
-      colorNode = meshGradient(uniforms as MeshGradientUniforms)
-      break
-    case 'aurora':
-      uniforms = createAuroraUniforms(shaderOptions as AuroraOptions) as ShaderUniforms<T>
-      colorNode = aurora(uniforms as AuroraUniforms)
-      break
-    case 'shaderGradient':
-      uniforms = createShaderGradientUniforms(
-        shaderOptions as ShaderGradientOptions
-      ) as ShaderUniforms<T>
-      colorNode = shaderGradient(uniforms as ShaderGradientUniforms)
-      break
-    case 'paperShading':
-      uniforms = createPaperShadingUniforms(
-        shaderOptions as PaperShadingOptions
-      ) as ShaderUniforms<T>
-      colorNode = paperShading(uniforms as PaperShadingUniforms)
-      break
-    default:
-      throw new Error(`Unknown shader type: ${type}`)
-  }
+  const uniforms = createShaderUniforms(type, shaderOptions)
+  const colorNode = createShaderColorNode(type, uniforms)
 
   // Create material
   const material = new MeshBasicNodeMaterial()
-  material.colorNode = transparent ? vec4(colorNode, opacity) : colorNode
-  material.transparent = transparent
-  material.side = sideMap[side] || DoubleSide
-  material.depthTest = depthTest
-  material.depthWrite = depthWrite
+  applyMaterialOptions(material, colorNode, materialOptions)
 
   // Update function
   const update = (options: Partial<ShaderOptions<T>>) => {
-    switch (type) {
-      case 'stripe':
-        updateStripeGradientUniforms(
-          uniforms as StripeGradientUniforms,
-          options as Partial<StripeGradientOptions>
-        )
-        break
-      case 'meshGradient':
-        updateMeshGradientUniforms(
-          uniforms as MeshGradientUniforms,
-          options as Partial<MeshGradientOptions>
-        )
-        break
-      case 'aurora':
-        updateAuroraUniforms(uniforms as AuroraUniforms, options as Partial<AuroraOptions>)
-        break
-      case 'shaderGradient':
-        updateShaderGradientUniforms(
-          uniforms as ShaderGradientUniforms,
-          options as Partial<ShaderGradientOptions>
-        )
-        break
-      case 'paperShading':
-        updatePaperShadingUniforms(
-          uniforms as PaperShadingUniforms,
-          options as Partial<PaperShadingOptions>
-        )
-        break
-    }
+    updateShaderUniforms(type, uniforms, options)
   }
 
   // Dispose function

@@ -5,6 +5,7 @@
 import { abs, clamp, float, max, min, mix, step, vec3 } from 'three/tsl'
 
 import type { TSLNode } from '../types'
+import { toScalarNode } from './nodes'
 
 // ============================================
 // Basic Blending
@@ -168,11 +169,10 @@ export function blendPinLight(base: TSLNode, blend: TSLNode): TSLNode {
  */
 export function blendWithOpacity(
   base: TSLNode,
-  blend: TSLNode,
-  blendFn: (a: TSLNode, b: TSLNode) => TSLNode,
-  opacity: TSLNode | number = 1
+  ...args: [blend: TSLNode, blendFn: (a: TSLNode, b: TSLNode) => TSLNode, opacity?: TSLNode | number]
 ): TSLNode {
-  const op = typeof opacity === 'number' ? float(opacity) : opacity
+  const [blend, blendFn, opacity = 1] = args
+  const op = toScalarNode(opacity)
   const blended = blendFn(base, blend)
   return mix(base, blended, op)
 }

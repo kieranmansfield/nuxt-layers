@@ -16,10 +16,10 @@ import {
   sin,
   smoothstep,
   step,
-  vec2,
 } from 'three/tsl'
 
 import type { TSLNode } from '../types'
+import { toScalarNode, toVec2Node } from './nodes'
 
 // ============================================
 // Basic Shapes
@@ -30,13 +30,16 @@ import type { TSLNode } from '../types'
  */
 export function blob(
   uv: TSLNode,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  radius: TSLNode | number = 0.3,
-  softness: TSLNode | number = 0.1
+  ...args: [
+    center?: TSLNode | [number, number],
+    radius?: TSLNode | number,
+    softness?: TSLNode | number,
+  ]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const r = typeof radius === 'number' ? float(radius) : radius
-  const s = typeof softness === 'number' ? float(softness) : softness
+  const [center = [0.5, 0.5], radius = 0.3, softness = 0.1] = args
+  const c = toVec2Node(center)
+  const r = toScalarNode(radius)
+  const s = toScalarNode(softness)
 
   const d = length(uv.sub(c))
   return smoothstep(r.add(s), r.sub(s), d)
@@ -47,11 +50,11 @@ export function blob(
  */
 export function circle(
   uv: TSLNode,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  radius: TSLNode | number = 0.3
+  ...args: [center?: TSLNode | [number, number], radius?: TSLNode | number]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const r = typeof radius === 'number' ? float(radius) : radius
+  const [center = [0.5, 0.5], radius = 0.3] = args
+  const c = toVec2Node(center)
+  const r = toScalarNode(radius)
 
   const d = length(uv.sub(c))
   return step(d, r)
@@ -62,15 +65,18 @@ export function circle(
  */
 export function ring(
   uv: TSLNode,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  innerRadius: TSLNode | number = 0.2,
-  outerRadius: TSLNode | number = 0.3,
-  softness: TSLNode | number = 0.02
+  ...args: [
+    center?: TSLNode | [number, number],
+    innerRadius?: TSLNode | number,
+    outerRadius?: TSLNode | number,
+    softness?: TSLNode | number,
+  ]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const inner = typeof innerRadius === 'number' ? float(innerRadius) : innerRadius
-  const outer = typeof outerRadius === 'number' ? float(outerRadius) : outerRadius
-  const s = typeof softness === 'number' ? float(softness) : softness
+  const [center = [0.5, 0.5], innerRadius = 0.2, outerRadius = 0.3, softness = 0.02] = args
+  const c = toVec2Node(center)
+  const inner = toScalarNode(innerRadius)
+  const outer = toScalarNode(outerRadius)
+  const s = toScalarNode(softness)
 
   const d = length(uv.sub(c))
   const outerEdge = smoothstep(outer.add(s), outer.sub(s), d)
@@ -84,11 +90,11 @@ export function ring(
  */
 export function radialGradient(
   uv: TSLNode,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  scale: TSLNode | number = 1
+  ...args: [center?: TSLNode | [number, number], scale?: TSLNode | number]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const s = typeof scale === 'number' ? float(scale) : scale
+  const [center = [0.5, 0.5], scale = 1] = args
+  const c = toVec2Node(center)
+  const s = toScalarNode(scale)
 
   return max(float(0), float(1).sub(length(uv.sub(c)).mul(s)))
 }
@@ -98,15 +104,18 @@ export function radialGradient(
  */
 export function roundedRect(
   uv: TSLNode,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  size: TSLNode | [number, number] = [0.4, 0.3],
-  cornerRadius: TSLNode | number = 0.05,
-  softness: TSLNode | number = 0.01
+  ...args: [
+    center?: TSLNode | [number, number],
+    size?: TSLNode | [number, number],
+    cornerRadius?: TSLNode | number,
+    softness?: TSLNode | number,
+  ]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const sz = Array.isArray(size) ? vec2(size[0], size[1]) : size
-  const r = typeof cornerRadius === 'number' ? float(cornerRadius) : cornerRadius
-  const s = typeof softness === 'number' ? float(softness) : softness
+  const [center = [0.5, 0.5], size = [0.4, 0.3], cornerRadius = 0.05, softness = 0.01] = args
+  const c = toVec2Node(center)
+  const sz = toVec2Node(size)
+  const r = toScalarNode(cornerRadius)
+  const s = toScalarNode(softness)
 
   const p: TSLNode = abs(uv.sub(c)).sub(sz.div(2)).add(r)
   const d = length(max(p, 0))
@@ -121,11 +130,11 @@ export function roundedRect(
  */
 export function rect(
   uv: TSLNode,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  size: TSLNode | [number, number] = [0.4, 0.3]
+  ...args: [center?: TSLNode | [number, number], size?: TSLNode | [number, number]]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const sz = Array.isArray(size) ? vec2(size[0], size[1]) : size
+  const [center = [0.5, 0.5], size = [0.4, 0.3]] = args
+  const c = toVec2Node(center)
+  const sz = toVec2Node(size)
 
   const p: TSLNode = abs(uv.sub(c))
   const halfSize = sz.div(2)
@@ -142,13 +151,12 @@ export function rect(
  */
 export function horizontalLine(
   uv: TSLNode,
-  y: TSLNode | number = 0.5,
-  thickness: TSLNode | number = 0.02,
-  softness: TSLNode | number = 0.005
+  ...args: [y?: TSLNode | number, thickness?: TSLNode | number, softness?: TSLNode | number]
 ): TSLNode {
-  const yPos = typeof y === 'number' ? float(y) : y
-  const t = typeof thickness === 'number' ? float(thickness) : thickness
-  const s = typeof softness === 'number' ? float(softness) : softness
+  const [y = 0.5, thickness = 0.02, softness = 0.005] = args
+  const yPos = toScalarNode(y)
+  const t = toScalarNode(thickness)
+  const s = toScalarNode(softness)
 
   const d = abs(uv.y.sub(yPos))
   return smoothstep(t.div(2).add(s), t.div(2).sub(s), d)
@@ -159,13 +167,12 @@ export function horizontalLine(
  */
 export function verticalLine(
   uv: TSLNode,
-  x: TSLNode | number = 0.5,
-  thickness: TSLNode | number = 0.02,
-  softness: TSLNode | number = 0.005
+  ...args: [x?: TSLNode | number, thickness?: TSLNode | number, softness?: TSLNode | number]
 ): TSLNode {
-  const xPos = typeof x === 'number' ? float(x) : x
-  const t = typeof thickness === 'number' ? float(thickness) : thickness
-  const s = typeof softness === 'number' ? float(softness) : softness
+  const [x = 0.5, thickness = 0.02, softness = 0.005] = args
+  const xPos = toScalarNode(x)
+  const t = toScalarNode(thickness)
+  const s = toScalarNode(softness)
 
   const d = abs(uv.x.sub(xPos))
   return smoothstep(t.div(2).add(s), t.div(2).sub(s), d)
@@ -176,13 +183,12 @@ export function verticalLine(
  */
 export function stripes(
   uv: TSLNode,
-  frequency: TSLNode | number = 10,
-  thickness: TSLNode | number = 0.5,
-  angle: TSLNode | number = 0
+  ...args: [frequency?: TSLNode | number, thickness?: TSLNode | number, angle?: TSLNode | number]
 ): TSLNode {
-  const freq = typeof frequency === 'number' ? float(frequency) : frequency
-  const t = typeof thickness === 'number' ? float(thickness) : thickness
-  const a = typeof angle === 'number' ? float(angle) : angle
+  const [frequency = 10, thickness = 0.5, angle = 0] = args
+  const freq = toScalarNode(frequency)
+  const t = toScalarNode(thickness)
+  const a = toScalarNode(angle)
 
   // Rotate UV
   const cosA = cos(a)
@@ -242,19 +248,18 @@ export function grid(
  */
 export function dots(
   uv: TSLNode,
-  cellSize: TSLNode | number = 0.1,
-  dotRadius: TSLNode | number = 0.03,
-  softness?: TSLNode | number
+  ...args: [cellSize?: TSLNode | number, dotRadius?: TSLNode | number, softness?: TSLNode | number]
 ): TSLNode {
-  const size = typeof cellSize === 'number' ? float(cellSize) : cellSize
-  const radius = typeof dotRadius === 'number' ? float(dotRadius) : dotRadius
+  const [cellSize = 0.1, dotRadius = 0.03, softness] = args
+  const size = toScalarNode(cellSize)
+  const radius = toScalarNode(dotRadius)
 
   const gridUV: TSLNode = fract(uv.div(size)).sub(0.5)
   const d = length(gridUV.mul(size))
 
   if (softness === undefined) return step(d, radius)
 
-  const soft = typeof softness === 'number' ? float(softness) : softness
+  const soft = toScalarNode(softness)
   return float(1).sub(smoothstep(radius.sub(soft), radius.add(soft), d))
 }
 
@@ -276,15 +281,18 @@ export function checker(uv: TSLNode, scale: TSLNode | number = 10): TSLNode {
  */
 export function star(
   uv: TSLNode,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  points: number = 5,
-  innerRadius: TSLNode | number = 0.1,
-  outerRadius: TSLNode | number = 0.3,
-  softness?: TSLNode | number
+  ...args: [
+    center?: TSLNode | [number, number],
+    points?: number,
+    innerRadius?: TSLNode | number,
+    outerRadius?: TSLNode | number,
+    softness?: TSLNode | number,
+  ]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const inner = typeof innerRadius === 'number' ? float(innerRadius) : innerRadius
-  const outer = typeof outerRadius === 'number' ? float(outerRadius) : outerRadius
+  const [center = [0.5, 0.5], points = 5, innerRadius = 0.1, outerRadius = 0.3, softness] = args
+  const c = toVec2Node(center)
+  const inner = toScalarNode(innerRadius)
+  const outer = toScalarNode(outerRadius)
 
   const p = uv.sub(c)
   const angle = atan(p.y, p.x)
@@ -302,7 +310,7 @@ export function star(
 
   if (softness === undefined) return step(dist, targetRadius)
 
-  const soft = typeof softness === 'number' ? float(softness) : softness
+  const soft = toScalarNode(softness)
   return float(1).sub(smoothstep(targetRadius.sub(soft), targetRadius.add(soft), dist))
 }
 
@@ -311,12 +319,11 @@ export function star(
  */
 export function radialLines(
   uv: TSLNode,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  numLines: number = 12,
-  thickness: TSLNode | number = 0.5
+  ...args: [center?: TSLNode | [number, number], numLines?: number, thickness?: TSLNode | number]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const t = typeof thickness === 'number' ? float(thickness) : thickness
+  const [center = [0.5, 0.5], numLines = 12, thickness = 0.5] = args
+  const c = toVec2Node(center)
+  const t = toScalarNode(thickness)
 
   const p = uv.sub(c)
   const angle = atan(p.y, p.x).add(Math.PI)
@@ -331,13 +338,12 @@ export function radialLines(
  */
 export function concentricCircles(
   uv: TSLNode,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  frequency: TSLNode | number = 10,
-  thickness: TSLNode | number = 0.5
+  ...args: [center?: TSLNode | [number, number], frequency?: TSLNode | number, thickness?: TSLNode | number]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const freq = typeof frequency === 'number' ? float(frequency) : frequency
-  const t = typeof thickness === 'number' ? float(thickness) : thickness
+  const [center = [0.5, 0.5], frequency = 10, thickness = 0.5] = args
+  const c = toVec2Node(center)
+  const freq = toScalarNode(frequency)
+  const t = toScalarNode(thickness)
 
   const d: TSLNode = length(uv.sub(c))
   return step(fract(d.mul(freq)), t)
@@ -352,15 +358,18 @@ export function concentricCircles(
  */
 export function polygon(
   uv: TSLNode,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  sides: number = 6,
-  radius: TSLNode | number = 0.3,
-  rotation: TSLNode | number = 0,
-  softness?: TSLNode | number
+  ...args: [
+    center?: TSLNode | [number, number],
+    sides?: number,
+    radius?: TSLNode | number,
+    rotation?: TSLNode | number,
+    softness?: TSLNode | number,
+  ]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const r = typeof radius === 'number' ? float(radius) : radius
-  const rot = typeof rotation === 'number' ? float(rotation) : rotation
+  const [center = [0.5, 0.5], sides = 6, radius = 0.3, rotation = 0, softness] = args
+  const c = toVec2Node(center)
+  const r = toScalarNode(radius)
+  const rot = toScalarNode(rotation)
 
   const p = uv.sub(c)
   const angle = atan(p.y, p.x).add(rot)
@@ -374,6 +383,6 @@ export function polygon(
 
   if (softness === undefined) return step(dist, edgeDist)
 
-  const soft = typeof softness === 'number' ? float(softness) : softness
+  const soft = toScalarNode(softness)
   return float(1).sub(smoothstep(edgeDist.sub(soft), edgeDist.add(soft), dist))
 }

@@ -48,10 +48,9 @@ export function gradient2(t: TSLNode, color1: TSLNode | string, color2: TSLNode 
  */
 export function gradient3(
   t: TSLNode,
-  color1: TSLNode | string,
-  color2: TSLNode | string,
-  color3: TSLNode | string
+  ...colors: [color1: TSLNode | string, color2: TSLNode | string, color3: TSLNode | string]
 ): TSLNode {
+  const [color1, color2, color3] = colors
   const c1 = typeof color1 === 'string' ? hexToVec3(color1) : color1
   const c2 = typeof color2 === 'string' ? hexToVec3(color2) : color2
   const c3 = typeof color3 === 'string' ? hexToVec3(color3) : color3
@@ -68,11 +67,14 @@ export function gradient3(
  */
 export function gradient4(
   t: TSLNode,
-  color1: TSLNode | string,
-  color2: TSLNode | string,
-  color3: TSLNode | string,
-  color4: TSLNode | string
+  ...colors: [
+    color1: TSLNode | string,
+    color2: TSLNode | string,
+    color3: TSLNode | string,
+    color4: TSLNode | string,
+  ]
 ): TSLNode {
+  const [color1, color2, color3, color4] = colors
   const c1 = typeof color1 === 'string' ? hexToVec3(color1) : color1
   const c2 = typeof color2 === 'string' ? hexToVec3(color2) : color2
   const c3 = typeof color3 === 'string' ? hexToVec3(color3) : color3
@@ -133,11 +135,19 @@ export function gradientMulti(t: TSLNode, stops: ColorStop[]): TSLNode {
  */
 export function cosinePalette(
   t: TSLNode,
-  brightness: TSLNode | [number, number, number] = [0.5, 0.5, 0.5],
-  contrast: TSLNode | [number, number, number] = [0.5, 0.5, 0.5],
-  frequency: TSLNode | [number, number, number] = [1.0, 1.0, 1.0],
-  phase: TSLNode | [number, number, number] = [0.0, 0.33, 0.67]
+  ...args: [
+    brightness?: TSLNode | [number, number, number],
+    contrast?: TSLNode | [number, number, number],
+    frequency?: TSLNode | [number, number, number],
+    phase?: TSLNode | [number, number, number],
+  ]
 ): TSLNode {
+  const [
+    brightness = [0.5, 0.5, 0.5],
+    contrast = [0.5, 0.5, 0.5],
+    frequency = [1.0, 1.0, 1.0],
+    phase = [0.0, 0.33, 0.67],
+  ] = args
   const a = Array.isArray(brightness) ? vec3(...brightness) : brightness
   const b = Array.isArray(contrast) ? vec3(...contrast) : contrast
   const c = Array.isArray(frequency) ? vec3(...frequency) : frequency

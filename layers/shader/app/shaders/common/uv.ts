@@ -5,12 +5,7 @@
 import { abs, atan, cos, float, floor, fract, length, mix, pow, sin, smoothstep, vec2 } from 'three/tsl'
 
 import type { TSLNode } from '../types'
-
-function toVec2Node(val: TSLNode | number | [number, number]): TSLNode {
-  if (typeof val === 'number') return vec2(val, val)
-  if (Array.isArray(val)) return vec2(val[0], val[1])
-  return val
-}
+import { toScalarNode, toVec2Node } from './nodes'
 
 // ============================================
 // Basic Transformations
@@ -124,14 +119,17 @@ export function fromPolar(
  */
 export function waveUV(
   uv: TSLNode,
-  frequency: TSLNode | number = 10,
-  amplitude: TSLNode | number = 0.05,
-  time: TSLNode | number = 0,
-  direction: 'x' | 'y' | 'both' = 'y'
+  ...args: [
+    frequency?: TSLNode | number,
+    amplitude?: TSLNode | number,
+    time?: TSLNode | number,
+    direction?: 'x' | 'y' | 'both',
+  ]
 ): TSLNode {
-  const freq = typeof frequency === 'number' ? float(frequency) : frequency
-  const amp = typeof amplitude === 'number' ? float(amplitude) : amplitude
-  const t = typeof time === 'number' ? float(time) : time
+  const [frequency = 10, amplitude = 0.05, time = 0, direction = 'y'] = args
+  const freq = toScalarNode(frequency)
+  const amp = toScalarNode(amplitude)
+  const t = toScalarNode(time)
 
   if (direction === 'x') {
     const offset = sin(uv.y.mul(freq).add(t)).mul(amp)
@@ -151,17 +149,20 @@ export function waveUV(
  */
 export function rippleUV(
   uv: TSLNode,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  frequency: TSLNode | number = 10,
-  amplitude: TSLNode | number = 0.05,
-  time: TSLNode | number = 0,
-  falloff: TSLNode | number = 1
+  ...args: [
+    center?: TSLNode | [number, number],
+    frequency?: TSLNode | number,
+    amplitude?: TSLNode | number,
+    time?: TSLNode | number,
+    falloff?: TSLNode | number,
+  ]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const freq = typeof frequency === 'number' ? float(frequency) : frequency
-  const amp = typeof amplitude === 'number' ? float(amplitude) : amplitude
-  const t = typeof time === 'number' ? float(time) : time
-  const fall = typeof falloff === 'number' ? float(falloff) : falloff
+  const [center = [0.5, 0.5], frequency = 10, amplitude = 0.05, time = 0, falloff = 1] = args
+  const c = toVec2Node(center)
+  const freq = toScalarNode(frequency)
+  const amp = toScalarNode(amplitude)
+  const t = toScalarNode(time)
+  const fall = toScalarNode(falloff)
 
   const diff = uv.sub(c)
   const dist: TSLNode = length(diff)
@@ -178,13 +179,12 @@ export function rippleUV(
  */
 export function swirlUV(
   uv: TSLNode,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  strength: TSLNode | number = 1,
-  radius: TSLNode | number = 0.5
+  ...args: [center?: TSLNode | [number, number], strength?: TSLNode | number, radius?: TSLNode | number]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const str = typeof strength === 'number' ? float(strength) : strength
-  const r = typeof radius === 'number' ? float(radius) : radius
+  const [center = [0.5, 0.5], strength = 1, radius = 0.5] = args
+  const c = toVec2Node(center)
+  const str = toScalarNode(strength)
+  const r = toScalarNode(radius)
 
   const diff = uv.sub(c)
   const dist = length(diff)
@@ -238,12 +238,11 @@ export function pincushionUV(
  */
 export function kaleidoscopeUV(
   uv: TSLNode,
-  segments: number = 6,
-  center: TSLNode | [number, number] = [0.5, 0.5],
-  rotation: TSLNode | number = 0
+  ...args: [segments?: number, center?: TSLNode | [number, number], rotation?: TSLNode | number]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const rot = typeof rotation === 'number' ? float(rotation) : rotation
+  const [segments = 6, center = [0.5, 0.5], rotation = 0] = args
+  const c = toVec2Node(center)
+  const rot = toScalarNode(rotation)
 
   const polar = toPolar(uv, c)
   const segmentAngle = float(1 / segments)

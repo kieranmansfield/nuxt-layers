@@ -13,7 +13,10 @@ export type ShaderGraphEntry = {
 }
 
 export type ShaderGraph = {
-  register: (id: string, node: TSLNode, order?: number, blend?: BlendMode, opacity?: number) => void
+  register: (
+    id: string,
+    ...args: [node: TSLNode, order?: number, blend?: BlendMode, opacity?: number]
+  ) => void
   unregister: (id: string) => void
   update: (id: string, node: TSLNode) => void
   finalNode: ComputedRef<TSLNode | null>
@@ -33,11 +36,9 @@ export function useShaderGraph(): ShaderGraph {
 
   function register(
     id: string,
-    node: TSLNode,
-    order = 0,
-    blend: BlendMode = 'normal',
-    opacity = 1.0
+    ...args: [node: TSLNode, order?: number, blend?: BlendMode, opacity?: number]
   ) {
+    const [node, order = 0, blend = 'normal', opacity = 1.0] = args
     entries.set(id, { node, order, blend, opacity })
     version.value++
   }
@@ -99,7 +100,11 @@ export function useShaderGraphContext(): ShaderGraph {
   return graph
 }
 
-function applyBlend(base: TSLNode, layer: TSLNode, mode: BlendMode, opacity: number): TSLNode {
+function applyBlend(
+  base: TSLNode,
+  ...args: [layer: TSLNode, mode: BlendMode, opacity?: number]
+): TSLNode {
+  const [layer, mode, opacity = 1] = args
   let blended: TSLNode
 
   switch (mode) {

@@ -167,11 +167,9 @@ export function complexTan(a: TSLNode): TSLNode {
  */
 export function grad(
   st: TSLNode,
-  color1: TSLNode,
-  color2: TSLNode,
-  color3: TSLNode,
-  color4: TSLNode
+  ...colors: [color1: TSLNode, color2: TSLNode, color3: TSLNode, color4: TSLNode]
 ): TSLNode {
+  const [color1, color2, color3, color4] = colors
   const _uv = vec2(st).toVar()
   const _color0 = vec4(color1, 1.0).toVar()
   const _color1 = vec4(color2, 1.0).toVar()

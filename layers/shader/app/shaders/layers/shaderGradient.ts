@@ -8,6 +8,31 @@ import { cos, mix, pow, sin, smoothstep, time as tslTime, uniform, uv, vec2, vec
 import { fbm2D, simplexNoise2D } from '../common/noise'
 import type { FloatUniform, TSLNode } from '../types'
 
+const DEFAULT_SHADER_GRADIENT_OPTIONS = {
+  color1: '#ff5722',
+  color2: '#673ab7',
+  color3: '#2196f3',
+  speed: 0.4,
+  morphIntensity: 1,
+  grain: 0.03,
+  lightX: 0.5,
+  lightY: 0.5,
+  brightness: 1,
+  zoom: 1,
+} as const
+
+function setNumberUniform(uniform: FloatUniform, value: number | undefined): void {
+  if (value !== undefined) {
+    uniform.value = value
+  }
+}
+
+function setColorUniform(uniform: TSLNode, value: string | undefined): void {
+  if (value !== undefined) {
+    uniform.value = new Color(value)
+  }
+}
+
 export type ShaderGradientOptions = {
   /** Primary color */
   color1?: string
@@ -51,17 +76,17 @@ export function createShaderGradientUniforms(
   options: ShaderGradientOptions = {}
 ): ShaderGradientUniforms {
   const {
-    color1 = '#ff5722',
-    color2 = '#673ab7',
-    color3 = '#2196f3',
-    speed = 0.4,
-    morphIntensity = 1,
-    grain = 0.03,
-    lightX = 0.5,
-    lightY = 0.5,
-    brightness = 1,
-    zoom = 1,
-  } = options
+    color1,
+    color2,
+    color3,
+    speed,
+    morphIntensity,
+    grain,
+    lightX,
+    lightY,
+    brightness,
+    zoom,
+  } = { ...DEFAULT_SHADER_GRADIENT_OPTIONS, ...options }
 
   return {
     color1: uniform(new Color(color1)),
@@ -139,14 +164,14 @@ export function updateShaderGradientUniforms(
   uniforms: ShaderGradientUniforms,
   options: Partial<ShaderGradientOptions>
 ): void {
-  if (options.color1 !== undefined) uniforms.color1.value = new Color(options.color1)
-  if (options.color2 !== undefined) uniforms.color2.value = new Color(options.color2)
-  if (options.color3 !== undefined) uniforms.color3.value = new Color(options.color3)
-  if (options.speed !== undefined) uniforms.speed.value = options.speed
-  if (options.morphIntensity !== undefined) uniforms.morphIntensity.value = options.morphIntensity
-  if (options.grain !== undefined) uniforms.grain.value = options.grain
-  if (options.lightX !== undefined) uniforms.lightX.value = options.lightX
-  if (options.lightY !== undefined) uniforms.lightY.value = options.lightY
-  if (options.brightness !== undefined) uniforms.brightness.value = options.brightness
-  if (options.zoom !== undefined) uniforms.zoom.value = options.zoom
+  setColorUniform(uniforms.color1, options.color1)
+  setColorUniform(uniforms.color2, options.color2)
+  setColorUniform(uniforms.color3, options.color3)
+  setNumberUniform(uniforms.speed, options.speed)
+  setNumberUniform(uniforms.morphIntensity, options.morphIntensity)
+  setNumberUniform(uniforms.grain, options.grain)
+  setNumberUniform(uniforms.lightX, options.lightX)
+  setNumberUniform(uniforms.lightY, options.lightY)
+  setNumberUniform(uniforms.brightness, options.brightness)
+  setNumberUniform(uniforms.zoom, options.zoom)
 }

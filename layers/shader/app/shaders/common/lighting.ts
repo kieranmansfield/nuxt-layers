@@ -5,6 +5,7 @@
 import { dot, float, max, mix, normalize, pow, reflect, vec3 } from 'three/tsl'
 
 import type { TSLNode } from '../types'
+import { toScalarNode } from './nodes'
 
 // ============================================
 // Fresnel Effect
@@ -72,11 +73,10 @@ export function diffuse(lightDir: TSLNode, normal: TSLNode, lightColor: TSLNode)
  */
 export function phongSpecular(
   viewDir: TSLNode,
-  normal: TSLNode,
-  lightDir: TSLNode,
-  shininess: TSLNode | number = 32
+  ...args: [normal: TSLNode, lightDir: TSLNode, shininess?: TSLNode | number]
 ): TSLNode {
-  const p = typeof shininess === 'number' ? float(shininess) : shininess
+  const [normal, lightDir, shininess = 32] = args
+  const p = toScalarNode(shininess)
   const reflectDir = normalize(reflect(lightDir.negate(), normal))
   const phongValue = max(0, dot(viewDir, reflectDir)).pow(p)
   return vec3(phongValue)
@@ -96,11 +96,10 @@ export function phongSpecular(
  */
 export function blinnPhongSpecular(
   viewDir: TSLNode,
-  normal: TSLNode,
-  lightDir: TSLNode,
-  shininess: TSLNode | number = 32
+  ...args: [normal: TSLNode, lightDir: TSLNode, shininess?: TSLNode | number]
 ): TSLNode {
-  const p = typeof shininess === 'number' ? float(shininess) : shininess
+  const [normal, lightDir, shininess = 32] = args
+  const p = toScalarNode(shininess)
   const halfDir = normalize(lightDir.add(viewDir))
   const specAngle = max(0, dot(halfDir, normal))
   return vec3(pow(specAngle, p))
@@ -127,16 +126,19 @@ export type LightingOptions = {
  */
 export function phongLighting(
   viewDir: TSLNode,
-  normal: TSLNode,
-  lightDir: TSLNode,
-  lightColor: TSLNode,
-  options: LightingOptions = {}
+  ...args: [
+    normal: TSLNode,
+    lightDir: TSLNode,
+    lightColor: TSLNode,
+    options?: LightingOptions,
+  ]
 ): TSLNode {
+  const [normal, lightDir, lightColor, options = {}] = args
   const { ambient = 0.1, diffuseStrength = 1.0, specularStrength = 0.5, shininess = 32 } = options
 
-  const ambientVal = typeof ambient === 'number' ? float(ambient) : ambient
-  const diffStr = typeof diffuseStrength === 'number' ? float(diffuseStrength) : diffuseStrength
-  const specStr = typeof specularStrength === 'number' ? float(specularStrength) : specularStrength
+  const ambientVal = toScalarNode(ambient)
+  const diffStr = toScalarNode(diffuseStrength)
+  const specStr = toScalarNode(specularStrength)
 
   const ambientLight = lightColor.mul(ambientVal)
   const diffuseLight = diffuse(lightDir, normal, lightColor).mul(diffStr)

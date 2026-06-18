@@ -11,6 +11,42 @@ export type UseShaderOptions = {
   autoDispose?: boolean
 }
 
+function assignIfDefined<T extends object, K extends keyof T>(
+  target: T,
+  key: K,
+  value: T[K] | undefined
+) {
+  if (value !== undefined) {
+    target[key] = value
+  }
+}
+
+function applyStandardMaterialConfig(
+  material: MeshStandardNodeMaterial,
+  config: NodeMaterialConfig
+) {
+  assignIfDefined(material, 'emissiveNode', config.emissiveNode)
+  assignIfDefined(material, 'metalnessNode', config.metalnessNode)
+  assignIfDefined(material, 'roughnessNode', config.roughnessNode)
+  assignIfDefined(material, 'flatShading', config.flatShading)
+}
+
+function applyCommonMaterialConfig(
+  material: MeshBasicNodeMaterial | MeshStandardNodeMaterial,
+  config: NodeMaterialConfig
+) {
+  assignIfDefined(material, 'colorNode', config.colorNode)
+  assignIfDefined(material, 'opacityNode', config.opacityNode)
+  assignIfDefined(material, 'normalNode', config.normalNode)
+  assignIfDefined(material, 'positionNode', config.positionNode)
+  assignIfDefined(material, 'transparent', config.transparent)
+  assignIfDefined(material, 'side', config.side)
+  assignIfDefined(material, 'blending', config.blending)
+  assignIfDefined(material, 'depthTest', config.depthTest)
+  assignIfDefined(material, 'depthWrite', config.depthWrite)
+  assignIfDefined(material, 'wireframe', config.wireframe)
+}
+
 /**
  * Main shader management composable
  */
@@ -39,30 +75,9 @@ export function useShader(options: UseShaderOptions = {}) {
     if (!material.value) return
 
     const mat = material.value
-
-    if (newConfig.colorNode !== undefined) mat.colorNode = newConfig.colorNode
-    if (newConfig.opacityNode !== undefined) mat.opacityNode = newConfig.opacityNode
-    if (newConfig.normalNode !== undefined) mat.normalNode = newConfig.normalNode
-
+    applyCommonMaterialConfig(mat, newConfig)
     if (mat instanceof MeshStandardNodeMaterial) {
-      if (newConfig.emissiveNode !== undefined) mat.emissiveNode = newConfig.emissiveNode
-      if (newConfig.metalnessNode !== undefined) mat.metalnessNode = newConfig.metalnessNode
-      if (newConfig.roughnessNode !== undefined) mat.roughnessNode = newConfig.roughnessNode
-    }
-
-    if (newConfig.positionNode !== undefined) mat.positionNode = newConfig.positionNode
-
-    // Standard material properties
-    if (newConfig.transparent !== undefined) mat.transparent = newConfig.transparent
-    if (newConfig.side !== undefined) mat.side = newConfig.side
-    if (newConfig.blending !== undefined) mat.blending = newConfig.blending
-    if (newConfig.depthTest !== undefined) mat.depthTest = newConfig.depthTest
-    if (newConfig.depthWrite !== undefined) mat.depthWrite = newConfig.depthWrite
-    if (newConfig.wireframe !== undefined) mat.wireframe = newConfig.wireframe
-
-    // flatShading only exists on MeshStandardNodeMaterial
-    if (mat instanceof MeshStandardNodeMaterial && newConfig.flatShading !== undefined) {
-      mat.flatShading = newConfig.flatShading
+      applyStandardMaterialConfig(mat, newConfig)
     }
   }
 

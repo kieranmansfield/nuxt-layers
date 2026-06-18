@@ -5,10 +5,9 @@ import type { TSLNode } from '../types/tsl'
 
 export function useShaderMixBlend(
   blendFn: (base: TSLNode, blend: TSLNode) => TSLNode,
-  colorGetter: () => string,
-  opacityGetter: () => number,
-  order: number = 0
+  ...args: [colorGetter: () => string, opacityGetter: () => number, order?: number]
 ) {
+  const [colorGetter, opacityGetter, order = 0] = args
   const colorNode = uniform(new Color(colorGetter()))
   const opacityNode = uniform(opacityGetter())
 
@@ -20,7 +19,8 @@ export function useShaderMixBlend(
   })
 
   useShaderStage(
-    (prev) => vec4(mix(prev.xyz, blendFn(prev.xyz, colorNode as unknown as TSLNode), opacityNode), prev.w),
+    (prev) =>
+      vec4(mix(prev.xyz, blendFn(prev.xyz, colorNode as unknown as TSLNode), opacityNode), prev.w),
     order
   )
 }

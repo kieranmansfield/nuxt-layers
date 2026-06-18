@@ -19,6 +19,7 @@ import {
 
 import type { TSLNode } from '../types'
 import { fbm3dSimplex, simplexNoise3d } from './noise'
+import { toScalarNode, toVec2Node } from './nodes'
 
 // ============================================
 // Canvas Weave Pattern
@@ -64,6 +65,13 @@ export type LEDPatternOptions = {
   edgeSoftness?: TSLNode | number
 }
 
+const DEFAULT_LED_PATTERN_OPTIONS = {
+  cellSize: 10,
+  intensity: 0.5,
+  intensityFalloff: 1.8,
+  edgeSoftness: 0.2,
+} as const
+
 /**
  * LED screen pattern with configurable parameters
  * Creates a grid of circular LED dots
@@ -76,12 +84,15 @@ export function ledPattern(
   resolution: TSLNode = screenSize,
   options: LEDPatternOptions = {}
 ): TSLNode {
-  const { cellSize = 10, intensity = 0.5, intensityFalloff = 1.8, edgeSoftness = 0.2 } = options
+  const { cellSize, intensity, intensityFalloff, edgeSoftness } = {
+    ...DEFAULT_LED_PATTERN_OPTIONS,
+    ...options,
+  }
 
-  const _cellSize = typeof cellSize === 'number' ? float(cellSize) : cellSize
-  const _intensity = typeof intensity === 'number' ? float(intensity) : intensity
-  const _falloff = typeof intensityFalloff === 'number' ? float(intensityFalloff) : intensityFalloff
-  const _softness = typeof edgeSoftness === 'number' ? float(edgeSoftness) : edgeSoftness
+  const _cellSize = toScalarNode(cellSize)
+  const _intensity = toScalarNode(intensity)
+  const _falloff = toScalarNode(intensityFalloff)
+  const _softness = toScalarNode(edgeSoftness)
 
   const _uv = uv.toVar()
 
@@ -115,8 +126,8 @@ export type SpeckledPatternOptions = {
 export function speckledNoisePattern(uv: TSLNode, options: SpeckledPatternOptions = {}): TSLNode {
   const { density = 0.75, warpAmount = [80, 120] } = options
 
-  const _density = typeof density === 'number' ? float(density) : density
-  const _warpAmount = Array.isArray(warpAmount) ? vec2(warpAmount[0], warpAmount[1]) : warpAmount
+  const _density = toScalarNode(density)
+  const _warpAmount = toVec2Node(warpAmount)
 
   // Warp the UVs for organic distribution
   const warpX = fbm3dSimplex(vec3(uv.mul(3.0), 0.0))
@@ -153,9 +164,9 @@ export type DotGridOptions = {
 export function dotGridPattern(uv: TSLNode, options: DotGridOptions = {}): TSLNode {
   const { scale = 10, dotSize = 0.3, softness = 0.1 } = options
 
-  const _scale = typeof scale === 'number' ? float(scale) : scale
-  const _dotSize = typeof dotSize === 'number' ? float(dotSize) : dotSize
-  const _softness = typeof softness === 'number' ? float(softness) : softness
+  const _scale = toScalarNode(scale)
+  const _dotSize = toScalarNode(dotSize)
+  const _softness = toScalarNode(softness)
 
   const grid = fract(uv.mul(_scale)).sub(0.5)
   const dist = length(grid)
@@ -198,10 +209,10 @@ export type StripeOptions = {
 export function stripePattern(uv: TSLNode, options: StripeOptions = {}): TSLNode {
   const { scale = 10, thickness = 0.5, angle = 0, softness = 0.01 } = options
 
-  const _scale = typeof scale === 'number' ? float(scale) : scale
-  const _thickness = typeof thickness === 'number' ? float(thickness) : thickness
-  const _angle = typeof angle === 'number' ? float(angle) : angle
-  const _softness = typeof softness === 'number' ? float(softness) : softness
+  const _scale = toScalarNode(scale)
+  const _thickness = toScalarNode(thickness)
+  const _angle = toScalarNode(angle)
+  const _softness = toScalarNode(softness)
 
   // Rotate UV
   const cosA = _angle.cos()

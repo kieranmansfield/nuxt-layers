@@ -28,11 +28,9 @@ export function useShaderVec2(initialX = 0, initialY = 0) {
   }
 
   function tweenTo(
-    targetX: number,
-    targetY: number,
-    duration: number,
-    easing?: (t: number) => number
+    ...args: [targetX: number, targetY: number, duration: number, easing?: (t: number) => number]
   ): TweenHandle {
+    const [targetX, targetY, duration, easing] = args
     activeTween?.cancel()
 
     const startX = vector.x

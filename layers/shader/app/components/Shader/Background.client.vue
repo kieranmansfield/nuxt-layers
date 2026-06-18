@@ -147,7 +147,7 @@
       initialized = true
       emit('ready', renderer)
     } catch (e) {
-      console.error('[ShaderBackground] init() failed:', e)
+      void e
     }
 
     // Always start the animation loop even if pre-compilation failed — Three.js

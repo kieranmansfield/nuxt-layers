@@ -41,10 +41,22 @@ export function useThemePreset(
     color4: c4.node,
   })
 
-  watch(() => props.color1, (hex) => c1.tweenTo(hex, 0.8))
-  watch(() => props.color2, (hex) => c2.tweenTo(hex, 0.8))
-  watch(() => props.color3, (hex) => c3.tweenTo(hex, 0.8))
-  watch(() => props.color4, (hex) => c4.tweenTo(hex, 0.8))
+  watch(
+    () => props.color1,
+    (hex) => c1.tweenTo(hex, 0.8)
+  )
+  watch(
+    () => props.color2,
+    (hex) => c2.tweenTo(hex, 0.8)
+  )
+  watch(
+    () => props.color3,
+    (hex) => c3.tweenTo(hex, 0.8)
+  )
+  watch(
+    () => props.color4,
+    (hex) => c4.tweenTo(hex, 0.8)
+  )
 
   try {
     const runtime = useShaderRuntimeContext()
@@ -60,15 +72,29 @@ export function useThemePreset(
     // No runtime context
   }
 
-  watch(() => props.speed, (v) => { uniforms.speed.value = v })
-  watch(() => props.intensity, (v) => { uniforms.intensity.value = v })
+  watch(
+    () => props.speed,
+    (v) => {
+      uniforms.speed.value = v
+    }
+  )
+  watch(
+    () => props.intensity,
+    (v) => {
+      uniforms.intensity.value = v
+    }
+  )
   watch(
     () => props.mouseInteraction,
-    (v) => { uniforms.mouseStrength.value = v ? props.mouseStrength : 0 }
+    (v) => {
+      uniforms.mouseStrength.value = v ? props.mouseStrength : 0
+    }
   )
   watch(
     () => props.mouseStrength,
-    (v) => { if (props.mouseInteraction) uniforms.mouseStrength.value = v }
+    (v) => {
+      if (props.mouseInteraction) uniforms.mouseStrength.value = v
+    }
   )
 
   return { uniforms, colorNode }
