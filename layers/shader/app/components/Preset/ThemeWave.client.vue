@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { createThemeWaveColorNode } from '#layers/shader/app/composables/useAmbientMaterials'
-  import { type ThemePresetProps } from '#layers/shader/app/composables/useThemePreset'
   import type { TSLNode } from '#layers/shader/app/types/tsl'
+
+  import type { ThemePresetProps } from '../../composables/useThemePreset'
 
   const {
     speed = 1.0,

@@ -43,6 +43,8 @@ dist
 
 # Local debugging artifacts (not for commit)
 .playwright-mcp/
+/playwright-report/
+/test-results/
 /ambient-after-wait.png
 /ambient-page.png
 .pnpm-store/

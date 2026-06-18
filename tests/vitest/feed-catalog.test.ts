@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest'
 
-import { createFeedCatalog } from './feed-catalog'
+import { createFeedCatalog, formatFeedCollectionName } from '../../layers/feeds/app/utils/feed-catalog'
+
+describe('formatFeedCollectionName', () => {
+  it('normalizes kebab and snake case names for display', () => {
+    expect(formatFeedCollectionName('featured_posts')).toBe('Featured Posts')
+    expect(formatFeedCollectionName('site-updates')).toBe('Site Updates')
+  })
+})
 
 describe('createFeedCatalog', () => {
   it('builds the feed manifest from app config and content collections', () => {
@@ -25,6 +32,7 @@ describe('createFeedCatalog', () => {
     })
 
     expect(catalog.site.title).toBe('Nuxt Layers Playground')
+    expect(catalog.site.url).toBe('https://nuxtlayers.netlify.app')
     expect(catalog.feed.defaultCollection).toBe('blog')
     expect(catalog.feed.limit).toBe(30)
     expect(catalog.feed.collections).toEqual(['blog', 'portfolio', 'gallery'])

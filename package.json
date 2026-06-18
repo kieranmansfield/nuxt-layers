@@ -58,8 +58,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:unit": "vitest run --project unit",
+    "test:vitest": "vitest run --project vitest",
     "test:vue": "vitest run --project vue",
     "test:nuxt": "vitest run --project nuxt",
+    "test:playwright": "playwright test",
+    "test:e2e": "playwright test",
     "clean": "pnpm -r exec rm -rf node_modules .nuxt .output .data && pnpm store prune && pnpm install",
     "cleancache": "pnpm store prune --force",
     "update": "ncu -i",
@@ -101,7 +104,7 @@
   "keywords": [],
   "author": "Kieran Mansfield",
   "license": "ISC",
-  "packageManager": "pnpm@11.7.0",
+  "packageManager": "pnpm@11.5.3",
   "workspaces": [
     "layers/*",
     "apps/*",
@@ -197,6 +200,7 @@
     "@nuxt/fonts": "catalog:",
     "@nuxt/image": "catalog:",
     "@nuxt/test-utils": "catalog:",
+    "@playwright/test": "catalog:",
     "@nuxt/ui": "catalog:",
     "@nuxtjs/device": "catalog:",
     "@oxc-parser/binding-darwin-arm64": "catalog:",
@@ -266,7 +270,6 @@
   ],
   "dependencies": {
     "node-gyp": "catalog:",
-    "pnpm": "catalog:",
     "skills": "catalog:"
   },
   "engines": {
@@ -274,6 +277,6 @@
   },
   "volta": {
     "node": "24.16.0",
-    "pnpm": "11.5.1"
+    "pnpm": "11.5.3"
   }
 }

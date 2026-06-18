@@ -9,7 +9,7 @@
     SRGBColorSpace,
     type ToneMapping,
   } from 'three'
-  import { WebGPURenderer } from 'three/webgpu'
+  import * as ThreeWebGPU from 'three/webgpu'
 
   const {
     clearColor = '#000000',
@@ -70,7 +70,7 @@
   // WebGPU renderer factory — TresJS v5 calls renderer.init() automatically
   // when the returned object has isRenderer === true (three/webgpu Renderer base class)
   function webgpuRendererFactory({ canvas }: TresRendererSetupContext) {
-    const r = new WebGPURenderer({
+    const r = new ThreeWebGPU.WebGPURenderer({
       canvas: unref(canvas),
       antialias,
       // WebGPU has no 'default' power preference — omit to let the browser decide

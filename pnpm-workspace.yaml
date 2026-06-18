@@ -37,6 +37,7 @@ minimumReleaseAgeExclude:
   - '@nuxt/schema@4.4.7'
   - '@nuxt/vite-builder@4.4.7'
   - nuxt@4.4.7
+  - '@playwright/test@1.61.0'
   - skills@1.5.10
   - eslint-plugin-vue@10.9.2
   - pnpm@11.5.3
@@ -81,6 +82,7 @@ catalog:
   '@nuxt/image': ^2.0.0
   '@nuxt/scripts': ^0.11.0
   '@nuxt/ui': latest
+  '@playwright/test': 1.61.0
   '@nuxtjs/device': ^4.0.0
   '@nuxtjs/seo': ^5.0.0
   '@oxc-parser/binding-darwin-arm64': ^0.134.0
@@ -261,7 +263,6 @@ catalog:
   perfect-debounce: 2.1.0
   pinia: ^3.0.4
   '@vitejs/plugin-vue': ^6.0.7
-  pnpm: 11.5.3
   postcss-html: ^1.8.1
   prerender-buildhooks: https://6abe5a43-4668-4f72-b3f7-823e2d8bbbbf.netlify.app/packages/buildhooks.tgz
   prettier: ^3.8.3

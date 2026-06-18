@@ -14,7 +14,7 @@
     SRGBColorSpace,
     type ToneMapping,
   } from 'three'
-  import { MeshBasicNodeMaterial, WebGPURenderer } from 'three/webgpu'
+  import * as ThreeWebGPU from 'three/webgpu'
 
   const {
     material = null,
@@ -42,13 +42,13 @@
   }>()
 
   const emit = defineEmits<{
-    ready: [renderer: WebGPURenderer]
+    ready: [renderer: ThreeWebGPU.WebGPURenderer]
   }>()
 
   const canvasRef = useTemplateRef<HTMLCanvasElement>('canvasRef')
   const { width, height } = useWindowSize()
 
-  let renderer: WebGPURenderer | undefined
+  let renderer: ThreeWebGPU.WebGPURenderer | undefined
   let scene: Scene
   let camera: PerspectiveCamera
   let planeMesh: Mesh
@@ -102,7 +102,7 @@
 
     try {
       // WebGPURenderer falls back to WebGL2 if WebGPU is unavailable
-      renderer = new WebGPURenderer({ canvas, antialias: antialias })
+      renderer = new ThreeWebGPU.WebGPURenderer({ canvas, antialias: antialias })
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
       renderer.setSize(width.value, height.value)
       renderer.setClearColor(new Color(clearColor))

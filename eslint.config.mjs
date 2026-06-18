@@ -335,6 +335,19 @@ export default defineConfigWithVueTs(
     },
   },
 
+  // Vitest files live under `tests/`, so point type-aware linting at the shared
+  // root project instead of the default project-service lookup.
+  {
+    files: ['tests/**/*.{ts,tsx,mts}'],
+    languageOptions: {
+      parserOptions: {
+        projectService: false,
+        project: ['./tsconfig.typecheck.json'],
+        tsconfigRootDir,
+      },
+    },
+  },
+
   // JavaScript files
   {
     files: ['**/*.js', '**/*.mjs'],

@@ -22,7 +22,7 @@ type FeedSourceItem = {
 }
 
 type FeedCollectionQuery = {
-  all(): Promise<FeedSourceItem[]>
+  all: () => Promise<FeedSourceItem[]>
 }
 
 const getFeedCollection = queryCollection as unknown as (

@@ -86,6 +86,9 @@ catalogs:
     '@pinia/nuxt':
       specifier: ^0.11.3
       version: 0.11.3
+    '@playwright/test':
+      specifier: 1.61.0
+      version: 1.61.0
     '@tresjs/cientos':
       specifier: ^5.7.2
       version: 5.7.2
@@ -209,9 +212,6 @@ catalogs:
     pinia:
       specifier: ^3.0.4
       version: 3.0.4
-    pnpm:
-      specifier: 11.5.3
-      version: 11.5.3
     postcss-html:
       specifier: ^1.8.1
       version: 1.8.1
@@ -345,9 +345,6 @@ importers:
       node-gyp:
         specifier: 'catalog:'
         version: 12.3.0
-      pnpm:
-        specifier: 'catalog:'
-        version: 11.5.3
       skills:
         specifier: 'catalog:'
         version: 1.5.10
@@ -409,6 +406,9 @@ importers:
       '@pinia/nuxt':
         specifier: 'catalog:'
         version: 0.11.3(magicast@0.5.3)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.35(typescript@6.0.3)))
+      '@playwright/test':
+        specifier: 'catalog:'
+        version: 1.61.0
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.1
@@ -9864,11 +9864,6 @@ packages:
   pnpm-workspace-yaml@1.6.1:
     resolution: {integrity: sha512-yTeZntGWi8m9WNuhoVsP0DpFc4sC1U0+rr/qR6Zi9n2g3sxXY+JfccjXjjruNz96tM8I09yaJUA86doRnNLkbg==}
 
-  pnpm@11.5.3:
-    resolution: {integrity: sha512-esHJGTQcITo03A0Cr7cUPFwmrCbujEeC3uqCG4rGTSE0oIH9iUHa5uKbu0j1jfwrf7zuzMB8svCdIZ00Kklp7Q==}
-    engines: {node: '>=22.13'}
-    hasBin: true
-
   possible-typed-array-names@1.1.0:
     resolution: {integrity: sha512-/+5VFTchJDoVj3bhoqi6UeymcD00DAwb1nJwamzPvHEszJ4FpF6SNNbUbOS8yI56qHzdV8eK0qEfOSiodkTdxg==}
     engines: {node: '>= 0.4'}
@@ -16841,7 +16836,6 @@ snapshots:
   '@playwright/test@1.61.0':
     dependencies:
       playwright: 1.61.0
-    optional: true
 
   '@pmndrs/pointer-events@6.6.30': {}
 
@@ -24725,15 +24719,13 @@ snapshots:
       exsolve: 1.0.8
       pathe: 2.0.3
 
-  playwright-core@1.61.0:
-    optional: true
+  playwright-core@1.61.0: {}
 
   playwright@1.61.0:
     dependencies:
       playwright-core: 1.61.0
     optionalDependencies:
       fsevents: 2.3.2
-    optional: true
 
   please-upgrade-node@3.2.0:
     dependencies:
@@ -24744,8 +24736,6 @@ snapshots:
   pnpm-workspace-yaml@1.6.1:
     dependencies:
       yaml: 2.9.0
-
-  pnpm@11.5.3: {}
 
   possible-typed-array-names@1.1.0: {}
 

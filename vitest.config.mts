@@ -129,6 +129,13 @@ export default defineConfig({
         },
       },
       {
+        test: {
+          name: 'vitest',
+          include: ['tests/vitest/**/*.{test,spec}.ts'],
+          environment: 'node',
+        },
+      },
+      {
         plugins: [vue()],
         test: {
           name: 'vue',

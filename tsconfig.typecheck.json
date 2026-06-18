@@ -23,6 +23,7 @@
     "./apps/playground/.nuxt/types/*.d.ts",
     "./apps/playground/.nuxt/content/types.d.ts",
     "./layers/*/app/**/*",
+    "./tests/**/*",
     "./types/**/*"
   ]
 }
