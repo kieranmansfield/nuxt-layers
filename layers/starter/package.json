@@ -1,0 +1,10 @@
+{
+  "name": "kmcom-layer-starter",
+  "type": "module",
+  "version": "0.0.1",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json",
+    "lint": "eslint ."
+  }
+}
