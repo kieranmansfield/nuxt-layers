@@ -764,6 +764,8 @@ importers:
         specifier: 'catalog:'
         version: 0.184.1
 
+  layers/starter: {}
+
   layers/theme: {}
 
   layers/transitions: {}

@@ -28,11 +28,12 @@ const accentCSS = buildAccentCSS()
 // Written as a self-invoking function to avoid polluting the global scope.
 // JSON.parse handles the quoted string that useLocalStorage writes.
 // Note: theme-mode is stored as a raw string by Nuxt Color Mode (no JSON.stringify).
-const initScript = `(function(){
+function buildInitScript(defaultAccent: string) {
+  return `(function(){
   try{
     var h=document.documentElement;
     var c=localStorage.getItem('theme-colour');
-    h.setAttribute('data-theme-colour',c?JSON.parse(c):'blue');
+    h.setAttribute('data-theme-colour',c?JSON.parse(c):'${defaultAccent}');
     var ct=localStorage.getItem('theme-contrast');
     var ctv=ct?JSON.parse(ct):'system';
     if(ctv==='on'){h.setAttribute('data-theme-contrast','high')}
@@ -55,9 +56,12 @@ const initScript = `(function(){
     else{h.setAttribute('data-theme-mode',(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light')}
   }catch(e){}
 })()`.replace(/\n\s*/g, '')
+}
 
 export default defineNitroPlugin((nitroApp) => {
-  nitroApp.hooks.hook('render:html', (html) => {
+  nitroApp.hooks.hook('render:html', (html, { event }) => {
+    const config = useRuntimeConfig(event)
+    const initScript = buildInitScript(config.public.themeDefaultAccent || 'blue')
     html.head.unshift(
       `<style id="theme-accent-css">${accentCSS}</style><script>${initScript}</script>`
     )
