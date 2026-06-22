@@ -11,11 +11,12 @@
   import type { TSLNode } from '#layers/shader/app/types/tsl'
   import { DoubleSide } from 'three'
   import { MeshBasicNodeMaterial } from 'three/webgpu'
+
   import { useThemeNodeUniforms } from '~/composables/useThemeNodeUniforms'
 
   type ThemeId = 'mesh' | 'wave' | 'lavalamp' | 'bubble' | 'plasma'
 
-  const props = defineProps<{
+  const { themeId, speed, intensity, color1, color2, color3, color4 } = defineProps<{
     themeId: ThemeId
     speed?: number
     intensity?: number
@@ -24,7 +25,27 @@
     color3?: string
     color4?: string
   }>()
-  const { colorUniforms, ambientUniforms } = useThemeNodeUniforms(props)
+
+  const { colorUniforms, ambientUniforms } = useThemeNodeUniforms({
+    get speed() {
+      return speed
+    },
+    get intensity() {
+      return intensity
+    },
+    get color1() {
+      return color1
+    },
+    get color2() {
+      return color2
+    },
+    get color3() {
+      return color3
+    },
+    get color4() {
+      return color4
+    },
+  })
 
   const NODE_CREATORS: Record<ThemeId, (u: AmbientUniforms, c: ThemeColorUniforms) => TSLNode> = {
     mesh: createThemeGradientColorNode,
@@ -35,7 +56,7 @@
   }
 
   function buildMaterial() {
-    const colorNode = NODE_CREATORS[props.themeId](ambientUniforms, colorUniforms)
+    const colorNode = NODE_CREATORS[themeId](ambientUniforms, colorUniforms)
     const mat = new MeshBasicNodeMaterial()
     mat.side = DoubleSide
     mat.colorNode = colorNode
@@ -44,9 +65,8 @@
 
   const material = shallowRef(buildMaterial())
 
-  // Rebuild material + uniforms when preset switches
   watch(
-    () => props.themeId,
+    () => themeId,
     () => {
       const old = material.value
       material.value = buildMaterial()

@@ -1,5 +1,10 @@
 <script setup lang="ts">
-  import { type FeatureValue, type RoutingLayerConfig, type RoutingPreset } from '#layers/routing/app/types/routing'
+  import {
+    type FeatureValue,
+    type RoutingLayerConfig,
+    type RoutingPreset,
+  } from '#layers/routing/app/types/routing'
+
   import {
     buildPresetFlags,
     resolveRoutingConfig,

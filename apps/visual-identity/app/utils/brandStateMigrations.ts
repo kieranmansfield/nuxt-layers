@@ -24,8 +24,11 @@ function migrateThemeMode(state: Record<string, unknown> & { themeMode?: Record<
   if (!state.themeMode || !('mode' in state.themeMode) || 'schemes' in state.themeMode) return
 
   const oldMode = String(state.themeMode.mode ?? '')
-  const schemes =
-    oldMode === 'light-only' ? ['light'] : oldMode === 'dark-only' ? ['dark'] : ['light', 'dark']
+  const schemesByMode: Record<string, string[]> = {
+    'light-only': ['light'],
+    'dark-only': ['dark'],
+  }
+  const schemes = schemesByMode[oldMode] ?? ['light', 'dark']
 
   state.themeMode = {
     schemes,

@@ -7,7 +7,9 @@ const WHITE: RgbFallback = { mode: 'rgb', r: 1, g: 1, b: 1 }
 const BLACK: RgbFallback = { mode: 'rgb', r: 0, g: 0, b: 0 }
 
 function toOklch(hex: string, fallback: RgbFallback): OklchColor {
-  return oklch(parse(hex) ?? fallback) ?? oklch(fallback)!
+  const result = oklch(parse(hex) ?? fallback) ?? oklch(fallback)
+  if (!result) throw new Error(`Failed to convert color: ${hex}`)
+  return result
 }
 
 function mixChannel(start: number | undefined, end: number | undefined, t: number): number {
