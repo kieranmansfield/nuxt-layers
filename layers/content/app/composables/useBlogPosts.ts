@@ -3,7 +3,8 @@ import type { BlogQueryOptions } from '../types/content'
 export function useBlogPosts(options: BlogQueryOptions = {}) {
   const { excludeDrafts = true, tags, limit } = options
 
-  return useContentData('blog-posts', async () => {
+  const key = `blog-posts:${excludeDrafts}:${(tags ?? []).slice().sort().join(',')}:${limit ?? ''}`
+  return useContentData(key, async () => {
     let posts = (await queryCollection('blog').all()).sort((a, b) =>
       (b.date ?? '').localeCompare(a.date ?? '')
     )

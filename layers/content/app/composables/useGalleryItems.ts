@@ -4,8 +4,9 @@ import { useCollectionItems } from './useCollectionItems'
 export function useGalleryItems(options: GalleryQueryOptions = {}) {
   const { tags, limit } = options
 
+  const key = `gallery-items:${(tags ?? []).slice().sort().join(',')}:${limit ?? ''}`
   return useCollectionItems({
-    key: 'gallery-items',
+    key,
     collection: 'gallery',
     sort: (a, b) => (b.date ?? '').localeCompare(a.date ?? ''),
     options: { limit },

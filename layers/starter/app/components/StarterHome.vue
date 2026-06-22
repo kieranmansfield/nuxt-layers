@@ -40,7 +40,7 @@ onMounted(() => {
 })
 
 const appConfig = useAppConfig()
-const activeLayers = appConfig.layers as Record<string, boolean>
+const activeLayers = appConfig.layers ?? {}
 
 type LayerDef = {
   name: string
