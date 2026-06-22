@@ -26,6 +26,8 @@ type FeedCollectionQuery = {
   all: () => Promise<FeedSourceItem[]>
 }
 
+const COLLECTION_NAME_RE = /^[a-z][a-z0-9_-]*$/i
+
 const getFeedCollection = queryCollection as unknown as (
   event: H3Event,
   collection: string
@@ -36,6 +38,10 @@ export async function getContentFeedItems(
   collection: string = 'blog',
   limit: number = 30
 ): Promise<FeedItem[]> {
+  if (!COLLECTION_NAME_RE.test(collection)) {
+    throw createError({ statusCode: 400, statusMessage: 'Invalid collection name' })
+  }
+
   // queryCollection is keyed by literal collection names, but feed routes accept
   // a runtime collection string; keep the unsafe bridge local here.
   const raw = await getFeedCollection(event, collection).all()
