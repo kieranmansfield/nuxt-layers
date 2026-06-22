@@ -1,10 +1,23 @@
 // Theme Layer - Color mode, accent colors, accessibility preferences
+
+declare module '@nuxt/schema' {
+  interface PublicRuntimeConfig {
+    themeDefaultAccent: string
+  }
+}
+
 export default defineNuxtConfig({
   $meta: {
     name: 'theme',
   },
 
   extends: ['../core'],
+
+  runtimeConfig: {
+    public: {
+      themeDefaultAccent: 'blue',
+    },
+  },
 
   alias: {
     '#layers/theme': import.meta.dirname,
