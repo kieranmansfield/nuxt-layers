@@ -20,7 +20,8 @@ export function createPortfolioComposables(collectionName: keyof Collections) {
   function useItems(options: PortfolioQueryOptions = {}) {
     const { featured, tags, limit } = options
 
-    return useContentData(`${collectionName}-items`, async () => {
+    const key = `${collectionName}-items:${featured ?? ''}:${(tags ?? []).slice().sort().join(',')}:${limit ?? ''}`
+    return useContentData(key, async () => {
       let items: CollectionItem[] = (await queryCollection(collectionName).all()).sort(
         (a, b) => itemYear(b) - itemYear(a)
       )

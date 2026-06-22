@@ -47,7 +47,12 @@ export default defineNuxtPlugin({
 
     if (smoothScroll === true) {
       nuxtApp.hook('app:mounted', () => nextTick(init))
-      nuxtApp.hook('page:finish', () => nextTick(() => ScrollTrigger.refresh()))
+      nuxtApp.hook('page:finish', () =>
+        nextTick(() => {
+          instance.value?.scrollTo(0, { immediate: true })
+          ScrollTrigger.refresh()
+        })
+      )
     } else if (Array.isArray(smoothScroll)) {
       addRouteMiddleware((to, from) => {
         if (smoothScroll.includes(to.path)) {

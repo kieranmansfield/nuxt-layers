@@ -11,32 +11,41 @@ gsap.registerPlugin(ScrollTrigger)
 const heroRef = ref<HTMLElement | null>(null)
 const sectionsRef = ref<HTMLElement | null>(null)
 
-onMounted(() => {
-  if (heroRef.value) {
-    gsap.from(Array.from(heroRef.value.children), {
-      y: 24,
-      opacity: 0,
-      duration: 0.7,
-      stagger: 0.1,
-      ease: 'power3.out',
-    })
-  }
+let ctx: ReturnType<typeof gsap.context> | null = null
 
-  if (sectionsRef.value) {
-    gsap.from(sectionsRef.value.querySelectorAll('.layer-card'), {
-      scrollTrigger: {
-        trigger: sectionsRef.value,
-        start: 'top 85%',
-        toggleActions: 'play none none none',
-      },
-      y: 32,
-      opacity: 0,
-      scale: 0.97,
-      duration: 0.5,
-      stagger: { amount: 0.5 },
-      ease: 'power3.out',
-    })
-  }
+onMounted(() => {
+  ctx = gsap.context(() => {
+    if (heroRef.value) {
+      gsap.from(Array.from(heroRef.value.children), {
+        y: 24,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: 'power3.out',
+      })
+    }
+
+    if (sectionsRef.value) {
+      gsap.from(sectionsRef.value.querySelectorAll('.layer-card'), {
+        scrollTrigger: {
+          trigger: sectionsRef.value,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+        y: 32,
+        opacity: 0,
+        scale: 0.97,
+        duration: 0.5,
+        stagger: { amount: 0.5 },
+        ease: 'power3.out',
+      })
+    }
+  })
+})
+
+onUnmounted(() => {
+  ctx?.revert()
+  ctx = null
 })
 
 const appConfig = useAppConfig()
