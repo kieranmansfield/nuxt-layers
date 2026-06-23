@@ -93,10 +93,7 @@
         name="TYPOGRAPHY"
         description="Typography components — Headline, TextStroke, CodeBlock — plus useTypography and useColor composables."
       />
-      <LayoutMain>
-        <LayoutSection>
-          <LayoutGridItem preset="centered">
-            <div class="space-y-12 py-8">
+      <UContainer class="space-y-12 py-8">
               <!-- Typography Section -->
               <section class="space-y-8">
                 <div>
@@ -994,10 +991,7 @@
                 </UButton>
                 <UButton to="/" icon="i-lucide-home"> Back to Home </UButton>
               </div>
-            </div>
-          </LayoutGridItem>
-        </LayoutSection>
-      </LayoutMain>
+      </UContainer>
       <DemoPageFooter
         name="Typography Layer"
         description="Typography components and composables"

@@ -95,10 +95,7 @@ open({ confirmLabel: 'Yes, delete it', onConfirm: () => toast.success('Deleted!'
         name="OVERLAYS"
         description="Modals, drawers, notifications, and toast messages via useModal and useToast composables."
       />
-      <LayoutMain>
-        <LayoutSection>
-          <LayoutGridItem preset="centered">
-            <div class="space-y-16 py-8">
+      <UContainer class="space-y-16 py-8">
               <!-- ─── TOASTS ─────────────────────────────────────────────── -->
               <section class="space-y-6">
                 <div>
@@ -349,10 +346,7 @@ open({ confirmLabel: 'Yes, delete it', onConfirm: () => toast.success('Deleted!'
                   }}</TypographyCodeBlock>
                 </UCard>
               </section>
-            </div>
-          </LayoutGridItem>
-        </LayoutSection>
-      </LayoutMain>
+      </UContainer>
       <DemoPageFooter
         name="Overlays"
         description="Modals, drawers, and notification toasts"

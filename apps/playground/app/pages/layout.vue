@@ -116,10 +116,7 @@
         name="LAYOUT"
         description="Swiss Grid system — 18-column subgrid, hero sections, split layouts, and page composition components."
       />
-      <LayoutMain>
-        <LayoutSection>
-          <LayoutGridItem preset="centered">
-            <div class="space-y-12 py-8">
+      <UContainer class="space-y-12 py-8">
               <!-- Header -->
               <div class="flex items-center gap-4">
                 <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" />
@@ -1159,10 +1156,7 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
                   Core Layer Demo
                 </UButton>
               </div>
-            </div>
-          </LayoutGridItem>
-        </LayoutSection>
-      </LayoutMain>
+      </UContainer>
       <DemoPageFooter
         name="Layout Layer"
         description="Swiss Grid system and page composition"

@@ -52,10 +52,7 @@
         name="THEME"
         description="Config-driven theme system with dark mode, accent colours, and CSS variable tokens."
       />
-      <LayoutMain>
-        <LayoutSection>
-          <LayoutGridItem preset="centered">
-            <div class="space-y-12 py-8">
+      <UContainer class="space-y-12 py-8">
               <!-- Color Mode -->
               <section class="space-y-4">
                 <h2 class="text-2xl font-bold">Color Mode</h2>
@@ -284,10 +281,7 @@
                   </UCard>
                 </div>
               </section>
-            </div>
-          </LayoutGridItem>
-        </LayoutSection>
-      </LayoutMain>
+      </UContainer>
       <DemoPageFooter
         name="Theme Layer"
         description="Design tokens and theming utilities"

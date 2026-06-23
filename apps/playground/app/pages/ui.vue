@@ -101,10 +101,7 @@
         name="UI"
         description="UI orchestrator — typography, navigation, visual identity, gradients, modals, and more."
       />
-      <LayoutMain>
-        <LayoutSection>
-          <LayoutGridItem preset="centered">
-            <div class="space-y-12 py-8">
+      <UContainer class="space-y-12 py-8">
               <!-- Typography Section -->
               <section class="space-y-8">
                 <div>
@@ -1129,10 +1126,7 @@
                 </UButton>
                 <UButton to="/" icon="i-lucide-home"> Back to Home </UButton>
               </div>
-            </div>
-          </LayoutGridItem>
-        </LayoutSection>
-      </LayoutMain>
+      </UContainer>
       <DemoPageFooter
         name="UI Layer"
         description="Typography, navigation, and visual identity components"

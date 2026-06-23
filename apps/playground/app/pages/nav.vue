@@ -81,10 +81,7 @@ const activeSection = useState('activeSection', () => '')
         name="NAVIGATION"
         description="Mast/Site/Links navigation components with useMastNav and useSite composables."
       />
-      <LayoutMain>
-        <LayoutSection>
-          <LayoutGridItem preset="centered">
-            <div class="space-y-12 py-8 pt-16">
+      <UContainer class="space-y-12 py-8 pt-16">
               <!-- Live demo callout -->
               <UAlert
                 icon="lucide:mouse-pointer-click"
@@ -219,10 +216,7 @@ const activeSection = useState('activeSection', () => '')
                   composableSnippet
                 }}</TypographyCodeBlock>
               </UCard>
-            </div>
-          </LayoutGridItem>
-        </LayoutSection>
-      </LayoutMain>
+      </UContainer>
       <DemoPageFooter
         name="Navigation Layer"
         description="Navigation components and composables"

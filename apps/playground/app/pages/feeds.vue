@@ -225,10 +225,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
         description="Syndication routes for the playground: a live feed index, a discovery manifest, and per-collection RSS, Atom, and JSON endpoints."
       />
 
-      <LayoutMain>
-        <LayoutSection>
-          <LayoutGridItem preset="centered">
-            <div class="space-y-10 py-8">
+      <UContainer class="space-y-10 py-8">
               <section class="grid gap-6 lg:grid-cols-[minmax(0,1.18fr)_minmax(19rem,0.82fr)]">
                 <div class="space-y-4">
                   <div class="flex flex-wrap items-end justify-between gap-4">
@@ -1009,10 +1006,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                   { label: 'Routing', to: '/routing', icon: 'i-lucide-route' },
                 ]"
               />
-            </div>
-          </LayoutGridItem>
-        </LayoutSection>
-      </LayoutMain>
+      </UContainer>
     </div>
   </LayoutPage>
 </template>

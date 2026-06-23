@@ -162,10 +162,7 @@ type FormState = z.infer<typeof schema>`
         name="FORMS"
         description="Config-driven form fields with Zod validation and full type inference."
       />
-      <LayoutMain>
-        <LayoutSection>
-          <LayoutGridItem preset="centered">
-            <div class="space-y-12 py-8">
+      <UContainer class="space-y-12 py-8">
               <!-- Overview -->
               <UCard>
                 <template #header>
@@ -827,10 +824,7 @@ NUXT_FORMS_LAYER_EMAIL_TO=you@example.com
                 </UButton>
                 <UButton to="/" icon="i-lucide-home"> Back to Home </UButton>
               </div>
-            </div>
-          </LayoutGridItem>
-        </LayoutSection>
-      </LayoutMain>
+      </UContainer>
       <DemoPageFooter
         name="Forms Layer"
         description="Config-driven forms with Zod validation"

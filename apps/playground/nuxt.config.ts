@@ -21,6 +21,7 @@ const AVAILABLE_LAYERS = [
   'content',
   'routing',
   'feeds',
+  'baseline',
 ] as const
 type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
@@ -46,6 +47,7 @@ const LAYER_PATHS: Record<LayerName, string> = {
   content: '../../layers/content',
   routing: '../../layers/routing',
   feeds: '../../layers/feeds',
+  baseline: '../../layers/baseline',
 }
 
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included
@@ -71,6 +73,7 @@ const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
   content: ['core'],
   routing: ['core'],
   feeds: ['core', 'content'],
+  baseline: ['core'],
 }
 
 /**
@@ -128,6 +131,7 @@ export default defineNuxtConfig({
   vue: {
     compilerOptions: {
       isCustomElement: (tag: string) => {
+        if (tag === 'baseline-status' || tag === 'baseline-icon') return true
         const tresVueComponents = ['TresCanvas', 'TresLeches', 'TresScene']
         return (
           ((/^Tres[A-Z]/.test(tag) || tag.startsWith('tres-')) &&

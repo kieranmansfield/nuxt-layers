@@ -146,10 +146,7 @@
         name="CORE"
         description="Foundation utilities: browser detection, screen info, network status, PWA support, and feature detection."
       />
-      <LayoutMain>
-        <LayoutSection>
-          <LayoutGridItem preset="centered">
-            <div class="space-y-8 py-8">
+      <UContainer class="space-y-8 py-8">
               <ClientOnly>
                 <!-- Browser Detection -->
                 <UCard>
@@ -611,10 +608,7 @@
                   <div class="text-center text-muted py-16">Loading diagnostics…</div>
                 </template>
               </ClientOnly>
-            </div>
-          </LayoutGridItem>
-        </LayoutSection>
-      </LayoutMain>
+      </UContainer>
       <div>
         <DemoPageFooter
           name="Core Layer"

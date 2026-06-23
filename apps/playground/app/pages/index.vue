@@ -348,6 +348,19 @@
       iconColor: 'text-teal-500',
       buttonClass: 'bg-teal-500/10 text-teal-500 hover:bg-teal-500/20',
     },
+    {
+      name: 'Baseline',
+      description: 'Browser compatibility badges from the Web Platform Baseline initiative',
+      loaded: true,
+      icon: 'i-lucide-shield-check',
+      to: '/baseline',
+      features: ['BaselineStatus', 'Widely Available', 'Newly Available', 'Live API Data'],
+      borderColor: 'border-sky-500/50',
+      bgColor: 'bg-sky-500/10',
+      iconBg: 'bg-sky-500/10',
+      iconColor: 'text-sky-500',
+      buttonClass: 'bg-sky-500/10 text-sky-500 hover:bg-sky-500/20',
+    },
   ]
 
   const demos = [
