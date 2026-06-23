@@ -1,8 +1,14 @@
 <script setup lang="ts">
   import { useThemePreferenceModels } from '../../composables/useThemePreferenceModels'
 
-  const { contrastOverride, motionOverride, transparencyOverride, contrastModel, motionModel, transparencyModel } =
-    useThemePreferenceModels()
+  const {
+    contrastOverride,
+    motionOverride,
+    transparencyOverride,
+    contrastModel,
+    motionModel,
+    transparencyModel,
+  } = useThemePreferenceModels()
 </script>
 
 <template>

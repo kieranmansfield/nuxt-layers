@@ -1,24 +1,15 @@
 <script setup lang="ts">
   import type { FormSubmitEvent } from '@nuxt/ui'
-  import { z } from 'zod'
 
-  import { fieldConfigs } from '../../config/fields'
+  import { contactSchema, type ContactData } from '../../utils/contact-schema'
 
   const emit = defineEmits<{
-    submit: [data: FormState]
+    submit: [data: ContactData]
   }>()
 
-  const schema = z.object({
-    name: fieldConfigs.name.validation.pipe(
-      z.string().min(3, 'Name must be at least 3 characters')
-    ),
-    email: fieldConfigs.email.validation,
-    message: fieldConfigs.textarea.validation.pipe(
-      z.string().min(8, 'Message must be at least 8 characters')
-    ),
-  })
+  const schema = contactSchema
 
-  type FormState = z.infer<typeof schema>
+  type FormState = ContactData
 
   const state = reactive({ name: '', email: '', message: '' })
 

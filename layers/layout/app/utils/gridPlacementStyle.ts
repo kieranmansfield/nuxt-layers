@@ -164,16 +164,17 @@ export function buildGridPlacementStyle(input: GridPlacementInput): PlacementSty
       style['--_re'] = String(rowSpan)
       Object.assign(style, resolveResponsivePlacementVars(input.rowStart, 'rs'))
       Object.assign(style, resolveResponsivePlacementVars(input.rowSpan, 're'))
-    } else {
-      style['--_cs'] = String(colStart ?? 'auto')
-      style['--_ce'] = String(colSpan)
-      style['--_rs'] = String(rowStart ?? 'auto')
-      style['--_re'] = String(rowSpan)
-      Object.assign(style, resolveResponsivePlacementVars(input.colStart, 'cs'))
-      Object.assign(style, resolveResponsivePlacementVars(input.colSpan, 'ce'))
-      Object.assign(style, resolveResponsivePlacementVars(input.rowStart, 'rs'))
-      Object.assign(style, resolveResponsivePlacementVars(input.rowSpan, 're'))
+      return style
     }
+
+    style['--_cs'] = String(colStart ?? 'auto')
+    style['--_ce'] = String(colSpan)
+    style['--_rs'] = String(rowStart ?? 'auto')
+    style['--_re'] = String(rowSpan)
+    Object.assign(style, resolveResponsivePlacementVars(input.colStart, 'cs'))
+    Object.assign(style, resolveResponsivePlacementVars(input.colSpan, 'ce'))
+    Object.assign(style, resolveResponsivePlacementVars(input.rowStart, 'rs'))
+    Object.assign(style, resolveResponsivePlacementVars(input.rowSpan, 're'))
   }
 
   Object.assign(style, resolveAlignmentStyles(input.align, input.justify))

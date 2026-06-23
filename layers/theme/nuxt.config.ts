@@ -1,7 +1,7 @@
 // Theme Layer - Color mode, accent colors, accessibility preferences
 
 declare module '@nuxt/schema' {
-  interface PublicRuntimeConfig {
+  type PublicRuntimeConfig = {
     themeDefaultAccent: string
   }
 }

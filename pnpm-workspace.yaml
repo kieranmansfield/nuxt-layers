@@ -58,6 +58,10 @@ overrides:
   'vite': '^7'
   'ws': '>=8.21.0'
   'undici': '>=6.27.0'
+  'form-data': '>=4.0.6'
+  'http-proxy-middleware': '>=3.0.7'
+  'js-yaml': '>=4.1.2'
+  '@opentelemetry/core': '>=2.8.0'
 
 patchedDependencies:
   '@nuxt/vite-builder@4.4.7': patches/@nuxt__vite-builder@4.4.7.patch
