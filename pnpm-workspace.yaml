@@ -138,6 +138,7 @@ catalog:
   better-sqlite3: ^12.10.0
   birpc: 2.9.0
   browserslist: ^4.28.2
+  browserslist-config-baseline: ^0.5.0
   ccount: 2.0.1
   csstype: ^3.2.3
   changesets: ^1.0.2

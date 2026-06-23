@@ -219,6 +219,7 @@
     "@webgpu/glslang": "catalog:",
     "@webgpu/types": "catalog:",
     "browserslist": "catalog:",
+    "browserslist-config-baseline": "catalog:",
     "changesets": "catalog:",
     "csstype": "catalog:",
     "cypress": "catalog:",
@@ -267,7 +268,7 @@
     "last 2 Firefox major versions",
     "last 2 Safari major versions",
     "last 2 Edge major versions",
-    "baseline widely available"
+    "extends browserslist-config-baseline"
   ],
   "dependencies": {
     "node-gyp": "catalog:",

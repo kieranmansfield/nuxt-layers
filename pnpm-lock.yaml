@@ -143,6 +143,9 @@ catalogs:
     browserslist:
       specifier: ^4.28.2
       version: 4.28.2
+    browserslist-config-baseline:
+      specifier: ^0.5.0
+      version: 0.5.0
     changesets:
       specifier: ^1.0.2
       version: 1.0.2
@@ -451,6 +454,9 @@ importers:
       browserslist:
         specifier: 'catalog:'
         version: 4.28.2
+      browserslist-config-baseline:
+        specifier: 'catalog:'
+        version: 0.5.0
       changesets:
         specifier: 'catalog:'
         version: 1.0.2
@@ -5873,6 +5879,9 @@ packages:
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
+
+  browserslist-config-baseline@0.5.0:
+    resolution: {integrity: sha512-TBB58g6MkqLiN7JPqkNWImFBpiybPDyMN6QeU7/Vb5J10eAyNEPQLj0HpFsTZZ+xyeFpCIz2qNdg0/xnrq929Q==}
 
   browserslist@4.28.2:
     resolution: {integrity: sha512-48xSriZYYg+8qXna9kwqjIVzuQxi+KYWp2+5nCYnYKPTr0LvD89Jqk2Or5ogxz0NUMfIjhh2lIUX/LyX9B4oIg==}
@@ -19180,6 +19189,10 @@ snapshots:
   braces@3.0.3:
     dependencies:
       fill-range: 7.1.1
+
+  browserslist-config-baseline@0.5.0:
+    dependencies:
+      baseline-browser-mapping: 2.10.33
 
   browserslist@4.28.2:
     dependencies:
