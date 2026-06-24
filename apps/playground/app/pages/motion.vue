@@ -132,7 +132,7 @@
     <div class="motion-page">
       <!-- Hero Section -->
       <section
-        class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gray-950"
+        class="min-h-screen flex items-center justify-center relative overflow-hidden bg-default"
       >
         <div
           class="absolute inset-0 bg-linear-to-b from-primary/10 via-transparent to-transparent"
@@ -140,7 +140,7 @@
 
         <div class="text-center z-10 px-4">
           <h1
-            class="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white mb-8 perspective-1000"
+            class="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-highlighted mb-8 perspective-1000"
           >
             <span
               v-gsap.from="{ y: 100, opacity: 0, rotateX: -80, duration: 1.2, ease: 'power3.out' }"
@@ -162,7 +162,7 @@
               LAYER
             </span>
           </h1>
-          <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+          <p class="text-xl text-muted mb-12 max-w-2xl mx-auto">
             GSAP + Locomotive Scroll v5. Parallax, pinning, scrub animations, and velocity-based
             effects.
           </p>
@@ -193,13 +193,13 @@
         </div>
 
         <!-- Scroll indicator -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 animate-bounce">
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-highlighted/50 animate-bounce">
           <UIcon name="i-lucide-chevron-down" class="text-3xl" />
         </div>
       </section>
 
       <!-- Marquee Section - Velocity Reactive -->
-      <section class="py-0 bg-primary text-white overflow-hidden">
+      <section class="py-0 bg-primary text-highlighted overflow-hidden">
         <MotionMarquee
           :speed="80"
           direction="left"
@@ -221,23 +221,23 @@
 
       <!-- Scroll Velocity Display -->
       <div
-        class="fixed top-4 right-4 z-50 bg-black/80 text-white px-4 py-2 rounded-lg font-mono text-sm"
+        class="fixed top-4 right-4 z-50 bg-black/80 text-highlighted px-4 py-2 rounded-lg font-mono text-sm"
       >
         <div>Velocity: {{ velocity.toFixed(2) }}</div>
         <div>Progress: {{ (progress * 100).toFixed(1) }}%</div>
       </div>
 
       <!-- Demos Section -->
-      <section id="demos" class="py-24 bg-gray-950">
+      <section id="demos" class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Animation Demos</h2>
-            <p class="text-gray-400 text-lg">Scroll down to trigger each animation</p>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Animation Demos</h2>
+            <p class="text-muted text-lg">Scroll down to trigger each animation</p>
           </div>
 
           <!-- Large Scroll Trigger Box -->
           <div class="mb-32">
-            <h3 class="text-2xl font-bold text-white mb-8 text-center">Scroll Trigger</h3>
+            <h3 class="text-2xl font-bold text-highlighted mb-8 text-center">Scroll Trigger</h3>
             <div
               v-gsap.whenVisible.once.from="{
                 y: 100,
@@ -248,17 +248,17 @@
               }"
               class="h-[50vh] min-h-100 bg-linear-to-br from-blue-600 via-purple-600 to-pink-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-purple-500/25"
             >
-              <div class="text-center text-white p-8">
+              <div class="text-center text-highlighted p-8">
                 <UIcon name="i-lucide-sparkles" class="text-6xl mb-4" />
                 <h3 class="text-4xl md:text-5xl font-bold mb-4">Scroll Triggered</h3>
-                <p class="text-xl text-white/80">This box animates in when you scroll to it</p>
+                <p class="text-xl text-highlighted/80">This box animates in when you scroll to it</p>
               </div>
             </div>
           </div>
 
           <!-- Staggered Cards -->
           <div class="mb-32">
-            <h3 class="text-2xl font-bold text-white mb-8 text-center">Staggered Animation</h3>
+            <h3 class="text-2xl font-bold text-highlighted mb-8 text-center">Staggered Animation</h3>
             <div
               v-gsap.whenVisible.once.stagger.from="{
                 y: 50,
@@ -273,7 +273,7 @@
               <div
                 v-for="i in 8"
                 :key="i"
-                class="stagger-card aspect-square bg-linear-to-br from-gray-800 to-gray-900 rounded-2xl flex items-center justify-center text-4xl font-bold text-white border border-gray-700"
+                class="stagger-card aspect-square bg-linear-to-br from-[var(--ui-bg-accented)] to-[var(--ui-bg-muted)] rounded-2xl flex items-center justify-center text-4xl font-bold text-highlighted border border-accented"
               >
                 {{ i }}
               </div>
@@ -283,16 +283,16 @@
       </section>
 
       <!-- Parallax Section -->
-      <section ref="parallaxSection" class="h-[200vh] relative overflow-hidden bg-gray-950">
+      <section ref="parallaxSection" class="h-[200vh] relative overflow-hidden bg-default">
         <div class="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
           <!-- Deep background layer (slowest) -->
           <div ref="parallaxDeep" class="absolute inset-0 flex items-center justify-center">
-            <div class="text-[40vw] font-black text-gray-900/50 select-none">DEEP</div>
+            <div class="text-[40vw] font-black text-highlighted/50 select-none">DEEP</div>
           </div>
 
           <!-- Background layer -->
           <div ref="parallaxBg" class="absolute inset-0 flex items-center justify-center">
-            <div class="text-[25vw] font-black text-gray-800 select-none">PARALLAX</div>
+            <div class="text-[25vw] font-black text-default select-none">PARALLAX</div>
           </div>
 
           <!-- Floating shapes layer -->
@@ -309,8 +309,8 @@
 
           <!-- Middle layer (content) -->
           <div ref="parallaxMid" class="relative z-10 text-center px-4">
-            <h2 class="text-5xl md:text-8xl font-bold text-white mb-4">Parallax Layers</h2>
-            <p class="text-xl md:text-2xl text-gray-400">
+            <h2 class="text-5xl md:text-8xl font-bold text-highlighted mb-4">Parallax Layers</h2>
+            <p class="text-xl md:text-2xl text-muted">
               Multiple layers moving at different speeds
             </p>
           </div>
@@ -334,7 +334,7 @@
       </section>
 
       <!-- Reverse Marquee - Direction changes with scroll -->
-      <section class="py-0 bg-white text-black overflow-hidden">
+      <section class="py-0 bg-default text-highlighted overflow-hidden">
         <MotionMarquee
           :speed="60"
           direction="right"
@@ -357,28 +357,28 @@
       </section>
 
       <!-- Pinned Section -->
-      <MotionPinnedSection :duration="200" class="bg-gray-950">
+      <MotionPinnedSection :duration="200" class="bg-default">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 px-8 max-w-6xl">
           <div
             v-for="(item, i) in ['Reveal', 'As You', 'Scroll', 'Down']"
             :key="i"
             class="aspect-square bg-linear-to-br from-primary to-purple-600 rounded-3xl flex items-center justify-center p-8"
           >
-            <span class="text-2xl md:text-4xl font-bold text-white text-center">{{ item }}</span>
+            <span class="text-2xl md:text-4xl font-bold text-highlighted text-center">{{ item }}</span>
           </div>
         </div>
       </MotionPinnedSection>
 
       <!-- Scrub Progress Section -->
-      <section ref="scrubSection" class="py-32 bg-gray-950">
+      <section ref="scrubSection" class="py-32 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Scrub Animation</h2>
-            <p class="text-gray-400 text-lg">Progress tied directly to scroll position</p>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Scrub Animation</h2>
+            <p class="text-muted text-lg">Progress tied directly to scroll position</p>
           </div>
 
           <!-- Progress bar -->
-          <div class="h-4 bg-gray-800 rounded-full overflow-hidden mb-16">
+          <div class="h-4 bg-accented rounded-full overflow-hidden mb-16">
             <div
               ref="scrubProgress"
               class="h-full bg-linear-to-r from-primary via-purple-500 to-pink-500 origin-left scale-x-0"
@@ -390,9 +390,9 @@
             <div
               v-for="i in 3"
               :key="i"
-              class="h-64 bg-gray-800 rounded-2xl flex items-center justify-center"
+              class="h-64 bg-accented rounded-2xl flex items-center justify-center"
             >
-              <span class="text-6xl font-bold text-gray-600">{{ i }}</span>
+              <span class="text-6xl font-bold text-toned">{{ i }}</span>
             </div>
           </div>
         </UContainer>
@@ -401,16 +401,16 @@
       <!-- Velocity-based Text Section -->
       <section class="py-32 bg-black overflow-hidden">
         <div ref="velocityText" class="text-center">
-          <h2 class="text-6xl md:text-8xl lg:text-[12rem] font-black text-white leading-none">
+          <h2 class="text-6xl md:text-8xl lg:text-[12rem] font-black text-highlighted leading-none">
             VELOCITY
           </h2>
-          <p class="text-gray-500 mt-8 text-lg">Text skews based on scroll velocity</p>
+          <p class="text-muted mt-8 text-lg">Text skews based on scroll velocity</p>
         </div>
       </section>
 
       <!-- Large Text Marquee - High velocity response -->
 
-      <section class="py-8 bg-gray-950 overflow-hidden">
+      <section class="py-8 bg-default overflow-hidden">
         <MotionMarquee
           :speed="30"
           direction="left"
@@ -429,14 +429,14 @@
       </section>
 
       <!-- Horizontal Scroll Section -->
-      <MotionHorizontalScroll id="horizontal-section" class="bg-gray-950">
+      <MotionHorizontalScroll id="horizontal-section" class="bg-default">
         <div
           v-for="i in 6"
           :key="i"
           class="shrink-0 w-[80vw] md:w-[50vw] h-[70vh] mx-8 first:ml-[10vw] last:mr-[10vw]"
         >
           <div
-            class="w-full h-full rounded-3xl flex items-center justify-center text-white"
+            class="w-full h-full rounded-3xl flex items-center justify-center text-highlighted"
             :class="[
               i % 3 === 1 ? 'bg-linear-to-br from-blue-600 to-blue-800' : '',
               i % 3 === 2 ? 'bg-linear-to-br from-purple-600 to-purple-800' : '',
@@ -445,20 +445,20 @@
           >
             <div class="text-center p-8">
               <h3 class="text-4xl md:text-6xl font-bold mb-4">Panel {{ i }}</h3>
-              <p class="text-xl text-white/70">Horizontal scroll with pinning</p>
+              <p class="text-xl text-highlighted/70">Horizontal scroll with pinning</p>
             </div>
           </div>
         </div>
       </MotionHorizontalScroll>
 
       <!-- Text Reveal Section -->
-      <section class="py-32 bg-gray-950">
+      <section class="py-32 bg-default">
         <UContainer>
           <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl md:text-6xl font-bold text-white mb-8">
+            <h2 class="text-4xl md:text-6xl font-bold text-highlighted mb-8">
               <MotionTextReveal text="Text Reveal Animation" type="chars" :stagger="0.02" />
             </h2>
-            <p class="text-xl text-gray-400">
+            <p class="text-xl text-muted">
               <MotionTextReveal
                 text="Each character animates in sequence as you scroll into view"
                 type="words"
@@ -471,18 +471,18 @@
       </section>
 
       <!-- GSAP Parallax Demo Section -->
-      <section class="py-32 bg-gray-950 overflow-hidden">
+      <section class="py-32 bg-default overflow-hidden">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">GSAP Parallax</h2>
-            <p class="text-gray-400 text-lg">Multi-layer parallax using GSAP ScrollTrigger</p>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">GSAP Parallax</h2>
+            <p class="text-muted text-lg">Multi-layer parallax using GSAP ScrollTrigger</p>
           </div>
 
           <div class="relative h-[60vh] flex items-center justify-center">
             <!-- Slow background text -->
             <div
               v-gsap.parallax.slower-3
-              class="absolute text-[20vw] font-black text-gray-800/30 select-none"
+              class="absolute text-[20vw] font-black text-default/30 select-none"
             >
               SCROLL
             </div>
@@ -495,17 +495,17 @@
 
             <!-- Center content -->
             <div v-gsap.parallax.slower-5 class="relative z-10 text-center">
-              <p class="text-2xl md:text-3xl text-white font-bold mb-4">
+              <p class="text-2xl md:text-3xl text-highlighted font-bold mb-4">
                 Layers move at different speeds
               </p>
-              <p class="text-gray-400">Scroll slowly to see the effect</p>
+              <p class="text-muted">Scroll slowly to see the effect</p>
             </div>
           </div>
         </UContainer>
       </section>
 
       <!-- Locomotive Scroll Features Showcase -->
-      <section class="py-40 bg-gray-950">
+      <section class="py-40 bg-default">
         <UContainer>
           <div class="text-center mb-24">
             <div
@@ -514,10 +514,10 @@
               <UIcon name="i-lucide-train" class="text-lg" />
               <span>Locomotive Scroll v5</span>
             </div>
-            <h2 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+            <h2 class="text-4xl md:text-6xl lg:text-7xl font-bold text-highlighted mb-6">
               Smooth Scrolling Features
             </h2>
-            <p class="text-gray-400 text-xl max-w-3xl mx-auto mb-10">
+            <p class="text-muted text-xl max-w-3xl mx-auto mb-10">
               Native-feeling smooth scroll with declarative parallax, scroll direction detection,
               and buttery performance
             </p>
@@ -531,111 +531,111 @@
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
             <!-- Feature 1: Smooth Scroll -->
             <div
-              class="bg-gray-900 rounded-2xl p-8 border border-gray-800 hover:border-primary/50 transition-colors"
+              class="bg-muted rounded-2xl p-8 border border-default hover:border-primary/50 transition-colors"
             >
               <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
                 <UIcon name="i-lucide-mouse-pointer-click" class="text-2xl text-primary" />
               </div>
-              <h3 class="text-xl font-bold text-white mb-3">Native Smooth Scroll</h3>
-              <p class="text-gray-400 mb-4">
+              <h3 class="text-xl font-bold text-highlighted mb-3">Native Smooth Scroll</h3>
+              <p class="text-muted mb-4">
                 Buttery smooth scrolling using native browser APIs. No hijacking — feels natural on
                 all devices.
               </p>
-              <code class="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded">
+              <code class="text-xs text-muted bg-accented px-2 py-1 rounded">
                 useSmoothScroll()
               </code>
             </div>
 
             <!-- Feature 2: Data Attributes -->
             <div
-              class="bg-gray-900 rounded-2xl p-8 border border-gray-800 hover:border-primary/50 transition-colors"
+              class="bg-muted rounded-2xl p-8 border border-default hover:border-primary/50 transition-colors"
             >
               <div
                 class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6"
               >
                 <UIcon name="i-lucide-code" class="text-2xl text-purple-500" />
               </div>
-              <h3 class="text-xl font-bold text-white mb-3">Declarative Parallax</h3>
-              <p class="text-gray-400 mb-4">
+              <h3 class="text-xl font-bold text-highlighted mb-3">Declarative Parallax</h3>
+              <p class="text-muted mb-4">
                 No JavaScript needed. Just add data-scroll attributes to any element for instant
                 parallax effects.
               </p>
-              <code class="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded">
+              <code class="text-xs text-muted bg-accented px-2 py-1 rounded">
                 data-scroll-speed="-0.5"
               </code>
             </div>
 
             <!-- Feature 3: Velocity -->
             <div
-              class="bg-gray-900 rounded-2xl p-8 border border-gray-800 hover:border-primary/50 transition-colors"
+              class="bg-muted rounded-2xl p-8 border border-default hover:border-primary/50 transition-colors"
             >
               <div
                 class="w-12 h-12 bg-pink-500/10 rounded-xl flex items-center justify-center mb-6"
               >
                 <UIcon name="i-lucide-gauge" class="text-2xl text-pink-500" />
               </div>
-              <h3 class="text-xl font-bold text-white mb-3">Scroll Velocity</h3>
-              <p class="text-gray-400 mb-4">
+              <h3 class="text-xl font-bold text-highlighted mb-3">Scroll Velocity</h3>
+              <p class="text-muted mb-4">
                 Reactive velocity tracking. Create momentum-based effects that respond to scroll
                 speed.
               </p>
-              <code class="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded">
+              <code class="text-xs text-muted bg-accented px-2 py-1 rounded">
                 velocity: {{ velocity.toFixed(2) }}
               </code>
             </div>
 
             <!-- Feature 4: Progress -->
             <div
-              class="bg-gray-900 rounded-2xl p-8 border border-gray-800 hover:border-primary/50 transition-colors"
+              class="bg-muted rounded-2xl p-8 border border-default hover:border-primary/50 transition-colors"
             >
               <div
                 class="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-6"
               >
                 <UIcon name="i-lucide-percent" class="text-2xl text-cyan-500" />
               </div>
-              <h3 class="text-xl font-bold text-white mb-3">Scroll Progress</h3>
-              <p class="text-gray-400 mb-4">
+              <h3 class="text-xl font-bold text-highlighted mb-3">Scroll Progress</h3>
+              <p class="text-muted mb-4">
                 Track global scroll progress for page indicators, progress bars, and scroll-linked
                 animations.
               </p>
-              <code class="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded">
+              <code class="text-xs text-muted bg-accented px-2 py-1 rounded">
                 progress: {{ (progress * 100).toFixed(0) }}%
               </code>
             </div>
 
             <!-- Feature 5: Programmatic Control -->
             <div
-              class="bg-gray-900 rounded-2xl p-8 border border-gray-800 hover:border-primary/50 transition-colors"
+              class="bg-muted rounded-2xl p-8 border border-default hover:border-primary/50 transition-colors"
             >
               <div
                 class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center mb-6"
               >
                 <UIcon name="i-lucide-navigation" class="text-2xl text-amber-500" />
               </div>
-              <h3 class="text-xl font-bold text-white mb-3">Programmatic Scroll</h3>
-              <p class="text-gray-400 mb-4">
+              <h3 class="text-xl font-bold text-highlighted mb-3">Programmatic Scroll</h3>
+              <p class="text-muted mb-4">
                 Smooth scroll to any element or position with custom duration and easing curves.
               </p>
-              <code class="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded">
+              <code class="text-xs text-muted bg-accented px-2 py-1 rounded">
                 scrollTo('#section')
               </code>
             </div>
 
             <!-- Feature 6: GSAP Integration -->
             <div
-              class="bg-gray-900 rounded-2xl p-8 border border-gray-800 hover:border-primary/50 transition-colors"
+              class="bg-muted rounded-2xl p-8 border border-default hover:border-primary/50 transition-colors"
             >
               <div
                 class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-6"
               >
                 <UIcon name="i-lucide-link" class="text-2xl text-green-500" />
               </div>
-              <h3 class="text-xl font-bold text-white mb-3">GSAP ScrollTrigger</h3>
-              <p class="text-gray-400 mb-4">
+              <h3 class="text-xl font-bold text-highlighted mb-3">GSAP ScrollTrigger</h3>
+              <p class="text-muted mb-4">
                 Seamless integration with GSAP ScrollTrigger. Pin, scrub, and animate with
                 precision.
               </p>
-              <code class="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded">
+              <code class="text-xs text-muted bg-accented px-2 py-1 rounded">
                 scrollerProxy
               </code>
             </div>
@@ -644,8 +644,8 @@
           <!-- Interactive Demo Area -->
           <div class="relative">
             <div class="text-center mb-12">
-              <h3 class="text-2xl font-bold text-white mb-2">Try It</h3>
-              <p class="text-gray-400">Click the buttons to see programmatic scrolling</p>
+              <h3 class="text-2xl font-bold text-highlighted mb-2">Try It</h3>
+              <p class="text-muted">Click the buttons to see programmatic scrolling</p>
             </div>
 
             <div class="flex flex-wrap gap-4 justify-center">
@@ -670,43 +670,43 @@
       </section>
 
       <!-- Data Attributes Reference -->
-      <section class="py-24 bg-gray-950">
+      <section class="py-24 bg-default">
         <UContainer>
           <div class="max-w-4xl mx-auto">
-            <h3 class="text-3xl font-bold text-white mb-8 text-center">Data Attribute Reference</h3>
+            <h3 class="text-3xl font-bold text-highlighted mb-8 text-center">Data Attribute Reference</h3>
 
             <div class="grid gap-4">
               <div
-                class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4"
+                class="bg-accented rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4"
               >
                 <code class="text-primary font-mono text-sm whitespace-nowrap">data-scroll</code>
-                <span class="text-gray-400 flex-1">Enable scroll detection on element</span>
+                <span class="text-muted flex-1">Enable scroll detection on element</span>
               </div>
               <div
-                class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4"
+                class="bg-accented rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4"
               >
                 <code class="text-primary font-mono text-sm whitespace-nowrap">
                   data-scroll-speed="-0.5"
                 </code>
-                <span class="text-gray-400 flex-1">
+                <span class="text-muted flex-1">
                   Parallax speed (negative = slower, positive = faster)
                 </span>
               </div>
               <div
-                class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4"
+                class="bg-accented rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4"
               >
                 <code class="text-primary font-mono text-sm whitespace-nowrap">
                   data-scroll-direction="horizontal"
                 </code>
-                <span class="text-gray-400 flex-1">Parallax direction (vertical by default)</span>
+                <span class="text-muted flex-1">Parallax direction (vertical by default)</span>
               </div>
               <div
-                class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4"
+                class="bg-accented rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4"
               >
                 <code class="text-primary font-mono text-sm whitespace-nowrap">
                   data-scroll-position="top,bottom"
                 </code>
-                <span class="text-gray-400 flex-1">When to start/end the parallax effect</span>
+                <span class="text-muted flex-1">When to start/end the parallax effect</span>
               </div>
             </div>
           </div>
@@ -716,19 +716,19 @@
       <!-- Final Marquee -->
       <section class="py-4 bg-primary overflow-hidden">
         <MotionMarquee :speed="100" direction="left" :pause-on-hover="false" gap="2rem">
-          <span v-for="i in 10" :key="i" class="text-2xl font-bold text-white/90 whitespace-nowrap">
+          <span v-for="i in 10" :key="i" class="text-2xl font-bold text-highlighted/90 whitespace-nowrap">
             BUILT WITH GSAP + LOCOMOTIVE SCROLL ✦
           </span>
         </MotionMarquee>
       </section>
 
       <!-- Footer Navigation -->
-      <section class="py-16 bg-gray-950">
+      <section class="py-16 bg-default">
         <UContainer>
           <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
             <div>
-              <h2 class="text-2xl font-bold text-white mb-2">Motion Layer</h2>
-              <p class="text-gray-400">GSAP + Locomotive Scroll for professional animations</p>
+              <h2 class="text-2xl font-bold text-highlighted mb-2">Motion Layer</h2>
+              <p class="text-muted">GSAP + Locomotive Scroll for professional animations</p>
             </div>
             <div class="flex flex-wrap gap-4">
               <UButton variant="ghost" to="/scrollytelling">

@@ -90,7 +90,7 @@ open({ confirmLabel: 'Yes, delete it', onConfirm: () => toast.success('Deleted!'
 
 <template>
   <LayoutPage title="Overlays Demo" description="Toasts, modals, and the overlay system">
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="OVERLAYS"
         description="Modals, drawers, notifications, and toast messages via useModal and useToast composables."

@@ -138,10 +138,10 @@
         <!-- Header -->
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="font-semibold text-base" :class="isDark ? 'text-white' : 'text-black'">
+            <h1 class="font-semibold text-base" :class="isDark ? 'text-highlighted' : 'text-black'">
               Theme Gradient
             </h1>
-            <p class="text-xs mt-0.5" :class="isDark ? 'text-white/40' : 'text-black/40'">
+            <p class="text-xs mt-0.5" :class="isDark ? 'text-highlighted/40' : 'text-black/40'">
               Animated mesh — TSL / WebGPU
             </p>
           </div>
@@ -157,7 +157,7 @@
         <div>
           <p
             class="text-xs font-medium uppercase tracking-wide mb-2.5"
-            :class="isDark ? 'text-white/40' : 'text-black/40'"
+            :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
           >
             Pattern
           </p>
@@ -169,10 +169,10 @@
               :class="
                 activePattern === p.key
                   ? isDark
-                    ? 'bg-white/20 text-white'
+                    ? 'bg-white/20 text-highlighted'
                     : 'bg-black/15 text-black'
                   : isDark
-                    ? 'bg-white/5 text-white/50 hover:text-white/80'
+                    ? 'bg-white/5 text-highlighted/50 hover:text-highlighted/80'
                     : 'bg-black/5 text-black/50 hover:text-black/80'
               "
               @click="() => (activePattern = p.key)"
@@ -188,7 +188,7 @@
         <div>
           <p
             class="text-xs font-medium uppercase tracking-wide mb-2.5"
-            :class="isDark ? 'text-white/40' : 'text-black/40'"
+            :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
           >
             Accent preset
           </p>
@@ -215,7 +215,7 @@
         <div>
           <p
             class="text-xs font-medium uppercase tracking-wide mb-2.5"
-            :class="isDark ? 'text-white/40' : 'text-black/40'"
+            :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
           >
             Gradient colours
           </p>
@@ -240,7 +240,7 @@
                 class="text-xs leading-none transition-colors"
                 :class="
                   isDark
-                    ? 'text-white/60 group-hover:text-white/90'
+                    ? 'text-highlighted/60 group-hover:text-highlighted/90'
                     : 'text-black/60 group-hover:text-black/90'
                 "
               >
@@ -256,15 +256,15 @@
         <div class="space-y-3">
           <p
             class="text-xs font-medium uppercase tracking-wide"
-            :class="isDark ? 'text-white/40' : 'text-black/40'"
+            :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
           >
             Animation
           </p>
 
           <div>
             <div class="flex justify-between mb-1">
-              <span class="text-xs" :class="isDark ? 'text-white/60' : 'text-black/60'">Speed</span>
-              <span class="text-xs tabular-nums" :class="isDark ? 'text-white/40' : 'text-black/40'"
+              <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'">Speed</span>
+              <span class="text-xs tabular-nums" :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
                 >{{ speed.toFixed(1) }}×</span
               >
             </div>
@@ -281,12 +281,12 @@
 
           <div>
             <div class="flex justify-between mb-1">
-              <span class="text-xs" :class="isDark ? 'text-white/60' : 'text-black/60'"
+              <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'"
                 >Intensity</span
               >
               <span
                 class="text-xs tabular-nums"
-                :class="isDark ? 'text-white/40' : 'text-black/40'"
+                :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
                 >{{ intensity.toFixed(1) }}</span
               >
             </div>
@@ -309,7 +309,7 @@
           <div class="flex items-center justify-between">
             <p
               class="text-xs font-medium uppercase tracking-wide"
-              :class="isDark ? 'text-white/40' : 'text-black/40'"
+              :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
             >
               Mouse
             </p>
@@ -338,12 +338,12 @@
 
           <div v-if="mouseInteraction">
             <div class="flex justify-between mb-1">
-              <span class="text-xs" :class="isDark ? 'text-white/60' : 'text-black/60'"
+              <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'"
                 >Strength</span
               >
               <span
                 class="text-xs tabular-nums"
-                :class="isDark ? 'text-white/40' : 'text-black/40'"
+                :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
                 >{{ mouseStrength.toFixed(2) }}</span
               >
             </div>

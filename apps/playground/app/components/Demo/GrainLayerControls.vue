@@ -45,13 +45,13 @@
 <template>
   <div class="space-y-3">
     <div class="flex items-center justify-between">
-      <p class="text-xs font-semibold uppercase tracking-wider text-white/30">{{ label }}</p>
+      <p class="text-xs font-semibold uppercase tracking-wider text-highlighted/30">{{ label }}</p>
       <button
         class="px-3 py-1 rounded-full text-xs font-medium transition-all duration-150"
         :class="
           enabled
             ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
-            : 'bg-white/5 text-white/40 hover:text-white/70'
+            : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
         "
         @click="() => emit('toggle')"
       >
@@ -60,7 +60,7 @@
     </div>
     <template v-if="enabled">
       <div>
-        <p class="text-xs text-white/30 font-medium mb-1.5">Type</p>
+        <p class="text-xs text-highlighted/30 font-medium mb-1.5">Type</p>
         <div class="flex gap-1">
           <button
             v-for="t in TYPES"
@@ -69,7 +69,7 @@
             :class="
               state.type === t.id
                 ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
-                : 'bg-white/5 text-white/40 hover:text-white/70'
+                : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
             "
             @click="() => (state.type = t.id)"
           >
@@ -79,7 +79,7 @@
       </div>
       <!-- Style selector (Fine grain only) -->
       <div v-if="state.type === 'fine' && state.style !== undefined">
-        <p class="text-xs text-white/30 font-medium mb-1.5">Texture</p>
+        <p class="text-xs text-highlighted/30 font-medium mb-1.5">Texture</p>
         <div class="flex gap-1">
           <button
             v-for="s in STYLES"
@@ -88,7 +88,7 @@
             :class="
               state.style === s.id
                 ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
-                : 'bg-white/5 text-white/40 hover:text-white/70'
+                : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
             "
             @click="() => (state.style = s.id)"
           >
@@ -97,7 +97,7 @@
         </div>
       </div>
       <div>
-        <p class="text-xs text-white/30 font-medium mb-1.5">Blend</p>
+        <p class="text-xs text-highlighted/30 font-medium mb-1.5">Blend</p>
         <div class="flex gap-1 flex-wrap">
           <button
             v-for="m in BLENDS"
@@ -106,7 +106,7 @@
             :class="
               state.blendMode === m.id
                 ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
-                : 'bg-white/5 text-white/40 hover:text-white/70'
+                : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
             "
             @click="() => (state.blendMode = m.id)"
           >

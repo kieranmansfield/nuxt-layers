@@ -121,18 +121,18 @@
       class="bg-default"
     >
       <div
-        class="w-full bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 lg:p-12 text-white space-y-6"
+        class="w-full bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 lg:p-12 text-highlighted space-y-6"
       >
         <h2 class="text-3xl font-bold">How it works</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm text-white/70">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm text-highlighted/70">
           <div class="space-y-2">
-            <div class="text-white font-semibold text-base">Body content</div>
+            <div class="text-highlighted font-semibold text-base">Body content</div>
             <p><code class="font-mono bg-white/10 px-1 rounded">position: relative</code></p>
             <p><code class="font-mono bg-white/10 px-1 rounded">z-index: 2</code></p>
             <p>Scrolls normally through the document flow.</p>
           </div>
           <div class="space-y-2">
-            <div class="text-white font-semibold text-base">Footer</div>
+            <div class="text-highlighted font-semibold text-base">Footer</div>
             <p>
               <code class="font-mono bg-white/10 px-1 rounded">position: sticky; bottom: 0</code>
             </p>
@@ -140,7 +140,7 @@
             <p>Pinned to the viewport bottom, but always behind the body.</p>
           </div>
         </div>
-        <p class="text-white/50 text-sm">
+        <p class="text-highlighted/50 text-sm">
           This is the spatial inverse of the stacking demo — instead of sections sliding
           <em>in</em> from below, the body slides <em>away</em> upward.
         </p>
@@ -164,8 +164,8 @@
     >
       <div class="text-center space-y-6 px-4">
         <div class="text-5xl">↓</div>
-        <h2 class="text-3xl font-bold text-white">Keep scrolling</h2>
-        <p class="text-white/60 max-w-md mx-auto">
+        <h2 class="text-3xl font-bold text-highlighted">Keep scrolling</h2>
+        <p class="text-highlighted/60 max-w-md mx-auto">
           As this section exits the top of the viewport, the footer beneath it will be fully
           revealed. A GSAP scrub scales it from
           <code class="font-mono text-sm bg-white/10 px-1 rounded">0.92 → 1</code> with
@@ -181,13 +181,13 @@
   <!-- Footer: sticky bottom, revealed from underneath -->
   <LayoutSection data-blind-footer :style="footerStyle">
     <LayoutGridItem bleed="both" :row-span="12" layer="back">
-      <div class="w-full h-full bg-gray-950" />
+      <div class="w-full h-full bg-default" />
     </LayoutGridItem>
 
     <LayoutGridItem :row-start="3" :row-span="6" align="center" justify="center" layer="mid">
       <div class="text-center space-y-8 px-4">
-        <h2 class="text-4xl lg:text-6xl font-bold text-white tracking-tight">The blind is open.</h2>
-        <p class="text-white/40 max-w-lg mx-auto">
+        <h2 class="text-4xl lg:text-6xl font-bold text-highlighted tracking-tight">The blind is open.</h2>
+        <p class="text-highlighted/40 max-w-lg mx-auto">
           The footer was here all along — fixed at the bottom of the document, waiting for the body
           content to scroll away.
         </p>
@@ -208,7 +208,7 @@
     </LayoutGridItem>
 
     <LayoutGridItem :row-start="10" :row-span="2" align="end" justify="center" layer="mid">
-      <p class="font-mono text-xs text-white/20 pb-4">
+      <p class="font-mono text-xs text-highlighted/20 pb-4">
         position: sticky · bottom: 0 · z-index: 1 · scale: 0.92 → 1
       </p>
     </LayoutGridItem>

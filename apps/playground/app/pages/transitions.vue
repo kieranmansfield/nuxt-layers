@@ -30,7 +30,7 @@
     title="Transitions Layer Demo"
     description="CSS transition classes + the MotionTransition wrapper component"
   >
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="TRANSITIONS"
         description="Lightweight CSS transition classes and the MotionTransition wrapper for element-level enter/leave effects."
@@ -49,11 +49,11 @@
       </DemoPageHero>
 
       <!-- Demo -->
-      <section id="demo" class="py-24 bg-gray-950">
+      <section id="demo" class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">MotionTransition</h2>
-            <p class="text-gray-400 text-lg">
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">MotionTransition</h2>
+            <p class="text-muted text-lg">
               Pick a variant, then replay to see the enter animation
             </p>
           </div>
@@ -69,17 +69,17 @@
                 :class="
                   activeVariant === variant.name
                     ? 'border-primary bg-primary/10'
-                    : 'border-gray-800 bg-gray-800/50 hover:border-gray-700'
+                    : 'border-default bg-accented/50 hover:border-accented'
                 "
                 @click="activeVariant = variant.name"
               >
-                <div class="font-semibold text-white">{{ variant.label }}</div>
-                <p class="text-sm text-gray-400">{{ variant.description }}</p>
+                <div class="font-semibold text-highlighted">{{ variant.label }}</div>
+                <p class="text-sm text-muted">{{ variant.description }}</p>
                 <code class="text-xs text-primary">name="{{ variant.name }}"</code>
               </button>
 
-              <div class="rounded-xl border border-gray-800 bg-gray-800/50 p-4">
-                <label for="transition-duration" class="text-sm text-gray-400 block mb-2">
+              <div class="rounded-xl border border-default bg-accented/50 p-4">
+                <label for="transition-duration" class="text-sm text-muted block mb-2">
                   Duration: {{ duration }}ms
                 </label>
                 <input
@@ -100,15 +100,15 @@
             </div>
 
             <!-- Preview -->
-            <div class="bg-gray-950 rounded-3xl p-12 flex items-center justify-center min-h-90">
+            <div class="bg-default rounded-3xl p-12 flex items-center justify-center min-h-90">
               <MotionTransition :key="replayKey" :name="activeVariant" :duration>
                 <div
                   class="w-64 h-64 rounded-3xl bg-linear-to-br from-primary to-purple-600 flex items-center justify-center shadow-2xl shadow-primary/30"
                 >
-                  <div class="text-center text-white p-6">
+                  <div class="text-center text-highlighted p-6">
                     <UIcon name="i-lucide-square-asterisk" class="text-5xl mb-3" />
                     <p class="text-lg font-bold">{{ activeVariant }}</p>
-                    <p class="text-sm text-white/70">{{ duration }}ms</p>
+                    <p class="text-sm text-highlighted/70">{{ duration }}ms</p>
                   </div>
                 </div>
               </MotionTransition>
@@ -118,23 +118,23 @@
       </section>
 
       <!-- CSS Reference -->
-      <section class="py-24 bg-gray-950">
+      <section class="py-24 bg-default">
         <UContainer>
           <div class="max-w-3xl mx-auto">
-            <h3 class="text-3xl font-bold text-white mb-8 text-center">CSS Class Reference</h3>
+            <h3 class="text-3xl font-bold text-highlighted mb-8 text-center">CSS Class Reference</h3>
             <div class="grid gap-4">
               <div
                 v-for="entry in cssClasses"
                 :key="entry.class"
-                class="bg-gray-900 rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4 border border-gray-800"
+                class="bg-muted rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4 border border-default"
               >
                 <code class="text-primary font-mono text-sm whitespace-nowrap">{{
                   entry.class
                 }}</code>
-                <span class="text-gray-400 flex-1">{{ entry.props }}</span>
+                <span class="text-muted flex-1">{{ entry.props }}</span>
               </div>
             </div>
-            <p class="text-gray-500 text-sm mt-6 text-center">
+            <p class="text-muted text-sm mt-6 text-center">
               Apply these classes directly to any element, or wrap content in
               <code class="text-primary">&lt;MotionTransition name="fade" /&gt;</code>
               for a managed enter/leave lifecycle.

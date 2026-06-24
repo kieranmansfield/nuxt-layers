@@ -110,7 +110,7 @@
     title="Layout Layer"
     description="Demonstrating the Layout layer Swiss Grid system, sections, and page components"
   >
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <LayoutGridDebug />
       <DemoPageHero
         name="LAYOUT"
@@ -212,7 +212,7 @@
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>&lt;!-- pages/about.vue --&gt;
 &lt;template&gt;
   &lt;LayoutPage title="About" description="Learn about us" :show-header="true"&gt;
@@ -259,7 +259,7 @@
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>// app.config.ts
 export default defineAppConfig({
   layoutLayer: {
@@ -273,7 +273,7 @@ export default defineAppConfig({
 })</code></pre>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>// Read in components
 const { mode, isEnabled } = useGridConfig()</code></pre>
                   </div>
@@ -319,7 +319,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>&lt;!-- default.vue layout --&gt;
 &lt;LayoutMain&gt;
   &lt;NuxtPage /&gt;
@@ -366,7 +366,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>&lt;LayoutGridItem preset="fullWidth"&gt;
   &lt;LayoutContainer size="content"&gt;
     &lt;p&gt;Prose constrained to ~65 characters.&lt;/p&gt;
@@ -536,7 +536,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>&lt;LayoutGridItem
   :col-start="{ default: 1, md: 2, lg: 4 }"
   :col-span="{ default: 6, md: 10, lg: 12 }"
@@ -593,7 +593,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>&lt;LayoutGridItem preset="centered"&gt;
   &lt;!-- full width within the grid's padding · 12 rows (100vh) --&gt;
 &lt;/LayoutGridItem&gt;
@@ -657,7 +657,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>&lt;LayoutSection&gt;
   &lt;LayoutGridItem preset="splitLeft" :row-span="12"&gt;Left&lt;/LayoutGridItem&gt;
   &lt;LayoutGridItem preset="splitRight" :row-span="12"&gt;Right&lt;/LayoutGridItem&gt;
@@ -721,7 +721,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>&lt;LayoutSectionHero&gt;
   &lt;template #background&gt;
     &lt;NuxtImg src="/hero.jpg" class="size-full object-cover" /&gt;
@@ -766,7 +766,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>&lt;LayoutSectionSplit reverse&gt;
   &lt;template #left&gt;
     &lt;NuxtImg src="/image.jpg" class="size-full object-cover" /&gt;
@@ -796,14 +796,14 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                         v-for="item in galleryItems"
                         :key="item.id"
                         :class="item.color"
-                        class="rounded-lg p-6 flex items-center justify-center text-white font-medium"
+                        class="rounded-lg p-6 flex items-center justify-center text-highlighted font-medium"
                       >
                         {{ item.title }}
                       </div>
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>&lt;LayoutSectionGallery :items="images" :columns="3"&gt;
   &lt;template #item="{ item }"&gt;
     &lt;NuxtImg :src="item.src" class="size-full object-cover" /&gt;
@@ -834,7 +834,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                   </template>
 
                   <pre
-                    class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                    class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                   ><code>// app.config.ts (provided by the layout layer)
 ui: {
   header: {
@@ -871,7 +871,7 @@ ui: {
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>&lt;LayoutPage title="Docs"&gt;
   &lt;LayoutSection&gt;
     &lt;UPage&gt;
@@ -933,7 +933,7 @@ ui: {
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>const { useZIndex } = useGridConfig()
 
 // Returns the configured z-index number for that layer
@@ -958,14 +958,14 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
                   <div class="space-y-4">
                     <!-- Bounded mini-viewport -->
                     <div
-                      class="relative h-60 overflow-hidden rounded-lg bg-gray-950 border border-white/10"
+                      class="relative h-60 overflow-hidden rounded-lg bg-default border border-white/10"
                     >
                       <!-- back: z-0 -->
                       <div
                         class="absolute inset-0 bg-amber-900/60 flex items-end px-4 pb-3"
                         style="z-index: 0"
                       >
-                        <span class="font-mono text-xs bg-black/50 text-white px-2 py-1 rounded">
+                        <span class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded">
                           layer="back" · z-index: 0
                         </span>
                       </div>
@@ -974,7 +974,7 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
                         class="absolute inset-x-6 top-6 bottom-10 rounded-lg bg-sky-800/70 flex items-end px-4 pb-3 shadow-lg"
                         style="z-index: 10"
                       >
-                        <span class="font-mono text-xs bg-black/50 text-white px-2 py-1 rounded">
+                        <span class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded">
                           layer="mid" · z-index: 10
                         </span>
                       </div>
@@ -983,7 +983,7 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
                         class="absolute inset-x-16 top-12 bottom-14 rounded-lg bg-violet-700/80 flex items-end px-4 pb-3 shadow-xl"
                         style="z-index: 20"
                       >
-                        <span class="font-mono text-xs bg-black/50 text-white px-2 py-1 rounded">
+                        <span class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded">
                           layer="front" · z-index: 20
                         </span>
                       </div>
@@ -992,7 +992,7 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
                         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-500 px-5 py-2 shadow-2xl whitespace-nowrap"
                         style="z-index: 30"
                       >
-                        <span class="font-mono text-xs text-white">layer="top" · z-index: 30</span>
+                        <span class="font-mono text-xs text-highlighted">layer="top" · z-index: 30</span>
                       </div>
                     </div>
 
@@ -1079,7 +1079,7 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
                     </div>
 
                     <pre
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
                     ><code>&lt;!-- Custom min-width override --&gt;
 &lt;div class="fluid-grid" style="--fluid-col-min: 20rem"&gt;
   &lt;div v-for="item in items" :key="item.id"&gt;…&lt;/div&gt;

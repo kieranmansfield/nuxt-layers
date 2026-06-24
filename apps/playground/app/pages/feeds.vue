@@ -209,7 +209,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
     description="Demonstrating the feed catalog component and the syndicated routes it renders"
   >
     <div
-      class="relative isolate min-h-screen bg-[linear-gradient(180deg,#020617_0%,#0f172a_44%,#111827_100%)] text-slate-100"
+      class="relative isolate min-h-screen bg-default text-highlighted"
       style="overflow-x: clip"
     >
       <div class="pointer-events-none absolute inset-0">
@@ -236,11 +236,11 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                         Live demo
                       </p>
                       <h2
-                        class="mt-2 text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl"
+                        class="mt-2 text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl"
                       >
                         FeedsIndex component
                       </h2>
-                      <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
+                      <p class="mt-2 max-w-2xl text-sm leading-6 text-toned">
                         The component below reads the current app config, inspects the content
                         manifest, and renders the feed catalog exactly as the layer exposes it.
                       </p>
@@ -267,38 +267,38 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
                     <div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
                       <div
-                        class="rounded-2xl border border-slate-200/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
+                        class="rounded-2xl border border-default/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-default dark:bg-muted/45"
                       >
                         <p
-                          class="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400"
+                          class="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-highlighted0 dark:text-muted"
                         >
                           Collections
                         </p>
-                        <p class="mt-2 text-sm font-semibold text-slate-950 dark:text-slate-100">
+                        <p class="mt-2 text-sm font-semibold text-highlighted dark:text-highlighted">
                           {{ feedCollectionsLabel }}
                         </p>
                       </div>
                       <div
-                        class="rounded-2xl border border-slate-200/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
+                        class="rounded-2xl border border-default/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-default dark:bg-muted/45"
                       >
                         <p
-                          class="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400"
+                          class="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-highlighted0 dark:text-muted"
                         >
                           Default feed
                         </p>
-                        <p class="mt-2 text-sm font-semibold text-slate-950 dark:text-slate-100">
+                        <p class="mt-2 text-sm font-semibold text-highlighted dark:text-highlighted">
                           {{ feedDefaultCollection }}
                         </p>
                       </div>
                       <div
-                        class="rounded-2xl border border-slate-200/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
+                        class="rounded-2xl border border-default/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-default dark:bg-muted/45"
                       >
                         <p
-                          class="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400"
+                          class="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-highlighted0 dark:text-muted"
                         >
                           Limit
                         </p>
-                        <p class="mt-2 text-sm font-semibold text-slate-950 dark:text-slate-100">
+                        <p class="mt-2 text-sm font-semibold text-highlighted dark:text-highlighted">
                           {{ feedLimit }} items
                         </p>
                       </div>
@@ -320,18 +320,18 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                       <div
                         v-for="route in routePatterns"
                         :key="route.path"
-                        class="flex items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white/70 px-4 py-3 text-sm dark:border-slate-800 dark:bg-slate-900/45"
+                        class="flex items-center justify-between gap-4 rounded-2xl border border-default/80 bg-white/70 px-4 py-3 text-sm dark:border-default dark:bg-muted/45"
                       >
                         <div class="min-w-0">
-                          <p class="font-medium text-slate-950 dark:text-slate-100">
+                          <p class="font-medium text-highlighted dark:text-highlighted">
                             {{ route.label }}
                           </p>
-                          <p class="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                          <p class="mt-0.5 text-xs text-highlighted0 dark:text-muted">
                             Helper route surfaced by the shared feed catalog.
                           </p>
                         </div>
                         <code
-                          class="shrink-0 rounded-full bg-slate-100 px-2 py-1 font-mono text-[0.72rem] text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                          class="shrink-0 rounded-full bg-accented px-2 py-1 font-mono text-[0.72rem] text-toned"
                         >
                           {{ route.path }}
                         </code>
@@ -354,7 +354,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                       <li
                         v-for="note in demoNotes"
                         :key="note"
-                        class="flex items-start gap-3 text-slate-700 dark:text-slate-300"
+                        class="flex items-start gap-3 text-toned dark:text-toned"
                       >
                         <span
                           class="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-[0.65rem] font-semibold text-orange-300"
@@ -369,7 +369,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
               </section>
 
               <section class="grid gap-6 lg:grid-cols-2">
-                <UCard class="bg-slate-950/60 text-slate-100">
+                <UCard class="bg-default/60 text-highlighted">
                   <template #header>
                     <div class="flex items-center gap-2">
                       <UIcon name="i-lucide-code-2" class="text-primary" />
@@ -381,11 +381,11 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                   </template>
 
                   <pre
-                    class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950/90 p-4 text-xs leading-6 text-slate-200"
+                    class="overflow-x-auto rounded-2xl border border-default bg-default/90 p-4 text-xs leading-6 text-default"
                   ><code>{{ componentSnippet }}</code></pre>
                 </UCard>
 
-                <UCard class="bg-slate-950/60 text-slate-100">
+                <UCard class="bg-default/60 text-highlighted">
                   <template #header>
                     <div class="flex items-center gap-2">
                       <UIcon name="i-lucide-wrench" class="text-primary" />
@@ -397,7 +397,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                   </template>
 
                   <pre
-                    class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950/90 p-4 text-xs leading-6 text-slate-200"
+                    class="overflow-x-auto rounded-2xl border border-default bg-default/90 p-4 text-xs leading-6 text-default"
                   ><code>{{ configSnippet }}</code></pre>
                 </UCard>
               </section>
@@ -409,10 +409,10 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                   >
                     Reference
                   </p>
-                  <h2 class="text-3xl font-semibold tracking-tight text-slate-50 sm:text-4xl">
+                  <h2 class="text-3xl font-semibold tracking-tight text-highlighted sm:text-4xl">
                     The original guide, restored
                   </h2>
-                  <p class="max-w-2xl text-sm leading-6 text-slate-300">
+                  <p class="max-w-2xl text-sm leading-6 text-toned">
                     The sections below bring back the explanatory content that was removed, so the
                     page now works as both a live demo and a full feed reference.
                   </p>
@@ -421,51 +421,51 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
               <section class="space-y-6">
                 <div class="max-w-3xl space-y-2">
-                  <h2 class="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl">
+                  <h2 class="text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl">
                     Overview
                   </h2>
-                  <p class="text-sm leading-6 text-slate-300">
+                  <p class="text-sm leading-6 text-toned">
                     The feeds layer exposes your Nuxt Content collections as standard syndication
                     feeds. Every format derives from a single canonical <code>FeedItem[]</code>
                     model, so the content queries stay format-agnostic.
                   </p>
                 </div>
 
-                <UCard class="bg-slate-950/60 text-slate-100">
+                <UCard class="bg-default/60 text-highlighted">
                   <div class="space-y-5">
-                    <p class="text-sm leading-6 text-slate-300">
+                    <p class="text-sm leading-6 text-toned">
                       The layer keeps the machine-readable routes and the human-facing page in sync
                       through shared config. That lets the feed catalog stay consistent without
                       duplicating route lists in every app.
                     </p>
 
                     <div class="grid gap-4 md:grid-cols-3">
-                      <div class="rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+                      <div class="rounded-2xl border border-default bg-default/60 p-4">
                         <div class="mb-2 flex items-center gap-2">
                           <UIcon name="i-lucide-layers" class="text-orange-300" />
-                          <h3 class="font-semibold text-slate-50">Format-agnostic</h3>
+                          <h3 class="font-semibold text-highlighted">Format-agnostic</h3>
                         </div>
-                        <p class="text-sm leading-6 text-slate-300">
+                        <p class="text-sm leading-6 text-toned">
                           One canonical model drives RSS, Atom, and JSON Feed adapters.
                         </p>
                       </div>
 
-                      <div class="rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+                      <div class="rounded-2xl border border-default bg-default/60 p-4">
                         <div class="mb-2 flex items-center gap-2">
                           <UIcon name="i-lucide-zap" class="text-orange-300" />
-                          <h3 class="font-semibold text-slate-50">Cache-friendly</h3>
+                          <h3 class="font-semibold text-highlighted">Cache-friendly</h3>
                         </div>
-                        <p class="text-sm leading-6 text-slate-300">
+                        <p class="text-sm leading-6 text-toned">
                           The feed responses ship with ETag and Cache-Control headers.
                         </p>
                       </div>
 
-                      <div class="rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+                      <div class="rounded-2xl border border-default bg-default/60 p-4">
                         <div class="mb-2 flex items-center gap-2">
                           <UIcon name="i-lucide-folder-open" class="text-orange-300" />
-                          <h3 class="font-semibold text-slate-50">Collection-aware</h3>
+                          <h3 class="font-semibold text-highlighted">Collection-aware</h3>
                         </div>
-                        <p class="text-sm leading-6 text-slate-300">
+                        <p class="text-sm leading-6 text-toned">
                           Global feeds and per-collection endpoints sit side by side.
                         </p>
                       </div>
@@ -476,16 +476,16 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
               <section class="space-y-6">
                 <div class="max-w-3xl space-y-2">
-                  <h2 class="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl">
+                  <h2 class="text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl">
                     Live Feed Endpoints
                   </h2>
-                  <p class="text-sm leading-6 text-slate-300">
+                  <p class="text-sm leading-6 text-toned">
                     These routes are served by Nitro. Open them in a browser or RSS reader to see
                     the rendered output.
                   </p>
                 </div>
 
-                <UCard class="bg-slate-950/60 text-slate-100">
+                <UCard class="bg-default/60 text-highlighted">
                   <template #header>
                     <div class="flex items-center gap-2">
                       <UIcon name="i-lucide-signal" class="text-primary" />
@@ -526,14 +526,14 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                           />
                         </div>
                         <div>
-                          <p class="font-medium text-slate-50">{{ endpoint.format }}</p>
-                          <p class="text-xs text-slate-400 font-mono">{{ endpoint.contentType }}</p>
+                          <p class="font-medium text-highlighted">{{ endpoint.format }}</p>
+                          <p class="text-xs text-muted font-mono">{{ endpoint.contentType }}</p>
                         </div>
                       </div>
 
                       <div class="flex items-center gap-2">
                         <code
-                          class="hidden shrink-0 rounded-full bg-slate-900/80 px-2 py-1 font-mono text-[0.72rem] text-slate-300 sm:block"
+                          class="hidden shrink-0 rounded-full bg-muted/80 px-2 py-1 font-mono text-[0.72rem] text-toned sm:block"
                         >
                           {{ endpoint.url }}
                         </code>
@@ -561,16 +561,16 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
               <section class="space-y-6">
                 <div class="max-w-3xl space-y-2">
-                  <h2 class="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl">
+                  <h2 class="text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl">
                     Browser View
                   </h2>
-                  <p class="text-sm leading-6 text-slate-300">
+                  <p class="text-sm leading-6 text-toned">
                     RSS and Atom include an <code>&lt;?xml-stylesheet?&gt;</code> processing
                     instruction. Open them directly in the browser for a styled reading experience.
                   </p>
                 </div>
 
-                <UCard class="bg-slate-950/60 text-slate-100">
+                <UCard class="bg-default/60 text-highlighted">
                   <template #header>
                     <div class="flex flex-wrap items-center justify-between gap-3">
                       <div class="flex items-center gap-2">
@@ -605,15 +605,15 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                   </template>
 
                   <div class="space-y-3">
-                    <div class="overflow-hidden rounded-2xl border border-slate-800">
+                    <div class="overflow-hidden rounded-2xl border border-default">
                       <iframe
                         src="/feed/demo"
-                        class="h-[520px] w-full border-0 bg-white dark:bg-slate-950"
+                        class="h-[520px] w-full border-0 bg-default"
                         title="Feed browser view"
                       />
                     </div>
 
-                    <p class="flex items-start gap-1.5 text-xs text-slate-400">
+                    <p class="flex items-start gap-1.5 text-xs text-muted">
                       <UIcon name="i-lucide-info" class="mt-0.5 shrink-0" />
                       <span>
                         Open RSS or Atom in a new tab to see the live XSLT transformation in your
@@ -628,16 +628,16 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
               <section class="space-y-6">
                 <div class="max-w-3xl space-y-2">
-                  <h2 class="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl">
+                  <h2 class="text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl">
                     Live Preview
                   </h2>
-                  <p class="text-sm leading-6 text-slate-300">
+                  <p class="text-sm leading-6 text-toned">
                     Fetch a feed format directly from the server and inspect the first chunk of the
                     response.
                   </p>
                 </div>
 
-                <UCard class="bg-slate-950/60 text-slate-100">
+                <UCard class="bg-default/60 text-highlighted">
                   <template #header>
                     <div class="flex items-center gap-2">
                       <UIcon name="i-lucide-terminal" class="text-primary" />
@@ -655,7 +655,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                         :class="
                           previewFormat === format
                             ? [config.iconBg, config.iconColor, config.borderColor]
-                            : 'border-transparent bg-transparent text-slate-400 hover:text-slate-200'
+                            : 'border-transparent bg-transparent text-muted hover:text-default'
                         "
                         @click="() => loadPreview(format)"
                       >
@@ -665,14 +665,14 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                     </div>
 
                     <div class="relative">
-                      <div v-if="!previewFormat" class="py-10 text-center text-slate-400">
+                      <div v-if="!previewFormat" class="py-10 text-center text-muted">
                         <UIcon name="i-lucide-mouse-pointer-click" class="mb-2 text-2xl" />
                         <p class="text-sm">Click a format above to preview the live feed output.</p>
                       </div>
 
                       <div
                         v-else-if="previewLoading"
-                        class="flex items-center justify-center gap-2 py-10 text-slate-400"
+                        class="flex items-center justify-center gap-2 py-10 text-muted"
                       >
                         <UIcon name="i-lucide-loader-circle" class="animate-spin" />
                         <span class="text-sm">Fetching {{ previewFormat }} feed&hellip;</span>
@@ -692,7 +692,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                         <div
                           class="overflow-hidden rounded-2xl border"
                           :class="
-                            previewFormat ? fmt(previewFormat).borderColor : 'border-slate-800'
+                            previewFormat ? fmt(previewFormat).borderColor : 'border-default'
                           "
                         >
                           <div
@@ -705,7 +705,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                           >
                             <span
                               :class="
-                                previewFormat ? fmt(previewFormat).iconColor : 'text-slate-400'
+                                previewFormat ? fmt(previewFormat).iconColor : 'text-muted'
                               "
                             >
                               <UIcon :name="fmt(previewFormat ?? 'RSS 2.0').icon" class="mr-1" />
@@ -720,7 +720,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                             />
                           </div>
                           <div
-                            class="max-h-96 overflow-x-auto overflow-y-auto bg-slate-950 p-4 font-mono text-xs text-slate-100"
+                            class="max-h-96 overflow-x-auto overflow-y-auto bg-default p-4 font-mono text-xs text-highlighted"
                           >
                             <pre>{{ previewContent }}</pre>
                           </div>
@@ -733,15 +733,15 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
               <section class="space-y-6">
                 <div class="max-w-3xl space-y-2">
-                  <h2 class="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl">
+                  <h2 class="text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl">
                     Route Reference
                   </h2>
-                  <p class="text-sm leading-6 text-slate-300">
+                  <p class="text-sm leading-6 text-toned">
                     All routes are Nitro server routes, so there is no API prefix to remember.
                   </p>
                 </div>
 
-                <UCard class="bg-slate-950/60 text-slate-100">
+                <UCard class="bg-default/60 text-highlighted">
                   <template #header>
                     <div class="flex items-center gap-2">
                       <UIcon name="i-lucide-route" class="text-primary" />
@@ -750,7 +750,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                   </template>
 
                   <div
-                    class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950/90 p-4 font-mono text-sm text-slate-100"
+                    class="overflow-x-auto rounded-2xl border border-default bg-default/90 p-4 font-mono text-sm text-highlighted"
                   >
                     <pre>{{ routeUsageCode }}</pre>
                   </div>
@@ -759,16 +759,16 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
               <section class="space-y-6">
                 <div class="max-w-3xl space-y-2">
-                  <h2 class="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl">
+                  <h2 class="text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl">
                     Configuration
                   </h2>
-                  <p class="text-sm leading-6 text-slate-300">
+                  <p class="text-sm leading-6 text-toned">
                     Feed metadata lives in <code>feedsLayer</code> inside your app's
                     <code>app.config.ts</code>.
                   </p>
                 </div>
 
-                <UCard class="bg-slate-950/60 text-slate-100">
+                <UCard class="bg-default/60 text-highlighted">
                   <template #header>
                     <div class="flex items-center gap-2">
                       <UIcon name="i-lucide-settings" class="text-primary" />
@@ -781,19 +781,19 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
                   <div class="space-y-6">
                     <div
-                      class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950/90 p-4 font-mono text-xs text-slate-100"
+                      class="overflow-x-auto rounded-2xl border border-default bg-default/90 p-4 font-mono text-xs text-highlighted"
                     >
                       <pre>{{ appConfigCode }}</pre>
                     </div>
 
                     <div>
-                      <h4 class="mb-3 text-sm font-medium uppercase tracking-wide text-slate-400">
+                      <h4 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
                         Config Options
                       </h4>
                       <div class="overflow-x-auto">
                         <table class="w-full text-sm">
                           <thead>
-                            <tr class="border-b border-slate-800">
+                            <tr class="border-b border-default">
                               <th class="px-3 py-2 text-left">Key</th>
                               <th class="px-3 py-2 text-left">Type</th>
                               <th class="px-3 py-2 text-left">Default</th>
@@ -856,15 +856,15 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
               <section class="space-y-6">
                 <div class="max-w-3xl space-y-2">
-                  <h2 class="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl">
+                  <h2 class="text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl">
                     Caching
                   </h2>
-                  <p class="text-sm leading-6 text-slate-300">
+                  <p class="text-sm leading-6 text-toned">
                     Every feed response is deterministic and safe to cache.
                   </p>
                 </div>
 
-                <UCard class="bg-slate-950/60 text-slate-100">
+                <UCard class="bg-default/60 text-highlighted">
                   <template #header>
                     <div class="flex items-center gap-2">
                       <UIcon name="i-lucide-zap" class="text-primary" />
@@ -874,28 +874,28 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
                   <div class="space-y-4">
                     <div
-                      class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950/90 p-4 font-mono text-sm text-slate-100"
+                      class="overflow-x-auto rounded-2xl border border-default bg-default/90 p-4 font-mono text-sm text-highlighted"
                     >
                       <pre>{{ cacheHeadersCode }}</pre>
                     </div>
 
                     <div class="grid gap-4 md:grid-cols-2">
-                      <div class="rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+                      <div class="rounded-2xl border border-default bg-default/60 p-4">
                         <div class="mb-2 flex items-center gap-2">
                           <UIcon name="i-lucide-fingerprint" class="text-orange-300" />
-                          <h4 class="font-semibold text-slate-50">ETag</h4>
+                          <h4 class="font-semibold text-highlighted">ETag</h4>
                         </div>
-                        <p class="text-sm leading-6 text-slate-300">
+                        <p class="text-sm leading-6 text-toned">
                           A content hash lets clients skip re-downloading unchanged feeds.
                         </p>
                       </div>
 
-                      <div class="rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+                      <div class="rounded-2xl border border-default bg-default/60 p-4">
                         <div class="mb-2 flex items-center gap-2">
                           <UIcon name="i-lucide-timer" class="text-orange-300" />
-                          <h4 class="font-semibold text-slate-50">Cache-Control</h4>
+                          <h4 class="font-semibold text-highlighted">Cache-Control</h4>
                         </div>
-                        <p class="text-sm leading-6 text-slate-300">
+                        <p class="text-sm leading-6 text-toned">
                           The browser cache is short-lived and the CDN cache can stretch longer.
                         </p>
                       </div>
@@ -906,15 +906,15 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
               <section class="space-y-6">
                 <div class="max-w-3xl space-y-2">
-                  <h2 class="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl">
+                  <h2 class="text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl">
                     Architecture
                   </h2>
-                  <p class="text-sm leading-6 text-slate-300">
+                  <p class="text-sm leading-6 text-toned">
                     The data flow stays clean: content in, adapter in the middle, formats out.
                   </p>
                 </div>
 
-                <UCard class="bg-slate-950/60 text-slate-100">
+                <UCard class="bg-default/60 text-highlighted">
                   <template #header>
                     <div class="flex items-center gap-2">
                       <UIcon name="i-lucide-git-branch" class="text-primary" />
@@ -925,40 +925,40 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                   <div class="space-y-4">
                     <div class="grid items-center gap-3 md:grid-cols-4">
                       <div
-                        class="rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-center"
+                        class="rounded-2xl border border-default bg-default/60 p-4 text-center"
                       >
                         <UIcon name="i-lucide-database" class="mb-2 text-xl text-orange-300" />
-                        <p class="text-sm font-semibold text-slate-50">Nuxt Content</p>
-                        <p class="mt-1 text-xs text-slate-400">Content collections</p>
+                        <p class="text-sm font-semibold text-highlighted">Nuxt Content</p>
+                        <p class="mt-1 text-xs text-muted">Content collections</p>
                       </div>
 
                       <div class="flex items-center justify-center">
                         <UIcon
                           name="i-lucide-arrow-right"
-                          class="hidden text-xl text-slate-500 md:block"
+                          class="hidden text-xl text-highlighted0 md:block"
                         />
                         <UIcon
                           name="i-lucide-arrow-down"
-                          class="text-xl text-slate-500 md:hidden"
+                          class="text-xl text-highlighted0 md:hidden"
                         />
                       </div>
 
                       <div
-                        class="rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-center"
+                        class="rounded-2xl border border-default bg-default/60 p-4 text-center"
                       >
                         <UIcon name="i-lucide-filter" class="mb-2 text-xl text-orange-300" />
-                        <p class="text-sm font-semibold text-slate-50">content-adapter</p>
-                        <p class="mt-1 text-xs text-slate-400">Maps to FeedItem[]</p>
+                        <p class="text-sm font-semibold text-highlighted">content-adapter</p>
+                        <p class="mt-1 text-xs text-muted">Maps to FeedItem[]</p>
                       </div>
 
                       <div class="flex items-center justify-center">
                         <UIcon
                           name="i-lucide-arrow-right"
-                          class="hidden text-xl text-slate-500 md:block"
+                          class="hidden text-xl text-highlighted0 md:block"
                         />
                         <UIcon
                           name="i-lucide-arrow-down"
-                          class="text-xl text-slate-500 md:hidden"
+                          class="text-xl text-highlighted0 md:hidden"
                         />
                       </div>
                     </div>
@@ -975,8 +975,8 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                           class="mb-2 text-xl"
                           :class="[config.iconColor]"
                         />
-                        <p class="text-sm font-semibold text-slate-50">{{ format }}</p>
-                        <p class="mt-1 text-xs text-slate-400">
+                        <p class="text-sm font-semibold text-highlighted">{{ format }}</p>
+                        <p class="mt-1 text-xs text-muted">
                           {{
                             format === 'RSS 2.0'
                               ? 'via feed package'

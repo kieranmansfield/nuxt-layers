@@ -124,7 +124,7 @@
 
 <template>
   <LayoutPage title="Scroll Layer Demo" description="GSAP + Locomotive Scroll base layer">
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <!-- Scroll progress bar -->
       <MotionScrollProgress
         class="fixed top-0 left-0 right-0 z-50"
@@ -147,13 +147,13 @@
 
       <!-- Live scroll stats overlay -->
       <div
-        class="fixed top-16 right-4 z-50 bg-black/80 text-white px-4 py-2 rounded-lg font-mono text-sm backdrop-blur-sm"
+        class="fixed top-16 right-4 z-50 bg-black/80 text-highlighted px-4 py-2 rounded-lg font-mono text-sm backdrop-blur-sm"
       >
         <div>Velocity: {{ velocity.toFixed(2) }}</div>
         <div>Progress: {{ (progress * 100).toFixed(1) }}%</div>
       </div>
 
-      <section class="bg-gray-950 pb-24">
+      <section class="bg-default pb-24">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="space-y-8 py-8">
             <!-- Composables -->

@@ -17,12 +17,12 @@
 </script>
 
 <template>
-  <section class="py-16 bg-gray-950 border-t border-gray-800">
+  <section class="py-16 bg-default border-t border-default">
     <UContainer>
       <div class="flex flex-col md:flex-row gap-8 items-start md:items-center justify-between">
         <div>
-          <h2 class="text-2xl font-bold text-white mb-2">{{ name }}</h2>
-          <p class="text-gray-400">{{ description }}</p>
+          <h2 class="text-2xl font-bold text-highlighted mb-2">{{ name }}</h2>
+          <p class="text-muted">{{ description }}</p>
         </div>
         <div class="flex flex-wrap gap-3">
           <UButton

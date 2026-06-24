@@ -76,7 +76,7 @@ const activeSection = useState('activeSection', () => '')
 
 <template>
   <LayoutPage title="MastNav Demo" description="Hamburger nav + full-screen overlay modal">
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="NAVIGATION"
         description="Mast/Site/Links navigation components with useMastNav and useSite composables."

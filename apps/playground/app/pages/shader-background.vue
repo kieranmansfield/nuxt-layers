@@ -635,7 +635,7 @@
 </script>
 
 <template>
-  <div class="min-h-screen bg-neutral-950 text-white flex flex-col">
+  <div class="min-h-screen bg-neutral-950 text-highlighted flex flex-col">
     <!-- Header -->
     <div class="flex items-center gap-4 px-6 py-4 border-b border-white/8">
       <UButton
@@ -646,8 +646,8 @@
         color="neutral"
       />
       <div>
-        <h1 class="font-semibold text-sm text-white">Shader Background</h1>
-        <p class="text-xs text-white/40">
+        <h1 class="font-semibold text-sm text-highlighted">Shader Background</h1>
+        <p class="text-xs text-highlighted/40">
           60+ presets · Gradients, Mesh, Noise, Atmospheric, Abstract, Theme
         </p>
       </div>
@@ -1466,7 +1466,7 @@
             :class="
               activeCategory === cat.id
                 ? 'bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/30'
-                : 'text-white/40 hover:text-white/70 hover:bg-white/5'
+                : 'text-highlighted/40 hover:text-highlighted/70 hover:bg-white/5'
             "
             @click="() => (activeCategory = cat.id)"
           >
@@ -1478,7 +1478,7 @@
         <div class="flex-1 overflow-y-auto p-4 space-y-5">
           <!-- Preset grid -->
           <div>
-            <p class="text-xs font-semibold uppercase tracking-wider text-white/30 mb-2">Presets</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-highlighted/30 mb-2">Presets</p>
 
             <!-- Gradients -->
             <div v-if="activeCategory === 'gradients'" class="grid grid-cols-3 gap-1.5">
@@ -1489,7 +1489,7 @@
                 :class="
                   activeGrad === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeGrad = p.id)"
               >
@@ -1506,7 +1506,7 @@
                 :class="
                   activeMesh === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeMesh = p.id)"
               >
@@ -1523,7 +1523,7 @@
                 :class="
                   activeAnim === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeAnim = p.id)"
               >
@@ -1540,7 +1540,7 @@
                 :class="
                   activeNoiseBg === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeNoiseBg = p.id)"
               >
@@ -1557,7 +1557,7 @@
                 :class="
                   activeAtmo === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeAtmo = p.id)"
               >
@@ -1574,7 +1574,7 @@
                 :class="
                   activeAbstract === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeAbstract = p.id)"
               >
@@ -1591,7 +1591,7 @@
                 :class="
                   activeTheme === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeTheme = p.id)"
               >
@@ -1664,7 +1664,7 @@
                 <template v-if="['linear-h', 'linear-v'].includes(activeGrad)">
                   <div class="h-px bg-white/5" />
                   <div>
-                    <p class="text-xs text-white/30 font-medium mb-1.5">Colour Stops</p>
+                    <p class="text-xs text-highlighted/30 font-medium mb-1.5">Colour Stops</p>
                     <div class="flex gap-1">
                       <button
                         v-for="n in [2, 3, 4]"
@@ -1673,7 +1673,7 @@
                         :class="
                           grad.numColors === n
                             ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
-                            : 'bg-white/5 text-white/40 hover:text-white/70'
+                            : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
                         "
                         @click="() => (grad.numColors = n)"
                       >
@@ -1689,13 +1689,13 @@
               <template v-if="!['sunrise', 'pastel'].includes(activeGrad)">
                 <div class="h-px bg-white/5" />
                 <div class="flex items-center justify-between">
-                  <p class="text-xs text-white/30 font-medium">Vignette</p>
+                  <p class="text-xs text-highlighted/30 font-medium">Vignette</p>
                   <button
                     class="px-2 py-0.5 rounded text-xs transition-all"
                     :class="
                       grad.vignette
                         ? 'bg-violet-500/25 text-violet-300'
-                        : 'bg-white/5 text-white/40'
+                        : 'bg-white/5 text-highlighted/40'
                     "
                     @click="() => (grad.vignette = !grad.vignette)"
                   >
@@ -1740,7 +1740,7 @@
               <template v-if="activeMesh === 'organic'">
                 <div class="h-px bg-white/5" />
                 <div>
-                  <p class="text-xs text-white/30 font-medium mb-1.5">Texture</p>
+                  <p class="text-xs text-highlighted/30 font-medium mb-1.5">Texture</p>
                   <div class="flex gap-1">
                     <button
                       v-for="t in [
@@ -1753,7 +1753,7 @@
                       :class="
                         mesh.organicType === t.id
                           ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
-                          : 'bg-white/5 text-white/40 hover:text-white/70'
+                          : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
                       "
                       @click="() => (mesh.organicType = t.id as typeof mesh.organicType)"
                     >

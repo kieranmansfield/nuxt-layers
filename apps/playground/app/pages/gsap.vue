@@ -432,10 +432,10 @@
     title="v-gsap Directive Guide"
     description="Complete reference for the v-gsap directive with live examples"
   >
-    <div class="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+    <div class="min-h-screen bg-default text-highlighted">
       <!-- Hero -->
       <section
-        class="relative overflow-hidden bg-linear-to-br from-violet-950 via-gray-900 to-gray-950 text-white py-24 px-6"
+        class="relative overflow-hidden bg-linear-to-br from-violet-950 via-gray-900 to-[var(--ui-bg)] text-highlighted py-24 px-6"
       >
         <div class="absolute inset-0 opacity-20">
           <div class="absolute top-20 left-20 w-64 h-64 bg-violet-500 rounded-full blur-3xl" />
@@ -448,7 +448,7 @@
               <UBadge variant="subtle" size="lg">GSAP 3</UBadge>
             </div>
             <h1 class="text-5xl font-bold mb-4 tracking-tight">v-gsap Directive Guide</h1>
-            <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+            <p class="text-xl text-toned mb-8 leading-relaxed">
               A complete reference for every modifier with live demos and copyable code.
               Scroll-triggered entrances, text splits, hover effects, parallax, timelines, and more.
             </p>
@@ -471,21 +471,21 @@
       </section>
 
       <!-- Quick Reference table -->
-      <section id="quick-ref" class="py-16 bg-gray-50 dark:bg-gray-900">
+      <section id="quick-ref" class="py-16 bg-muted">
         <UContainer>
           <h2 class="text-3xl font-bold mb-2">Quick Reference</h2>
-          <p class="text-gray-500 dark:text-gray-400 mb-8">All available modifiers at a glance.</p>
-          <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+          <p class="text-muted mb-8">All available modifiers at a glance.</p>
+          <div class="overflow-x-auto rounded-xl border border-default">
             <table class="w-full text-sm">
-              <thead class="bg-gray-100 dark:bg-gray-800 text-left">
+              <thead class="bg-accented text-left">
                 <tr>
-                  <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300 min-w-52">
+                  <th class="px-4 py-3 font-semibold text-toned min-w-52">
                     Modifier
                   </th>
-                  <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">
+                  <th class="px-4 py-3 font-semibold text-toned">
                     Description
                   </th>
-                  <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300 min-w-44">
+                  <th class="px-4 py-3 font-semibold text-toned min-w-44">
                     Usage / Options
                   </th>
                 </tr>
@@ -494,13 +494,13 @@
                 <tr
                   v-for="row in quickRef"
                   :key="row.modifier"
-                  class="bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors"
+                  class="bg-default hover:bg-muted transition-colors"
                 >
                   <td class="px-4 py-3 font-mono text-violet-600 dark:text-violet-400 font-medium">
                     {{ row.modifier }}
                   </td>
-                  <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ row.desc }}</td>
-                  <td class="px-4 py-3 font-mono text-xs text-gray-500 dark:text-gray-500">
+                  <td class="px-4 py-3 text-toned">{{ row.desc }}</td>
+                  <td class="px-4 py-3 font-mono text-xs text-muted">
                     {{ row.example }}
                   </td>
                 </tr>
@@ -515,18 +515,18 @@
         <UContainer class="space-y-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Basic Animations</h2>
-            <p class="text-gray-500 dark:text-gray-400">
+            <p class="text-muted">
               These run immediately on mount. Use
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">
                 .from </code
               >,
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">
                 .to </code
               >,
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">
                 .fromTo </code
               >, or
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">
                 .set
               </code>
               as the animation type.
@@ -535,11 +535,11 @@
 
           <!-- .from -->
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >Demo — .from</span
                 >
                 <UButton
@@ -552,7 +552,7 @@
               </div>
               <div
                 :key="replayKeys['from']"
-                class="p-8 bg-white dark:bg-gray-900 flex items-center justify-center min-h-32"
+                class="p-8 bg-muted flex items-center justify-center min-h-32"
               >
                 <div
                   v-gsap.from="{ opacity: 0, y: 40, duration: 0.8 }"
@@ -562,11 +562,11 @@
                 </div>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">v-gsap.from</span>
+                <span class="text-sm font-mono text-muted">v-gsap.from</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -577,18 +577,18 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.from }}</code></pre>
             </div>
           </div>
 
           <!-- .fromTo -->
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                <span class="text-sm font-medium text-toned">
                   Demo — .fromTo
                 </span>
                 <UButton
@@ -602,7 +602,7 @@
               </div>
               <div
                 :key="replayKeys['fromTo']"
-                class="p-8 bg-white dark:bg-gray-900 flex items-center justify-center min-h-32"
+                class="p-8 bg-muted flex items-center justify-center min-h-32"
               >
                 <div
                   v-gsap.fromTo="[
@@ -615,11 +615,11 @@
                 </div>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">v-gsap.fromTo</span>
+                <span class="text-sm font-mono text-muted">v-gsap.fromTo</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -630,18 +630,18 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.fromTo }}</code></pre>
             </div>
           </div>
 
           <!-- .infinitely -->
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                <span class="text-sm font-medium text-toned">
                   Demo — .infinitely
                 </span>
                 <UButton
@@ -655,7 +655,7 @@
               </div>
               <div
                 :key="replayKeys['infinitely']"
-                class="p-8 bg-white dark:bg-gray-900 flex items-center justify-center gap-8 min-h-32"
+                class="p-8 bg-muted flex items-center justify-center gap-8 min-h-32"
               >
                 <div
                   v-gsap.infinitely.to="{ rotation: 360, duration: 2, ease: 'linear' }"
@@ -674,11 +674,11 @@
                 </div>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">v-gsap.infinitely</span>
+                <span class="text-sm font-mono text-muted">v-gsap.infinitely</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -689,7 +689,7 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.infinitely }}</code></pre>
             </div>
           </div>
@@ -697,17 +697,17 @@
       </section>
 
       <!-- ── Section: Scroll-Triggered Entrance ── -->
-      <section id="scroll" class="py-16 bg-gray-50 dark:bg-gray-900">
+      <section id="scroll" class="py-16 bg-muted">
         <UContainer class="space-y-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Scroll-Triggered Entrances</h2>
-            <p class="text-gray-500 dark:text-gray-400">
+            <p class="text-muted">
               Add
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">
                 .whenVisible
               </code>
               to trigger animations when the element scrolls into view. Combine with
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">
                 .once
               </code>
               to play once, or omit it to scrub with scroll.
@@ -716,11 +716,11 @@
 
           <!-- whenVisible.once.from -->
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                <span class="text-sm font-medium text-toned">
                   Demo — .whenVisible.once.from
                 </span>
                 <UButton
@@ -734,7 +734,7 @@
               </div>
               <div
                 :key="replayKeys['whenVisibleOnce']"
-                class="p-8 bg-white dark:bg-gray-900 min-h-32 flex items-center justify-center"
+                class="p-8 bg-muted min-h-32 flex items-center justify-center"
               >
                 <div
                   v-gsap.whenVisible.once.from="{ opacity: 0, y: 60, duration: 0.8 }"
@@ -744,11 +744,11 @@
                 </div>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">whenVisible.once.from</span>
+                <span class="text-sm font-mono text-muted">whenVisible.once.from</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -759,18 +759,18 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.whenVisibleOnce }}</code></pre>
             </div>
           </div>
 
           <!-- whenVisible.once.reversible -->
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >Demo — .whenVisible.once.reversible.from</span
                 >
                 <UButton
@@ -783,7 +783,7 @@
               </div>
               <div
                 :key="replayKeys['whenVisibleReversible']"
-                class="p-8 bg-white dark:bg-gray-900 min-h-32 flex items-center justify-center"
+                class="p-8 bg-muted min-h-32 flex items-center justify-center"
               >
                 <div
                   v-gsap.whenVisible.once.reversible.from="{ opacity: 0, x: -60, duration: 0.6 }"
@@ -793,11 +793,11 @@
                 </div>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">whenVisible.once.reversible</span>
+                <span class="text-sm font-mono text-muted">whenVisible.once.reversible</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -808,18 +808,18 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.whenVisibleReversible }}</code></pre>
             </div>
           </div>
 
           <!-- scrub -->
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >Demo — .whenVisible scrub (no .once)</span
                 >
                 <UButton
@@ -832,7 +832,7 @@
               </div>
               <div
                 :key="replayKeys['whenVisibleScrub']"
-                class="p-8 bg-white dark:bg-gray-900 min-h-32 flex items-center justify-center"
+                class="p-8 bg-muted min-h-32 flex items-center justify-center"
               >
                 <div
                   v-gsap.whenVisible.fromTo="[
@@ -845,11 +845,11 @@
                 </div>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">whenVisible + scrub</span>
+                <span class="text-sm font-mono text-muted">whenVisible + scrub</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -860,18 +860,18 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.whenVisibleScrub }}</code></pre>
             </div>
           </div>
 
           <!-- delay -->
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >Demo — .delay-N (milliseconds)</span
                 >
                 <UButton
@@ -884,7 +884,7 @@
               </div>
               <div
                 :key="replayKeys['whenVisibleDelay']"
-                class="p-8 bg-white dark:bg-gray-900 min-h-32 flex items-center justify-center gap-4"
+                class="p-8 bg-muted min-h-32 flex items-center justify-center gap-4"
               >
                 <div
                   v-gsap.whenVisible.once.from="{ opacity: 0, y: 30, duration: 0.6 }"
@@ -906,11 +906,11 @@
                 </div>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">.delay-N modifier</span>
+                <span class="text-sm font-mono text-muted">.delay-N modifier</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -921,7 +921,7 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.whenVisibleDelay }}</code></pre>
             </div>
           </div>
@@ -933,13 +933,13 @@
         <UContainer class="space-y-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Entrance Presets</h2>
-            <p class="text-gray-500 dark:text-gray-400">
+            <p class="text-muted">
               Add
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.entrance</code
               >
               plus a preset name for one-line scroll animations. All presets use
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >whenVisible.once.fromInvisible</code
               >
               under the hood.
@@ -950,10 +950,10 @@
             <div
               v-for="demo in entrancePresetDemos"
               :key="demo.id"
-              class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+              class="rounded-xl border border-default overflow-hidden"
             >
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
                 <code class="text-sm text-violet-600 dark:text-violet-400 font-medium">{{
                   demo.label
@@ -968,7 +968,7 @@
               </div>
               <div
                 :key="replayKeys[demo.id]"
-                class="p-6 bg-white dark:bg-gray-900 flex items-center justify-center min-h-24"
+                class="p-6 bg-muted flex items-center justify-center min-h-24"
               >
                 <div
                   v-if="demo.id === 'entranceFade'"
@@ -1019,11 +1019,11 @@
                   {{ demo.text }}
                 </div>
               </div>
-              <div class="border-t border-gray-200 dark:border-gray-700">
+              <div class="border-t border-default">
                 <div
-                  class="flex items-center justify-between px-4 py-2 bg-gray-900 dark:bg-gray-950"
+                  class="flex items-center justify-between px-4 py-2 bg-muted"
                 >
-                  <span class="text-xs font-mono text-gray-500">code</span>
+                  <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
                     variant="ghost"
@@ -1034,7 +1034,7 @@
                   </UButton>
                 </div>
                 <pre
-                  class="p-3 text-xs overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-300 leading-relaxed max-h-28"
+                  class="p-3 text-xs overflow-x-auto bg-muted text-toned leading-relaxed max-h-28"
                 ><code>{{ snippets[demo.snip as keyof typeof snippets] }}</code></pre>
               </div>
             </div>
@@ -1043,22 +1043,22 @@
       </section>
 
       <!-- ── Section: Text Split Animations ── -->
-      <section id="text-split" class="py-16 bg-gray-50 dark:bg-gray-900">
+      <section id="text-split" class="py-16 bg-muted">
         <UContainer class="space-y-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Text Split Animations</h2>
-            <p class="text-gray-500 dark:text-gray-400">
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+            <p class="text-muted">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.splitText</code
               >
               uses GSAP's SplitText plugin to break text into animatable units. Combine with
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.chars</code
               >,
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.words</code
               >, or
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.lines</code
               >.
             </p>
@@ -1066,11 +1066,11 @@
 
           <!-- chars -->
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >Demo — .splitText.chars.from</span
                 >
                 <UButton
@@ -1083,7 +1083,7 @@
               </div>
               <div
                 :key="replayKeys['splitChars']"
-                class="p-8 bg-white dark:bg-gray-900 min-h-28 flex items-center justify-center"
+                class="p-8 bg-muted min-h-28 flex items-center justify-center"
               >
                 <p
                   v-gsap.whenVisible.once.splitText.chars.from="{
@@ -1092,17 +1092,17 @@
                     stagger: 0.03,
                     duration: 0.5,
                   }"
-                  class="text-3xl font-bold text-gray-900 dark:text-gray-100"
+                  class="text-3xl font-bold text-highlighted"
                 >
                   Characters animate in
                 </p>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">splitText.chars</span>
+                <span class="text-sm font-mono text-muted">splitText.chars</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1113,18 +1113,18 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.splitChars }}</code></pre>
             </div>
           </div>
 
           <!-- words -->
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >Demo — .splitText.words.from</span
                 >
                 <UButton
@@ -1137,7 +1137,7 @@
               </div>
               <div
                 :key="replayKeys['splitWords']"
-                class="p-8 bg-white dark:bg-gray-900 min-h-28 flex items-center justify-center"
+                class="p-8 bg-muted min-h-28 flex items-center justify-center"
               >
                 <p
                   v-gsap.whenVisible.once.splitText.words.from="{
@@ -1146,17 +1146,17 @@
                     stagger: 0.08,
                     duration: 0.6,
                   }"
-                  class="text-2xl font-semibold text-gray-900 dark:text-gray-100 max-w-sm text-center"
+                  class="text-2xl font-semibold text-highlighted max-w-sm text-center"
                 >
                   Each word slides in from the left
                 </p>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">splitText.words</span>
+                <span class="text-sm font-mono text-muted">splitText.words</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1167,18 +1167,18 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.splitWords }}</code></pre>
             </div>
           </div>
 
           <!-- lines -->
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >Demo — .splitText.lines.from</span
                 >
                 <UButton
@@ -1191,7 +1191,7 @@
               </div>
               <div
                 :key="replayKeys['splitLines']"
-                class="p-8 bg-white dark:bg-gray-900 min-h-28 flex items-center justify-center"
+                class="p-8 bg-muted min-h-28 flex items-center justify-center"
               >
                 <p
                   v-gsap.whenVisible.once.splitText.lines.from="{
@@ -1200,17 +1200,17 @@
                     stagger: 0.12,
                     duration: 0.7,
                   }"
-                  class="text-lg leading-relaxed text-gray-900 dark:text-gray-100 max-w-sm text-center"
+                  class="text-lg leading-relaxed text-highlighted max-w-sm text-center"
                 >
                   First line fades in. Then the second line follows. Finally the third line appears.
                 </p>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">splitText.lines</span>
+                <span class="text-sm font-mono text-muted">splitText.lines</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1221,18 +1221,18 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.splitLines }}</code></pre>
             </div>
           </div>
 
           <!-- mask -->
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >Demo — .splitText.words.mask</span
                 >
                 <UButton
@@ -1245,7 +1245,7 @@
               </div>
               <div
                 :key="replayKeys['splitMask']"
-                class="p-8 bg-white dark:bg-gray-900 min-h-28 flex items-center justify-center"
+                class="p-8 bg-muted min-h-28 flex items-center justify-center"
               >
                 <p
                   v-gsap.whenVisible.once.splitText.words.mask.from="{
@@ -1254,17 +1254,17 @@
                     duration: 0.6,
                     ease: 'power3.out',
                   }"
-                  class="text-3xl font-bold text-gray-900 dark:text-gray-100"
+                  class="text-3xl font-bold text-highlighted"
                 >
                   Masked word reveal
                 </p>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">splitText.mask</span>
+                <span class="text-sm font-mono text-muted">splitText.mask</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1275,7 +1275,7 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.splitMask }}</code></pre>
             </div>
           </div>
@@ -1287,12 +1287,12 @@
         <UContainer class="space-y-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Hover Animations</h2>
-            <p class="text-gray-500 dark:text-gray-400">
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+            <p class="text-muted">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.whileHover</code
               >
               plays the animation on mouseenter and reverses on mouseleave. Add
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.noReverse</code
               >
               to skip the reverse. These demos are always interactive — no replay needed.
@@ -1300,13 +1300,13 @@
           </div>
 
           <div class="grid sm:grid-cols-2 gap-6">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm font-medium text-gray-600 dark:text-gray-400"
+                class="px-4 py-2 border-b border-default bg-muted dark:bg-accented text-sm font-medium text-toned"
               >
                 .whileHover.to — scale
               </div>
-              <div class="p-8 bg-white dark:bg-gray-900 flex items-center justify-center min-h-32">
+              <div class="p-8 bg-muted flex items-center justify-center min-h-32">
                 <div
                   v-gsap.whileHover.to="{ scale: 1.08, duration: 0.3, ease: 'power2.out' }"
                   class="px-8 py-5 bg-violet-100 dark:bg-violet-900/30 rounded-xl font-semibold text-violet-800 dark:text-violet-200 cursor-pointer"
@@ -1314,11 +1314,11 @@
                   Hover me
                 </div>
               </div>
-              <div class="border-t border-gray-200 dark:border-gray-700">
+              <div class="border-t border-default">
                 <div
-                  class="flex items-center justify-between px-4 py-2 bg-gray-900 dark:bg-gray-950"
+                  class="flex items-center justify-between px-4 py-2 bg-muted"
                 >
-                  <span class="text-xs font-mono text-gray-500">code</span>
+                  <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
                     variant="ghost"
@@ -1328,18 +1328,18 @@
                   >
                 </div>
                 <pre
-                  class="p-3 text-xs overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-300 leading-relaxed max-h-28"
+                  class="p-3 text-xs overflow-x-auto bg-muted text-toned leading-relaxed max-h-28"
                 ><code>{{ snippets.whileHoverScale }}</code></pre>
               </div>
             </div>
 
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm font-medium text-gray-600 dark:text-gray-400"
+                class="px-4 py-2 border-b border-default bg-muted dark:bg-accented text-sm font-medium text-toned"
               >
                 .whileHover.to — rotate + scale
               </div>
-              <div class="p-8 bg-white dark:bg-gray-900 flex items-center justify-center min-h-32">
+              <div class="p-8 bg-muted flex items-center justify-center min-h-32">
                 <div
                   v-gsap.whileHover.to="{ rotation: 6, scale: 1.05, duration: 0.25 }"
                   class="px-8 py-5 bg-blue-100 dark:bg-blue-900/30 rounded-xl font-semibold text-blue-800 dark:text-blue-200 cursor-pointer"
@@ -1347,11 +1347,11 @@
                   Hover me
                 </div>
               </div>
-              <div class="border-t border-gray-200 dark:border-gray-700">
+              <div class="border-t border-default">
                 <div
-                  class="flex items-center justify-between px-4 py-2 bg-gray-900 dark:bg-gray-950"
+                  class="flex items-center justify-between px-4 py-2 bg-muted"
                 >
-                  <span class="text-xs font-mono text-gray-500">code</span>
+                  <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
                     variant="ghost"
@@ -1361,18 +1361,18 @@
                   >
                 </div>
                 <pre
-                  class="p-3 text-xs overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-300 leading-relaxed max-h-28"
+                  class="p-3 text-xs overflow-x-auto bg-muted text-toned leading-relaxed max-h-28"
                 ><code>{{ snippets.whileHoverRotate }}</code></pre>
               </div>
             </div>
 
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm font-medium text-gray-600 dark:text-gray-400"
+                class="px-4 py-2 border-b border-default bg-muted dark:bg-accented text-sm font-medium text-toned"
               >
                 .whileHover.noReverse.to — stays lifted
               </div>
-              <div class="p-8 bg-white dark:bg-gray-900 flex items-center justify-center min-h-32">
+              <div class="p-8 bg-muted flex items-center justify-center min-h-32">
                 <div
                   v-gsap.whileHover.noReverse.to="{ y: -8, duration: 0.3 }"
                   class="px-8 py-5 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl font-semibold text-emerald-800 dark:text-emerald-200 cursor-pointer"
@@ -1380,11 +1380,11 @@
                   Lifts — stays lifted on leave
                 </div>
               </div>
-              <div class="border-t border-gray-200 dark:border-gray-700">
+              <div class="border-t border-default">
                 <div
-                  class="flex items-center justify-between px-4 py-2 bg-gray-900 dark:bg-gray-950"
+                  class="flex items-center justify-between px-4 py-2 bg-muted"
                 >
-                  <span class="text-xs font-mono text-gray-500">code</span>
+                  <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
                     variant="ghost"
@@ -1394,18 +1394,18 @@
                   >
                 </div>
                 <pre
-                  class="p-3 text-xs overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-300 leading-relaxed max-h-28"
+                  class="p-3 text-xs overflow-x-auto bg-muted text-toned leading-relaxed max-h-28"
                 ><code>{{ snippets.whileHoverNoReverse }}</code></pre>
               </div>
             </div>
 
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm font-medium text-gray-600 dark:text-gray-400"
+                class="px-4 py-2 border-b border-default bg-muted dark:bg-accented text-sm font-medium text-toned"
               >
                 .whileHover.fromTo — glow shadow
               </div>
-              <div class="p-8 bg-white dark:bg-gray-900 flex items-center justify-center min-h-32">
+              <div class="p-8 bg-muted flex items-center justify-center min-h-32">
                 <div
                   v-gsap.whileHover.fromTo="[
                     { boxShadow: '0 0 0 0 rgba(139,92,246,0)' },
@@ -1416,11 +1416,11 @@
                   Hover for glow
                 </div>
               </div>
-              <div class="border-t border-gray-200 dark:border-gray-700">
+              <div class="border-t border-default">
                 <div
-                  class="flex items-center justify-between px-4 py-2 bg-gray-900 dark:bg-gray-950"
+                  class="flex items-center justify-between px-4 py-2 bg-muted"
                 >
-                  <span class="text-xs font-mono text-gray-500">code</span>
+                  <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
                     variant="ghost"
@@ -1430,7 +1430,7 @@
                   >
                 </div>
                 <pre
-                  class="p-3 text-xs overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-300 leading-relaxed max-h-28"
+                  class="p-3 text-xs overflow-x-auto bg-muted text-toned leading-relaxed max-h-28"
                 ><code>{{ snippets.whileHoverFromTo }}</code></pre>
               </div>
             </div>
@@ -1439,16 +1439,16 @@
       </section>
 
       <!-- ── Section: Parallax ── -->
-      <section id="parallax" class="py-16 bg-gray-50 dark:bg-gray-900">
+      <section id="parallax" class="py-16 bg-muted">
         <UContainer class="space-y-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Parallax Scroll</h2>
-            <p class="text-gray-500 dark:text-gray-400">
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+            <p class="text-muted">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.parallax.slower-N</code
               >
               moves at 1/N speed (lags behind scroll).
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.parallax.faster-N</code
               >
               moves at N× speed (overtakes scroll). Scroll this section to see the effect.
@@ -1456,25 +1456,25 @@
           </div>
 
           <div class="grid md:grid-cols-2 gap-6">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm font-medium text-gray-600 dark:text-gray-400"
+                class="px-4 py-2 border-b border-default bg-muted dark:bg-accented text-sm font-medium text-toned"
               >
                 .parallax.slower-3
               </div>
-              <div class="relative h-48 overflow-hidden bg-gray-100 dark:bg-gray-800">
+              <div class="relative h-48 overflow-hidden bg-accented">
                 <div
                   v-gsap.parallax.slower-3
-                  class="absolute inset-0 bg-linear-to-br from-violet-400 to-purple-600 flex items-center justify-center font-bold text-white text-lg"
+                  class="absolute inset-0 bg-linear-to-br from-violet-400 to-purple-600 flex items-center justify-center font-bold text-highlighted text-lg"
                 >
                   Moves slower than scroll
                 </div>
               </div>
-              <div class="border-t border-gray-200 dark:border-gray-700">
+              <div class="border-t border-default">
                 <div
-                  class="flex items-center justify-between px-4 py-2 bg-gray-900 dark:bg-gray-950"
+                  class="flex items-center justify-between px-4 py-2 bg-muted"
                 >
-                  <span class="text-xs font-mono text-gray-500">code</span>
+                  <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
                     variant="ghost"
@@ -1484,30 +1484,30 @@
                   >
                 </div>
                 <pre
-                  class="p-3 text-xs overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-300 leading-relaxed"
+                  class="p-3 text-xs overflow-x-auto bg-muted text-toned leading-relaxed"
                 ><code>{{ snippets.parallaxSlower }}</code></pre>
               </div>
             </div>
 
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm font-medium text-gray-600 dark:text-gray-400"
+                class="px-4 py-2 border-b border-default bg-muted dark:bg-accented text-sm font-medium text-toned"
               >
                 .parallax.faster-2
               </div>
-              <div class="relative h-48 overflow-hidden bg-gray-100 dark:bg-gray-800">
+              <div class="relative h-48 overflow-hidden bg-accented">
                 <div
                   v-gsap.parallax.faster-2
-                  class="absolute inset-0 bg-linear-to-br from-blue-400 to-cyan-500 flex items-center justify-center font-bold text-white text-lg"
+                  class="absolute inset-0 bg-linear-to-br from-blue-400 to-cyan-500 flex items-center justify-center font-bold text-highlighted text-lg"
                 >
                   Moves faster than scroll
                 </div>
               </div>
-              <div class="border-t border-gray-200 dark:border-gray-700">
+              <div class="border-t border-default">
                 <div
-                  class="flex items-center justify-between px-4 py-2 bg-gray-900 dark:bg-gray-950"
+                  class="flex items-center justify-between px-4 py-2 bg-muted"
                 >
-                  <span class="text-xs font-mono text-gray-500">code</span>
+                  <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
                     variant="ghost"
@@ -1517,7 +1517,7 @@
                   >
                 </div>
                 <pre
-                  class="p-3 text-xs overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-300 leading-relaxed"
+                  class="p-3 text-xs overflow-x-auto bg-muted text-toned leading-relaxed"
                 ><code>{{ snippets.parallaxFaster }}</code></pre>
               </div>
             </div>
@@ -1530,12 +1530,12 @@
         <UContainer class="space-y-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Stagger Animations</h2>
-            <p class="text-gray-500 dark:text-gray-400">
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+            <p class="text-muted">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.stagger</code
               >
               animates direct child elements in sequence. The stagger delay is set via
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >stagger</code
               >
               in the value object.
@@ -1543,11 +1543,11 @@
           </div>
 
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >Demo — staggered cards</span
                 >
                 <UButton
@@ -1558,7 +1558,7 @@
                   >Replay</UButton
                 >
               </div>
-              <div :key="replayKeys['stagger']" class="p-6 bg-white dark:bg-gray-900">
+              <div :key="replayKeys['stagger']" class="p-6 bg-muted">
                 <div
                   v-gsap.whenVisible.once.stagger.from="{
                     opacity: 0,
@@ -1601,11 +1601,11 @@
                 </div>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">stagger</span>
+                <span class="text-sm font-mono text-muted">stagger</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1616,7 +1616,7 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.stagger }}</code></pre>
             </div>
           </div>
@@ -1624,21 +1624,21 @@
       </section>
 
       <!-- ── Section: Timeline ── -->
-      <section id="timeline" class="py-16 bg-gray-50 dark:bg-gray-900">
+      <section id="timeline" class="py-16 bg-muted">
         <UContainer class="space-y-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Timeline Sequences</h2>
-            <p class="text-gray-500 dark:text-gray-400">
+            <p class="text-muted">
               Add
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.timeline</code
               >
               to a parent element to create a GSAP timeline. Children use
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.add</code
               >
               to join it in order. Use
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.withPrevious</code
               >
               to play simultaneously with the preceding item.
@@ -1646,11 +1646,11 @@
           </div>
 
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >Demo — sequenced items</span
                 >
                 <UButton
@@ -1661,7 +1661,7 @@
                   >Replay</UButton
                 >
               </div>
-              <div :key="replayKeys['timeline']" class="p-6 bg-white dark:bg-gray-900">
+              <div :key="replayKeys['timeline']" class="p-6 bg-muted">
                 <div v-gsap.timeline="{ scrub: false }" class="space-y-3">
                   <div
                     v-gsap.add.from="{ opacity: 0, x: -60, duration: 0.45 }"
@@ -1690,11 +1690,11 @@
                 </div>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">timeline + .add</span>
+                <span class="text-sm font-mono text-muted">timeline + .add</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1705,7 +1705,7 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.timeline }}</code></pre>
             </div>
           </div>
@@ -1717,39 +1717,39 @@
         <UContainer class="space-y-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Magnetic Effect</h2>
-            <p class="text-gray-500 dark:text-gray-400">
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+            <p class="text-muted">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.magnetic</code
               >
               attracts the element towards the cursor when nearby. Adjust intensity with
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.strong</code
               >,
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.stronger</code
               >,
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.weak</code
               >,
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.weaker</code
               >.
             </p>
           </div>
 
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm font-medium text-gray-600 dark:text-gray-400"
+                class="px-4 py-2 border-b border-default bg-muted dark:bg-accented text-sm font-medium text-toned"
               >
                 Demo — hover near these buttons
               </div>
               <div
-                class="p-8 bg-white dark:bg-gray-900 flex flex-wrap items-center justify-center gap-6 min-h-40"
+                class="p-8 bg-muted flex flex-wrap items-center justify-center gap-6 min-h-40"
               >
                 <button
                   v-gsap.magnetic.weak
-                  class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-full font-semibold cursor-pointer transition-colors text-sm"
+                  class="px-5 py-2.5 bg-elevated hover:bg-accented text-default rounded-full font-semibold cursor-pointer transition-colors text-sm"
                 >
                   Weak
                 </button>
@@ -1761,17 +1761,17 @@
                 </button>
                 <button
                   v-gsap.magnetic.strong
-                  class="px-5 py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-full font-semibold cursor-pointer transition-colors text-sm"
+                  class="px-5 py-2.5 bg-purple-500 hover:bg-purple-600 text-highlighted rounded-full font-semibold cursor-pointer transition-colors text-sm"
                 >
                   Strong
                 </button>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">magnetic</span>
+                <span class="text-sm font-mono text-muted">magnetic</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1782,7 +1782,7 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.magnetic }}</code></pre>
             </div>
           </div>
@@ -1790,20 +1790,20 @@
       </section>
 
       <!-- ── Section: Draggable ── -->
-      <section id="draggable" class="py-16 bg-gray-50 dark:bg-gray-900">
+      <section id="draggable" class="py-16 bg-muted">
         <UContainer class="space-y-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Draggable Elements</h2>
-            <p class="text-gray-500 dark:text-gray-400">
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+            <p class="text-muted">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.draggable</code
               >
               enables free drag.
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.draggable.x</code
               >
               constrains to horizontal.
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.draggable.rotation</code
               >
               for spin drag.
@@ -1811,14 +1811,14 @@
           </div>
 
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm font-medium text-gray-600 dark:text-gray-400"
+                class="px-4 py-2 border-b border-default bg-muted dark:bg-accented text-sm font-medium text-toned"
               >
                 Demo — drag the shapes
               </div>
               <div
-                class="p-6 bg-white dark:bg-gray-900 min-h-48 relative flex items-center justify-center gap-6"
+                class="p-6 bg-muted min-h-48 relative flex items-center justify-center gap-6"
               >
                 <div
                   v-gsap.draggable.x
@@ -1840,11 +1840,11 @@
                 </div>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">draggable</span>
+                <span class="text-sm font-mono text-muted">draggable</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1855,7 +1855,7 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.draggableXY }}</code></pre>
             </div>
           </div>
@@ -1867,28 +1867,28 @@
         <UContainer class="space-y-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Typewriter Effect</h2>
-            <p class="text-gray-500 dark:text-gray-400">
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+            <p class="text-muted">
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.animateText</code
               >
               uses GSAP's TextPlugin to type the text content character by character. Control speed
               with
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.slow</code
               >
               or
-              <code class="font-mono text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.fast</code
               >.
             </p>
           </div>
 
           <div class="grid md:grid-cols-2 gap-6 items-start">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >Demo — typewriter on scroll</span
                 >
                 <UButton
@@ -1901,11 +1901,11 @@
               </div>
               <div
                 :key="replayKeys['animateText']"
-                class="p-8 bg-white dark:bg-gray-900 space-y-6 min-h-40 flex flex-col justify-center"
+                class="p-8 bg-muted space-y-6 min-h-40 flex flex-col justify-center"
               >
                 <p
                   v-gsap.whenVisible.once.animateText
-                  class="text-lg font-mono text-gray-800 dark:text-gray-200"
+                  class="text-lg font-mono text-default dark:text-default"
                 >
                   Default speed typewriter effect...
                 </p>
@@ -1923,11 +1923,11 @@
                 </p>
               </div>
             </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-900 dark:bg-gray-950"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted"
               >
-                <span class="text-sm font-mono text-gray-400">animateText</span>
+                <span class="text-sm font-mono text-muted">animateText</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1938,7 +1938,7 @@
                 </UButton>
               </div>
               <pre
-                class="p-4 text-sm overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-200 leading-relaxed"
+                class="p-4 text-sm overflow-x-auto bg-muted text-default leading-relaxed"
               ><code>{{ snippets.animateText }}</code></pre>
             </div>
           </div>
@@ -1946,22 +1946,22 @@
       </section>
 
       <!-- ── Section: Responsive & Advanced ── -->
-      <section id="advanced" class="py-16 bg-gray-50 dark:bg-gray-900">
+      <section id="advanced" class="py-16 bg-muted">
         <UContainer class="space-y-12">
           <div>
             <h2 class="text-3xl font-bold mb-2">Responsive & Advanced Patterns</h2>
-            <p class="text-gray-500 dark:text-gray-400">
+            <p class="text-muted">
               Limit animations to a device size, pin elements during scroll, or trigger based on
               data attribute state.
             </p>
           </div>
 
           <div class="grid md:grid-cols-2 gap-6">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >.desktop / .mobile — breakpoint guards</span
                 >
                 <UButton
@@ -1972,7 +1972,7 @@
                   >Replay</UButton
                 >
               </div>
-              <div :key="replayKeys['responsive']" class="p-6 bg-white dark:bg-gray-900 space-y-3">
+              <div :key="replayKeys['responsive']" class="p-6 bg-muted space-y-3">
                 <div
                   v-gsap.desktop.whenVisible.once.from="{ opacity: 0, y: 40, duration: 0.8 }"
                   class="p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-sm font-semibold text-blue-800 dark:text-blue-200"
@@ -1986,11 +1986,11 @@
                   Mobile only (&lt;768px)
                 </div>
               </div>
-              <div class="border-t border-gray-200 dark:border-gray-700">
+              <div class="border-t border-default">
                 <div
-                  class="flex items-center justify-between px-4 py-2 bg-gray-900 dark:bg-gray-950"
+                  class="flex items-center justify-between px-4 py-2 bg-muted"
                 >
-                  <span class="text-xs font-mono text-gray-500">code</span>
+                  <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
                     variant="ghost"
@@ -2000,16 +2000,16 @@
                   >
                 </div>
                 <pre
-                  class="p-3 text-xs overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-300 leading-relaxed"
+                  class="p-3 text-xs overflow-x-auto bg-muted text-toned leading-relaxed"
                 ><code>{{ snippets.desktopOnly }}</code></pre>
               </div>
             </div>
 
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="rounded-xl border border-default overflow-hidden">
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                <span class="text-sm font-medium text-toned"
                   >.fromInvisible — prevent SSR flash</span
                 >
                 <UButton
@@ -2020,23 +2020,23 @@
                   >Replay</UButton
                 >
               </div>
-              <div :key="replayKeys['fromInvisible']" class="p-6 bg-white dark:bg-gray-900">
+              <div :key="replayKeys['fromInvisible']" class="p-6 bg-muted">
                 <div
                   v-gsap.whenVisible.once.fromInvisible.from="{ y: 40, duration: 0.8 }"
                   class="p-4 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg text-sm font-semibold text-yellow-800 dark:text-yellow-200"
                 >
                   Starts invisible on SSR — no flash before JS
                 </div>
-                <p class="mt-3 text-xs text-gray-500 dark:text-gray-500">
+                <p class="mt-3 text-xs text-muted">
                   Adds <code class="font-mono">data-vgsap-from-invisible</code> in SSR HTML so your
                   CSS can hide the element until GSAP runs.
                 </p>
               </div>
-              <div class="border-t border-gray-200 dark:border-gray-700">
+              <div class="border-t border-default">
                 <div
-                  class="flex items-center justify-between px-4 py-2 bg-gray-900 dark:bg-gray-950"
+                  class="flex items-center justify-between px-4 py-2 bg-muted"
                 >
-                  <span class="text-xs font-mono text-gray-500">code</span>
+                  <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
                     variant="ghost"
@@ -2046,38 +2046,38 @@
                   >
                 </div>
                 <pre
-                  class="p-3 text-xs overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-300 leading-relaxed"
+                  class="p-3 text-xs overflow-x-auto bg-muted text-toned leading-relaxed"
                 ><code>{{ snippets.fromInvisible }}</code></pre>
               </div>
             </div>
 
             <div
-              class="md:col-span-2 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+              class="md:col-span-2 rounded-xl border border-default overflow-hidden"
             >
               <div
-                class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm font-medium text-gray-600 dark:text-gray-400"
+                class="px-4 py-2 border-b border-default bg-muted dark:bg-accented text-sm font-medium text-toned"
               >
                 .pinned — pin element during scroll travel
               </div>
-              <div class="p-6 bg-white dark:bg-gray-900">
-                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              <div class="p-6 bg-muted">
+                <p class="text-sm text-toned mb-4">
                   The
-                  <code class="font-mono text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+                  <code class="font-mono text-xs bg-accented px-1.5 py-0.5 rounded"
                     >.pinned</code
                   >
                   modifier creates a ScrollTrigger that pins the element in the viewport while
                   scrolling through the defined
-                  <code class="font-mono text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded"
+                  <code class="font-mono text-xs bg-accented px-1.5 py-0.5 rounded"
                     >end</code
                   >
                   distance. Use it on full-height sections, not inline cards.
                 </p>
               </div>
-              <div class="border-t border-gray-200 dark:border-gray-700">
+              <div class="border-t border-default">
                 <div
-                  class="flex items-center justify-between px-4 py-2 bg-gray-900 dark:bg-gray-950"
+                  class="flex items-center justify-between px-4 py-2 bg-muted"
                 >
-                  <span class="text-xs font-mono text-gray-500">code</span>
+                  <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
                     variant="ghost"
@@ -2087,7 +2087,7 @@
                   >
                 </div>
                 <pre
-                  class="p-3 text-xs overflow-x-auto bg-gray-900 dark:bg-gray-950 text-gray-300 leading-relaxed"
+                  class="p-3 text-xs overflow-x-auto bg-muted text-toned leading-relaxed"
                 ><code>{{ snippets.pinned }}</code></pre>
               </div>
             </div>
@@ -2100,19 +2100,19 @@
         <UContainer class="space-y-8">
           <div>
             <h2 class="text-3xl font-bold mb-2">Value Object Reference</h2>
-            <p class="text-gray-500 dark:text-gray-400">
+            <p class="text-muted">
               All GSAP tween properties are valid. Common scroll-specific keys consumed by the
               directive:
             </p>
           </div>
-          <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+          <div class="overflow-x-auto rounded-xl border border-default">
             <table class="w-full text-sm">
-              <thead class="bg-gray-100 dark:bg-gray-800 text-left">
+              <thead class="bg-accented text-left">
                 <tr>
-                  <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Key</th>
-                  <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Type</th>
-                  <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Default</th>
-                  <th class="px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">
+                  <th class="px-4 py-3 font-semibold text-toned">Key</th>
+                  <th class="px-4 py-3 font-semibold text-toned">Type</th>
+                  <th class="px-4 py-3 font-semibold text-toned">Default</th>
+                  <th class="px-4 py-3 font-semibold text-toned">
                     Description
                   </th>
                 </tr>
@@ -2179,18 +2179,18 @@
                     { key: 'rotation', type: 'number', def: '—', desc: 'Rotation in degrees' },
                   ]"
                   :key
-                  class="bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors"
+                  class="bg-default hover:bg-muted transition-colors"
                 >
                   <td class="px-4 py-3 font-mono text-violet-600 dark:text-violet-400 font-medium">
                     {{ key }}
                   </td>
-                  <td class="px-4 py-3 font-mono text-xs text-gray-500 dark:text-gray-500">
+                  <td class="px-4 py-3 font-mono text-xs text-muted">
                     {{ type }}
                   </td>
-                  <td class="px-4 py-3 font-mono text-xs text-gray-500 dark:text-gray-500">
+                  <td class="px-4 py-3 font-mono text-xs text-muted">
                     {{ def }}
                   </td>
-                  <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ desc }}</td>
+                  <td class="px-4 py-3 text-toned">{{ desc }}</td>
                 </tr>
               </tbody>
             </table>
@@ -2200,15 +2200,15 @@
 
       <!-- Footer nav -->
       <section
-        class="py-12 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900"
+        class="py-12 border-t border-default dark:border-default bg-muted"
       >
         <UContainer>
           <div class="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
             <div>
-              <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-1">
+              <h3 class="text-xl font-bold text-highlighted mb-1">
                 v-gsap Directive
               </h3>
-              <p class="text-gray-500 dark:text-gray-400 text-sm">
+              <p class="text-muted text-sm">
                 Part of the motion layer — GSAP + Locomotive Scroll
               </p>
             </div>

@@ -68,7 +68,7 @@
     title="SEO Layer Demo"
     description="@nuxtjs/seo wrapper with robots, sitemap, OG images, and schema-org"
   >
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="SEO"
         description="@nuxtjs/seo wrapper — robots, sitemap, OG images, and schema-org structured data in one layer."
@@ -83,7 +83,7 @@
         </div>
       </DemoPageHero>
 
-      <section class="bg-gray-950 pb-24">
+      <section class="bg-default pb-24">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="space-y-8 py-8">
             <!-- Modules Overview -->

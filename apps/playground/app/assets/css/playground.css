@@ -1,0 +1,28 @@
+:root {
+  --demo-hero-bg: var(--ui-bg);
+  --demo-hero-accent-opacity: 0.3;
+}
+
+[data-theme-mode='dark'] {
+  --ui-bg: var(--color-gray-950);
+  --ui-bg-muted: var(--color-gray-900);
+  --ui-bg-elevated: var(--color-gray-900);
+  --ui-bg-accented: var(--color-gray-800);
+  --demo-hero-accent-opacity: 0.3;
+}
+
+[data-theme-mode='light'] {
+  --ui-bg: var(--color-gray-100);
+}
+
+[data-theme-mode='light'] .demo-hero-bg {
+  opacity: 0.08;
+}
+
+[data-theme-mode='light'] .demo-hero-shadow {
+  opacity: 0.1;
+}
+
+.demo-hero-accent {
+  opacity: var(--demo-hero-accent-opacity);
+}

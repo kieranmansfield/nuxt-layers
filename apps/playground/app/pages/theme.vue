@@ -47,7 +47,7 @@
     title="Theme Layer Demo"
     description="Demonstrating the Theme layer color system, palettes, and design tokens"
   >
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="THEME"
         description="Config-driven theme system with dark mode, accent colours, and CSS variable tokens."

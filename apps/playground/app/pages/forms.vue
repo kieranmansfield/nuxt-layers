@@ -157,7 +157,7 @@ type FormState = z.infer<typeof schema>`
     title="Forms Layer Demo"
     description="Config-driven form fields with Zod validation and type inference"
   >
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="FORMS"
         description="Config-driven form fields with Zod validation and full type inference."
@@ -179,30 +179,30 @@ type FormState = z.infer<typeof schema>`
                     throughout your application.
                   </p>
                   <div class="grid gap-4 md:grid-cols-3 not-prose mt-4">
-                    <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div class="p-4 bg-muted dark:bg-accented rounded-lg">
                       <div class="flex items-center gap-2 mb-2">
                         <UIcon name="i-lucide-settings" class="text-primary" />
                         <h3 class="font-semibold">Config-Driven</h3>
                       </div>
-                      <p class="text-sm text-gray-600 dark:text-gray-400">
+                      <p class="text-sm text-toned dark:text-muted">
                         Define field behavior once in a central config
                       </p>
                     </div>
-                    <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div class="p-4 bg-muted dark:bg-accented rounded-lg">
                       <div class="flex items-center gap-2 mb-2">
                         <UIcon name="i-lucide-shield-check" class="text-primary" />
                         <h3 class="font-semibold">Zod Validation</h3>
                       </div>
-                      <p class="text-sm text-gray-600 dark:text-gray-400">
+                      <p class="text-sm text-toned dark:text-muted">
                         Type-safe validation with automatic TypeScript inference
                       </p>
                     </div>
-                    <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div class="p-4 bg-muted dark:bg-accented rounded-lg">
                       <div class="flex items-center gap-2 mb-2">
                         <UIcon name="i-lucide-component" class="text-primary" />
                         <h3 class="font-semibold">Single Component</h3>
                       </div>
-                      <p class="text-sm text-gray-600 dark:text-gray-400">
+                      <p class="text-sm text-toned dark:text-muted">
                         One FormField component handles all input types
                       </p>
                     </div>
@@ -214,7 +214,7 @@ type FormState = z.infer<typeof schema>`
               <section class="space-y-6">
                 <div>
                   <h2 class="text-2xl font-bold mb-2">Field Types</h2>
-                  <p class="text-gray-500">
+                  <p class="text-muted">
                     12 built-in field types with automatic icons, validation, and input modes
                   </p>
                 </div>
@@ -225,7 +225,7 @@ type FormState = z.infer<typeof schema>`
                       <UIcon name="i-lucide-text-cursor-input" class="text-primary" />
                       <h3 class="text-xl font-semibold">FormField Component</h3>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">
+                    <p class="text-sm text-muted mt-1">
                       Dynamic field rendering based on type prop
                     </p>
                   </template>
@@ -233,7 +233,7 @@ type FormState = z.infer<typeof schema>`
                   <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     <div v-for="field in fieldTypes" :key="field.type" class="space-y-2">
                       <div class="flex items-center justify-between">
-                        <span class="text-sm font-medium text-gray-500">{{ field.type }}</span>
+                        <span class="text-sm font-medium text-muted">{{ field.type }}</span>
                         <UBadge variant="subtle" size="xs">{{ field.description }}</UBadge>
                       </div>
                       <FormField
@@ -247,7 +247,7 @@ type FormState = z.infer<typeof schema>`
 
                   <template #footer>
                     <div
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg font-mono text-sm overflow-x-auto"
                     >
                       <pre>{{ formFieldUsageCode }}</pre>
                     </div>
@@ -259,7 +259,7 @@ type FormState = z.infer<typeof schema>`
               <section class="space-y-6">
                 <div>
                   <h2 class="text-2xl font-bold mb-2">Field Configuration</h2>
-                  <p class="text-gray-500">
+                  <p class="text-muted">
                     Each field type is defined in a central configuration with validation, icons,
                     and input behavior
                   </p>
@@ -271,7 +271,7 @@ type FormState = z.infer<typeof schema>`
                       <UIcon name="i-lucide-file-code" class="text-primary" />
                       <h3 class="text-xl font-semibold">fieldConfigs</h3>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">
+                    <p class="text-sm text-muted mt-1">
                       Central registry for field type definitions
                     </p>
                   </template>
@@ -279,7 +279,7 @@ type FormState = z.infer<typeof schema>`
                   <div class="space-y-6">
                     <!-- Config Properties -->
                     <div>
-                      <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">
+                      <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
                         Configuration Properties
                       </h4>
                       <div class="overflow-x-auto">
@@ -334,11 +334,11 @@ type FormState = z.infer<typeof schema>`
 
                     <!-- Code Example -->
                     <div>
-                      <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">
+                      <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
                         Example Configuration
                       </h4>
                       <div
-                        class="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-xs overflow-x-auto"
+                        class="bg-muted text-highlighted p-4 rounded-lg font-mono text-xs overflow-x-auto"
                       >
                         <pre>{{ fieldConfigCode }}</pre>
                       </div>
@@ -351,7 +351,7 @@ type FormState = z.infer<typeof schema>`
               <section class="space-y-6">
                 <div>
                   <h2 class="text-2xl font-bold mb-2">Zod Validation</h2>
-                  <p class="text-gray-500">
+                  <p class="text-muted">
                     Built-in validation with Zod schemas and automatic error messages
                   </p>
                 </div>
@@ -362,7 +362,7 @@ type FormState = z.infer<typeof schema>`
                       <UIcon name="i-lucide-shield-check" class="text-primary" />
                       <h3 class="text-xl font-semibold">Validation Demo</h3>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">
+                    <p class="text-sm text-muted mt-1">
                       Try submitting with invalid data to see validation errors
                     </p>
                   </template>
@@ -409,25 +409,25 @@ type FormState = z.infer<typeof schema>`
 
                     <!-- Validation Rules -->
                     <div class="space-y-4">
-                      <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500">
+                      <h4 class="text-sm font-medium uppercase tracking-wide text-muted">
                         Validation Rules
                       </h4>
                       <div class="space-y-3">
-                        <div class="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div class="p-3 bg-muted dark:bg-accented rounded-lg">
                           <div class="flex items-center gap-2 mb-1">
                             <UIcon name="i-lucide-mail" class="text-primary" />
                             <span class="font-medium">Email</span>
                           </div>
-                          <p class="text-sm text-gray-600 dark:text-gray-400">
+                          <p class="text-sm text-toned dark:text-muted">
                             Must be a valid email address format
                           </p>
                         </div>
-                        <div class="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div class="p-3 bg-muted dark:bg-accented rounded-lg">
                           <div class="flex items-center gap-2 mb-1">
                             <UIcon name="i-lucide-lock" class="text-primary" />
                             <span class="font-medium">Password</span>
                           </div>
-                          <p class="text-sm text-gray-600 dark:text-gray-400">
+                          <p class="text-sm text-toned dark:text-muted">
                             Minimum 8 characters required
                           </p>
                         </div>
@@ -441,7 +441,7 @@ type FormState = z.infer<typeof schema>`
               <section class="space-y-6">
                 <div>
                   <h2 class="text-2xl font-bold mb-2">Type Inference</h2>
-                  <p class="text-gray-500">Automatic TypeScript types from Zod schemas</p>
+                  <p class="text-muted">Automatic TypeScript types from Zod schemas</p>
                 </div>
 
                 <UCard>
@@ -450,14 +450,14 @@ type FormState = z.infer<typeof schema>`
                       <UIcon name="i-lucide-file-type" class="text-primary" />
                       <h3 class="text-xl font-semibold">z.infer&lt;typeof schema&gt;</h3>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">
+                    <p class="text-sm text-muted mt-1">
                       Get compile-time type safety from your validation schemas
                     </p>
                   </template>
 
                   <div class="space-y-6">
                     <div
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-xs overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg font-mono text-xs overflow-x-auto"
                     >
                       <pre>{{ zodSchemaCode }}</pre>
                     </div>
@@ -508,7 +508,7 @@ type FormState = z.infer<typeof schema>`
               <section class="space-y-6">
                 <div>
                   <h2 class="text-2xl font-bold mb-2">Complete Example</h2>
-                  <p class="text-gray-500">A fully functional contact form using the Forms layer</p>
+                  <p class="text-muted">A fully functional contact form using the Forms layer</p>
                 </div>
 
                 <UCard>
@@ -517,7 +517,7 @@ type FormState = z.infer<typeof schema>`
                       <UIcon name="i-lucide-mail" class="text-primary" />
                       <h3 class="text-xl font-semibold">Contact Form</h3>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">
+                    <p class="text-sm text-muted mt-1">
                       Validates client-side with Zod then POSTs to <code>/api/contact</code> — sends
                       a real email via Resend
                     </p>
@@ -549,7 +549,7 @@ type FormState = z.infer<typeof schema>`
 
                     <!-- Component Info -->
                     <div class="space-y-4">
-                      <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500">
+                      <h4 class="text-sm font-medium uppercase tracking-wide text-muted">
                         Component Features
                       </h4>
                       <div class="space-y-3">
@@ -557,14 +557,14 @@ type FormState = z.infer<typeof schema>`
                           <UIcon name="i-lucide-check" class="text-green-500 mt-0.5" />
                           <div>
                             <span class="font-medium">3 field types</span>
-                            <p class="text-sm text-gray-500">name, email, textarea</p>
+                            <p class="text-sm text-muted">name, email, textarea</p>
                           </div>
                         </div>
                         <div class="flex items-start gap-3">
                           <UIcon name="i-lucide-check" class="text-green-500 mt-0.5" />
                           <div>
                             <span class="font-medium">Zod validation</span>
-                            <p class="text-sm text-gray-500">
+                            <p class="text-sm text-muted">
                               Name ≥3 chars, valid email, message ≥8 chars
                             </p>
                           </div>
@@ -573,14 +573,14 @@ type FormState = z.infer<typeof schema>`
                           <UIcon name="i-lucide-check" class="text-green-500 mt-0.5" />
                           <div>
                             <span class="font-medium">Toast notifications</span>
-                            <p class="text-sm text-gray-500">Success/error feedback on submit</p>
+                            <p class="text-sm text-muted">Success/error feedback on submit</p>
                           </div>
                         </div>
                         <div class="flex items-start gap-3">
                           <UIcon name="i-lucide-check" class="text-green-500 mt-0.5" />
                           <div>
                             <span class="font-medium">Sends real email</span>
-                            <p class="text-sm text-gray-500">
+                            <p class="text-sm text-muted">
                               Resend API via <code>/api/contact</code>
                             </p>
                           </div>
@@ -589,7 +589,7 @@ type FormState = z.infer<typeof schema>`
                           <UIcon name="i-lucide-check" class="text-green-500 mt-0.5" />
                           <div>
                             <span class="font-medium">Type-safe state</span>
-                            <p class="text-sm text-gray-500">Full TypeScript inference</p>
+                            <p class="text-sm text-muted">Full TypeScript inference</p>
                           </div>
                         </div>
                       </div>
@@ -602,7 +602,7 @@ type FormState = z.infer<typeof schema>`
               <section class="space-y-6">
                 <div>
                   <h2 class="text-2xl font-bold mb-2">Email Integration</h2>
-                  <p class="text-gray-500">
+                  <p class="text-muted">
                     Real email delivery via Resend — configure with runtime environment variables
                   </p>
                 </div>
@@ -613,7 +613,7 @@ type FormState = z.infer<typeof schema>`
                       <UIcon name="i-lucide-send" class="text-primary" />
                       <h3 class="text-xl font-semibold">Resend Configuration</h3>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">
+                    <p class="text-sm text-muted mt-1">
                       Current status of the forms layer environment variables
                     </p>
                   </template>
@@ -650,25 +650,25 @@ type FormState = z.infer<typeof schema>`
                       </div>
 
                       <div
-                        class="p-4 rounded-lg border bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                        class="p-4 rounded-lg border bg-muted dark:bg-accented border-default dark:border-accented"
                       >
                         <div class="flex items-center gap-2 mb-2">
                           <UIcon name="i-lucide-mail" class="text-primary" />
                           <span class="text-xs font-mono font-medium">EMAIL_FROM</span>
                         </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
+                        <p class="text-sm text-toned dark:text-muted truncate">
                           {{ emailStatus?.emailFrom || '—' }}
                         </p>
                       </div>
 
                       <div
-                        class="p-4 rounded-lg border bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                        class="p-4 rounded-lg border bg-muted dark:bg-accented border-default dark:border-accented"
                       >
                         <div class="flex items-center gap-2 mb-2">
                           <UIcon name="i-lucide-inbox" class="text-primary" />
                           <span class="text-xs font-mono font-medium">EMAIL_TO</span>
                         </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
+                        <p class="text-sm text-toned dark:text-muted truncate">
                           {{ emailStatus?.emailTo || '—' }}
                         </p>
                       </div>
@@ -719,11 +719,11 @@ type FormState = z.infer<typeof schema>`
 
                     <!-- Env var reference -->
                     <div>
-                      <h4 class="text-sm font-medium uppercase tracking-wide text-gray-500 mb-3">
+                      <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
                         Environment Variables
                       </h4>
                       <div
-                        class="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-xs overflow-x-auto"
+                        class="bg-muted text-highlighted p-4 rounded-lg font-mono text-xs overflow-x-auto"
                       >
                         <pre>
 NUXT_FORMS_LAYER_RESEND_API_KEY=re_xxxx
@@ -741,7 +741,7 @@ NUXT_FORMS_LAYER_EMAIL_TO=you@example.com
               <section class="space-y-6">
                 <div>
                   <h2 class="text-2xl font-bold mb-2">API Reference</h2>
-                  <p class="text-gray-500">FormField component props</p>
+                  <p class="text-muted">FormField component props</p>
                 </div>
 
                 <UCard>

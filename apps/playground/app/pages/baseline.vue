@@ -59,7 +59,7 @@
     title="Baseline Layer Demo"
     description="Browser compatibility badges from the Web Platform Baseline initiative"
   >
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="BASELINE"
         description="Show browser compatibility status for any web platform feature using the Baseline initiative."
@@ -107,13 +107,13 @@
                       </p>
                     </div>
                     <div
-                      class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700"
+                      class="p-4 bg-accented rounded-lg border border-default"
                     >
                       <div class="flex items-center gap-2 mb-2">
-                        <span class="text-gray-500 font-bold text-lg">✗</span>
+                        <span class="text-muted font-bold text-lg">✗</span>
                         <h3 class="font-semibold">Limited Availability</h3>
                       </div>
-                      <p class="text-sm text-gray-600 dark:text-gray-400">
+                      <p class="text-sm text-toned">
                         Not yet in all major browsers — check support tables
                       </p>
                     </div>
@@ -125,9 +125,9 @@
               <section class="space-y-6">
                 <div>
                   <h2 class="text-2xl font-bold mb-2">Featured Features</h2>
-                  <p class="text-gray-500">
+                  <p class="text-muted">
                     Live status badges fetched from
-                    <code class="text-xs bg-gray-800 px-1.5 py-0.5 rounded">api.webstatus.dev</code>
+                    <code class="text-xs bg-accented px-1.5 py-0.5 rounded">api.webstatus.dev</code>
                   </p>
                 </div>
 
@@ -136,14 +136,14 @@
                     <template #header>
                       <div>
                         <h3 class="font-semibold">{{ feature.label }}</h3>
-                        <p class="text-sm text-gray-500 mt-0.5">{{ feature.description }}</p>
+                        <p class="text-sm text-muted mt-0.5">{{ feature.description }}</p>
                       </div>
                     </template>
 
                     <BaselineStatus :featureId="feature.id" />
 
                     <template #footer>
-                      <code class="text-xs text-gray-500">featureId="{{ feature.id }}"</code>
+                      <code class="text-xs text-muted">featureId="{{ feature.id }}"</code>
                     </template>
                   </UCard>
                 </div>
@@ -153,9 +153,9 @@
               <section class="space-y-6">
                 <div>
                   <h2 class="text-2xl font-bold mb-2">Try Any Feature</h2>
-                  <p class="text-gray-500">
+                  <p class="text-muted">
                     Enter any feature ID from
-                    <code class="text-xs bg-gray-800 px-1.5 py-0.5 rounded">webstatus.dev</code>
+                    <code class="text-xs bg-accented px-1.5 py-0.5 rounded">webstatus.dev</code>
                     to see its Baseline status
                   </p>
                 </div>
@@ -177,9 +177,9 @@
                     />
 
                     <div v-if="customFeatureId" class="space-y-2">
-                      <p class="text-sm text-gray-500">
+                      <p class="text-sm text-muted">
                         Status for
-                        <code class="text-xs bg-gray-800 px-1.5 py-0.5 rounded">{{
+                        <code class="text-xs bg-accented px-1.5 py-0.5 rounded">{{
                           customFeatureId
                         }}</code
                         >:
@@ -189,7 +189,7 @@
                   </div>
 
                   <template #footer>
-                    <p class="text-xs text-gray-500">
+                    <p class="text-xs text-muted">
                       Find feature IDs at
                       <ULink
                         to="https://webstatus.dev"
@@ -197,7 +197,7 @@
                         class="underline"
                       >webstatus.dev</ULink>
                       — the ID is the last segment of the URL, e.g.
-                      <code class="bg-gray-800 px-1 py-0.5 rounded">intl-list-format</code>
+                      <code class="bg-accented px-1 py-0.5 rounded">intl-list-format</code>
                     </p>
                   </template>
                 </UCard>
@@ -207,8 +207,8 @@
               <section class="space-y-6">
                 <div>
                   <h2 class="text-2xl font-bold mb-2">Usage</h2>
-                  <p class="text-gray-500">
-                    <code class="text-xs bg-gray-800 px-1.5 py-0.5 rounded">BaselineStatus</code>
+                  <p class="text-muted">
+                    <code class="text-xs bg-accented px-1.5 py-0.5 rounded">BaselineStatus</code>
                     is auto-imported — no manual import needed
                   </p>
                 </div>
@@ -223,13 +223,13 @@
 
                   <div class="space-y-6">
                     <div
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg font-mono text-sm overflow-x-auto"
                     >
                       <pre>{{ usageCode }}</pre>
                     </div>
 
                     <div
-                      class="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm overflow-x-auto"
+                      class="bg-muted text-highlighted p-4 rounded-lg font-mono text-sm overflow-x-auto"
                     >
                       <pre>{{ advancedCode }}</pre>
                     </div>
@@ -263,7 +263,7 @@
                           </td>
                           <td class="py-2 px-3">
                             Web platform feature slug from
-                            <code class="text-xs bg-gray-800 px-1 rounded">webstatus.dev</code>
+                            <code class="text-xs bg-accented px-1 rounded">webstatus.dev</code>
                           </td>
                         </tr>
                       </tbody>

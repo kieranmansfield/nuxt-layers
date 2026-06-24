@@ -139,9 +139,9 @@
   <LayoutPage
     title="Core Layer Demo"
     description="Demonstrating the core layer utilities and composables"
-    class="bg-gray-950"
+    class="bg-default"
   >
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="CORE"
         description="Foundation utilities: browser detection, screen info, network status, PWA support, and feature detection."
@@ -155,7 +155,7 @@
                       <UIcon name="i-lucide-globe" class="text-primary" />
                       <h2 class="text-xl font-semibold">useBrowser()</h2>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">
+                    <p class="text-sm text-muted mt-1">
                       Detect browser, engine, version, and OS
                     </p>
                   </template>
@@ -163,24 +163,24 @@
                   <div class="grid gap-6 md:grid-cols-2">
                     <!-- Browser Info -->
                     <div class="space-y-3">
-                      <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                      <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
                         Browser Info
                       </h3>
                       <div class="space-y-2">
                         <div class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">Name</span>
+                          <span class="text-toned dark:text-muted">Name</span>
                           <span class="font-mono capitalize">{{ browserName }}</span>
                         </div>
                         <div class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">Version</span>
+                          <span class="text-toned dark:text-muted">Version</span>
                           <span class="font-mono">{{ browserVersion }} (v{{ majorVersion }})</span>
                         </div>
                         <div class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">Engine</span>
+                          <span class="text-toned dark:text-muted">Engine</span>
                           <span class="font-mono capitalize">{{ engine }}</span>
                         </div>
                         <div class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">OS</span>
+                          <span class="text-toned dark:text-muted">OS</span>
                           <span class="font-mono capitalize">{{ os }}</span>
                         </div>
                       </div>
@@ -188,7 +188,7 @@
 
                     <!-- Flags -->
                     <div class="space-y-3">
-                      <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                      <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
                         Detection Flags
                       </h3>
                       <div class="flex flex-wrap gap-2">
@@ -216,7 +216,7 @@
                       <UIcon name="i-lucide-monitor" class="text-primary" />
                       <h2 class="text-xl font-semibold">useScreen()</h2>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">
+                    <p class="text-sm text-muted mt-1">
                       Screen dimensions, breakpoints, and orientation
                     </p>
                   </template>
@@ -224,24 +224,24 @@
                   <div class="grid gap-6 md:grid-cols-3">
                     <!-- Dimensions -->
                     <div class="space-y-3">
-                      <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                      <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
                         Dimensions
                       </h3>
                       <div class="space-y-2">
                         <div class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">Width</span>
+                          <span class="text-toned dark:text-muted">Width</span>
                           <span class="font-mono">{{ screenWidth }}px</span>
                         </div>
                         <div class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">Height</span>
+                          <span class="text-toned dark:text-muted">Height</span>
                           <span class="font-mono">{{ screenHeight }}px</span>
                         </div>
                         <div class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">Pixel Ratio</span>
+                          <span class="text-toned dark:text-muted">Pixel Ratio</span>
                           <span class="font-mono">{{ pixelRatio }}x</span>
                         </div>
                         <div class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">Retina</span>
+                          <span class="text-toned dark:text-muted">Retina</span>
                           <UBadge :color="isRetina ? 'success' : 'neutral'" size="xs">
                             {{ isRetina ? 'Yes' : 'No' }}
                           </UBadge>
@@ -251,12 +251,12 @@
 
                     <!-- Breakpoints -->
                     <div class="space-y-3">
-                      <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                      <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
                         Breakpoints
                       </h3>
                       <div class="space-y-2">
                         <div class="flex justify-between items-center">
-                          <span class="text-gray-600 dark:text-gray-400">Current</span>
+                          <span class="text-toned dark:text-muted">Current</span>
                           <UBadge color="primary">{{ breakpoint }}</UBadge>
                         </div>
                         <div class="flex flex-wrap gap-1.5 pt-2">
@@ -294,12 +294,12 @@
 
                     <!-- Orientation -->
                     <div class="space-y-3">
-                      <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                      <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
                         Orientation
                       </h3>
                       <div class="space-y-2">
                         <div class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">Current</span>
+                          <span class="text-toned dark:text-muted">Current</span>
                           <span class="font-mono text-sm">{{ orientation || 'N/A' }}</span>
                         </div>
                         <div class="flex gap-2 pt-2">
@@ -330,28 +330,28 @@
                       <UIcon name="i-lucide-wifi" class="text-primary" />
                       <h2 class="text-xl font-semibold">useNetworkInfo()</h2>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">Network connection status and quality</p>
+                    <p class="text-sm text-muted mt-1">Network connection status and quality</p>
                   </template>
 
                   <div class="grid gap-6 md:grid-cols-2">
                     <!-- Status -->
                     <div class="space-y-3">
-                      <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                      <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
                         Connection Status
                       </h3>
                       <div class="space-y-2">
                         <div class="flex justify-between items-center">
-                          <span class="text-gray-600 dark:text-gray-400">Online</span>
+                          <span class="text-toned dark:text-muted">Online</span>
                           <UBadge :color="isOnline ? 'success' : 'error'">
                             {{ isOnline ? 'Connected' : 'Offline' }}
                           </UBadge>
                         </div>
                         <div class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">Type</span>
+                          <span class="text-toned dark:text-muted">Type</span>
                           <span class="font-mono">{{ effectiveType || 'unknown' }}</span>
                         </div>
                         <div class="flex justify-between items-center">
-                          <span class="text-gray-600 dark:text-gray-400">Quality</span>
+                          <span class="text-toned dark:text-muted">Quality</span>
                           <UBadge
                             :color="
                               connectionQuality === 'excellent'
@@ -371,7 +371,7 @@
 
                     <!-- Flags -->
                     <div class="space-y-3">
-                      <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                      <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
                         Network Flags
                       </h3>
                       <div class="flex flex-wrap gap-2">
@@ -392,7 +392,7 @@
                       <UIcon name="i-lucide-cpu" class="text-primary" />
                       <h2 class="text-xl font-semibold">useFeatures()</h2>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">
+                    <p class="text-sm text-muted mt-1">
                       CSS features, JS APIs, and user preferences
                     </p>
                   </template>
@@ -400,7 +400,7 @@
                   <div class="grid gap-6 md:grid-cols-3">
                     <!-- CSS Features -->
                     <div class="space-y-3">
-                      <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                      <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
                         CSS Features
                       </h3>
                       <div class="space-y-1.5">
@@ -420,7 +420,7 @@
 
                     <!-- JS APIs -->
                     <div class="space-y-3">
-                      <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                      <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
                         JavaScript APIs
                       </h3>
                       <div class="space-y-1.5">
@@ -440,7 +440,7 @@
 
                     <!-- User Preferences & Formats -->
                     <div class="space-y-3">
-                      <h3 class="font-medium text-sm uppercase tracking-wide text-gray-500">
+                      <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
                         Preferences & Formats
                       </h3>
                       <div class="space-y-1.5">
@@ -451,7 +451,7 @@
                         >
                           <UIcon
                             :name="pref.active ? 'i-lucide-check' : 'i-lucide-x'"
-                            :class="pref.active ? 'text-green-500' : 'text-gray-400'"
+                            :class="pref.active ? 'text-green-500' : 'text-muted'"
                           />
                           <span>{{ pref.name }}</span>
                         </div>
@@ -467,7 +467,7 @@
                       <UIcon name="i-lucide-smartphone" class="text-primary" />
                       <h2 class="text-xl font-semibold">useDevice()</h2>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">
+                    <p class="text-sm text-muted mt-1">
                       Server-side device detection via @nuxtjs/device
                     </p>
                   </template>
@@ -498,15 +498,15 @@
 
                     <div class="space-y-2">
                       <div class="flex justify-between">
-                        <span class="text-gray-600 dark:text-gray-400">Mode</span>
+                        <span class="text-toned dark:text-muted">Mode</span>
                         <UBadge color="primary">{{ mode.toUpperCase() }}</UBadge>
                       </div>
                       <div class="flex justify-between">
-                        <span class="text-gray-600 dark:text-gray-400">Environment</span>
+                        <span class="text-toned dark:text-muted">Environment</span>
                         <span class="font-mono">{{ isClient ? 'Client' : 'Server' }}</span>
                       </div>
                       <div class="flex justify-between">
-                        <span class="text-gray-600 dark:text-gray-400">Hydrated</span>
+                        <span class="text-toned dark:text-muted">Hydrated</span>
                         <UBadge :color="isHydrated ? 'success' : 'warning'" size="xs">
                           {{ isHydrated ? 'Yes' : 'No' }}
                         </UBadge>
@@ -526,19 +526,19 @@
                     <div class="space-y-3">
                       <div class="space-y-2">
                         <div class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">Installed</span>
+                          <span class="text-toned dark:text-muted">Installed</span>
                           <UBadge :color="isInstalled ? 'success' : 'neutral'" size="xs">
                             {{ isInstalled ? 'Yes' : 'No' }}
                           </UBadge>
                         </div>
                         <div class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">Can Install</span>
+                          <span class="text-toned dark:text-muted">Can Install</span>
                           <UBadge :color="canInstall ? 'success' : 'neutral'" size="xs">
                             {{ canInstall ? 'Yes' : 'No' }}
                           </UBadge>
                         </div>
                         <div v-if="needRefresh" class="flex justify-between">
-                          <span class="text-gray-600 dark:text-gray-400">Update Available</span>
+                          <span class="text-toned dark:text-muted">Update Available</span>
                           <UBadge color="warning" size="xs">Yes</UBadge>
                         </div>
                       </div>
@@ -562,7 +562,7 @@
                       <UIcon name="i-lucide-loader-2" class="text-primary" />
                       <h2 class="text-xl font-semibold">useLoading()</h2>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">
+                    <p class="text-sm text-muted mt-1">
                       Global loading state with simulated progress
                     </p>
                   </template>
@@ -580,13 +580,13 @@
                       {{ showLoadingDemo ? 'Loading...' : 'Run Loading Demo' }}
                     </UButton>
 
-                    <div class="text-sm text-gray-500">
+                    <div class="text-sm text-muted">
                       <p>The useLoading composable provides:</p>
                       <ul class="list-disc list-inside mt-2 space-y-1">
                         <li>Simulated progress (0-90% auto, then waits)</li>
                         <li>Shared singleton state across components</li>
                         <li>
-                          <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded"
+                          <code class="bg-elevated dark:bg-accented px-1 rounded"
                             >withLoading(fn)</code
                           >
                           wrapper for async functions

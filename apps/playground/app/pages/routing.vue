@@ -130,12 +130,12 @@
     title="Routing Layer Demo"
     description="Feature flags, governance presets, maintenance mode, and route access control"
   >
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="ROUTING"
         description="Feature flags, governance presets, maintenance mode, and advanced access control."
       />
-      <section class="bg-gray-950 pb-24">
+      <section class="bg-default pb-24">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="space-y-12 py-8">
             <!-- 1. Preset Switcher -->

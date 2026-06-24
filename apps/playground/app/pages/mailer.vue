@@ -78,7 +78,7 @@
     title="Mailer Layer Demo"
     description="Resend-backed transactional email sending, runtime config, and lifecycle hooks"
   >
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="MAILER LAYER"
         description="Server-side transactional email via Resend — runtime config, a typed hook lifecycle, and the pipeline that powers the Forms layer's contact form."
@@ -93,18 +93,18 @@
       </DemoPageHero>
 
       <!-- Status -->
-      <section class="py-24 bg-gray-950">
+      <section class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Runtime Configuration</h2>
-            <p class="text-gray-400 text-lg">
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Runtime Configuration</h2>
+            <p class="text-muted text-lg">
               <code class="text-primary">useMailerConfig()</code> — read live via
               <code class="text-primary">/api/forms/status</code>
             </p>
           </div>
           <div class="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            <div class="bg-gray-800 rounded-2xl p-6 text-center border border-gray-700">
-              <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Configured</p>
+            <div class="bg-accented rounded-2xl p-6 text-center border border-accented">
+              <p class="text-xs uppercase tracking-widest text-muted mb-2">Configured</p>
               <UBadge
                 :color="status?.configured ? 'success' : 'warning'"
                 variant="subtle"
@@ -113,39 +113,39 @@
                 {{ status?.configured ? 'Resend API key set' : 'No API key' }}
               </UBadge>
             </div>
-            <div class="bg-gray-800 rounded-2xl p-6 text-center border border-gray-700">
-              <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">From</p>
-              <p class="text-white font-mono text-sm break-all">{{ status?.emailFrom ?? '—' }}</p>
+            <div class="bg-accented rounded-2xl p-6 text-center border border-accented">
+              <p class="text-xs uppercase tracking-widest text-muted mb-2">From</p>
+              <p class="text-highlighted font-mono text-sm break-all">{{ status?.emailFrom ?? '—' }}</p>
             </div>
-            <div class="bg-gray-800 rounded-2xl p-6 text-center border border-gray-700">
-              <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">To</p>
-              <p class="text-white font-mono text-sm break-all">{{ status?.emailTo ?? '—' }}</p>
+            <div class="bg-accented rounded-2xl p-6 text-center border border-accented">
+              <p class="text-xs uppercase tracking-widest text-muted mb-2">To</p>
+              <p class="text-highlighted font-mono text-sm break-all">{{ status?.emailTo ?? '—' }}</p>
             </div>
           </div>
         </UContainer>
       </section>
 
       <!-- Pipeline -->
-      <section id="pipeline" class="py-24 bg-gray-950">
+      <section id="pipeline" class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Send Pipeline</h2>
-            <p class="text-gray-400 text-lg">What happens between submit and inbox</p>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Send Pipeline</h2>
+            <p class="text-muted text-lg">What happens between submit and inbox</p>
           </div>
           <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-16">
             <div
               v-for="item in pipeline"
               :key="item.step"
-              class="bg-gray-900 rounded-2xl p-6 border border-gray-800 relative"
+              class="bg-muted rounded-2xl p-6 border border-default relative"
             >
               <div
-                class="absolute -top-4 -left-4 w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm"
+                class="absolute -top-4 -left-4 w-9 h-9 rounded-full bg-primary text-highlighted flex items-center justify-center font-bold text-sm"
               >
                 {{ item.step }}
               </div>
               <UIcon :name="item.icon" class="text-3xl text-primary mb-3" />
-              <code class="text-white font-mono text-sm block mb-2">{{ item.label }}</code>
-              <p class="text-gray-400 text-sm">{{ item.description }}</p>
+              <code class="text-highlighted font-mono text-sm block mb-2">{{ item.label }}</code>
+              <p class="text-muted text-sm">{{ item.description }}</p>
             </div>
           </div>
 
@@ -167,11 +167,11 @@
       </section>
 
       <!-- Surface -->
-      <section class="py-24 bg-gray-950">
+      <section class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Server Surface</h2>
-            <p class="text-gray-400 text-lg">
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Server Surface</h2>
+            <p class="text-muted text-lg">
               Mailer is server-only — no client components or composables
             </p>
           </div>
@@ -179,14 +179,14 @@
             <div
               v-for="item in surface"
               :key="item.name"
-              class="bg-gray-800 rounded-2xl p-6 border border-gray-700"
+              class="bg-accented rounded-2xl p-6 border border-accented"
             >
               <UIcon :name="item.icon" class="text-2xl text-primary mb-3" />
-              <code class="text-white font-mono text-sm block mb-1">{{ item.name }}</code>
+              <code class="text-highlighted font-mono text-sm block mb-1">{{ item.name }}</code>
               <UBadge variant="subtle" color="neutral" size="xs" class="mb-3">{{
                 item.kind
               }}</UBadge>
-              <p class="text-gray-400 text-sm">{{ item.description }}</p>
+              <p class="text-muted text-sm">{{ item.description }}</p>
             </div>
           </div>
         </UContainer>

@@ -24,7 +24,7 @@
     title="Page Transitions Layer Demo"
     description="usePageTransition() — reactive page-transition state driven by app.config defaults"
   >
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="PAGE TRANSITIONS"
         description="usePageTransition() exposes the active transition name + duration as shared reactive state, seeded from app.config.pageTransitions on every navigation."
@@ -43,33 +43,33 @@
       </DemoPageHero>
 
       <!-- Live state -->
-      <section id="demo" class="py-24 bg-gray-950">
+      <section id="demo" class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Live Transition State</h2>
-            <p class="text-gray-400 text-lg">
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Live Transition State</h2>
+            <p class="text-muted text-lg">
               Reactive values returned from <code class="text-primary">usePageTransition()</code>
             </p>
           </div>
 
           <div class="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto mb-16">
-            <div class="bg-gray-800 rounded-2xl p-6 text-center border border-gray-700">
-              <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">transitionName</p>
+            <div class="bg-accented rounded-2xl p-6 text-center border border-accented">
+              <p class="text-xs uppercase tracking-widest text-muted mb-2">transitionName</p>
               <p class="text-3xl font-bold text-primary font-mono">{{ transitionName }}</p>
             </div>
-            <div class="bg-gray-800 rounded-2xl p-6 text-center border border-gray-700">
-              <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">duration</p>
+            <div class="bg-accented rounded-2xl p-6 text-center border border-accented">
+              <p class="text-xs uppercase tracking-widest text-muted mb-2">duration</p>
               <p class="text-3xl font-bold text-primary font-mono">{{ duration }}ms</p>
             </div>
-            <div class="bg-gray-800 rounded-2xl p-6 text-center border border-gray-700">
-              <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">route.path</p>
-              <p class="text-lg font-bold text-white font-mono truncate">{{ route.path }}</p>
+            <div class="bg-accented rounded-2xl p-6 text-center border border-accented">
+              <p class="text-xs uppercase tracking-widest text-muted mb-2">route.path</p>
+              <p class="text-lg font-bold text-highlighted font-mono truncate">{{ route.path }}</p>
             </div>
           </div>
 
           <div class="text-center mb-8">
-            <h3 class="text-2xl font-bold text-white mb-2">Try setTransition()</h3>
-            <p class="text-gray-400">
+            <h3 class="text-2xl font-bold text-highlighted mb-2">Try setTransition()</h3>
+            <p class="text-muted">
               Calls update the shared
               <code class="text-primary">page-transition:current</code> state that the navigation
               plugin reads on <code class="text-primary">page:start</code>
@@ -90,7 +90,7 @@
               <div
                 class="w-48 h-48 rounded-3xl bg-linear-to-br from-primary to-purple-600 flex items-center justify-center shadow-2xl shadow-primary/30"
               >
-                <UIcon name="i-lucide-arrow-right-left" class="text-5xl text-white" />
+                <UIcon name="i-lucide-arrow-right-left" class="text-5xl text-highlighted" />
               </div>
             </MotionTransition>
           </div>
@@ -98,32 +98,32 @@
       </section>
 
       <!-- How it works -->
-      <section class="py-24 bg-gray-950">
+      <section class="py-24 bg-default">
         <UContainer>
           <div class="max-w-3xl mx-auto">
-            <h3 class="text-3xl font-bold text-white mb-8 text-center">How It Works</h3>
+            <h3 class="text-3xl font-bold text-highlighted mb-8 text-center">How It Works</h3>
             <div class="grid gap-4">
-              <div class="bg-gray-950 rounded-xl p-6 border border-gray-800">
+              <div class="bg-default rounded-xl p-6 border border-default">
                 <code class="text-primary font-mono text-sm">app.config.pageTransitions</code>
-                <p class="text-gray-400 mt-2">
+                <p class="text-muted mt-2">
                   Layer default:
-                  <code class="text-gray-300">{{ '{ default: "fade", duration: 300 }' }}</code> —
-                  override per-app via <code class="text-gray-300">app.config.ts</code>
+                  <code class="text-toned">{{ '{ default: "fade", duration: 300 }' }}</code> —
+                  override per-app via <code class="text-toned">app.config.ts</code>
                 </p>
               </div>
-              <div class="bg-gray-950 rounded-xl p-6 border border-gray-800">
+              <div class="bg-default rounded-xl p-6 border border-default">
                 <code class="text-primary font-mono text-sm">page-transitions.client.ts</code>
-                <p class="text-gray-400 mt-2">
-                  Nitro plugin hook — on every <code class="text-gray-300">page:start</code> it
+                <p class="text-muted mt-2">
+                  Nitro plugin hook — on every <code class="text-toned">page:start</code> it
                   resets the shared state back to the configured default
                 </p>
               </div>
-              <div class="bg-gray-950 rounded-xl p-6 border border-gray-800">
+              <div class="bg-default rounded-xl p-6 border border-default">
                 <code class="text-primary font-mono text-sm">usePageTransition(name?)</code>
-                <p class="text-gray-400 mt-2">
-                  Call inside a page's <code class="text-gray-300">setup()</code> to override the
+                <p class="text-muted mt-2">
+                  Call inside a page's <code class="text-toned">setup()</code> to override the
                   transition for that route, or use
-                  <code class="text-gray-300">setTransition()</code>
+                  <code class="text-toned">setTransition()</code>
                   to change it imperatively
                 </p>
               </div>

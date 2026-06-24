@@ -46,12 +46,12 @@
 </script>
 
 <template>
-  <div class="bg-slate-950 text-white">
+  <div class="bg-default text-highlighted">
     <!-- Fixed: back nav -->
     <div class="fixed top-4 left-4 z-50">
       <NuxtLink
         to="/routing"
-        class="flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors"
+        class="flex items-center gap-1.5 text-sm text-highlighted/60 hover:text-highlighted transition-colors"
       >
         <UIcon name="i-lucide-arrow-left" class="text-base" />
         Routing
@@ -81,8 +81,8 @@
           class="transition-all duration-300 rounded-full"
           :class="
             activeSection === section.id
-              ? 'size-3 bg-white'
-              : 'size-2 bg-white/30 hover:bg-white/60'
+              ? 'size-3 bg-highlighted'
+              : 'size-2 bg-highlighted/30 hover:bg-highlighted/60'
           "
         />
       </button>
@@ -96,7 +96,7 @@
         v-for="mode in ['replace', 'push'] as const"
         :key="mode"
         class="rounded-full px-4 py-1.5 text-xs font-medium transition-all"
-        :class="urlMode === mode ? 'bg-white text-slate-900' : 'text-white/60 hover:text-white'"
+        :class="urlMode === mode ? 'bg-inverted text-inverted' : 'text-highlighted/60 hover:text-highlighted'"
         @click="() => (urlMode = mode)"
       >
         {{ mode }}
@@ -110,17 +110,17 @@
     >
       <div class="text-center space-y-6 px-8">
         <div
-          class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs text-white/60"
+          class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs text-highlighted/60"
         >
           <UIcon name="i-lucide-link" class="text-sm" />
           layers/routing
         </div>
         <h1 class="text-6xl md:text-8xl font-black tracking-tight">Scroll Routing</h1>
-        <p class="text-xl md:text-2xl text-white/50 max-w-lg mx-auto">
+        <p class="text-xl md:text-2xl text-highlighted/50 max-w-lg mx-auto">
           The URL updates as you scroll
         </p>
         <div class="pt-8 animate-bounce">
-          <UIcon name="i-lucide-chevrons-down" class="text-3xl text-white/30" />
+          <UIcon name="i-lucide-chevrons-down" class="text-3xl text-highlighted/30" />
         </div>
       </div>
     </section>
@@ -144,7 +144,7 @@
             <span class="size-2.5 rounded-full bg-red-500/70" />
             <span class="size-2.5 rounded-full bg-yellow-500/70" />
             <span class="size-2.5 rounded-full bg-green-500/70" />
-            <span class="ml-2 text-xs text-white/30 font-mono">scroll-routing.client.ts</span>
+            <span class="ml-2 text-xs text-highlighted/30 font-mono">scroll-routing.client.ts</span>
           </div>
           <pre
             class="text-sm p-5 overflow-auto text-blue-100/80 leading-relaxed"
@@ -235,7 +235,7 @@ document.querySelectorAll('[data-section]')
             <span class="size-2.5 rounded-full bg-red-500/70" />
             <span class="size-2.5 rounded-full bg-yellow-500/70" />
             <span class="size-2.5 rounded-full bg-green-500/70" />
-            <span class="ml-2 text-xs text-white/30 font-mono">app/app.config.ts</span>
+            <span class="ml-2 text-xs text-highlighted/30 font-mono">app/app.config.ts</span>
           </div>
           <pre
             class="text-sm p-5 overflow-auto text-emerald-100/80 leading-relaxed"
@@ -280,7 +280,7 @@ document.querySelectorAll('[data-section]')
         </div>
         <NuxtLink
           to="/routing"
-          class="inline-flex items-center gap-2 rounded-xl bg-white text-slate-900 px-6 py-3 font-semibold text-sm hover:bg-orange-50 transition-colors"
+          class="inline-flex items-center gap-2 rounded-xl bg-inverted text-inverted px-6 py-3 font-semibold text-sm hover:bg-muted transition-colors"
         >
           Explore the full Routing demo
           <UIcon name="i-lucide-arrow-right" class="text-base" />

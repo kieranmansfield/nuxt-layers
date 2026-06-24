@@ -118,6 +118,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   extends: resolveExtendedLayers(),
   devtools: { enabled: true },
+  css: ['./app/assets/css/playground.css'],
 
   routeRules: {
     '/_studio/**': { redirect: '/' },

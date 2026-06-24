@@ -85,7 +85,7 @@
       <div
         class="w-full h-full bg-linear-to-br from-amber-900 via-amber-800 to-orange-900 flex items-end p-6 lg:p-8"
       >
-        <span class="font-mono text-xs bg-black/50 text-white px-2 py-1 rounded">
+        <span class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded">
           layer='back' · z-index: 0 · rows 1–12
         </span>
       </div>
@@ -101,17 +101,17 @@
       layer="mid"
     >
       <div
-        class="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 lg:p-12 text-white text-center space-y-4 shadow-2xl"
+        class="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 lg:p-12 text-highlighted text-center space-y-4 shadow-2xl"
       >
         <h2 class="text-3xl font-bold">Background + Content</h2>
-        <p class="text-white/80 max-w-md mx-auto">
+        <p class="text-highlighted/80 max-w-md mx-auto">
           The background uses
           <code class="font-mono text-sm bg-black/30 px-1 rounded">bleed="both"</code>
           to reach the viewport edges. The content floats above it with
           <code class="font-mono text-sm bg-black/30 px-1 rounded">layer="mid"</code>.
         </p>
         <div class="flex justify-center">
-          <span class="font-mono text-xs bg-black/50 text-white px-2 py-1 rounded">
+          <span class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded">
             layer='mid' · z-index: 10 · rows 4–8
           </span>
         </div>
@@ -123,8 +123,8 @@
   <LayoutSection data-stack-section="3" :style="sectionStyles[2]">
     <!-- layer="back": full-bleed dark base, rows 1–12 -->
     <LayoutGridItem bleed="both" :row-span="12" layer="back">
-      <div class="w-full h-full bg-gray-900 flex items-end p-6 lg:p-8">
-        <span class="font-mono text-xs bg-black/50 text-white px-2 py-1 rounded">
+      <div class="w-full h-full bg-muted flex items-end p-6 lg:p-8">
+        <span class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded">
           layer='back' · z-index: 0
         </span>
       </div>
@@ -142,12 +142,12 @@
         class="w-full h-full bg-sky-900/90 border border-sky-700/50 rounded-xl p-6 flex flex-col justify-between shadow-xl"
       >
         <div>
-          <h2 class="text-2xl font-bold text-white">Mid Layer</h2>
+          <h2 class="text-2xl font-bold text-highlighted">Mid Layer</h2>
           <p class="text-sky-200 mt-2 text-sm">
             Sits above the background. Standard content and interactive elements live here.
           </p>
         </div>
-        <span class="font-mono text-xs bg-black/50 text-white px-2 py-1 rounded self-start">
+        <span class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded self-start">
           layer='mid' · z-index: 10
         </span>
       </div>
@@ -165,12 +165,12 @@
         class="w-full h-full bg-violet-800/90 border border-violet-600/50 rounded-xl p-6 flex flex-col justify-between shadow-xl"
       >
         <div>
-          <h3 class="text-xl font-bold text-white">Front Layer</h3>
+          <h3 class="text-xl font-bold text-highlighted">Front Layer</h3>
           <p class="text-violet-200 mt-2 text-sm">
             Elevated above mid — sticky elements, floating panels, tooltips.
           </p>
         </div>
-        <span class="font-mono text-xs bg-black/50 text-white px-2 py-1 rounded self-start">
+        <span class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded self-start">
           layer='front' · z-index: 20
         </span>
       </div>
@@ -187,8 +187,8 @@
       layer="top"
     >
       <div class="bg-rose-500 rounded-full px-8 py-4 shadow-2xl text-center">
-        <div class="text-white font-bold text-lg">Top Layer</div>
-        <div class="font-mono text-xs text-white/80 mt-1">layer='top' · z-index: 30</div>
+        <div class="text-highlighted font-bold text-lg">Top Layer</div>
+        <div class="font-mono text-xs text-highlighted/80 mt-1">layer='top' · z-index: 30</div>
       </div>
     </LayoutGridItem>
   </LayoutSection>
@@ -199,13 +199,13 @@
     <LayoutGridItem bleed="both" :row-start="8" :row-span="5" layer="back">
       <div class="w-full h-full bg-teal-700 flex flex-col justify-end p-8 lg:p-12">
         <div class="space-y-2">
-          <h3 class="text-2xl font-bold text-white">Footer</h3>
+          <h3 class="text-2xl font-bold text-highlighted">Footer</h3>
           <p class="text-teal-200 text-sm">
             <code class="font-mono bg-black/20 px-1 rounded">layer="back"</code> (z-index: 0).
             Hidden behind body in rows 8–10. Visible in rows 11–12.
           </p>
           <span
-            class="font-mono text-xs bg-black/50 text-white px-2 py-1 rounded inline-block mt-1"
+            class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded inline-block mt-1"
           >
             layer='back' · z-index: 0 · rows 8–12
           </span>
@@ -217,7 +217,7 @@
     <LayoutGridItem bleed="both" :row-start="1" :row-span="10" layer="mid">
       <div class="w-full h-full bg-indigo-900/95 flex flex-col justify-between p-8 lg:p-12">
         <div class="space-y-4">
-          <h2 class="text-3xl font-bold text-white">Body Content</h2>
+          <h2 class="text-3xl font-bold text-highlighted">Body Content</h2>
           <p class="text-indigo-200 max-w-xl">
             This item uses
             <code class="font-mono text-sm bg-white/10 px-1 rounded">layer="mid"</code>
@@ -228,7 +228,7 @@
             Scroll down to see the footer peek out below in rows 11–12.
           </p>
         </div>
-        <span class="font-mono text-xs bg-black/50 text-white px-2 py-1 rounded self-start">
+        <span class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded self-start">
           layer='mid' · z-index: 10 · rows 1–10
         </span>
       </div>

@@ -58,7 +58,7 @@
     title="Visual Layer Demo"
     description="Gradients, tints, accent blobs, progress indicators, and responsive media"
   >
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="VISUAL LAYER"
         description="The decorative building blocks behind the UI layer — gradients, tints, accent blobs, progress indicators, responsive pictures, and the modal primitive."
@@ -79,11 +79,11 @@
       </DemoPageHero>
 
       <!-- Gradients & Tints -->
-      <section id="gradients" class="py-24 bg-gray-950">
+      <section id="gradients" class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Gradients & Tints</h2>
-            <p class="text-gray-400 text-lg">
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Gradients & Tints</h2>
+            <p class="text-muted text-lg">
               <code class="text-primary">useGradient()</code> resolves preset names from
               <code class="text-primary">app.config.uiLayer.gradients</code>
             </p>
@@ -91,7 +91,7 @@
 
           <div class="grid lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div>
-              <h3 class="text-lg font-bold text-white mb-4">GradientBackground presets</h3>
+              <h3 class="text-lg font-bold text-highlighted mb-4">GradientBackground presets</h3>
               <div class="flex gap-2 mb-4">
                 <UButton
                   v-for="preset in gradientPresets"
@@ -107,14 +107,14 @@
                 :preset="activeGradient"
                 class="h-48 rounded-2xl flex items-center justify-center"
               >
-                <code class="text-white/90 font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg">
+                <code class="text-highlighted/90 font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg">
                   preset="{{ activeGradient }}"
                 </code>
               </GradientBackground>
             </div>
 
             <div>
-              <h3 class="text-lg font-bold text-white mb-4">TintOverlay levels</h3>
+              <h3 class="text-lg font-bold text-highlighted mb-4">TintOverlay levels</h3>
               <div class="flex gap-2 mb-4">
                 <UButton
                   v-for="level in tintLevels"
@@ -131,7 +131,7 @@
               >
                 <TintOverlay color="primary" :level="activeTintLevel" class="absolute inset-0" />
                 <div class="relative z-10 h-full flex items-center justify-center">
-                  <code class="text-white font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg">
+                  <code class="text-highlighted font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg">
                     level="{{ activeTintLevel }}"
                   </code>
                 </div>
@@ -142,22 +142,22 @@
       </section>
 
       <!-- Accent blobs -->
-      <section class="py-24 bg-gray-950 overflow-hidden">
+      <section class="py-24 bg-default overflow-hidden">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Accent Blobs</h2>
-            <p class="text-gray-400 text-lg">
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Accent Blobs</h2>
+            <p class="text-muted text-lg">
               <code class="text-primary">useAccentBlob()</code> +
               <code class="text-primary">AccentScene</code>
               — soft blurred shapes positioned by percentage coordinates
             </p>
           </div>
-          <div class="relative h-72 rounded-3xl overflow-hidden bg-gray-950 max-w-4xl mx-auto">
+          <div class="relative h-72 rounded-3xl overflow-hidden bg-default max-w-4xl mx-auto">
             <AccentBlob :x="20" :y="30" size="14rem" color="primary" :opacity="50" blur="3xl" />
             <AccentBlob :x="75" :y="60" size="10rem" color="secondary" :opacity="40" blur="2xl" />
             <AccentBlob :x="50" :y="85" size="8rem" color="info" :opacity="35" blur="xl" />
             <div class="relative z-10 h-full flex items-center justify-center">
-              <code class="text-white/80 font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg">
+              <code class="text-highlighted/80 font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg">
                 &lt;AccentBlob :x :y size color opacity blur /&gt;
               </code>
             </div>
@@ -166,15 +166,15 @@
       </section>
 
       <!-- Progress -->
-      <section id="progress" class="py-24 bg-gray-950">
+      <section id="progress" class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Progress Indicators</h2>
-            <p class="text-gray-400 text-lg">Linear and circular progress, semantic colours</p>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Progress Indicators</h2>
+            <p class="text-muted text-lg">Linear and circular progress, semantic colours</p>
           </div>
           <div class="max-w-2xl mx-auto space-y-10">
-            <div class="bg-gray-800 rounded-2xl p-8 border border-gray-700">
-              <p class="text-sm text-gray-400 mb-4">ProgressBar — value: {{ circularProgress }}%</p>
+            <div class="bg-accented rounded-2xl p-8 border border-accented">
+              <p class="text-sm text-muted mb-4">ProgressBar — value: {{ circularProgress }}%</p>
               <ProgressBar :progress="circularProgress / 100" color="primary" size="lg" />
               <input
                 v-model.number="circularProgress"
@@ -185,7 +185,7 @@
               />
             </div>
             <div
-              class="bg-gray-800 rounded-2xl p-8 border border-gray-700 flex items-center justify-center"
+              class="bg-accented rounded-2xl p-8 border border-accented flex items-center justify-center"
             >
               <ProgressCircular
                 :progress="circularProgress / 100"
@@ -199,21 +199,21 @@
       </section>
 
       <!-- Surface -->
-      <section class="py-24 bg-gray-950">
+      <section class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Component Surface</h2>
-            <p class="text-gray-400 text-lg">Everything the UI layer composes from Visual</p>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Component Surface</h2>
+            <p class="text-muted text-lg">Everything the UI layer composes from Visual</p>
           </div>
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <div
               v-for="item in components"
               :key="item.name"
-              class="bg-gray-900 rounded-2xl p-6 border border-gray-800"
+              class="bg-muted rounded-2xl p-6 border border-default"
             >
               <UIcon :name="item.icon" class="text-2xl text-primary mb-3" />
-              <h3 class="text-white font-bold mb-2">{{ item.name }}</h3>
-              <p class="text-gray-400 text-sm">{{ item.description }}</p>
+              <h3 class="text-highlighted font-bold mb-2">{{ item.name }}</h3>
+              <p class="text-muted text-sm">{{ item.description }}</p>
             </div>
           </div>
         </UContainer>

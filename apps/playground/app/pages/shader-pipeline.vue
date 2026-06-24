@@ -248,14 +248,14 @@
 </script>
 
 <template>
-  <div class="min-h-screen bg-neutral-950 text-white flex flex-col">
+  <div class="min-h-screen bg-neutral-950 text-highlighted flex flex-col">
     <!-- Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-white/8">
       <div class="flex items-center gap-4">
         <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" size="xs" color="neutral" />
         <div>
-          <h1 class="font-semibold text-sm text-white">Shader Pipeline</h1>
-          <p class="text-xs text-white/40">142 composable TSL blocks · WebGPU</p>
+          <h1 class="font-semibold text-sm text-highlighted">Shader Pipeline</h1>
+          <p class="text-xs text-highlighted/40">142 composable TSL blocks · WebGPU</p>
         </div>
       </div>
       <UButton
@@ -267,7 +267,7 @@
         color="neutral"
       />
       <div class="flex items-center gap-3">
-        <div class="flex gap-2 text-xs text-white/30">
+        <div class="flex gap-2 text-xs text-highlighted/30">
           <span class="bg-white/5 rounded px-2 py-0.5">Generators</span>
           <span class="bg-white/5 rounded px-2 py-0.5">UV Transforms</span>
           <span class="bg-white/5 rounded px-2 py-0.5">Colour Ops</span>
@@ -287,7 +287,7 @@
         :class="
           activeCategory === cat.id
             ? 'bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/30'
-            : 'text-white/40 hover:text-white/70 hover:bg-white/5'
+            : 'text-highlighted/40 hover:text-highlighted/70 hover:bg-white/5'
         "
         @click="() => (activeCategory = cat.id)"
       >
@@ -885,7 +885,7 @@
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
             Ring Field + Cosine Palette
           </p>
-          <p class="text-xs text-white/40 -mt-3">
+          <p class="text-xs text-highlighted/40 -mt-3">
             Scalar pipeline: SDF rings → grayscale → IQ palette colourised
           </p>
           <div class="space-y-4">
@@ -933,7 +933,7 @@
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
             FBM Noise + Colour Grading
           </p>
-          <p class="text-xs text-white/40 -mt-3">
+          <p class="text-xs text-highlighted/40 -mt-3">
             Fractal noise → hue shift → brightness/contrast → vignette
           </p>
           <div class="space-y-4">
@@ -970,11 +970,11 @@
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
             UV Sine Warp + Twirl
           </p>
-          <p class="text-xs text-white/40 -mt-3">
+          <p class="text-xs text-highlighted/40 -mt-3">
             UV pipeline: sine warp + twirl → SimplexNoise → ACES tonemap
           </p>
           <div class="space-y-4">
-            <p class="text-xs text-white/30 font-medium">Sine Warp</p>
+            <p class="text-xs text-highlighted/30 font-medium">Sine Warp</p>
             <DemoSliderRow
               v-model="uvt.warpFrequency"
               label="Frequency"
@@ -991,7 +991,7 @@
             />
             <DemoSliderRow v-model="uvt.warpSpeed" label="Speed" :min="0" :max="5" :step="0.1" />
             <div class="h-px bg-white/5" />
-            <p class="text-xs text-white/30 font-medium">Twirl</p>
+            <p class="text-xs text-highlighted/30 font-medium">Twirl</p>
             <DemoSliderRow
               v-model="uvt.twirlStrength"
               label="Strength"
@@ -1007,7 +1007,7 @@
               :step="0.05"
             />
             <div class="h-px bg-white/5" />
-            <p class="text-xs text-white/30 font-medium">Noise Generator</p>
+            <p class="text-xs text-highlighted/30 font-medium">Noise Generator</p>
             <DemoSliderRow v-model="uvt.noiseScale" label="Scale" :min="1" :max="10" :step="0.5" />
             <DemoSliderRow
               v-model="uvt.noiseSpeed"
@@ -1024,7 +1024,7 @@
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
             Curl Noise + Duotone
           </p>
-          <p class="text-xs text-white/40 -mt-3">
+          <p class="text-xs text-highlighted/40 -mt-3">
             Curl noise field → duotone colour map → brightness/contrast
           </p>
           <div class="space-y-4">
@@ -1043,7 +1043,7 @@
               :step="0.01"
             />
             <div class="h-px bg-white/5" />
-            <p class="text-xs text-white/30 font-medium">Duotone</p>
+            <p class="text-xs text-highlighted/30 font-medium">Duotone</p>
             <DemoColorRow v-model="colour.shadowColor" label="Shadow" />
             <DemoColorRow v-model="colour.highlightColor" label="Highlight" />
             <div class="h-px bg-white/5" />
@@ -1069,13 +1069,13 @@
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
             Film / Analogue Stack
           </p>
-          <p class="text-xs text-white/40 -mt-3">Linear gradient → Aged Film → VHS Bleed</p>
+          <p class="text-xs text-highlighted/40 -mt-3">Linear gradient → Aged Film → VHS Bleed</p>
           <div class="space-y-4">
-            <p class="text-xs text-white/30 font-medium">Base Gradient</p>
+            <p class="text-xs text-highlighted/30 font-medium">Base Gradient</p>
             <DemoColorRow v-model="film.gradColorA" label="Color A" />
             <DemoColorRow v-model="film.gradColorB" label="Color B" />
             <div class="h-px bg-white/5" />
-            <p class="text-xs text-white/30 font-medium">Aged Film</p>
+            <p class="text-xs text-highlighted/30 font-medium">Aged Film</p>
             <DemoSliderRow
               v-model="film.agedIntensity"
               label="Intensity"
@@ -1105,7 +1105,7 @@
               :step="0.01"
             />
             <div class="h-px bg-white/5" />
-            <p class="text-xs text-white/30 font-medium">VHS Bleed</p>
+            <p class="text-xs text-highlighted/30 font-medium">VHS Bleed</p>
             <DemoSliderRow
               v-model="film.vhsBleed"
               label="Bleed"
@@ -1129,9 +1129,9 @@
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
             Night Sky Composition
           </p>
-          <p class="text-xs text-white/40 -mt-3">Black base → Aurora → Starfield → Edge haze</p>
+          <p class="text-xs text-highlighted/40 -mt-3">Black base → Aurora → Starfield → Edge haze</p>
           <div class="space-y-4">
-            <p class="text-xs text-white/30 font-medium">Aurora</p>
+            <p class="text-xs text-highlighted/30 font-medium">Aurora</p>
             <DemoColorRow v-model="overlays.auroraColorA" label="Color A" />
             <DemoColorRow v-model="overlays.auroraColorB" label="Color B" />
             <DemoSliderRow
@@ -1163,7 +1163,7 @@
               :step="0.05"
             />
             <div class="h-px bg-white/5" />
-            <p class="text-xs text-white/30 font-medium">Starfield</p>
+            <p class="text-xs text-highlighted/30 font-medium">Starfield</p>
             <DemoSliderRow
               v-model="overlays.starDensity"
               label="Density"
@@ -1186,7 +1186,7 @@
               :step="0.1"
             />
             <div class="h-px bg-white/5" />
-            <p class="text-xs text-white/30 font-medium">Haze</p>
+            <p class="text-xs text-highlighted/30 font-medium">Haze</p>
             <DemoSliderRow
               v-model="overlays.hazeReach"
               label="Reach"
@@ -1209,11 +1209,11 @@
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
             Wood + Halation + Vignette
           </p>
-          <p class="text-xs text-white/40 -mt-3">
+          <p class="text-xs text-highlighted/40 -mt-3">
             Procedural wood rings → analogue film halation → vignette
           </p>
           <div class="space-y-4">
-            <p class="text-xs text-white/30 font-medium">Wood</p>
+            <p class="text-xs text-highlighted/30 font-medium">Wood</p>
             <DemoSliderRow
               v-model="comp.ringFrequency"
               label="Ring Frequency"
@@ -1236,7 +1236,7 @@
               :step="0.01"
             />
             <div class="h-px bg-white/5" />
-            <p class="text-xs text-white/30 font-medium">Halation</p>
+            <p class="text-xs text-highlighted/30 font-medium">Halation</p>
             <DemoColorRow v-model="comp.halationColor" label="Glow Color" />
             <DemoSliderRow
               v-model="comp.halationThreshold"
@@ -1253,7 +1253,7 @@
               :step="0.01"
             />
             <div class="h-px bg-white/5" />
-            <p class="text-xs text-white/30 font-medium">Vignette</p>
+            <p class="text-xs text-highlighted/30 font-medium">Vignette</p>
             <DemoSliderRow
               v-model="comp.vignetteIntensity"
               label="Intensity"
@@ -1267,7 +1267,7 @@
         <!-- ── Noise FX controls ── -->
         <template v-else-if="activeCategory === 'noise_fx'">
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">Noise FX</p>
-          <p class="text-xs text-white/40 -mt-3">Various procedural noise algorithms</p>
+          <p class="text-xs text-highlighted/40 -mt-3">Various procedural noise algorithms</p>
           <div class="flex flex-wrap gap-1">
             <button
               v-for="s in [
@@ -1285,7 +1285,7 @@
               :class="
                 noiseFxSub === s
                   ? 'bg-violet-500/30 text-violet-300'
-                  : 'bg-white/5 text-white/40 hover:text-white/70'
+                  : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
               "
               @click="() => (noiseFxSub = s)"
             >
@@ -1316,7 +1316,7 @@
         <!-- ── SDF Shapes controls ── -->
         <template v-else-if="activeCategory === 'sdf'">
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">SDF Shapes</p>
-          <p class="text-xs text-white/40 -mt-3">Signed-distance field primitives</p>
+          <p class="text-xs text-highlighted/40 -mt-3">Signed-distance field primitives</p>
           <div class="flex flex-wrap gap-1">
             <button
               v-for="s in [
@@ -1333,7 +1333,7 @@
               :class="
                 sdfSub === s
                   ? 'bg-violet-500/30 text-violet-300'
-                  : 'bg-white/5 text-white/40 hover:text-white/70'
+                  : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
               "
               @click="() => (sdfSub = s)"
             >
@@ -1435,7 +1435,7 @@
         <!-- ── Lighting controls ── -->
         <template v-else-if="activeCategory === 'lighting'">
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">Lighting</p>
-          <p class="text-xs text-white/40 -mt-3">FBM noise base with volumetric light effects</p>
+          <p class="text-xs text-highlighted/40 -mt-3">FBM noise base with volumetric light effects</p>
           <div class="flex flex-wrap gap-1">
             <button
               v-for="s in [
@@ -1447,7 +1447,7 @@
               :class="
                 lightingSub === s.id
                   ? 'bg-violet-500/30 text-violet-300'
-                  : 'bg-white/5 text-white/40 hover:text-white/70'
+                  : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
               "
               @click="() => (lightingSub = s.id)"
             >
@@ -1455,7 +1455,7 @@
             </button>
           </div>
           <div class="space-y-4">
-            <p class="text-xs text-white/30 font-medium">Base Noise</p>
+            <p class="text-xs text-highlighted/30 font-medium">Base Noise</p>
             <DemoSliderRow
               v-model="lighting.noiseScale"
               label="Scale"
@@ -1471,7 +1471,7 @@
               :step="0.01"
             />
             <div class="h-px bg-white/5" />
-            <p class="text-xs text-white/30 font-medium">Light</p>
+            <p class="text-xs text-highlighted/30 font-medium">Light</p>
             <DemoColorRow v-model="lighting.color" label="Color" />
             <DemoSliderRow
               v-model="lighting.intensity"
@@ -1518,7 +1518,7 @@
         <!-- ── Tonemapping controls ── -->
         <template v-else-if="activeCategory === 'tonemapping'">
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">Tonemapping</p>
-          <p class="text-xs text-white/40 -mt-3">HDR noise base → various tonemap operators</p>
+          <p class="text-xs text-highlighted/40 -mt-3">HDR noise base → various tonemap operators</p>
           <div class="flex flex-wrap gap-1">
             <button
               v-for="s in ['aces', 'reinhard', 'tanh', 'exposure', 'gamma'] as const"
@@ -1527,7 +1527,7 @@
               :class="
                 tonemappingSub === s
                   ? 'bg-violet-500/30 text-violet-300'
-                  : 'bg-white/5 text-white/40 hover:text-white/70'
+                  : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
               "
               @click="() => (tonemappingSub = s)"
             >
@@ -1535,7 +1535,7 @@
             </button>
           </div>
           <div class="space-y-4">
-            <p class="text-xs text-white/30 font-medium">Source Noise</p>
+            <p class="text-xs text-highlighted/30 font-medium">Source Noise</p>
             <DemoSliderRow
               v-model="tonemapping.noiseScale"
               label="Scale"
@@ -1551,7 +1551,7 @@
               :step="0.01"
             />
             <div class="h-px bg-white/5" />
-            <p class="text-xs text-white/30 font-medium">Operator</p>
+            <p class="text-xs text-highlighted/30 font-medium">Operator</p>
             <template v-if="tonemappingSub === 'tanh'">
               <DemoSliderRow
                 v-model="tonemapping.exposure"
@@ -1580,7 +1580,7 @@
               />
             </template>
             <template v-else>
-              <p class="text-xs text-white/20">No parameters — fixed operator</p>
+              <p class="text-xs text-highlighted/20">No parameters — fixed operator</p>
             </template>
           </div>
         </template>
@@ -1588,7 +1588,7 @@
         <!-- ── Patterns controls ── -->
         <template v-else-if="activeCategory === 'patterns'">
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">Patterns</p>
-          <p class="text-xs text-white/40 -mt-3">Geometric tiling and screen patterns</p>
+          <p class="text-xs text-highlighted/40 -mt-3">Geometric tiling and screen patterns</p>
           <div class="flex flex-wrap gap-1">
             <button
               v-for="s in [
@@ -1605,7 +1605,7 @@
               :class="
                 patternsSub === s
                   ? 'bg-violet-500/30 text-violet-300'
-                  : 'bg-white/5 text-white/40 hover:text-white/70'
+                  : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
               "
               @click="() => (patternsSub = s)"
             >
@@ -1728,7 +1728,7 @@
         <!-- ── Effects controls ── -->
         <template v-else-if="activeCategory === 'effects'">
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">Effects</p>
-          <p class="text-xs text-white/40 -mt-3">Post-processing and stylistic effects</p>
+          <p class="text-xs text-highlighted/40 -mt-3">Post-processing and stylistic effects</p>
           <div class="flex flex-wrap gap-1">
             <button
               v-for="s in [
@@ -1744,7 +1744,7 @@
               :class="
                 effectsSub === s.id
                   ? 'bg-violet-500/30 text-violet-300'
-                  : 'bg-white/5 text-white/40 hover:text-white/70'
+                  : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
               "
               @click="() => (effectsSub = s.id)"
             >
@@ -1752,7 +1752,7 @@
             </button>
           </div>
           <div class="space-y-4">
-            <p class="text-xs text-white/30 font-medium">Base Noise</p>
+            <p class="text-xs text-highlighted/30 font-medium">Base Noise</p>
             <DemoSliderRow
               v-model="effects.noiseScale"
               label="Scale"
@@ -1768,7 +1768,7 @@
               :step="0.01"
             />
             <div class="h-px bg-white/5" />
-            <p class="text-xs text-white/30 font-medium">Effect</p>
+            <p class="text-xs text-highlighted/30 font-medium">Effect</p>
             <template v-if="effectsSub === 'chromatic'">
               <DemoSliderRow
                 v-model="effects.caStrength"
@@ -1851,7 +1851,7 @@
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
             Complex Plane Field
           </p>
-          <p class="text-xs text-white/40 -mt-3">
+          <p class="text-xs text-highlighted/40 -mt-3">
             Two-pole complex function → cosine palette → ACES
           </p>
           <div class="space-y-4">
@@ -1890,7 +1890,7 @@
         <!-- ── UV & Grain controls ── -->
         <template v-else-if="activeCategory === 'uv_grain'">
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">UV & Grain</p>
-          <p class="text-xs text-white/40 -mt-3">UV distortion transforms + grain overlays</p>
+          <p class="text-xs text-highlighted/40 -mt-3">UV distortion transforms + grain overlays</p>
           <div class="flex flex-wrap gap-1">
             <button
               v-for="s in [
@@ -1907,7 +1907,7 @@
               :class="
                 uvGrainSub === s
                   ? 'bg-violet-500/30 text-violet-300'
-                  : 'bg-white/5 text-white/40 hover:text-white/70'
+                  : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
               "
               @click="() => (uvGrainSub = s)"
             >
@@ -1962,7 +1962,7 @@
               "
             >
               <div class="h-px bg-white/5" />
-              <p class="text-xs text-white/30 font-medium">Noise Generator</p>
+              <p class="text-xs text-highlighted/30 font-medium">Noise Generator</p>
               <DemoSliderRow
                 v-model="uvGrain.noiseScale"
                 label="Scale"

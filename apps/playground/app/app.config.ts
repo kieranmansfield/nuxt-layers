@@ -1,4 +1,15 @@
 export default defineAppConfig({
+  ui: {
+    card: {
+      variants: {
+        variant: {
+          outline: {
+            root: 'bg-elevated ring ring-default divide-y divide-default',
+          },
+        },
+      },
+    },
+  },
   site: {
     title: 'Nuxt Layers Playground',
     description: 'Demo and development playground for nuxt-layers.',

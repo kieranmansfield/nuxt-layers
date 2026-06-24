@@ -539,7 +539,7 @@
 </script>
 
 <template>
-  <div class="min-h-screen bg-neutral-950 text-white flex flex-col">
+  <div class="min-h-screen bg-neutral-950 text-highlighted flex flex-col">
     <!-- Header -->
     <div class="flex items-center gap-4 px-6 py-4 border-b border-white/8">
       <UButton
@@ -550,8 +550,8 @@
         color="neutral"
       />
       <div>
-        <h1 class="font-semibold text-sm text-white">Shader Pipeline Backgrounds</h1>
-        <p class="text-xs text-white/40">
+        <h1 class="font-semibold text-sm text-highlighted">Shader Pipeline Backgrounds</h1>
+        <p class="text-xs text-highlighted/40">
           50+ background presets · Gradients, Mesh, Noise, Atmospheric, Abstract
         </p>
       </div>
@@ -1183,7 +1183,7 @@
             :class="
               activeCategory === cat.id
                 ? 'bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/30'
-                : 'text-white/40 hover:text-white/70 hover:bg-white/5'
+                : 'text-highlighted/40 hover:text-highlighted/70 hover:bg-white/5'
             "
             @click="() => (activeCategory = cat.id)"
           >
@@ -1195,7 +1195,7 @@
         <div class="flex-1 overflow-y-auto p-4 space-y-5">
           <!-- Preset grid -->
           <div>
-            <p class="text-xs font-semibold uppercase tracking-wider text-white/30 mb-2">Presets</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-highlighted/30 mb-2">Presets</p>
 
             <!-- Gradients -->
             <div v-if="activeCategory === 'gradients'" class="grid grid-cols-3 gap-1.5">
@@ -1206,7 +1206,7 @@
                 :class="
                   activeGrad === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeGrad = p.id)"
               >
@@ -1223,7 +1223,7 @@
                 :class="
                   activeMesh === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeMesh = p.id)"
               >
@@ -1240,7 +1240,7 @@
                 :class="
                   activeAnim === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeAnim = p.id)"
               >
@@ -1257,7 +1257,7 @@
                 :class="
                   activeNoiseBg === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeNoiseBg = p.id)"
               >
@@ -1274,7 +1274,7 @@
                 :class="
                   activeAtmo === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeAtmo = p.id)"
               >
@@ -1291,7 +1291,7 @@
                 :class="
                   activeAbstract === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-white/50 hover:text-white/80 hover:bg-white/8'
+                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
                 "
                 @click="() => (activeAbstract = p.id)"
               >
@@ -1836,7 +1836,7 @@
             <div class="h-px bg-white/5" />
             <div class="space-y-3">
               <div class="flex items-center justify-between">
-                <p class="text-xs font-semibold uppercase tracking-wider text-white/30">
+                <p class="text-xs font-semibold uppercase tracking-wider text-highlighted/30">
                   Grain Overlay
                 </p>
                 <button
@@ -1844,7 +1844,7 @@
                   :class="
                     grainEnabled
                       ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
-                      : 'bg-white/5 text-white/40 hover:text-white/70'
+                      : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
                   "
                   @click="() => (grainEnabled = !grainEnabled)"
                 >
@@ -1854,7 +1854,7 @@
               <template v-if="grainEnabled">
                 <!-- Type -->
                 <div>
-                  <p class="text-xs text-white/30 font-medium mb-1.5">Type</p>
+                  <p class="text-xs text-highlighted/30 font-medium mb-1.5">Type</p>
                   <div class="flex gap-1">
                     <button
                       v-for="t in [
@@ -1867,7 +1867,7 @@
                       :class="
                         grainState.type === t.id
                           ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
-                          : 'bg-white/5 text-white/40 hover:text-white/70'
+                          : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
                       "
                       @click="() => (grainState.type = t.id as typeof grainState.type)"
                     >
@@ -1877,7 +1877,7 @@
                 </div>
                 <!-- Blend mode -->
                 <div>
-                  <p class="text-xs text-white/30 font-medium mb-1.5">Blend Mode</p>
+                  <p class="text-xs text-highlighted/30 font-medium mb-1.5">Blend Mode</p>
                   <div class="flex gap-1 flex-wrap">
                     <button
                       v-for="m in [
@@ -1892,7 +1892,7 @@
                       :class="
                         grainState.blendMode === m.id
                           ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
-                          : 'bg-white/5 text-white/40 hover:text-white/70'
+                          : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
                       "
                       @click="() => (grainState.blendMode = m.id as typeof grainState.blendMode)"
                     >

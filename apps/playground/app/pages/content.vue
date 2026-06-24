@@ -13,12 +13,12 @@
     title="Content Layer Demo"
     description="Demonstrating the content layer with blog, portfolio, and gallery collections"
   >
-    <div class="bg-gray-950 min-h-screen">
+    <div class="bg-default min-h-screen">
       <DemoPageHero
         name="CONTENT"
         description="Nuxt Content v3 with typed collections for blog, portfolio, and gallery."
       />
-      <section class="bg-gray-950 pb-24">
+      <section class="bg-default pb-24">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="space-y-12 py-8">
             <!-- Quick Nav -->
