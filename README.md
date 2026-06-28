@@ -29,6 +29,7 @@ export default defineNuxtConfig({
 | **motion** | Animations — GSAP, Locomotive Scroll |
 | **shader** | 3D / WebGPU — Three.js, TresJS |
 | **forms** | Validation — Zod-based form system |
+| **database** | Storage — Drizzle ORM + Neon Postgres |
 | **theme** | Theming — color mode, accent colors |
 | **content** | CMS — @nuxt/content, Nuxt Studio |
 

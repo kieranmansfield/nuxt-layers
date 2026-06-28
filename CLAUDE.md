@@ -55,6 +55,8 @@ nuxt-layers/
 │   ├── mailer/             # Resend email sending + runtime config
 │   ├── forms/              # Form UI + Zod validation (depends on mailer)
 │   │
+│   ├── database/           # Drizzle + Neon Postgres connection, useDrizzle() helper
+│   │
 │   ├── theme/              # Design tokens and theming utilities
 │   ├── content/            # Nuxt Content v3 collections and components
 │   └── routing/            # Advanced routing, maintenance mode, feature flags
@@ -87,6 +89,8 @@ shader → canvas
 
 mailer → core
 forms → mailer
+
+database → core
 
 theme → core
 content → core
