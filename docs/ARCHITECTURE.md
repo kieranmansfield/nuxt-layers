@@ -15,6 +15,7 @@ nuxt-layers/
 │   ├── motion/              # GSAP + Locomotive Scroll animations
 │   ├── shader/              # Three.js / TresJS WebGPU shaders
 │   ├── forms/               # Zod-based form validation
+│   ├── auth/                # nuxt-auth-utils + GitHub OAuth
 │   ├── theme/               # Color mode, accent colors, accessibility
 │   └── content/             # @nuxt/content integration, Nuxt Studio
 ├── packages/                # Shared utilities (placeholder)
@@ -192,5 +193,6 @@ Some layers (ui, content) support standalone mode via environment variables (`UI
 | **motion** | Animation layer. GSAP with ScrollTrigger, Locomotive Scroll (Lenis) smooth scrolling, motion composables. Transpiles GSAP for SSR. |
 | **shader** | WebGPU/WebGL layer. Three.js + TresJS integration, TSL shader support, post-processing. Includes custom shader utilities and auto-imported shader modules. |
 | **forms** | Form validation layer. Zod schema-based validation, form composables, typed form components. |
+| **auth** | Authentication layer. nuxt-auth-utils + GitHub OAuth handler, sealed-cookie sessions. Opt-in `auth` route middleware; no user table (app's responsibility). Env: `NUXT_SESSION_PASSWORD`, `NUXT_OAUTH_GITHUB_CLIENT_ID/SECRET`. |
 | **theme** | Theming layer. Color mode switching, accent color palette, theme plugin, CSS custom properties for dynamic theming. |
 | **content** | Content management layer. @nuxt/content integration, better-sqlite3 for local content DB, optional Nuxt Studio support. |

@@ -17,3 +17,5 @@ export type {
 export type { ScrollLockEvent, LoadingStateEvent, LayerEvent } from './events'
 export type { MotionConfig, TransitionConfig } from './motion'
 export type { PublicRuntimeConfig } from './runtime'
+// fallow-ignore-next-line unused-type
+export type { SessionUser } from './auth'

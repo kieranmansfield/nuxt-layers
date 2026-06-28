@@ -1,0 +1,15 @@
+{
+  "name": "kmcom-layer-auth",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi dev",
+    "dev:playground": "PLAYGROUND_LAYERS=core,auth pnpm -F playground dev",
+    "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "nuxt-auth-utils": "catalog:"
+  }
+}
