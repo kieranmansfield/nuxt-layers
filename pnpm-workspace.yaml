@@ -264,6 +264,7 @@ catalog:
   node-gyp: ^12.3.0
   npm-check-updates: ^22.2.2
   nuxt: ^4.4.7
+  'nuxt-auth-utils': ^0.5.0
   '@nuxt/test-utils': ^4.0.3
   oniguruma-parser: 0.12.2
   oniguruma-to-es: 4.3.6

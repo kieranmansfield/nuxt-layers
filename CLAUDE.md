@@ -56,6 +56,7 @@ nuxt-layers/
 │   ├── forms/              # Form UI + Zod validation (depends on mailer)
 │   │
 │   ├── database/           # Drizzle + Neon Postgres connection, useDrizzle() helper
+│   ├── auth/               # nuxt-auth-utils + GitHub OAuth, session utilities
 │   │
 │   ├── theme/              # Design tokens and theming utilities
 │   ├── content/            # Nuxt Content v3 collections and components
@@ -91,6 +92,7 @@ mailer → core
 forms → mailer
 
 database → core
+auth → core
 
 theme → core
 content → core

@@ -30,6 +30,7 @@ export default defineNuxtConfig({
 | **shader** | 3D / WebGPU — Three.js, TresJS |
 | **forms** | Validation — Zod-based form system |
 | **database** | Storage — Drizzle ORM + Neon Postgres |
+| **auth** | Authentication — nuxt-auth-utils + GitHub OAuth |
 | **theme** | Theming — color mode, accent colors |
 | **content** | CMS — @nuxt/content, Nuxt Studio |
 

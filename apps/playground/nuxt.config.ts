@@ -23,6 +23,7 @@ const AVAILABLE_LAYERS = [
   'feeds',
   'baseline',
   'database',
+  'auth',
 ] as const
 type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
@@ -50,6 +51,7 @@ const LAYER_PATHS: Record<LayerName, string> = {
   feeds: '../../layers/feeds',
   baseline: '../../layers/baseline',
   database: '../../layers/database',
+  auth: '../../layers/auth',
 }
 
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included
@@ -77,6 +79,7 @@ const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
   feeds: ['core', 'content'],
   baseline: ['core'],
   database: ['core'],
+  auth: ['core'],
 }
 
 /**

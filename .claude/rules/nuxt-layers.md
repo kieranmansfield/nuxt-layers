@@ -50,6 +50,7 @@ Placing it at the layer root silently ignores it — `useAppConfig()` returns `u
 | `mailer` | Email sending via Resend, hooks, runtime config | `core` |
 | `forms` | Form UI components, Zod validation | `mailer` |
 | `database` | Drizzle ORM + Neon Postgres connection; useSql(), useDrizzle(schema) server utils | `core` |
+| `auth` | nuxt-auth-utils + GitHub OAuth handler; sealed-cookie sessions, opt-in `auth` route middleware | `core` |
 | `theme` | Design tokens and theming utilities | `core` |
 | `content` | Nuxt Content v3 collections and components | `core` |
 | `routing` | Advanced routing, maintenance mode, feature flags | `core` |
