@@ -1,0 +1,12 @@
+{
+  "name": "kmcom-layer-metadata-google-books",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi dev",
+    "dev:playground": "PLAYGROUND_LAYERS=core,metadata,metadata-google-books pnpm -F playground dev",
+    "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json",
+    "lint": "eslint ."
+  }
+}

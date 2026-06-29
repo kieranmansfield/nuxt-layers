@@ -24,6 +24,10 @@ const AVAILABLE_LAYERS = [
   'baseline',
   'database',
   'auth',
+  'metadata',
+  'metadata-comicvine',
+  'metadata-openlibrary',
+  'metadata-google-books',
 ] as const
 type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
@@ -52,6 +56,10 @@ const LAYER_PATHS: Record<LayerName, string> = {
   baseline: '../../layers/baseline',
   database: '../../layers/database',
   auth: '../../layers/auth',
+  metadata: '../../layers/metadata',
+  'metadata-comicvine': '../../layers/metadata-comicvine',
+  'metadata-openlibrary': '../../layers/metadata-openlibrary',
+  'metadata-google-books': '../../layers/metadata-google-books',
 }
 
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included
@@ -80,6 +88,10 @@ const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
   baseline: ['core'],
   database: ['core'],
   auth: ['core'],
+  metadata: ['core'],
+  'metadata-comicvine': ['metadata'],
+  'metadata-openlibrary': ['metadata'],
+  'metadata-google-books': ['metadata'],
 }
 
 /**

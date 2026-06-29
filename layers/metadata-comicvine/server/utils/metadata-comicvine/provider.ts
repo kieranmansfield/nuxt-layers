@@ -1,0 +1,39 @@
+import type { MetadataProvider } from '#layers/metadata/shared/types'
+
+export const comicVineProvider: MetadataProvider = {
+  id: 'comicvine',
+  label: 'Comic Vine',
+  mediaTypes: ['comic', 'graphic-novel', 'collected-edition'],
+
+  // fallow-ignore-next-line complexity
+  async search({ query, mediaType, limit = 10 }) {
+    const resourceType = mediaType === 'collected-edition' || mediaType === 'graphic-novel' ? 'volume' : 'issue'
+
+    if (resourceType === 'volume') {
+      const res = await searchComicVineVolumes(query, limit)
+      return (Array.isArray(res.results) ? res.results : []).map(normaliseComicVineVolume)
+    }
+
+    const [issueRes, volumeRes] = await Promise.all([
+      searchComicVineIssues(query, Math.ceil(limit / 2)),
+      searchComicVineVolumes(query, Math.floor(limit / 2)),
+    ])
+
+    const issues = (Array.isArray(issueRes.results) ? issueRes.results : []).map(normaliseComicVineIssue)
+    const volumes = (Array.isArray(volumeRes.results) ? volumeRes.results : []).map(normaliseComicVineVolume)
+    return [...issues, ...volumes]
+  },
+
+  async lookup({ providerId, resourceType = 'issue' }) {
+    if (resourceType === 'volume') {
+      const res = await fetchComicVineVolume(providerId)
+      return normaliseComicVineVolume(res.results as import('./types').ComicVineVolume)
+    }
+    const res = await fetchComicVineIssue(providerId)
+    return normaliseComicVineIssue(res.results as import('./types').ComicVineIssue)
+  },
+
+  async sync({ providerId, resourceType = 'issue' }) {
+    return (await comicVineProvider.lookup!({ provider: 'comicvine', providerId, resourceType }))!
+  },
+}
