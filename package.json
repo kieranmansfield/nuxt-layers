@@ -27,7 +27,11 @@
     "./layers/content": "./layers/content/nuxt.config.ts",
     "./layers/feeds": "./layers/feeds/nuxt.config.ts",
     "./layers/routing": "./layers/routing/nuxt.config.ts",
-    "./layers/starter": "./layers/starter/nuxt.config.ts"
+    "./layers/starter": "./layers/starter/nuxt.config.ts",
+    "./layers/metadata": "./layers/metadata/nuxt.config.ts",
+    "./layers/metadata-comicvine": "./layers/metadata-comicvine/nuxt.config.ts",
+    "./layers/metadata-openlibrary": "./layers/metadata-openlibrary/nuxt.config.ts",
+    "./layers/metadata-google-books": "./layers/metadata-google-books/nuxt.config.ts"
   },
   "files": [
     "layers/*/nuxt.config.ts",

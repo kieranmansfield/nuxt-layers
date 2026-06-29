@@ -58,6 +58,11 @@ nuxt-layers/
 │   ├── database/           # Drizzle + Neon Postgres connection, useDrizzle() helper
 │   ├── auth/               # nuxt-auth-utils + GitHub OAuth, session utilities
 │   │
+│   ├── metadata/           # Provider registry, cache, normalised types, API routes
+│   ├── metadata-comicvine/ # Comic Vine provider (issues, volumes)
+│   ├── metadata-openlibrary/ # Open Library provider (books, ISBNs)
+│   ├── metadata-google-books/ # Google Books provider (fallback/enrichment)
+│   │
 │   ├── theme/              # Design tokens and theming utilities
 │   ├── content/            # Nuxt Content v3 collections and components
 │   └── routing/            # Advanced routing, maintenance mode, feature flags
@@ -93,6 +98,11 @@ forms → mailer
 
 database → core
 auth → core
+
+metadata → core
+metadata-comicvine → metadata
+metadata-openlibrary → metadata
+metadata-google-books → metadata
 
 theme → core
 content → core
