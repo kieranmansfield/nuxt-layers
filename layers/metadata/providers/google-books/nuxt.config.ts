@@ -3,7 +3,7 @@ export default defineNuxtConfig({
     name: 'metadata-google-books',
   },
 
-  extends: ['../metadata'],
+  extends: ['../../'],
 
   alias: {
     '#layers/metadata-google-books': import.meta.dirname,
