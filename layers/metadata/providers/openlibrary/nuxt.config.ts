@@ -3,7 +3,7 @@ export default defineNuxtConfig({
     name: 'metadata-openlibrary',
   },
 
-  extends: ['../metadata'],
+  extends: ['../../'],
 
   alias: {
     '#layers/metadata-openlibrary': import.meta.dirname,

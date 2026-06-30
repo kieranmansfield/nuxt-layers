@@ -3,6 +3,7 @@
 packages:
   - 'apps/*'
   - 'layers/*'
+  - 'layers/*/providers/*'
   - 'packages/*'
 
 allowBuilds:

@@ -766,11 +766,11 @@ importers:
 
   layers/metadata: {}
 
-  layers/metadata-comicvine: {}
+  layers/metadata/providers/comicvine: {}
 
-  layers/metadata-google-books: {}
+  layers/metadata/providers/google-books: {}
 
-  layers/metadata-openlibrary: {}
+  layers/metadata/providers/openlibrary: {}
 
   layers/motion: {}
 

@@ -57,9 +57,9 @@ const LAYER_PATHS: Record<LayerName, string> = {
   database: '../../layers/database',
   auth: '../../layers/auth',
   metadata: '../../layers/metadata',
-  'metadata-comicvine': '../../layers/metadata-comicvine',
-  'metadata-openlibrary': '../../layers/metadata-openlibrary',
-  'metadata-google-books': '../../layers/metadata-google-books',
+  'metadata-comicvine': '../../layers/metadata/providers/comicvine',
+  'metadata-openlibrary': '../../layers/metadata/providers/openlibrary',
+  'metadata-google-books': '../../layers/metadata/providers/google-books',
 }
 
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included

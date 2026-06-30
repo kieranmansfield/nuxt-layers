@@ -3,7 +3,7 @@ export default defineNuxtConfig({
     name: 'metadata-comicvine',
   },
 
-  extends: ['../metadata'],
+  extends: ['../../'],
 
   alias: {
     '#layers/metadata-comicvine': import.meta.dirname,
