@@ -12,7 +12,11 @@ export async function getCacheRecord(key: string): Promise<MetadataCacheRecord |
   return (await storage.getItem<MetadataCacheRecord>(key)) ?? null
 }
 
-export async function setCacheRecord(key: string, record: MetadataCacheRecord, ttl?: number): Promise<void> {
+export async function setCacheRecord(
+  key: string,
+  record: MetadataCacheRecord,
+  ttl?: number
+): Promise<void> {
   const storage = useStorage('metadata')
   await storage.setItem(key, record, ttl ? { ttl } : undefined)
 }

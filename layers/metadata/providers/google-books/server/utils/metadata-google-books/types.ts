@@ -7,7 +7,15 @@ export type GoogleBooksVolumeInfo = {
   description?: string
   industryIdentifiers?: Array<{ type: 'ISBN_10' | 'ISBN_13' | string; identifier: string }>
   pageCount?: number
-  imageLinks?: { thumbnail?: string; smallThumbnail?: string }
+  imageLinks?: {
+    smallThumbnail?: string
+    thumbnail?: string
+    small?: string
+    medium?: string
+    large?: string
+    extraLarge?: string
+  }
+  categories?: string[]
   previewLink?: string
   infoLink?: string
   canonicalVolumeLink?: string

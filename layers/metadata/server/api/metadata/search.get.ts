@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
   const mediaType = query.mediaType as MetadataMediaType | undefined
   const providers = query.providers
-    ? String(query.providers).split(',').filter(Boolean) as MetadataProviderId[]
+    ? (String(query.providers).split(',').filter(Boolean) as MetadataProviderId[])
     : undefined
   const limit = query.limit ? Number(query.limit) : 10
 

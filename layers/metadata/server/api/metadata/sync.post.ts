@@ -1,4 +1,4 @@
-import type { MetadataSyncInput, MetadataProviderId } from '#layers/metadata/shared/types'
+import type { MetadataProviderId, MetadataSyncInput } from '#layers/metadata/shared/types'
 
 // fallow-ignore-next-line complexity
 export default defineEventHandler(async (event) => {
@@ -10,8 +10,13 @@ export default defineEventHandler(async (event) => {
   }
 
   const provider = getProvider(providerName as MetadataProviderId)
-  if (!provider) throw createError({ statusCode: 404, message: `Provider '${providerName}' not registered` })
-  if (!provider.sync) throw createError({ statusCode: 400, message: `Provider '${providerName}' does not support sync` })
+  if (!provider)
+    throw createError({ statusCode: 404, message: `Provider '${providerName}' not registered` })
+  if (!provider.sync)
+    throw createError({
+      statusCode: 400,
+      message: `Provider '${providerName}' does not support sync`,
+    })
 
   const cacheKey = makeCacheKey('metadata', providerName, resourceType ?? 'item', providerId)
 
@@ -20,7 +25,12 @@ export default defineEventHandler(async (event) => {
     if (cached) return { synced: false, record: cached.normalised }
   }
 
-  const result = await provider.sync({ provider: providerName as MetadataProviderId, providerId, resourceType, force })
+  const result = await provider.sync({
+    provider: providerName as MetadataProviderId,
+    providerId,
+    resourceType,
+    force,
+  })
   const now = new Date().toISOString()
 
   await setCacheRecord(cacheKey, {

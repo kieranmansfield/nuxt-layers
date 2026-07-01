@@ -28,6 +28,7 @@ const AVAILABLE_LAYERS = [
   'metadata-comicvine',
   'metadata-openlibrary',
   'metadata-google-books',
+  'metadata-tmdb',
 ] as const
 type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
@@ -60,6 +61,7 @@ const LAYER_PATHS: Record<LayerName, string> = {
   'metadata-comicvine': '../../layers/metadata/providers/comicvine',
   'metadata-openlibrary': '../../layers/metadata/providers/openlibrary',
   'metadata-google-books': '../../layers/metadata/providers/google-books',
+  'metadata-tmdb': '../../layers/metadata/providers/themoviedb',
 }
 
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included
@@ -92,6 +94,7 @@ const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
   'metadata-comicvine': ['metadata'],
   'metadata-openlibrary': ['metadata'],
   'metadata-google-books': ['metadata'],
+  'metadata-tmdb': ['metadata'],
 }
 
 /**
@@ -251,15 +254,11 @@ export default defineNuxtConfig({
       // Collection-specific feed routes aren't reachable via <a href> links so
       // the crawler can't discover them. List them explicitly so they're built as
       // static files alongside the shorthand routes added by the feeds layer.
-      routes: [
-        '/feed/discovery',
-        '/feed/blog/rss',
-        '/feed/blog/atom',
-        '/feed/blog/json',
-        '/feed/blog/rss/all',
-        '/feed/blog/atom/all',
-        '/feed/blog/json/all',
-      ],
+      //
+      // The /all variants are omitted on purpose — /feed/blog/rss (a file) and
+      // /feed/blog/rss/all (needs feed/blog/rss/ as a directory) collide on disk.
+      // The /all routes are served dynamically by the Nitro function instead.
+      routes: ['/feed/blog/rss', '/feed/blog/atom', '/feed/blog/json'],
       ignore: ['/admin'],
     },
   },

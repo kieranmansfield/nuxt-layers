@@ -772,6 +772,8 @@ importers:
 
   layers/metadata/providers/openlibrary: {}
 
+  layers/metadata/providers/themoviedb: {}
+
   layers/motion: {}
 
   layers/navigation: {}

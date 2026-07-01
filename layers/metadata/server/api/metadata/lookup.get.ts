@@ -13,7 +13,8 @@ export default defineEventHandler(async (event) => {
   }
 
   const provider = getProvider(providerName)
-  if (!provider) throw createError({ statusCode: 404, message: `Provider '${providerName}' not registered` })
+  if (!provider)
+    throw createError({ statusCode: 404, message: `Provider '${providerName}' not registered` })
 
   const cacheKey = makeCacheKey('metadata', providerName, resourceType ?? 'item', providerId)
   const cached = await getCacheRecord(cacheKey)

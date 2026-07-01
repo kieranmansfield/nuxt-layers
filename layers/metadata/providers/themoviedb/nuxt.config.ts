@@ -1,21 +1,21 @@
 export default defineNuxtConfig({
   $meta: {
-    name: 'metadata-comicvine',
+    name: 'metadata-tmdb',
   },
 
   extends: ['../../'],
 
   alias: {
-    '#layers/metadata-comicvine': import.meta.dirname,
+    '#layers/metadata-tmdb': import.meta.dirname,
   },
 
   compatibilityDate: '2026-06-30',
 
   runtimeConfig: {
-    metadataComicvine: {
-      apiKey: '', // env: NUXT_METADATA_COMICVINE_API_KEY
-      baseUrl: 'https://comicvine.gamespot.com/api',
-      cacheTtl: 60 * 60 * 24 * 30,
+    metadataTmdb: {
+      apiKey: '', // env: NUXT_METADATA_TMDB_API_KEY
+      baseUrl: 'https://api.themoviedb.org/3',
+      imageBaseUrl: 'https://image.tmdb.org/t/p',
     },
   },
 
@@ -27,10 +27,10 @@ export default defineNuxtConfig({
 
 declare module '@nuxt/schema' {
   type RuntimeConfig = {
-    metadataComicvine: {
+    metadataTmdb: {
       apiKey: string
       baseUrl: string
-      cacheTtl: number
+      imageBaseUrl: string
     }
   }
 }

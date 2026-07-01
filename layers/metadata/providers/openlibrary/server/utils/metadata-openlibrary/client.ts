@@ -1,14 +1,23 @@
-import type { OpenLibrarySearchResponse, OpenLibraryWork, OpenLibraryEdition } from './types'
+import type { OpenLibraryEdition, OpenLibrarySearchResponse, OpenLibraryWork } from './types'
 
 const BASE = 'https://openlibrary.org'
 
-export function openLibraryCoverUrl(coverId: number, size: 'S' | 'M' | 'L' = 'M'): string {
+export function openLibraryCoverUrl(coverId: number, size: 'S' | 'M' | 'L' = 'L'): string {
   return `https://covers.openlibrary.org/b/id/${coverId}-${size}.jpg`
 }
 
-export async function searchOpenLibrary(query: string, limit = 10): Promise<OpenLibrarySearchResponse> {
+export async function searchOpenLibrary(
+  query: string,
+  limit = 10
+): Promise<OpenLibrarySearchResponse> {
   return $fetch<OpenLibrarySearchResponse>(`${BASE}/search.json`, {
-    query: { q: query, limit, fields: 'key,title,subtitle,author_name,author_key,publisher,first_publish_year,isbn,cover_i,number_of_pages_median' },
+    timeout: 10000,
+    query: {
+      q: query,
+      limit,
+      fields:
+        'key,title,subtitle,author_name,author_key,publisher,first_publish_year,isbn,cover_i,number_of_pages_median',
+    },
   })
 }
 
@@ -23,8 +32,7 @@ export async function lookupOpenLibraryEdition(editionId: string): Promise<OpenL
 export async function lookupByIsbn(isbn: string): Promise<OpenLibraryEdition | null> {
   try {
     return await $fetch<OpenLibraryEdition>(`${BASE}/isbn/${isbn}.json`)
-  }
-  catch {
+  } catch {
     return null
   }
 }

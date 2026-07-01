@@ -1,4 +1,5 @@
-import type { MetadataRecord, MetadataCreator } from '#layers/metadata/shared/types'
+import type { MetadataCreator, MetadataRecord } from '#layers/metadata/shared/types'
+
 import type { ComicVineIssue, ComicVineVolume } from './types'
 
 // fallow-ignore-next-line complexity
@@ -14,7 +15,9 @@ export function normaliseComicVineIssue(issue: ComicVineIssue): MetadataRecord {
     provider: 'comicvine',
     providerId: String(issue.id),
     mediaType: 'comic',
-    title: issue.volume?.name ? `${issue.volume.name} #${issue.issue_number}` : (issue.name ?? `Issue #${issue.issue_number}`),
+    title: issue.volume?.name
+      ? `${issue.volume.name} #${issue.issue_number}`
+      : (issue.name ?? `Issue #${issue.issue_number}`),
     subtitle: issue.name ?? undefined,
     description: issue.deck ?? issue.description ?? undefined,
     creators: creators.length ? creators : undefined,
@@ -40,8 +43,16 @@ export function normaliseComicVineVolume(volume: ComicVineVolume): MetadataRecor
     id: `comicvine:volume:${volume.id}`,
     provider: 'comicvine',
     providerId: String(volume.id),
-    mediaType: 'comic',
-    title: volume.name,
+    mediaType: 'comic-series',
+    title: volume.start_year ? `${volume.name} (${volume.start_year})` : volume.name,
+    subtitle: [
+      volume.publisher?.name,
+      volume.count_of_issues
+        ? `${volume.count_of_issues} issue${volume.count_of_issues === 1 ? '' : 's'}`
+        : null,
+    ]
+      .filter(Boolean)
+      .join(' · ') || undefined,
     description: volume.deck ?? volume.description ?? undefined,
     creators: creators.length ? creators : undefined,
     publisher: volume.publisher?.name ?? undefined,

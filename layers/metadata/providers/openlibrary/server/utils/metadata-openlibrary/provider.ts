@@ -20,6 +20,10 @@ export const openLibraryProvider: MetadataProvider = {
   },
 
   async sync({ providerId, resourceType = 'work' }) {
-    return (await openLibraryProvider.lookup!({ provider: 'openlibrary', providerId, resourceType }))!
+    return (await openLibraryProvider.lookup!({
+      provider: 'openlibrary',
+      providerId,
+      resourceType,
+    }))!
   },
 }

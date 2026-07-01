@@ -13,7 +13,7 @@ export async function searchMetadata(input: MetadataSearchInput): Promise<Metada
     'metadata-search',
     targets.map((p) => p.id).join('+'),
     input.mediaType ?? 'any',
-    hashQuery(`${input.query}:${input.limit ?? 10}`),
+    hashQuery(`${input.query}:${input.limit ?? 10}`)
   )
 
   const cached = await getSearchCache<MetadataSearchResult[]>(cacheKey)
@@ -22,8 +22,13 @@ export async function searchMetadata(input: MetadataSearchInput): Promise<Metada
   const settled = await Promise.allSettled(targets.map((p) => p.search(input)))
 
   const results: MetadataSearchResult[] = []
-  for (const outcome of settled) {
-    if (outcome.status === 'fulfilled') results.push(...outcome.value)
+  for (let i = 0; i < settled.length; i++) {
+    const outcome = settled[i]!
+    if (outcome.status === 'fulfilled') {
+      results.push(...outcome.value)
+    } else {
+      console.error(`[metadata] provider "${targets[i]!.id}" search failed:`, outcome.reason)
+    }
   }
 
   const deduped = deduplicateResults(results)
@@ -34,7 +39,7 @@ export async function searchMetadata(input: MetadataSearchInput): Promise<Metada
 function deduplicateResults(results: MetadataSearchResult[]): MetadataSearchResult[] {
   const seen = new Set<string>()
   return results.filter((r) => {
-    const key = `${r.title.toLowerCase()}:${r.publishedAt?.slice(0, 4) ?? ''}`
+    const key = `${r.mediaType}:${r.title.toLowerCase()}:${r.publishedAt?.slice(0, 4) ?? ''}`
     if (seen.has(key)) return false
     seen.add(key)
     return true
