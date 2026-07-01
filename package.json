@@ -106,6 +106,7 @@
     "layer:rebuild:layout": "pnpm build:layout && pnpm layer:generate:layout && pnpm layer:layout",
     "layer:rebuild:motion": "pnpm build:motion && pnpm layer:generate:motion && pnpm layer:motion",
     "browserlist": "npx update-browserslist-db@latest",
+    "kill": "pkill -f 'nuxt|vite|node.*dev' || true",
     "deploy": "turbo run build --filter playground",
     "build:netlify": "pnpm -F playground build:netlify",
     "dev:netlify": "pnpm -F playground dev:netlify"

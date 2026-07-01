@@ -29,6 +29,7 @@ export type ComicVineVolume = {
   description: string | null
   deck: string | null
   start_year: string | null
+  count_of_issues: number | null
   site_detail_url: string
   image: { original_url: string; medium_url: string } | null
   publisher: { id: number; name: string } | null

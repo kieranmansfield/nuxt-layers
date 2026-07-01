@@ -62,7 +62,8 @@ nuxt-layers/
 │   │   └── providers/
 │   │       ├── comicvine/      # Comic Vine provider (issues, volumes)
 │   │       ├── openlibrary/    # Open Library provider (books, ISBNs)
-│   │       └── google-books/   # Google Books provider (fallback/enrichment)
+│   │       ├── google-books/   # Google Books provider (fallback/enrichment)
+│   │       └── themoviedb/     # TMDB provider (movies, TV shows; IMDB ID passthrough)
 │   │
 │   ├── theme/              # Design tokens and theming utilities
 │   ├── content/            # Nuxt Content v3 collections and components
@@ -104,6 +105,7 @@ metadata → core
 metadata/providers/comicvine → metadata
 metadata/providers/openlibrary → metadata
 metadata/providers/google-books → metadata
+metadata/providers/themoviedb → metadata
 
 theme → core
 content → core

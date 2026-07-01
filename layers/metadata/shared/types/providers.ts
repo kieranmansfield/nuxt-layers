@@ -1,6 +1,6 @@
 import type { MetadataMediaType, MetadataRecord } from './metadata'
 
-export type MetadataProviderId = 'comicvine' | 'openlibrary' | 'google-books' | 'local'
+export type MetadataProviderId = 'comicvine' | 'openlibrary' | 'google-books' | 'tmdb' | 'local'
 
 export type MetadataSearchInput = {
   query: string

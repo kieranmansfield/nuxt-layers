@@ -3,7 +3,7 @@
   publish = "apps/playground/dist"
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "24"
   NPM_CONFIG_BUILD_FROM_SOURCE = "false"
   NODE_OPTIONS = "--max-old-space-size=4096"
 

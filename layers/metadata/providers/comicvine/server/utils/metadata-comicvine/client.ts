@@ -1,14 +1,19 @@
 import type { ComicVineApiResponse } from './types'
 
-const FIELD_LIST_ISSUE = 'id,name,issue_number,description,deck,cover_date,store_date,site_detail_url,image,volume,person_credits,publisher'
-const FIELD_LIST_VOLUME = 'id,name,description,deck,start_year,site_detail_url,image,publisher,people'
+const FIELD_LIST_ISSUE =
+  'id,name,issue_number,description,deck,cover_date,store_date,site_detail_url,image,volume,person_credits,publisher'
+const FIELD_LIST_VOLUME =
+  'id,name,description,deck,start_year,count_of_issues,site_detail_url,image,publisher,people'
 
 function getConfig() {
   const config = useRuntimeConfig()
   return config.metadataComicvine
 }
 
-async function comicVineFetch<T>(path: string, params: Record<string, string>): Promise<ComicVineApiResponse<T>> {
+async function comicVineFetch<T>(
+  path: string,
+  params: Record<string, string>
+): Promise<ComicVineApiResponse<T>> {
   const { apiKey, baseUrl } = getConfig()
 
   const url = new URL(`${baseUrl}${path}`)
@@ -16,13 +21,15 @@ async function comicVineFetch<T>(path: string, params: Record<string, string>): 
   url.searchParams.set('format', 'json')
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v)
 
-  const res = await $fetch<ComicVineApiResponse<T>>(url.toString())
+  const res = await $fetch<ComicVineApiResponse<T>>(url.toString(), {
+    headers: { 'User-Agent': 'Mozilla/5.0 (compatible; nuxt-metadata/1.0)' },
+  })
   if (res.status_code !== 1) throw new MetadataProviderError('comicvine', `API error: ${res.error}`)
   return res
 }
 
 export async function searchComicVineIssues(query: string, limit = 10) {
-  return comicVineFetch<import('./types').ComicVineIssue[]>('/search/', {
+  return comicVineFetch<Array<import('./types').ComicVineIssue>>('/search/', {
     query,
     resources: 'issue',
     limit: String(limit),
@@ -31,7 +38,7 @@ export async function searchComicVineIssues(query: string, limit = 10) {
 }
 
 export async function searchComicVineVolumes(query: string, limit = 10) {
-  return comicVineFetch<import('./types').ComicVineVolume[]>('/search/', {
+  return comicVineFetch<Array<import('./types').ComicVineVolume>>('/search/', {
     query,
     resources: 'volume',
     limit: String(limit),

@@ -361,6 +361,29 @@
       iconColor: 'text-sky-500',
       buttonClass: 'bg-sky-500/10 text-sky-500 hover:bg-sky-500/20',
     },
+    {
+      name: 'Metadata',
+      description:
+        'Unified metadata search and lookup across Open Library, Google Books, Comic Vine, and TMDB',
+      loaded: true,
+      icon: 'i-lucide-library',
+      to: '/metadata',
+      features: [
+        'Provider Registry',
+        'Unified Search',
+        'Books (Open Library)',
+        'Books (Google Books)',
+        'Comics (Comic Vine)',
+        'Movies & TV (TMDB)',
+        'IMDB ID Passthrough',
+        'Normalised Schema',
+      ],
+      borderColor: 'border-teal-500/50',
+      bgColor: 'bg-teal-500/10',
+      iconBg: 'bg-teal-500/10',
+      iconColor: 'text-teal-500',
+      buttonClass: 'bg-teal-500/10 text-teal-500 hover:bg-teal-500/20',
+    },
   ]
 
   const demos = [
@@ -423,6 +446,12 @@
       icon: 'i-lucide-blend',
       layer: 'Shader',
     },
+    {
+      label: 'Metadata Search',
+      to: '/metadata',
+      icon: 'i-lucide-library',
+      layer: 'Metadata',
+    },
   ]
 
   const layerDemoColors: Record<string, { icon: string; border: string; bg: string }> = {
@@ -432,6 +461,7 @@
     Content: { icon: 'text-red-400', border: 'border-red-400/50', bg: 'bg-red-400/10' },
     Layout: { icon: 'text-amber-500', border: 'border-amber-500/50', bg: 'bg-amber-500/10' },
     Routing: { icon: 'text-orange-500', border: 'border-orange-500/50', bg: 'bg-orange-500/10' },
+    Metadata: { icon: 'text-teal-500', border: 'border-teal-500/50', bg: 'bg-teal-500/10' },
   }
 
   definePageMeta({ layout: { name: 'grid', props: { showHeader: false, showFooter: false } } })

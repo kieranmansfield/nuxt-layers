@@ -3,9 +3,12 @@ import type { MetadataProviderId } from './providers'
 export type MetadataMediaType =
   | 'book'
   | 'comic'
+  | 'comic-series'
   | 'manga'
   | 'graphic-novel'
   | 'collected-edition'
+  | 'movie'
+  | 'tv-show'
 
 export type MetadataCreator = {
   name: string
@@ -19,6 +22,8 @@ export type MetadataIdentifiers = {
   comicVineId?: string
   openLibraryId?: string
   googleBooksId?: string
+  tmdbId?: string
+  imdbId?: string
 }
 
 export type MetadataRecord = {

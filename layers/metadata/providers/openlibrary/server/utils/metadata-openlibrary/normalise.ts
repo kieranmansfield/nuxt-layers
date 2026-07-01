@@ -1,5 +1,6 @@
-import type { MetadataRecord, MetadataCreator } from '#layers/metadata/shared/types'
-import type { OpenLibrarySearchDoc, OpenLibraryWork, OpenLibraryEdition } from './types'
+import type { MetadataCreator, MetadataRecord } from '#layers/metadata/shared/types'
+
+import type { OpenLibraryEdition, OpenLibrarySearchDoc, OpenLibraryWork } from './types'
 
 // fallow-ignore-next-line complexity
 export function normaliseOpenLibrarySearchDoc(doc: OpenLibrarySearchDoc): MetadataRecord {
