@@ -113,6 +113,7 @@ routing → core
 ```
 
 **Rules:**
+
 - `core` has no layer dependencies — it is always the base
 - Every non-core layer MUST declare its full `extends` list explicitly in `nuxt.config.ts`
 - Do not rely on playground load order to provide dependencies
@@ -134,6 +135,15 @@ routing → core
 ## Path-Based Rules
 
 Detailed coding conventions are in `.claude/rules/`:
+
 - `vue-components.md` — Vue SFC patterns (applies to `**/*.vue`)
 - `nuxt-layers.md` — Layer development (applies to `layers/**/*`)
 - `typescript.md` — TypeScript conventions (applies to `**/*.ts`, `**/*.tsx`)
+
+## Orchestration workflow
+
+You (Fable) are the orchestrator. Plan, decompose, synthesize.
+Reasoning-heavy phases → deep-reasoner
+Mechanical work → fast-worker
+Codex (/codex:rescue --background) is a cracked engineer on par with deep-reasoner, from a different perspective. Treat as a peer, not a reviewer.
+High-stakes decisions: task Opus + Codex on the same problem in parallel, synthesize the best of both, without showing either the other's answer. Keep your own context lean.

@@ -2,7 +2,7 @@ export class MetadataProviderError extends Error {
   constructor(
     public readonly provider: string,
     message: string,
-    public readonly cause?: unknown
+    public override readonly cause?: unknown
   ) {
     super(`[metadata:${provider}] ${message}`)
     this.name = 'MetadataProviderError'

@@ -13,5 +13,10 @@ export default defineEventHandler(async (event) => {
     : undefined
   const limit = query.limit ? Number(query.limit) : 10
 
-  return searchMetadata({ query: q, mediaType, providers, limit })
+  return searchMetadata({
+    query: q,
+    ...(mediaType && { mediaType }),
+    ...(providers && { providers }),
+    limit,
+  })
 })

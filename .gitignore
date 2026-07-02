@@ -48,3 +48,4 @@ dist
 /ambient-after-wait.png
 /ambient-page.png
 .pnpm-store/
+coverage/

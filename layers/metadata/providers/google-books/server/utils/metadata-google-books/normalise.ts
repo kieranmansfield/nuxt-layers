@@ -22,24 +22,26 @@ export function normaliseGoogleBooksVolume(volume: GoogleBooksVolume): MetadataR
     volumeInfo.imageLinks?.thumbnail ??
     volumeInfo.imageLinks?.smallThumbnail
 
+  const sourceUrl = volumeInfo.canonicalVolumeLink ?? volumeInfo.infoLink
+
   return {
     id: `google-books:volume:${volume.id}`,
     provider: 'google-books',
     providerId: volume.id,
     mediaType: googleBooksMediaType(volumeInfo.categories),
     title: volumeInfo.title,
-    subtitle: volumeInfo.subtitle,
-    description: volumeInfo.description,
-    creators: creators.length ? creators : undefined,
-    publisher: volumeInfo.publisher,
-    publishedAt: volumeInfo.publishedDate,
-    coverUrl: rawCover ? googleBooksCoverUrl(rawCover) : undefined,
+    ...(volumeInfo.subtitle && { subtitle: volumeInfo.subtitle }),
+    ...(volumeInfo.description && { description: volumeInfo.description }),
+    ...(creators.length && { creators }),
+    ...(volumeInfo.publisher && { publisher: volumeInfo.publisher }),
+    ...(volumeInfo.publishedDate && { publishedAt: volumeInfo.publishedDate }),
+    ...(rawCover && { coverUrl: googleBooksCoverUrl(rawCover) }),
     identifiers: {
-      isbn10,
-      isbn13,
+      ...(isbn10 && { isbn10 }),
+      ...(isbn13 && { isbn13 }),
       googleBooksId: volume.id,
     },
-    sourceUrl: volumeInfo.canonicalVolumeLink ?? volumeInfo.infoLink,
+    ...(sourceUrl && { sourceUrl }),
     raw: volume,
     lastSyncedAt: new Date().toISOString(),
   }

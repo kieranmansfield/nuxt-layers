@@ -31,7 +31,8 @@
     "./layers/metadata": "./layers/metadata/nuxt.config.ts",
     "./layers/metadata/providers/comicvine": "./layers/metadata/providers/comicvine/nuxt.config.ts",
     "./layers/metadata/providers/openlibrary": "./layers/metadata/providers/openlibrary/nuxt.config.ts",
-    "./layers/metadata/providers/google-books": "./layers/metadata/providers/google-books/nuxt.config.ts"
+    "./layers/metadata/providers/google-books": "./layers/metadata/providers/google-books/nuxt.config.ts",
+    "./layers/metadata/providers/themoviedb": "./layers/metadata/providers/themoviedb/nuxt.config.ts"
   },
   "files": [
     "layers/*/nuxt.config.ts",
@@ -69,6 +70,7 @@
     "fix:app": "f(){ pnpm turbo run lint --filter \"./apps/$1\" -- --fix && prettier --write \"apps/$1\"; }; f",
     "typecheck": "vue-tsc --noEmit -p tsconfig.typecheck.json",
     "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
     "test:unit": "vitest run --project unit",
     "test:vitest": "vitest run --project vitest",
@@ -271,6 +273,7 @@
     "typescript": "catalog:",
     "vite-plugin-checker": "catalog:",
     "vitest": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
     "vue": "catalog:conflicts_conflicts_vue_latest_h3_5_35",
     "vue-tsc": "catalog:",
     "zod": "catalog:",

@@ -3,6 +3,10 @@ import type { MetadataCacheRecord } from '#layers/metadata/shared/types'
 // Cache keys: metadata:{provider}:{resourceType}:{providerId}
 //             metadata-search:{provider}:{mediaType}:{queryHash}
 
+// unstorage isn't a direct dependency, so derive its StorageValue type from
+// useStorage's own signature rather than importing the package by name.
+type StorageValue = Parameters<ReturnType<typeof useStorage>['setItem']>[1]
+
 export function makeCacheKey(...parts: string[]): string {
   return parts.join(':')
 }
@@ -21,12 +25,16 @@ export async function setCacheRecord(
   await storage.setItem(key, record, ttl ? { ttl } : undefined)
 }
 
-export async function getSearchCache<T>(key: string): Promise<T | null> {
+export async function getSearchCache<T extends StorageValue>(key: string): Promise<T | null> {
   const storage = useStorage('metadata')
   return (await storage.getItem<T>(key)) ?? null
 }
 
-export async function setSearchCache<T>(key: string, value: T, ttl = 3600): Promise<void> {
+export async function setSearchCache<T extends StorageValue>(
+  key: string,
+  value: T,
+  ttl = 3600
+): Promise<void> {
   const storage = useStorage('metadata')
   await storage.setItem(key, value, { ttl })
 }

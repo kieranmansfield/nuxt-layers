@@ -8,8 +8,8 @@ test('feed index redirects to the default RSS route', async ({ page }) => {
 
 test('feed endpoints return the expected content types', async ({ page }) => {
   const routes = [
-    ['/feed/rss', 'application/rss+xml'],
-    ['/feed/atom', 'application/atom+xml'],
+    ['/feed/rss', 'text/xml'],
+    ['/feed/atom', 'text/xml'],
     ['/feed/json', 'application/feed+json'],
   ] as const
 

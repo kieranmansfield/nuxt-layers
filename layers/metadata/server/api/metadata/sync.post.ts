@@ -28,8 +28,8 @@ export default defineEventHandler(async (event) => {
   const result = await provider.sync({
     provider: providerName as MetadataProviderId,
     providerId,
-    resourceType,
-    force,
+    ...(resourceType && { resourceType }),
+    ...(force !== undefined && { force }),
   })
   const now = new Date().toISOString()
 

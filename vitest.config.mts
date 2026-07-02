@@ -120,6 +120,12 @@ async function withStructuredCloneFallback<T>(callback: () => Promise<T>): Promi
 
 export default defineConfig({
   test: {
+    coverage: {
+      provider: 'v8',
+      include: ['layers/*/app/utils/**', 'layers/*/server/utils/**', 'layers/**/server/utils/**'],
+      exclude: ['**/*.test.ts', '**/*.spec.ts'],
+      reporter: ['text', 'html'],
+    },
     projects: [
       {
         test: {
