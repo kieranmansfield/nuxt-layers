@@ -5,7 +5,7 @@
 [build.environment]
   NODE_VERSION = "24"
   NPM_CONFIG_BUILD_FROM_SOURCE = "false"
-  NODE_OPTIONS = "--max-old-space-size=4096"
+  NODE_OPTIONS = "--max-old-space-size=6144"
 
 # Feed routes — must be served as text/xml so browsers apply the XSLT stylesheet
 # instead of prompting to open a feed reader app.
