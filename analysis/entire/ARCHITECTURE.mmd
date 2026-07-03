@@ -1,0 +1,61 @@
+graph TD
+  subgraph Foundation
+    core
+  end
+  subgraph Presentation
+    typography --> core
+    visual --> core
+    navigation --> core
+    ui --> typography
+    ui --> navigation
+    ui --> visual
+  end
+  subgraph Layout_D[Layout]
+    layout --> core
+  end
+  subgraph Motion_D[Motion]
+    scroll --> core
+    animations --> scroll
+    transitions --> core
+    pagetransitions[page-transitions] --> core
+    motion --> scroll
+    motion --> animations
+    motion --> transitions
+    motion --> pagetransitions
+  end
+  navigation --> scroll
+  navigation --> layout
+  subgraph Graphics
+    canvas --> core
+    shader --> canvas
+  end
+  subgraph SEO_Scripts[SEO & Scripts]
+    seo --> core
+    scripts --> core
+  end
+  subgraph Communication
+    mailer --> core
+    forms --> mailer
+  end
+  subgraph Data_Identity[Data & Identity]
+    database --> core
+    auth --> core
+  end
+  subgraph Metadata
+    metadata --> core
+    providers[providers/*] --> metadata
+  end
+  subgraph Content_Feeds[Content & Feeds]
+    content --> core
+    feeds -. standalone-only .-> content
+  end
+  subgraph Theme_Routing[Theme & Routing]
+    theme --> core
+    routing --> core
+  end
+  subgraph Scaffold
+    starter --> ui
+    starter --> layout
+    starter --> motion
+    baseline --> core
+  end
