@@ -37,6 +37,32 @@ dist
 
 # Claude Code session lock files
 .claude/scheduled_tasks.lock
+.claude/settings.json
+.claude/commands/
+.claude/helpers/
+.claude/agents/*
+!.claude/agents/deep-reasoner.md
+!.claude/agents/fast-worker.md
+.claude/skills/*
+!.claude/skills/document-writer
+!.claude/skills/improve
+!.claude/skills/nuxt
+!.claude/skills/nuxt-content
+!.claude/skills/nuxt-modules
+!.claude/skills/nuxt-seo
+!.claude/skills/nuxt-ui
+!.claude/skills/nuxthub
+!.claude/skills/pnpm
+!.claude/skills/tresjs
+!.claude/skills/ts-library
+!.claude/skills/tsdown
+!.claude/skills/vite
+!.claude/skills/vitest
+!.claude/skills/vue
+!.claude/skills/vueuse
+.claude-flow/
+.swarm/
+.mcp.json
 
 # Superpowers skills
 .superpowers/

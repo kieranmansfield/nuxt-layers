@@ -120,7 +120,7 @@
   "keywords": [],
   "author": "Kieran Mansfield",
   "license": "ISC",
-  "packageManager": "pnpm@11.9.0",
+  "packageManager": "pnpm@11.10.0",
   "workspaces": [
     "layers/*",
     "apps/*",
@@ -130,7 +130,7 @@
     "@nuxt/content": "^3.14.0",
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/image": "^2.0.0",
-    "@nuxt/scripts": "^0.11.0",
+    "@nuxt/scripts": "^0.11.0 || ^1.0.0",
     "@nuxt/ui": "^4.8.1",
     "@nuxtjs/device": "^4.0.0",
     "@nuxtjs/seo": "^5.0.0",
