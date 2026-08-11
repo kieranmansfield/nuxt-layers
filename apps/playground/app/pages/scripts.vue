@@ -110,9 +110,7 @@
               </div>
               <h3 class="text-lg font-bold text-highlighted mb-2">{{ item.name }}</h3>
               <p class="text-muted text-sm mb-3">{{ item.description }}</p>
-              <code
-                class="text-xs text-muted bg-muted px-2 py-1 rounded block overflow-x-auto"
-              >
+              <code class="text-xs text-muted bg-muted px-2 py-1 rounded block overflow-x-auto">
                 {{ item.snippet }}
               </code>
             </div>

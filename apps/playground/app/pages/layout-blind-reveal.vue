@@ -186,7 +186,9 @@
 
     <LayoutGridItem :row-start="3" :row-span="6" align="center" justify="center" layer="mid">
       <div class="text-center space-y-8 px-4">
-        <h2 class="text-4xl lg:text-6xl font-bold text-highlighted tracking-tight">The blind is open.</h2>
+        <h2 class="text-4xl lg:text-6xl font-bold text-highlighted tracking-tight">
+          The blind is open.
+        </h2>
         <p class="text-highlighted/40 max-w-lg mx-auto">
           The footer was here all along — fixed at the bottom of the document, waiting for the body
           content to scroll away.

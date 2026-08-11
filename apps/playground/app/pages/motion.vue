@@ -251,14 +251,18 @@
               <div class="text-center text-highlighted p-8">
                 <UIcon name="i-lucide-sparkles" class="text-6xl mb-4" />
                 <h3 class="text-4xl md:text-5xl font-bold mb-4">Scroll Triggered</h3>
-                <p class="text-xl text-highlighted/80">This box animates in when you scroll to it</p>
+                <p class="text-xl text-highlighted/80">
+                  This box animates in when you scroll to it
+                </p>
               </div>
             </div>
           </div>
 
           <!-- Staggered Cards -->
           <div class="mb-32">
-            <h3 class="text-2xl font-bold text-highlighted mb-8 text-center">Staggered Animation</h3>
+            <h3 class="text-2xl font-bold text-highlighted mb-8 text-center">
+              Staggered Animation
+            </h3>
             <div
               v-gsap.whenVisible.once.stagger.from="{
                 y: 50,
@@ -310,9 +314,7 @@
           <!-- Middle layer (content) -->
           <div ref="parallaxMid" class="relative z-10 text-center px-4">
             <h2 class="text-5xl md:text-8xl font-bold text-highlighted mb-4">Parallax Layers</h2>
-            <p class="text-xl md:text-2xl text-muted">
-              Multiple layers moving at different speeds
-            </p>
+            <p class="text-xl md:text-2xl text-muted">Multiple layers moving at different speeds</p>
           </div>
 
           <!-- Foreground blur layer (fastest) -->
@@ -364,7 +366,9 @@
             :key="i"
             class="aspect-square bg-linear-to-br from-primary to-purple-600 rounded-3xl flex items-center justify-center p-8"
           >
-            <span class="text-2xl md:text-4xl font-bold text-highlighted text-center">{{ item }}</span>
+            <span class="text-2xl md:text-4xl font-bold text-highlighted text-center">{{
+              item
+            }}</span>
           </div>
         </div>
       </MotionPinnedSection>
@@ -635,9 +639,7 @@
                 Seamless integration with GSAP ScrollTrigger. Pin, scrub, and animate with
                 precision.
               </p>
-              <code class="text-xs text-muted bg-accented px-2 py-1 rounded">
-                scrollerProxy
-              </code>
+              <code class="text-xs text-muted bg-accented px-2 py-1 rounded"> scrollerProxy </code>
             </div>
           </div>
 
@@ -673,7 +675,9 @@
       <section class="py-24 bg-default">
         <UContainer>
           <div class="max-w-4xl mx-auto">
-            <h3 class="text-3xl font-bold text-highlighted mb-8 text-center">Data Attribute Reference</h3>
+            <h3 class="text-3xl font-bold text-highlighted mb-8 text-center">
+              Data Attribute Reference
+            </h3>
 
             <div class="grid gap-4">
               <div
@@ -716,7 +720,11 @@
       <!-- Final Marquee -->
       <section class="py-4 bg-primary overflow-hidden">
         <MotionMarquee :speed="100" direction="left" :pause-on-hover="false" gap="2rem">
-          <span v-for="i in 10" :key="i" class="text-2xl font-bold text-highlighted/90 whitespace-nowrap">
+          <span
+            v-for="i in 10"
+            :key="i"
+            class="text-2xl font-bold text-highlighted/90 whitespace-nowrap"
+          >
             BUILT WITH GSAP + LOCOMOTIVE SCROLL ✦
           </span>
         </MotionMarquee>

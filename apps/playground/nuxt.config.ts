@@ -194,6 +194,8 @@ export default defineNuxtConfig({
         'three',
         'three/tsl',
         'three/webgpu',
+        '@unhead/schema-org/vue',
+        'baseline-status',
       ],
     },
     ssr: {
@@ -220,6 +222,8 @@ export default defineNuxtConfig({
           'three',
           'three/tsl',
           'three/webgpu',
+          '@unhead/schema-org/vue',
+          'baseline-status',
         ],
         // Removed force:true — it clears the dep cache on every start which
         // causes slugify to be served as a raw CJS file while Vite is still

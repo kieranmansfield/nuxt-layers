@@ -8,6 +8,8 @@ export default defineNuxtConfig({
     '#layers/typography/types': `${import.meta.dirname}/app/types`,
   },
 
+  css: ['#layers/typography/app/assets/css/typography.css'],
+
   compatibilityDate: '2026-06-06',
 
   typescript: {

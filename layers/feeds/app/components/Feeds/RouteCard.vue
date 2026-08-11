@@ -50,7 +50,7 @@
   <UCard
     :to="route.path"
     :ui="{ body: 'p-0' }"
-    class="group relative overflow-hidden border-slate-200/80 bg-white/90 shadow-none transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-950/55 dark:hover:border-slate-700"
+    class="group relative overflow-hidden border-slate-200/80 bg-white/90 shadow-none transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-950/55 dark:hover:border-slate-700 @container"
   >
     <div class="absolute inset-y-0 left-0 w-1" :class="routeTone.strip" />
     <div :class="compact ? 'flex items-center gap-3 p-3' : 'flex items-center gap-3 p-4'">

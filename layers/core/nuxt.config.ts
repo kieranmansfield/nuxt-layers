@@ -65,6 +65,8 @@ export default defineNuxtConfig({
       meta: [
         // <meta name="viewport" content="width=device-width, initial-scale=1">
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        // Opt page into browser's text-scale preference respecting default font size
+        { name: 'text-scale', content: 'scale' },
       ],
 
       noscript: [

@@ -108,9 +108,7 @@
               <MotionMarqueeText :texts="['SLOW ✦']" :velocity="30" />
             </div>
             <div>
-              <p class="text-center text-muted text-sm font-mono mb-4">
-                velocity: 100 — default
-              </p>
+              <p class="text-center text-muted text-sm font-mono mb-4">velocity: 100 — default</p>
               <MotionMarqueeText :texts="['DEFAULT ✦']" :velocity="100" />
             </div>
             <div>

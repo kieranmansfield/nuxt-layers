@@ -107,7 +107,9 @@
                 :preset="activeGradient"
                 class="h-48 rounded-2xl flex items-center justify-center"
               >
-                <code class="text-highlighted/90 font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg">
+                <code
+                  class="text-highlighted/90 font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg"
+                >
                   preset="{{ activeGradient }}"
                 </code>
               </GradientBackground>
@@ -131,7 +133,9 @@
               >
                 <TintOverlay color="primary" :level="activeTintLevel" class="absolute inset-0" />
                 <div class="relative z-10 h-full flex items-center justify-center">
-                  <code class="text-highlighted font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg">
+                  <code
+                    class="text-highlighted font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg"
+                  >
                     level="{{ activeTintLevel }}"
                   </code>
                 </div>
@@ -157,7 +161,9 @@
             <AccentBlob :x="75" :y="60" size="10rem" color="secondary" :opacity="40" blur="2xl" />
             <AccentBlob :x="50" :y="85" size="8rem" color="info" :opacity="35" blur="xl" />
             <div class="relative z-10 h-full flex items-center justify-center">
-              <code class="text-highlighted/80 font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg">
+              <code
+                class="text-highlighted/80 font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg"
+              >
                 &lt;AccentBlob :x :y size color opacity blur /&gt;
               </code>
             </div>
@@ -169,7 +175,9 @@
       <section id="progress" class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Progress Indicators</h2>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+              Progress Indicators
+            </h2>
             <p class="text-muted text-lg">Linear and circular progress, semantic colours</p>
           </div>
           <div class="max-w-2xl mx-auto space-y-10">

@@ -263,8 +263,12 @@
 
           <div>
             <div class="flex justify-between mb-1">
-              <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'">Speed</span>
-              <span class="text-xs tabular-nums" :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
+              <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'"
+                >Speed</span
+              >
+              <span
+                class="text-xs tabular-nums"
+                :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
                 >{{ speed.toFixed(1) }}×</span
               >
             </div>

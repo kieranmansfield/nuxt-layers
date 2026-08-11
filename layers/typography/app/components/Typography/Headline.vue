@@ -3,6 +3,7 @@
   import { useTypography } from '../../composables/typography'
   import type { UiColors } from '../../types/colors'
   import type {
+    FluidFontSize,
     FontLeading,
     FontSize,
     FontSlant,
@@ -26,6 +27,7 @@
     transform = 'none',
     color = undefined,
     size = undefined,
+    fluidSize = undefined,
     class: classProp = '',
   } = defineProps<{
     level?: 1 | 2 | 3 | 4 | 5 | 6
@@ -38,12 +40,13 @@
     transform?: TextTransform
     color?: UiColors
     size?: FontSize
+    fluidSize?: FluidFontSize
     class?: string
   }>()
   const tag = computed(() => `h${level}` as const)
 
   const sizeClass = computed(() => {
-    if (size) return null
+    if (size || fluidSize) return null
 
     const sizes: Record<number, string> = {
       1: 'text-4xl sm:text-5xl',
@@ -65,6 +68,7 @@
     align: align,
     transform: transform,
     ...(size !== undefined && { size: size }),
+    ...(fluidSize !== undefined && { fluidSize: fluidSize }),
   })
   const colorClass = useColor(color, 'text')
 </script>
@@ -80,7 +84,11 @@
     :align
     :transform
     :class="[sizeClass, classes, colorClass, classProp]"
-    v-bind="{ ...(size !== undefined && { size: size }), ...$attrs }"
+    v-bind="{
+      ...(size !== undefined && { size: size }),
+      ...(fluidSize !== undefined && { fluidSize: fluidSize }),
+      ...$attrs,
+    }"
   >
     <slot />
   </Typography>

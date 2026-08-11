@@ -61,6 +61,13 @@
     gap: var(--grid-gap, clamp(0.75rem, 1.5vw, 1.5rem));
     width: 100%;
     height: 100%;
+    container-type: inline-size;
+
+    /* Collapse to a single column when the container itself is too narrow
+       for the sidebar split, regardless of viewport size. */
+    @container (width < 30rem) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .sidebar-inner.sidebar-reverse {
