@@ -45,7 +45,7 @@
     <template #after-content="{ item }">
       <template v-if="asGallery(item).images?.length">
         <USeparator class="my-8" />
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="gallery-grid gap-4">
           <div
             v-for="(img, idx) in asGallery(item).images"
             :key="img.src"
@@ -88,3 +88,10 @@
     </template>
   </NuxtContentDetail>
 </template>
+
+<style scoped>
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+</style>

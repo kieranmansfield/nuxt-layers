@@ -45,19 +45,20 @@
   }>()
   const tag = computed(() => `h${level}` as const)
 
-  const sizeClass = computed(() => {
-    if (size || fluidSize) return null
+  // Fluid by default (continuous scaling, no mobile-first breakpoint step) —
+  // only used when the caller passes neither `size` nor `fluidSize`.
+  const defaultFluidSizes: Record<number, FluidFontSize> = {
+    1: '6xl',
+    2: '5xl',
+    3: '4xl',
+    4: '3xl',
+    5: 'xl',
+    6: 'lg',
+  }
 
-    const sizes: Record<number, string> = {
-      1: 'text-4xl sm:text-5xl',
-      2: 'text-3xl sm:text-4xl',
-      3: 'text-2xl sm:text-3xl',
-      4: 'text-xl sm:text-2xl',
-      5: 'text-lg sm:text-xl',
-      6: 'text-base sm:text-lg',
-    }
-    return sizes[level]
-  })
+  const appliedFluidSize = computed(() =>
+    size !== undefined ? undefined : (fluidSize ?? defaultFluidSizes[level])
+  )
 
   const { classes } = useTypography({
     weight: weight,
@@ -68,7 +69,7 @@
     align: align,
     transform: transform,
     ...(size !== undefined && { size: size }),
-    ...(fluidSize !== undefined && { fluidSize: fluidSize }),
+    fluidSize: appliedFluidSize.value,
   })
   const colorClass = useColor(color, 'text')
 </script>
@@ -83,10 +84,10 @@
     :tracking
     :align
     :transform
-    :class="[sizeClass, classes, colorClass, classProp]"
+    :class="[classes, colorClass, classProp]"
     v-bind="{
       ...(size !== undefined && { size: size }),
-      ...(fluidSize !== undefined && { fluidSize: fluidSize }),
+      ...(appliedFluidSize !== undefined && { fluidSize: appliedFluidSize }),
       ...$attrs,
     }"
   >

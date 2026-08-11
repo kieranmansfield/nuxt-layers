@@ -38,7 +38,7 @@
             <template #header>
               <h2 class="text-xl font-semibold">CSS Features</h2>
             </template>
-            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            <div class="diag-grid-9 gap-3">
               <div class="flex items-center gap-2">
                 <span v-if="grid" class="text-green-500">✓</span>
                 <span v-else class="text-red-500">✗</span>
@@ -76,7 +76,7 @@
             <template #header>
               <h2 class="text-xl font-semibold">Image Formats</h2>
             </template>
-            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <div class="diag-grid-8 gap-3">
               <div class="flex items-center gap-2">
                 <span v-if="webp" class="text-green-500">✓</span>
                 <span v-else class="text-red-500">✗</span>
@@ -94,7 +94,7 @@
             <template #header>
               <h2 class="text-xl font-semibold">JavaScript APIs</h2>
             </template>
-            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            <div class="diag-grid-9 gap-3">
               <div class="flex items-center gap-2">
                 <span v-if="intersectionObserver" class="text-green-500">✓</span>
                 <span v-else class="text-red-500">✗</span>
@@ -224,3 +224,15 @@
     </UContainer>
   </div>
 </template>
+
+<style scoped>
+  .diag-grid-9 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  }
+
+  .diag-grid-8 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  }
+</style>

@@ -12,12 +12,12 @@
     <div class="mt-8 flex flex-col gap-24">
       <div v-for="font in typography" :key="font.name" class="flex flex-col gap-6">
         <div class="flex items-baseline justify-between gap-4">
-          <p class="text-4xl sm:text-5xl font-semibold text-highlighted tracking-tight truncate">
+          <p class="font-name font-semibold text-highlighted tracking-tight truncate">
             {{ font.name }}
           </p>
           <p v-if="font.usage" class="text-sm text-muted shrink-0">{{ font.usage }}</p>
         </div>
-        <p class="text-2xl sm:text-3xl text-muted tracking-wide">ABCDEFGHabcdefgh 0123456789</p>
+        <p class="font-sample text-muted tracking-wide">ABCDEFGHabcdefgh 0123456789</p>
         <div class="flex items-center gap-4">
           <span class="text-xs font-mono text-muted uppercase tracking-widest opacity-50">
             Weights
@@ -34,3 +34,13 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+  .font-name {
+    font-size: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+  }
+
+  .font-sample {
+    font-size: clamp(1.5rem, 1.25rem + 1.5vw, 2.5rem);
+  }
+</style>

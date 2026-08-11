@@ -32,6 +32,11 @@ export default defineNuxtPlugin({
           ScrollTrigger.update()
         },
       })
+
+      // ScrollTriggers created before Lenis exists (page:finish can fire first)
+      // refresh against a null instance — remeasure once real layout settles.
+      requestAnimationFrame(() => ScrollTrigger.refresh())
+      document.fonts?.ready?.then(() => ScrollTrigger.refresh())
     }
 
     function destroy() {

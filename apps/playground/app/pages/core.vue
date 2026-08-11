@@ -139,7 +139,6 @@
   <LayoutPage
     title="Core Layer Demo"
     description="Demonstrating the core layer utilities and composables"
-    class="bg-default"
   >
     <div class="bg-default min-h-screen">
       <DemoPageHero

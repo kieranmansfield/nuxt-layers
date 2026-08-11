@@ -17,7 +17,7 @@
 <template>
   <div v-if="colors.length" class="space-y-6">
     <h3 class="text-2xl font-semibold tracking-tight text-highlighted">Palette</h3>
-    <LinksGroup class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+    <LinksGroup class="palette-grid gap-3">
       <div v-for="color in colors" :key="color.value">
         <div
           class="aspect-2/3 flex flex-col justify-between p-4 rounded-lg border border-default/20 shadow-lg cursor-default"
@@ -33,3 +33,10 @@
     </LinksGroup>
   </div>
 </template>
+
+<style scoped>
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  }
+</style>
