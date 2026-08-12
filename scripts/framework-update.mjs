@@ -3,8 +3,16 @@ import { readFileSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
 import { ROOT } from './lib/layers.mjs'
 
+// nuxt is deliberately excluded from automated `--latest` updates: nuxt@4.5.0+ requires
+// vite ^8.2.0, conflicting with this workspace's `overrides: { vite: '^7' }` pin (Vite 8
+// is deliberately blocked — see pnpm-workspace.yaml), and nuxt@4.4.8 pulls in an unhead
+// release whose dist/client.mjs fails to parse under Rollup (unrelated upstream bug),
+// breaking playground/ui builds. Neither a catalog range cap nor a plain `overrides` pin
+// reliably holds nuxt back across this monorepo's 34 workspace packages — `--latest`
+// rewrites manifest fields directly for packages resolved through conflict-catalogs, and
+// @nuxt/vite-builder can still float independently of the top-level `nuxt` pin. Bump nuxt
+// manually and verify `pnpm typecheck && pnpm build` pass before raising this further.
 const FRAMEWORK_PACKAGES = [
-  'nuxt',
   '@nuxt/ui',
   '@nuxt/content',
   '@nuxt/image',
@@ -50,6 +58,7 @@ if (detected.length === 0) {
 
 console.log('Framework packages to update (via pnpm catalog):')
 for (const name of detected) console.log(`  - ${name}`)
+console.log('  - nuxt: SKIPPED (held manually — see comment in scripts/framework-update.mjs)')
 
 run('Update framework catalog entries', 'pnpm', ['update', ...detected, '--latest', '--recursive'])
 run('Install', 'pnpm', ['install'])
