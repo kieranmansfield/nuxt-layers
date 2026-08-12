@@ -23,10 +23,10 @@ const FRAMEWORK_PACKAGES = [
   'pinia',
 ]
 
-function run(label, cmd, args) {
+function run(label, cmd, args, opts = {}) {
   console.log(`\n▶ ${label}`)
   console.log(`  ${cmd} ${args.join(' ')}`)
-  const result = spawnSync(cmd, args, { cwd: ROOT, stdio: 'inherit' })
+  const result = spawnSync(cmd, args, { cwd: ROOT, stdio: 'inherit', ...opts })
   if (result.status !== 0) {
     console.error(`\n✗ ${label} failed. Stopping — project is not left half-updated.`)
     process.exit(result.status ?? 1)
@@ -64,6 +64,15 @@ run('Update framework catalog entries', 'pnpm', ['update', ...detected, '--lates
 run('Install', 'pnpm', ['install'])
 run('Prepare Nuxt apps', 'pnpm', ['--filter', './apps/*', 'exec', 'nuxt', 'prepare'])
 run('Typecheck', 'pnpm', ['run', 'typecheck'])
-run('Build', 'pnpm', ['run', 'build'])
+// Layers have no workspace-level dependency on apps (they're pulled in via `extends` in
+// nuxt.config.ts, not package.json), so an unfiltered `turbo run build` builds all ~26
+// layers standalone as well as the apps — heavy enough to OOM (exit 137) on this repo.
+// Building the apps is the meaningful rebuildability check; each app's build already
+// resolves and bundles its extended layers. Even scoped to apps-only, playground's build
+// (Content + TresJS/shader/WebGPU + many bundled layers) still exceeds Node's default
+// heap standalone, so raise it explicitly rather than relying on the environment's default.
+run('Build (apps)', 'pnpm', ['turbo', 'run', 'build', '--filter', './apps/*', '--concurrency', '1'], {
+  env: { ...process.env, NODE_OPTIONS: '--max-old-space-size=8192' },
+})
 
 console.log('\nFramework update complete. Review the diff before committing.')

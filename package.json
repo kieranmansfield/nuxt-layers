@@ -91,6 +91,7 @@
     "deps:update:latest": "pnpm update --latest",
     "update:nuxt-ui": "pnpm up @nuxt/ui --latest --dedupe",
     "update:nuxt-image": "pnpm up @nuxt/image --latest --dedupe",
+    "nuxtupdate": "pnpm dlx nuxi@latest upgrade --dedupe --force",
     "framework:update": "node scripts/framework-update.mjs",
     "doctor": "node scripts/doctor.mjs",
     "info": "node scripts/info.mjs",
