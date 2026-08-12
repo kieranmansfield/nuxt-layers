@@ -208,10 +208,10 @@ function evaluateFeatureGate(
 
 export function simulateRoutingOutcome(
   config: RoutingLayerConfig,
-  path: string,
-  feature?: string,
-  fromLayer = false
+  options: { path: string; feature?: string; fromLayer?: boolean }
 ): RoutingSimulatorResult {
+  const { path, feature, fromLayer = false } = options
+
   const maintenance = evaluateMaintenance(config, path)
   if (maintenance) return maintenance
 

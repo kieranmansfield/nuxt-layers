@@ -35,9 +35,9 @@ import type { ColorUniform, FloatUniform, TSLNode, Vec3Uniform } from '../shader
 // ============================================
 
 function buildFlowWarpedUV(
-  uvCoord: any,
-  t: any,
-  mouseOffset: any
+  uvCoord: TSLNode,
+  t: TSLNode,
+  mouseOffset: TSLNode
 ): {
   warpedUV: TSLNode
   n1: TSLNode

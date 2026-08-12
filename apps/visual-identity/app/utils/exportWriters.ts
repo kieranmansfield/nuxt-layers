@@ -57,10 +57,9 @@ function resolveThemeColour(
 function pushColourLines(
   lines: string[],
   colours: BrandColour[],
-  contrast: ContrastLevel,
-  format: 'hex' | 'oklch',
-  indent = '  '
+  options: { contrast: ContrastLevel; format: 'hex' | 'oklch'; indent?: string }
 ) {
+  const { contrast, format, indent = '  ' } = options
   for (const colour of colours) {
     const name = colourCssName(colour)
     const scale = contrastScale(generateScale(colour.hex), contrast)
@@ -90,7 +89,7 @@ export function buildCssVariablesExport(state: BrandState): string {
   const lines: string[] = []
 
   lines.push(':root {')
-  pushColourLines(lines, state.colours, 'standard', 'hex')
+  pushColourLines(lines, state.colours, { contrast: 'standard', format: 'hex' })
   lines.push('')
   pushFontLines(lines, state.typography)
   lines.push('}', '')
@@ -106,7 +105,7 @@ export function buildCssVariablesExport(state: BrandState): string {
   for (const contrast of contrastLevels) {
     if (contrast === 'standard') continue
     lines.push(`[data-contrast="${contrast}"] {`)
-    pushColourLines(lines, state.colours, contrast, 'hex')
+    pushColourLines(lines, state.colours, { contrast, format: 'hex' })
     lines.push('}', '')
   }
 
@@ -116,7 +115,7 @@ export function buildCssVariablesExport(state: BrandState): string {
     if (!themeColours.length) continue
 
     lines.push(`[data-theme="${slug}"] {`)
-    pushColourLines(lines, themeColours, 'standard', 'hex')
+    pushColourLines(lines, themeColours, { contrast: 'standard', format: 'hex' })
     lines.push('}', '')
   }
 
@@ -128,7 +127,7 @@ export function buildTailwindV4Export(state: BrandState): string {
   const { contrastLevels } = state.themeMode
   const lines: string[] = ['@import "tailwindcss";', '', '@theme {']
 
-  pushColourLines(lines, state.colours, 'standard', 'oklch')
+  pushColourLines(lines, state.colours, { contrast: 'standard', format: 'oklch' })
   lines.push('')
   pushFontLines(lines, state.typography)
   lines.push('}', '')
@@ -138,7 +137,7 @@ export function buildTailwindV4Export(state: BrandState): string {
     lines.push(`/* ${contrast} contrast */`)
     lines.push('@layer utilities {')
     lines.push(`  [data-contrast="${contrast}"] {`)
-    pushColourLines(lines, state.colours, contrast, 'oklch', '    ')
+    pushColourLines(lines, state.colours, { contrast, format: 'oklch', indent: '    ' })
     // fallow-ignore-next-line code-duplication
     lines.push('  }')
     lines.push('}', '')
@@ -152,7 +151,7 @@ export function buildTailwindV4Export(state: BrandState): string {
     lines.push(`/* theme: ${theme.name} */`)
     lines.push('@layer utilities {')
     lines.push(`  [data-theme="${slug}"] {`)
-    pushColourLines(lines, themeColours, 'standard', 'oklch', '    ')
+    pushColourLines(lines, themeColours, { contrast: 'standard', format: 'oklch', indent: '    ' })
     lines.push('  }')
     lines.push('}', '')
   }

@@ -16,7 +16,15 @@
 
   type ThemeId = 'mesh' | 'wave' | 'lavalamp' | 'bubble' | 'plasma'
 
-  const { themeId, speed, intensity, color1, color2, color3, color4 } = defineProps<{
+  const {
+    themeId,
+    speed = 1,
+    intensity = 1,
+    color1 = '#ffffff',
+    color2 = '#ffffff',
+    color3 = '#ffffff',
+    color4 = '#ffffff',
+  } = defineProps<{
     themeId: ThemeId
     speed?: number
     intensity?: number
