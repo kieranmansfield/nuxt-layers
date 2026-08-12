@@ -61,7 +61,7 @@ if (detected.length === 0) {
 
 console.log('Framework packages to update (via pnpm catalog):')
 for (const name of detected) console.log(`  - ${name}`)
-console.log('  - nuxt: SKIPPED (held manually — see comment in scripts/framework-update.mjs)')
+// console.log('  - nuxt: SKIPPED (held manually — see comment in scripts/framework-update.mjs)')
 
 run('Update framework catalog entries', 'pnpm', ['update', ...detected, '--latest', '--recursive'])
 run('Install', 'pnpm', ['install'])
