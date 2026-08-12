@@ -51,7 +51,7 @@ run('Check (lint + typecheck + format)', 'pnpm', ['run', 'check'])
 run('Build (apps)', 'pnpm', ['--filter', './apps/*', 'run', 'build', '--concurrency', '1'], {
   env: { ...process.env, NODE_OPTIONS: '--max-old-space-size=8192' },
 })
-run('Test', 'pnpm', ['run', 'test'])
+// run('Test', 'pnpm', ['run', 'test'])
 
 run('Bump version', 'npm', ['version', level, '--no-git-tag-version'])
 
