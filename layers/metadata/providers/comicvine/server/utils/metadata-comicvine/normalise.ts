@@ -2,13 +2,23 @@ import type { MetadataCreator, MetadataRecord } from '#layers/metadata/shared/ty
 
 import type { ComicVineIssue, ComicVineVolume } from './types'
 
-// fallow-ignore-next-line complexity
-export function normaliseComicVineIssue(issue: ComicVineIssue): MetadataRecord {
-  const creators: MetadataCreator[] = (issue.person_credits ?? []).map((p) => ({
+function mapComicVineCreators(
+  people: Array<{ id: number; name: string; role: string }> | null,
+): MetadataCreator[] {
+  return (people ?? []).map((p) => ({
     name: p.name,
     role: p.role,
     providerId: String(p.id),
   }))
+}
+
+function buildComicVineIssueTitle(issue: ComicVineIssue): string {
+  if (issue.volume?.name) return `${issue.volume.name} #${issue.issue_number}`
+  return issue.name ?? `Issue #${issue.issue_number}`
+}
+
+export function normaliseComicVineIssue(issue: ComicVineIssue): MetadataRecord {
+  const creators = mapComicVineCreators(issue.person_credits)
 
   const description = issue.deck ?? issue.description
   const publishedAt = issue.cover_date ?? issue.store_date
@@ -19,9 +29,7 @@ export function normaliseComicVineIssue(issue: ComicVineIssue): MetadataRecord {
     provider: 'comicvine',
     providerId: String(issue.id),
     mediaType: 'comic',
-    title: issue.volume?.name
-      ? `${issue.volume.name} #${issue.issue_number}`
-      : (issue.name ?? `Issue #${issue.issue_number}`),
+    title: buildComicVineIssueTitle(issue),
     ...(issue.name && { subtitle: issue.name }),
     ...(description && { description }),
     ...(creators.length && { creators }),
@@ -35,22 +43,17 @@ export function normaliseComicVineIssue(issue: ComicVineIssue): MetadataRecord {
   }
 }
 
-// fallow-ignore-next-line complexity
-export function normaliseComicVineVolume(volume: ComicVineVolume): MetadataRecord {
-  const creators: MetadataCreator[] = (volume.people ?? []).map((p) => ({
-    name: p.name,
-    role: p.role,
-    providerId: String(p.id),
-  }))
+function buildComicVineVolumeSubtitle(volume: ComicVineVolume): string {
+  const issueCount = volume.count_of_issues
+    ? `${volume.count_of_issues} issue${volume.count_of_issues === 1 ? '' : 's'}`
+    : null
+  return [volume.publisher?.name, issueCount].filter(Boolean).join(' · ')
+}
 
-  const subtitle = [
-    volume.publisher?.name,
-    volume.count_of_issues
-      ? `${volume.count_of_issues} issue${volume.count_of_issues === 1 ? '' : 's'}`
-      : null,
-  ]
-    .filter(Boolean)
-    .join(' · ')
+export function normaliseComicVineVolume(volume: ComicVineVolume): MetadataRecord {
+  const creators = mapComicVineCreators(volume.people)
+
+  const subtitle = buildComicVineVolumeSubtitle(volume)
   const description = volume.deck ?? volume.description
   const coverUrl = volume.image?.medium_url ?? volume.image?.original_url
 
