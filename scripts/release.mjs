@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-import { readFileSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
+import { readFileSync } from 'node:fs'
 import { createInterface } from 'node:readline/promises'
+
 import { ROOT } from './lib/layers.mjs'
 
 const level = process.argv[2]
@@ -67,7 +68,7 @@ run('Push', 'git', ['push', 'origin', 'main', '--follow-tags'])
 const gh = sh('which', ['gh'])
 if (gh.status !== 0) {
   console.log(
-    `\nPushed. GitHub CLI ("gh") not found — create the release manually so npm-publish.yml fires:\n  gh release create ${version} --generate-notes`,
+    `\nPushed. GitHub CLI ("gh") not found — create the release manually so npm-publish.yml fires:\n  gh release create ${version} --generate-notes`
   )
   process.exit(0)
 }

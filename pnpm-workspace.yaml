@@ -397,5 +397,7 @@ catalogs:
     '@nuxt/ui': ^4.10.0
   conflicts_conflicts_vue_latest_3_5_41:
     vue: 3.5.41
+  conflicts_conflicts_tailwindcss_4_3_0_h4_3_3:
+    tailwindcss: ^4.3.3
 
 # minimumReleaseAge: 0

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { listLayers, isWellFormedLayer } from './lib/layers.mjs'
+import { isWellFormedLayer, listLayers } from './lib/layers.mjs'
 
 console.log('Available Layers')
 let bad = 0
