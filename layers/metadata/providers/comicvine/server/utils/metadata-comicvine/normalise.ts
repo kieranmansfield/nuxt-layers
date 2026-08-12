@@ -3,7 +3,7 @@ import type { MetadataCreator, MetadataRecord } from '#layers/metadata/shared/ty
 import type { ComicVineIssue, ComicVineVolume } from './types'
 
 function mapComicVineCreators(
-  people: Array<{ id: number; name: string; role: string }> | null,
+  people: Array<{ id: number; name: string; role: string }> | null
 ): MetadataCreator[] {
   return (people ?? []).map((p) => ({
     name: p.name,
