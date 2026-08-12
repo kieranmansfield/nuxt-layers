@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import { spawnSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
-import { createInterface } from 'node:readline/promises'
 
 import { ROOT } from './lib/layers.mjs'
 
@@ -25,13 +24,6 @@ function sh(cmd, args) {
   return spawnSync(cmd, args, { cwd: ROOT, encoding: 'utf8' })
 }
 
-async function confirm(question) {
-  const rl = createInterface({ input: process.stdin, output: process.stdout })
-  const answer = await rl.question(`${question} [y/N] `)
-  rl.close()
-  return answer.trim().toLowerCase() === 'y'
-}
-
 const branch = sh('git', ['branch', '--show-current']).stdout.trim()
 if (branch !== 'main') {
   console.error(`✗ On branch "${branch}", expected "main". Release aborted.`)
@@ -45,13 +37,6 @@ if (status !== '') {
 }
 
 run('Check (lint + typecheck + format)', 'pnpm', ['run', 'check'])
-// Full unfiltered `pnpm run build` builds every layer standalone too (layers only link
-// to apps via nuxt.config.ts `extends`, not package.json deps) — ~30 builds, OOMs at
-// default heap. Scope to apps and raise the heap limit, same fix as framework-update.mjs.
-run('Build (apps)', 'pnpm', ['--filter', './apps/*', 'run', 'build', '--concurrency', '1'], {
-  env: { ...process.env, NODE_OPTIONS: '--max-old-space-size=8192' },
-})
-// run('Test', 'pnpm', ['run', 'test'])
 
 run('Bump version', 'npm', ['version', level, '--no-git-tag-version'])
 
@@ -62,25 +47,15 @@ run('Commit', 'git', ['add', 'package.json'])
 run('Commit', 'git', ['commit', '-m', `chore(release): ${version}`])
 run('Tag', 'git', ['tag', version])
 
-const proceed = await confirm(`\nPush commit and tag ${version} to origin/main?`)
-if (!proceed) {
-  console.log('Stopped before push. Commit and tag are local — push manually when ready.')
-  process.exit(0)
-}
-
-run('Push', 'git', ['push', 'origin', 'main', '--follow-tags'])
+// `--follow-tags` only pushes annotated tags; `git tag <name>` above makes a lightweight
+// one, so push the tag explicitly alongside the branch.
+run('Push', 'git', ['push', 'origin', 'main', version])
 
 const gh = sh('which', ['gh'])
 if (gh.status !== 0) {
   console.log(
     `\nPushed. GitHub CLI ("gh") not found — create the release manually so npm-publish.yml fires:\n  gh release create ${version} --generate-notes`
   )
-  process.exit(0)
-}
-
-const proceedRelease = await confirm(`Create GitHub release ${version} (triggers npm publish)?`)
-if (!proceedRelease) {
-  console.log(`Skipped. Run later: gh release create ${version} --generate-notes`)
   process.exit(0)
 }
 

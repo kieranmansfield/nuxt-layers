@@ -43,8 +43,6 @@ module.exports = {
     '^v-(if|else-if|else|for|show|model|on|bind|slot|html|text|pre|cloak|once)$',
   ],
 
-  ignorePath: '.prettierignore',
-
   overrides: [
     { files: '*.{md,mdx}', options: { proseWrap: 'preserve' } },
     { files: '*.json', options: { printWidth: 200 } },
