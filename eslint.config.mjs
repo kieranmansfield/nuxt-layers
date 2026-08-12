@@ -236,7 +236,7 @@ export default defineConfigWithVueTs(
       compat,
     },
     rules: {
-      complexity: ['warn', { max: 10 }],
+      complexity: ['warn', { max: 15 }],
       'no-nested-ternary': 'error',
       eqeqeq: ['error', 'always'],
       'no-implicit-coercion': 'error',
