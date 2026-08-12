@@ -8,10 +8,9 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint ."
   },
-  "devDependencies": {},
   "dependencies": {
     "nuxt": "catalog:",
-    "vue": "catalog:conflicts_conflicts_vue_latest_h3_5_35",
+    "vue": "3.5.41",
     "vue-router": "catalog:conflicts_conflicts_vue-router_5_1_0_h5_1_0"
   }
 }

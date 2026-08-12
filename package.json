@@ -235,7 +235,7 @@
     "@nuxt/fonts": "catalog:",
     "@nuxt/image": "catalog:",
     "@nuxt/test-utils": "catalog:",
-    "@nuxt/ui": "catalog:",
+    "@nuxt/ui": "^4.10.0",
     "@nuxtjs/device": "catalog:",
     "@oxc-parser/binding-darwin-arm64": "catalog:",
     "@perplex-digital/stylelint-config": "catalog:",
@@ -293,7 +293,7 @@
     "typescript": "catalog:",
     "vite-plugin-checker": "catalog:",
     "vitest": "catalog:",
-    "vue": "catalog:conflicts_conflicts_vue_latest_h3_5_35",
+    "vue": "3.5.41",
     "vue-tsc": "catalog:",
     "zod": "catalog:",
     "zod-to-json-schema": "catalog:"

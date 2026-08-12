@@ -393,5 +393,9 @@ catalogs:
     three: ^0.181.2
   conflicts_conflicts_prettier_3_8_3_h3_7_4:
     prettier: ^3.7.4
+  conflicts_@nuxt/ui_h4_10_0:
+    '@nuxt/ui': ^4.10.0
+  conflicts_conflicts_vue_latest_3_5_41:
+    vue: 3.5.41
 
 # minimumReleaseAge: 0
