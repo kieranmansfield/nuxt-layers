@@ -21,13 +21,13 @@ count.value++
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue'
+  import { ref } from 'vue'
 
-const count = ref(0)
+  const count = ref(0)
 
-function increment() {
-  count.value++
-}
+  function increment() {
+    count.value++
+  }
 </script>
 
 <template>
@@ -38,8 +38,7 @@ function increment() {
 ### Typing refs
 
 ```ts
-import { ref } from 'vue'
-import type { Ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
 // Type inference
 const year = ref(2020) // Ref<number>
@@ -65,7 +64,7 @@ interface State {
 
 const state: State = reactive({
   count: 0,
-  name: 'Vue'
+  name: 'Vue',
 })
 
 state.count++ // reactive
@@ -78,13 +77,14 @@ state.count++ // reactive
 3. **Destructuring loses reactivity** - use `toRefs()` instead
 
 ```ts
+// ✅ Use toRefs
+import { toRefs } from 'vue'
+
 const state = reactive({ count: 0 })
 
 // ❌ Loses reactivity
 let { count } = state
 
-// ✅ Use toRefs
-import { toRefs } from 'vue'
 const { count } = toRefs(state)
 ```
 
@@ -99,7 +99,7 @@ Both `ref()` and `reactive()` are deeply reactive by default:
 ```ts
 const obj = ref({
   nested: { count: 0 },
-  arr: ['foo', 'bar']
+  arr: ['foo', 'bar'],
 })
 
 // These trigger updates
@@ -114,7 +114,7 @@ Use `shallowRef()` or `shallowReactive()` to opt out of deep reactivity for perf
 DOM updates are batched and asynchronous. Use `nextTick()` to wait for updates:
 
 ```ts
-import { ref, nextTick } from 'vue'
+import { nextTick, ref } from 'vue'
 
 const count = ref(0)
 
@@ -146,7 +146,7 @@ console.log(books[0].value) // Need .value
 Derive values from reactive state with automatic caching. Only re-evaluates when dependencies change.
 
 ```ts
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const firstName = ref('John')
 const lastName = ref('Doe')
@@ -160,8 +160,8 @@ const fullNameWritable = computed({
     return `${firstName.value} ${lastName.value}`
   },
   set(newValue: string) {
-    [firstName.value, lastName.value] = newValue.split(' ')
-  }
+    ;[firstName.value, lastName.value] = newValue.split(' ')
+  },
 })
 ```
 
@@ -173,11 +173,11 @@ const fullNameWritable = computed({
 
 ```ts
 // ✅ Cached - only recalculates when items changes
-const activeItems = computed(() => items.value.filter(x => x.active))
+const activeItems = computed(() => items.value.filter((x) => x.active))
 
 // ❌ Not cached - runs on every render
 function getActiveItems() {
-  return items.value.filter(x => x.active)
+  return items.value.filter((x) => x.active)
 }
 ```
 
@@ -206,7 +206,10 @@ const obj = reactive({ count: 0 })
 watch(x, (newX) => console.log(newX))
 
 // Getter function
-watch(() => obj.count, (count) => console.log(count))
+watch(
+  () => obj.count,
+  (count) => console.log(count)
+)
 
 // Multiple sources
 watch([x, () => obj.count], ([newX, newCount]) => {
@@ -218,10 +221,10 @@ watch([x, () => obj.count], ([newX, newCount]) => {
 
 ```ts
 watch(source, callback, {
-  immediate: true,  // Run immediately on creation
-  deep: true,       // Watch nested properties
-  once: true,       // Trigger only once (3.4+)
-  flush: 'post'     // Run after DOM update
+  immediate: true, // Run immediately on creation
+  deep: true, // Watch nested properties
+  once: true, // Trigger only once (3.4+)
+  flush: 'post', // Run after DOM update
 })
 ```
 
@@ -255,7 +258,7 @@ watchEffect(async () => {
 Cancel stale async operations:
 
 ```ts
-import { watch, onWatcherCleanup } from 'vue'
+import { onWatcherCleanup, watch } from 'vue'
 
 watch(id, async (newId) => {
   const controller = new AbortController()
@@ -270,14 +273,18 @@ watch(id, async (newId) => {
 
 ```ts
 const stop = watch(source, callback)
-const stop2 = watchEffect(() => { /* ... */ })
+const stop2 = watchEffect(() => {
+  /* ... */
+})
 
 // Stop manually
 stop()
 stop2()
 
 // Pause/Resume (3.5+)
-const { stop, pause, resume } = watchEffect(() => { /* ... */ })
+const { stop, pause, resume } = watchEffect(() => {
+  /* ... */
+})
 ```
 
 <!--

@@ -9,23 +9,24 @@ nuxt-layers is a 73k-LOC (.ts/.vue) Nuxt 4 monorepo of ~27 composable layers plu
 
 ## System Inventory
 
-| ext | files | LOC |
-|---|---|---|
-| .vue | 363 | 48,448 |
-| .ts | 376 | 24,903 |
-| .md | 24 | 4,280 |
-| .json | 71 | 1,257 |
-| .css | 17 | 1,066 |
+| ext                 | files   | LOC        |
+| ------------------- | ------- | ---------- |
+| .vue                | 363     | 48,448     |
+| .ts                 | 376     | 24,903     |
+| .md                 | 24      | 4,280      |
+| .json               | 71      | 1,257      |
+| .css                | 17      | 1,066      |
 | **code (.ts/.vue)** | **739** | **73,351** |
 
 **Tech fingerprint** (evidence: `pnpm-workspace.yaml` catalog, root `package.json`):
+
 - Nuxt **4.4.7** (pinned, with local patch `patches/@nuxt__vite-builder@4.4.7.patch`), Vue **3.5.35**, TypeScript **^6**, Vite ^7
 - @nuxt/ui (`latest`!), Tailwind CSS 4, @nuxt/content 3.14, @nuxtjs/seo 5, @nuxt/scripts
 - GSAP 3.15 + Locomotive Scroll 5; TresJS 5 / three 0.184 (WebGPU/TSL)
 - Zod 4, Drizzle + @neondatabase/serverless, Resend 4, nuxt-auth-utils, `feed` 5
 - Build: pnpm workspaces (heavy catalog + 17 conflict-catalogs + overrides), Turbo 2.9
 - Tests: Vitest 4 + @nuxt/test-utils + Playwright 1.61 (+ Cypress installed but unused signal)
-- Deploy: Netlify (`@netlify/nuxt`, custom buildhook tarballs from *.netlify.app URLs)
+- Deploy: Netlify (`@netlify/nuxt`, custom buildhook tarballs from \*.netlify.app URLs)
 - Test presence: 45 test files — 33 unit suites added at v2.6.0 + Playwright smoke/E2E; strong on utils/server logic, thin on components/composables
 
 **Top complexity files** (decision-keyword count / LOC): playground shader demo pages dominate (`shader-background.vue` 233/2330, `shader-pipeline-background.vue` 192/1935, `shader-pipeline.vue` 122/2043, `shader.vue` 97/1777, `gsap.vue` 72/2235), then `layers/layout/app/utils/gridPlacementStyle.ts` (64/197).
@@ -34,20 +35,20 @@ nuxt-layers is a 73k-LOC (.ts/.vue) Nuxt 4 monorepo of ~27 composable layers plu
 
 12 domains (diagram: `ARCHITECTURE.mmd`; interactive: `TOPOLOGY.html` — 709 modules, 1,457 edges, 96 entry points):
 
-| Domain | Layers | Depends on |
-|---|---|---|
-| Foundation | core | — |
-| Presentation/UI | typography, navigation, visual, ui (orchestrator) | core; navigation→scroll+layout |
-| Layout | layout | core |
-| Motion | scroll, animations, transitions, page-transitions, motion (orchestrator) | core |
-| 3D/Graphics | canvas, shader | core |
-| SEO & Scripts | seo, scripts | core |
-| Communication | mailer, forms | core |
-| Data & Identity | database, auth | core |
-| Metadata | metadata + 4 provider sub-layers | core |
-| Content & Feeds | content, feeds | core; feeds→content (conditional!) |
-| Theme & Routing | theme, routing | core |
-| Scaffold | starter, baseline | ui, layout, motion, core |
+| Domain          | Layers                                                                   | Depends on                         |
+| --------------- | ------------------------------------------------------------------------ | ---------------------------------- |
+| Foundation      | core                                                                     | —                                  |
+| Presentation/UI | typography, navigation, visual, ui (orchestrator)                        | core; navigation→scroll+layout     |
+| Layout          | layout                                                                   | core                               |
+| Motion          | scroll, animations, transitions, page-transitions, motion (orchestrator) | core                               |
+| 3D/Graphics     | canvas, shader                                                           | core                               |
+| SEO & Scripts   | seo, scripts                                                             | core                               |
+| Communication   | mailer, forms                                                            | core                               |
+| Data & Identity | database, auth                                                           | core                               |
+| Metadata        | metadata + 4 provider sub-layers                                         | core                               |
+| Content & Feeds | content, feeds                                                           | core; feeds→content (conditional!) |
+| Theme & Routing | theme, routing                                                           | core                               |
+| Scaffold        | starter, baseline                                                        | ui, layout, motion, core           |
 
 Key structural fact: **69% of edges are implicit** (Nuxt auto-import dispatch), so renames are cross-layer breaking changes with no compiler-visible edge. 3 auto-import symbol name collisions exist today.
 
@@ -65,7 +66,7 @@ No telemetry available (Netlify hosting; no APM wired). Gap noted — Netlify an
 6. **Provider clients swallow errors** — openlibrary `lookupByIsbn` catches everything → `null` (= "not found"); search failures only `console.error`, callers can't see partial results. Fix: catch 404 only; return `{ results, failedProviders }`.
 7. **Dead artifacts tracked** — `layers/content/_jiti_test.ts`; commented-out config blocks in playground.
 8. **Duplicated Vite `optimizeDeps` blocks** — identical 6-entry list twice in playground config.
-9. **Unconditional debug logging in core** — `layers/core/app/plugins/init.ts:16-72`, six console.log blocks on every consumer's boot; 52 raw console.* across layers. Fix: gate behind `import.meta.dev`/scoped logger.
+9. **Unconditional debug logging in core** — `layers/core/app/plugins/init.ts:16-72`, six console.log blocks on every consumer's boot; 52 raw console.\* across layers. Fix: gate behind `import.meta.dev`/scoped logger.
 10. **Deprecated APIs without sunset + muted complexity linter** — deprecated layout mode + `useThemePreferences`; ~30 `fallow-ignore-next-line complexity` suppressions (5 in `gridPlacementStyle.ts` alone). Fix: remove deprecated paths pre-1.0; treat suppression clusters as refactor queue.
 
 Also: `@nuxt/ui: latest` in the catalog is a reproducibility hazard (any publish changes the build).
@@ -74,15 +75,15 @@ Also: `@nuxt/ui: latest` in the catalog is a reproducibility hazard (any publish
 
 `pnpm audit`: **2 vulnerabilities (1 high, 1 low)** — matches Dependabot. No hardcoded secrets in tracked source; `.env` files gitignored (verified). Credential inventory in SECRETS.local.md (gitignored; not for sharing).
 
-| CWE | Sev | Location | Finding | Fix |
-|---|---|---|---|---|
+| CWE         | Sev      | Location                                                                          | Finding                                                                                                                                                                                       | Fix                                                                               |
+| ----------- | -------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | CWE-209/200 | **High** | `layers/metadata/server/api/metadata/status.get.ts:21` + comicvine `client.ts:24` | Unauthed `/api/metadata/status` returns raw `err.message`; FetchError messages embed full upstream URL incl. `?api_key=…` → live ComicVine key disclosable by one GET during upstream 401/429 | Sanitize provider errors (strip URL/query); return generic "provider unavailable" |
-| CWE-1395 | **High** | `pnpm-lock.yaml` (`@nuxt/content>db0>drizzle-orm`) | drizzle-orm GHSA-gpj5-g38j-94v9 | pnpm override to patched version |
-| CWE-306/400 | Med | `metadata/sync.post.ts`, `lookup.get.ts`, `search.get.ts` | Unauthed endpoints; `sync force:true` bypasses cache → billable upstream calls; cache writes have no TTL → unbounded growth | Session/token gate; TTL on `setCacheRecord`; rate clamp |
-| CWE-20/74 | Med | all 4 provider `client.ts` lookup paths | Raw `providerId` interpolated into upstream URL paths (`/movie/${id}`) → arbitrary endpoint access with your key + cache poisoning | Per-provider id regex validation or `encodeURIComponent` |
-| CWE-20 | Med | `search.get.ts:14` | `limit` unclamped (`NaN`/`-1`/`99999` forwarded upstream) | Clamp 1–50 |
-| CWE-770 | Low | `forms/server/api/contact.post.ts:24` | Rate limit keys on client-supplied XFF (bypassable) and per-instance Map (useless on serverless) | Netlify `x-nf-client-connection-ip`; shared storage counter |
-| CWE-1395 | Low | `pnpm-lock.yaml` (`vite>esbuild`) | esbuild GHSA-g7r4-m6w7-qqqr (dev-only, Windows) | Override ≥0.28.1 when convenient |
+| CWE-1395    | **High** | `pnpm-lock.yaml` (`@nuxt/content>db0>drizzle-orm`)                                | drizzle-orm GHSA-gpj5-g38j-94v9                                                                                                                                                               | pnpm override to patched version                                                  |
+| CWE-306/400 | Med      | `metadata/sync.post.ts`, `lookup.get.ts`, `search.get.ts`                         | Unauthed endpoints; `sync force:true` bypasses cache → billable upstream calls; cache writes have no TTL → unbounded growth                                                                   | Session/token gate; TTL on `setCacheRecord`; rate clamp                           |
+| CWE-20/74   | Med      | all 4 provider `client.ts` lookup paths                                           | Raw `providerId` interpolated into upstream URL paths (`/movie/${id}`) → arbitrary endpoint access with your key + cache poisoning                                                            | Per-provider id regex validation or `encodeURIComponent`                          |
+| CWE-20      | Med      | `search.get.ts:14`                                                                | `limit` unclamped (`NaN`/`-1`/`99999` forwarded upstream)                                                                                                                                     | Clamp 1–50                                                                        |
+| CWE-770     | Low      | `forms/server/api/contact.post.ts:24`                                             | Rate limit keys on client-supplied XFF (bypassable) and per-instance Map (useless on serverless)                                                                                              | Netlify `x-nf-client-connection-ip`; shared storage counter                       |
+| CWE-1395    | Low      | `pnpm-lock.yaml` (`vite>esbuild`)                                                 | esbuild GHSA-g7r4-m6w7-qqqr (dev-only, Windows)                                                                                                                                               | Override ≥0.28.1 when convenient                                                  |
 
 ## Documentation Gaps (top 5)
 
@@ -98,4 +99,4 @@ COCOMO-II basic index: `2.94 × 73.4^1.10 ≈ 331` (KSLOC = 73.351, nominal scal
 
 ## Recommended Modernization Pattern
 
-**Rebuild → `/modernize-reimagine`** (user-directed: "old version is the spec"). Honest caveat: on pure findings this system would grade as *Refactor* — the architecture is good and tests are green; the debt is localized (providers, shader, feeds, config duplication). The rebuild directive is best served by treating it as a **module-by-module reimagine on the same stack**, ordered leaf-first along the layer graph, where each layer is rebuilt to a tightened spec (debt items 1–10 and all security findings designed out) and must pass the existing + expanded characterization suite before the next layer starts. That converges to the 10x version without a big-bang integration risk.
+**Rebuild → `/modernize-reimagine`** (user-directed: "old version is the spec"). Honest caveat: on pure findings this system would grade as _Refactor_ — the architecture is good and tests are green; the debt is localized (providers, shader, feeds, config duplication). The rebuild directive is best served by treating it as a **module-by-module reimagine on the same stack**, ordered leaf-first along the layer graph, where each layer is rebuilt to a tightened spec (debt items 1–10 and all security findings designed out) and must pass the existing + expanded characterization suite before the next layer starts. That converges to the 10x version without a big-bang integration risk.

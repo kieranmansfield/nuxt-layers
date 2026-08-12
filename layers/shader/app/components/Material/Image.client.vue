@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
   import { DoubleSide, type Texture } from 'three'
   import {
     float,
@@ -17,7 +18,6 @@
 
   import type { TSLNode } from '../../types'
   import { simplexNoise2D } from '../../utils/tsl/noise'
-  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
 
   const {
     src,

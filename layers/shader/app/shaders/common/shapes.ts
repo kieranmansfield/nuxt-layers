@@ -338,7 +338,11 @@ export function radialLines(
  */
 export function concentricCircles(
   uv: TSLNode,
-  ...args: [center?: TSLNode | [number, number], frequency?: TSLNode | number, thickness?: TSLNode | number]
+  ...args: [
+    center?: TSLNode | [number, number],
+    frequency?: TSLNode | number,
+    thickness?: TSLNode | number,
+  ]
 ): TSLNode {
   const [center = [0.5, 0.5], frequency = 10, thickness = 0.5] = args
   const c = toVec2Node(center)

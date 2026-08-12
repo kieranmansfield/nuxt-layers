@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { computed } from 'vue'
-
   import { type FeedRoute } from '../../utils/feed-catalog'
 
   const { route, compact = false } = defineProps<{

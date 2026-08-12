@@ -54,10 +54,7 @@ export function resolveFeedSiteConfig(appConfig: AppFeedConfig, requestUrl: URL)
   }
 }
 
-export function resolveFeedCollection(
-  feedConfig: FeedLayerConfig,
-  collection?: string
-) {
+export function resolveFeedCollection(feedConfig: FeedLayerConfig, collection?: string) {
   return collection ?? feedConfig?.defaultCollection ?? 'blog'
 }
 

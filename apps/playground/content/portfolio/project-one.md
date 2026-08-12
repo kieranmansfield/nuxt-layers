@@ -12,19 +12,19 @@ url: https://example.com
 featured: true
 colors:
   - name: Deep Night
-    value: "#0F0E17"
+    value: '#0F0E17'
     usage: Primary
   - name: Warm Blush
-    value: "#E8836B"
+    value: '#E8836B'
     usage: Accent
   - name: Cream
-    value: "#FFFBF0"
+    value: '#FFFBF0'
     usage: Background
   - name: Soft Slate
-    value: "#6B7280"
+    value: '#6B7280'
     usage: Body text
   - name: Dusk Violet
-    value: "#7C5DBA"
+    value: '#7C5DBA'
     usage: Secondary accent
 typography:
   - name: Fraunces
@@ -42,7 +42,7 @@ typography:
 
 Sleep brands tend to fall into two camps: either hyper-clinical (white coats, graphs, blue light filters) or aggressively cozy (clouds, sheep, pastel everything). Nocturn wanted to be neither. They make evidence-backed sleep products, but they also understand that bedtime is intimate, personal, and a little bit ritualistic.
 
-The brief was simple: *make sleep feel like something you look forward to, not something you optimise.*
+The brief was simple: _make sleep feel like something you look forward to, not something you optimise._
 
 ::figure{src="https://picsum.photos/seed/brand-hero/1200/600" alt="Nocturn brand identity spread showing logo, packaging, and editorial layout" caption="The final identity system — warm enough to feel human, structured enough to feel credible"}
 ::

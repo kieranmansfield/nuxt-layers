@@ -1,10 +1,10 @@
 <script setup lang="ts">
+  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
   import { Color, DoubleSide } from 'three'
   import { mix, sin, time as tslTime, uniform, uv, vec3 } from 'three/tsl'
   import { MeshBasicNodeMaterial } from 'three/webgpu'
 
   import type { TSLNode } from '../../types'
-  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
 
   const {
     colors = ['#4f46e5', '#7c3aed', '#ec4899'],

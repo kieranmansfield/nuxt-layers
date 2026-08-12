@@ -12,10 +12,7 @@ export function resolvePointerSpring(
   return next * (1 - damping)
 }
 
-export function usePointerMotionFrame(
-  update: () => void,
-  cleanup?: () => void
-) {
+export function usePointerMotionFrame(update: () => void, cleanup?: () => void) {
   const { gsap } = useGsap()
 
   onMounted(() => {

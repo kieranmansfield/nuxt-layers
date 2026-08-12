@@ -20,7 +20,9 @@ function dedupeColours(colours: BrandColour[]) {
 }
 
 // fallow-ignore-next-line complexity
-function migrateThemeMode(state: Record<string, unknown> & { themeMode?: Record<string, unknown> }) {
+function migrateThemeMode(
+  state: Record<string, unknown> & { themeMode?: Record<string, unknown> }
+) {
   if (!state.themeMode || !('mode' in state.themeMode) || 'schemes' in state.themeMode) return
 
   const oldMode = String(state.themeMode.mode ?? '')

@@ -11,7 +11,7 @@ Step-by-step guide to implementing the Swiss Grid system in a new or existing Nu
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  extends: ['../layers/layout'],  // or npm package path
+  extends: ['../layers/layout'], // or npm package path
 })
 ```
 
@@ -22,6 +22,7 @@ The layer auto-imports its CSS, components, and composables. No additional setup
 ## 2. Structure every page with `<LayoutPage>`
 
 `LayoutPage` is a **fragment component** (no wrapper element) that sits inside the default layout's `MastMain`. It handles:
+
 - SEO (`useHead`) with title + OG tags
 - Provides the page title to children via `provide`
 - Optional visible page header block
@@ -56,6 +57,7 @@ Each `LayoutSection` spans the full 18 columns and 12 rows (one viewport height)
 ```
 
 **Props:**
+
 - `full-height` — forces `min-height: 100svh` (useful for short content sections)
 - `full-width` — breaks out of the grid gutters for edge-to-edge content
 
@@ -78,17 +80,17 @@ Inside a `LayoutSection`, use `LayoutGridItem` to place content on specific colu
 
 **Available presets:**
 
-| Preset | Mobile | Tablet | Desktop | Use for |
-|---|---|---|---|---|
-| `hero` | cols 1–6 | cols 2–11 | cols 4–15 | Hero headlines |
-| `centered` | cols 1–6 | cols 2–11 | cols 5–14 | Article content |
-| `fullWidth` | cols 1–6 | cols 1–12 | cols 1–18 | Full-bleed elements |
-| `sidebar` | cols 1–6 | cols 1–4 | cols 1–4 | Navigation sidebars |
-| `content` | cols 1–6 | cols 5–12 | cols 5–18 | Main content next to sidebar |
-| `splitLeft` | cols 1–6 | cols 1–6 | cols 1–9 | Left of 50/50 split |
-| `splitRight` | cols 1–6 | cols 7–12 | cols 10–18 | Right of 50/50 split |
-| `quarterLeft` | cols 1–6 | cols 1–3 | cols 1–5 | 25% left panel |
-| `threeQuarterRight` | cols 1–6 | cols 4–12 | cols 6–18 | 75% right content |
+| Preset              | Mobile   | Tablet    | Desktop    | Use for                      |
+| ------------------- | -------- | --------- | ---------- | ---------------------------- |
+| `hero`              | cols 1–6 | cols 2–11 | cols 4–15  | Hero headlines               |
+| `centered`          | cols 1–6 | cols 2–11 | cols 5–14  | Article content              |
+| `fullWidth`         | cols 1–6 | cols 1–12 | cols 1–18  | Full-bleed elements          |
+| `sidebar`           | cols 1–6 | cols 1–4  | cols 1–4   | Navigation sidebars          |
+| `content`           | cols 1–6 | cols 5–12 | cols 5–18  | Main content next to sidebar |
+| `splitLeft`         | cols 1–6 | cols 1–6  | cols 1–9   | Left of 50/50 split          |
+| `splitRight`        | cols 1–6 | cols 7–12 | cols 10–18 | Right of 50/50 split         |
+| `quarterLeft`       | cols 1–6 | cols 1–3  | cols 1–5   | 25% left panel               |
+| `threeQuarterRight` | cols 1–6 | cols 4–12 | cols 6–18  | 75% right content            |
 
 ### Custom responsive positioning
 
@@ -139,12 +141,12 @@ Use the `layer` prop instead of raw z-index numbers:
 </LayoutSection>
 ```
 
-| Layer | z-index | Use for |
-|---|---|---|
-| `back` | 0 | Background images, decorative shapes |
-| `mid` | 10 | Default text and content (default) |
-| `front` | 20 | Overlapping cards, callouts |
-| `top` | 30 | Tooltips, dropdowns, notifications |
+| Layer   | z-index | Use for                              |
+| ------- | ------- | ------------------------------------ |
+| `back`  | 0       | Background images, decorative shapes |
+| `mid`   | 10      | Default text and content (default)   |
+| `front` | 20      | Overlapping cards, callouts          |
+| `top`   | 30      | Tooltips, dropdowns, notifications   |
 
 ---
 
@@ -305,11 +307,7 @@ The layout layer configures Nuxt UI's `UPage` to participate as a subgrid member
 Pass `:show-header="true"` to `LayoutPage` to render an automatic title + description block using the `centered` preset:
 
 ```vue
-<LayoutPage
-  title="About Us"
-  description="Learn about our team and mission"
-  :show-header="true"
->
+<LayoutPage title="About Us" description="Learn about our team and mission" :show-header="true">
   <LayoutSection>
     <LayoutGridItem preset="centered">
       <p>Content below the auto-generated header</p>
@@ -352,7 +350,7 @@ export default defineAppConfig({
   layoutLayer: {
     ui: {
       grid: {
-        columns: { default: 4, md: 8, lg: 12 },  // 12-column instead of 18
+        columns: { default: 4, md: 8, lg: 12 }, // 12-column instead of 18
       },
     },
   },
@@ -408,10 +406,7 @@ if (isEnabled.value) {
 To use it standalone (outside of `LayoutPage`):
 
 ```vue
-<LayoutGridDebug
-  color="rgba(0, 100, 255, 0.1)"
-  gap="clamp(0.75rem, 1.5vw, 1.5rem)"
-/>
+<LayoutGridDebug color="rgba(0, 100, 255, 0.1)" gap="clamp(0.75rem, 1.5vw, 1.5rem)" />
 ```
 
 ---

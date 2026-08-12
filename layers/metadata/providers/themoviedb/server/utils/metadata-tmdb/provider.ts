@@ -32,6 +32,8 @@ export const tmdbProvider: MetadataProvider = {
   },
 
   async sync(input) {
-    return (await tmdbProvider.lookup!(input))!
+    const record = await tmdbProvider.lookup(input)
+    if (!record) throw new MetadataProviderError('tmdb', `No record found for ${input.providerId}`)
+    return record
   },
 }

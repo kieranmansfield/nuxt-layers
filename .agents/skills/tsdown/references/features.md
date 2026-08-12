@@ -6,8 +6,8 @@ Enabled by default - removes unused code.
 
 ```ts
 defineConfig({
-  treeshake: true,   // Default
-  treeshake: false,  // Disable
+  treeshake: true, // Default
+  treeshake: false, // Disable
 })
 ```
 
@@ -39,7 +39,7 @@ Auto-enabled if `declarationMap: true` in tsconfig.json.
 
 ```ts
 defineConfig({
-  shims: true,  // Provides __dirname, __filename
+  shims: true, // Provides __dirname, __filename
 })
 ```
 
@@ -141,9 +141,9 @@ Control Node.js built-in imports:
 
 ```ts
 defineConfig({
-  nodeProtocol: true,     // fs → node:fs
-  nodeProtocol: 'strip',  // node:fs → fs
-  nodeProtocol: false,    // Keep as-is (default)
+  nodeProtocol: true, // fs → node:fs
+  nodeProtocol: 'strip', // node:fs → fs
+  nodeProtocol: false, // Keep as-is (default)
 })
 ```
 
@@ -152,7 +152,7 @@ defineConfig({
 ```ts
 defineConfig({
   css: {
-    splitting: false,      // Single CSS file
+    splitting: false, // Single CSS file
     fileName: 'styles.css',
   },
 })
@@ -172,7 +172,7 @@ Built-in support via Rolldown:
 defineConfig({
   inputOptions: {
     transform: {
-      jsx: 'react',  // Classic transform
+      jsx: 'react', // Classic transform
     },
   },
 })
@@ -242,14 +242,14 @@ pnpm add -D rolldown-plugin-wasm
 ```
 
 ```ts
-import { defineConfig } from 'tsdown'
 import wasm from 'rolldown-plugin-wasm'
+import { defineConfig } from 'tsdown'
 
 export default defineConfig({
   plugins: [
     wasm({
-      maxFileSize: 14000,  // Inline if < 14KB
-      targetEnv: 'auto',   // 'auto' | 'node' | 'browser'
+      maxFileSize: 14000, // Inline if < 14KB
+      targetEnv: 'auto', // 'auto' | 'node' | 'browser'
     }),
   ],
 })
@@ -258,8 +258,8 @@ export default defineConfig({
 Import methods:
 
 ```ts
-import { add } from './add.wasm'              // Direct
-import init from './module.wasm?init'         // Async
+import { add } from './add.wasm' // Direct
+import init from './module.wasm?init' // Async
 import initSync from './module.wasm?init&sync' // Sync
 ```
 

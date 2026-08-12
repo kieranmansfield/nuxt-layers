@@ -126,12 +126,7 @@ export type LightingOptions = {
  */
 export function phongLighting(
   viewDir: TSLNode,
-  ...args: [
-    normal: TSLNode,
-    lightDir: TSLNode,
-    lightColor: TSLNode,
-    options?: LightingOptions,
-  ]
+  ...args: [normal: TSLNode, lightDir: TSLNode, lightColor: TSLNode, options?: LightingOptions]
 ): TSLNode {
   const [normal, lightDir, lightColor, options = {}] = args
   const { ambient = 0.1, diffuseStrength = 1.0, specularStrength = 0.5, shininess = 32 } = options

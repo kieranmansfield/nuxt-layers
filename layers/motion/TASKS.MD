@@ -8,9 +8,6 @@ const { x, y } = useMouse({ touch: false })
 
 ```vue
 <template>
-  <UseMouse v-slot="{ x, y }">
-    x: {{ x }}
-    y: {{ y }}
-  </UseMouse>
+  <UseMouse v-slot="{ x, y }"> x: {{ x }} y: {{ y }} </UseMouse>
 </template>
 ```

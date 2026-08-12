@@ -400,14 +400,18 @@ export default defineConfigWithVueTs(
   // Layer server/ files are Nitro code outside tsconfig.typecheck.json's project,
   // so type-aware rules can't run on them either.
   {
-    files: ['layers/*/server/**/*.ts', 'layers/*/shared/**/*.ts'],
+    files: [
+      'layers/*/server/**/*.ts',
+      'layers/*/shared/**/*.ts',
+      'layers/*/providers/*/server/**/*.ts',
+    ],
     ...typescript.configs['flat/disable-type-checked'],
   },
 
   // Demo/showcase pages legitimately nest deep and run long — the structural
   // budgets are meant for the reusable layer components, not kitchen-sink demos.
   {
-    files: ['apps/*/app/**/*.vue'],
+    files: ['apps/*/app/**/*.vue', 'layers/starter/app/**/*.vue'],
     rules: {
       'vue/max-template-depth': 'off',
       'vue/max-lines-per-block': 'off',
@@ -417,7 +421,10 @@ export default defineConfigWithVueTs(
   // Render-function component — needs real `cloneVNode`/`Fragment` imports,
   // which Nuxt does not auto-import.
   {
-    files: ['layers/navigation/app/components/Links/Group.vue'],
+    files: [
+      'layers/navigation/app/components/Links/Group.vue',
+      'layers/baseline/app/components/BaselineStatus.vue',
+    ],
     rules: {
       '@typescript-eslint/no-restricted-imports': 'off',
     },
@@ -428,7 +435,13 @@ export default defineConfigWithVueTs(
   // Nuxt Content collection typing. Keep `interface` allowed in the files that
   // augment external modules.
   {
-    files: ['**/*.d.ts', '**/app.config.ts', '**/types/runtime-config.ts'],
+    files: [
+      '**/*.d.ts',
+      '**/app.config.ts',
+      '**/types/runtime-config.ts',
+      'layers/database/nuxt.config.ts',
+      'layers/theme/nuxt.config.ts',
+    ],
     rules: {
       '@typescript-eslint/consistent-type-definitions': 'off',
     },

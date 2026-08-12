@@ -95,6 +95,7 @@ pnpm dev
 ```
 
 Then visit:
+
 - `/feed/rss` — styled RSS XML, blog items present
 - `/feed/blog/json` — JSON Feed 1.1 with items
 - `/feed` — index listing the blog collection

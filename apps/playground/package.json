@@ -20,7 +20,7 @@
     "better-sqlite3": "catalog:",
     "nuxt": "catalog:",
     "three": "catalog:",
-    "vue": "3.5.41",
+    "vue": "catalog:",
     "vue-router": "catalog:conflicts_conflicts_vue-router_5_1_0_h5_1_0",
     "zod": "catalog:conflicts_conflicts_zod_h4_3_6_h4_4_3",
     "zod-to-json-schema": "catalog:conflicts_conflicts_zod-to-json-schema_h3_25_1_h3_25_2"

@@ -1,6 +1,6 @@
+import type { SiteConfig } from '#layers/core/app/types/site'
 import { describe, expect, it } from 'vitest'
 
-import type { SiteConfig } from '#layers/core/app/types/site'
 import { resolveSeoConfig } from './seoConfig'
 
 const site: SiteConfig = { title: 'Nuxt Layers', description: 'A composable layer system' }

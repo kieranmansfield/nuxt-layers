@@ -92,9 +92,7 @@ describe('resolveBleedStyles', () => {
   })
 
   it('handles "left" bleed direction with a numeric colSpan', () => {
-    expect(
-      resolveBleedStyles({ bleed: 'left', colSpan: 4, rowStart: 2, rowSpan: 1 })
-    ).toEqual({
+    expect(resolveBleedStyles({ bleed: 'left', colSpan: 4, rowStart: 2, rowSpan: 1 })).toEqual({
       gridColumn: '1 / span 4',
       marginInlineStart: 'calc(-1 * var(--grid-padding))',
       gridRow: '2 / span 1',
@@ -102,9 +100,7 @@ describe('resolveBleedStyles', () => {
   })
 
   it('handles "left" bleed direction without a numeric colSpan', () => {
-    expect(
-      resolveBleedStyles({ bleed: 'left', colSpan: 'full', rowSpan: 1 })
-    ).toEqual({
+    expect(resolveBleedStyles({ bleed: 'left', colSpan: 'full', rowSpan: 1 })).toEqual({
       gridColumn: '1 / -1',
       marginInlineStart: 'calc(-1 * var(--grid-padding))',
       gridRow: 'auto / span 1',
@@ -112,9 +108,7 @@ describe('resolveBleedStyles', () => {
   })
 
   it('handles "right" bleed direction', () => {
-    expect(
-      resolveBleedStyles({ bleed: 'right', colStart: 3, rowSpan: 2 })
-    ).toEqual({
+    expect(resolveBleedStyles({ bleed: 'right', colStart: 3, rowSpan: 2 })).toEqual({
       gridColumn: '3 / -1',
       marginInlineEnd: 'calc(-1 * var(--grid-padding))',
       gridRow: 'auto / span 2',

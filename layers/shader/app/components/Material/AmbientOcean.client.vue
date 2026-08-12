@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
   import { Color, DoubleSide } from 'three'
   import {
     add,
@@ -20,7 +21,6 @@
 
   import { simplexNoise2D } from '../../shaders/common/noise'
   import type { TSLNode } from '../../shaders/types'
-  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
 
   const {
     speed = 1.0,
@@ -59,9 +59,21 @@
   watchUniformProp(() => mouseX, mouseXUniform)
   watchUniformProp(() => mouseY, mouseYUniform)
   watchUniformProp(() => mouseStrength, mouseStrengthUniform)
-  watchUniformProp(() => color1, color1Uniform, (val) => new Color(val))
-  watchUniformProp(() => color2, color2Uniform, (val) => new Color(val))
-  watchUniformProp(() => color3, color3Uniform, (val) => new Color(val))
+  watchUniformProp(
+    () => color1,
+    color1Uniform,
+    (val) => new Color(val)
+  )
+  watchUniformProp(
+    () => color2,
+    color2Uniform,
+    (val) => new Color(val)
+  )
+  watchUniformProp(
+    () => color3,
+    color3Uniform,
+    (val) => new Color(val)
+  )
 
   const material = computed(() => {
     const mat = new MeshBasicNodeMaterial()

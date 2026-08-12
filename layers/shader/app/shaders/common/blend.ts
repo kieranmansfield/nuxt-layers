@@ -169,7 +169,11 @@ export function blendPinLight(base: TSLNode, blend: TSLNode): TSLNode {
  */
 export function blendWithOpacity(
   base: TSLNode,
-  ...args: [blend: TSLNode, blendFn: (a: TSLNode, b: TSLNode) => TSLNode, opacity?: TSLNode | number]
+  ...args: [
+    blend: TSLNode,
+    blendFn: (a: TSLNode, b: TSLNode) => TSLNode,
+    opacity?: TSLNode | number,
+  ]
 ): TSLNode {
   const [blend, blendFn, opacity = 1] = args
   const op = toScalarNode(opacity)

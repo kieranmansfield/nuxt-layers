@@ -1,17 +1,17 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-
-import { hashQuery, makeCacheKey } from './cache'
 import type {
   MetadataProvider,
   MetadataSearchInput,
   MetadataSearchResult,
 } from '#layers/metadata/shared/types'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
+import { hashQuery, makeCacheKey } from './cache'
 
 // search.ts calls getProviders()/makeCacheKey()/hashQuery()/getSearchCache()/setSearchCache()
 // as Nitro auto-imports (sibling server/utils files). Stub the pure cache helpers with their
 // real implementations, and control provider/cache lookups directly via mocks.
-let mockProviders: MetadataProvider[] = []
-const getProvidersMock = vi.fn(() => mockProviders)
+const providerState: { mockProviders: MetadataProvider[] } = { mockProviders: [] }
+const getProvidersMock = vi.fn(() => providerState.mockProviders)
 const getSearchCacheMock = vi.fn(async () => null as MetadataSearchResult[] | null)
 const setSearchCacheMock = vi.fn(async () => undefined)
 
@@ -46,7 +46,7 @@ function makeProvider(overrides: Partial<MetadataProvider> = {}): MetadataProvid
 }
 
 beforeEach(() => {
-  mockProviders = []
+  providerState.mockProviders = []
   getProvidersMock.mockClear()
   getSearchCacheMock.mockClear()
   getSearchCacheMock.mockResolvedValue(null)
@@ -61,7 +61,7 @@ describe('searchMetadata', () => {
   it('targets only providers named in input.providers', async () => {
     const a = vi.fn(async () => [makeResult({ id: 'a-1' })])
     const b = vi.fn(async () => [makeResult({ id: 'b-1' })])
-    mockProviders = [
+    providerState.mockProviders = [
       makeProvider({ id: 'comicvine', search: a }),
       makeProvider({ id: 'openlibrary', mediaTypes: ['book'], search: b }),
     ]
@@ -75,7 +75,7 @@ describe('searchMetadata', () => {
   it('targets providers by mediaType when providers[] is not given', async () => {
     const comic = vi.fn(async () => [makeResult()])
     const book = vi.fn(async () => [makeResult({ mediaType: 'book' })])
-    mockProviders = [
+    providerState.mockProviders = [
       makeProvider({ id: 'comicvine', mediaTypes: ['comic'], search: comic }),
       makeProvider({ id: 'openlibrary', mediaTypes: ['book'], search: book }),
     ]
@@ -89,7 +89,7 @@ describe('searchMetadata', () => {
   it('targets all providers when neither providers[] nor mediaType is given', async () => {
     const comic = vi.fn(async () => [makeResult()])
     const book = vi.fn(async () => [makeResult({ mediaType: 'book' })])
-    mockProviders = [
+    providerState.mockProviders = [
       makeProvider({ id: 'comicvine', mediaTypes: ['comic'], search: comic }),
       makeProvider({ id: 'openlibrary', mediaTypes: ['book'], search: book }),
     ]
@@ -101,7 +101,7 @@ describe('searchMetadata', () => {
   })
 
   it('returns [] when no providers match the given targets', async () => {
-    mockProviders = [makeProvider({ id: 'comicvine', mediaTypes: ['comic'] })]
+    providerState.mockProviders = [makeProvider({ id: 'comicvine', mediaTypes: ['comic'] })]
 
     const result = await searchMetadata(baseInput({ mediaType: 'movie' }))
 
@@ -110,7 +110,7 @@ describe('searchMetadata', () => {
   })
 
   it('returns [] when providers[] names an id with no registered provider', async () => {
-    mockProviders = [makeProvider({ id: 'comicvine' })]
+    providerState.mockProviders = [makeProvider({ id: 'comicvine' })]
 
     const result = await searchMetadata(baseInput({ providers: ['tmdb'] }))
 
@@ -122,7 +122,7 @@ describe('searchMetadata', () => {
     const failing = vi.fn(async () => {
       throw new Error('boom')
     })
-    mockProviders = [
+    providerState.mockProviders = [
       makeProvider({ id: 'comicvine', search: ok }),
       makeProvider({ id: 'openlibrary', mediaTypes: ['book'], search: failing }),
     ]
@@ -132,7 +132,7 @@ describe('searchMetadata', () => {
     const result = await searchMetadata(baseInput())
 
     expect(result).toHaveLength(1)
-    expect(result[0]!.id).toBe('ok-1')
+    expect(result.at(0)?.id).toBe('ok-1')
     expect(consoleErrorSpy).toHaveBeenCalled()
 
     consoleErrorSpy.mockRestore()
@@ -145,7 +145,7 @@ describe('searchMetadata', () => {
     const b = vi.fn(async () => [
       makeResult({ id: 'b-1', title: 'WATCHMEN', mediaType: 'comic', publishedAt: '1986-12-25' }),
     ])
-    mockProviders = [
+    providerState.mockProviders = [
       makeProvider({ id: 'comicvine', search: a }),
       makeProvider({ id: 'openlibrary', mediaTypes: ['comic'], search: b }),
     ]
@@ -153,7 +153,7 @@ describe('searchMetadata', () => {
     const result = await searchMetadata(baseInput())
 
     expect(result).toHaveLength(1)
-    expect(result[0]!.id).toBe('a-1')
+    expect(result.at(0)?.id).toBe('a-1')
   })
 
   it('does not dedupe results with different years', async () => {
@@ -163,7 +163,7 @@ describe('searchMetadata', () => {
     const b = vi.fn(async () => [
       makeResult({ id: 'b-1', title: 'Watchmen', publishedAt: '2019-10-20' }),
     ])
-    mockProviders = [
+    providerState.mockProviders = [
       makeProvider({ id: 'comicvine', search: a }),
       makeProvider({ id: 'openlibrary', mediaTypes: ['comic'], search: b }),
     ]
@@ -177,7 +177,7 @@ describe('searchMetadata', () => {
     const cached = [makeResult({ id: 'cached-1' })]
     getSearchCacheMock.mockResolvedValue(cached)
     const search = vi.fn(async () => [makeResult({ id: 'live-1' })])
-    mockProviders = [makeProvider({ id: 'comicvine', search })]
+    providerState.mockProviders = [makeProvider({ id: 'comicvine', search })]
 
     const result = await searchMetadata(baseInput())
 
@@ -188,7 +188,7 @@ describe('searchMetadata', () => {
 
   it('writes deduped results to the cache after a live search', async () => {
     const search = vi.fn(async () => [makeResult({ id: 'live-1' })])
-    mockProviders = [makeProvider({ id: 'comicvine', search })]
+    providerState.mockProviders = [makeProvider({ id: 'comicvine', search })]
 
     const result = await searchMetadata(baseInput())
 

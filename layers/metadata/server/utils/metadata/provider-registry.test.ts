@@ -1,7 +1,7 @@
+import type { MetadataProvider } from '#layers/metadata/shared/types'
 import { describe, expect, it } from 'vitest'
 
 import { getProvider, getProviders, registerProvider } from './provider-registry'
-import type { MetadataProvider } from '#layers/metadata/shared/types'
 
 function makeProvider(overrides: Partial<MetadataProvider> = {}): MetadataProvider {
   return {

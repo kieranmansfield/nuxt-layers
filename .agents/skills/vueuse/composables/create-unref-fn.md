@@ -8,8 +8,8 @@ Make a plain function accepting ref and raw values as arguments. Returns the sam
 ## Usage
 
 ```ts
-import { createUnrefFn } from '@vueuse/core'
 import { shallowRef } from 'vue'
+import { createUnrefFn } from '@vueuse/core'
 
 const url = shallowRef('https://httpbin.org/post')
 const data = shallowRef({ foo: 'bar' })

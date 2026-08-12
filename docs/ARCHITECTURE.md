@@ -94,6 +94,7 @@ pnpm dev
 ```
 
 The `resolveExtendedLayers()` function:
+
 1. Parses `PLAYGROUND_LAYERS` as a comma-separated list
 2. Auto-includes each layer's dependencies (defined in `LAYER_DEPENDENCIES`)
 3. Returns paths in correct order (dependencies first, following `AVAILABLE_LAYERS` order)
@@ -117,11 +118,13 @@ Nuxt auto-discovers components from all extended layers' `app/components/` direc
 The shader layer uses explicit component registration with `global: true` for its WebGPU components:
 
 ```ts
-components: [{
-  path: './app/components',
-  pathPrefix: false,
-  global: true,
-}]
+components: [
+  {
+    path: './app/components',
+    pathPrefix: false,
+    global: true,
+  },
+]
 ```
 
 ## app.config.ts
@@ -129,6 +132,7 @@ components: [{
 Each layer provides typed runtime configuration via `app.config.ts` with sensible defaults. Consumers can override any value in their own `app.config.ts`.
 
 Key config namespaces:
+
 - `coreLayer` — loading screen, error handling, scroll guard, 404 page
 - `motion` — Lenis smooth scroll, GSAP ScrollTrigger integration
 - `themeLayer` — accent colors, default accent
@@ -186,15 +190,15 @@ Some layers (ui, content) support standalone mode via environment variables (`UI
 
 ## Layer Details
 
-| Layer | Description |
-|-------|-------------|
-| **core** | Foundation layer. Nuxt UI, VueUse, device detection, Pinia, loading screen, error handler, scroll guard, feature detection, PWA support (production only). |
-| **ui** | Design system primitives. Typography components (Headline, CodeBlock, QuoteBlock), color system, media/picture component, site branding, breakpoint types. |
-| **layout** | Page structure. Grid systems, containers, spacing, layout compositions with breakpoint-based responsiveness. |
-| **motion** | Animation layer. GSAP with ScrollTrigger, Locomotive Scroll (Lenis) smooth scrolling, motion composables. Transpiles GSAP for SSR. |
-| **shader** | WebGPU/WebGL layer. Three.js + TresJS integration, TSL shader support, post-processing. Includes custom shader utilities and auto-imported shader modules. |
-| **forms** | Form validation layer. Zod schema-based validation, form composables, typed form components. |
-| **database** | Database infrastructure. Drizzle ORM + Neon Postgres via HTTP driver. Exposes `useSql()` and `useDrizzle(schema)` server utilities. App-owned schema and migrations; env: `NUXT_DATABASE_LAYER_URL`. |
-| **auth** | Authentication layer. nuxt-auth-utils + GitHub OAuth handler, sealed-cookie sessions. Opt-in `auth` route middleware; no user table (app's responsibility). Env: `NUXT_SESSION_PASSWORD`, `NUXT_OAUTH_GITHUB_CLIENT_ID/SECRET`. |
-| **theme** | Theming layer. Color mode switching, accent color palette, theme plugin, CSS custom properties for dynamic theming. |
-| **content** | Content management layer. @nuxt/content integration, better-sqlite3 for local content DB, optional Nuxt Studio support. |
+| Layer        | Description                                                                                                                                                                                                                     |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **core**     | Foundation layer. Nuxt UI, VueUse, device detection, Pinia, loading screen, error handler, scroll guard, feature detection, PWA support (production only).                                                                      |
+| **ui**       | Design system primitives. Typography components (Headline, CodeBlock, QuoteBlock), color system, media/picture component, site branding, breakpoint types.                                                                      |
+| **layout**   | Page structure. Grid systems, containers, spacing, layout compositions with breakpoint-based responsiveness.                                                                                                                    |
+| **motion**   | Animation layer. GSAP with ScrollTrigger, Locomotive Scroll (Lenis) smooth scrolling, motion composables. Transpiles GSAP for SSR.                                                                                              |
+| **shader**   | WebGPU/WebGL layer. Three.js + TresJS integration, TSL shader support, post-processing. Includes custom shader utilities and auto-imported shader modules.                                                                      |
+| **forms**    | Form validation layer. Zod schema-based validation, form composables, typed form components.                                                                                                                                    |
+| **database** | Database infrastructure. Drizzle ORM + Neon Postgres via HTTP driver. Exposes `useSql()` and `useDrizzle(schema)` server utilities. App-owned schema and migrations; env: `NUXT_DATABASE_LAYER_URL`.                            |
+| **auth**     | Authentication layer. nuxt-auth-utils + GitHub OAuth handler, sealed-cookie sessions. Opt-in `auth` route middleware; no user table (app's responsibility). Env: `NUXT_SESSION_PASSWORD`, `NUXT_OAUTH_GITHUB_CLIENT_ID/SECRET`. |
+| **theme**    | Theming layer. Color mode switching, accent color palette, theme plugin, CSS custom properties for dynamic theming.                                                                                                             |
+| **content**  | Content management layer. @nuxt/content integration, better-sqlite3 for local content DB, optional Nuxt Studio support.                                                                                                         |

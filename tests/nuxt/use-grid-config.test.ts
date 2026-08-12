@@ -1,5 +1,5 @@
-import { mockNuxtImport, mountSuspended } from '@nuxt/test-utils/runtime'
 import { defineComponent } from 'vue'
+import { mockNuxtImport, mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it } from 'vitest'
 
 import { useGridConfig } from '../../layers/layout/app/composables/useGridConfig'

@@ -146,11 +146,7 @@ layers/metadata-comicvine/
 The metadata layer should expose a provider registry.
 
 ```ts
-export type MetadataProviderId =
-  | 'comicvine'
-  | 'openlibrary'
-  | 'google-books'
-  | 'local'
+export type MetadataProviderId = 'comicvine' | 'openlibrary' | 'google-books' | 'local'
 
 export type MetadataProvider = {
   id: MetadataProviderId
@@ -186,12 +182,7 @@ await searchComicVine(...)
 The base metadata layer should return normalised records.
 
 ```ts
-export type MetadataMediaType =
-  | 'book'
-  | 'comic'
-  | 'manga'
-  | 'graphic-novel'
-  | 'collected-edition'
+export type MetadataMediaType = 'book' | 'comic' | 'manga' | 'graphic-novel' | 'collected-edition'
 
 export type MetadataRecord = {
   id: string

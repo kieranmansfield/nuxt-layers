@@ -136,7 +136,9 @@ describe('normaliseOpenLibraryEdition', () => {
   })
 
   it('takes publisher from publishers[0]', () => {
-    const record = normaliseOpenLibraryEdition(baseEdition({ publishers: ['DC Comics', 'Vertigo'] }))
+    const record = normaliseOpenLibraryEdition(
+      baseEdition({ publishers: ['DC Comics', 'Vertigo'] })
+    )
     expect(record.publisher).toBe('DC Comics')
   })
 })

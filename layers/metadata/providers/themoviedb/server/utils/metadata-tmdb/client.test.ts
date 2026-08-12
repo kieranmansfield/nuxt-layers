@@ -24,8 +24,6 @@ describe('tmdbImageUrl', () => {
   })
 
   it('prefixes imageBaseUrl from runtime config', () => {
-    expect(tmdbImageUrl('/backdrop.jpg')).toBe(
-      'https://image.tmdb.org/t/p/w500/backdrop.jpg'
-    )
+    expect(tmdbImageUrl('/backdrop.jpg')).toBe('https://image.tmdb.org/t/p/w500/backdrop.jpg')
   })
 })

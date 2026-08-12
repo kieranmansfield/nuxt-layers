@@ -84,13 +84,13 @@ Keep `content.config.ts` as the authoritative definition of what collections exi
 
 The ownership split should be:
 
-| Concern | Source |
-|---|---|
-| Site title, URL, author metadata | `app.config.ts` |
-| Which collections exist | `content.config.ts` |
-| Which collections are exposed as feeds | `app.config.ts` |
-| Feed rendering and link generation | `kmcom-nuxt-layers` component |
-| Feed routes and prerender behavior | app `nuxt.config.ts` |
+| Concern                                | Source                        |
+| -------------------------------------- | ----------------------------- |
+| Site title, URL, author metadata       | `app.config.ts`               |
+| Which collections exist                | `content.config.ts`           |
+| Which collections are exposed as feeds | `app.config.ts`               |
+| Feed rendering and link generation     | `kmcom-nuxt-layers` component |
+| Feed routes and prerender behavior     | app `nuxt.config.ts`          |
 
 This is the cleanest balance between reuse and app-specific control.
 

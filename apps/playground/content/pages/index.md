@@ -52,30 +52,36 @@ const { data: galleries } = await useGalleries()
 
 ::card-group
 
-::card
----
+## ::card
+
 title: Blog
 icon: i-lucide-pen-line
 to: /blog
+
 ---
+
 Articles and posts with authors, tags, and draft support.
 ::
 
-::card
----
+## ::card
+
 title: Portfolio
 icon: i-lucide-briefcase
 to: /portfolio
+
 ---
+
 Projects and work with client info and featured filtering.
 ::
 
-::card
----
+## ::card
+
 title: Gallery
 icon: i-lucide-images
 to: /gallery
+
 ---
+
 Photo collections with image metadata.
 ::
 

@@ -8,8 +8,8 @@ Reactive ipcRenderer.invoke API result. Make asynchronous operations look synchr
 ## Usage
 
 ```ts
-import { useIpcRendererInvoke } from '@vueuse/electron'
 import { computed } from 'vue'
+import { useIpcRendererInvoke } from '@vueuse/electron'
 
 // enable nodeIntegration if you don't provide ipcRenderer explicitly
 // see: https://www.electronjs.org/docs/api/webview-tag#nodeintegration

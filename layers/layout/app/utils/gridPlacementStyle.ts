@@ -149,13 +149,16 @@ export function buildGridPlacementStyle(input: GridPlacementInput): PlacementSty
   const rowStart = resolveDefaultPlacement(input.rowStart, undefined)
   const rowSpan = resolveDefaultPlacement(input.rowSpan, 1)
 
-  Object.assign(style, resolveBleedStyles({
-    bleed: input.bleed,
-    colStart,
-    colSpan,
-    rowStart,
-    rowSpan,
-  }))
+  Object.assign(
+    style,
+    resolveBleedStyles({
+      bleed: input.bleed,
+      colStart,
+      colSpan,
+      rowStart,
+      rowSpan,
+    })
+  )
 
   if (!input.bleed) {
     if (colSpan === 'full') {

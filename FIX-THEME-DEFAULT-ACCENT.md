@@ -57,7 +57,7 @@ then generate it inside the `render:html` hook using `useRuntimeConfig(event)`:
 ```ts
 import { buildAccentCSS } from '../utils/accent-css'
 
-const accentCSS = buildAccentCSS()  // still fine as a module-level const
+const accentCSS = buildAccentCSS() // still fine as a module-level const
 
 function buildInitScript(defaultAccent: string) {
   return `(function(){

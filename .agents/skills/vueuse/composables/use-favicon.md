@@ -9,6 +9,7 @@ Reactive favicon
 
 ```ts
 import { useFavicon } from '@vueuse/core'
+
 // ---cut---
 const source = shallowRef('icon.png')
 const icon = useFavicon(source)

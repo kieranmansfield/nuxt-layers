@@ -11,7 +11,10 @@ Wrapper for .
 import { useIDBKeyval } from '@vueuse/integrations/useIDBKeyval'
 
 // bind object
-const { data: storedObject, isFinished } = useIDBKeyval('my-idb-keyval-store', { hello: 'hi', greeting: 'Hello' })
+const { data: storedObject, isFinished } = useIDBKeyval('my-idb-keyval-store', {
+  hello: 'hi',
+  greeting: 'Hello',
+})
 
 // update object
 storedObject.value.hello = 'hola'
@@ -32,11 +35,11 @@ storedObject.value = null
 
 ## Returns
 
-| Name | Type |
-| --- | --- |
-| set | `Ref` |
+| Name       | Type         |
+| ---------- | ------------ |
+| set        | `Ref`        |
 | isFinished | `shallowRef` |
-| data | `Ref` |
+| data       | `Ref`        |
 
 ## Reference
 

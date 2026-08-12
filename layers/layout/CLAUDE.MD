@@ -60,6 +60,7 @@ LayoutMain (<main class="mastmain">)        ← defines the grid
 `LayoutPage` is a fragment component — it provides no grid wrapper. You need:
 
 **`layouts/grid.vue`:**
+
 ```vue
 <template>
   <LayoutMain>
@@ -70,9 +71,10 @@ LayoutMain (<main class="mastmain">)        ← defines the grid
 ```
 
 **In each page using the grid:**
+
 ```vue
 <script setup lang="ts">
-definePageMeta({ layout: 'grid' })
+  definePageMeta({ layout: 'grid' })
 </script>
 ```
 
@@ -94,21 +96,26 @@ layoutLayer.ui.grid.mode: 'swiss' | 'fluid' | 'disabled'
 ## Component Quick Reference
 
 ### `LayoutMain` — `<main class="mastmain">`
+
 - **Props:** `tag` (default `'main'`)
 - Renders plain `<main>` when `mode === 'disabled'`
 
 ### `LayoutContainer` — width constraint
+
 - **Props:** `size` (`'content' | 'wide' | 'fluid' | 'full'`, default `'wide'`), `tag`
 - Maps to `.layout-container-*` CSS classes
 
 ### `LayoutPage` — fragment: SEO + optional header
+
 - **Props:** `title` (req), `description`, `showHeader`
 - Fragment component — no wrapper element
 
 ### `LayoutSection` — subgrid section (12 rows = 100vh)
+
 - **Props:** `fullHeight`, `fullWidth`, `tag`
 
 ### `LayoutGridItem` — positioned grid child
+
 - **Props:** `preset`, `colStart`, `colSpan`, `rowStart`, `rowSpan`, `layer`, `align`, `justify`, `bleed`, `as`
 - **Presets:** hero, centered, fullWidth, sidebar, content, splitLeft, splitRight, quarterLeft, threeQuarterRight, halfTop, halfBottom
 - **Layers (z-index):** `back`(0) `mid`(10) `front`(20) `top`(30) `header`(100) `dropdown`(200) `overlay`(300) `modal`(400) `toast`(500)
@@ -121,13 +128,13 @@ layoutLayer.ui.grid.mode: 'swiss' | 'fluid' | 'disabled'
 const { config, getPreset, isEnabled, mode, layers, useZIndex } = useGridConfig()
 ```
 
-| Return | Description |
-|---|---|
-| `config` | Raw `GridConfig` from app.config |
-| `isEnabled` | `true` when `mode !== 'disabled'` |
-| `mode` | `'swiss' \| 'fluid' \| 'disabled'` |
-| `layers` | All z-index values |
-| `getPreset(name)` | Look up preset by name |
+| Return             | Description                                   |
+| ------------------ | --------------------------------------------- |
+| `config`           | Raw `GridConfig` from app.config              |
+| `isEnabled`        | `true` when `mode !== 'disabled'`             |
+| `mode`             | `'swiss' \| 'fluid' \| 'disabled'`            |
+| `layers`           | All z-index values                            |
+| `getPreset(name)`  | Look up preset by name                        |
 | `useZIndex(layer)` | Get z-index value: `useZIndex('modal')` → 400 |
 
 ---
@@ -142,13 +149,13 @@ const { config, getPreset, isEnabled, mode, layers, useZIndex } = useGridConfig(
 
 ## Key Files
 
-| Task | File |
-|---|---|
-| Grid CSS | `app/assets/css/layout/grids.css` |
-| Fluid / container CSS | `app/assets/css/layout/modes/fluid.css` |
-| Config + Nuxt UI theming | `app/app.config.ts` |
-| TypeScript types | `app/types/layouts.ts` |
-| Config composable | `app/composables/useGridConfig.ts` |
-| Grid wrapper component | `app/components/Layout/Main.vue` |
-| Container component | `app/components/Layout/Container.vue` |
-| Full reference docs | `../../docs/LAYOUT.md` |
+| Task                     | File                                    |
+| ------------------------ | --------------------------------------- |
+| Grid CSS                 | `app/assets/css/layout/grids.css`       |
+| Fluid / container CSS    | `app/assets/css/layout/modes/fluid.css` |
+| Config + Nuxt UI theming | `app/app.config.ts`                     |
+| TypeScript types         | `app/types/layouts.ts`                  |
+| Config composable        | `app/composables/useGridConfig.ts`      |
+| Grid wrapper component   | `app/components/Layout/Main.vue`        |
+| Container component      | `app/components/Layout/Container.vue`   |
+| Full reference docs      | `../../docs/LAYOUT.md`                  |

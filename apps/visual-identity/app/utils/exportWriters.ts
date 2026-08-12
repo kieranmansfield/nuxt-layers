@@ -1,13 +1,15 @@
 import { formatHex, oklch, parse } from 'culori'
 
-import { generateScale } from '../composables/useTailwindScale'
-import type { BrandColour, BrandState, ContrastLevel, ThemeVariant } from '../composables/useBrandState'
-import type { ScaleEntry } from '../composables/useTailwindScale'
+import type {
+  BrandColour,
+  BrandState,
+  ContrastLevel,
+  ThemeVariant,
+} from '../composables/useBrandState'
+import { generateScale, type ScaleEntry } from '../composables/useTailwindScale'
 
 function colourCssName(colour: { role: string; name: string }): string {
-  return colour.role === 'custom'
-    ? colour.name.toLowerCase().replace(/\s+/g, '-')
-    : colour.role
+  return colour.role === 'custom' ? colour.name.toLowerCase().replace(/\s+/g, '-') : colour.role
 }
 
 function contrastScale(entries: ScaleEntry[], contrast: ContrastLevel): ScaleEntry[] {
@@ -21,7 +23,8 @@ function contrastScale(entries: ScaleEntry[], contrast: ContrastLevel): ScaleEnt
     if (!base) return entry
 
     const l = base.l
-    const newL = l > 0.5 ? Math.min(0.99, l + (l - 0.5) * 0.35) : Math.max(0.01, l - (0.5 - l) * 0.35)
+    const newL =
+      l > 0.5 ? Math.min(0.99, l + (l - 0.5) * 0.35) : Math.max(0.01, l - (0.5 - l) * 0.35)
     const newC = Math.min((base.c ?? 0) * 1.25, 0.42)
 
     return {
@@ -62,7 +65,9 @@ function pushColourLines(
     const name = colourCssName(colour)
     const scale = contrastScale(generateScale(colour.hex), contrast)
     for (const entry of scale) {
-      lines.push(`${indent}--color-${name}-${entry.step}: ${format === 'oklch' ? entry.oklchStr : entry.hex};`)
+      lines.push(
+        `${indent}--color-${name}-${entry.step}: ${format === 'oklch' ? entry.oklchStr : entry.hex};`
+      )
     }
   }
 }

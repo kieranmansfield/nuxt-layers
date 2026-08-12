@@ -65,10 +65,7 @@ defineConfig({
 
 // Mixed array and object entries
 defineConfig({
-  entry: [
-    'src/index.ts',
-    { cli: 'src/cli.ts' },
-  ],
+  entry: ['src/index.ts', { cli: 'src/cli.ts' }],
 })
 ```
 
@@ -200,7 +197,7 @@ defineConfig({
   format: 'esm',
   platform: 'node',
   dts: true,
-  shims: true,  // __dirname, __filename in ESM
+  shims: true, // __dirname, __filename in ESM
 })
 ```
 

@@ -58,11 +58,11 @@ Declare the unrounded `clamp()` expressions and the rounding step as ordinary cu
   --fluid-step: 0.25rem;
 
   /* Unrounded fluid ranges. Endpoints MUST be integer multiples of --fluid-step. */
-  --fluid-text-md-raw:  clamp(1rem,    0.9375rem + 0.35vi, 1.25rem);
-  --fluid-text-lg-raw:  clamp(1.25rem, 1.125rem  + 0.75vi, 1.75rem);
-  --fluid-text-xl-raw:  clamp(1.5rem,  1.25rem   + 1.5vi,  2.5rem);
-  --fluid-text-2xl-raw: clamp(2rem,    1.5rem    + 2.5vi,  3.5rem);
-  --fluid-text-3xl-raw: clamp(2.5rem,  1.75rem   + 4vi,    5rem);
+  --fluid-text-md-raw: clamp(1rem, 0.9375rem + 0.35vi, 1.25rem);
+  --fluid-text-lg-raw: clamp(1.25rem, 1.125rem + 0.75vi, 1.75rem);
+  --fluid-text-xl-raw: clamp(1.5rem, 1.25rem + 1.5vi, 2.5rem);
+  --fluid-text-2xl-raw: clamp(2rem, 1.5rem + 2.5vi, 3.5rem);
+  --fluid-text-3xl-raw: clamp(2.5rem, 1.75rem + 4vi, 5rem);
 }
 ```
 
@@ -107,7 +107,9 @@ Line heights must be **unitless ratios**, not fixed lengths — a fixed `line-he
 Because the step resolves per-element, a consumer can retune the ladder for a subtree with a single declaration:
 
 ```css
-.editorial-lede { --fluid-step: 0.125rem; }  /* finer steps */
+.editorial-lede {
+  --fluid-step: 0.125rem;
+} /* finer steps */
 ```
 
 Document this as the supported extension point.

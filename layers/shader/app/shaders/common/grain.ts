@@ -151,7 +151,11 @@ export function interlace(
  */
 export function vignette(
   uv: TSLNode,
-  ...args: [intensity?: TSLNode | number, smoothness?: TSLNode | number, roundness?: TSLNode | number]
+  ...args: [
+    intensity?: TSLNode | number,
+    smoothness?: TSLNode | number,
+    roundness?: TSLNode | number,
+  ]
 ): TSLNode {
   const [intensity = 0.5, smoothness = 0.5, roundness = 1] = args
   const int = toScalarNode(intensity)

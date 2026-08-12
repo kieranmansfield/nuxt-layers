@@ -19,7 +19,7 @@
   "devDependencies": {
     "@nuxt/content": "catalog:",
     "nuxt": "catalog:",
-    "vue": "3.5.41",
+    "vue": "catalog:",
     "vue-router": "catalog:"
   }
 }

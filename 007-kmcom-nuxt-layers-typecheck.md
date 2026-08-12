@@ -100,14 +100,15 @@ export function useColorUniform(initialHex: string) {
 
 ## Commands you will need
 
-| Purpose | Command | Expected on success |
-|---------|---------|---------------------|
-| Local package check | `node_modules/.bin/vue-tsc --noEmit -p tsconfig.typecheck.json` | exit 0, no diagnostics in the 12 files above |
-| Consumer regression gate | `pnpm run typecheck` in KMCOM frontend after linking/publishing the package change | exit 0, 0 errors |
+| Purpose                  | Command                                                                            | Expected on success                          |
+| ------------------------ | ---------------------------------------------------------------------------------- | -------------------------------------------- |
+| Local package check      | `node_modules/.bin/vue-tsc --noEmit -p tsconfig.typecheck.json`                    | exit 0, no diagnostics in the 12 files above |
+| Consumer regression gate | `pnpm run typecheck` in KMCOM frontend after linking/publishing the package change | exit 0, 0 errors                             |
 
 ## Scope
 
 **In scope** (apply the same edits in the `kmcom-nuxt-layers` source repo):
+
 - `layers/animations/app/components/Motion/MarqueeText.vue`
 - `layers/canvas/app/composables/useRendererCapabilities.ts`
 - `layers/content/app/components/NuxtContent/Detail.vue`
@@ -124,6 +125,7 @@ export function useColorUniform(initialHex: string) {
 - `layers/theme/app/components/ThemePicker/Colors.vue`
 
 **Out of scope** (do NOT touch):
+
 - `nuxt.config.ts`, `package.json`, `.nuxt/**` in the frontend repo - those
   files only prove why the package is being typechecked.
 - Any consumer config change that tries to hide the package from typecheck.

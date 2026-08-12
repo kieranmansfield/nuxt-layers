@@ -14,9 +14,7 @@ describe('resolveSiteConfig', () => {
   })
 
   it('splits the title and subtitle into words', () => {
-    expect(
-      resolveSiteConfig({ title: 'Nuxt Layers', subtitle: 'Composable Vue apps' })
-    ).toEqual({
+    expect(resolveSiteConfig({ title: 'Nuxt Layers', subtitle: 'Composable Vue apps' })).toEqual({
       title: 'Nuxt Layers',
       titleWords: ['Nuxt', 'Layers'],
       subtitle: 'Composable Vue apps',

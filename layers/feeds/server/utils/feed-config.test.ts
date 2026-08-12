@@ -51,7 +51,11 @@ describe('resolveFeedCollection', () => {
 
 describe('createFeedConfig', () => {
   it('uses "My Site" as the title fallback with no collection label', () => {
-    const config = createFeedConfig({ site: {}, siteUrl: 'https://example.com', collection: undefined })
+    const config = createFeedConfig({
+      site: {},
+      siteUrl: 'https://example.com',
+      collection: undefined,
+    })
     expect(config.title).toBe('My Site')
   })
 
@@ -65,7 +69,11 @@ describe('createFeedConfig', () => {
   })
 
   it('defaults description to an empty string', () => {
-    const config = createFeedConfig({ site: {}, siteUrl: 'https://example.com', collection: undefined })
+    const config = createFeedConfig({
+      site: {},
+      siteUrl: 'https://example.com',
+      collection: undefined,
+    })
     expect(config.description).toBe('')
   })
 
@@ -80,7 +88,9 @@ describe('createFeedConfig', () => {
 
   it('builds an author object when the site has a named author', () => {
     const config = createFeedConfig({
-      site: { author: { name: 'Kieran Mansfield', email: 'hi@example.com', link: 'https://example.com' } },
+      site: {
+        author: { name: 'Kieran Mansfield', email: 'hi@example.com', link: 'https://example.com' },
+      },
       siteUrl: 'https://example.com',
       collection: undefined,
     })
@@ -92,7 +102,11 @@ describe('createFeedConfig', () => {
   })
 
   it('omits author when the site author has no name', () => {
-    const config = createFeedConfig({ site: {}, siteUrl: 'https://example.com', collection: undefined })
+    const config = createFeedConfig({
+      site: {},
+      siteUrl: 'https://example.com',
+      collection: undefined,
+    })
     expect(config.author).toBeUndefined()
   })
 
@@ -115,7 +129,11 @@ describe('createFeedConfig', () => {
   })
 
   it('defaults favicon to /favicon.ico', () => {
-    const config = createFeedConfig({ site: {}, siteUrl: 'https://example.com', collection: undefined })
+    const config = createFeedConfig({
+      site: {},
+      siteUrl: 'https://example.com',
+      collection: undefined,
+    })
     expect(config.favicon).toBe('/favicon.ico')
   })
 
@@ -138,7 +156,11 @@ describe('createFeedConfig', () => {
   })
 
   it('omits copyright when there is no explicit copyright and no author name', () => {
-    const config = createFeedConfig({ site: {}, siteUrl: 'https://example.com', collection: undefined })
+    const config = createFeedConfig({
+      site: {},
+      siteUrl: 'https://example.com',
+      collection: undefined,
+    })
     expect(config.copyright).toBeUndefined()
   })
 })

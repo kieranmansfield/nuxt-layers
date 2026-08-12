@@ -69,8 +69,7 @@ describe('buildGradientStyle', () => {
   it('builds a conic gradient', () => {
     const cfg: GradientConfig = { from, to, shape: 'conic' }
     expect(buildGradientStyle(cfg)).toEqual({
-      backgroundImage:
-        'conic-gradient(var(--ui-color-primary-500), var(--ui-color-secondary-500))',
+      backgroundImage: 'conic-gradient(var(--ui-color-primary-500), var(--ui-color-secondary-500))',
     })
   })
 })

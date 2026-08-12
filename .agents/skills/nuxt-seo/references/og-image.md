@@ -27,7 +27,7 @@ defineOgImage('NuxtSeo', {
   colorMode: 'dark',
   icon: 'carbon:cloud',
   siteName: 'My Site',
-  siteLogo: '/logo.png'
+  siteLogo: '/logo.png',
 })
 ```
 
@@ -44,7 +44,7 @@ defineOgImage('NuxtSeo', {
   title: 'Square',
   key: 'square',
   width: 800,
-  height: 800
+  height: 800,
 })
 ```
 
@@ -55,11 +55,13 @@ Create in `components/OgImage/`:
 ```vue
 <!-- components/OgImage/Blog.vue -->
 <script setup lang="ts">
-defineProps<{ title: string; author: string }>()
+  defineProps<{ title: string; author: string }>()
 </script>
 
 <template>
-  <div class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-br from-blue-500 to-purple-600 p-12">
+  <div
+    class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-br from-blue-500 to-purple-600 p-12"
+  >
     <h1 class="text-6xl font-bold text-white text-center">{{ title }}</h1>
     <p class="text-2xl text-white/80 mt-4">By {{ author }}</p>
   </div>
@@ -82,8 +84,8 @@ defineOgImage('OgImageBlog', { title: 'My Post', author: 'John' })
 ```ts
 export default defineNuxtConfig({
   ogImage: {
-    defaults: { renderer: 'satori' }
-  }
+    defaults: { renderer: 'satori' },
+  },
 })
 ```
 
@@ -102,11 +104,11 @@ export default defineNuxtConfig({
       component: 'NuxtSeo',
       width: 1200,
       height: 600,
-      cacheMaxAgeSeconds: 60 * 60 * 24 * 3  // 3 days
+      cacheMaxAgeSeconds: 60 * 60 * 24 * 3, // 3 days
     },
     // For static sites
-    zeroRuntime: true
-  }
+    zeroRuntime: true,
+  },
 })
 ```
 
@@ -127,9 +129,8 @@ With `asSeoCollection()` (see main SKILL.md):
 
 ```vue
 <script setup>
-const { data: page } = await useAsyncData(() => queryCollection('posts').path(route.path).first())
-if (page.value?.ogImage)
-  defineOgImage(page.value.ogImage)
+  const { data: page } = await useAsyncData(() => queryCollection('posts').path(route.path).first())
+  if (page.value?.ogImage) defineOgImage(page.value.ogImage)
 </script>
 ```
 
@@ -146,7 +147,7 @@ Capture page as OG image (requires Chromium):
 defineOgImageScreenshot({
   colorScheme: 'dark',
   mask: '.navigation, .footer',
-  selector: '.article-content'
+  selector: '.article-content',
 })
 ```
 
@@ -156,8 +157,8 @@ defineOgImageScreenshot({
 export default defineNuxtConfig({
   routeRules: {
     '/blog/**': { ogImage: { component: 'OgImageBlog' } },
-    '/admin/**': { ogImage: false }
-  }
+    '/admin/**': { ogImage: false },
+  },
 })
 ```
 

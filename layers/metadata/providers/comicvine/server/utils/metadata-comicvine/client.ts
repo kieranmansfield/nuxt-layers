@@ -1,4 +1,4 @@
-import type { ComicVineApiResponse } from './types'
+import type { ComicVineApiResponse, ComicVineIssue, ComicVineVolume } from './types'
 
 const FIELD_LIST_ISSUE =
   'id,name,issue_number,description,deck,cover_date,store_date,site_detail_url,image,volume,person_credits,publisher'
@@ -29,7 +29,7 @@ async function comicVineFetch<T>(
 }
 
 export async function searchComicVineIssues(query: string, limit = 10) {
-  return comicVineFetch<Array<import('./types').ComicVineIssue>>('/search/', {
+  return comicVineFetch<ComicVineIssue[]>('/search/', {
     query,
     resources: 'issue',
     limit: String(limit),
@@ -38,7 +38,7 @@ export async function searchComicVineIssues(query: string, limit = 10) {
 }
 
 export async function searchComicVineVolumes(query: string, limit = 10) {
-  return comicVineFetch<Array<import('./types').ComicVineVolume>>('/search/', {
+  return comicVineFetch<ComicVineVolume[]>('/search/', {
     query,
     resources: 'volume',
     limit: String(limit),
@@ -47,13 +47,13 @@ export async function searchComicVineVolumes(query: string, limit = 10) {
 }
 
 export async function fetchComicVineIssue(id: string) {
-  return comicVineFetch<import('./types').ComicVineIssue>(`/issue/4000-${id}/`, {
+  return comicVineFetch<ComicVineIssue>(`/issue/4000-${id}/`, {
     field_list: FIELD_LIST_ISSUE,
   })
 }
 
 export async function fetchComicVineVolume(id: string) {
-  return comicVineFetch<import('./types').ComicVineVolume>(`/volume/4050-${id}/`, {
+  return comicVineFetch<ComicVineVolume>(`/volume/4050-${id}/`, {
     field_list: FIELD_LIST_VOLUME,
   })
 }

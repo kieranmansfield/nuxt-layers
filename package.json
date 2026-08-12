@@ -294,7 +294,7 @@
     "typescript": "catalog:",
     "vite-plugin-checker": "catalog:",
     "vitest": "catalog:",
-    "vue": "3.5.41",
+    "vue": "catalog:",
     "vue-tsc": "catalog:",
     "zod": "catalog:",
     "zod-to-json-schema": "catalog:"

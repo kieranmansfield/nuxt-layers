@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
   import { Color, DoubleSide } from 'three'
   import {
     add,
@@ -19,7 +20,6 @@
   import { fbm3D, hash21, ridgedFbm2d, voronoi2D } from '../../shaders/common/noise'
   import { cosinePalette } from '../../shaders/common/palette'
   import type { TSLNode } from '../../shaders/types'
-  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
 
   const {
     // fallow-ignore-next-line code-duplication
@@ -62,11 +62,27 @@
   watchUniformProp(() => mouseX, mouseXUniform)
   watchUniformProp(() => mouseY, mouseYUniform)
   watchUniformProp(() => mouseStrength, mouseStrengthUniform)
-  watchUniformProp(() => color1, color1Uniform, (val) => new Color(val))
-  watchUniformProp(() => color2, color2Uniform, (val) => new Color(val))
-  watchUniformProp(() => color3, color3Uniform, (val) => new Color(val))
+  watchUniformProp(
+    () => color1,
+    color1Uniform,
+    (val) => new Color(val)
+  )
+  watchUniformProp(
+    () => color2,
+    color2Uniform,
+    (val) => new Color(val)
+  )
+  watchUniformProp(
+    () => color3,
+    color3Uniform,
+    (val) => new Color(val)
+  )
   // fallow-ignore-next-line code-duplication
-  watchUniformProp(() => color4, color4Uniform, (val) => new Color(val))
+  watchUniformProp(
+    () => color4,
+    color4Uniform,
+    (val) => new Color(val)
+  )
 
   const material = computed(() => {
     const mat = new MeshBasicNodeMaterial()

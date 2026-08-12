@@ -30,7 +30,9 @@ describe('buildThemeInitScript', () => {
     expect(script).toContain("var ct=localStorage.getItem('theme-contrast');")
     expect(script).toContain("var ctv=ct?JSON.parse(ct):'system';")
     expect(script).toContain("if(ctv==='on'){h.setAttribute('data-theme-contrast','high')}")
-    expect(script).toContain("else if(ctv==='off'){h.setAttribute('data-theme-contrast','standard')}")
+    expect(script).toContain(
+      "else if(ctv==='off'){h.setAttribute('data-theme-contrast','standard')}"
+    )
     expect(script).toContain(
       "else{h.setAttribute('data-theme-contrast',(window.matchMedia&&window.matchMedia('(prefers-contrast:more)').matches)?'high':'standard')}"
     )
@@ -48,7 +50,9 @@ describe('buildThemeInitScript', () => {
   it('emits a JSON-parsed tri-state block for theme-transparency', () => {
     expect(script).toContain("var t=localStorage.getItem('theme-transparency');")
     expect(script).toContain("if(tv==='on'){h.setAttribute('data-theme-transparency','reduced')}")
-    expect(script).toContain("else if(tv==='off'){h.setAttribute('data-theme-transparency','full')}")
+    expect(script).toContain(
+      "else if(tv==='off'){h.setAttribute('data-theme-transparency','full')}"
+    )
     expect(script).toContain(
       "window.matchMedia('(prefers-reduced-transparency:reduce)').matches)?'reduced':'full'"
     )
@@ -65,7 +69,7 @@ describe('buildThemeInitScript', () => {
   })
 
   it('does not JSON.parse the theme-mode value (jsonParsed: false)', () => {
-    expect(script).not.toContain("JSON.parse(dm)")
+    expect(script).not.toContain('JSON.parse(dm)')
   })
 
   it('produces valid, evaluable JavaScript', () => {

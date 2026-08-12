@@ -8,8 +8,8 @@ export const googleBooksProvider: MetadataProvider = {
   async search({ query, mediaType, limit = 10 }) {
     const subjectHints: Record<string, string> = {
       'graphic-novel': '+subject:"Comics & Graphic Novels"',
-      'manga': '+subject:manga',
-      'book': '+-subject:"Comics & Graphic Novels"+-subject:manga',
+      manga: '+subject:manga',
+      book: '+-subject:"Comics & Graphic Novels"+-subject:manga',
     }
     const q = query + (mediaType ? (subjectHints[mediaType] ?? '') : '')
     const res = await searchGoogleBooks(q, limit)
@@ -23,6 +23,9 @@ export const googleBooksProvider: MetadataProvider = {
   },
 
   async sync({ providerId }) {
-    return (await googleBooksProvider.lookup!({ provider: 'google-books', providerId }))!
+    const record = await googleBooksProvider.lookup({ provider: 'google-books', providerId })
+    if (!record)
+      throw new MetadataProviderError('google-books', `No record found for ${providerId}`)
+    return record
   },
 }

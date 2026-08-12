@@ -189,7 +189,11 @@ function evaluateLayerDefaultDeny(
 }
 
 function buildAllowResult(): RoutingSimulatorResult {
-  return { steps: [{ label: 'Feature gate', status: 'pass', note: 'No feature required — allow' }], final: 'allow', finalNote: 'Allowed' }
+  return {
+    steps: [{ label: 'Feature gate', status: 'pass', note: 'No feature required — allow' }],
+    final: 'allow',
+    finalNote: 'Allowed',
+  }
 }
 
 function evaluateFeatureGate(

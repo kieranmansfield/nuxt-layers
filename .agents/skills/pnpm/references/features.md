@@ -8,10 +8,10 @@ Force specific versions of dependencies:
 # pnpm-workspace.yaml (recommended)
 overrides:
   lodash: ^4.17.21
-  'foo@^1.0.0': ^1.2.3           # Specific parent version
-  'express>cookie': ^0.6.0        # Nested dep
-  'underscore': 'npm:lodash@^4'   # Replace package
-  'unwanted-pkg': '-'             # Remove entirely
+  'foo@^1.0.0': ^1.2.3 # Specific parent version
+  'express>cookie': ^0.6.0 # Nested dep
+  'underscore': 'npm:lodash@^4' # Replace package
+  'unwanted-pkg': '-' # Remove entirely
 ```
 
 Or in package.json:
@@ -126,7 +126,7 @@ module.exports = {
   hooks: {
     readPackage,
     afterAllResolved,
-    beforePacking,  // v10.28+
+    beforePacking, // v10.28+
   },
 }
 ```

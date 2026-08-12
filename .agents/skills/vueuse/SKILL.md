@@ -136,14 +136,14 @@ const storage = useLocalStorage('key', 'default') // Uses default on server
 When targeting component refs instead of DOM elements:
 
 ```ts
-import type { MaybeElementRef } from '@vueuse/core'
+// ❌ Won't work
+
+// Use MaybeElementRef pattern
+import { unrefElement, type MaybeElementRef } from '@vueuse/core'
 
 // Component ref needs .$el to get DOM element
 const compRef = ref<ComponentInstance>()
-const { width } = useElementSize(compRef) // ❌ Won't work
-
-// Use MaybeElementRef pattern
-import { unrefElement } from '@vueuse/core'
+const { width } = useElementSize(compRef)
 
 const el = computed(() => unrefElement(compRef)) // Gets .$el
 const { width } = useElementSize(el) // ✅ Works

@@ -6,8 +6,6 @@ import { BackSide, DoubleSide, FrontSide, type Side } from 'three'
 import { vec4 } from 'three/tsl'
 import { MeshBasicNodeMaterial } from 'three/webgpu'
 
-import type { TSLNode } from './types'
-
 import {
   aurora,
   createAuroraUniforms,
@@ -44,7 +42,7 @@ import {
   type StripeGradientOptions,
   type StripeGradientUniforms,
 } from './layers/stripe'
-
+import type { TSLNode } from './types'
 
 // ============================================
 // Types
@@ -112,19 +110,26 @@ function createShaderUniforms<T extends ShaderType>(
 ): ShaderUniforms<T> {
   switch (type) {
     case 'stripe':
-      return createStripeGradientUniforms(shaderOptions as StripeGradientOptions) as ShaderUniforms<T>
+      return createStripeGradientUniforms(
+        shaderOptions as StripeGradientOptions
+      ) as ShaderUniforms<T>
     case 'meshGradient':
       return createMeshGradientUniforms(shaderOptions as MeshGradientOptions) as ShaderUniforms<T>
     case 'aurora':
       return createAuroraUniforms(shaderOptions as AuroraOptions) as ShaderUniforms<T>
     case 'shaderGradient':
-      return createShaderGradientUniforms(shaderOptions as ShaderGradientOptions) as ShaderUniforms<T>
+      return createShaderGradientUniforms(
+        shaderOptions as ShaderGradientOptions
+      ) as ShaderUniforms<T>
     case 'paperShading':
       return createPaperShadingUniforms(shaderOptions as PaperShadingOptions) as ShaderUniforms<T>
   }
 }
 
-function createShaderColorNode<T extends ShaderType>(type: T, uniforms: ShaderUniforms<T>): TSLNode {
+function createShaderColorNode<T extends ShaderType>(
+  type: T,
+  uniforms: ShaderUniforms<T>
+): TSLNode {
   switch (type) {
     case 'stripe':
       return stripeGradient(uniforms as StripeGradientUniforms)

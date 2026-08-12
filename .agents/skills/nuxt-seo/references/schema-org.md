@@ -15,9 +15,9 @@ export default defineNuxtConfig({
       name: 'My Company',
       url: 'https://example.com',
       logo: '/logo.png',
-      sameAs: ['https://twitter.com/mycompany', 'https://github.com/mycompany']
-    })
-  }
+      sameAs: ['https://twitter.com/mycompany', 'https://github.com/mycompany'],
+    }),
+  },
 })
 ```
 
@@ -32,9 +32,9 @@ export default defineNuxtConfig({
       name: 'John Doe',
       url: 'https://johndoe.com',
       image: '/avatar.jpg',
-      sameAs: ['https://twitter.com/johndoe']
-    })
-  }
+      sameAs: ['https://twitter.com/johndoe'],
+    }),
+  },
 })
 ```
 
@@ -51,8 +51,8 @@ useSchemaOrg([
     image: '/article-image.jpg',
     datePublished: '2025-01-15',
     dateModified: '2025-01-20',
-    author: { name: 'John Doe', url: 'https://johndoe.com' }
-  })
+    author: { name: 'John Doe', url: 'https://johndoe.com' },
+  }),
 ])
 ```
 
@@ -67,9 +67,9 @@ useSchemaOrg([
       price: 99.99,
       priceCurrency: 'USD',
       availability: 'InStock',
-      url: 'https://example.com/product'
-    }
-  })
+      url: 'https://example.com/product',
+    },
+  }),
 ])
 ```
 
@@ -110,9 +110,9 @@ useSchemaOrg([
     itemListElement: [
       { name: 'Home', item: '/' },
       { name: 'Blog', item: '/blog' },
-      { name: 'My Post', item: '/blog/my-post' }
-    ]
-  })
+      { name: 'My Post', item: '/blog/my-post' },
+    ],
+  }),
 ])
 ```
 
@@ -130,9 +130,9 @@ useSchemaOrg([
   defineFAQPage({
     mainEntity: [
       { name: 'What is your return policy?', acceptedAnswer: 'You can return within 30 days.' },
-      { name: 'How do I contact support?', acceptedAnswer: 'Email us at support@example.com' }
-    ]
-  })
+      { name: 'How do I contact support?', acceptedAnswer: 'Email us at support@example.com' },
+    ],
+  }),
 ])
 ```
 
@@ -157,8 +157,8 @@ With `asSeoCollection()` (see main SKILL.md), ensure schema renders:
 
 ```vue
 <script setup>
-const { data: page } = await useAsyncData(() => queryCollection('posts').path(route.path).first())
-useHead(page.value?.head || {})
+  const { data: page } = await useAsyncData(() => queryCollection('posts').path(route.path).first())
+  useHead(page.value?.head || {})
 </script>
 ```
 
@@ -175,8 +175,8 @@ useHead(page.value?.head || {})
 export default defineNuxtConfig({
   routeRules: {
     '/blog/**': {
-      schemaOrg: { type: 'Article' }
-    }
-  }
+      schemaOrg: { type: 'Article' },
+    },
+  },
 })
 ```

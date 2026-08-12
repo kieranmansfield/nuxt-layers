@@ -1,5 +1,5 @@
-import type { GradientConfig } from './types/gradient'
 import type { AccentSceneConfig } from './types/accent'
+import type { GradientConfig } from './types/gradient'
 
 export default defineAppConfig({
   uiLayer: {

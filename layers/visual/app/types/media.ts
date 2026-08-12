@@ -1,3 +1,5 @@
+import type { ComputedRef } from 'vue'
+
 /**
  * Media Types
  *
@@ -173,8 +175,6 @@ export type PictureProps = {
    */
   decoding?: 'sync' | 'async' | 'auto'
 }
-
-import type { ComputedRef } from 'vue'
 
 /**
  * Return type for usePicture composable

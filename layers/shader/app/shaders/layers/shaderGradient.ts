@@ -75,18 +75,8 @@ export type ShaderGradientUniforms = {
 export function createShaderGradientUniforms(
   options: ShaderGradientOptions = {}
 ): ShaderGradientUniforms {
-  const {
-    color1,
-    color2,
-    color3,
-    speed,
-    morphIntensity,
-    grain,
-    lightX,
-    lightY,
-    brightness,
-    zoom,
-  } = { ...DEFAULT_SHADER_GRADIENT_OPTIONS, ...options }
+  const { color1, color2, color3, speed, morphIntensity, grain, lightX, lightY, brightness, zoom } =
+    { ...DEFAULT_SHADER_GRADIENT_OPTIONS, ...options }
 
   return {
     color1: uniform(new Color(color1)),

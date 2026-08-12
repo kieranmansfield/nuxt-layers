@@ -8,8 +8,8 @@ Holds the previous value of a ref.
 ## Usage
 
 ```ts
-import { usePrevious } from '@vueuse/core'
 import { shallowRef } from 'vue'
+import { usePrevious } from '@vueuse/core'
 
 const counter = shallowRef('Hello')
 const previous = usePrevious(counter)

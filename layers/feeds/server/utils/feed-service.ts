@@ -1,12 +1,12 @@
 import type { H3Event } from 'h3'
 
-import type { FeedConfig, FeedItem } from './types'
 import {
   createFeedConfig,
   resolveFeedCollection,
   resolveFeedLimit,
   resolveFeedSiteConfig,
 } from './feed-config'
+import type { FeedConfig, FeedItem } from './types'
 
 export async function buildFeed(
   event: H3Event,

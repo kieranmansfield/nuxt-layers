@@ -12,19 +12,19 @@ url: https://example.com/marche
 featured: false
 colors:
   - name: Ink
-    value: "#1A1A1A"
+    value: '#1A1A1A'
     usage: Primary
   - name: Paper
-    value: "#FAFAF9"
+    value: '#FAFAF9'
     usage: Background
   - name: Signal Violet
-    value: "#7C3AED"
+    value: '#7C3AED'
     usage: Interactive elements
   - name: Stone
-    value: "#A8A29E"
+    value: '#A8A29E'
     usage: Supporting text
   - name: Confirmation
-    value: "#16A34A"
+    value: '#16A34A'
     usage: Success states
 typography:
   - name: Geist
@@ -47,6 +47,7 @@ They didn't want a redesign for the sake of it. They wanted their online shop to
 ## The old site
 
 Worth understanding what we were replacing. The existing site had:
+
 - 6.2s average page load
 - A checkout flow spread across 5 pages with mandatory account creation
 - Product images that were inconsistently sized, some with watermarks still visible

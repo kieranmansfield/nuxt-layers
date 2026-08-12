@@ -3,8 +3,9 @@ import type { MetadataSearchInput, MetadataSearchResult } from '#layers/metadata
 // fallow-ignore-next-line complexity
 export async function searchMetadata(input: MetadataSearchInput): Promise<MetadataSearchResult[]> {
   const all = getProviders()
-  const targets = input.providers?.length
-    ? all.filter((p) => input.providers!.includes(p.id))
+  const requestedProviders = input.providers
+  const targets = requestedProviders?.length
+    ? all.filter((p) => requestedProviders.includes(p.id))
     : all.filter((p) => !input.mediaType || p.mediaTypes.includes(input.mediaType))
 
   if (!targets.length) return []
@@ -19,16 +20,23 @@ export async function searchMetadata(input: MetadataSearchInput): Promise<Metada
   const cached = await getSearchCache<MetadataSearchResult[]>(cacheKey)
   if (cached) return cached
 
-  const settled = await Promise.allSettled(targets.map((p) => p.search(input)))
+  const settled = await Promise.all(
+    targets.map(async (p) => {
+      try {
+        return { provider: p, value: await p.search(input) }
+      } catch (reason) {
+        return { provider: p, reason }
+      }
+    })
+  )
 
   const results: MetadataSearchResult[] = []
-  for (let i = 0; i < settled.length; i++) {
-    const outcome = settled[i]!
-    if (outcome.status === 'fulfilled') {
+  for (const outcome of settled) {
+    if ('value' in outcome) {
       results.push(...outcome.value)
-    } else {
-      console.error(`[metadata] provider "${targets[i]!.id}" search failed:`, outcome.reason)
+      continue
     }
+    console.error(`[metadata] provider "${outcome.provider.id}" search failed:`, outcome.reason)
   }
 
   const deduped = deduplicateResults(results)

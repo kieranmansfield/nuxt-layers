@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
-import { createFeedCatalog, formatFeedCollectionName } from '../../layers/feeds/app/utils/feed-catalog'
+import {
+  createFeedCatalog,
+  formatFeedCollectionName,
+} from '../../layers/feeds/app/utils/feed-catalog'
 
 describe('formatFeedCollectionName', () => {
   it('normalizes kebab and snake case names for display', () => {

@@ -8,8 +8,8 @@ Debounce execution of a ref value.
 ## Usage
 
 ```ts
-import { refDebounced } from '@vueuse/core'
 import { shallowRef } from 'vue'
+import { refDebounced } from '@vueuse/core'
 
 const data = shallowRef({
   name: 'foo',

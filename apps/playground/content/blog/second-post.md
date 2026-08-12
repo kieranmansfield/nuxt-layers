@@ -23,35 +23,43 @@ Each layer is an independent, composable package:
 
 ::card-group
 
-::card
----
+## ::card
+
 title: Core
 icon: i-lucide-box
+
 ---
+
 Foundation utilities and device detection.
 ::
 
-::card
----
+## ::card
+
 title: UI
 icon: i-lucide-palette
+
 ---
+
 Typography, colors, and media components.
 ::
 
-::card
----
+## ::card
+
 title: Content
 icon: i-lucide-file-text
+
 ---
+
 Collections, composables, and rendering.
 ::
 
-::card
----
+## ::card
+
 title: Layout
 icon: i-lucide-layout
+
 ---
+
 Grid systems and page structure.
 ::
 

@@ -59,8 +59,8 @@ import { asSeoCollection } from '@nuxtjs/seo/content'
 
 export default defineContentConfig({
   collections: {
-    posts: defineCollection(asSeoCollection({ type: 'page', source: 'posts/**' }))
-  }
+    posts: defineCollection(asSeoCollection({ type: 'page', source: 'posts/**' })),
+  },
 })
 ```
 
@@ -68,7 +68,7 @@ export default defineContentConfig({
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/seo', '@nuxt/content']
+  modules: ['@nuxtjs/seo', '@nuxt/content'],
 })
 ```
 

@@ -30,43 +30,43 @@ export const loopTime = Fn(([time, duration]: [TSLNode, TSLNode]) => {
  * Bounce easing (standalone so `easing` does not reference itself)
  */
 const easeOutBounceFn = Fn(([t]: [TSLNode]) => {
-    const n1 = 7.5625
-    const d1 = 2.75
+  const n1 = 7.5625
+  const d1 = 2.75
 
-    const c1 = t.lessThan(1.0 / d1).select(t.mul(t).mul(n1), float(0.0))
-    const c2 = t
-      .greaterThanEqual(1.0 / d1)
-      .mul(t.lessThan(2.0 / d1))
-      .select(
-        t
-          .sub(1.5 / d1)
-          .mul(t.sub(1.5 / d1))
-          .mul(n1)
-          .add(0.75),
-        float(0.0)
-      )
-    const c3 = t
-      .greaterThanEqual(2.0 / d1)
-      .mul(t.lessThan(2.5 / d1))
-      .select(
-        t
-          .sub(2.25 / d1)
-          .mul(t.sub(2.25 / d1))
-          .mul(n1)
-          .add(0.9375),
-        float(0.0)
-      )
-    const c4 = t.greaterThanEqual(2.5 / d1).select(
+  const c1 = t.lessThan(1.0 / d1).select(t.mul(t).mul(n1), float(0.0))
+  const c2 = t
+    .greaterThanEqual(1.0 / d1)
+    .mul(t.lessThan(2.0 / d1))
+    .select(
       t
-        .sub(2.625 / d1)
-        .mul(t.sub(2.625 / d1))
+        .sub(1.5 / d1)
+        .mul(t.sub(1.5 / d1))
         .mul(n1)
-        .add(0.984375),
+        .add(0.75),
       float(0.0)
     )
+  const c3 = t
+    .greaterThanEqual(2.0 / d1)
+    .mul(t.lessThan(2.5 / d1))
+    .select(
+      t
+        .sub(2.25 / d1)
+        .mul(t.sub(2.25 / d1))
+        .mul(n1)
+        .add(0.9375),
+      float(0.0)
+    )
+  const c4 = t.greaterThanEqual(2.5 / d1).select(
+    t
+      .sub(2.625 / d1)
+      .mul(t.sub(2.625 / d1))
+      .mul(n1)
+      .add(0.984375),
+    float(0.0)
+  )
 
-    return c1.add(c2).add(c3).add(c4)
-  })
+  return c1.add(c2).add(c3).add(c4)
+})
 
 /**
  * Easing functions
@@ -85,9 +85,7 @@ export const easing = {
   easeOutCubic: Fn(([t]: [TSLNode]) => float(1.0).sub(pow(float(1.0).sub(t), 3.0))),
   easeInOutCubic: Fn(([t]: [TSLNode]) => {
     const inv: TSLNode = float(-2.0).mul(t).add(2.0)
-    return t
-      .lessThan(0.5)
-      .select(t.mul(t).mul(t).mul(4.0), float(1.0).sub(inv.pow(3.0).div(2.0)))
+    return t.lessThan(0.5).select(t.mul(t).mul(t).mul(4.0), float(1.0).sub(inv.pow(3.0).div(2.0)))
   }),
 
   // Quartic

@@ -18,8 +18,8 @@ import {
 } from 'three/tsl'
 
 import type { TSLNode } from '../types'
-import { fbm3dSimplex, simplexNoise3d } from './noise'
 import { toScalarNode, toVec2Node } from './nodes'
+import { fbm3dSimplex, simplexNoise3d } from './noise'
 
 // ============================================
 // Canvas Weave Pattern

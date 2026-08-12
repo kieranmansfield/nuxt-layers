@@ -1,5 +1,7 @@
 import type { MetadataProvider } from '#layers/metadata/shared/types'
 
+import type { ComicVineIssue, ComicVineVolume } from './types'
+
 // Matches CJK, Hangul, Arabic, Hebrew, Thai, Devanagari, Cyrillic, etc.
 const NON_LATIN_RE = /[Ͱ-ϿЀ-ӿ؀-ۿऀ-ॿ　-鿿가-힯豈-﫿]/
 
@@ -44,13 +46,19 @@ export const comicVineProvider: MetadataProvider = {
   async lookup({ providerId, resourceType = 'issue' }) {
     if (resourceType === 'volume') {
       const res = await fetchComicVineVolume(providerId)
-      return normaliseComicVineVolume(res.results as import('./types').ComicVineVolume)
+      return normaliseComicVineVolume(res.results as ComicVineVolume)
     }
     const res = await fetchComicVineIssue(providerId)
-    return normaliseComicVineIssue(res.results as import('./types').ComicVineIssue)
+    return normaliseComicVineIssue(res.results as ComicVineIssue)
   },
 
   async sync({ providerId, resourceType = 'issue' }) {
-    return (await comicVineProvider.lookup!({ provider: 'comicvine', providerId, resourceType }))!
+    const record = await comicVineProvider.lookup({
+      provider: 'comicvine',
+      providerId,
+      resourceType,
+    })
+    if (!record) throw new MetadataProviderError('comicvine', `No record found for ${providerId}`)
+    return record
   },
 }

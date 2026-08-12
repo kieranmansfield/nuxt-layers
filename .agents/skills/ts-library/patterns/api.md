@@ -37,8 +37,12 @@ export function createContext(options: Options = {}) {
   return {
     options: resolved,
     filter,
-    transform(code: string, id: string) { /* ... */ },
-    async scanDirs() { /* ... */ },
+    transform(code: string, id: string) {
+      /* ... */
+    },
+    async scanDirs() {
+      /* ... */
+    },
   }
 }
 
@@ -63,7 +67,9 @@ export function createBuilder<TContext = unknown>() {
     output<T>(schema: T): Builder<TContext, unknown, T> {
       return this as any
     },
-    build(): Procedure<TContext> { /* ... */ },
+    build(): Procedure<TContext> {
+      /* ... */
+    },
   }
 }
 
@@ -98,10 +104,14 @@ export default createUnplugin<Options>((options) => {
 
     // Bundler-specific hooks
     vite: {
-      configResolved(config) { /* Vite-specific */ },
+      configResolved(config) {
+        /* Vite-specific */
+      },
     },
     webpack(compiler) {
-      compiler.hooks.watchRun.tap('my-plugin', () => { /* ... */ })
+      compiler.hooks.watchRun.tap('my-plugin', () => {
+        /* ... */
+      })
     },
   }
 })
@@ -112,10 +122,11 @@ Export per-bundler entries:
 ```typescript
 // src/vite.ts
 import unplugin from '.'
-export default unplugin.vite
-
 // src/webpack.ts
 import unplugin from '.'
+
+export default unplugin.vite
+
 export default unplugin.webpack
 ```
 
@@ -126,9 +137,15 @@ Defer bundler-specific code until accessed:
 ```typescript
 export function createPlugin<T>(factory: PluginFactory<T>) {
   return {
-    get vite() { return getVitePlugin(factory) },
-    get webpack() { return getWebpackPlugin(factory) },
-    get rollup() { return getRollupPlugin(factory) },
+    get vite() {
+      return getVitePlugin(factory)
+    },
+    get webpack() {
+      return getWebpackPlugin(factory)
+    },
+    get rollup() {
+      return getRollupPlugin(factory)
+    },
   }
 }
 ```

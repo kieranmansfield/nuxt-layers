@@ -1,6 +1,6 @@
 ---
 paths:
-  - "layers/**/*"
+  - 'layers/**/*'
 ---
 
 # Nuxt Layers Development
@@ -30,30 +30,30 @@ Placing it at the layer root silently ignores it — `useAppConfig()` returns `u
 
 ## All Layers
 
-| Layer | Purpose | Depends on |
-|-------|---------|------------|
-| `core` | Base utilities, 404, loading screen, scroll guard | nothing (loads @nuxt/ui, @vueuse/nuxt, @nuxtjs/device) |
-| `seo` | SEO: robots, sitemap, og-image, schema-org via @nuxtjs/seo | `core` |
-| `scripts` | Third-party script loading via @nuxt/scripts (analytics, GTM, embeds) | `core` |
-| `typography` | Typography components (Headline, TextStroke, CodeBlock) + useTypography, useColor | `core` |
-| `navigation` | Nav/header/footer, site title, links, useMastNav, useSite, useAppToast | `core`, `scroll`, `layout`, `typography` |
-| `visual` | Accent blobs, gradients, tints, modals, picture, progress + their composables | `core` |
-| `ui` | UI orchestrator — composes typography, navigation, visual + default layout | `typography`, `navigation`, `visual` |
-| `layout` | Page layout components (header, footer, sidebar) | `core` |
-| `scroll` | GSAP + Locomotive Scroll infrastructure, scroll-reactive components | `core` |
-| `animations` | Animation components (Marquee, Cursor, Tilt, Magnetic, CountUp, TextReveal) | `scroll` |
-| `transitions` | CSS transition/animation classes + Transition.vue component | `core` |
-| `page-transitions` | Nuxt page transition defaults + usePageTransition() | `core` |
-| `motion` | Motion orchestrator — composes scroll, animations, transitions, page-transitions | `scroll`, `animations`, `transitions`, `page-transitions` |
-| `canvas` | WebGL/WebGPU/TresJS rendering context | `core` |
-| `shader` | TSL shader pipeline blocks, materials, presets | `canvas` |
-| `mailer` | Email sending via Resend, hooks, runtime config | `core` |
-| `forms` | Form UI components, Zod validation | `mailer` |
-| `database` | Drizzle ORM + Neon Postgres connection; useSql(), useDrizzle(schema) server utils | `core` |
-| `auth` | nuxt-auth-utils + GitHub OAuth handler; sealed-cookie sessions, opt-in `auth` route middleware | `core` |
-| `theme` | Design tokens and theming utilities | `core` |
-| `content` | Nuxt Content v3 collections and components | `core` |
-| `routing` | Advanced routing, maintenance mode, feature flags | `core` |
+| Layer              | Purpose                                                                                        | Depends on                                                |
+| ------------------ | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `core`             | Base utilities, 404, loading screen, scroll guard                                              | nothing (loads @nuxt/ui, @vueuse/nuxt, @nuxtjs/device)    |
+| `seo`              | SEO: robots, sitemap, og-image, schema-org via @nuxtjs/seo                                     | `core`                                                    |
+| `scripts`          | Third-party script loading via @nuxt/scripts (analytics, GTM, embeds)                          | `core`                                                    |
+| `typography`       | Typography components (Headline, TextStroke, CodeBlock) + useTypography, useColor              | `core`                                                    |
+| `navigation`       | Nav/header/footer, site title, links, useMastNav, useSite, useAppToast                         | `core`, `scroll`, `layout`, `typography`                  |
+| `visual`           | Accent blobs, gradients, tints, modals, picture, progress + their composables                  | `core`                                                    |
+| `ui`               | UI orchestrator — composes typography, navigation, visual + default layout                     | `typography`, `navigation`, `visual`                      |
+| `layout`           | Page layout components (header, footer, sidebar)                                               | `core`                                                    |
+| `scroll`           | GSAP + Locomotive Scroll infrastructure, scroll-reactive components                            | `core`                                                    |
+| `animations`       | Animation components (Marquee, Cursor, Tilt, Magnetic, CountUp, TextReveal)                    | `scroll`                                                  |
+| `transitions`      | CSS transition/animation classes + Transition.vue component                                    | `core`                                                    |
+| `page-transitions` | Nuxt page transition defaults + usePageTransition()                                            | `core`                                                    |
+| `motion`           | Motion orchestrator — composes scroll, animations, transitions, page-transitions               | `scroll`, `animations`, `transitions`, `page-transitions` |
+| `canvas`           | WebGL/WebGPU/TresJS rendering context                                                          | `core`                                                    |
+| `shader`           | TSL shader pipeline blocks, materials, presets                                                 | `canvas`                                                  |
+| `mailer`           | Email sending via Resend, hooks, runtime config                                                | `core`                                                    |
+| `forms`            | Form UI components, Zod validation                                                             | `mailer`                                                  |
+| `database`         | Drizzle ORM + Neon Postgres connection; useSql(), useDrizzle(schema) server utils              | `core`                                                    |
+| `auth`             | nuxt-auth-utils + GitHub OAuth handler; sealed-cookie sessions, opt-in `auth` route middleware | `core`                                                    |
+| `theme`            | Design tokens and theming utilities                                                            | `core`                                                    |
+| `content`          | Nuxt Content v3 collections and components                                                     | `core`                                                    |
+| `routing`          | Advanced routing, maintenance mode, feature flags                                              | `core`                                                    |
 
 ## Alias Pattern
 
@@ -70,6 +70,7 @@ export default defineNuxtConfig({
 ```
 
 Import examples:
+
 - `import { formsLayerHooks } from '#layers/forms/server/utils/hooks'`
 - `import type { GridConfig } from '#layers/layout/types/layouts'`
 

@@ -43,10 +43,10 @@ export default defineConfig({
 
 ```typescript
 export default defineConfig({
-  entry: ['src/*.ts'],          // Glob all entries
+  entry: ['src/*.ts'], // Glob all entries
   format: ['esm', 'cjs'],
   dts: true,
-  exports: true,                // Auto-generate package.json exports
+  exports: true, // Auto-generate package.json exports
   attw: { profile: 'esm-only' }, // Type checking profile
 })
 ```
@@ -58,7 +58,7 @@ export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
   dts: {
-    resolve: ['@antfu/utils'],  // Inline specific deps in declarations
+    resolve: ['@antfu/utils'], // Inline specific deps in declarations
   },
   external: ['vue'],
   define: {

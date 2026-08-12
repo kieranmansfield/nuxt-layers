@@ -1,5 +1,6 @@
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import LocomotiveScroll from 'locomotive-scroll'
+
 import type { ScrollState } from '../types/scroll'
 
 export default defineNuxtPlugin({

@@ -72,9 +72,7 @@ describe('getFeatureClassNames', () => {
   })
 
   it('only includes extra classes for the features that are truthy', () => {
-    const classes = getFeatureClassNames(
-      createFeatures({ intersectionObserver: true, avif: true })
-    )
+    const classes = getFeatureClassNames(createFeatures({ intersectionObserver: true, avif: true }))
 
     expect(classes).toContain('has-intersection-observer')
     expect(classes).toContain('supports-avif')

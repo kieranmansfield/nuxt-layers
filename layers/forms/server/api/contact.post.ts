@@ -23,7 +23,10 @@ function checkRateLimit(ip: string): boolean {
 export default defineEventHandler(async (event) => {
   const ip = getRequestIP(event, { xForwardedFor: true }) ?? 'unknown'
   if (!checkRateLimit(ip)) {
-    throw createError({ statusCode: 429, statusMessage: 'Too many requests. Please try again later.' })
+    throw createError({
+      statusCode: 429,
+      statusMessage: 'Too many requests. Please try again later.',
+    })
   }
 
   const body = await readBody(event)

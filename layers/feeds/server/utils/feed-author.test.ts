@@ -25,9 +25,9 @@ describe('resolveFeedAuthor', () => {
   })
 
   it('ignores an authors array entry with an empty name and falls through', () => {
-    expect(
-      resolveFeedAuthor({ authors: [{ name: '' }], author: 'Kieran Mansfield' })
-    ).toBe('Kieran Mansfield')
+    expect(resolveFeedAuthor({ authors: [{ name: '' }], author: 'Kieran Mansfield' })).toBe(
+      'Kieran Mansfield'
+    )
   })
 
   it('ignores an empty string author and falls through to object author', () => {

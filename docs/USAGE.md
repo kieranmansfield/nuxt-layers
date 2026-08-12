@@ -15,10 +15,7 @@ Add layers to the `extends` array in your `nuxt.config.ts`. Each layer is refere
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  extends: [
-    'kmcom-nuxt-layers/layers/core',
-    'kmcom-nuxt-layers/layers/ui',
-  ]
+  extends: ['kmcom-nuxt-layers/layers/core', 'kmcom-nuxt-layers/layers/ui'],
 })
 ```
 
@@ -26,16 +23,16 @@ Nuxt resolves each layer via the `package.json` → `"main": "./nuxt.config.ts"`
 
 ## Available Layers
 
-| Layer | Extends Path | Depends On | Required Dependencies |
-|-------|-------------|------------|----------------------|
-| **core** | `kmcom-nuxt-layers/layers/core` | — | `nuxt`, `@nuxt/ui`, `pinia`, `@vueuse/nuxt`, `@nuxtjs/device` |
-| **ui** | `kmcom-nuxt-layers/layers/ui` | core | — |
-| **layout** | `kmcom-nuxt-layers/layers/layout` | core | — |
-| **motion** | `kmcom-nuxt-layers/layers/motion` | core | `gsap`, `locomotive-scroll` |
-| **shader** | `kmcom-nuxt-layers/layers/shader` | core | `three`, `@tresjs/nuxt`, `@tresjs/core`, `@tresjs/cientos`, `@tresjs/post-processing` |
-| **forms** | `kmcom-nuxt-layers/layers/forms` | core | `zod` |
-| **theme** | `kmcom-nuxt-layers/layers/theme` | core | — |
-| **content** | `kmcom-nuxt-layers/layers/content` | core | `@nuxt/content`, `better-sqlite3` |
+| Layer       | Extends Path                       | Depends On | Required Dependencies                                                                 |
+| ----------- | ---------------------------------- | ---------- | ------------------------------------------------------------------------------------- |
+| **core**    | `kmcom-nuxt-layers/layers/core`    | —          | `nuxt`, `@nuxt/ui`, `pinia`, `@vueuse/nuxt`, `@nuxtjs/device`                         |
+| **ui**      | `kmcom-nuxt-layers/layers/ui`      | core       | —                                                                                     |
+| **layout**  | `kmcom-nuxt-layers/layers/layout`  | core       | —                                                                                     |
+| **motion**  | `kmcom-nuxt-layers/layers/motion`  | core       | `gsap`, `locomotive-scroll`                                                           |
+| **shader**  | `kmcom-nuxt-layers/layers/shader`  | core       | `three`, `@tresjs/nuxt`, `@tresjs/core`, `@tresjs/cientos`, `@tresjs/post-processing` |
+| **forms**   | `kmcom-nuxt-layers/layers/forms`   | core       | `zod`                                                                                 |
+| **theme**   | `kmcom-nuxt-layers/layers/theme`   | core       | —                                                                                     |
+| **content** | `kmcom-nuxt-layers/layers/content` | core       | `@nuxt/content`, `better-sqlite3`                                                     |
 
 ## Layer Dependency Rules
 
@@ -67,10 +64,7 @@ npm install @nuxt/content better-sqlite3
 
 ```ts
 export default defineNuxtConfig({
-  extends: [
-    'kmcom-nuxt-layers/layers/core',
-    'kmcom-nuxt-layers/layers/ui',
-  ]
+  extends: ['kmcom-nuxt-layers/layers/core', 'kmcom-nuxt-layers/layers/ui'],
 })
 ```
 
@@ -82,7 +76,7 @@ export default defineNuxtConfig({
     'kmcom-nuxt-layers/layers/core',
     'kmcom-nuxt-layers/layers/ui',
     'kmcom-nuxt-layers/layers/layout',
-  ]
+  ],
 })
 ```
 
@@ -94,10 +88,7 @@ npm install gsap locomotive-scroll
 
 ```ts
 export default defineNuxtConfig({
-  extends: [
-    'kmcom-nuxt-layers/layers/core',
-    'kmcom-nuxt-layers/layers/motion',
-  ]
+  extends: ['kmcom-nuxt-layers/layers/core', 'kmcom-nuxt-layers/layers/motion'],
 })
 ```
 
@@ -118,7 +109,7 @@ export default defineNuxtConfig({
     'kmcom-nuxt-layers/layers/forms',
     'kmcom-nuxt-layers/layers/theme',
     'kmcom-nuxt-layers/layers/content',
-  ]
+  ],
 })
 ```
 
@@ -132,39 +123,39 @@ export default defineAppConfig({
   // Core layer overrides
   coreLayer: {
     loading: {
-      enabled: false,          // Disable loading screen
+      enabled: false, // Disable loading screen
     },
     scrollGuard: {
-      enabled: false,          // Disable scroll guard
+      enabled: false, // Disable scroll guard
     },
   },
 
   // Motion layer overrides
   motion: {
     lenis: {
-      duration: 0.8,           // Faster smooth scroll
-      smoothTouch: true,       // Enable on touch devices
+      duration: 0.8, // Faster smooth scroll
+      smoothTouch: true, // Enable on touch devices
     },
   },
 
   // Theme layer overrides
   themeLayer: {
-    defaultAccent: 'indigo',   // Change default accent color
-    accents: ['blue', 'indigo', 'violet', 'purple'],  // Limit palette
+    defaultAccent: 'indigo', // Change default accent color
+    accents: ['blue', 'indigo', 'violet', 'purple'], // Limit palette
   },
 })
 ```
 
 ### Available Config Namespaces
 
-| Namespace | Layer | Key Options |
-|-----------|-------|-------------|
-| `coreLayer.loading` | core | `enabled`, `minDuration`, `maxDuration`, `background`, `textColor` |
-| `coreLayer.scrollGuard` | core | `enabled`, `strict`, `excludeSelectors`, `debug` |
-| `coreLayer.errors` | core | `logToConsole`, `logToExternal`, `externalUrl` |
-| `coreLayer.notFound` | core | `icon`, `title`, `description`, `showHomeButton`, `actions`, `suggestions` |
-| `motion` | motion | `gsapScrollTrigger`, `lenis.*` (duration, smoothWheel, smoothTouch, etc.) |
-| `themeLayer` | theme | `accents`, `defaultAccent` |
+| Namespace               | Layer  | Key Options                                                                |
+| ----------------------- | ------ | -------------------------------------------------------------------------- |
+| `coreLayer.loading`     | core   | `enabled`, `minDuration`, `maxDuration`, `background`, `textColor`         |
+| `coreLayer.scrollGuard` | core   | `enabled`, `strict`, `excludeSelectors`, `debug`                           |
+| `coreLayer.errors`      | core   | `logToConsole`, `logToExternal`, `externalUrl`                             |
+| `coreLayer.notFound`    | core   | `icon`, `title`, `description`, `showHomeButton`, `actions`, `suggestions` |
+| `motion`                | motion | `gsapScrollTrigger`, `lenis.*` (duration, smoothWheel, smoothTouch, etc.)  |
+| `themeLayer`            | theme  | `accents`, `defaultAccent`                                                 |
 
 ## Optional Modules
 

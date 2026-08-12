@@ -109,14 +109,13 @@ Potentially include lint:types if you decide that vue-tsc provides something val
 The distinction should be:
 
 check
-  ├── ESLint
-  ├── Stylelint
-  ├── TypeScript
-  └── Prettier
+├── ESLint
+├── Stylelint
+├── TypeScript
+└── Prettier
 validate
-  └── check
-      +
-      production build
+└── check +
+production build
 
 So:
 
@@ -147,10 +146,10 @@ is already close.
 I’d extend it to:
 
 pnpm fix
-    │
-    ├── Prettier
-    ├── ESLint
-    └── Stylelint
+│
+├── Prettier
+├── ESLint
+└── Stylelint
 
 Then the workflow becomes beautifully simple:
 
@@ -173,9 +172,9 @@ to something more meaningful:
 
 Now you have:
 
-fix       → modify things to make them better
-check     → source-level validation
-validate  → source validation + production build
+fix → modify things to make them better
+check → source-level validation
+validate → source validation + production build
 
 That’s a very clean contract.
 
@@ -192,9 +191,9 @@ is too destructive for something called clean.
 I’d split it:
 
 {
-  "clean": "nuxt cleanup",
-  "reset": "node scripts/reset.mjs",
-  "clean:cache": "pnpm store prune"
+"clean": "nuxt cleanup",
+"reset": "node scripts/reset.mjs",
+"clean:cache": "pnpm store prune"
 }
 
 Where reset deliberately does the nuclear option:
@@ -267,25 +266,25 @@ The script should understand the concept of a Nuxt framework stack.
 Initially:
 
 const frameworkPackages = [
-  "nuxt",
-  "@nuxt/ui",
-  "@nuxt/content",
-  "@nuxt/image",
-  "@nuxt/fonts",
-  "vue",
-  "vue-router",
-  "tailwindcss"
+"nuxt",
+"@nuxt/ui",
+"@nuxt/content",
+"@nuxt/image",
+"@nuxt/fonts",
+"vue",
+"vue-router",
+"tailwindcss"
 ]
 
 But importantly, it should inspect package.json and only operate on packages actually present.
 
 That makes the automation reusable between:
 
-* simple Nuxt sites
-* Nuxt sites using Content
-* Nuxt sites using UI
-* your layers repository
-* future projects with additional Nuxt modules
+- simple Nuxt sites
+- Nuxt sites using Content
+- Nuxt sites using UI
+- your layers repository
+- future projects with additional Nuxt modules
 
 ⸻
 
@@ -294,32 +293,32 @@ That makes the automation reusable between:
 I’d design its lifecycle approximately like this:
 
 pnpm framework:update
-        │
-        ▼
+│
+▼
 Check Git state
-        │
-        ▼
+│
+▼
 Detect framework packages
-        │
-        ▼
+│
+▼
 Remove generated Nuxt artefacts
-        │
-        ▼
+│
+▼
 Update framework dependencies
-        │
-        ▼
+│
+▼
 pnpm install
-        │
-        ▼
+│
+▼
 nuxt prepare
-        │
-        ▼
+│
+▼
 Typecheck
-        │
-        ▼
+│
+▼
 Build
-        │
-        ▼
+│
+▼
 Report result
 
 The important thing is that this is not simply dependency updating.
@@ -376,13 +375,13 @@ Your current:
 can become:
 
 deps:check
-    ↓
+↓
 Show available updates
 deps:update
-    ↓
+↓
 Update within declared ranges
 deps:update:latest
-    ↓
+↓
 Explicitly jump to latest versions
 
 I’d keep npm-check-updates here because it’s useful for deliberately discovering/upgrading versions beyond the ranges currently declared in package.json.
@@ -416,19 +415,19 @@ Release
 Does something closer to:
 
 check Git state
-     ↓
+↓
 update dependencies if appropriate
-     ↓
+↓
 check
-     ↓
+↓
 build layers
-     ↓
+↓
 test layers
-     ↓
+↓
 bump version
-     ↓
+↓
 commit
-     ↓
+↓
 tag
 
 I’d make this a layers-repo-specific system, rather than putting it into every website.
@@ -609,8 +608,8 @@ pnpm release
 The tooling determines:
 
 Changed:
-  layers/design-system
-  layers/typography
+layers/design-system
+layers/typography
 
 and can eventually determine whether you need:
 
@@ -640,10 +639,10 @@ nuxt-frontend-boilerplate/
 ├── pages/
 ├── public/
 ├── scripts/
-│   ├── doctor.mjs
-│   ├── framework-update.mjs
-│   ├── info.mjs
-│   └── reset.mjs
+│ ├── doctor.mjs
+│ ├── framework-update.mjs
+│ ├── info.mjs
+│ └── reset.mjs
 ├── server/
 ├── app.vue
 ├── nuxt.config.ts
@@ -659,40 +658,40 @@ And every project starts with the same automation.
 Not necessarily immediately, but as the end state:
 
 {
-  "scripts": {
-    "dev": "nuxt dev",
-    "preview": "nuxt preview",
-    "kill": "node scripts/kill.mjs",
-    "build": "nuxt build",
-    "generate": "nuxt generate",
-    "analyze": "nuxt analyze",
-    "build:analyze": "nuxt build --analyze",
-    "content:build": "nuxt content build",
-    "lint": "pnpm run lint:js && pnpm run lint:style",
-    "lint:js": "eslint .",
-    "lint:style": "stylelint \"**/*.{vue,scss,css}\"",
-    "lint:types": "vue-tsc --noEmit --strict",
-    "lint:fix": "node scripts/lint-fix.mjs",
-    "format": "prettier --config prettier.config.cjs --ignore-path .prettierignore --write .",
-    "format:check": "prettier --config prettier.config.cjs --ignore-path .prettierignore --check .",
-    "typecheck": "nuxt typecheck",
-    "check": "pnpm run lint && pnpm run typecheck && pnpm run format:check",
-    "fix": "pnpm run format && pnpm run lint:fix",
-    "validate": "pnpm run check && pnpm run build",
-    "clean": "nuxt cleanup",
-    "reset": "node scripts/reset.mjs",
-    "clean:cache": "pnpm store prune",
-    "deps:check": "ncu --format group",
-    "deps:update": "ncu -u && pnpm install",
-    "deps:update:latest": "pnpm update --latest",
-    "framework:update": "node scripts/framework-update.mjs",
-    "doctor": "node scripts/doctor.mjs",
-    "info": "node scripts/info.mjs",
-    "browserlist": "pnpm dlx update-browserslist-db@latest",
-    "vscode:sync": "git fetch vscode-config && git checkout vscode-config/main -- .vscode/",
-    "lint:sync": "git fetch tooling-config && git checkout tooling-config/main -- .editorconfig eslint.config.mjs prettier.config.cjs .prettierignore stylelint.config.mjs",
-    "postinstall": "nuxt prepare"
-  }
+"scripts": {
+"dev": "nuxt dev",
+"preview": "nuxt preview",
+"kill": "node scripts/kill.mjs",
+"build": "nuxt build",
+"generate": "nuxt generate",
+"analyze": "nuxt analyze",
+"build:analyze": "nuxt build --analyze",
+"content:build": "nuxt content build",
+"lint": "pnpm run lint:js && pnpm run lint:style",
+"lint:js": "eslint .",
+"lint:style": "stylelint \"\*_/_.{vue,scss,css}\"",
+"lint:types": "vue-tsc --noEmit --strict",
+"lint:fix": "node scripts/lint-fix.mjs",
+"format": "prettier --config prettier.config.cjs --ignore-path .prettierignore --write .",
+"format:check": "prettier --config prettier.config.cjs --ignore-path .prettierignore --check .",
+"typecheck": "nuxt typecheck",
+"check": "pnpm run lint && pnpm run typecheck && pnpm run format:check",
+"fix": "pnpm run format && pnpm run lint:fix",
+"validate": "pnpm run check && pnpm run build",
+"clean": "nuxt cleanup",
+"reset": "node scripts/reset.mjs",
+"clean:cache": "pnpm store prune",
+"deps:check": "ncu --format group",
+"deps:update": "ncu -u && pnpm install",
+"deps:update:latest": "pnpm update --latest",
+"framework:update": "node scripts/framework-update.mjs",
+"doctor": "node scripts/doctor.mjs",
+"info": "node scripts/info.mjs",
+"browserlist": "pnpm dlx update-browserslist-db@latest",
+"vscode:sync": "git fetch vscode-config && git checkout vscode-config/main -- .vscode/",
+"lint:sync": "git fetch tooling-config && git checkout tooling-config/main -- .editorconfig eslint.config.mjs prettier.config.cjs .prettierignore stylelint.config.mjs",
+"postinstall": "nuxt prepare"
+}
 }
 
 I wouldn’t blindly copy that yet — this is the target architecture, not necessarily the first implementation.
@@ -707,12 +706,12 @@ Phase 1 — Clean up
 
 Refactor the existing package.json:
 
-* remove duplicate format/format:fix
-* make lint non-mutating
-* separate clean from reset
-* clean up dependency naming
-* introduce check
-* redefine validate
+- remove duplicate format/format:fix
+- make lint non-mutating
+- separate clean from reset
+- clean up dependency naming
+- introduce check
+- redefine validate
 
 Phase 2 — Basic helpers
 
@@ -784,23 +783,23 @@ Phase 7 — Release automation
 Eventually:
 
 Git state
- ↓
+↓
 dependency state
- ↓
+↓
 framework compatibility
- ↓
+↓
 layer validation
- ↓
+↓
 build
- ↓
+↓
 tests
- ↓
+↓
 version
- ↓
+↓
 commit
- ↓
+↓
 tag
- ↓
+↓
 publish
 
 At that point your layers repository effectively has its own release system.
@@ -824,16 +823,16 @@ pnpm release
 Then put the intelligence behind those commands:
 
 package.json
-     │
-     ├── simple commands ──────→ Nuxt / pnpm / ESLint
-     │
-     └── complex commands ─────→ scripts/*.mjs
-                                  │
-                                  ├── dependency management
-                                  ├── framework updates
-                                  ├── project diagnostics
-                                  ├── layer management
-                                  └── release management
+│
+├── simple commands ──────→ Nuxt / pnpm / ESLint
+│
+└── complex commands ─────→ scripts/\*.mjs
+│
+├── dependency management
+├── framework updates
+├── project diagnostics
+├── layer management
+└── release management
 
 That gives you something much more valuable than a large `package.json: a consistent automation layer for your entire Nuxt ecosystem.
 

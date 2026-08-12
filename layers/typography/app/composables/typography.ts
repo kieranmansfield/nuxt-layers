@@ -1,5 +1,4 @@
-import type { MaybeRefOrGetter } from 'vue'
-import { toValue } from 'vue'
+import { toValue, type MaybeRefOrGetter } from 'vue'
 
 import type {
   FluidFontSize,
@@ -26,8 +25,8 @@ function normalizeAxis(
   const { prefix = '', fallback = '', numericFormatter } = options
 
   return typeof value === 'number'
-    ? numericFormatter?.(value) ?? (prefix ? `${prefix}-[${value}]` : `[${value}]`)
-    : value ?? fallback
+    ? (numericFormatter?.(value) ?? (prefix ? `${prefix}-[${value}]` : `[${value}]`))
+    : (value ?? fallback)
 }
 
 function getSizeClass(size: FontSize | undefined): string {

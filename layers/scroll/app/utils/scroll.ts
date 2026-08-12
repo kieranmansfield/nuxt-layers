@@ -91,7 +91,11 @@ export function runNativeScroll(target: ScrollTarget, options?: ScrollToOptions)
     return
   }
 
-  runSmoothScroll(targetPosition, resolveNativeScrollDelay(options), resolveScrollOnComplete(options))
+  runSmoothScroll(
+    targetPosition,
+    resolveNativeScrollDelay(options),
+    resolveScrollOnComplete(options)
+  )
 }
 
 export function runLocomotiveScroll(
