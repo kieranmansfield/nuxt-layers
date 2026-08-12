@@ -69,6 +69,7 @@
 @utility text-fluid-xs {
   font-size: var(--fluid-text-xs-raw);
   line-height: 1.5;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-xs-raw), var(--fluid-step));
   }
@@ -77,6 +78,7 @@
 @utility text-fluid-sm {
   font-size: var(--fluid-text-sm-raw);
   line-height: 1.45;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-sm-raw), var(--fluid-step));
   }
@@ -85,6 +87,7 @@
 @utility text-fluid-md {
   font-size: var(--fluid-text-md-raw);
   line-height: 1.4;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-md-raw), var(--fluid-step));
   }
@@ -93,6 +96,7 @@
 @utility text-fluid-lg {
   font-size: var(--fluid-text-lg-raw);
   line-height: 1.25;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-lg-raw), var(--fluid-step));
   }
@@ -101,6 +105,7 @@
 @utility text-fluid-xl {
   font-size: var(--fluid-text-xl-raw);
   line-height: 1.15;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-xl-raw), var(--fluid-step));
   }
@@ -109,6 +114,7 @@
 @utility text-fluid-2xl {
   font-size: var(--fluid-text-2xl-raw);
   line-height: 1.1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-2xl-raw), var(--fluid-step));
   }
@@ -117,6 +123,7 @@
 @utility text-fluid-3xl {
   font-size: var(--fluid-text-3xl-raw);
   line-height: 1.05;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-3xl-raw), var(--fluid-step));
   }
@@ -125,6 +132,7 @@
 @utility text-fluid-4xl {
   font-size: calc(var(--fluid-text-4xl-raw) * var(--heading-text-scale-damp));
   line-height: 1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: calc(
       round(down, var(--fluid-text-4xl-raw), var(--fluid-step)) * var(--heading-text-scale-damp)
@@ -135,6 +143,7 @@
 @utility text-fluid-5xl {
   font-size: calc(var(--fluid-text-5xl-raw) * var(--heading-text-scale-damp));
   line-height: 1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: calc(
       round(down, var(--fluid-text-5xl-raw), var(--fluid-step)) * var(--heading-text-scale-damp)
@@ -145,6 +154,7 @@
 @utility text-fluid-6xl {
   font-size: calc(var(--fluid-text-6xl-raw) * var(--heading-text-scale-damp));
   line-height: 1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: calc(
       round(down, var(--fluid-text-6xl-raw), var(--fluid-step)) * var(--heading-text-scale-damp)
@@ -155,6 +165,7 @@
 @utility text-fluid-7xl {
   font-size: calc(var(--fluid-text-7xl-raw) * var(--heading-text-scale-damp));
   line-height: 1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: calc(
       round(down, var(--fluid-text-7xl-raw), var(--fluid-step)) * var(--heading-text-scale-damp)
@@ -165,6 +176,7 @@
 @utility text-fluid-8xl {
   font-size: calc(var(--fluid-text-8xl-raw) * var(--heading-text-scale-damp));
   line-height: 1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: calc(
       round(down, var(--fluid-text-8xl-raw), var(--fluid-step)) * var(--heading-text-scale-damp)
@@ -175,6 +187,7 @@
 @utility text-fluid-9xl {
   font-size: calc(var(--fluid-text-9xl-raw) * var(--heading-text-scale-damp));
   line-height: 1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: calc(
       round(down, var(--fluid-text-9xl-raw), var(--fluid-step)) * var(--heading-text-scale-damp)
@@ -185,6 +198,7 @@
 @utility text-fluid-xs-cq {
   font-size: var(--fluid-text-xs-cq-raw);
   line-height: 1.5;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-xs-cq-raw), var(--fluid-step));
   }
@@ -193,6 +207,7 @@
 @utility text-fluid-sm-cq {
   font-size: var(--fluid-text-sm-cq-raw);
   line-height: 1.45;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-sm-cq-raw), var(--fluid-step));
   }
@@ -201,6 +216,7 @@
 @utility text-fluid-md-cq {
   font-size: var(--fluid-text-md-cq-raw);
   line-height: 1.4;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-md-cq-raw), var(--fluid-step));
   }
@@ -209,6 +225,7 @@
 @utility text-fluid-lg-cq {
   font-size: var(--fluid-text-lg-cq-raw);
   line-height: 1.25;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-lg-cq-raw), var(--fluid-step));
   }
@@ -217,6 +234,7 @@
 @utility text-fluid-xl-cq {
   font-size: var(--fluid-text-xl-cq-raw);
   line-height: 1.15;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-xl-cq-raw), var(--fluid-step));
   }
@@ -225,6 +243,7 @@
 @utility text-fluid-2xl-cq {
   font-size: var(--fluid-text-2xl-cq-raw);
   line-height: 1.1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-2xl-cq-raw), var(--fluid-step));
   }
@@ -233,6 +252,7 @@
 @utility text-fluid-3xl-cq {
   font-size: var(--fluid-text-3xl-cq-raw);
   line-height: 1.05;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-3xl-cq-raw), var(--fluid-step));
   }
@@ -241,6 +261,7 @@
 @utility text-fluid-4xl-cq {
   font-size: var(--fluid-text-4xl-cq-raw);
   line-height: 1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-4xl-cq-raw), var(--fluid-step));
   }
@@ -249,6 +270,7 @@
 @utility text-fluid-5xl-cq {
   font-size: var(--fluid-text-5xl-cq-raw);
   line-height: 1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-5xl-cq-raw), var(--fluid-step));
   }
@@ -257,6 +279,7 @@
 @utility text-fluid-6xl-cq {
   font-size: var(--fluid-text-6xl-cq-raw);
   line-height: 1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-6xl-cq-raw), var(--fluid-step));
   }
@@ -265,6 +288,7 @@
 @utility text-fluid-7xl-cq {
   font-size: var(--fluid-text-7xl-cq-raw);
   line-height: 1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-7xl-cq-raw), var(--fluid-step));
   }
@@ -273,6 +297,7 @@
 @utility text-fluid-8xl-cq {
   font-size: var(--fluid-text-8xl-cq-raw);
   line-height: 1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-8xl-cq-raw), var(--fluid-step));
   }
@@ -281,6 +306,7 @@
 @utility text-fluid-9xl-cq {
   font-size: var(--fluid-text-9xl-cq-raw);
   line-height: 1;
+
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(down, var(--fluid-text-9xl-cq-raw), var(--fluid-step));
   }

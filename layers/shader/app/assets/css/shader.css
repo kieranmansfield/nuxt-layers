@@ -12,7 +12,7 @@
   z-index: 9999;
   backdrop-filter: blur(8px);
   border-radius: 0.5rem;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgb(0 0 0 / 0.8);
   padding: 0.75rem 1rem;
   min-width: 200px;
   color: #fff;

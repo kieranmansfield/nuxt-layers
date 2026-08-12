@@ -21,6 +21,7 @@
  */
 .fluid-grid {
   --fluid-col-min: 16rem;
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--fluid-col-min), 1fr));
   gap: var(--grid-gap, clamp(0.75rem, 1.5vw, 1.5rem));
@@ -34,6 +35,7 @@
  */
 .fluid-grid-2 {
   --fluid-col-min: 14rem;
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--fluid-col-min), 1fr));
   gap: var(--grid-gap, clamp(0.75rem, 1.5vw, 1.5rem));
@@ -45,6 +47,7 @@
 
 .fluid-grid-3 {
   --fluid-col-min: 14rem;
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--fluid-col-min), 1fr));
   gap: var(--grid-gap, clamp(0.75rem, 1.5vw, 1.5rem));
@@ -56,6 +59,7 @@
 
 .fluid-grid-4 {
   --fluid-col-min: 12rem;
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--fluid-col-min), 1fr));
   gap: var(--grid-gap, clamp(0.75rem, 1.5vw, 1.5rem));
@@ -73,32 +77,33 @@
  */
 .layout-container-content {
   box-sizing: border-box;
+  container-type: inline-size;
   margin-inline: auto;
   width: 100%;
   max-width: 65ch;
-  container-type: inline-size;
 }
 
 .layout-container-wide {
   box-sizing: border-box;
+  container-type: inline-size;
   margin-inline: auto;
   width: 100%;
   max-width: 90rem;
-  container-type: inline-size;
 }
 
 .layout-container-fluid {
   box-sizing: border-box;
+  container-type: inline-size;
   width: 100%;
   max-width: 100%;
-  container-type: inline-size;
 }
 
 .layout-container-full {
   box-sizing: border-box;
+  container-type: inline-size;
   margin-inline: calc(var(--grid-padding, clamp(1rem, 2.5vw, 2rem)) * -1);
+
   /* Escape parent padding to reach the viewport edge */
   width: 100vw;
   max-width: 100vw;
-  container-type: inline-size;
 }

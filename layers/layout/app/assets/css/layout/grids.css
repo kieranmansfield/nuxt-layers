@@ -82,7 +82,7 @@
     min-width: 0;
     max-width: 100%;
     overflow-wrap: break-word;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   /* On mobile, allow sections to grow beyond 12 rows if needed */
@@ -102,52 +102,62 @@
 /* Line height utilities */
 .leading-rhythm-4 {
   --rhythm: 0.25rem;
+
   line-height: calc(var(--rhythm) * 4); /* 1rem */
 }
 
 .leading-rhythm-5 {
   --rhythm: 0.25rem;
+
   line-height: calc(var(--rhythm) * 5); /* 1.25rem */
 }
 
 .leading-rhythm-6 {
   --rhythm: 0.25rem;
+
   line-height: calc(var(--rhythm) * 6); /* 1.5rem */
 }
 
 .leading-rhythm-7 {
   --rhythm: 0.25rem;
+
   line-height: calc(var(--rhythm) * 7); /* 1.75rem */
 }
 
 .leading-rhythm-8 {
   --rhythm: 0.25rem;
+
   line-height: calc(var(--rhythm) * 8); /* 2rem */
 }
 
 /* Vertical spacing utilities */
 .space-rhythm-1 {
   --rhythm: 0.25rem;
+
   margin-block: var(--rhythm); /* 0.25rem */
 }
 
 .space-rhythm-2 {
   --rhythm: 0.25rem;
+
   margin-block: calc(var(--rhythm) * 2); /* 0.5rem */
 }
 
 .space-rhythm-4 {
   --rhythm: 0.25rem;
+
   margin-block: calc(var(--rhythm) * 4); /* 1rem */
 }
 
 .space-rhythm-6 {
   --rhythm: 0.25rem;
+
   margin-block: calc(var(--rhythm) * 6); /* 1.5rem */
 }
 
 .space-rhythm-8 {
   --rhythm: 0.25rem;
+
   margin-block: calc(var(--rhythm) * 8); /* 2rem */
 }
 
@@ -165,8 +175,7 @@
   & > h4,
   & > h5,
   & > h6 {
-    margin-block-start: calc(var(--rhythm) * 8); /* 2rem before headings */
-    margin-block-end: calc(var(--rhythm) * 4); /* 1rem after headings */
+    margin-block: calc(var(--rhythm) * 8) calc(var(--rhythm) * 4); /* 1rem after headings */ /* 2rem before headings */
     line-height: calc(var(--rhythm) * 8);
   }
 
