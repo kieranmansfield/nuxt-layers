@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "nuxt": "catalog:",
-    "vue": "3.5.41",
+    "vue": "catalog:",
     "vue-router": "catalog:conflicts_conflicts_vue-router_5_1_0_h5_1_0"
   }
 }
