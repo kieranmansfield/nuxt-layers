@@ -69,7 +69,7 @@
     align: align,
     transform: transform,
     ...(size !== undefined && { size: size }),
-    fluidSize: appliedFluidSize.value,
+    ...(appliedFluidSize.value !== undefined && { fluidSize: appliedFluidSize.value }),
   })
   const colorClass = useColor(color, 'text')
 </script>
