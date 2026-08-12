@@ -45,7 +45,12 @@ if (status !== '') {
 }
 
 run('Check (lint + typecheck + format)', 'pnpm', ['run', 'check'])
-run('Build', 'pnpm', ['run', 'build'])
+// Full unfiltered `pnpm run build` builds every layer standalone too (layers only link
+// to apps via nuxt.config.ts `extends`, not package.json deps) — ~30 builds, OOMs at
+// default heap. Scope to apps and raise the heap limit, same fix as framework-update.mjs.
+run('Build (apps)', 'pnpm', ['--filter', './apps/*', 'run', 'build', '--concurrency', '1'], {
+  env: { ...process.env, NODE_OPTIONS: '--max-old-space-size=8192' },
+})
 run('Test', 'pnpm', ['run', 'test'])
 
 run('Bump version', 'npm', ['version', level, '--no-git-tag-version'])
