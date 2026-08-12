@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { readFileSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
+import { readFileSync } from 'node:fs'
+
 import { ROOT } from './lib/layers.mjs'
 
 // nuxt is deliberately excluded from automated `--latest` updates: nuxt@4.5.0+ requires
@@ -40,7 +41,9 @@ function sh(cmd, args) {
 
 const status = sh('git', ['status', '--porcelain'])
 if (status.stdout.trim() !== '') {
-  console.error('✗ Working tree is not clean. Commit or stash changes before running framework:update.')
+  console.error(
+    '✗ Working tree is not clean. Commit or stash changes before running framework:update.'
+  )
   process.exit(1)
 }
 
@@ -66,6 +69,12 @@ run('Prepare Nuxt apps', 'pnpm', ['--filter', './apps/*', 'exec', 'nuxt', 'prepa
 run('Typecheck', 'pnpm', ['run', 'typecheck'])
 // nuxi upgrade --dedupe --force: dedupes the nuxt-related dependency tree and forces a
 // clean .nuxt regeneration, as recommended by the Nuxt team after a framework upgrade.
-run('nuxi upgrade (dedupe + regenerate)', 'pnpm', ['dlx', 'nuxi@latest', 'upgrade', '--dedupe', '--force'])
+run('nuxi upgrade (dedupe + regenerate)', 'pnpm', [
+  'dlx',
+  'nuxi@latest',
+  'upgrade',
+  '--dedupe',
+  '--force',
+])
 
 console.log('\nFramework update complete. Review the diff before committing.')
