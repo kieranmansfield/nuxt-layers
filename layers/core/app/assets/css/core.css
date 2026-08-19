@@ -16,3 +16,10 @@
 
 @import '#layers/core/app/assets/css/layout.css';
 @import '#layers/core/app/assets/css/base.css';
+
+/* Relative path, not the '#layers/typography' alias — that alias only exists
+   when the typography layer is in a consumer's `extends`. This file is a CSS
+   import (needed so Tailwind treats it as part of this one build root, see
+   typography.css's header comment), and must resolve even for consumers that
+   only extend core, since it lives in the same single published package. */
+@import '../../../../typography/app/assets/css/typography.css';

@@ -19,6 +19,9 @@
     "nuxtupdate": "npx nuxi@latest upgrade --dedupe --force",
     "nuxiupgrade": "npx nuxi upgrade"
   },
+  "dependencies": {
+    "@iconify/vue": "catalog:"
+  },
   "devDependencies": {
     "@vite-pwa/nuxt": "catalog:"
   }

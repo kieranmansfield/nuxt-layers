@@ -1,16 +1,10 @@
 /*
- * Loaded as its own global stylesheet (see layers/typography/nuxt.config.ts
- * `css:` array), not @import-chained through core.css's Tailwind root — so
- * @utility below is invisible to Tailwind unless this file is its own build
- * root. theme+utilities only (no preflight) to avoid double-emitting the
- * reset core.css already provides.
+ * @import-chained through core.css's single Tailwind build root (see
+ * layers/core/app/assets/css/core.css) — must NOT open its own
+ * 'tailwindcss/theme'/'tailwindcss/utilities' root, that creates a second
+ * parallel Tailwind build and breaks content-scan coverage for @nuxt/ui
+ * utilities elsewhere in the app (see kmcom-nuxt-layers-typography-css-bug.md).
  */
-@import 'tailwindcss/theme' layer(theme);
-@import 'tailwindcss/utilities' layer(utilities);
-
-@source '../../../../*/app/**/*.{vue,ts}';
-@source '../../../../../apps/*/app/**/*.{vue,ts}';
-
 :root {
   /* Fluid type scale — rounding interval. rem, never px (see §5 a11y). */
   --fluid-step: 0.25rem;
