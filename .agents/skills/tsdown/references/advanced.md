@@ -10,13 +10,13 @@
 - **Vite** - May work if not using Vite internals
 
 ```ts
-import UnpluginVue from 'unplugin-vue/rolldown'
 import SomeRollupPlugin from 'some-rollup-plugin'
+import UnpluginVue from 'unplugin-vue/rolldown'
 
 defineConfig({
   plugins: [
     UnpluginVue({ isProduction: true }),
-    SomeRollupPlugin() as any,  // Type cast for Rollup plugins
+    SomeRollupPlugin() as any, // Type cast for Rollup plugins
   ],
 })
 ```
@@ -131,7 +131,7 @@ defineConfig({
 ```ts
 defineConfig({
   outputOptions: {
-    legalComments: 'inline',  // Preserve license headers
+    legalComments: 'inline', // Preserve license headers
   },
 })
 ```
@@ -199,9 +199,9 @@ Validates `package.json` exports configuration:
 
 ```ts
 defineConfig({
-  publint: true,  // Enable
-  publint: 'warning',  // Set severity: 'warning' | 'error' | 'suggestion'
-  publint: 'ci-only',  // Run only in CI
+  publint: true, // Enable
+  publint: 'warning', // Set severity: 'warning' | 'error' | 'suggestion'
+  publint: 'ci-only', // Run only in CI
 })
 ```
 
@@ -216,11 +216,11 @@ Validates TypeScript declarations across module resolutions:
 ```ts
 defineConfig({
   attw: {
-    profile: 'strict',  // 'strict' | 'node16' | 'esm-only'
-    level: 'error',     // 'warn' | 'error'
+    profile: 'strict', // 'strict' | 'node16' | 'esm-only'
+    level: 'error', // 'warn' | 'error'
     ignoreRules: ['false-cjs', 'named-exports'],
   },
-  attw: 'ci-only',  // Run only in CI
+  attw: 'ci-only', // Run only in CI
 })
 ```
 
@@ -245,7 +245,7 @@ Rolldown devtools for debugging:
 ```ts
 defineConfig({
   devtools: {
-    ui: true,  // Enable UI (renamed from debug.devtools)
+    ui: true, // Enable UI (renamed from debug.devtools)
   },
 })
 ```

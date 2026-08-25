@@ -16,7 +16,7 @@ Orbit around a target:
 
 ```vue
 <script setup>
-import { OrbitControls } from '@tresjs/cientos'
+  import { OrbitControls } from '@tresjs/cientos'
 </script>
 
 <template>
@@ -50,9 +50,9 @@ Load glTF/GLB models:
 
 ```vue
 <script setup>
-import { useGLTF } from '@tresjs/cientos'
+  import { useGLTF } from '@tresjs/cientos'
 
-const { scene, nodes, materials } = await useGLTF('/model.glb', { draco: true })
+  const { scene, nodes, materials } = await useGLTF('/model.glb', { draco: true })
 </script>
 
 <template>
@@ -77,7 +77,7 @@ Declarative alternative:
 ### Other Loaders
 
 ```ts
-import { useFBX, useTexture, useVideoTexture, useSVG } from '@tresjs/cientos'
+import { useFBX, useSVG, useTexture, useVideoTexture } from '@tresjs/cientos'
 
 const fbx = await useFBX('/model.fbx')
 const texture = await useTexture('/texture.jpg')
@@ -91,9 +91,9 @@ Track loading progress:
 
 ```vue
 <script setup>
-import { useProgress } from '@tresjs/cientos'
+  import { useProgress } from '@tresjs/cientos'
 
-const { progress, active, errors, item } = useProgress()
+  const { progress, active, errors, item } = useProgress()
 </script>
 
 <template>
@@ -224,9 +224,9 @@ Font format: typeface.json (generate at gero3.github.io/facetype.js)
 HTML overlay in 3D space:
 
 ```vue
-<Html :position="[0, 2, 0]" center transform>
+<html :position="[0, 2, 0]" center transform>
   <div class="label">Hello World</div>
-</Html>
+</html>
 ```
 
 ### Billboard

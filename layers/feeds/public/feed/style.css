@@ -12,16 +12,16 @@
 }
 
 :root {
-  --feed-bg: var(--ui-bg, #ffffff);
+  --feed-bg: var(--ui-bg, #fff);
   --feed-bg-elevated: var(--ui-bg-elevated, #f8fafc);
   --feed-bg-accented: var(--ui-bg-accented, #f1f5f9);
   --feed-border: var(--ui-border, #e2e8f0);
   --feed-text: var(--ui-text, #0f172a);
   --feed-text-muted: var(--ui-text-muted, #64748b);
   --feed-text-toned: var(--ui-text-toned, #475569);
-  --feed-primary: var(--ui-color-primary-500, oklch(62.3% 0.214 259.5));
-  --feed-primary-text: var(--ui-color-primary-600, oklch(54.6% 0.214 259.5));
-  --feed-primary-bg: var(--ui-color-primary-50, oklch(97% 0.03 259.5));
+  --feed-primary: var(--ui-color-primary-500, oklch(62.3% 0.214 259.5deg));
+  --feed-primary-text: var(--ui-color-primary-600, oklch(54.6% 0.214 259.5deg));
+  --feed-primary-bg: var(--ui-color-primary-50, oklch(97% 0.03 259.5deg));
   --feed-radius: var(--ui-radius, 0.375rem);
   --feed-font: var(--font-sans, ui-sans-serif, system-ui, -apple-system, sans-serif);
 }
@@ -35,9 +35,9 @@
     --feed-text: var(--ui-text, #f8fafc);
     --feed-text-muted: var(--ui-text-muted, #94a3b8);
     --feed-text-toned: var(--ui-text-toned, #cbd5e1);
-    --feed-primary: var(--ui-color-primary-400, oklch(71% 0.18 259.5));
-    --feed-primary-text: var(--ui-color-primary-400, oklch(71% 0.18 259.5));
-    --feed-primary-bg: var(--ui-color-primary-950, oklch(22% 0.06 259.5));
+    --feed-primary: var(--ui-color-primary-400, oklch(71% 0.18 259.5deg));
+    --feed-primary-text: var(--ui-color-primary-400, oklch(71% 0.18 259.5deg));
+    --feed-primary-bg: var(--ui-color-primary-950, oklch(22% 0.06 259.5deg));
   }
 }
 
@@ -160,7 +160,7 @@ a:hover {
   border-radius: var(--feed-radius);
   background-color: var(--feed-primary);
   padding: 0.5rem 1.125rem;
-  color: #ffffff;
+  color: #fff;
   font-weight: 600;
   font-size: 0.875rem;
   line-height: 1;
@@ -169,7 +169,7 @@ a:hover {
 
 .feed-subscribe:hover {
   opacity: 0.85;
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
 }
 

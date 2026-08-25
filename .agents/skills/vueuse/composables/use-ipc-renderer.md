@@ -8,8 +8,8 @@ Provides ipcRenderer and all of its APIs with Vue reactivity.
 ## Usage
 
 ```ts
-import { useIpcRenderer } from '@vueuse/electron'
 import { computed } from 'vue'
+import { useIpcRenderer } from '@vueuse/electron'
 
 // enable nodeIntegration if you don't provide ipcRenderer explicitly
 // see: https://www.electronjs.org/docs/api/webview-tag#nodeintegration
@@ -27,20 +27,20 @@ ipcRenderer.on('custom-event', (event, ...args) => {
 
 ## Returns
 
-| Name | Type |
-| --- | --- |
-| on | `Ref` |
-| listener | `Ref` |
-| once | `Ref` |
-| removeListener | `Ref` |
+| Name               | Type  |
+| ------------------ | ----- |
+| on                 | `Ref` |
+| listener           | `Ref` |
+| once               | `Ref` |
+| removeListener     | `Ref` |
 | removeAllListeners | `Ref` |
-| send | `Ref` |
-| invoke | `Ref` |
-| channel | `Ref` |
-| sendSync | `Ref` |
-| postMessage | `Ref` |
-| sendTo | `Ref` |
-| sendToHost | `Ref` |
+| send               | `Ref` |
+| invoke             | `Ref` |
+| channel            | `Ref` |
+| sendSync           | `Ref` |
+| postMessage        | `Ref` |
+| sendTo             | `Ref` |
+| sendToHost         | `Ref` |
 
 ## Reference
 

@@ -64,6 +64,7 @@ Test transforms with file fixtures:
 
 ```typescript
 import { describe, expect, it } from 'vitest'
+
 import { transform } from '../src'
 
 const fixtures = import.meta.glob('./fixtures/*.ts', { as: 'raw' })
@@ -89,7 +90,7 @@ it('transform is idempotent', async () => {
   expect(pass1).toMatchSnapshot()
 
   const pass2 = (await transform(pass1))?.code ?? pass1
-  expect(pass2).toBe(pass1)  // Should not change
+  expect(pass2).toBe(pass1) // Should not change
 })
 ```
 
@@ -109,6 +110,7 @@ export default defineConfig({
 ```typescript
 // test/types.test-d.ts
 import { describe, expectTypeOf, it } from 'vitest'
+
 import type { Input, Output } from '../src'
 
 describe('types', () => {
@@ -150,7 +152,7 @@ Add to tsdown config:
 
 ```typescript
 export default defineConfig({
-  attw: { profile: 'esm-only' },  // or 'node16'
+  attw: { profile: 'esm-only' }, // or 'node16'
 })
 ```
 
@@ -188,11 +190,14 @@ Dogfood your own plugin in tests:
 ```typescript
 // vitest.config.ts
 import { defineConfig } from 'vitest/config'
+
 import MyPlugin from './src/vite'
 
 export default defineConfig({
   plugins: [
-    MyPlugin({ /* options */ }),
+    MyPlugin({
+      /* options */
+    }),
   ],
   test: {
     include: ['test/**/*.test.ts'],

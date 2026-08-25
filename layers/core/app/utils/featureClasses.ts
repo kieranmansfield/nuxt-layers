@@ -25,9 +25,7 @@ export function getFeatureClassNames(features: FeatureDetection): string[] {
     features[key] ? supportedClass : unsupportedClass
   )
 
-  classes.push(
-    ...EXTRA_CLASS_MAP.flatMap(([key, className]) => (features[key] ? [className] : []))
-  )
+  classes.push(...EXTRA_CLASS_MAP.flatMap(([key, className]) => (features[key] ? [className] : [])))
 
   return classes
 }

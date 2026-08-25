@@ -2,7 +2,7 @@
 
 ## Scope
 
-Only **generic, cross-project infrastructure** lands here. Chronos's domain (the chronology engine, reading-order UI, franchise content) does **not** — that stays in the Chronos repo (Stage 3). The bar for this repo is: *would any future app I build reuse this?* Two new layers clear that bar:
+Only **generic, cross-project infrastructure** lands here. Chronos's domain (the chronology engine, reading-order UI, franchise content) does **not** — that stays in the Chronos repo (Stage 3). The bar for this repo is: _would any future app I build reuse this?_ Two new layers clear that bar:
 
 ```txt
 layers/database   Drizzle + Neon Postgres connection, useDrizzle() helper, env config
@@ -58,14 +58,15 @@ declare module '@nuxt/schema' {
 ```ts
 // sql.ts
 import { neon } from '@neondatabase/serverless'
+// drizzle.ts — schema is supplied by the consuming app, keeping the layer generic
+import { drizzle } from 'drizzle-orm/neon-http'
+
 export function useSql() {
   const { databaseLayer } = useRuntimeConfig()
   if (!databaseLayer?.url) throw createError('Database URL not configured')
   return neon(databaseLayer.url)
 }
 
-// drizzle.ts — schema is supplied by the consuming app, keeping the layer generic
-import { drizzle } from 'drizzle-orm/neon-http'
 export function useDrizzle<TSchema extends Record<string, unknown>>(schema: TSchema) {
   return drizzle(useSql(), { schema })
 }
@@ -125,11 +126,11 @@ export default defineNuxtConfig({
   alias: { '#layers/auth': import.meta.dirname },
   runtimeConfig: {
     // nuxt-auth-utils reads these env vars automatically:
-    session: { password: '' },          // env: NUXT_SESSION_PASSWORD
+    session: { password: '' }, // env: NUXT_SESSION_PASSWORD
     oauth: {
       github: {
-        clientId: '',                    // env: NUXT_OAUTH_GITHUB_CLIENT_ID
-        clientSecret: '',                // env: NUXT_OAUTH_GITHUB_CLIENT_SECRET
+        clientId: '', // env: NUXT_OAUTH_GITHUB_CLIENT_ID
+        clientSecret: '', // env: NUXT_OAUTH_GITHUB_CLIENT_SECRET
       },
     },
   },
@@ -143,7 +144,12 @@ export default defineNuxtConfig({
 export default defineOAuthGitHubEventHandler({
   async onSuccess(event, { user }) {
     await setUserSession(event, {
-      user: { provider: 'github', providerId: user.id, username: user.login, avatarUrl: user.avatar_url },
+      user: {
+        provider: 'github',
+        providerId: user.id,
+        username: user.login,
+        avatarUrl: user.avatar_url,
+      },
     })
     return sendRedirect(event, '/')
   },

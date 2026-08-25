@@ -10,7 +10,7 @@ pnpm add @nuxt/ui
 // nuxt.config.ts
 export default defineNuxtConfig({
   modules: ['@nuxt/ui'],
-  css: ['~/assets/css/main.css']
+  css: ['~/assets/css/main.css'],
 })
 ```
 
@@ -51,15 +51,17 @@ import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [vue(), ui()]
+  plugins: [vue(), ui()],
 })
 ```
 
 ```ts
-import ui from '@nuxt/ui/vue-plugin'
 // main.ts
 import { createApp } from 'vue'
+import ui from '@nuxt/ui/vue-plugin'
+
 import App from './App.vue'
+
 import './assets/main.css'
 
 const app = createApp(App)
@@ -110,16 +112,16 @@ export default defineNuxtConfig({
       transitions: true, // transition-colors on components
       defaultVariants: {
         color: 'primary',
-        size: 'md'
+        size: 'md',
       },
-      prefix: '' // Tailwind CSS prefix (v4.2+) - ensures prefixed utilities work
+      prefix: '', // Tailwind CSS prefix (v4.2+) - ensures prefixed utilities work
     },
     mdc: false, // Force Prose components
     content: false, // Force UContent* components
     experimental: {
-      componentDetection: false // Tree-shake unused components (v4.1+) - auto-generates CSS only for used components
-    }
-  }
+      componentDetection: false, // Tree-shake unused components (v4.1+) - auto-generates CSS only for used components
+    },
+  },
 })
 ```
 
@@ -135,12 +137,14 @@ ui({
     colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'],
     transitions: true,
     defaultVariants: { color: 'primary', size: 'md' },
-    prefix: ''
+    prefix: '',
   },
   ui: {
     colors: { primary: 'green' }, // Runtime color config
-    button: { /* theme overrides */ }
-  }
+    button: {
+      /* theme overrides */
+    },
+  },
 })
 ```
 
@@ -177,9 +181,9 @@ Enable `experimental.componentDetection` to auto-generate CSS only for component
 export default defineNuxtConfig({
   ui: {
     experimental: {
-      componentDetection: true
-    }
-  }
+      componentDetection: true,
+    },
+  },
 })
 ```
 
@@ -194,9 +198,9 @@ Avoid style conflicts in complex apps:
 export default defineNuxtConfig({
   ui: {
     theme: {
-      prefix: 'ui-' // Prefixes all Tailwind utilities
-    }
-  }
+      prefix: 'ui-', // Prefixes all Tailwind utilities
+    },
+  },
 })
 ```
 

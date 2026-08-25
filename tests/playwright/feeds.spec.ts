@@ -5,5 +5,5 @@ test('feeds page renders the catalog', async ({ page }) => {
 
   await expect(page.getByRole('heading', { name: /Feed catalog for/i })).toBeVisible()
   await expect(page.getByText('Global routes')).toBeVisible()
-  await expect(page.getByText('/feed/rss')).toBeVisible()
+  await expect(page.getByText('/feed/rss', { exact: true })).toBeVisible()
 })

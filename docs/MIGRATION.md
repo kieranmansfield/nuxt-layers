@@ -25,7 +25,11 @@ Site metadata is no longer namespaced under `feedsLayer.site`. It now lives at t
 // app/app.config.ts — BEFORE
 export default defineAppConfig({
   feedsLayer: {
-    site: { title: 'My Site', url: 'https://example.com', author: { name: 'Jane', email: 'jane@example.com' } },
+    site: {
+      title: 'My Site',
+      url: 'https://example.com',
+      author: { name: 'Jane', email: 'jane@example.com' },
+    },
   },
 })
 
@@ -34,7 +38,7 @@ export default defineAppConfig({
   site: {
     title: 'My Site',
     description: 'Short description used in feed channels and meta tags',
-    url: 'https://example.com',           // canonical origin, NO trailing slash
+    url: 'https://example.com', // canonical origin, NO trailing slash
     author: { name: 'Jane', email: 'jane@example.com' },
   },
 })
@@ -52,11 +56,11 @@ export default defineAppConfig({
 
 ```ts
 // BEFORE
-import type { SiteAuthor } from '#layers/core/app/types/site'
+// AFTER
+import type { Author, SiteAuthor } from '#layers/core/app/types/site'
+
 const author: SiteAuthor = { name: 'Jane' }
 
-// AFTER
-import type { Author } from '#layers/core/app/types/site'
 const author: Author = { name: 'Jane' }
 ```
 
@@ -72,9 +76,13 @@ The author `url` field is renamed to `link` to match core's `Author`. This touch
 
 ```ts
 // BEFORE
-authors: z.array(z.object({ name: z.string(), avatar: z.string().optional(), url: z.string().optional() }))
+authors: z.array(
+  z.object({ name: z.string(), avatar: z.string().optional(), url: z.string().optional() })
+)
 // AFTER
-authors: z.array(z.object({ name: z.string(), avatar: z.string().optional(), link: z.string().optional() }))
+authors: z.array(
+  z.object({ name: z.string(), avatar: z.string().optional(), link: z.string().optional() })
+)
 ```
 
 **3b. Markdown frontmatter** (every content file with authors):
@@ -98,7 +106,10 @@ authors:              authors:
 
 ```ts
 import type { BaseContent } from '#layers/content/app/types/content'
-interface MyCustomPage extends BaseContent { featuredVideo?: string }
+
+interface MyCustomPage extends BaseContent {
+  featuredVideo?: string
+}
 ```
 
 ## 5. Next: add feeds (feature, not breaking)
@@ -114,13 +125,13 @@ Once the breaking changes are applied and `site` is set, wire RSS/Atom/JSON feed
 
 ## Quick reference
 
-| Change | Type | Action |
-|--------|------|--------|
+| Change                     | Type     | Action                                          |
+| -------------------------- | -------- | ----------------------------------------------- |
 | `feedsLayer.site` → `site` | Breaking | Move to top-level `site` in `app/app.config.ts` |
-| `SiteAuthor` → `Author` | Breaking | Rename imports/annotations |
-| Author `url` → `link` | Breaking | Update Zod schema + frontmatter + TS (3 places) |
-| `BaseContent` | Additive | Extend it in custom content types |
-| Add feeds | Feature | Follow [`FEEDS.md`](./FEEDS.md) |
+| `SiteAuthor` → `Author`    | Breaking | Rename imports/annotations                      |
+| Author `url` → `link`      | Breaking | Update Zod schema + frontmatter + TS (3 places) |
+| `BaseContent`              | Additive | Extend it in custom content types               |
+| Add feeds                  | Feature  | Follow [`FEEDS.md`](./FEEDS.md)                 |
 
 The sections below are the detailed, chronological history these summaries were distilled from.
 
@@ -137,6 +148,7 @@ Four related changes landed together. None are strictly breaking for existing pa
 Site metadata is no longer namespaced under `feedsLayer`. It lives at the top-level `site` key in `app.config.ts`, owned by the core layer's type declarations. Any layer can read it.
 
 **Before:**
+
 ```ts
 // app/app.config.ts
 export default defineAppConfig({
@@ -151,6 +163,7 @@ export default defineAppConfig({
 ```
 
 **After:**
+
 ```ts
 // app/app.config.ts
 export default defineAppConfig({
@@ -171,6 +184,7 @@ The `site` key is typed via `SiteConfig` from the core layer — `useAppConfig()
 The core type previously exported as `SiteAuthor` is now exported as `Author`. It's the base author shape used by `SiteConfig.author`, `ContentAuthor`, and any other layer that deals with authorship.
 
 **Before:**
+
 ```ts
 import type { SiteAuthor } from '#layers/core/app/types/site'
 
@@ -178,6 +192,7 @@ const author: SiteAuthor = { name: 'Jane' }
 ```
 
 **After:**
+
 ```ts
 import type { Author } from '#layers/core/app/types/site'
 
@@ -193,15 +208,21 @@ const author: Author = { name: 'Jane' }
 The `url` field on blog post authors has been renamed to `link` to align with core's `Author` type. The Zod schema, TypeScript interface, and markdown frontmatter all need updating.
 
 **Zod schema (in your `content.config.ts`):**
+
 ```ts
 // Before
-authors: z.array(z.object({ name: z.string(), avatar: z.string().optional(), url: z.string().optional() }))
+authors: z.array(
+  z.object({ name: z.string(), avatar: z.string().optional(), url: z.string().optional() })
+)
 
 // After
-authors: z.array(z.object({ name: z.string(), avatar: z.string().optional(), link: z.string().optional() }))
+authors: z.array(
+  z.object({ name: z.string(), avatar: z.string().optional(), link: z.string().optional() })
+)
 ```
 
 **Markdown frontmatter:**
+
 ```yaml
 # Before
 authors:
@@ -215,6 +236,7 @@ authors:
 ```
 
 **TypeScript interface** — `ContentAuthor` now extends `Author` instead of being a standalone type:
+
 ```ts
 import type { Author } from '#layers/core/app/types/site'
 
@@ -274,20 +296,23 @@ export default defineAppConfig({
 
 Available feed URLs for each collection:
 
-| URL | Format |
-|-----|--------|
-| `/feed/:collection/rss` | RSS 2.0 |
-| `/feed/:collection/atom` | Atom 1.0 |
-| `/feed/:collection/json` | JSON Feed 1.1 |
-| `/feed/rss` | RSS for `defaultCollection` |
-| `/feed/atom` | Atom for `defaultCollection` |
-| `/feed/json` | JSON Feed for `defaultCollection` |
-| `/feed` | JSON index of all configured feeds |
+| URL                      | Format                             |
+| ------------------------ | ---------------------------------- |
+| `/feed/:collection/rss`  | RSS 2.0                            |
+| `/feed/:collection/atom` | Atom 1.0                           |
+| `/feed/:collection/json` | JSON Feed 1.1                      |
+| `/feed/rss`              | RSS for `defaultCollection`        |
+| `/feed/atom`             | Atom for `defaultCollection`       |
+| `/feed/json`             | JSON Feed for `defaultCollection`  |
+| `/feed`                  | JSON index of all configured feeds |
 
 To expose portfolio items as a feed:
+
 ```ts
 feedsLayer: {
-  feed: { collections: ['blog', 'portfolio'] }
+  feed: {
+    collections: ['blog', 'portfolio']
+  }
 }
 ```
 
@@ -318,11 +343,11 @@ The feeds layer automatically injects `<link rel="alternate">` tags so RSS reade
 
 **The rule:** every page gets the main site feeds. Pages that belong to a non-default collection also get that collection's specific feeds.
 
-| Page | Links injected |
-|------|---------------|
-| `/`, `/about`, any non-collection page | 3 main site feeds |
+| Page                                                           | Links injected                                  |
+| -------------------------------------------------------------- | ----------------------------------------------- |
+| `/`, `/about`, any non-collection page                         | 3 main site feeds                               |
 | `/blog`, `/blog/hello-world` (if `blog` = `defaultCollection`) | 3 main site feeds (these already point to blog) |
-| `/portfolio`, `/portfolio/project` (non-default collection) | 3 main site feeds + 3 portfolio feeds |
+| `/portfolio`, `/portfolio/project` (non-default collection)    | 3 main site feeds + 3 portfolio feeds           |
 
 The main site feeds use the shorthand routes (`/feed/rss`, `/feed/atom`, `/feed/json`) which always serve `defaultCollection`. Collection-specific links are only added for non-default collections — where you're actively browsing content not covered by the main feeds.
 
@@ -332,14 +357,14 @@ No action required. The collection a page belongs to is inferred from the first 
 
 ## Quick Reference
 
-| Change | Action required |
-|--------|----------------|
-| Site metadata | Move `feedsLayer.site` → top-level `site` in `app.config.ts` |
-| `SiteAuthor` type import | Rename to `Author` |
-| Author `url` in frontmatter | Rename `url:` → `link:` in blog author blocks |
-| Author `url` in Zod schema | Rename `url` → `link` in `authors` object schema |
-| Collection feeds | Set `feedsLayer.feed.collections` in `app.config.ts` |
-| Feed autodiscovery | Nothing — automatic via the feeds layer plugin |
+| Change                      | Action required                                              |
+| --------------------------- | ------------------------------------------------------------ |
+| Site metadata               | Move `feedsLayer.site` → top-level `site` in `app.config.ts` |
+| `SiteAuthor` type import    | Rename to `Author`                                           |
+| Author `url` in frontmatter | Rename `url:` → `link:` in blog author blocks                |
+| Author `url` in Zod schema  | Rename `url` → `link` in `authors` object schema             |
+| Collection feeds            | Set `feedsLayer.feed.collections` in `app.config.ts`         |
+| Feed autodiscovery          | Nothing — automatic via the feeds layer plugin               |
 
 ---
 
@@ -385,14 +410,14 @@ Each factory defaults to the conventional source glob if you omit the argument.
 In your app's `content.config.ts`, import the factory and register it under any name you like:
 
 ```ts
-import { createPortfolioCollection, createBlogCollection } from '#layers/content/content.config'
+import { createBlogCollection, createPortfolioCollection } from '#layers/content/content.config'
 
 export default defineContentConfig({
   collections: {
     blog: createBlogCollection(),
     works: createPortfolioCollection('works/**/*.md'),
     // gallery omitted — not needed
-  }
+  },
 })
 ```
 
@@ -442,8 +467,8 @@ export default defineAppConfig({
   contentLayer: {
     sections: {
       blog: true,
-      portfolio: false,  // /portfolio and /portfolio/[slug] → 404
-      gallery: false,    // /gallery and all nested routes → 404
+      portfolio: false, // /portfolio and /portfolio/[slug] → 404
+      gallery: false, // /gallery and all nested routes → 404
     },
   },
 })
@@ -457,12 +482,12 @@ All three flags default to `true` in the layer, so you only need to declare the 
 
 ## Quick Reference
 
-| Goal | How |
-|---|---|
+| Goal                              | How                                                                        |
+| --------------------------------- | -------------------------------------------------------------------------- |
 | Reuse portfolio schema as `works` | `works: createPortfolioCollection('works/**/*.md')` in `content.config.ts` |
-| Query custom-named collection | `createPortfolioComposables('works')` → `useItems` / `useItem` |
-| Disable the gallery section | `contentLayer: { sections: { gallery: false } }` in `app.config.ts` |
-| Disable multiple sections | List each with `false` in `sections` |
+| Query custom-named collection     | `createPortfolioComposables('works')` → `useItems` / `useItem`             |
+| Disable the gallery section       | `contentLayer: { sections: { gallery: false } }` in `app.config.ts`        |
+| Disable multiple sections         | List each with `false` in `sections`                                       |
 
 ---
 
@@ -479,12 +504,14 @@ v1.6.0 restructures the layout and content systems. The main theme is **opt-in c
 Header and footer are no longer rendered by default. Pages that relied on `layout: 'grid'` to get them must now pass props.
 
 **Before (v1.5.x):**
+
 ```ts
 definePageMeta({ layout: 'grid' })
 // header + footer always rendered
 ```
 
 **After (v1.6.0):**
+
 ```ts
 // Opt-in to header and footer:
 definePageMeta({
@@ -500,11 +527,11 @@ definePageMeta({ layout: false })
 
 Available props on `grid.vue` (all `boolean`, default `false`):
 
-| Prop | Description |
-|---|---|
-| `showHeader` | Renders `<MastHeader>` |
-| `showNav` | Renders `<MastNav>` |
-| `showFooter` | Renders `<MastFooter>` |
+| Prop            | Description                         |
+| --------------- | ----------------------------------- |
+| `showHeader`    | Renders `<MastHeader>`              |
+| `showNav`       | Renders `<MastNav>`                 |
+| `showFooter`    | Renders `<MastFooter>`              |
 | `showGridDebug` | Renders `<LayoutGridDebug>` overlay |
 
 ---
@@ -514,12 +541,14 @@ Available props on `grid.vue` (all `boolean`, default `false`):
 The global Locomotive Scroll wrapper in `default.vue` has been removed. Smooth scroll is now per-page via the `useSmoothScroll()` composable.
 
 **Before (v1.5.x):**
+
 ```vue
 <!-- default.vue automatically wrapped everything in MastScroller -->
 <!-- No per-page setup required -->
 ```
 
 **After (v1.6.0):**
+
 ```ts
 // In any page that needs smooth scroll:
 const { scrollTo, scrollToTop, velocity, progress } = useSmoothScroll()
@@ -534,6 +563,7 @@ Pages that don't call `useSmoothScroll()` will use native browser scroll — no 
 `LayoutPageContainer` has been superseded by `LayoutPage`. The legacy component still exists for backwards compatibility but is no longer maintained.
 
 **Before (v1.5.x):**
+
 ```vue
 <LayoutPageContainer title="My Page" :show-header="false">
   <LayoutSection>...</LayoutSection>
@@ -541,6 +571,7 @@ Pages that don't call `useSmoothScroll()` will use native browser scroll — no 
 ```
 
 **After (v1.6.0):**
+
 ```vue
 <LayoutPage title="My Page">
   <LayoutSection>...</LayoutSection>
@@ -581,11 +612,13 @@ definePageMeta({ ssr: false, layout: false })
 All built-in content composables now use `useContentData` — a `createUseAsyncData` wrapper with `dedupe: 'cancel'` — instead of calling `useAsyncData` directly. If you've extended or wrapped any content composables, update the inner call:
 
 **Before (v1.5.x):**
+
 ```ts
 return useAsyncData('my-key', () => queryCollection('blog').all())
 ```
 
 **After (v1.6.0):**
+
 ```ts
 return useContentData('my-key', () => queryCollection('blog').all())
 ```
@@ -617,11 +650,11 @@ export default defineNuxtConfig({
 
 ## Quick Reference
 
-| Pattern | v1.5.x | v1.6.0 |
-|---|---|---|
-| Grid page with header + footer | `layout: 'grid'` | `layout: { name: 'grid', props: { showHeader: true, showFooter: true } }` |
-| Grid page, no chrome | `layout: 'grid'` | `layout: 'grid'` |
-| Full-bleed / animation page | `layout: 'grid'` (broken) | `layout: false` |
-| Page wrapper component | `<LayoutPageContainer>` | `<LayoutPage>` |
-| Global smooth scroll | `MastScroller` in layout (auto) | `useSmoothScroll()` per-page |
-| Content async data | `useAsyncData(...)` | `useContentData(...)` |
+| Pattern                        | v1.5.x                          | v1.6.0                                                                    |
+| ------------------------------ | ------------------------------- | ------------------------------------------------------------------------- |
+| Grid page with header + footer | `layout: 'grid'`                | `layout: { name: 'grid', props: { showHeader: true, showFooter: true } }` |
+| Grid page, no chrome           | `layout: 'grid'`                | `layout: 'grid'`                                                          |
+| Full-bleed / animation page    | `layout: 'grid'` (broken)       | `layout: false`                                                           |
+| Page wrapper component         | `<LayoutPageContainer>`         | `<LayoutPage>`                                                            |
+| Global smooth scroll           | `MastScroller` in layout (auto) | `useSmoothScroll()` per-page                                              |
+| Content async data             | `useAsyncData(...)`             | `useContentData(...)`                                                     |

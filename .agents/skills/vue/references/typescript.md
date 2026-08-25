@@ -8,6 +8,7 @@ Use `InjectionKey` for type-safe dependency injection:
 
 ```ts
 import type { InjectionKey } from 'vue'
+
 import type { User } from './types'
 
 // Define typed key
@@ -65,10 +66,8 @@ Catches template errors like:
 
 ```ts
 // ❌ May cause issues with bundlers
-import { User } from './types'
-
 // ✅ Explicit type import
-import type { User } from './types'
+import { User, type User } from './types'
 ```
 
 ## Component Type Helpers
@@ -76,7 +75,8 @@ import type { User } from './types'
 **Extract props type from component:**
 
 ```ts
-import type { ComponentProps, ComponentSlots, ComponentEmits } from 'vue-component-type-helpers'
+import type { ComponentEmits, ComponentProps, ComponentSlots } from 'vue-component-type-helpers'
+
 import MyComponent from './MyComponent.vue'
 
 type Props = ComponentProps<typeof MyComponent>
@@ -98,13 +98,13 @@ Define generic components with typed slots:
 
 ```vue
 <script setup lang="ts" generic="T extends { id: string }">
-defineProps<{
-  items: T[]
-}>()
+  defineProps<{
+    items: T[]
+  }>()
 
-defineSlots<{
-  default: (props: { item: T }) => any
-}>()
+  defineSlots<{
+    default: (props: { item: T }) => any
+  }>()
 </script>
 
 <template>
@@ -155,10 +155,8 @@ const onUpdate = (value: string) => { ... }
 
 ```ts
 // ❌ Runtime import of type-only
-import { User } from './types'
-
 // ✅ Type-only import
-import type { User } from './types'
+import { User, type User } from './types'
 ```
 
 **Not using `as const` for literal types:**

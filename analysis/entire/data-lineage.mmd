@@ -1,0 +1,13 @@
+graph LR
+  apps_playground["apps/playground"] -- read --> ds_content_collections[("content-collections")]
+  layers_auth["layers/auth"] -- read --> ds_github_oauth[("github-oauth")]
+  layers_content["layers/content"] -- read --> ds_content_collections[("content-collections")]
+  layers_database["layers/database"] -- write --> ds_neon_postgres[("neon-postgres")]
+  layers_feeds["layers/feeds"] -- read --> ds_content_collections[("content-collections")]
+  layers_mailer["layers/mailer"] -- write --> ds_resend_email[("resend-email")]
+  layers_metadata["layers/metadata"] -- write --> ds_nitro_cache[("nitro-cache")]
+  layers_metadata_providers_comicvine["layers/metadata/providers/comicvine"] -- read --> ds_comicvine_api[("comicvine-api")]
+  layers_metadata_providers_google_books["layers/metadata/providers/google-books"] -- read --> ds_google_books_api[("google-books-api")]
+  layers_metadata_providers_openlibrary["layers/metadata/providers/openlibrary"] -- read --> ds_openlibrary_api[("openlibrary-api")]
+  layers_metadata_providers_themoviedb["layers/metadata/providers/themoviedb"] -- read --> ds_tmdb_api[("tmdb-api")]
+  layers_shader["layers/shader"] -- write --> ds_neon_postgres[("neon-postgres")]

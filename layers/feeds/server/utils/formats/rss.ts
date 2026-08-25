@@ -1,12 +1,12 @@
 import { Feed } from 'feed'
 
-import type { FeedConfig, FeedItem } from '../types'
 import {
   applyFeedStylesheet,
   resolveFeedAuthorPayload,
   resolveFeedItemId,
   resolveFeedItemLink,
 } from '../feed-xml'
+import type { FeedConfig, FeedItem } from '../types'
 
 export function toRSS(items: FeedItem[], config: FeedConfig): string {
   const author = resolveFeedAuthorPayload(config.author)

@@ -1,4 +1,8 @@
-import type { MetadataMediaType, MetadataProviderId, MetadataSearchResult } from '#layers/metadata/shared/types'
+import type {
+  MetadataMediaType,
+  MetadataProviderId,
+  MetadataSearchResult,
+} from '#layers/metadata/shared/types'
 
 type UseMetadataSearchOptions = {
   mediaType?: MetadataMediaType
@@ -20,6 +24,6 @@ export function useMetadataSearch(query: MaybeRef<string>, options: UseMetadataS
           limit: options.limit,
         },
       }) as Promise<MetadataSearchResult[]>,
-    { watch: [q], immediate: false },
+    { watch: [q], immediate: false }
   )
 }

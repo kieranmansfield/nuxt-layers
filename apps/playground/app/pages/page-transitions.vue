@@ -46,7 +46,9 @@
       <section id="demo" class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Live Transition State</h2>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+              Live Transition State
+            </h2>
             <p class="text-muted text-lg">
               Reactive values returned from <code class="text-primary">usePageTransition()</code>
             </p>
@@ -114,8 +116,8 @@
               <div class="bg-default rounded-xl p-6 border border-default">
                 <code class="text-primary font-mono text-sm">page-transitions.client.ts</code>
                 <p class="text-muted mt-2">
-                  Nitro plugin hook — on every <code class="text-toned">page:start</code> it
-                  resets the shared state back to the configured default
+                  Nitro plugin hook — on every <code class="text-toned">page:start</code> it resets
+                  the shared state back to the configured default
                 </p>
               </div>
               <div class="bg-default rounded-xl p-6 border border-default">

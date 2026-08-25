@@ -8,8 +8,8 @@ Converts ref to reactive. Also made possible to create a "swapable" reactive obj
 ## Usage
 
 ```ts
-import { toReactive } from '@vueuse/core'
 import { ref } from 'vue'
+import { toReactive } from '@vueuse/core'
 
 const refState = ref({ foo: 'bar' })
 
@@ -27,9 +27,9 @@ console.log(state.bar) // => 'foo'
 
 ## Returns
 
-| Name | Type |
-| --- | --- |
-| enumerable | `Ref` |
+| Name         | Type  |
+| ------------ | ----- |
+| enumerable   | `Ref` |
 | configurable | `Ref` |
 
 ## Reference

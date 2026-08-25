@@ -51,7 +51,7 @@ Root component that creates WebGL renderer and scene:
 
 ```vue
 <script setup lang="ts">
-import { TresCanvas } from '@tresjs/core'
+  import { TresCanvas } from '@tresjs/core'
 </script>
 
 <template>
@@ -88,8 +88,8 @@ Props are reactive - changes update the 3D scene:
 
 ```vue
 <script setup>
-const color = ref('orange')
-const position = ref([0, 0, 0])
+  const color = ref('orange')
+  const position = ref([0, 0, 0])
 </script>
 
 <template>
@@ -105,8 +105,9 @@ Inject existing Three.js objects directly:
 
 ```vue
 <script setup>
-import { useGLTF } from '@tresjs/cientos'
-const { scene } = await useGLTF('/model.glb')
+  import { useGLTF } from '@tresjs/cientos'
+
+  const { scene } = await useGLTF('/model.glb')
 </script>
 
 <template>

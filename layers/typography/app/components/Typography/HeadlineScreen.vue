@@ -3,8 +3,8 @@
   import { useTypography } from '../../composables/typography'
   import type { UiColors } from '../../types/colors'
   import type {
+    FluidFontSize,
     FontLeading,
-    FontScreenSize,
     FontSlant,
     FontTracking,
     FontWeight,
@@ -17,7 +17,7 @@
 
   const {
     level = 1,
-    size = 'screen-xxl',
+    fluidSize = '2xl',
     weight = 'font-bold',
     width = 'font-stretch-normal',
     slant = 'normal',
@@ -29,7 +29,7 @@
     class: classProp = '',
   } = defineProps<{
     level?: 1 | 2 | 3 | 4 | 5 | 6
-    size?: FontScreenSize
+    fluidSize?: FluidFontSize
     weight?: FontWeight
     width?: FontWidth
     slant?: FontSlant
@@ -43,14 +43,6 @@
 
   const tag = computed(() => `h${level}` as const)
 
-  const sizeMap: Record<string, string> = {
-    screen: 'text-screen',
-    'screen-xl': 'text-screen-xl',
-    'screen-xxl': 'text-screen-xxl',
-    'screen-xxxl': 'text-screen-xxxl',
-  }
-  const sizeClass = computed(() => sizeMap[size] ?? 'text-screen-xxl')
-
   const { classes } = useTypography({
     weight: weight,
     width: width,
@@ -59,13 +51,14 @@
     tracking: tracking,
     align: align,
     transform: transform,
+    fluidSize: fluidSize,
   })
 
   const colorClass = useColor(color, 'text')
 </script>
 
 <template>
-  <component :is="tag" :class="[sizeClass, classes, colorClass, classProp]" v-bind="$attrs">
+  <component :is="tag" :class="[classes, colorClass, classProp]" v-bind="$attrs">
     <slot />
   </component>
 </template>

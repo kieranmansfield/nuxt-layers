@@ -14,14 +14,10 @@ const posts = await queryCollection('blog')
   .all()
 
 // Single item
-const post = await queryCollection('blog')
-  .where('path', '=', '/blog/my-post')
-  .first()
+const post = await queryCollection('blog').where('path', '=', '/blog/my-post').first()
 
 // Count
-const total = await queryCollection('blog')
-  .where('category', '=', 'tech')
-  .count()
+const total = await queryCollection('blog').where('category', '=', 'tech').count()
 ```
 
 ## Operators
@@ -43,10 +39,7 @@ const total = await queryCollection('blog')
 // AND conditions
 const posts = await queryCollection('blog')
   .where('draft', '=', false)
-  .andWhere(group => group
-    .where('category', '=', 'tech')
-    .orWhere('featured', '=', true)
-  )
+  .andWhere((group) => group.where('category', '=', 'tech').orWhere('featured', '=', true))
   .all()
 
 // OR conditions
@@ -60,9 +53,7 @@ const posts = await queryCollection('blog')
 
 ```ts
 // Select specific fields (reduces payload)
-const titles = await queryCollection('blog')
-  .select('title', 'path', 'date')
-  .all()
+const titles = await queryCollection('blog').select('title', 'path', 'date').all()
 ```
 
 ## Navigation
@@ -80,15 +71,15 @@ const navigation = await queryCollectionNavigation('docs', ['title', 'icon', 'de
 Returns nested structure:
 
 ```ts
-[
+;[
   {
     title: 'Getting Started',
     path: '/docs/getting-started',
     children: [
       { title: 'Installation', path: '/docs/getting-started/installation' },
       { title: 'Configuration', path: '/docs/getting-started/configuration' },
-    ]
-  }
+    ],
+  },
 ]
 ```
 
@@ -113,18 +104,17 @@ navigation:
 ## Surroundings (Prev/Next)
 
 ```ts
-const { prev, next } = await queryCollectionItemSurroundings(
-  'docs',
-  '/docs/current-page',
-  { before: 1, after: 1 }
-)
+const { prev, next } = await queryCollectionItemSurroundings('docs', '/docs/current-page', {
+  before: 1,
+  after: 1,
+})
 
 // With specific fields
-const { prev, next } = await queryCollectionItemSurroundings(
-  'docs',
-  currentPath,
-  { before: 1, after: 1, fields: ['title', 'path', 'description'] }
-)
+const { prev, next } = await queryCollectionItemSurroundings('docs', currentPath, {
+  before: 1,
+  after: 1,
+  fields: ['title', 'path', 'description'],
+})
 ```
 
 ## Search Sections
@@ -133,20 +123,18 @@ Split pages into searchable sections:
 
 ```ts
 const sections = await queryCollectionSearchSections('docs', {
-  minHeading: 2,  // Minimum heading level to index (v3.10+)
-  maxHeading: 4,  // Maximum heading level to index (v3.10+)
-})
-
-// Returns
-  [
-    {
-      id: 'docs:getting-started#installation',
-      title: 'Installation',
-      titles: ['Getting Started', 'Installation'],
-      content: 'Section text content...',
-      path: '/docs/getting-started',
-    }
-  ]
+  minHeading: 2, // Minimum heading level to index (v3.10+)
+  maxHeading: 4, // Maximum heading level to index (v3.10+)
+})[
+  // Returns
+  {
+    id: 'docs:getting-started#installation',
+    title: 'Installation',
+    titles: ['Getting Started', 'Installation'],
+    content: 'Section text content...',
+    path: '/docs/getting-started',
+  }
+]
 
 // Include extra fields (v3.4+)
 const sections = await queryCollectionSearchSections('docs', {
@@ -163,9 +151,7 @@ In server routes, pass the event:
 ```ts
 // server/api/posts.get.ts
 export default defineEventHandler(async (event) => {
-  return await queryCollection(event, 'blog')
-    .where('draft', '=', false)
-    .all()
+  return await queryCollection(event, 'blog').where('draft', '=', false).all()
 })
 ```
 
@@ -184,9 +170,7 @@ const latest = await queryCollection('blog')
 **Posts by tag:**
 
 ```ts
-const tagged = await queryCollection('blog')
-  .where('tags', 'LIKE', `%${tag}%`)
-  .all()
+const tagged = await queryCollection('blog').where('tags', 'LIKE', `%${tag}%`).all()
 ```
 
 **Paginated list:**

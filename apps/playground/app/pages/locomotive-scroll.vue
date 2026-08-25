@@ -164,7 +164,9 @@ const { progress } = useSmoothScroll()
         </div>
 
         <!-- Scroll indicator -->
-        <div class="absolute bottom-24 left-1/2 -translate-x-1/2 text-highlighted/30 animate-bounce">
+        <div
+          class="absolute bottom-24 left-1/2 -translate-x-1/2 text-highlighted/30 animate-bounce"
+        >
           <UIcon name="i-lucide-chevron-down" class="text-3xl" />
         </div>
       </section>
@@ -393,7 +395,9 @@ const { progress } = useSmoothScroll()
             <span class="text-cyan-500 text-sm font-semibold tracking-wider uppercase mb-4 block">
               Try It Out
             </span>
-            <h2 class="text-4xl md:text-6xl font-bold text-highlighted mb-6">Interactive Playground</h2>
+            <h2 class="text-4xl md:text-6xl font-bold text-highlighted mb-6">
+              Interactive Playground
+            </h2>
             <p class="text-muted text-xl">Explore the API and see code examples</p>
           </div>
 
@@ -421,7 +425,9 @@ const { progress } = useSmoothScroll()
             <!-- Velocity Effects Tab -->
             <div v-show="activeTab === 'velocity'" class="space-y-8">
               <div class="bg-accented/50 rounded-3xl p-8 border border-accented">
-                <h3 class="text-2xl font-bold text-highlighted mb-4">MotionVelocityEffect Component</h3>
+                <h3 class="text-2xl font-bold text-highlighted mb-4">
+                  MotionVelocityEffect Component
+                </h3>
                 <p class="text-muted mb-8">
                   Wrap any content to apply velocity-based effects. Built-in smoothing for stable
                   animations.
@@ -475,7 +481,9 @@ const { progress } = useSmoothScroll()
             <!-- Progress Tab -->
             <div v-show="activeTab === 'progress'" class="space-y-8">
               <div class="bg-accented/50 rounded-3xl p-8 border border-accented">
-                <h3 class="text-2xl font-bold text-highlighted mb-4">MotionScrollProgress Component</h3>
+                <h3 class="text-2xl font-bold text-highlighted mb-4">
+                  MotionScrollProgress Component
+                </h3>
                 <p class="text-muted mb-8">
                   Display scroll progress as linear or circular indicator.
                 </p>
@@ -595,11 +603,16 @@ const { progress } = useSmoothScroll()
                     <h4 class="text-sm font-semibold text-primary mb-3">Velocity & Effects</h4>
                     <ul class="space-y-2 text-sm text-muted">
                       <li>
-                        <code class="text-highlighted">MotionVelocityEffect</code> - Velocity transforms
+                        <code class="text-highlighted">MotionVelocityEffect</code> - Velocity
+                        transforms
                       </li>
                       <li><code class="text-highlighted">MotionParallax</code> - GSAP parallax</li>
-                      <li><code class="text-highlighted">MotionTextReveal</code> - Text animations</li>
-                      <li><code class="text-highlighted">MotionMarquee</code> - Scrolling marquee</li>
+                      <li>
+                        <code class="text-highlighted">MotionTextReveal</code> - Text animations
+                      </li>
+                      <li>
+                        <code class="text-highlighted">MotionMarquee</code> - Scrolling marquee
+                      </li>
                     </ul>
                   </div>
                   <div class="bg-default rounded-xl p-4">
@@ -611,9 +624,12 @@ const { progress } = useSmoothScroll()
                         <code class="text-highlighted">MotionScrollLink</code> - Smooth scroll links
                       </li>
                       <li>
-                        <code class="text-highlighted">MotionScrollProgress</code> - Progress indicators
+                        <code class="text-highlighted">MotionScrollProgress</code> - Progress
+                        indicators
                       </li>
-                      <li><code class="text-highlighted">MotionScrollStats</code> - Debug display</li>
+                      <li>
+                        <code class="text-highlighted">MotionScrollStats</code> - Debug display
+                      </li>
                       <li>
                         <code class="text-highlighted">MotionStaggered</code> - Staggered animations
                       </li>
@@ -692,7 +708,9 @@ const { progress } = useSmoothScroll()
         <UContainer>
           <div class="max-w-4xl mx-auto">
             <div class="text-center mb-16">
-              <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">MotionScrollProgress</h2>
+              <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+                MotionScrollProgress
+              </h2>
               <p class="text-muted text-lg">Circular and linear progress indicators</p>
             </div>
 

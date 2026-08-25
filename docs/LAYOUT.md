@@ -51,7 +51,7 @@ The layout layer requires a dedicated Nuxt layout file and page-level layout dec
 
 ```vue
 <script setup lang="ts">
-definePageMeta({ layout: 'grid' })
+  definePageMeta({ layout: 'grid' })
 </script>
 ```
 
@@ -65,11 +65,11 @@ definePageMeta({ layout: 'grid' })
 
 The grid has three modes controlled via `app.config.ts`:
 
-| Mode | Behaviour |
-|---|---|
-| `'swiss'` | Default. Full Swiss grid with `mastmain`/`basesection` CSS subgrid. |
-| `'fluid'` | Container-query-based auto-fit grid. `basesection` still gets `container-type`. |
-| `'disabled'` | `LayoutMain` renders a plain `<main>` without grid CSS. |
+| Mode         | Behaviour                                                                       |
+| ------------ | ------------------------------------------------------------------------------- |
+| `'swiss'`    | Default. Full Swiss grid with `mastmain`/`basesection` CSS subgrid.             |
+| `'fluid'`    | Container-query-based auto-fit grid. `basesection` still gets `container-type`. |
+| `'disabled'` | `LayoutMain` renders a plain `<main>` without grid CSS.                         |
 
 Set in your `app.config.ts`:
 
@@ -78,7 +78,7 @@ export default defineAppConfig({
   layoutLayer: {
     ui: {
       grid: {
-        mode: 'swiss',  // 'swiss' | 'fluid' | 'disabled'
+        mode: 'swiss', // 'swiss' | 'fluid' | 'disabled'
       },
     },
   },
@@ -110,8 +110,8 @@ Renders `<main class="mastmain">`. When `mode === 'disabled'` it renders a plain
 
 **Props:**
 
-| Prop | Type | Default |
-|---|---|---|
+| Prop  | Type     | Default  |
+| ----- | -------- | -------- |
 | `tag` | `string` | `'main'` |
 
 Place this in your layout file (`layouts/grid.vue`), not in individual pages.
@@ -132,10 +132,10 @@ Constrains content width and centres it. Use inside sections or anywhere you nee
 
 **Props:**
 
-| Prop | Type | Default |
-|---|---|---|
+| Prop   | Type                                       | Default  |
+| ------ | ------------------------------------------ | -------- |
 | `size` | `'content' \| 'wide' \| 'fluid' \| 'full'` | `'wide'` |
-| `tag` | `string` | `'div'` |
+| `tag`  | `string`                                   | `'div'`  |
 
 The `full` size uses negative `margin-inline` to escape the grid's `--grid-padding`, reaching the true viewport edge.
 
@@ -159,11 +159,11 @@ Fragment component (no wrapper element). Handles `useHead()` SEO and optionally 
 
 **Props:**
 
-| Prop | Type | Default |
-|---|---|---|
-| `title` | `string` | — (required) |
-| `description` | `string` | `''` |
-| `showHeader` | `boolean` | `false` |
+| Prop          | Type      | Default      |
+| ------------- | --------- | ------------ |
+| `title`       | `string`  | — (required) |
+| `description` | `string`  | `''`         |
+| `showHeader`  | `boolean` | `false`      |
 
 ---
 
@@ -179,11 +179,11 @@ Full-viewport subgrid section. Spans 12 rows (= 100vh). Inherits the parent `.ma
 
 **Props:**
 
-| Prop | Type | Default |
-|---|---|---|
-| `fullHeight` | `boolean` | `false` |
-| `fullWidth` | `boolean` | `false` |
-| `tag` | `string` | `'section'` |
+| Prop         | Type      | Default     |
+| ------------ | --------- | ----------- |
+| `fullHeight` | `boolean` | `false`     |
+| `fullWidth`  | `boolean` | `false`     |
+| `tag`        | `string`  | `'section'` |
 
 ---
 
@@ -200,37 +200,37 @@ Positioned child within a subgrid section. Use `preset` for common layouts or se
 
 **Props:**
 
-| Prop | Type | Notes |
-|---|---|---|
-| `preset` | `string` | Named preset from config |
-| `colStart` | `number \| ResponsiveValue` | Grid column start |
-| `colSpan` | `number \| ResponsiveValue` | Column span |
-| `rowStart` | `number \| ResponsiveValue` | Grid row start |
-| `rowSpan` | `number \| ResponsiveValue` | Row span |
-| `layer` | `keyof GridLayers` | Z-index layer: `back`, `mid`, `front`, `top` |
-| `align` | `string` | `align-self` value: `start`, `center`, `end`, `stretch` |
-| `justify` | `string` | `justify-self` value: `start`, `center`, `end`, `stretch` |
-| `container` | `string` | Content width constraint: `content` (65ch), `wide` (90rem), `fluid`, `full` |
-| `gap` | `string` | Override `--grid-gap` for nested content (e.g. `'1rem'`) |
-| `density` | `string` | Rhythm base unit: `compact` (2px), `normal` (4px), `relaxed` (8px) |
-| `bleed` | `boolean` | Negative margin to reach viewport edge |
-| `as` | `string` | Tag override |
+| Prop        | Type                        | Notes                                                                       |
+| ----------- | --------------------------- | --------------------------------------------------------------------------- |
+| `preset`    | `string`                    | Named preset from config                                                    |
+| `colStart`  | `number \| ResponsiveValue` | Grid column start                                                           |
+| `colSpan`   | `number \| ResponsiveValue` | Column span                                                                 |
+| `rowStart`  | `number \| ResponsiveValue` | Grid row start                                                              |
+| `rowSpan`   | `number \| ResponsiveValue` | Row span                                                                    |
+| `layer`     | `keyof GridLayers`          | Z-index layer: `back`, `mid`, `front`, `top`                                |
+| `align`     | `string`                    | `align-self` value: `start`, `center`, `end`, `stretch`                     |
+| `justify`   | `string`                    | `justify-self` value: `start`, `center`, `end`, `stretch`                   |
+| `container` | `string`                    | Content width constraint: `content` (65ch), `wide` (90rem), `fluid`, `full` |
+| `gap`       | `string`                    | Override `--grid-gap` for nested content (e.g. `'1rem'`)                    |
+| `density`   | `string`                    | Rhythm base unit: `compact` (2px), `normal` (4px), `relaxed` (8px)          |
+| `bleed`     | `boolean`                   | Negative margin to reach viewport edge                                      |
+| `as`        | `string`                    | Tag override                                                                |
 
 **Built-in presets:**
 
-| Preset | Columns | Rows |
-|---|---|---|
-| `hero` | full width | full height |
-| `centered` | centre 10 cols | rows 2–10 |
-| `fullWidth` | full width | auto |
-| `sidebar` | cols 1–4 | full height |
-| `content` | cols 5–14 | rows 2–10 |
-| `splitLeft` | left half | full |
-| `splitRight` | right half | full |
-| `quarterLeft` | first quarter | full |
-| `threeQuarterRight` | right 3/4 | full |
-| `halfTop` | full width | top half |
-| `halfBottom` | full width | bottom half |
+| Preset              | Columns        | Rows        |
+| ------------------- | -------------- | ----------- |
+| `hero`              | full width     | full height |
+| `centered`          | centre 10 cols | rows 2–10   |
+| `fullWidth`         | full width     | auto        |
+| `sidebar`           | cols 1–4       | full height |
+| `content`           | cols 5–14      | rows 2–10   |
+| `splitLeft`         | left half      | full        |
+| `splitRight`        | right half     | full        |
+| `quarterLeft`       | first quarter  | full        |
+| `threeQuarterRight` | right 3/4      | full        |
+| `halfTop`           | full width     | top half    |
+| `halfBottom`        | full width     | bottom half |
 
 ---
 
@@ -258,7 +258,8 @@ Two-column 50/50 layout.
   <template #right>Right content</template>
 </LayoutSectionSplit>
 
-<LayoutSectionSplit reverse /> <!-- right renders first visually -->
+<LayoutSectionSplit reverse />
+<!-- right renders first visually -->
 ```
 
 ---
@@ -293,20 +294,20 @@ Column overlay toggled with `Cmd+G`. Place once in your grid layout file, not in
 const { config, getPreset, isEnabled, mode, layers, useZIndex } = useGridConfig()
 ```
 
-| Return | Type | Description |
-|---|---|---|
-| `config` | `Ref<GridConfig>` | Raw config from `app.config` |
-| `isEnabled` | `ComputedRef<boolean>` | `true` when `mode !== 'disabled'` |
-| `mode` | `ComputedRef<GridMode>` | `'swiss' \| 'fluid' \| 'disabled'` |
-| `layers` | `ComputedRef<GridLayers>` | All z-index values |
-| `getPreset(name)` | `GridPresetsItem \| undefined` | Look up a preset by name |
-| `useZIndex(layer)` | `number` | Get a z-index value by layer name |
+| Return             | Type                           | Description                        |
+| ------------------ | ------------------------------ | ---------------------------------- |
+| `config`           | `Ref<GridConfig>`              | Raw config from `app.config`       |
+| `isEnabled`        | `ComputedRef<boolean>`         | `true` when `mode !== 'disabled'`  |
+| `mode`             | `ComputedRef<GridMode>`        | `'swiss' \| 'fluid' \| 'disabled'` |
+| `layers`           | `ComputedRef<GridLayers>`      | All z-index values                 |
+| `getPreset(name)`  | `GridPresetsItem \| undefined` | Look up a preset by name           |
+| `useZIndex(layer)` | `number`                       | Get a z-index value by layer name  |
 
 **`useZIndex` example:**
 
 ```ts
 const { useZIndex } = useGridConfig()
-const zModal = useZIndex('modal')   // 400
+const zModal = useZIndex('modal') // 400
 const zHeader = useZIndex('header') // 100
 ```
 
@@ -331,13 +332,13 @@ All grid CSS is in `layers/layout/app/assets/css/layout/`.
 
 CSS custom properties exposed:
 
-| Variable | Value | Purpose |
-|---|---|---|
-| `--grid-cols` | 6 / 12 / 18 | Active column count |
-| `--grid-gap` | `clamp(0.75rem, 1.5vw, 1.5rem)` | Gap between columns and rows |
-| `--grid-padding` | `clamp(1rem, 2.5vw, 2rem)` | Outer left/right gutters |
-| `--section-height` | `100vh` | Height of one section |
-| `--grid-row-height` | computed | Height of one grid row |
+| Variable            | Value                           | Purpose                      |
+| ------------------- | ------------------------------- | ---------------------------- |
+| `--grid-cols`       | 6 / 12 / 18                     | Active column count          |
+| `--grid-gap`        | `clamp(0.75rem, 1.5vw, 1.5rem)` | Gap between columns and rows |
+| `--grid-padding`    | `clamp(1rem, 2.5vw, 2rem)`      | Outer left/right gutters     |
+| `--section-height`  | `100vh`                         | Height of one section        |
+| `--grid-row-height` | computed                        | Height of one grid row       |
 
 **`.basesection`** — Subgrid section (12 rows = 100vh).
 
@@ -362,12 +363,12 @@ Tune minimum column width per-instance:
 
 **Container size classes** (used by `LayoutContainer`):
 
-| Class | Effect |
-|---|---|
-| `.layout-container-content` | `max-width: 65ch`, centred |
-| `.layout-container-wide` | `max-width: 90rem`, centred |
-| `.layout-container-fluid` | `max-width: 100%` |
-| `.layout-container-full` | `width: 100vw`, escapes grid padding |
+| Class                       | Effect                               |
+| --------------------------- | ------------------------------------ |
+| `.layout-container-content` | `max-width: 65ch`, centred           |
+| `.layout-container-wide`    | `max-width: 90rem`, centred          |
+| `.layout-container-fluid`   | `max-width: 100%`                    |
+| `.layout-container-full`    | `width: 100vw`, escapes grid padding |
 
 ---
 
@@ -375,17 +376,17 @@ Tune minimum column width per-instance:
 
 The grid manages z-index through named layers. Use `useZIndex()` or the `layer` prop on `LayoutGridItem` — never raw numbers.
 
-| Layer | Value | Use |
-|---|---|---|
-| `back` | 0 | Background elements |
-| `mid` | 10 | Content |
-| `front` | 20 | Floating content |
-| `top` | 30 | Pinned / sticky |
-| `header` | 100 | Site header / nav |
-| `dropdown` | 200 | Dropdown menus, popups |
-| `overlay` | 300 | Drawers, sidebars |
-| `modal` | 400 | Modal dialogs |
-| `toast` | 500 | Toasts, notifications |
+| Layer      | Value | Use                    |
+| ---------- | ----- | ---------------------- |
+| `back`     | 0     | Background elements    |
+| `mid`      | 10    | Content                |
+| `front`    | 20    | Floating content       |
+| `top`      | 30    | Pinned / sticky        |
+| `header`   | 100   | Site header / nav      |
+| `dropdown` | 200   | Dropdown menus, popups |
+| `overlay`  | 300   | Drawers, sidebars      |
+| `modal`    | 400   | Modal dialogs          |
+| `toast`    | 500   | Toasts, notifications  |
 
 ```ts
 // In a component
@@ -495,10 +496,14 @@ The CSS overflow interaction rule: setting `overflow-x: hidden` on any element f
 
 ```css
 /* Wrong */
-.mastmain { overflow-x: hidden; } /* becomes a scroll container */
+.mastmain {
+  overflow-x: hidden;
+} /* becomes a scroll container */
 
 /* Correct */
-.mastmain { overflow-x: clip; }   /* clips without scroll container */
+.mastmain {
+  overflow-x: clip;
+} /* clips without scroll container */
 ```
 
 ### Locomotive Scroll intercepts wheel events globally

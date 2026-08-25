@@ -6,10 +6,10 @@ Common patterns and recipes.
 
 ```vue
 <script setup lang="ts">
-import { OrbitControls, useGLTF } from '@tresjs/cientos'
-import { TresCanvas } from '@tresjs/core'
+  import { OrbitControls, useGLTF } from '@tresjs/cientos'
+  import { TresCanvas } from '@tresjs/core'
 
-const { scene } = await useGLTF('/models/robot.glb', { draco: true })
+  const { scene } = await useGLTF('/models/robot.glb', { draco: true })
 </script>
 
 <template>
@@ -31,18 +31,13 @@ const { scene } = await useGLTF('/models/robot.glb', { draco: true })
 
 ```vue
 <script setup lang="ts">
-import { OrbitControls } from '@tresjs/cientos'
-import { TresCanvas } from '@tresjs/core'
+  import { OrbitControls } from '@tresjs/cientos'
+  import { TresCanvas } from '@tresjs/core'
 </script>
 
 <template>
   <TresCanvas>
-    <TresPerspectiveCamera
-      :position="[5, 5, 5]"
-      :fov="45"
-      :near="0.1"
-      :far="1000"
-    />
+    <TresPerspectiveCamera :position="[5, 5, 5]" :fov="45" :near="0.1" :far="1000" />
     <OrbitControls
       enable-damping
       :damping-factor="0.05"
@@ -59,19 +54,19 @@ import { TresCanvas } from '@tresjs/core'
 
 ```vue
 <script setup lang="ts">
-import { TresCanvas, useLoop } from '@tresjs/core'
-import { shallowRef } from 'vue'
+  import { shallowRef } from 'vue'
+  import { TresCanvas, useLoop } from '@tresjs/core'
 
-const meshRef = shallowRef()
+  const meshRef = shallowRef()
 
-const { onBeforeRender } = useLoop()
+  const { onBeforeRender } = useLoop()
 
-onBeforeRender(({ delta }) => {
-  if (meshRef.value) {
-    meshRef.value.rotation.y += delta
-    meshRef.value.rotation.x += delta * 0.5
-  }
-})
+  onBeforeRender(({ delta }) => {
+    if (meshRef.value) {
+      meshRef.value.rotation.y += delta
+      meshRef.value.rotation.x += delta * 0.5
+    }
+  })
 </script>
 
 <template>
@@ -90,8 +85,8 @@ onBeforeRender(({ delta }) => {
 
 ```vue
 <script setup lang="ts">
-import { BloomPmndrs, EffectComposerPmndrs, VignettePmndrs } from '@tresjs/post-processing'
-import { TresCanvas } from '@tresjs/core'
+  import { TresCanvas } from '@tresjs/core'
+  import { BloomPmndrs, EffectComposerPmndrs, VignettePmndrs } from '@tresjs/post-processing'
 </script>
 
 <template>
@@ -101,11 +96,7 @@ import { TresCanvas } from '@tresjs/core'
     <!-- Scene with emissive materials for bloom -->
     <TresMesh>
       <TresSphereGeometry :args="[1, 32, 32]" />
-      <TresMeshStandardMaterial
-        color="#ff6600"
-        :emissive="0xff6600"
-        :emissive-intensity="2"
-      />
+      <TresMeshStandardMaterial color="#ff6600" :emissive="0xff6600" :emissive-intensity="2" />
     </TresMesh>
 
     <TresAmbientLight :intensity="0.2" />
@@ -124,7 +115,7 @@ import { TresCanvas } from '@tresjs/core'
 
 ```vue
 <script setup lang="ts">
-import { TresCanvas } from '@tresjs/core'
+  import { TresCanvas } from '@tresjs/core'
 </script>
 
 <template>
@@ -142,10 +133,10 @@ import { TresCanvas } from '@tresjs/core'
 </template>
 
 <style scoped>
-.canvas-container {
-  width: 100%;
-  height: 100vh;
-}
+  .canvas-container {
+    width: 100%;
+    height: 100vh;
+  }
 </style>
 ```
 
@@ -153,8 +144,8 @@ import { TresCanvas } from '@tresjs/core'
 
 ```vue
 <script setup lang="ts">
-import { Environment, ContactShadows, Sky } from '@tresjs/cientos'
-import { TresCanvas } from '@tresjs/core'
+  import { ContactShadows, Environment, Sky } from '@tresjs/cientos'
+  import { TresCanvas } from '@tresjs/core'
 </script>
 
 <template>
@@ -191,12 +182,12 @@ import { TresCanvas } from '@tresjs/core'
 
 ```vue
 <script setup lang="ts">
-import { TresCanvas } from '@tresjs/core'
-import { ref } from 'vue'
+  import { ref } from 'vue'
+  import { TresCanvas } from '@tresjs/core'
 
-const hovered = ref(false)
-const clicked = ref(false)
-const scale = computed(() => (clicked.value ? 1.5 : hovered.value ? 1.2 : 1))
+  const hovered = ref(false)
+  const clicked = ref(false)
+  const scale = computed(() => (clicked.value ? 1.5 : hovered.value ? 1.2 : 1))
 </script>
 
 <template>
@@ -223,13 +214,13 @@ const scale = computed(() => (clicked.value ? 1.5 : hovered.value ? 1.2 : 1))
 
 ```vue
 <script setup lang="ts">
-import { OrbitControls, useGLTF, useProgress } from '@tresjs/cientos'
-import { TresCanvas } from '@tresjs/core'
+  import { OrbitControls, useGLTF, useProgress } from '@tresjs/cientos'
+  import { TresCanvas } from '@tresjs/core'
 
-const { progress, active } = useProgress()
+  const { progress, active } = useProgress()
 
-const robot = useGLTF('/models/robot.glb', { draco: true })
-const car = useGLTF('/models/car.glb', { draco: true })
+  const robot = useGLTF('/models/robot.glb', { draco: true })
+  const car = useGLTF('/models/car.glb', { draco: true })
 </script>
 
 <template>
@@ -257,8 +248,8 @@ const car = useGLTF('/models/car.glb', { draco: true })
 
 ```vue
 <script setup lang="ts">
-import { Text3D, Center } from '@tresjs/cientos'
-import { TresCanvas } from '@tresjs/core'
+  import { Center, Text3D } from '@tresjs/cientos'
+  import { TresCanvas } from '@tresjs/core'
 </script>
 
 <template>
@@ -288,8 +279,8 @@ import { TresCanvas } from '@tresjs/core'
 
 ```vue
 <script setup lang="ts">
-import { Levioso, OrbitControls } from '@tresjs/cientos'
-import { TresCanvas } from '@tresjs/core'
+  import { Levioso, OrbitControls } from '@tresjs/cientos'
+  import { TresCanvas } from '@tresjs/core'
 </script>
 
 <template>

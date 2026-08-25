@@ -5,7 +5,7 @@
 
   const { data: providers } = await useFetch('/api/metadata/providers')
 
-  const { data: providerStatus, refresh: refreshStatus } = await useFetch('/api/metadata/status')
+  const { data: providerStatus } = await useFetch('/api/metadata/status')
 
   const mediaTypeTabs = [
     { label: 'All', value: undefined as MetadataMediaType | undefined },
@@ -50,7 +50,9 @@
   }
 
   watch(query, runSearch)
-  watch(mediaType, () => { if (query.value) runSearch() })
+  watch(mediaType, () => {
+    if (query.value) runSearch()
+  })
 
   const mediaTypeIcons: Record<string, string> = {
     book: 'i-lucide-book-open',
@@ -64,17 +66,17 @@
   }
 
   const providerColors: Record<string, string> = {
-    'openlibrary': 'bg-amber-500/10 text-amber-500',
+    openlibrary: 'bg-amber-500/10 text-amber-500',
     'google-books': 'bg-sky-500/10 text-sky-500',
-    'comicvine': 'bg-yellow-500/10 text-yellow-500',
-    'tmdb': 'bg-teal-500/10 text-teal-500',
+    comicvine: 'bg-yellow-500/10 text-yellow-500',
+    tmdb: 'bg-teal-500/10 text-teal-500',
   }
 
   const providerLabels: Record<string, string> = {
-    'openlibrary': 'Open Library',
+    openlibrary: 'Open Library',
     'google-books': 'Google Books',
-    'comicvine': 'Comic Vine',
-    'tmdb': 'TMDB',
+    comicvine: 'Comic Vine',
+    tmdb: 'TMDB',
   }
 
   function yearOf(dateStr?: string) {
@@ -83,7 +85,10 @@
 </script>
 
 <template>
-  <LayoutPage title="Metadata" description="Search books, comics, movies, and TV shows across multiple providers">
+  <LayoutPage
+    title="Metadata"
+    description="Search books, comics, movies, and TV shows across multiple providers"
+  >
     <LayoutSection>
       <LayoutGridItem preset="centered">
         <div class="space-y-10 pb-8">
@@ -104,7 +109,11 @@
                 class="flex flex-col gap-2 rounded-xl border border-default bg-elevated px-4 py-3 min-w-48"
               >
                 <div class="flex items-center gap-3">
-                  <UIcon name="i-lucide-database" class="text-lg shrink-0" :class="providerColors[p.id]?.split(' ')[1] ?? 'text-primary'" />
+                  <UIcon
+                    name="i-lucide-database"
+                    class="text-lg shrink-0"
+                    :class="providerColors[p.id]?.split(' ')[1] ?? 'text-primary'"
+                  />
                   <div class="font-semibold text-sm text-highlighted">{{ p.label }}</div>
                 </div>
                 <div class="flex flex-wrap gap-1">
@@ -134,7 +143,8 @@
               </div>
             </div>
             <div v-else class="text-sm text-muted">
-              No providers registered. Load provider layers (e.g. <code>metadata-tmdb</code>, <code>metadata-openlibrary</code>) alongside the <code>metadata</code> layer.
+              No providers registered. Load provider layers (e.g. <code>metadata-tmdb</code>,
+              <code>metadata-openlibrary</code>) alongside the <code>metadata</code> layer.
             </div>
           </div>
 
@@ -170,11 +180,17 @@
 
           <!-- Results -->
           <div v-if="query">
-            <div v-if="error" class="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-400">
+            <div
+              v-if="error"
+              class="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-400"
+            >
               {{ error.message }}
             </div>
 
-            <div v-else-if="isLoading" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div
+              v-else-if="isLoading"
+              class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            >
               <div
                 v-for="i in 8"
                 :key="i"
@@ -182,7 +198,10 @@
               />
             </div>
 
-            <div v-else-if="hasSearched && !results.length" class="text-sm text-muted py-8 text-center">
+            <div
+              v-else-if="hasSearched && !results.length"
+              class="text-sm text-muted py-8 text-center"
+            >
               No results for "{{ query }}"<span v-if="mediaType"> in {{ mediaType }}</span>
             </div>
 
@@ -211,7 +230,12 @@
                   </div>
                   <!-- Media type badge -->
                   <div class="absolute top-2 left-2">
-                    <UBadge variant="solid" color="neutral" size="xs" class="backdrop-blur-sm bg-black/60 text-white border-0">
+                    <UBadge
+                      variant="solid"
+                      color="neutral"
+                      size="xs"
+                      class="backdrop-blur-sm bg-black/60 text-white border-0"
+                    >
                       {{ item.mediaType }}
                     </UBadge>
                   </div>
@@ -228,7 +252,7 @@
                   </div>
 
                   <div v-if="item.creators?.length" class="text-xs text-muted truncate">
-                    {{ item.creators.map(c => c.name).join(', ') }}
+                    {{ item.creators.map((c) => c.name).join(', ') }}
                   </div>
 
                   <div v-if="item.publisher" class="text-xs text-muted truncate">
@@ -254,7 +278,10 @@
           </div>
 
           <!-- Empty state hint -->
-          <div v-else class="rounded-xl border border-dashed border-default p-12 text-center text-muted text-sm">
+          <div
+            v-else
+            class="rounded-xl border border-dashed border-default p-12 text-center text-muted text-sm"
+          >
             <UIcon name="i-lucide-search" class="text-3xl mb-3 block mx-auto opacity-40" />
             Type a query above to search across all registered providers
           </div>

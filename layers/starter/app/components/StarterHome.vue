@@ -1,221 +1,247 @@
 <script setup lang="ts">
-useSeoMeta({
-  title: 'kmcom-nuxt-layers Starter',
-  description:
-    'A production-ready Nuxt starter powered by kmcom-nuxt-layers. Composable, modular, and ready to ship.',
-})
-
-const { gsap, ScrollTrigger } = useGsap()
-gsap.registerPlugin(ScrollTrigger)
-
-const heroRef = ref<HTMLElement | null>(null)
-const sectionsRef = ref<HTMLElement | null>(null)
-
-let ctx: ReturnType<typeof gsap.context> | null = null
-
-onMounted(() => {
-  ctx = gsap.context(() => {
-    if (heroRef.value) {
-      gsap.from(Array.from(heroRef.value.children), {
-        y: 24,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: 'power3.out',
-      })
-    }
-
-    if (sectionsRef.value) {
-      gsap.from(sectionsRef.value.querySelectorAll('.layer-card'), {
-        scrollTrigger: {
-          trigger: sectionsRef.value,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-        y: 32,
-        opacity: 0,
-        scale: 0.97,
-        duration: 0.5,
-        stagger: { amount: 0.5 },
-        ease: 'power3.out',
-      })
-    }
+  useSeoMeta({
+    title: 'kmcom-nuxt-layers Starter',
+    description:
+      'A production-ready Nuxt starter powered by kmcom-nuxt-layers. Composable, modular, and ready to ship.',
   })
-})
 
-onUnmounted(() => {
-  ctx?.revert()
-  ctx = null
-})
+  const { gsap, ScrollTrigger } = useGsap()
+  gsap.registerPlugin(ScrollTrigger)
 
-const appConfig = useAppConfig()
-const activeLayers = appConfig.layers ?? {}
+  const heroRef = useTemplateRef<HTMLElement>('heroRef')
+  const sectionsRef = useTemplateRef<HTMLElement>('sectionsRef')
 
-type LayerDef = {
-  name: string
-  key: string
-  description: string
-  icon: string
-  features: string[]
-  borderColor: string
-  bgColor: string
-  iconBg: string
-  iconColor: string
-}
+  let ctx: ReturnType<typeof gsap.context> | null = null
 
-const coreLayers: LayerDef[] = [
-  {
-    name: 'Core',
-    key: 'core',
-    description: 'Foundation utilities, error handling, device detection, PWA support',
-    icon: 'i-lucide-box',
-    features: ['Browser Detection', 'Screen Info', 'Network Status', 'Loading States', 'PWA'],
-    borderColor: 'border-blue-500/30',
-    bgColor: 'bg-blue-500/5',
-    iconBg: 'bg-blue-500/10',
-    iconColor: 'text-blue-500',
-  },
-  {
-    name: 'UI',
-    key: 'ui',
-    description: 'Typography, navigation, visual primitives and the design system',
-    icon: 'i-lucide-palette',
-    features: ['Typography', 'Color Tokens', 'Navigation', 'Visual Primitives', 'Toast', 'Modal'],
-    borderColor: 'border-pink-500/30',
-    bgColor: 'bg-pink-500/5',
-    iconBg: 'bg-pink-500/10',
-    iconColor: 'text-pink-500',
-  },
-  {
-    name: 'Layout',
-    key: 'layout',
-    description: 'Swiss Grid system, sections, and page containers',
-    icon: 'i-lucide-layout',
-    features: ['18-Col Grid', 'Hero Section', 'Split Section', 'Gallery Section', 'Grid Debug'],
-    borderColor: 'border-amber-500/30',
-    bgColor: 'bg-amber-500/5',
-    iconBg: 'bg-amber-500/10',
-    iconColor: 'text-amber-500',
-  },
-  {
-    name: 'Motion',
-    key: 'motion',
-    description: 'GSAP, Lenis smooth scroll, page transitions and animation effects',
-    icon: 'i-lucide-sparkles',
-    features: ['GSAP', 'ScrollTrigger', 'Lenis', 'Marquee', 'Magnetic', 'Tilt', 'Cursor'],
-    borderColor: 'border-emerald-500/30',
-    bgColor: 'bg-emerald-500/5',
-    iconBg: 'bg-emerald-500/10',
-    iconColor: 'text-emerald-500',
-  },
-  {
-    name: 'Forms',
-    key: 'forms',
-    description: 'Config-driven form fields with Zod validation and type inference',
-    icon: 'i-lucide-file-input',
-    features: ['Dynamic Fields', 'Zod Validation', 'Type Inference', 'Auto Icons', 'Contact Form'],
-    borderColor: 'border-cyan-500/30',
-    bgColor: 'bg-cyan-500/5',
-    iconBg: 'bg-cyan-500/10',
-    iconColor: 'text-cyan-500',
-  },
-  {
-    name: 'Theme',
-    key: 'theme',
-    description: 'Dark mode, accent color palettes and design token system',
-    icon: 'i-lucide-swatch-book',
-    features: ['Dark Mode', 'Accent Colors', 'Color Tokens', 'Color Mode'],
-    borderColor: 'border-neutral-400/30',
-    bgColor: 'bg-neutral-400/5',
-    iconBg: 'bg-neutral-400/10',
-    iconColor: 'text-neutral-400',
-  },
-  {
-    name: 'Content',
-    key: 'content',
-    description: 'Markdown CMS with typed collections via @nuxt/content',
-    icon: 'i-lucide-file-text',
-    features: ['Markdown', 'Collections', 'Frontmatter', 'Content API', 'Zod Schemas'],
-    borderColor: 'border-rose-500/30',
-    bgColor: 'bg-rose-500/5',
-    iconBg: 'bg-rose-500/10',
-    iconColor: 'text-rose-500',
-  },
-  {
-    name: 'Scripts',
-    key: 'scripts',
-    description: 'Third-party script management with performance-safe loading',
-    icon: 'i-lucide-code',
-    features: ['Lazy Loading', 'Analytics', 'Consent-Aware', 'Performance-Safe'],
-    borderColor: 'border-indigo-500/30',
-    bgColor: 'bg-indigo-500/5',
-    iconBg: 'bg-indigo-500/10',
-    iconColor: 'text-indigo-500',
-  },
-  {
-    name: 'Routing',
-    key: 'routing',
-    description: 'Advanced routing utilities, typed middleware and navigation helpers',
-    icon: 'i-lucide-route',
-    features: ['Typed Routes', 'Middleware', 'Route Guards', 'Navigation Utils'],
-    borderColor: 'border-teal-500/30',
-    bgColor: 'bg-teal-500/5',
-    iconBg: 'bg-teal-500/10',
-    iconColor: 'text-teal-500',
-  },
-  {
-    name: 'SEO',
-    key: 'seo',
-    description: 'Meta tags, Open Graph, JSON-LD, sitemap and robots.txt via @nuxtjs/seo',
-    icon: 'i-lucide-search',
-    features: ['Meta Tags', 'Open Graph', 'JSON-LD', 'Sitemap', 'Robots.txt', 'Schema.org'],
-    borderColor: 'border-sky-500/30',
-    bgColor: 'bg-sky-500/5',
-    iconBg: 'bg-sky-500/10',
-    iconColor: 'text-sky-500',
-  },
-  {
-    name: 'Feeds',
-    key: 'feeds',
-    description: 'RSS and feed aggregation with display components',
-    icon: 'i-lucide-rss',
-    features: ['RSS Feeds', 'Feed Display', 'Feed Parser'],
-    borderColor: 'border-orange-500/30',
-    bgColor: 'bg-orange-500/5',
-    iconBg: 'bg-orange-500/10',
-    iconColor: 'text-orange-500',
-  },
-]
+  onMounted(() => {
+    ctx = gsap.context(() => {
+      if (heroRef.value) {
+        gsap.from(Array.from(heroRef.value.children), {
+          y: 24,
+          opacity: 0,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: 'power3.out',
+        })
+      }
 
-const addonLayers: LayerDef[] = [
-  {
-    name: 'Canvas',
-    key: 'canvas',
-    description: 'WebGL/WebGPU canvas foundation required by the shader layer',
-    icon: 'i-lucide-monitor',
-    features: ['WebGL', 'WebGPU', 'Canvas Composables', '3D Foundation'],
-    borderColor: 'border-purple-500/30',
-    bgColor: 'bg-purple-500/5',
-    iconBg: 'bg-purple-500/10',
-    iconColor: 'text-purple-500',
-  },
-  {
-    name: 'Shader',
-    key: 'shader',
-    description: 'Three.js + TresJS shader system with TSL, noise and post-processing',
-    icon: 'i-lucide-shapes',
-    features: ['TSL Shaders', 'Noise', 'Gradients', 'Fresnel', 'Post-Processing', 'WebGPU'],
-    borderColor: 'border-violet-500/30',
-    bgColor: 'bg-violet-500/5',
-    iconBg: 'bg-violet-500/10',
-    iconColor: 'text-violet-500',
-  },
-]
+      if (sectionsRef.value) {
+        gsap.from(sectionsRef.value.querySelectorAll('.layer-card'), {
+          scrollTrigger: {
+            trigger: sectionsRef.value,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+          y: 32,
+          opacity: 0,
+          scale: 0.97,
+          duration: 0.5,
+          stagger: { amount: 0.5 },
+          ease: 'power3.out',
+        })
+      }
+    })
+  })
 
-const marqueeItems = [
-  'Core', '◆', 'UI', '◆', 'Layout', '◆', 'Motion', '◆', 'Forms', '◆',
-  'Theme', '◆', 'Content', '◆', 'SEO', '◆', 'Scripts', '◆', 'Routing', '◆', 'Feeds', '◆',
-]
+  onUnmounted(() => {
+    ctx?.revert()
+    ctx = null
+  })
+
+  const appConfig = useAppConfig()
+  const activeLayers = appConfig.layers ?? {}
+
+  type LayerDef = {
+    name: string
+    key: string
+    description: string
+    icon: string
+    features: string[]
+    borderColor: string
+    bgColor: string
+    iconBg: string
+    iconColor: string
+  }
+
+  const coreLayers: LayerDef[] = [
+    {
+      name: 'Core',
+      key: 'core',
+      description: 'Foundation utilities, error handling, device detection, PWA support',
+      icon: 'i-lucide-box',
+      features: ['Browser Detection', 'Screen Info', 'Network Status', 'Loading States', 'PWA'],
+      borderColor: 'border-blue-500/30',
+      bgColor: 'bg-blue-500/5',
+      iconBg: 'bg-blue-500/10',
+      iconColor: 'text-blue-500',
+    },
+    {
+      name: 'UI',
+      key: 'ui',
+      description: 'Typography, navigation, visual primitives and the design system',
+      icon: 'i-lucide-palette',
+      features: ['Typography', 'Color Tokens', 'Navigation', 'Visual Primitives', 'Toast', 'Modal'],
+      borderColor: 'border-pink-500/30',
+      bgColor: 'bg-pink-500/5',
+      iconBg: 'bg-pink-500/10',
+      iconColor: 'text-pink-500',
+    },
+    {
+      name: 'Layout',
+      key: 'layout',
+      description: 'Swiss Grid system, sections, and page containers',
+      icon: 'i-lucide-layout',
+      features: ['18-Col Grid', 'Hero Section', 'Split Section', 'Gallery Section', 'Grid Debug'],
+      borderColor: 'border-amber-500/30',
+      bgColor: 'bg-amber-500/5',
+      iconBg: 'bg-amber-500/10',
+      iconColor: 'text-amber-500',
+    },
+    {
+      name: 'Motion',
+      key: 'motion',
+      description: 'GSAP, Lenis smooth scroll, page transitions and animation effects',
+      icon: 'i-lucide-sparkles',
+      features: ['GSAP', 'ScrollTrigger', 'Lenis', 'Marquee', 'Magnetic', 'Tilt', 'Cursor'],
+      borderColor: 'border-emerald-500/30',
+      bgColor: 'bg-emerald-500/5',
+      iconBg: 'bg-emerald-500/10',
+      iconColor: 'text-emerald-500',
+    },
+    {
+      name: 'Forms',
+      key: 'forms',
+      description: 'Config-driven form fields with Zod validation and type inference',
+      icon: 'i-lucide-file-input',
+      features: [
+        'Dynamic Fields',
+        'Zod Validation',
+        'Type Inference',
+        'Auto Icons',
+        'Contact Form',
+      ],
+      borderColor: 'border-cyan-500/30',
+      bgColor: 'bg-cyan-500/5',
+      iconBg: 'bg-cyan-500/10',
+      iconColor: 'text-cyan-500',
+    },
+    {
+      name: 'Theme',
+      key: 'theme',
+      description: 'Dark mode, accent color palettes and design token system',
+      icon: 'i-lucide-swatch-book',
+      features: ['Dark Mode', 'Accent Colors', 'Color Tokens', 'Color Mode'],
+      borderColor: 'border-neutral-400/30',
+      bgColor: 'bg-neutral-400/5',
+      iconBg: 'bg-neutral-400/10',
+      iconColor: 'text-neutral-400',
+    },
+    {
+      name: 'Content',
+      key: 'content',
+      description: 'Markdown CMS with typed collections via @nuxt/content',
+      icon: 'i-lucide-file-text',
+      features: ['Markdown', 'Collections', 'Frontmatter', 'Content API', 'Zod Schemas'],
+      borderColor: 'border-rose-500/30',
+      bgColor: 'bg-rose-500/5',
+      iconBg: 'bg-rose-500/10',
+      iconColor: 'text-rose-500',
+    },
+    {
+      name: 'Scripts',
+      key: 'scripts',
+      description: 'Third-party script management with performance-safe loading',
+      icon: 'i-lucide-code',
+      features: ['Lazy Loading', 'Analytics', 'Consent-Aware', 'Performance-Safe'],
+      borderColor: 'border-indigo-500/30',
+      bgColor: 'bg-indigo-500/5',
+      iconBg: 'bg-indigo-500/10',
+      iconColor: 'text-indigo-500',
+    },
+    {
+      name: 'Routing',
+      key: 'routing',
+      description: 'Advanced routing utilities, typed middleware and navigation helpers',
+      icon: 'i-lucide-route',
+      features: ['Typed Routes', 'Middleware', 'Route Guards', 'Navigation Utils'],
+      borderColor: 'border-teal-500/30',
+      bgColor: 'bg-teal-500/5',
+      iconBg: 'bg-teal-500/10',
+      iconColor: 'text-teal-500',
+    },
+    {
+      name: 'SEO',
+      key: 'seo',
+      description: 'Meta tags, Open Graph, JSON-LD, sitemap and robots.txt via @nuxtjs/seo',
+      icon: 'i-lucide-search',
+      features: ['Meta Tags', 'Open Graph', 'JSON-LD', 'Sitemap', 'Robots.txt', 'Schema.org'],
+      borderColor: 'border-sky-500/30',
+      bgColor: 'bg-sky-500/5',
+      iconBg: 'bg-sky-500/10',
+      iconColor: 'text-sky-500',
+    },
+    {
+      name: 'Feeds',
+      key: 'feeds',
+      description: 'RSS and feed aggregation with display components',
+      icon: 'i-lucide-rss',
+      features: ['RSS Feeds', 'Feed Display', 'Feed Parser'],
+      borderColor: 'border-orange-500/30',
+      bgColor: 'bg-orange-500/5',
+      iconBg: 'bg-orange-500/10',
+      iconColor: 'text-orange-500',
+    },
+  ]
+
+  const addonLayers: LayerDef[] = [
+    {
+      name: 'Canvas',
+      key: 'canvas',
+      description: 'WebGL/WebGPU canvas foundation required by the shader layer',
+      icon: 'i-lucide-monitor',
+      features: ['WebGL', 'WebGPU', 'Canvas Composables', '3D Foundation'],
+      borderColor: 'border-purple-500/30',
+      bgColor: 'bg-purple-500/5',
+      iconBg: 'bg-purple-500/10',
+      iconColor: 'text-purple-500',
+    },
+    {
+      name: 'Shader',
+      key: 'shader',
+      description: 'Three.js + TresJS shader system with TSL, noise and post-processing',
+      icon: 'i-lucide-shapes',
+      features: ['TSL Shaders', 'Noise', 'Gradients', 'Fresnel', 'Post-Processing', 'WebGPU'],
+      borderColor: 'border-violet-500/30',
+      bgColor: 'bg-violet-500/5',
+      iconBg: 'bg-violet-500/10',
+      iconColor: 'text-violet-500',
+    },
+  ]
+
+  const marqueeItems = [
+    'Core',
+    '◆',
+    'UI',
+    '◆',
+    'Layout',
+    '◆',
+    'Motion',
+    '◆',
+    'Forms',
+    '◆',
+    'Theme',
+    '◆',
+    'Content',
+    '◆',
+    'SEO',
+    '◆',
+    'Scripts',
+    '◆',
+    'Routing',
+    '◆',
+    'Feeds',
+    '◆',
+  ]
 </script>
 
 <template>
@@ -269,14 +295,14 @@ const marqueeItems = [
           v-for="item in marqueeItems"
           :key="item"
           class="text-muted whitespace-nowrap text-xs font-semibold uppercase tracking-widest"
-        >{{ item }}</span>
+          >{{ item }}</span
+        >
       </MotionMarquee>
     </div>
 
     <div ref="sectionsRef">
       <UContainer class="px-8 pb-8 pt-10">
         <div class="space-y-12">
-
           <!-- Core Layers -->
           <section>
             <div class="mb-6">
@@ -408,7 +434,6 @@ const marqueeItems = [
               View Source
             </UButton>
           </div>
-
         </div>
       </UContainer>
     </div>

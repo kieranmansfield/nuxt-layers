@@ -1,6 +1,5 @@
-import { Resend } from 'resend'
-
 import type { ContactEmailData } from '#layers/mailer/shared/contact'
+import { Resend } from 'resend'
 
 type MailerTransport = {
   from: string
@@ -36,7 +35,9 @@ export async function sendContactEmail(data: ContactEmailData) {
   }
 
   const resend = new Resend(transport.apiKey)
-  const { data: result, error } = await resend.emails.send(buildContactEmailPayload(data, transport))
+  const { data: result, error } = await resend.emails.send(
+    buildContactEmailPayload(data, transport)
+  )
 
   if (error) return { success: false as const, error }
   return { success: true as const, messageId: result?.id ?? '' }

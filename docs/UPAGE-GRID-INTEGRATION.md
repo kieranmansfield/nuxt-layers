@@ -43,6 +43,7 @@ Every direct child that doesn't explicitly span rows becomes ~8.5vh tall. `<UPag
 The mobile breakpoint already uses this. Apply it at all breakpoints.
 
 **What changes:**
+
 - `<LayoutSection>` spanning 12 rows = at least `12 × 8.5vh ≈ 100vh` (min preserved)
 - `<UPage>` in a single row = auto-sized to its content height
 - Column alignment is fully preserved
@@ -69,6 +70,7 @@ ui: {
 With `display: contents`, `<UPage>` generates no box — its children (`UPageHero`, `UPageSection`, etc.) become direct grid items in `mastmain`.
 
 **What changes:**
+
 - `<UPage>` styling is effectively gone (use with care)
 - Each child component becomes a grid item and needs its own column/row spanning
 - Requires configuring `UPageSection`, `UPageHero`, etc. similarly
@@ -84,10 +86,10 @@ A new component that gives pages an explicit choice between Swiss Grid and norma
 ```vue
 <!-- layers/layout/app/components/Layout/Page/index.vue -->
 <script setup lang="ts">
-interface Props {
-  mode?: 'swiss' | 'flow'
-}
-const { mode = 'swiss' } = defineProps<Props>()
+  interface Props {
+    mode?: 'swiss' | 'flow'
+  }
+  const { mode = 'swiss' } = defineProps<Props>()
 </script>
 
 <template>
@@ -178,9 +180,9 @@ Don't apply `<LayoutMain>` in the layouts at all. Let pages that want the Swiss 
 
 ## CSS Grid Behaviour Reference
 
-| Scenario | `grid-auto-rows: 8.5vh` | `grid-auto-rows: minmax(8.5vh, auto)` |
-|---|---|---|
-| `<LayoutSection>` (spans 12 rows) | ✅ Exactly 100vh | ✅ At least 100vh, grows with content |
-| `<UPage>` (1 auto row) | ❌ Collapsed to 8.5vh | ✅ Grows to content height |
-| `<LayoutGridItem rowStart="3">` | ✅ Predictable position | ⚠️ Position shifts if rows above grew |
-| `<LayoutGridItem rowSpan="6">` | ✅ 6 × 8.5vh = 51vh | ✅ At least 6 × 8.5vh |
+| Scenario                          | `grid-auto-rows: 8.5vh` | `grid-auto-rows: minmax(8.5vh, auto)` |
+| --------------------------------- | ----------------------- | ------------------------------------- |
+| `<LayoutSection>` (spans 12 rows) | ✅ Exactly 100vh        | ✅ At least 100vh, grows with content |
+| `<UPage>` (1 auto row)            | ❌ Collapsed to 8.5vh   | ✅ Grows to content height            |
+| `<LayoutGridItem rowStart="3">`   | ✅ Predictable position | ⚠️ Position shifts if rows above grew |
+| `<LayoutGridItem rowSpan="6">`    | ✅ 6 × 8.5vh = 51vh     | ✅ At least 6 × 8.5vh                 |

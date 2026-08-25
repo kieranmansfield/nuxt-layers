@@ -736,9 +736,7 @@
                 </div>
 
                 <div class="p-4 bg-accented/30 rounded-xl">
-                  <h5 class="text-xs font-semibold text-muted uppercase mb-2">
-                    Active Functions
-                  </h5>
+                  <h5 class="text-xs font-semibold text-muted uppercase mb-2">Active Functions</h5>
                   <div class="flex flex-wrap gap-2">
                     <code class="text-xs bg-accented px-2 py-1 rounded text-violet-300">
                       simplexNoise2D
@@ -881,9 +879,7 @@
                 </div>
 
                 <div class="p-4 bg-accented/30 rounded-xl">
-                  <h5 class="text-xs font-semibold text-muted uppercase mb-2">
-                    Active Functions
-                  </h5>
+                  <h5 class="text-xs font-semibold text-muted uppercase mb-2">Active Functions</h5>
                   <div class="flex flex-wrap gap-2">
                     <code class="text-xs bg-accented px-2 py-1 rounded text-cyan-300">
                       sdSphere
@@ -1005,9 +1001,7 @@
                 </div>
 
                 <div class="p-4 bg-accented/30 rounded-xl">
-                  <h5 class="text-xs font-semibold text-muted uppercase mb-2">
-                    Active Functions
-                  </h5>
+                  <h5 class="text-xs font-semibold text-muted uppercase mb-2">Active Functions</h5>
                   <div class="flex flex-wrap gap-2">
                     <code class="text-xs bg-accented px-2 py-1 rounded text-pink-300">fresnel</code>
                     <code class="text-xs bg-accented px-2 py-1 rounded text-pink-300">

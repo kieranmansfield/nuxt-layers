@@ -8,8 +8,8 @@ Add extra attributes to Ref.
 ## Usage
 
 ```ts
-import { extendRef } from '@vueuse/core'
 import { shallowRef } from 'vue'
+import { extendRef } from '@vueuse/core'
 
 const myRef = shallowRef('content')
 
@@ -21,10 +21,10 @@ extended.foo === 'extra data'
 
 ## Options
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| enumerable | `boolean` | false | Is the extends properties enumerable |
-| unwrap | `Unwrap` | true | Unwrap for Ref properties |
+| Option     | Type      | Default | Description                          |
+| ---------- | --------- | ------- | ------------------------------------ |
+| enumerable | `boolean` | false   | Is the extends properties enumerable |
+| unwrap     | `Unwrap`  | true    | Unwrap for Ref properties            |
 
 ## Reference
 

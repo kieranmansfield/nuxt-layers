@@ -149,7 +149,9 @@ export function simplexNoise2D(v: TSLNode): TSLNode {
   const ox = floor(x.add(0.5))
   const a0 = x.sub(ox)
 
-  const mMod: TSLNode = m4.mul(float(1.79284291400159).sub(a0.mul(a0).add(h.mul(h)).mul(0.85373472095314)))
+  const mMod: TSLNode = m4.mul(
+    float(1.79284291400159).sub(a0.mul(a0).add(h.mul(h)).mul(0.85373472095314))
+  )
 
   const gx: TSLNode = a0.x.mul(x0.x).add(h.x.mul(x0.y))
   const gy: TSLNode = a0.y.mul(x12_mod.x).add(h.y.mul(x12_mod.y))

@@ -42,7 +42,7 @@ export default defineNuxtConfig({
 **Resolver-style (like the playground):**
 
 ```ts
-const AVAILABLE_LAYERS = [/* ...existing... */, 'content', 'feeds'] as const
+const AVAILABLE_LAYERS = [, /* ...existing... */ 'content', 'feeds'] as const
 
 const LAYER_PATHS = {
   /* ... */
@@ -69,24 +69,24 @@ export default defineAppConfig({
   site: {
     title: 'My Site',
     description: 'What the site is about',
-    url: 'https://example.com',          // canonical origin, no trailing slash
+    url: 'https://example.com', // canonical origin, no trailing slash
     author: { name: 'Jane', email: 'jane@example.com' },
   },
   feedsLayer: {
     feed: {
-      limit: 30,                          // max items per feed
+      limit: 30, // max items per feed
       collections: ['blog', 'portfolio'], // every collection to expose
-      defaultCollection: 'blog',          // backs the /feed/rss shorthand routes
+      defaultCollection: 'blog', // backs the /feed/rss shorthand routes
     },
   },
 })
 ```
 
-| Option | Default | Meaning |
-|--------|---------|---------|
-| `limit` | `30` | Max items included in each feed |
-| `collections` | `['blog']` | Collection names to expose as feeds |
-| `defaultCollection` | `'blog'` | Collection served by the shorthand `/feed/rss` routes |
+| Option              | Default    | Meaning                                               |
+| ------------------- | ---------- | ----------------------------------------------------- |
+| `limit`             | `30`       | Max items included in each feed                       |
+| `collections`       | `['blog']` | Collection names to expose as feeds                   |
+| `defaultCollection` | `'blog'`   | Collection served by the shorthand `/feed/rss` routes |
 
 ---
 
@@ -94,19 +94,19 @@ export default defineAppConfig({
 
 Every configured collection serves:
 
-| URL | Format |
-|-----|--------|
-| `/feed/:collection/rss` | RSS 2.0 |
-| `/feed/:collection/atom` | Atom 1.0 |
+| URL                      | Format        |
+| ------------------------ | ------------- |
+| `/feed/:collection/rss`  | RSS 2.0       |
+| `/feed/:collection/atom` | Atom 1.0      |
 | `/feed/:collection/json` | JSON Feed 1.1 |
 
 Plus site-wide shorthand and index routes:
 
-| URL | Purpose |
-|-----|---------|
-| `/feed/rss`, `/feed/atom`, `/feed/json` | Shorthand → serves `defaultCollection` |
-| `/feed` | JSON index of all configured feeds |
-| `/feed/style.xsl` | Browser stylesheet (applied automatically) |
+| URL                                     | Purpose                                    |
+| --------------------------------------- | ------------------------------------------ |
+| `/feed/rss`, `/feed/atom`, `/feed/json` | Shorthand → serves `defaultCollection`     |
+| `/feed`                                 | JSON index of all configured feeds         |
+| `/feed/style.xsl`                       | Browser stylesheet (applied automatically) |
 
 Opening any feed URL in a browser shows a styled page thanks to the XSLT stylesheet — no app work required.
 
@@ -146,11 +146,11 @@ The `feed-head.ts` plugin injects `<link rel="alternate">` tags so RSS readers a
 - **Every page** gets the 3 main site feeds (shorthand routes → `defaultCollection`).
 - A page whose first path segment matches a **non-default** collection (e.g. `/portfolio/...`) **also** gets that collection's 3 specific feeds.
 
-| Page | Links injected |
-|------|----------------|
-| `/`, `/about`, any non-collection page | 3 main site feeds |
-| `/blog`, `/blog/hello` (when `blog` is the default) | 3 main site feeds (already point to blog) |
-| `/portfolio`, `/portfolio/project` (non-default collection) | 3 main + 3 portfolio feeds |
+| Page                                                        | Links injected                            |
+| ----------------------------------------------------------- | ----------------------------------------- |
+| `/`, `/about`, any non-collection page                      | 3 main site feeds                         |
+| `/blog`, `/blog/hello` (when `blog` is the default)         | 3 main site feeds (already point to blog) |
+| `/portfolio`, `/portfolio/project` (non-default collection) | 3 main + 3 portfolio feeds                |
 
 **Do nothing.** Don't hand-add `<link rel="alternate">` tags — you'll duplicate them.
 
@@ -162,10 +162,18 @@ If you've aliased a collection (e.g. reused the portfolio schema as `works` via 
 
 ```ts
 // app.config.ts
-feedsLayer: { feed: { collections: ['blog', 'works'] } }
+feedsLayer: {
+  feed: {
+    collections: ['blog', 'works']
+  }
+}
 
 // nuxt.config.ts
-nitro: { prerender: { routes: ['/feed/works/rss', '/feed/works/atom', '/feed/works/json'] } }
+nitro: {
+  prerender: {
+    routes: ['/feed/works/rss', '/feed/works/atom', '/feed/works/json']
+  }
+}
 ```
 
 See `MIGRATION.md` → "Collection Aliases" for how to define the alias itself.
@@ -185,12 +193,12 @@ See `MIGRATION.md` → "Collection Aliases" for how to define the alias itself.
 
 ## Quick reference
 
-| Goal | Action |
-|------|--------|
-| Turn on feeds | Register `core` + `content` + `feeds` layers |
-| Expose a collection | Add its name to `feedsLayer.feed.collections` |
-| Set the shorthand target | `feedsLayer.feed.defaultCollection` |
-| Cap items per feed | `feedsLayer.feed.limit` |
-| Static hosting | Add `/feed/<collection>/{rss,atom,json}` to `nitro.prerender.routes` |
-| Autodiscovery in `<head>` | Automatic — nothing to do |
-| Feed channel metadata | Top-level `site` config in `app.config.ts` |
+| Goal                      | Action                                                               |
+| ------------------------- | -------------------------------------------------------------------- |
+| Turn on feeds             | Register `core` + `content` + `feeds` layers                         |
+| Expose a collection       | Add its name to `feedsLayer.feed.collections`                        |
+| Set the shorthand target  | `feedsLayer.feed.defaultCollection`                                  |
+| Cap items per feed        | `feedsLayer.feed.limit`                                              |
+| Static hosting            | Add `/feed/<collection>/{rss,atom,json}` to `nitro.prerender.routes` |
+| Autodiscovery in `<head>` | Automatic — nothing to do                                            |
+| Feed channel metadata     | Top-level `site` config in `app.config.ts`                           |

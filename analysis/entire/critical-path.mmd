@@ -1,0 +1,10 @@
+flowchart TD
+  s0["Curator types a search query"]
+  s1["Search API fans out to providers"]
+  s0 --> s1
+  s2["Each provider queries its upstream API"]
+  s1 --> s2
+  s3["Upstream catalogues respond"]
+  s2 --> s3
+  s4["Results normalised and cached"]
+  s3 --> s4

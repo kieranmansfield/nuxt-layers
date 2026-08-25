@@ -1,8 +1,8 @@
 import { queryCollection } from '@nuxt/content/nitro'
 import type { H3Event } from 'h3'
 
-import type { FeedItem } from './types'
 import { resolveFeedAuthor, resolveFeedDate } from './feed-author'
+import type { FeedItem } from './types'
 
 type FeedSourceAuthor = {
   name?: string | undefined

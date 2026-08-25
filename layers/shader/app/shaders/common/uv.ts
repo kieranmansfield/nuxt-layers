@@ -2,7 +2,20 @@
  * Modular TSL UV Manipulation Utilities
  * Provides composable UV transformation functions
  */
-import { abs, atan, cos, float, floor, fract, length, mix, pow, sin, smoothstep, vec2 } from 'three/tsl'
+import {
+  abs,
+  atan,
+  cos,
+  float,
+  floor,
+  fract,
+  length,
+  mix,
+  pow,
+  sin,
+  smoothstep,
+  vec2,
+} from 'three/tsl'
 
 import type { TSLNode } from '../types'
 import { toScalarNode, toVec2Node } from './nodes'
@@ -179,7 +192,11 @@ export function rippleUV(
  */
 export function swirlUV(
   uv: TSLNode,
-  ...args: [center?: TSLNode | [number, number], strength?: TSLNode | number, radius?: TSLNode | number]
+  ...args: [
+    center?: TSLNode | [number, number],
+    strength?: TSLNode | number,
+    radius?: TSLNode | number,
+  ]
 ): TSLNode {
   const [center = [0.5, 0.5], strength = 1, radius = 0.5] = args
   const c = toVec2Node(center)

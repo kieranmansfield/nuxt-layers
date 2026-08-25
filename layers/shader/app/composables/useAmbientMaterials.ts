@@ -34,11 +34,10 @@ import type { ColorUniform, FloatUniform, TSLNode, Vec3Uniform } from '../shader
 // Private helpers
 // ============================================
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function buildFlowWarpedUV(
-  uvCoord: any,
-  t: any,
-  mouseOffset: any
+  uvCoord: TSLNode,
+  t: TSLNode,
+  mouseOffset: TSLNode
 ): {
   warpedUV: TSLNode
   n1: TSLNode

@@ -1129,7 +1129,9 @@
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
             Night Sky Composition
           </p>
-          <p class="text-xs text-highlighted/40 -mt-3">Black base → Aurora → Starfield → Edge haze</p>
+          <p class="text-xs text-highlighted/40 -mt-3">
+            Black base → Aurora → Starfield → Edge haze
+          </p>
           <div class="space-y-4">
             <p class="text-xs text-highlighted/30 font-medium">Aurora</p>
             <DemoColorRow v-model="overlays.auroraColorA" label="Color A" />
@@ -1435,7 +1437,9 @@
         <!-- ── Lighting controls ── -->
         <template v-else-if="activeCategory === 'lighting'">
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">Lighting</p>
-          <p class="text-xs text-highlighted/40 -mt-3">FBM noise base with volumetric light effects</p>
+          <p class="text-xs text-highlighted/40 -mt-3">
+            FBM noise base with volumetric light effects
+          </p>
           <div class="flex flex-wrap gap-1">
             <button
               v-for="s in [
@@ -1518,7 +1522,9 @@
         <!-- ── Tonemapping controls ── -->
         <template v-else-if="activeCategory === 'tonemapping'">
           <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">Tonemapping</p>
-          <p class="text-xs text-highlighted/40 -mt-3">HDR noise base → various tonemap operators</p>
+          <p class="text-xs text-highlighted/40 -mt-3">
+            HDR noise base → various tonemap operators
+          </p>
           <div class="flex flex-wrap gap-1">
             <button
               v-for="s in ['aces', 'reinhard', 'tanh', 'exposure', 'gamma'] as const"

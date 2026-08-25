@@ -22,6 +22,7 @@
   <UPageCard
     :title
     variant="outline"
+    class="@container"
     v-bind="{ ...(description !== undefined && { description }), ...(to !== undefined && { to }) }"
   >
     <img v-if="image" :src="image" :alt="title" class="w-full h-48 object-cover rounded" />

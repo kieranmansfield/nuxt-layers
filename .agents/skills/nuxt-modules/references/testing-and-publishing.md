@@ -13,7 +13,7 @@ npm install -D @nuxt/test-utils vitest
 import { defineVitestConfig } from '@nuxt/test-utils/config'
 
 export default defineVitestConfig({
-  test: { environment: 'nuxt' }
+  test: { environment: 'nuxt' },
 })
 ```
 
@@ -27,7 +27,7 @@ import MyModule from '../../../src/module'
 
 export default defineNuxtConfig({
   modules: [MyModule],
-  myModule: { enabled: true }
+  myModule: { enabled: true },
 })
 ```
 
@@ -48,7 +48,7 @@ import { describe, expect, it } from 'vitest'
 
 describe('basic', async () => {
   await setup({
-    rootDir: fileURLToPath(new URL('./fixtures/basic', import.meta.url))
+    rootDir: fileURLToPath(new URL('./fixtures/basic', import.meta.url)),
   })
 
   it('renders component', async () => {
@@ -122,7 +122,7 @@ export default defineNuxtModule({
     if (semver.lt(previousVersion, '2.0.0')) {
       await migrateFromV1()
     }
-  }
+  },
 })
 ```
 
@@ -221,7 +221,9 @@ Three workflows for complete CI/CD:
 
 ```ts
 meta: {
-  compatibility: { nuxt: '>=3.0.0' }
+  compatibility: {
+    nuxt: '>=3.0.0'
+  }
 }
 ```
 

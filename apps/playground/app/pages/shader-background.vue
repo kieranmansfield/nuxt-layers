@@ -1478,7 +1478,9 @@
         <div class="flex-1 overflow-y-auto p-4 space-y-5">
           <!-- Preset grid -->
           <div>
-            <p class="text-xs font-semibold uppercase tracking-wider text-highlighted/30 mb-2">Presets</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-highlighted/30 mb-2">
+              Presets
+            </p>
 
             <!-- Gradients -->
             <div v-if="activeCategory === 'gradients'" class="grid grid-cols-3 gap-1.5">

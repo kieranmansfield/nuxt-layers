@@ -6,8 +6,8 @@
 // TSL nodes are complex internally, so we use a simple type alias
 // This provides flexibility while maintaining code readability
 
-import type { UniformNode } from 'three/webgpu'
 import type { Color, Vector3 } from 'three'
+import type { UniformNode } from 'three/webgpu'
 
 export type { TSLNode } from '../types/tsl'
 

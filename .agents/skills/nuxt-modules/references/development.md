@@ -16,14 +16,14 @@ export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: '@nuxtjs/example',
     configKey: 'example',
-    compatibility: { nuxt: '>=3.0.0' }
+    compatibility: { nuxt: '>=3.0.0' },
   },
   defaults: {
     apiKey: '',
-    prefix: 'My'
+    prefix: 'My',
   },
   hooks: {
-    'app:error': err => console.error(err)
+    'app:error': (err) => console.error(err),
   },
   moduleDependencies: {
     '@nuxtjs/tailwindcss': {
@@ -32,20 +32,20 @@ export default defineNuxtModule<ModuleOptions>({
       // Override nuxt.options for this module
       overrides: {},
       // Set defaults (lower priority than nuxt.options)
-      defaults: {}
-    }
+      defaults: {},
+    },
   },
   // Or as async function (Nuxt 4.3+)
   async moduleDependencies(nuxt) {
     const needsSupport = nuxt.options.runtimeConfig.public?.feature
     return {
-      '@nuxtjs/tailwindcss': needsSupport ? {} : { optional: true }
+      '@nuxtjs/tailwindcss': needsSupport ? {} : { optional: true },
     }
   },
   setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
     addPlugin(resolve('./runtime/plugin'))
-  }
+  },
 })
 ```
 
@@ -55,7 +55,7 @@ User configures via `configKey`:
 // nuxt.config.ts
 export default defineNuxtConfig({
   modules: ['@nuxtjs/example'],
-  example: { apiKey: 'xxx' }
+  example: { apiKey: 'xxx' },
 })
 ```
 
@@ -83,7 +83,7 @@ export default defineNuxtModule({
   setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
     addPlugin(resolve('./runtime/plugin'))
-  }
+  },
 })
 ```
 
@@ -93,7 +93,7 @@ import { defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
   return {
-    provide: { myHelper: (msg: string) => console.log(msg) }
+    provide: { myHelper: (msg: string) => console.log(msg) },
   }
 })
 ```
@@ -106,9 +106,9 @@ import { addVitePlugin, addWebpackPlugin } from '@nuxt/kit'
 export default defineNuxtModule({
   async setup() {
     // Lazy-load only the bundler plugin needed
-    addVitePlugin(() => import('my-plugin/vite').then(r => r.default()))
-    addWebpackPlugin(() => import('my-plugin/webpack').then(r => r.default()))
-  }
+    addVitePlugin(() => import('my-plugin/vite').then((r) => r.default()))
+    addWebpackPlugin(() => import('my-plugin/webpack').then((r) => r.default()))
+  },
 })
 ```
 
@@ -126,15 +126,15 @@ export default defineNuxtModule({
       name: 'MyButton',
       filePath: resolve('./runtime/components/MyButton.vue'),
       // Custom declaration path (Nuxt 4.2+)
-      declarationPath: resolve('./runtime/types/components.d.ts')
+      declarationPath: resolve('./runtime/types/components.d.ts'),
     })
 
     // Or entire directory with prefix
     addComponentsDir({
       path: resolve('./runtime/components'),
-      prefix: 'My' // <MyButton>, <MyCard>
+      prefix: 'My', // <MyButton>, <MyCard>
     })
-  }
+  },
 })
 ```
 
@@ -150,12 +150,12 @@ export default defineNuxtModule({
     // Single or multiple
     addImports([
       { name: 'useAuth', from: resolve('./runtime/composables/useAuth') },
-      { name: 'useUser', from: resolve('./runtime/composables/useUser') }
+      { name: 'useUser', from: resolve('./runtime/composables/useUser') },
     ])
 
     // Or entire directory
     addImportsDir(resolve('./runtime/composables'))
-  }
+  },
 })
 ```
 
@@ -170,9 +170,9 @@ export default defineNuxtModule({
 
     addServerHandler({
       route: '/api/_my-module/status',
-      handler: resolve('./runtime/server/api/status.get')
+      handler: resolve('./runtime/server/api/status.get'),
     })
-  }
+  },
 })
 ```
 
@@ -182,7 +182,7 @@ export default defineNuxtModule({
 
 ```ts
 // runtime/server/api/users.ts
-import { helper } from '#server/utils/helper'  // Clean imports
+import { helper } from '#server/utils/helper' // Clean imports
 ```
 
 ## Runtime Config
@@ -195,7 +195,7 @@ export default defineNuxtModule({
 
     // Private (server only)
     nuxt.options.runtimeConfig.myModule = { apiKey: options.apiKey }
-  }
+  },
 })
 ```
 
@@ -206,7 +206,7 @@ export default defineNuxtModule({
   hooks: {
     'pages:extend': (pages) => {
       pages.push({ name: 'custom', path: '/custom', file: resolve('./runtime/pages/custom.vue') })
-    }
+    },
   },
   setup(options, nuxt) {
     nuxt.hook('nitro:config', (nitroConfig) => {
@@ -219,7 +219,7 @@ export default defineNuxtModule({
     nuxt.hook('close', async () => {
       await cleanup()
     })
-  }
+  },
 })
 ```
 
@@ -247,7 +247,7 @@ export default defineNuxtModule({
     nuxt.hook('modules:done', async () => {
       await nuxt.callHook('my-module:init', { foo: 'bar' })
     })
-  }
+  },
 })
 ```
 
@@ -260,9 +260,9 @@ export default defineNuxtModule({
   setup(options, nuxt) {
     addTemplate({
       filename: 'my-module/config.mjs',
-      getContents: () => `export const config = ${JSON.stringify(options)}`
+      getContents: () => `export const config = ${JSON.stringify(options)}`,
     })
-  }
+  },
 })
 ```
 
@@ -282,9 +282,9 @@ export default defineNuxtModule({
           interface NuxtApp { $myHelper: (msg: string) => void }
         }
         export {}
-      `
+      `,
     })
-  }
+  },
 })
 ```
 
@@ -306,7 +306,7 @@ export default defineNuxtModule({
     if (!options.apiKey) {
       throw new Error('[my-module] `apiKey` option is required')
     }
-  }
+  },
 })
 ```
 
@@ -318,7 +318,7 @@ export default defineNuxtModule({
 // nuxt.config.ts
 export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss'],
-  tailwindcss: false  // Disable the module
+  tailwindcss: false, // Disable the module
 })
 ```
 
@@ -328,7 +328,7 @@ export default defineNuxtConfig({
 // nuxt.config.ts
 export default defineNuxtConfig({
   extends: ['../base-layer'],
-  disabledModules: ['@nuxt/image', '@sentry/nuxt/module']
+  disabledModules: ['@nuxt/image', '@sentry/nuxt/module'],
 })
 ```
 
@@ -346,14 +346,14 @@ export default defineNuxtModule({
   meta: { name: 'my-local-module' },
   setup(options, nuxt) {
     // Module logic
-  }
+  },
 })
 ```
 
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['./modules/my-local-module']
+  modules: ['./modules/my-local-module'],
 })
 ```
 
@@ -369,9 +369,9 @@ export default defineNuxtModule({
     setGlobalHead({
       title: 'My Module',
       meta: [{ name: 'description', content: 'Description' }],
-      link: [{ rel: 'icon', href: '/favicon.ico' }]
+      link: [{ rel: 'icon', href: '/favicon.ico' }],
     })
-  }
+  },
 })
 ```
 
@@ -385,9 +385,9 @@ import { resolveModule } from '@nuxt/kit'
 export default defineNuxtModule({
   async setup(options, nuxt) {
     const modulePath = await resolveModule('my-module', {
-      extensions: ['.mjs', '.js', '.ts']
+      extensions: ['.mjs', '.js', '.ts'],
     })
-  }
+  },
 })
 ```
 

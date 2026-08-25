@@ -16,7 +16,8 @@
 
 <template>
   <div
-    class="relative overflow-hidden rounded-4xl border border-amber-200/70 bg-[linear-gradient(180deg,rgba(255,251,244,0.96),rgba(243,236,223,0.95))] px-5 py-5 shadow-[0_30px_100px_rgba(15,23,42,0.12)] dark:border-slate-800/80 dark:bg-[linear-gradient(180deg,rgba(2,6,23,0.96),rgba(3,7,18,0.98))] sm:px-6 sm:py-6"
+    class="feeds-shell relative overflow-hidden rounded-4xl border border-amber-200/70 bg-[linear-gradient(180deg,rgba(255,251,244,0.96),rgba(243,236,223,0.95))] shadow-[0_30px_100px_rgba(15,23,42,0.12)] dark:border-slate-800/80 dark:bg-[linear-gradient(180deg,rgba(2,6,23,0.96),rgba(3,7,18,0.98))]"
+    style="container-type: inline-size"
   >
     <div class="pointer-events-none absolute inset-0">
       <div
@@ -31,7 +32,7 @@
     </div>
 
     <div class="relative space-y-8">
-      <div class="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)]">
+      <div class="feeds-split grid gap-6">
         <div class="space-y-6">
           <div
             class="inline-flex items-center gap-2 rounded-full border border-amber-200/80 bg-white/80 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.35em] text-amber-700 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/60 dark:text-amber-200"
@@ -42,18 +43,18 @@
 
           <div class="space-y-3">
             <h1
-              class="max-w-3xl text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl md:text-6xl dark:text-slate-50"
+              class="feeds-h1 max-w-3xl font-semibold tracking-tight text-slate-950 dark:text-slate-50"
             >
               Feed catalog for {{ catalog.site.title }}
             </h1>
-            <p class="max-w-2xl text-base leading-7 text-slate-700 sm:text-lg dark:text-slate-300">
+            <p class="feeds-body max-w-2xl leading-7 text-slate-700 dark:text-slate-300">
               Configured in <code class="font-mono text-[0.9em]">app.config.ts</code>, validated
               against <code class="font-mono text-[0.9em]">content.config.ts</code>, and rendered as
               a human-readable index for readers and site owners.
             </p>
           </div>
 
-          <div class="grid gap-3 sm:grid-cols-3">
+          <div class="feeds-cards-grid gap-3">
             <div
               class="rounded-2xl border border-slate-200/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
             >
@@ -201,7 +202,7 @@
               </UBadge>
             </div>
 
-            <div class="grid gap-3 p-5 sm:grid-cols-3">
+            <div class="feeds-cards-grid gap-3 p-5">
               <FeedsRouteCard v-for="route in group.routes" :key="route.path" :route compact />
             </div>
           </UCard>
@@ -227,3 +228,32 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+  .feeds-shell {
+    padding: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+  }
+
+  .feeds-h1 {
+    font-size: clamp(2.25rem, 1.75rem + 2.5vw, 3.75rem);
+  }
+
+  .feeds-body {
+    font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  }
+
+  .feeds-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  }
+
+  .feeds-split {
+    grid-template-columns: 1fr;
+  }
+
+  @container (width >= 48rem) {
+    .feeds-split {
+      grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    }
+  }
+</style>

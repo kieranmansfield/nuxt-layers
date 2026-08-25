@@ -479,15 +479,9 @@
             <table class="w-full text-sm">
               <thead class="bg-accented text-left">
                 <tr>
-                  <th class="px-4 py-3 font-semibold text-toned min-w-52">
-                    Modifier
-                  </th>
-                  <th class="px-4 py-3 font-semibold text-toned">
-                    Description
-                  </th>
-                  <th class="px-4 py-3 font-semibold text-toned min-w-44">
-                    Usage / Options
-                  </th>
+                  <th class="px-4 py-3 font-semibold text-toned min-w-52">Modifier</th>
+                  <th class="px-4 py-3 font-semibold text-toned">Description</th>
+                  <th class="px-4 py-3 font-semibold text-toned min-w-44">Usage / Options</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -517,18 +511,10 @@
             <h2 class="text-3xl font-bold mb-2">Basic Animations</h2>
             <p class="text-muted">
               These run immediately on mount. Use
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">
-                .from </code
-              >,
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">
-                .to </code
-              >,
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">
-                .fromTo </code
-              >, or
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">
-                .set
-              </code>
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"> .from </code>,
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"> .to </code>,
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"> .fromTo </code>, or
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"> .set </code>
               as the animation type.
             </p>
           </div>
@@ -539,9 +525,7 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-toned"
-                  >Demo — .from</span
-                >
+                <span class="text-sm font-medium text-toned">Demo — .from</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -588,9 +572,7 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-toned">
-                  Demo — .fromTo
-                </span>
+                <span class="text-sm font-medium text-toned"> Demo — .fromTo </span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -641,9 +623,7 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-toned">
-                  Demo — .infinitely
-                </span>
+                <span class="text-sm font-medium text-toned"> Demo — .infinitely </span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -707,9 +687,7 @@
                 .whenVisible
               </code>
               to trigger animations when the element scrolls into view. Combine with
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">
-                .once
-              </code>
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"> .once </code>
               to play once, or omit it to scrub with scroll.
             </p>
           </div>
@@ -720,9 +698,7 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-toned">
-                  Demo — .whenVisible.once.from
-                </span>
+                <span class="text-sm font-medium text-toned"> Demo — .whenVisible.once.from </span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -871,9 +847,7 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-toned"
-                  >Demo — .delay-N (milliseconds)</span
-                >
+                <span class="text-sm font-medium text-toned">Demo — .delay-N (milliseconds)</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -935,9 +909,7 @@
             <h2 class="text-3xl font-bold mb-2">Entrance Presets</h2>
             <p class="text-muted">
               Add
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.entrance</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.entrance</code>
               plus a preset name for one-line scroll animations. All presets use
               <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >whenVisible.once.fromInvisible</code
@@ -1020,9 +992,7 @@
                 </div>
               </div>
               <div class="border-t border-default">
-                <div
-                  class="flex items-center justify-between px-4 py-2 bg-muted"
-                >
+                <div class="flex items-center justify-between px-4 py-2 bg-muted">
                   <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
@@ -1048,19 +1018,11 @@
           <div>
             <h2 class="text-3xl font-bold mb-2">Text Split Animations</h2>
             <p class="text-muted">
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.splitText</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.splitText</code>
               uses GSAP's SplitText plugin to break text into animatable units. Combine with
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.chars</code
-              >,
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.words</code
-              >, or
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.lines</code
-              >.
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.chars</code>,
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.words</code>, or
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.lines</code>.
             </p>
           </div>
 
@@ -1070,9 +1032,7 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-toned"
-                  >Demo — .splitText.chars.from</span
-                >
+                <span class="text-sm font-medium text-toned">Demo — .splitText.chars.from</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1124,9 +1084,7 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-toned"
-                  >Demo — .splitText.words.from</span
-                >
+                <span class="text-sm font-medium text-toned">Demo — .splitText.words.from</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1178,9 +1136,7 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-toned"
-                  >Demo — .splitText.lines.from</span
-                >
+                <span class="text-sm font-medium text-toned">Demo — .splitText.lines.from</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1232,9 +1188,7 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-toned"
-                  >Demo — .splitText.words.mask</span
-                >
+                <span class="text-sm font-medium text-toned">Demo — .splitText.words.mask</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1288,13 +1242,9 @@
           <div>
             <h2 class="text-3xl font-bold mb-2">Hover Animations</h2>
             <p class="text-muted">
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.whileHover</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.whileHover</code>
               plays the animation on mouseenter and reverses on mouseleave. Add
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.noReverse</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.noReverse</code>
               to skip the reverse. These demos are always interactive — no replay needed.
             </p>
           </div>
@@ -1315,9 +1265,7 @@
                 </div>
               </div>
               <div class="border-t border-default">
-                <div
-                  class="flex items-center justify-between px-4 py-2 bg-muted"
-                >
+                <div class="flex items-center justify-between px-4 py-2 bg-muted">
                   <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
@@ -1348,9 +1296,7 @@
                 </div>
               </div>
               <div class="border-t border-default">
-                <div
-                  class="flex items-center justify-between px-4 py-2 bg-muted"
-                >
+                <div class="flex items-center justify-between px-4 py-2 bg-muted">
                   <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
@@ -1381,9 +1327,7 @@
                 </div>
               </div>
               <div class="border-t border-default">
-                <div
-                  class="flex items-center justify-between px-4 py-2 bg-muted"
-                >
+                <div class="flex items-center justify-between px-4 py-2 bg-muted">
                   <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
@@ -1417,9 +1361,7 @@
                 </div>
               </div>
               <div class="border-t border-default">
-                <div
-                  class="flex items-center justify-between px-4 py-2 bg-muted"
-                >
+                <div class="flex items-center justify-between px-4 py-2 bg-muted">
                   <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
@@ -1471,9 +1413,7 @@
                 </div>
               </div>
               <div class="border-t border-default">
-                <div
-                  class="flex items-center justify-between px-4 py-2 bg-muted"
-                >
+                <div class="flex items-center justify-between px-4 py-2 bg-muted">
                   <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
@@ -1504,9 +1444,7 @@
                 </div>
               </div>
               <div class="border-t border-default">
-                <div
-                  class="flex items-center justify-between px-4 py-2 bg-muted"
-                >
+                <div class="flex items-center justify-between px-4 py-2 bg-muted">
                   <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
@@ -1531,13 +1469,9 @@
           <div>
             <h2 class="text-3xl font-bold mb-2">Stagger Animations</h2>
             <p class="text-muted">
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.stagger</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.stagger</code>
               animates direct child elements in sequence. The stagger delay is set via
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >stagger</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">stagger</code>
               in the value object.
             </p>
           </div>
@@ -1547,9 +1481,7 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-toned"
-                  >Demo — staggered cards</span
-                >
+                <span class="text-sm font-medium text-toned">Demo — staggered cards</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1630,17 +1562,11 @@
             <h2 class="text-3xl font-bold mb-2">Timeline Sequences</h2>
             <p class="text-muted">
               Add
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.timeline</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.timeline</code>
               to a parent element to create a GSAP timeline. Children use
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.add</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.add</code>
               to join it in order. Use
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.withPrevious</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.withPrevious</code>
               to play simultaneously with the preceding item.
             </p>
           </div>
@@ -1650,9 +1576,7 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-toned"
-                  >Demo — sequenced items</span
-                >
+                <span class="text-sm font-medium text-toned">Demo — sequenced items</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1718,22 +1642,12 @@
           <div>
             <h2 class="text-3xl font-bold mb-2">Magnetic Effect</h2>
             <p class="text-muted">
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.magnetic</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.magnetic</code>
               attracts the element towards the cursor when nearby. Adjust intensity with
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.strong</code
-              >,
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.stronger</code
-              >,
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.weak</code
-              >,
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.weaker</code
-              >.
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.strong</code>,
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.stronger</code>,
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.weak</code>,
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.weaker</code>.
             </p>
           </div>
 
@@ -1744,9 +1658,7 @@
               >
                 Demo — hover near these buttons
               </div>
-              <div
-                class="p-8 bg-muted flex flex-wrap items-center justify-center gap-6 min-h-40"
-              >
+              <div class="p-8 bg-muted flex flex-wrap items-center justify-center gap-6 min-h-40">
                 <button
                   v-gsap.magnetic.weak
                   class="px-5 py-2.5 bg-elevated hover:bg-accented text-default rounded-full font-semibold cursor-pointer transition-colors text-sm"
@@ -1795,13 +1707,9 @@
           <div>
             <h2 class="text-3xl font-bold mb-2">Draggable Elements</h2>
             <p class="text-muted">
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.draggable</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.draggable</code>
               enables free drag.
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.draggable.x</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.draggable.x</code>
               constrains to horizontal.
               <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
                 >.draggable.rotation</code
@@ -1817,9 +1725,7 @@
               >
                 Demo — drag the shapes
               </div>
-              <div
-                class="p-6 bg-muted min-h-48 relative flex items-center justify-center gap-6"
-              >
+              <div class="p-6 bg-muted min-h-48 relative flex items-center justify-center gap-6">
                 <div
                   v-gsap.draggable.x
                   class="w-20 h-20 bg-blue-200 dark:bg-blue-900/50 rounded-xl cursor-grab active:cursor-grabbing flex items-center justify-center text-blue-700 dark:text-blue-300 text-xs font-bold select-none"
@@ -1868,18 +1774,12 @@
           <div>
             <h2 class="text-3xl font-bold mb-2">Typewriter Effect</h2>
             <p class="text-muted">
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.animateText</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.animateText</code>
               uses GSAP's TextPlugin to type the text content character by character. Control speed
               with
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.slow</code
-              >
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.slow</code>
               or
-              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded"
-                >.fast</code
-              >.
+              <code class="font-mono text-sm bg-accented px-1.5 py-0.5 rounded">.fast</code>.
             </p>
           </div>
 
@@ -1888,9 +1788,7 @@
               <div
                 class="flex items-center justify-between px-4 py-2 border-b border-default bg-muted dark:bg-accented"
               >
-                <span class="text-sm font-medium text-toned"
-                  >Demo — typewriter on scroll</span
-                >
+                <span class="text-sm font-medium text-toned">Demo — typewriter on scroll</span>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1987,9 +1885,7 @@
                 </div>
               </div>
               <div class="border-t border-default">
-                <div
-                  class="flex items-center justify-between px-4 py-2 bg-muted"
-                >
+                <div class="flex items-center justify-between px-4 py-2 bg-muted">
                   <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
@@ -2033,9 +1929,7 @@
                 </p>
               </div>
               <div class="border-t border-default">
-                <div
-                  class="flex items-center justify-between px-4 py-2 bg-muted"
-                >
+                <div class="flex items-center justify-between px-4 py-2 bg-muted">
                   <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
@@ -2051,9 +1945,7 @@
               </div>
             </div>
 
-            <div
-              class="md:col-span-2 rounded-xl border border-default overflow-hidden"
-            >
+            <div class="md:col-span-2 rounded-xl border border-default overflow-hidden">
               <div
                 class="px-4 py-2 border-b border-default bg-muted dark:bg-accented text-sm font-medium text-toned"
               >
@@ -2062,21 +1954,15 @@
               <div class="p-6 bg-muted">
                 <p class="text-sm text-toned mb-4">
                   The
-                  <code class="font-mono text-xs bg-accented px-1.5 py-0.5 rounded"
-                    >.pinned</code
-                  >
+                  <code class="font-mono text-xs bg-accented px-1.5 py-0.5 rounded">.pinned</code>
                   modifier creates a ScrollTrigger that pins the element in the viewport while
                   scrolling through the defined
-                  <code class="font-mono text-xs bg-accented px-1.5 py-0.5 rounded"
-                    >end</code
-                  >
+                  <code class="font-mono text-xs bg-accented px-1.5 py-0.5 rounded">end</code>
                   distance. Use it on full-height sections, not inline cards.
                 </p>
               </div>
               <div class="border-t border-default">
-                <div
-                  class="flex items-center justify-between px-4 py-2 bg-muted"
-                >
+                <div class="flex items-center justify-between px-4 py-2 bg-muted">
                   <span class="text-xs font-mono text-muted">code</span>
                   <UButton
                     size="xs"
@@ -2112,9 +1998,7 @@
                   <th class="px-4 py-3 font-semibold text-toned">Key</th>
                   <th class="px-4 py-3 font-semibold text-toned">Type</th>
                   <th class="px-4 py-3 font-semibold text-toned">Default</th>
-                  <th class="px-4 py-3 font-semibold text-toned">
-                    Description
-                  </th>
+                  <th class="px-4 py-3 font-semibold text-toned">Description</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -2199,18 +2083,12 @@
       </section>
 
       <!-- Footer nav -->
-      <section
-        class="py-12 border-t border-default dark:border-default bg-muted"
-      >
+      <section class="py-12 border-t border-default dark:border-default bg-muted">
         <UContainer>
           <div class="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
             <div>
-              <h3 class="text-xl font-bold text-highlighted mb-1">
-                v-gsap Directive
-              </h3>
-              <p class="text-muted text-sm">
-                Part of the motion layer — GSAP + Locomotive Scroll
-              </p>
+              <h3 class="text-xl font-bold text-highlighted mb-1">v-gsap Directive</h3>
+              <p class="text-muted text-sm">Part of the motion layer — GSAP + Locomotive Scroll</p>
             </div>
             <div class="flex flex-wrap gap-3">
               <UButton variant="ghost" to="/motion">

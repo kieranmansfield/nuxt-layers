@@ -8,8 +8,8 @@ Manipulate CSS variables
 ## Usage
 
 ```ts
-import { useCssVar } from '@vueuse/core'
 import { useTemplateRef } from 'vue'
+import { useCssVar } from '@vueuse/core'
 
 const el = useTemplateRef('el')
 const color1 = useCssVar('--color', el)
@@ -24,9 +24,9 @@ const color2 = useCssVar('--color', someEl, { initialValue: '#eee' })
 
 ## Options
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| observe | `boolean` | false | Use MutationObserver to monitor variable changes |
+| Option  | Type      | Default | Description                                      |
+| ------- | --------- | ------- | ------------------------------------------------ |
+| observe | `boolean` | false   | Use MutationObserver to monitor variable changes |
 
 ## Reference
 

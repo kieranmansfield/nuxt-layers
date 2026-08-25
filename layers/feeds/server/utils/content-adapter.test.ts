@@ -1,14 +1,13 @@
-import { describe, expect, it, beforeEach, vi } from 'vitest'
-
 import type { H3Event } from 'h3'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
+import { getContentFeedItems } from './content-adapter'
 
 const queryCollectionMock = vi.hoisted(() => vi.fn())
 
 vi.mock('@nuxt/content/nitro', () => ({
   queryCollection: queryCollectionMock,
 }))
-
-import { getContentFeedItems } from './content-adapter'
 
 describe('getContentFeedItems', () => {
   beforeEach(() => {

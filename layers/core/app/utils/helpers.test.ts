@@ -38,11 +38,15 @@ describe('core helpers', () => {
       ],
       docs: [{ kind: 'docs', id: 2 }],
     })
-    expect(pick({ title: 'Nuxt', description: 'Layers', slug: 'nuxt-layers' }, ['title', 'slug'])).toEqual({
+    expect(
+      pick({ title: 'Nuxt', description: 'Layers', slug: 'nuxt-layers' }, ['title', 'slug'])
+    ).toEqual({
       title: 'Nuxt',
       slug: 'nuxt-layers',
     })
-    expect(omit({ title: 'Nuxt', description: 'Layers', slug: 'nuxt-layers' }, ['description'])).toEqual({
+    expect(
+      omit({ title: 'Nuxt', description: 'Layers', slug: 'nuxt-layers' }, ['description'])
+    ).toEqual({
       title: 'Nuxt',
       slug: 'nuxt-layers',
     })

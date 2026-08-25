@@ -104,12 +104,11 @@
   const simFromLayer = ref(false)
 
   const simResult = computed(() => {
-    return simulateRoutingOutcome(
-      config.value,
-      simPath.value,
-      simFeature.value || undefined,
-      simFromLayer.value
-    )
+    return simulateRoutingOutcome(config.value, {
+      path: simPath.value,
+      feature: simFeature.value || undefined,
+      fromLayer: simFromLayer.value,
+    })
   })
 
   // Maintenance toggle

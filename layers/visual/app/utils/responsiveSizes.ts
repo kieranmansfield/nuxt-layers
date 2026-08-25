@@ -4,7 +4,6 @@ import {
   PHONE_BREAKPOINT_VALUES,
   TABLET_BREAKPOINT_VALUES,
 } from '../types/breakpoints'
-
 import type { ResponsiveSizes } from '../types/media'
 
 type BreakpointGroup = readonly [keyof ResponsiveSizes, number]

@@ -161,7 +161,7 @@ Control which deps get bundled vs externalized:
 ```ts
 export default defineConfig({
   ssr: {
-    noExternal: ['some-package'],  // Bundle this dep
+    noExternal: ['some-package'], // Bundle this dep
     external: ['another-package'], // Externalize this dep
   },
 })

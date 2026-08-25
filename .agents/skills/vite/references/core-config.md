@@ -25,9 +25,13 @@ Export a function to access command and mode:
 ```ts
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   if (command === 'serve') {
-    return { /* dev config */ }
+    return {
+      /* dev config */
+    }
   } else {
-    return { /* build config */ }
+    return {
+      /* build config */
+    }
   }
 })
 ```
@@ -40,7 +44,9 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
 ```ts
 export default defineConfig(async ({ command, mode }) => {
   const data = await fetchSomething()
-  return { /* config */ }
+  return {
+    /* config */
+  }
 })
 ```
 

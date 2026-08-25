@@ -8,8 +8,8 @@ Keep target refs in sync with a source ref
 ## Usage
 
 ```ts
-import { syncRefs } from '@vueuse/core'
 import { shallowRef } from 'vue'
+import { syncRefs } from '@vueuse/core'
 
 const source = shallowRef('hello')
 const target = shallowRef('target')
@@ -25,10 +25,10 @@ console.log(target.value) // foo
 
 ## Options
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| deep | `boolean` | false | Watch deeply |
-| immediate | `boolean` | true | Sync values immediately |
+| Option    | Type      | Default | Description             |
+| --------- | --------- | ------- | ----------------------- |
+| deep      | `boolean` | false   | Watch deeply            |
+| immediate | `boolean` | true    | Sync values immediately |
 
 ## Reference
 

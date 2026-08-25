@@ -38,5 +38,6 @@
       }))
     "
     variant="outline"
+    class="@container"
   />
 </template>

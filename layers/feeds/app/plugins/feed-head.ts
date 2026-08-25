@@ -27,7 +27,7 @@ export default defineNuxtPlugin({
       const mainLinks = catalog.siteRoutes
         .filter((route) => route.kind === 'format')
         .map((route) => ({
-          rel: 'alternate',
+          rel: 'alternate' as const,
           type: route.contentType ?? 'application/octet-stream',
           title: `${siteTitle || 'Site'} (${route.label})`,
           href: route.path,
@@ -38,7 +38,7 @@ export default defineNuxtPlugin({
       const collectionLinks =
         currentCollection && currentCollection.collection !== catalog.feed.defaultCollection
           ? currentCollection.routes.map((route) => ({
-              rel: 'alternate',
+              rel: 'alternate' as const,
               type: route.contentType ?? 'application/octet-stream',
               title: `${currentCollection.label} (${route.label})`,
               href: route.path,

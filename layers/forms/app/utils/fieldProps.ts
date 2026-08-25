@@ -1,5 +1,4 @@
-import type { FieldConfig } from '../types/fields'
-import type { FieldSize } from '../types/fields'
+import type { FieldConfig, FieldSize } from '../types/fields'
 
 export function buildFormFieldProps(args: {
   name: string

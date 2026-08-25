@@ -1,5 +1,4 @@
-import type { ComputedRef, CSSProperties, MaybeRefOrGetter } from 'vue'
-import { toValue } from 'vue'
+import { toValue, type ComputedRef, type CSSProperties, type MaybeRefOrGetter } from 'vue'
 
 import type { BlobBlur, BlobConfig } from '../types/accent'
 import { resolveUiColorToken } from '../utils/colorTokens'

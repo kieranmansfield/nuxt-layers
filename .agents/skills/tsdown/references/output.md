@@ -6,11 +6,11 @@ Default: `esm`
 
 ```ts
 defineConfig({
-  format: 'esm',                 // ECMAScript Modules
-  format: 'cjs',                 // CommonJS
-  format: 'iife',                // Browser script
-  format: 'umd',                 // Universal
-  format: ['esm', 'cjs'],        // Multiple
+  format: 'esm', // ECMAScript Modules
+  format: 'cjs', // CommonJS
+  format: 'iife', // Browser script
+  format: 'umd', // Universal
+  format: ['esm', 'cjs'], // Multiple
 })
 ```
 
@@ -29,7 +29,7 @@ defineConfig({
 
 ```ts
 defineConfig({
-  outDir: 'dist',  // Default
+  outDir: 'dist', // Default
 })
 ```
 
@@ -56,7 +56,7 @@ Disable transformations:
 
 ```ts
 defineConfig({
-  target: false,  // Preserve modern syntax
+  target: false, // Preserve modern syntax
 })
 ```
 
@@ -64,9 +64,9 @@ defineConfig({
 
 ```ts
 defineConfig({
-  platform: 'node',     // Default, Node.js built-ins external
-  platform: 'browser',  // Web browsers
-  platform: 'neutral',  // Platform-agnostic
+  platform: 'node', // Default, Node.js built-ins external
+  platform: 'browser', // Web browsers
+  platform: 'neutral', // Platform-agnostic
 })
 ```
 
@@ -80,7 +80,7 @@ Module resolution:
 
 ```ts
 defineConfig({
-  dts: true,  // Enable
+  dts: true, // Enable
 })
 ```
 
@@ -106,7 +106,7 @@ Uses oxc-transform instead of slower TypeScript.
 ```ts
 defineConfig({
   dts: {
-    sourcemap: true,  // .d.ts.map files
+    sourcemap: true, // .d.ts.map files
   },
 })
 ```
@@ -125,7 +125,7 @@ Or via tsconfig.json:
 
 ```ts
 defineConfig({
-  dts: { vue: true },  // Requires vue-tsc
+  dts: { vue: true }, // Requires vue-tsc
 })
 ```
 
@@ -154,7 +154,7 @@ Warn if dependencies are bundled (useful for libraries):
 
 ```ts
 defineConfig({
-  inlineOnly: true,  // Shows warnings for bundled deps
+  inlineOnly: true, // Shows warnings for bundled deps
 })
 ```
 
@@ -170,7 +170,7 @@ defineConfig({
 
 ```ts
 defineConfig({
-  noExternal: ['some-package'],  // Bundle despite being in deps
+  noExternal: ['some-package'], // Bundle despite being in deps
 })
 ```
 
@@ -189,7 +189,7 @@ defineConfig({
 ```ts
 defineConfig({
   exports: {
-    all: true,  // Not just entry files
+    all: true, // Not just entry files
   },
 })
 ```
@@ -201,7 +201,7 @@ Control `main` and `module` field generation:
 ```ts
 defineConfig({
   exports: {
-    legacy: true,  // Default, generates main/module fields
+    legacy: true, // Default, generates main/module fields
     legacy: false, // Pure ESM, omits main/module if only ESM format
   },
 })
@@ -254,8 +254,8 @@ Output directory cleaned by default:
 
 ```ts
 defineConfig({
-  clean: true,   // Default
-  clean: false,  // Keep existing
+  clean: true, // Default
+  clean: false, // Keep existing
 })
 ```
 

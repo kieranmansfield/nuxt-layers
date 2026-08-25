@@ -73,8 +73,18 @@
 
 <template>
   <section ref="sectionRef" class="motion-pinned-section h-screen relative">
-    <div ref="contentRef" class="h-full flex items-center justify-center">
+    <div ref="contentRef" class="motion-pinned-content h-full flex items-center justify-center">
       <slot />
     </div>
   </section>
 </template>
+
+<style scoped>
+  /* Match gsap.set()'s initial state (opacity:0, y:60, scale:0.9) so the SSR/first-paint
+     frame is already hidden — GSAP then animates from this state instead of visibly
+     snapping into it post-mount, which reads as a layout shift. */
+  .motion-pinned-content > :deep(*) {
+    transform: translateY(60px) scale(0.9);
+    opacity: 0;
+  }
+</style>

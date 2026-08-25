@@ -9,7 +9,7 @@ Setting up `content.config.ts`, defining collection schemas, or configuring cont
 ```ts
 // content.config.ts
 import { defineCollection, defineContentConfig } from '@nuxt/content'
-import { z } from 'zod'  // Import z from 'zod' directly (not from @nuxt/content)
+import { z } from 'zod' // Import z from 'zod' directly (not from @nuxt/content)
 
 export default defineContentConfig({
   collections: {
@@ -73,10 +73,12 @@ schema: z.object({
   status: z.enum(['draft', 'published', 'archived']),
 
   // Nested objects
-  author: z.object({
-    name: z.string(),
-    email: z.string().email(),
-  }).optional(),
+  author: z
+    .object({
+      name: z.string(),
+      email: z.string().email(),
+    })
+    .optional(),
 })
 ```
 
@@ -152,12 +154,12 @@ import { z } from 'zod'
 
 const apiSource = defineCollectionSource({
   getKeys: async () => {
-    const items = await fetch('https://api.example.com/posts').then(r => r.json())
+    const items = await fetch('https://api.example.com/posts').then((r) => r.json())
     return items.map((item: { id: string }) => `${item.id}.json`)
   },
   getItem: async (key: string) => {
     const id = key.replace('.json', '')
-    return fetch(`https://api.example.com/posts/${id}`).then(r => r.json())
+    return fetch(`https://api.example.com/posts/${id}`).then((r) => r.json())
   },
 })
 
@@ -313,13 +315,21 @@ const commonSchema = z.object({ title: z.string() })
 
 export default defineContentConfig({
   collections: {
-    content_en: defineCollection({ type: 'page', source: { include: 'en/**', prefix: '' }, schema: commonSchema }),
-    content_fr: defineCollection({ type: 'page', source: { include: 'fr/**', prefix: '' }, schema: commonSchema }),
+    content_en: defineCollection({
+      type: 'page',
+      source: { include: 'en/**', prefix: '' },
+      schema: commonSchema,
+    }),
+    content_fr: defineCollection({
+      type: 'page',
+      source: { include: 'fr/**', prefix: '' },
+      schema: commonSchema,
+    }),
   },
 })
 
 // pages/[...slug].vue
-const collection = (`content_${locale.value}`) as keyof Collections
+const collection = `content_${locale.value}` as keyof Collections
 const page = await queryCollection(collection).path(slug).first()
 ```
 

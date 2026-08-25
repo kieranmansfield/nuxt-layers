@@ -61,6 +61,42 @@ export type FontSize =
   | number
 
 /* ======================================================
+   Fluid Font Size
+   - Stepped clamp() scale, parallel to Tailwind's --text-*
+   - Companion to text-fluid-* utilities (typography.css)
+   ====================================================== */
+
+export type FluidFontSize =
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | '2xl'
+  | '3xl'
+  | '4xl'
+  | '5xl'
+  | '6xl'
+  | '7xl'
+  | '8xl'
+  | '9xl'
+  // Container-relative (cqi) variants — require a `container-type` ancestor
+  // (e.g. `@container`), otherwise cqi resolves against the small viewport.
+  | 'xs-cq'
+  | 'sm-cq'
+  | 'md-cq'
+  | 'lg-cq'
+  | 'xl-cq'
+  | '2xl-cq'
+  | '3xl-cq'
+  | '4xl-cq'
+  | '5xl-cq'
+  | '6xl-cq'
+  | '7xl-cq'
+  | '8xl-cq'
+  | '9xl-cq'
+
+/* ======================================================
    Font Width
    - Semantic abstraction over wdth axis
    ====================================================== */
@@ -111,13 +147,6 @@ export type FontTracking =
   | 'tracking-wider'
   | 'tracking-widest'
   | FontTrackingNumber
-
-/* ======================================================
-   Screen-scale Font Sizes
-   - Companion to text-screen-* fluid tokens
-   ====================================================== */
-
-export type FontScreenSize = 'screen' | 'screen-xl' | 'screen-xxl' | 'screen-xxxl'
 
 /* ======================================================
    Text Layout

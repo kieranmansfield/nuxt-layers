@@ -1,11 +1,11 @@
-import type { WebGPURenderer } from 'three/webgpu'
-import type { WebGLRenderer } from 'three'
 import {
   QUALITY_PRESETS,
   type QualityLevel,
   type QualitySettings,
   type RendererCapabilities,
 } from '#layers/canvas/types/renderer'
+import type { WebGLRenderer } from 'three'
+import type { WebGPURenderer } from 'three/webgpu'
 
 /**
  * Detect and expose renderer capabilities

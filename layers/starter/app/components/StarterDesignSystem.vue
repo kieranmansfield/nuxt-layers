@@ -1,130 +1,130 @@
 <script setup lang="ts">
-useSeoMeta({
-  title: 'Design System — kmcom-nuxt-layers',
-  description:
-    'Comprehensive design system reference: typography, colors, layout grid, section components, motion components, and UI components.',
-})
+  useSeoMeta({
+    title: 'Design System — kmcom-nuxt-layers',
+    description:
+      'Comprehensive design system reference: typography, colors, layout grid, section components, motion components, and UI components.',
+  })
 
-// Grid debug ref
-const gridDebug = ref<{ toggle: () => void } | null>(null)
+  // Grid debug ref
+  const gridDebug = useTemplateRef<{ toggle: () => void }>('gridDebug')
 
-// Color tokens for demo
-const semanticColors = ['dimmed', 'muted', 'toned', 'default', 'highlighted', 'inverted'] as const
-const statusColors = ['info', 'success', 'warning', 'error'] as const
-const brandColors = ['primary', 'secondary', 'neutral'] as const
+  // Color tokens for demo
+  const semanticColors = ['dimmed', 'muted', 'toned', 'default', 'highlighted', 'inverted'] as const
+  const statusColors = ['info', 'success', 'warning', 'error'] as const
+  const brandColors = ['primary', 'secondary', 'neutral'] as const
 
-// Typography weight demos
-const fontWeights = [
-  'font-thin',
-  'font-light',
-  'font-normal',
-  'font-medium',
-  'font-semibold',
-  'font-bold',
-  'font-black',
-] as const
+  // Typography weight demos
+  const fontWeights = [
+    'font-thin',
+    'font-light',
+    'font-normal',
+    'font-medium',
+    'font-semibold',
+    'font-bold',
+    'font-black',
+  ] as const
 
-// Sample code for CodeBlock demo
-const sampleCode = `function useScreen() {
+  // Sample code for CodeBlock demo
+  const sampleCode = `function useScreen() {
   const breakpoints = useBreakpoints(breakpointsTailwind)
   const isMobile = breakpoints.smaller('md')
   const isDesktop = breakpoints.greaterOrEqual('lg')
   return { isMobile, isDesktop }
 }`
 
-// Code samples — kept as script variables to avoid the Vue HTML lexer treating
-// <!-- sequences inside {{ `` }} template literals as HTML comment nodes.
-const scrollProgressCodeSample = [
-  '<!-- Fixed top bar -->',
-  '<div class="fixed top-0 left-0 right-0 z-50">',
-  '  <MotionScrollProgress type="linear" :height="3" />',
-  '</div>',
-  '',
-  '<!-- Floating circular indicator -->',
-  '<div class="fixed bottom-6 right-6">',
-  '  <MotionScrollProgress type="circular" :size="56" :stroke-width="4" :show-percentage="false" />',
-  '</div>',
-].join('\n')
+  // Code samples — kept as script variables to avoid the Vue HTML lexer treating
+  // <!-- sequences inside {{ `` }} template literals as HTML comment nodes.
+  const scrollProgressCodeSample = [
+    '<!-- Fixed top bar -->',
+    '<div class="fixed top-0 left-0 right-0 z-50">',
+    '  <MotionScrollProgress type="linear" :height="3" />',
+    '</div>',
+    '',
+    '<!-- Floating circular indicator -->',
+    '<div class="fixed bottom-6 right-6">',
+    '  <MotionScrollProgress type="circular" :size="56" :stroke-width="4" :show-percentage="false" />',
+    '</div>',
+  ].join('\n')
 
-const scrollStatsCodeSample = [
-  '<!-- Add during development only -->',
-  "<MotionScrollStats :show=\"['velocity', 'progress', 'scrollY']\" position=\"bottom-right\" />",
-].join('\n')
+  const scrollStatsCodeSample = [
+    '<!-- Add during development only -->',
+    "<MotionScrollStats :show=\"['velocity', 'progress', 'scrollY']\" position=\"bottom-right\" />",
+  ].join('\n')
 
-const layoutPageCodeSample = [
-  '// Standard page with grid layout + header and footer',
-  'definePageMeta({',
-  "  layout: { name: 'grid', props: { showHeader: true, showFooter: true } },",
-  '})',
-  '',
-  '// No chrome — content-only',
-  "definePageMeta({ layout: 'grid' })",
-  '',
-  '// Full-bleed / animation page — opt out entirely',
-  'definePageMeta({ layout: false })',
-  '',
-  '// In the template:',
-  '// <LayoutPage title="About" description="Learn more." :show-header="true">',
-  '//   <LayoutSection>...</LayoutSection>',
-  '// </LayoutPage>',
-].join('\n')
+  const layoutPageCodeSample = [
+    '// Standard page with grid layout + header and footer',
+    'definePageMeta({',
+    "  layout: { name: 'grid', props: { showHeader: true, showFooter: true } },",
+    '})',
+    '',
+    '// No chrome — content-only',
+    "definePageMeta({ layout: 'grid' })",
+    '',
+    '// Full-bleed / animation page — opt out entirely',
+    'definePageMeta({ layout: false })',
+    '',
+    '// In the template:',
+    '// <LayoutPage title="About" description="Learn more." :show-header="true">',
+    '//   <LayoutSection>...</LayoutSection>',
+    '// </LayoutPage>',
+  ].join('\n')
 
-// Table of contents
-const tocItems = [
-  {
-    id: 'typography-headlines',
-    label: 'Typography — Headlines',
-    icon: 'i-lucide-heading',
-  },
-  {
-    id: 'typography-controls',
-    label: 'Typography — Controls',
-    icon: 'i-lucide-type',
-  },
-  {
-    id: 'typography-decorative',
-    label: 'Typography — Decorative',
-    icon: 'i-lucide-pen-tool',
-  },
-  {
-    id: 'typography-blocks',
-    label: 'Typography — Blocks',
-    icon: 'i-lucide-code',
-  },
-  { id: 'color-system', label: 'Color System', icon: 'i-lucide-palette' },
-  { id: 'layout-grid', label: 'Layout Grid', icon: 'i-lucide-grid-3x3' },
-  { id: 'layout-page', label: 'LayoutPage', icon: 'i-lucide-file' },
-  {
-    id: 'section-components',
-    label: 'Section Components',
-    icon: 'i-lucide-image',
-  },
-  {
-    id: 'motion-components',
-    label: 'Motion Components',
-    icon: 'i-lucide-sparkles',
-  },
-  {
-    id: 'links-group',
-    label: 'LinksGroup',
-    icon: 'i-lucide-mouse-pointer-click',
-  },
-  {
-    id: 'ui-components',
-    label: 'UI Components',
-    icon: 'i-lucide-mouse-pointer',
-  },
-]
+  // Table of contents
+  const tocItems = [
+    {
+      id: 'typography-headlines',
+      label: 'Typography — Headlines',
+      icon: 'i-lucide-heading',
+    },
+    {
+      id: 'typography-controls',
+      label: 'Typography — Controls',
+      icon: 'i-lucide-type',
+    },
+    {
+      id: 'typography-decorative',
+      label: 'Typography — Decorative',
+      icon: 'i-lucide-pen-tool',
+    },
+    {
+      id: 'typography-blocks',
+      label: 'Typography — Blocks',
+      icon: 'i-lucide-code',
+    },
+    { id: 'color-system', label: 'Color System', icon: 'i-lucide-palette' },
+    { id: 'layout-grid', label: 'Layout Grid', icon: 'i-lucide-grid-3x3' },
+    { id: 'layout-page', label: 'LayoutPage', icon: 'i-lucide-file' },
+    {
+      id: 'section-components',
+      label: 'Section Components',
+      icon: 'i-lucide-image',
+    },
+    {
+      id: 'motion-components',
+      label: 'Motion Components',
+      icon: 'i-lucide-sparkles',
+    },
+    {
+      id: 'links-group',
+      label: 'LinksGroup',
+      icon: 'i-lucide-mouse-pointer-click',
+    },
+    {
+      id: 'ui-components',
+      label: 'UI Components',
+      icon: 'i-lucide-mouse-pointer',
+    },
+  ]
 
-// Gallery items for section demo
-const galleryItems = [
-  { id: 1, title: 'Item 1', color: 'bg-blue-500' },
-  { id: 2, title: 'Item 2', color: 'bg-green-500' },
-  { id: 3, title: 'Item 3', color: 'bg-purple-500' },
-  { id: 4, title: 'Item 4', color: 'bg-orange-500' },
-  { id: 5, title: 'Item 5', color: 'bg-pink-500' },
-  { id: 6, title: 'Item 6', color: 'bg-cyan-500' },
-]
+  // Gallery items for section demo
+  const galleryItems = [
+    { id: 1, title: 'Item 1', color: 'bg-blue-500' },
+    { id: 2, title: 'Item 2', color: 'bg-green-500' },
+    { id: 3, title: 'Item 3', color: 'bg-purple-500' },
+    { id: 4, title: 'Item 4', color: 'bg-orange-500' },
+    { id: 5, title: 'Item 5', color: 'bg-pink-500' },
+    { id: 6, title: 'Item 6', color: 'bg-cyan-500' },
+  ]
 </script>
 
 <template>

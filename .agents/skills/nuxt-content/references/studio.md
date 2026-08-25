@@ -74,13 +74,11 @@ Access preview: `https://your-site.com?preview=your-token`
 
 ```vue
 <script setup lang="ts">
-const { enabled: previewEnabled } = useContentPreview()
+  const { enabled: previewEnabled } = useContentPreview()
 </script>
 
 <template>
-  <div v-if="previewEnabled" class="preview-banner">
-    Preview Mode Active
-  </div>
+  <div v-if="previewEnabled" class="preview-banner">Preview Mode Active</div>
 </template>
 ```
 
@@ -170,10 +168,10 @@ Mark components as editable in Studio:
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  title: string
-  description: string
-}>()
+  defineProps<{
+    title: string
+    description: string
+  }>()
 </script>
 ```
 
@@ -239,12 +237,13 @@ export default defineNuxtConfig({
 ```vue
 <!-- components/PreviewBanner.vue -->
 <script setup lang="ts">
-const { enabled } = useContentPreview()
+  const { enabled } = useContentPreview()
 </script>
 
 <template>
   <div v-if="enabled" class="fixed top-0 left-0 right-0 bg-yellow-500 text-center py-1 z-50">
-    Preview Mode - <button @click="navigateTo(useRoute().fullPath.replace('?preview', ''))">Exit</button>
+    Preview Mode -
+    <button @click="navigateTo(useRoute().fullPath.replace('?preview', ''))">Exit</button>
   </div>
 </template>
 ```

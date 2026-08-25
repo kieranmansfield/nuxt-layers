@@ -53,9 +53,7 @@
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">MotionTransition</h2>
-            <p class="text-muted text-lg">
-              Pick a variant, then replay to see the enter animation
-            </p>
+            <p class="text-muted text-lg">Pick a variant, then replay to see the enter animation</p>
           </div>
 
           <div class="grid lg:grid-cols-[280px_1fr] gap-8 max-w-5xl mx-auto">
@@ -121,7 +119,9 @@
       <section class="py-24 bg-default">
         <UContainer>
           <div class="max-w-3xl mx-auto">
-            <h3 class="text-3xl font-bold text-highlighted mb-8 text-center">CSS Class Reference</h3>
+            <h3 class="text-3xl font-bold text-highlighted mb-8 text-center">
+              CSS Class Reference
+            </h3>
             <div class="grid gap-4">
               <div
                 v-for="entry in cssClasses"

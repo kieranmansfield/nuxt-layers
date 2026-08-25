@@ -1,5 +1,5 @@
-import type { ScrollTrigger } from 'gsap/ScrollTrigger'
 import type { MaybeRef } from 'vue'
+import type { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 type SectionProgressOptions = {
   start?: string

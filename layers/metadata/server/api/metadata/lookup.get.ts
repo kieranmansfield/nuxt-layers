@@ -20,7 +20,11 @@ export default defineEventHandler(async (event) => {
   const cached = await getCacheRecord(cacheKey)
   if (cached) return cached.normalised
 
-  const result = await provider.lookup({ provider: providerName, providerId, resourceType })
+  const result = await provider.lookup({
+    provider: providerName,
+    providerId,
+    ...(resourceType && { resourceType }),
+  })
   if (!result) throw createError({ statusCode: 404, message: 'Not found' })
 
   const now = new Date().toISOString()

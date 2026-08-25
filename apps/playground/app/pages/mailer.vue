@@ -96,7 +96,9 @@
       <section class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Runtime Configuration</h2>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+              Runtime Configuration
+            </h2>
             <p class="text-muted text-lg">
               <code class="text-primary">useMailerConfig()</code> — read live via
               <code class="text-primary">/api/forms/status</code>
@@ -115,11 +117,15 @@
             </div>
             <div class="bg-accented rounded-2xl p-6 text-center border border-accented">
               <p class="text-xs uppercase tracking-widest text-muted mb-2">From</p>
-              <p class="text-highlighted font-mono text-sm break-all">{{ status?.emailFrom ?? '—' }}</p>
+              <p class="text-highlighted font-mono text-sm break-all">
+                {{ status?.emailFrom ?? '—' }}
+              </p>
             </div>
             <div class="bg-accented rounded-2xl p-6 text-center border border-accented">
               <p class="text-xs uppercase tracking-widest text-muted mb-2">To</p>
-              <p class="text-highlighted font-mono text-sm break-all">{{ status?.emailTo ?? '—' }}</p>
+              <p class="text-highlighted font-mono text-sm break-all">
+                {{ status?.emailTo ?? '—' }}
+              </p>
             </div>
           </div>
         </UContainer>

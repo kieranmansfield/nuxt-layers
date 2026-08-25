@@ -1,8 +1,11 @@
+import { watch } from 'vue'
+import {
+  createAmbientUniforms,
+  type AmbientUniforms,
+  type ThemeColorUniforms,
+} from '#layers/shader/app/composables/useAmbientMaterials'
 import { Color, Vector3 } from 'three'
 import { uniform } from 'three/tsl'
-import { watch } from 'vue'
-
-import { createAmbientUniforms, type AmbientUniforms, type ThemeColorUniforms } from '#layers/shader/app/composables/useAmbientMaterials'
 
 export type ThemeNodeUniformProps = {
   speed: number | undefined

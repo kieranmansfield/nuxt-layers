@@ -8,8 +8,8 @@ Cache a ref with a custom comparator.
 ## Usage
 
 ```ts
-import { useCached } from '@vueuse/core'
 import { shallowRef } from 'vue'
+import { useCached } from '@vueuse/core'
 
 interface Data {
   value: number

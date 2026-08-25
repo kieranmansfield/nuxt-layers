@@ -22,7 +22,7 @@
 </script>
 
 <template>
-  <UPageCard :title v-bind="cardProps" variant="outline">
+  <UPageCard :title v-bind="cardProps" variant="outline" class="@container">
     <img
       v-if="coverImage"
       :src="coverImage.src"

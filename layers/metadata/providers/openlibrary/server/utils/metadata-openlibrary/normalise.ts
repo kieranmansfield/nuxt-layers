@@ -4,13 +4,18 @@ import type { OpenLibraryEdition, OpenLibrarySearchDoc, OpenLibraryWork } from '
 
 // fallow-ignore-next-line complexity
 export function normaliseOpenLibrarySearchDoc(doc: OpenLibrarySearchDoc): MetadataRecord {
-  const creators: MetadataCreator[] = (doc.author_name ?? []).map((name, i) => ({
-    name,
-    role: 'author',
-    providerId: doc.author_key?.[i]?.replace('/authors/', '') ?? undefined,
-  }))
+  const creators: MetadataCreator[] = (doc.author_name ?? []).map((name, i) => {
+    const providerId = doc.author_key?.[i]?.replace('/authors/', '')
+    return {
+      name,
+      role: 'author',
+      ...(providerId && { providerId }),
+    }
+  })
 
   const id = doc.key.replace('/works/', '')
+  const isbn10 = doc.isbn?.find((i) => i.length === 10)
+  const isbn13 = doc.isbn?.find((i) => i.length === 13)
 
   return {
     id: `openlibrary:work:${id}`,
@@ -18,14 +23,14 @@ export function normaliseOpenLibrarySearchDoc(doc: OpenLibrarySearchDoc): Metada
     providerId: id,
     mediaType: 'book',
     title: doc.title,
-    subtitle: doc.subtitle,
-    creators: creators.length ? creators : undefined,
-    publisher: doc.publisher?.[0] ?? undefined,
-    publishedAt: doc.first_publish_year ? String(doc.first_publish_year) : undefined,
-    coverUrl: doc.cover_i ? openLibraryCoverUrl(doc.cover_i) : undefined,
+    ...(doc.subtitle && { subtitle: doc.subtitle }),
+    ...(creators.length && { creators }),
+    ...(doc.publisher?.[0] && { publisher: doc.publisher[0] }),
+    ...(doc.first_publish_year && { publishedAt: String(doc.first_publish_year) }),
+    ...(doc.cover_i && { coverUrl: openLibraryCoverUrl(doc.cover_i) }),
     identifiers: {
-      isbn10: doc.isbn?.find((i) => i.length === 10),
-      isbn13: doc.isbn?.find((i) => i.length === 13),
+      ...(isbn10 && { isbn10 }),
+      ...(isbn13 && { isbn13 }),
       openLibraryId: id,
     },
     sourceUrl: `https://openlibrary.org${doc.key}`,
@@ -45,10 +50,10 @@ export function normaliseOpenLibraryWork(work: OpenLibraryWork): MetadataRecord 
     providerId: id,
     mediaType: 'book',
     title: work.title,
-    subtitle: work.subtitle,
-    description: desc,
-    coverUrl: work.covers?.[0] ? openLibraryCoverUrl(work.covers[0]) : undefined,
-    publishedAt: work.first_publish_date,
+    ...(work.subtitle && { subtitle: work.subtitle }),
+    ...(desc && { description: desc }),
+    ...(work.covers?.[0] && { coverUrl: openLibraryCoverUrl(work.covers[0]) }),
+    ...(work.first_publish_date && { publishedAt: work.first_publish_date }),
     identifiers: { openLibraryId: id },
     sourceUrl: `https://openlibrary.org${work.key}`,
     raw: work,
@@ -66,13 +71,13 @@ export function normaliseOpenLibraryEdition(edition: OpenLibraryEdition): Metada
     providerId: id,
     mediaType: 'book',
     title: edition.title,
-    subtitle: edition.subtitle,
-    publisher: edition.publishers?.[0] ?? undefined,
-    publishedAt: edition.publish_date,
-    coverUrl: edition.covers?.[0] ? openLibraryCoverUrl(edition.covers[0]) : undefined,
+    ...(edition.subtitle && { subtitle: edition.subtitle }),
+    ...(edition.publishers?.[0] && { publisher: edition.publishers[0] }),
+    ...(edition.publish_date && { publishedAt: edition.publish_date }),
+    ...(edition.covers?.[0] && { coverUrl: openLibraryCoverUrl(edition.covers[0]) }),
     identifiers: {
-      isbn10: edition.isbn_10?.[0],
-      isbn13: edition.isbn_13?.[0],
+      ...(edition.isbn_10?.[0] && { isbn10: edition.isbn_10[0] }),
+      ...(edition.isbn_13?.[0] && { isbn13: edition.isbn_13[0] }),
       openLibraryId: id,
     },
     sourceUrl: `https://openlibrary.org${edition.key}`,

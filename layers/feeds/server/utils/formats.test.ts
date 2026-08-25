@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
-import type { FeedConfig, FeedItem } from './types'
 import { toAtom } from './formats/atom'
 import { toJSONFeed } from './formats/json'
 import { toRSS } from './formats/rss'
+import type { FeedConfig, FeedItem } from './types'
 
 const config: FeedConfig = {
   title: 'Nuxt Layers Feed',

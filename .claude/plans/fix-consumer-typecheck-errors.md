@@ -59,15 +59,8 @@ This config is used solely for running typecheck across all layers without needi
     "noEmit": true,
     "lib": ["ESNext", "dom", "dom.iterable"]
   },
-  "include": [
-    "layers/*/app/**/*.ts",
-    "layers/*/app/**/*.vue"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/node_modules/**",
-    "layers/*/app/**/*.test.ts"
-  ]
+  "include": ["layers/*/app/**/*.ts", "layers/*/app/**/*.vue"],
+  "exclude": ["node_modules", "**/node_modules/**", "layers/*/app/**/*.test.ts"]
 }
 ```
 
@@ -84,6 +77,7 @@ For each file in `layers/*/package.json`, add (or update) the `typecheck` script
 ```
 
 Layers to update:
+
 - `layers/core/package.json`
 - `layers/ui/package.json`
 - `layers/layout/package.json`

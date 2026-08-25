@@ -56,10 +56,10 @@
       <section id="interactive" class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Pointer Interactions</h2>
-            <p class="text-muted text-lg">
-              Tilt, Magnetic, and Cursor — driven by spring physics
-            </p>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+              Pointer Interactions
+            </h2>
+            <p class="text-muted text-lg">Tilt, Magnetic, and Cursor — driven by spring physics</p>
           </div>
 
           <div class="grid md:grid-cols-2 gap-8 mb-16">
@@ -121,7 +121,9 @@
       <section class="py-24 bg-default overflow-hidden">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">MotionVelocityEffect</h2>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+              MotionVelocityEffect
+            </h2>
             <p class="text-muted text-lg">
               Reacts to scroll velocity — try scrolling quickly past this section
             </p>
@@ -153,9 +155,7 @@
         <UContainer>
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Text & Counters</h2>
-            <p class="text-muted text-lg">
-              MotionTextReveal, MotionStaggered, and MotionCountUp
-            </p>
+            <p class="text-muted text-lg">MotionTextReveal, MotionStaggered, and MotionCountUp</p>
           </div>
 
           <div class="max-w-3xl mx-auto text-center mb-16">

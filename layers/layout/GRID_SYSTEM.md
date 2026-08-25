@@ -85,13 +85,14 @@ The system provides three core CSS utilities (defined in `app/assets/css/layout/
 
 The grid adapts its column count based on viewport width:
 
-| Breakpoint | Width | Columns | CSS Variable |
-|------------|-------|---------|--------------|
-| Mobile     | < 768px | 6 | `--grid-cols: 6` |
-| Tablet     | ≥ 768px | 12 | `--grid-cols: 12` |
-| Desktop    | ≥ 1280px | 18 | `--grid-cols: 18` |
+| Breakpoint | Width    | Columns | CSS Variable      |
+| ---------- | -------- | ------- | ----------------- |
+| Mobile     | < 768px  | 6       | `--grid-cols: 6`  |
+| Tablet     | ≥ 768px  | 12      | `--grid-cols: 12` |
+| Desktop    | ≥ 1280px | 18      | `--grid-cols: 18` |
 
 **Breakpoints** are defined in `grids.css`:
+
 - Tablet: `48rem` (768px)
 - Desktop: `80rem` (1280px)
 
@@ -126,6 +127,7 @@ Typography and spacing snap to a **0.25rem (4px)** baseline grid:
 ```
 
 Utilities:
+
 - `leading-rhythm-4` through `leading-rhythm-8` (line-height)
 - `space-rhythm-1` through `space-rhythm-8` (margin-block)
 - `prose-rhythm` (auto-apply rhythm to prose content)
@@ -156,12 +158,14 @@ Use via `layer` prop on `<LayoutGridItem>`.
 Full-viewport section using CSS subgrid. Inherits parent grid lines.
 
 **Props**:
+
 - `fullHeight?: boolean` - Force `min-h-svh` (default: `false`)
 - `fullWidth?: boolean` - Break outside grid gutters for edge-to-edge content (default: `false`)
 
 **CSS Utility**: `basesection`
 
 **Usage**:
+
 ```vue
 <LayoutSection full-height>
   <LayoutGridItem>Content</LayoutGridItem>
@@ -185,22 +189,23 @@ Positions content on the parent section's grid using `grid-column` and `grid-row
 
 **Props**:
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `as` | `string` | HTML element (default: `'div'`) |
-| `preset` | `string` | Named preset: `'hero'`, `'centered'`, `'fullWidth'`, `'sidebar'`, `'content'` |
-| `colStart` | `number \| ResponsiveValue<number>` | Starting column (1-18) |
-| `colSpan` | `number \| ResponsiveValue<number>` | Columns to span (default: 1) |
-| `rowStart` | `number \| ResponsiveValue<number>` | Starting row (1-12) |
-| `rowSpan` | `number \| ResponsiveValue<number>` | Rows to span (default: 1) |
-| `align` | `'start' \| 'center' \| 'end' \| 'stretch'` | Vertical alignment |
-| `justify` | `'start' \| 'center' \| 'end' \| 'stretch'` | Horizontal alignment |
-| `z` | `number` | Explicit z-index |
-| `layer` | `'back' \| 'mid' \| 'front' \| 'top'` | Semantic layer |
-| `bleed` | `'left' \| 'right' \| 'both'` | Edge bleed (ignores padding) |
-| `aspect` | `'1/1' \| '4/3' \| '16/9'` etc. | Aspect ratio |
+| Prop       | Type                                        | Description                                                                   |
+| ---------- | ------------------------------------------- | ----------------------------------------------------------------------------- |
+| `as`       | `string`                                    | HTML element (default: `'div'`)                                               |
+| `preset`   | `string`                                    | Named preset: `'hero'`, `'centered'`, `'fullWidth'`, `'sidebar'`, `'content'` |
+| `colStart` | `number \| ResponsiveValue<number>`         | Starting column (1-18)                                                        |
+| `colSpan`  | `number \| ResponsiveValue<number>`         | Columns to span (default: 1)                                                  |
+| `rowStart` | `number \| ResponsiveValue<number>`         | Starting row (1-12)                                                           |
+| `rowSpan`  | `number \| ResponsiveValue<number>`         | Rows to span (default: 1)                                                     |
+| `align`    | `'start' \| 'center' \| 'end' \| 'stretch'` | Vertical alignment                                                            |
+| `justify`  | `'start' \| 'center' \| 'end' \| 'stretch'` | Horizontal alignment                                                          |
+| `z`        | `number`                                    | Explicit z-index                                                              |
+| `layer`    | `'back' \| 'mid' \| 'front' \| 'top'`       | Semantic layer                                                                |
+| `bleed`    | `'left' \| 'right' \| 'both'`               | Edge bleed (ignores padding)                                                  |
+| `aspect`   | `'1/1' \| '4/3' \| '16/9'` etc.             | Aspect ratio                                                                  |
 
 **ResponsiveValue Type**:
+
 ```ts
 interface ResponsiveValue<T> {
   default: T
@@ -210,6 +215,7 @@ interface ResponsiveValue<T> {
 ```
 
 **Examples**:
+
 ```vue
 <!-- Using preset -->
 <LayoutGridItem preset="hero">
@@ -241,10 +247,12 @@ interface ResponsiveValue<T> {
 Visual grid overlay for development. Toggle with **Cmd+G** (Mac) or **Ctrl+G** (Windows/Linux).
 
 **Props**:
+
 - `gap?: string` - Gap between columns (default: `clamp(0.75rem, 1.5vw, 1.5rem)`)
 - `color?: string` - Overlay color (default: `rgba(255, 0, 0, 0.1)`)
 
 **Usage**:
+
 ```vue
 <LayoutGridDebug />
 ```
@@ -260,14 +268,17 @@ Automatically adapts to responsive grid density (6/12/18 columns).
 Pre-configured hero section with slots for background, main content, and footer.
 
 **Props**:
+
 - `fullHeight?: boolean` - Force `100svh` (default: `true`)
 
 **Slots**:
+
 - `background` - Full-bleed background layer (z: 0)
 - `default` - Centered content (z: 10)
 - `footer` - Bottom-aligned content (z: 10)
 
 **Example**:
+
 ```vue
 <LayoutSectionHero>
   <template #background>
@@ -292,17 +303,20 @@ Pre-configured hero section with slots for background, main content, and footer.
 The canonical page wrapper. Use this for all new pages.
 
 **Props**:
+
 - `title: string` - Page title (required, sets `<title>` and OG tags)
 - `description?: string` - Meta description for SEO
 - `showHeader?: boolean` - Render a `LayoutPageHeader` block (default: `false`)
 
 **Behaviour**:
+
 - When `layoutLayer.ui.grid.enabled` is `true` (default): renders `<main class="mastmain">` as the grid root
 - When `enabled` is `false`: falls back to `<UMain><UPage><UPageBody>` standard Nuxt UI layout
 - Always calls `useHead()` and `provide('pageTitle', title)`
 - Always renders `LayoutGridDebug` (toggle with Cmd+G)
 
 **Example**:
+
 ```vue
 <LayoutPage title="About Us" description="Learn about our company" :show-header="true">
   <LayoutSectionHero>
@@ -326,6 +340,7 @@ The canonical page wrapper. Use this for all new pages.
 Kept for backwards compatibility. Use `LayoutPage` for new pages.
 
 **Props**:
+
 - `title: string` - Page title (required)
 - `description?: string` - Meta description
 - `showHeader?: boolean` - Show visible header (default: `true`)
@@ -386,11 +401,11 @@ This removes the default max-width cap and aligns the header edge-padding with t
 
 `UPage` is configured as a CSS subgrid participant. Its `left`, `center`, and `right` slots map to specific column ranges on the 18-column grid:
 
-| Slot | Columns (desktop) | Use for |
-|---|---|---|
-| `left` | 1–4 | Navigation sidebar |
-| `center` | 5–14 | Main content |
-| `right` | 15–18 | Table of contents / aside |
+| Slot     | Columns (desktop) | Use for                   |
+| -------- | ----------------- | ------------------------- |
+| `left`   | 1–4               | Navigation sidebar        |
+| `center` | 5–14              | Main content              |
+| `right`  | 15–18             | Table of contents / aside |
 
 ```vue
 <!-- Documentation layout example -->
@@ -508,7 +523,7 @@ export interface GridPresetsItem {
 }
 
 export interface GridConfig {
-  enabled?: boolean             // feature flag — defaults to true
+  enabled?: boolean // feature flag — defaults to true
   columns: ResponsiveValue<number>
   rowsPerSection: number
   rhythm: string
@@ -526,11 +541,13 @@ export interface GridConfig {
 In your consuming Nuxt project:
 
 **1. Install the layer:**
+
 ```bash
 npm install @your-org/ui-layout-layer
 ```
 
 **2. Extend in `nuxt.config.ts`:**
+
 ```ts
 export default defineNuxtConfig({
   extends: ['@your-org/ui-layout-layer'],
@@ -608,8 +625,8 @@ In your project's `app.vue` or layout file, ensure the root grid is initialized:
 </template>
 
 <style>
-/* Import layer CSS */
-@import '@your-org/ui-layout-layer/app/assets/css/main.css';
+  /* Import layer CSS */
+  @import '@your-org/ui-layout-layer/app/assets/css/main.css';
 </style>
 ```
 
@@ -648,11 +665,7 @@ export default defineNuxtConfig({
 <template>
   <LayoutSectionHero>
     <template #background>
-      <NuxtImg
-        src="/hero-bg.jpg"
-        class="size-full object-cover"
-        alt=""
-      />
+      <NuxtImg src="/hero-bg.jpg" class="size-full object-cover" alt="" />
     </template>
 
     <div class="text-center">
@@ -754,11 +767,7 @@ export default defineNuxtConfig({
 <template>
   <LayoutSection>
     <!-- Use preset but override row position -->
-    <LayoutGridItem
-      preset="hero"
-      :row-start="3"
-      :row-span="8"
-    >
+    <LayoutGridItem preset="hero" :row-start="3" :row-span="8">
       <h1>Custom positioned hero content</h1>
     </LayoutGridItem>
   </LayoutSection>
@@ -800,6 +809,7 @@ presets: {
 ```
 
 Then use:
+
 ```vue
 <LayoutGridItem preset="articleHeader">
 ```
@@ -845,7 +855,7 @@ Add to your layout:
 </template>
 
 <script setup>
-const isDev = process.dev
+  const isDev = process.dev
 </script>
 ```
 
@@ -907,6 +917,7 @@ The grid is flat by design. Avoid nesting `<LayoutSection>` inside `<LayoutGridI
 ### 10. Test Across Breakpoints
 
 Always test your layouts at:
+
 - Mobile: < 768px (6 columns)
 - Tablet: 768px - 1279px (12 columns)
 - Desktop: ≥ 1280px (18 columns)
@@ -934,6 +945,7 @@ const allLayers = layers.value
 ```
 
 **Returns**:
+
 - `config` - Computed full grid config
 - `getPreset(name: string)` - Get preset by name
 - `layers` - Computed z-index layer values
@@ -963,6 +975,7 @@ This ensures responsive grid utility classes are always generated, even when use
 - **Container Queries**: Chrome 105+, Safari 16+, Firefox 110+
 
 For older browsers, consider:
+
 - Progressive enhancement (grid gracefully degrades)
 - Polyfills (e.g., `css-grid-polyfill` for IE11)
 - Feature detection (`@supports (grid-template-columns: subgrid)`)
@@ -976,6 +989,7 @@ For older browsers, consider:
 **Problem**: Items don't align to grid lines.
 
 **Solution**: Ensure parent has `mastmain` or `basesection` utility class:
+
 ```vue
 <div class="mastmain">
   <LayoutSection>...</LayoutSection>
@@ -993,6 +1007,7 @@ For older browsers, consider:
 **Problem**: Section doesn't fill viewport.
 
 **Solution**: Use `full-height` prop:
+
 ```vue
 <LayoutSection full-height>
 ```
@@ -1002,6 +1017,7 @@ For older browsers, consider:
 **Problem**: Content overflows horizontally on mobile.
 
 **Solution**: Ensure all `<LayoutGridItem>` have mobile-friendly `colSpan`:
+
 ```vue
 <LayoutGridItem :col-span="{ default: 6, md: 10, lg: 12 }">
 ```
@@ -1011,6 +1027,7 @@ For older browsers, consider:
 **Problem**: `getPreset('myPreset')` returns `undefined`.
 
 **Solution**: Verify preset exists in `app.config.ts`:
+
 ```ts
 presets: {
   myPreset: { ... }
@@ -1059,6 +1076,7 @@ export default defineNuxtConfig({
 ```
 
 Access in component:
+
 ```ts
 const config = useRuntimeConfig()
 const columns = config.public.gridColumns

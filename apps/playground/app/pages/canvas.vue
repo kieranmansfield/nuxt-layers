@@ -150,7 +150,9 @@
       <section class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Renderer Capabilities</h2>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+              Renderer Capabilities
+            </h2>
             <p class="text-muted text-lg">
               <code class="text-primary">useRendererCapabilities()</code> +
               <code class="text-primary">useAutoQuality()</code> — detected from the canvas above
@@ -249,7 +251,9 @@
       <section class="py-24 bg-default">
         <UContainer>
           <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Shader Image Effects</h2>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+              Shader Image Effects
+            </h2>
             <p class="text-muted text-lg">
               Chromatic aberration, wave distortion, and vignette via
               <code class="text-primary">ShaderImageDemo</code>

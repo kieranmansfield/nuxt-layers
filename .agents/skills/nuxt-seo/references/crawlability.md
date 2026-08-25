@@ -15,10 +15,8 @@ export default defineNuxtConfig({
     // Block non-SEO bots (reduces server load)
     blockNonSeoBots: true,
     // Custom rules
-    groups: [
-      { userAgent: '*', disallow: ['/admin'] }
-    ]
-  }
+    groups: [{ userAgent: '*', disallow: ['/admin'] }],
+  },
 })
 ```
 
@@ -32,10 +30,10 @@ useRobotsRule('noindex, nofollow')
 useRobotsRule({
   noindex: true,
   nofollow: true,
-  noai: true,           // Block AI training
-  noimageai: true,      // Block AI image training
-  'max-snippet': 150,   // Preview controls
-  'max-image-preview': 'large'
+  noai: true, // Block AI training
+  noimageai: true, // Block AI image training
+  'max-snippet': 150, // Preview controls
+  'max-image-preview': 'large',
 })
 ```
 
@@ -45,8 +43,8 @@ Route rules:
 export default defineNuxtConfig({
   routeRules: {
     '/admin/**': { robots: 'noindex, nofollow' },
-    '/hidden': { robots: false }
-  }
+    '/hidden': { robots: false },
+  },
 })
 ```
 
@@ -75,8 +73,8 @@ export default defineNuxtConfig({
     sources: ['/api/__sitemap__/urls'],
     exclude: ['/admin/**', '/secret'],
     // For static sites - no runtime generation
-    zeroRuntime: true
-  }
+    zeroRuntime: true,
+  },
 })
 ```
 
@@ -89,14 +87,17 @@ import type { SitemapUrlInput } from '#sitemap/types'
 
 export default defineSitemapEventHandler(async () => {
   const posts = await $fetch('/api/posts')
-  return posts.map(post => ({
-    loc: post.path,
-    lastmod: post.updatedAt,
-    // Image sitemap
-    images: [{ loc: post.image, title: post.title }],
-    // Video sitemap
-    videos: [{ content_loc: post.videoUrl, title: post.title }]
-  } satisfies SitemapUrlInput))
+  return posts.map(
+    (post) =>
+      ({
+        loc: post.path,
+        lastmod: post.updatedAt,
+        // Image sitemap
+        images: [{ loc: post.image, title: post.title }],
+        // Video sitemap
+        videos: [{ content_loc: post.videoUrl, title: post.title }],
+      }) satisfies SitemapUrlInput
+  )
 })
 ```
 
@@ -108,8 +109,8 @@ Route rules:
 export default defineNuxtConfig({
   routeRules: {
     '/blog/**': { sitemap: { changefreq: 'daily', priority: 0.9 } },
-    '/hidden': { sitemap: false }
-  }
+    '/hidden': { sitemap: false },
+  },
 })
 ```
 
@@ -133,9 +134,9 @@ export default defineNuxtConfig({
   sitemap: {
     sitemaps: {
       pages: { include: ['/**'], exclude: ['/blog/**'] },
-      blog: { include: ['/blog/**'] }
-    }
-  }
+      blog: { include: ['/blog/**'] },
+    },
+  },
 })
 ```
 

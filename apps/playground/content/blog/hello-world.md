@@ -106,21 +106,25 @@ Check out the other content types — portfolio and gallery — to see the full 
 
 ::card-group
 
-::card
----
+## ::card
+
 title: Portfolio
 icon: i-lucide-briefcase
 to: /portfolio
+
 ---
+
 Showcase projects with client info, tags, and featured filtering.
 ::
 
-::card
----
+## ::card
+
 title: Gallery
 icon: i-lucide-images
 to: /gallery
+
 ---
+
 Image collections with metadata and tagging.
 ::
 

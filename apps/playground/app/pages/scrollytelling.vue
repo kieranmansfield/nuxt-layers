@@ -209,7 +209,9 @@
         <UContainer>
           <div class="text-center mb-16">
             <UBadge color="primary" variant="subtle" class="mb-4">Chapter 2</UBadge>
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">MotionPinnedSection</h2>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+              MotionPinnedSection
+            </h2>
             <p class="text-muted text-lg">
               Three cards revealed one by one as you scroll through the pin.
             </p>
@@ -300,7 +302,9 @@
         <UContainer>
           <div class="text-center mb-16">
             <UBadge color="primary" variant="subtle" class="mb-4">Chapter 4</UBadge>
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">MotionHorizontalScroll</h2>
+            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+              MotionHorizontalScroll
+            </h2>
             <p class="text-muted text-lg">
               Four panels advancing horizontally, pinned to the viewport.
             </p>

@@ -4,8 +4,8 @@ Audit written against commit `a2805da`.
 
 ## Files
 
-| File | Purpose |
-| --- | --- |
+| File                                                   | Purpose                                                                                                 |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | [IMPROVE-AUDIT-RESULTS.md](./IMPROVE-AUDIT-RESULTS.md) | Vetted improve audit findings, direction options, verification results, and recommended planning order. |
 
 ## Recommended Next Work
@@ -20,11 +20,10 @@ Recommended first implementation set:
 
 ## Dependency Order
 
-| Order | Finding | Depends On | Status |
-| --- | --- | --- | --- |
-| 1 | Current feeds lint failure | None | TODO |
-| 2 | Server route typecheck coverage | Feeds lint fix recommended first | TODO |
-| 3 | Public forms status endpoint leaks email addresses | Server route typecheck coverage recommended first | TODO |
-| 4 | Wrong mailer env var docs in forms demo | None | TODO |
-| 5 | Missing behavior tests | Typecheck/lint baseline | TODO |
-
+| Order | Finding                                            | Depends On                                        | Status |
+| ----- | -------------------------------------------------- | ------------------------------------------------- | ------ |
+| 1     | Current feeds lint failure                         | None                                              | TODO   |
+| 2     | Server route typecheck coverage                    | Feeds lint fix recommended first                  | TODO   |
+| 3     | Public forms status endpoint leaks email addresses | Server route typecheck coverage recommended first | TODO   |
+| 4     | Wrong mailer env var docs in forms demo            | None                                              | TODO   |
+| 5     | Missing behavior tests                             | Typecheck/lint baseline                           | TODO   |

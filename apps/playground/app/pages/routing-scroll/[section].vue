@@ -96,7 +96,11 @@
         v-for="mode in ['replace', 'push'] as const"
         :key="mode"
         class="rounded-full px-4 py-1.5 text-xs font-medium transition-all"
-        :class="urlMode === mode ? 'bg-inverted text-inverted' : 'text-highlighted/60 hover:text-highlighted'"
+        :class="
+          urlMode === mode
+            ? 'bg-inverted text-inverted'
+            : 'text-highlighted/60 hover:text-highlighted'
+        "
         @click="() => (urlMode = mode)"
       >
         {{ mode }}

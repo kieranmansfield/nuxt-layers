@@ -83,3 +83,7 @@ robots.txt
 # Documentation that might need specific formatting
 README.md
 CHANGELOG.md
+
+# Vendored agent-skill content — not project source (see eslint.config.mjs ignores)
+.agents/
+.claude/

@@ -3,6 +3,7 @@
   import { useTypography } from '../../composables/typography'
   import type { UiColors } from '../../types/colors'
   import type {
+    FluidFontSize,
     FontLeading,
     FontSize,
     FontSlant,
@@ -26,6 +27,7 @@
     transform = 'none',
     color = undefined,
     size = undefined,
+    fluidSize = undefined,
     class: classProp = '',
   } = defineProps<{
     level?: 1 | 2 | 3 | 4 | 5 | 6
@@ -38,23 +40,25 @@
     transform?: TextTransform
     color?: UiColors
     size?: FontSize
+    fluidSize?: FluidFontSize
     class?: string
   }>()
   const tag = computed(() => `h${level}` as const)
 
-  const sizeClass = computed(() => {
-    if (size) return null
+  // Fluid by default (continuous scaling, no mobile-first breakpoint step) —
+  // only used when the caller passes neither `size` nor `fluidSize`.
+  const defaultFluidSizes: Record<number, FluidFontSize> = {
+    1: '6xl',
+    2: '5xl',
+    3: '4xl',
+    4: '3xl',
+    5: 'xl',
+    6: 'lg',
+  }
 
-    const sizes: Record<number, string> = {
-      1: 'text-4xl sm:text-5xl',
-      2: 'text-3xl sm:text-4xl',
-      3: 'text-2xl sm:text-3xl',
-      4: 'text-xl sm:text-2xl',
-      5: 'text-lg sm:text-xl',
-      6: 'text-base sm:text-lg',
-    }
-    return sizes[level]
-  })
+  const appliedFluidSize = computed(() =>
+    size !== undefined ? undefined : (fluidSize ?? defaultFluidSizes[level])
+  )
 
   const { classes } = useTypography({
     weight: weight,
@@ -65,6 +69,7 @@
     align: align,
     transform: transform,
     ...(size !== undefined && { size: size }),
+    ...(appliedFluidSize.value !== undefined && { fluidSize: appliedFluidSize.value }),
   })
   const colorClass = useColor(color, 'text')
 </script>
@@ -79,8 +84,12 @@
     :tracking
     :align
     :transform
-    :class="[sizeClass, classes, colorClass, classProp]"
-    v-bind="{ ...(size !== undefined && { size: size }), ...$attrs }"
+    :class="[classes, colorClass, classProp]"
+    v-bind="{
+      ...(size !== undefined && { size: size }),
+      ...(appliedFluidSize !== undefined && { fluidSize: appliedFluidSize }),
+      ...$attrs,
+    }"
   >
     <slot />
   </Typography>

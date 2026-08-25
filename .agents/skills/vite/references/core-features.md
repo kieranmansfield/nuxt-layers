@@ -61,6 +61,7 @@ const svgUrls = import.meta.glob('./icons/*.svg', { query: '?url', import: 'defa
 
 ```ts
 import imgUrl from './img.png'
+
 // Returns resolved URL: '/src/img.png' (dev) or '/assets/img.2d8efhg.png' (build)
 ```
 
@@ -79,18 +80,18 @@ import shaderCode from './shader.glsl?raw'
 ### Inline/No-Inline
 
 ```ts
-import inlined from './small.png?inline'    // Force base64 inline
-import notInlined from './large.png?no-inline'  // Force separate file
+import notInlined from './large.png?no-inline' // Force separate file
+import inlined from './small.png?inline' // Force base64 inline
 ```
 
 ### Web Workers
 
 ```ts
 import Worker from './worker.ts?worker'
-const worker = new Worker()
-
 // Or inline:
 import InlineWorker from './worker.ts?worker&inline'
+
+const worker = new Worker()
 ```
 
 Preferred pattern using constructor:
@@ -106,11 +107,11 @@ const worker = new Worker(new URL('./worker.ts', import.meta.url), {
 ### Built-in Constants
 
 ```ts
-import.meta.env.MODE      // 'development' | 'production' | custom
-import.meta.env.BASE_URL  // Base URL from config
-import.meta.env.PROD      // true in production
-import.meta.env.DEV       // true in development
-import.meta.env.SSR       // true when running in server
+import.meta.env.MODE // 'development' | 'production' | custom
+import.meta.env.BASE_URL // Base URL from config
+import.meta.env.PROD // true in production
+import.meta.env.DEV // true in development
+import.meta.env.SSR // true when running in server
 ```
 
 ### Custom Variables
@@ -125,7 +126,7 @@ DB_PASSWORD=secret  # NOT exposed to client
 
 ```ts
 console.log(import.meta.env.VITE_API_URL) // works
-console.log(import.meta.env.DB_PASSWORD)  // undefined
+console.log(import.meta.env.DB_PASSWORD) // undefined
 ```
 
 ### Mode-specific Files
@@ -154,7 +155,9 @@ interface ImportMeta {
 
 ```html
 <p>Running in %MODE%</p>
-<script>window.API = "%VITE_API_URL%"</script>
+<script>
+  window.API = '%VITE_API_URL%'
+</script>
 ```
 
 ## CSS Modules
@@ -163,6 +166,7 @@ Any `.module.css` file treated as CSS module:
 
 ```ts
 import styles from './component.module.css'
+
 element.className = styles.button
 ```
 
@@ -176,8 +180,9 @@ import { myClass } from './component.module.css'
 ## JSON Import
 
 ```ts
-import pkg from './package.json'
-import { version } from './package.json'  // Named import with tree-shaking
+import pkg, { version } from './package.json'
+
+// Named import with tree-shaking
 ```
 
 ## HMR API
@@ -192,7 +197,7 @@ if (import.meta.hot) {
     // Cleanup before module is replaced
   })
 
-  import.meta.hot.invalidate()  // Force full reload
+  import.meta.hot.invalidate() // Force full reload
 }
 ```
 
