@@ -406,6 +406,12 @@
       layer: 'Motion',
     },
     {
+      label: 'RepeatText',
+      to: '/repeat-text-demo',
+      icon: 'i-lucide-rows-3',
+      layer: 'Typography',
+    },
+    {
       label: 'Locomotive Scroll',
       to: '/locomotive-scroll',
       icon: 'i-lucide-train',
@@ -462,6 +468,7 @@
     Layout: { icon: 'text-amber-500', border: 'border-amber-500/50', bg: 'bg-amber-500/10' },
     Routing: { icon: 'text-orange-500', border: 'border-orange-500/50', bg: 'bg-orange-500/10' },
     Metadata: { icon: 'text-teal-500', border: 'border-teal-500/50', bg: 'bg-teal-500/10' },
+    Typography: { icon: 'text-sky-500', border: 'border-sky-500/50', bg: 'bg-sky-500/10' },
   }
 
   definePageMeta({ layout: { name: 'grid', props: { showHeader: false, showFooter: false } } })
