@@ -1,4 +1,3 @@
-/* fallow-ignore-file unused-file — reached via @import in core.css, not visible to the JS import graph */
 /**
  * Fluid spacing scale — clamp() + cqi container-relative variant, same
  * pattern as layers/typography's fluid type scale (see typography.css).
