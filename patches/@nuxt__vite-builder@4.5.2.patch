@@ -1,10 +1,10 @@
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
-@@ -492,14 +492,16 @@
+@@ -631,14 +631,16 @@
  			try {
  				fs.chmodSync(socketPath, 384);
  			} catch (error) {
--				console.error("[nuxt] Failed to restrict vite-node socket permissions; closing.", error);
+-				bundlerDiagnostics.NUXT_B7018({ cause: error });
 -				server.close();
 -				try {
 -					fs.rmSync(dirname(socketPath), {
@@ -13,7 +13,7 @@
 -					});
 -				} catch {}
 +				if (error.code !== "ENOENT") {
-+					console.error("[nuxt] Failed to restrict vite-node socket permissions; closing.", error);
++					bundlerDiagnostics.NUXT_B7018({ cause: error });
 +					server.close();
 +					try {
 +						fs.rmSync(dirname(socketPath), {

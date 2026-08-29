@@ -58,14 +58,14 @@
   const rowWordSpacing = (i: number) => pick(wordSpacing, i)
 
   const rowClasses = computed(() =>
-    Array.from(
-      { length: rows },
-      (_, i) =>
-        useTypography({
-          weight: rowWeight(i),
-          fluidSize: rowSize(i),
-        }).classes.value
-    )
+    Array.from({ length: rows }, (_, i) => {
+      const weight = rowWeight(i)
+      const fluidSize = rowSize(i)
+      return useTypography({
+        ...(weight !== undefined && { weight }),
+        ...(fluidSize !== undefined && { fluidSize }),
+      }).classes.value
+    })
   )
 
   const rowColorClasses = computed(() =>
@@ -130,14 +130,14 @@
         <template v-for="copy in rowCopies(i - 1)" :key="copy">
           <TypographyTextStroke
             v-if="isStrokeCopy(copy, rowCopies(i - 1))"
-            :ref="copy === 1 ? (el) => setItemRef(el, i - 1) : undefined"
+            :ref="(el) => copy === 1 && setItemRef(el, i - 1)"
             :text="rowText(i - 1)"
             :stroke-width
             :class="[rowClasses[i - 1], rowColorClasses[i - 1]]"
           />
           <span
             v-else
-            :ref="copy === 1 ? (el) => setItemRef(el, i - 1) : undefined"
+            :ref="(el) => copy === 1 && setItemRef(el, i - 1)"
             :class="[rowClasses[i - 1], rowColorClasses[i - 1]]"
           >
             {{ rowText(i - 1) }}{{ copy < rowCopies(i - 1) ? separator : '' }}

@@ -45,19 +45,16 @@ minimumReleaseAgeExclude:
   - pinia@4.0.3
 
 overrides:
-  # vue-tsc@3.3.1 / @vue/language-core@3.3.1 published 2026-05-19, blocked by minimumReleaseAge — remove once >24h old
-  'vue-tsc': '3.3.3'
-  '@vue/language-core': '3.3.3'
-  'vue': '3.5.35'
-  '@vue/runtime-core': '3.5.35'
-  '@vue/runtime-dom': '3.5.35'
-  '@vue/reactivity': '3.5.35'
-  '@vue/shared': '3.5.35'
+  'vue': '3.5.42'
+  '@vue/runtime-core': '3.5.42'
+  '@vue/runtime-dom': '3.5.42'
+  '@vue/reactivity': '3.5.42'
+  '@vue/shared': '3.5.42'
   'three': '0.184.0'
   'citty': '0.2.2'
   'stylelint': '17.12.0'
   'eslint': '10.4.1'
-  'vite': '^7'
+  'vite': '^8'
   'ws': '>=8.21.0'
   'undici': '>=6.27.0'
   'form-data': '>=4.0.6'
@@ -66,19 +63,19 @@ overrides:
   '@opentelemetry/core': '>=2.8.0'
 
 patchedDependencies:
-  '@nuxt/vite-builder@4.4.7': patches/@nuxt__vite-builder@4.4.7.patch
+  '@nuxt/vite-builder@4.5.2': patches/@nuxt__vite-builder@4.5.2.patch
 catalog:
   '@babel/parser': 7.29.7
   '@commitlint/cli': ^21.0.2
   '@commitlint/config-conventional': ^21.0.2
-  '@culur/config-stylelint': ^1.7.1
+  '@culur/config-stylelint': ^1.7.2
   '@eslint/json': ^1.2.0
-  '@eslint/markdown': ^8.0.2
+  '@eslint/markdown': ^8.0.3
   '@floating-ui/core': 1.7.5
   '@floating-ui/dom': 1.7.6
   '@floating-ui/utils': 0.2.11
   '@ianvs/prettier-plugin-sort-imports': ^4.7.1
-  '@iconify-json/lucide': ^1.2.111
+  '@iconify-json/lucide': ^1.2.126
   '@iconify/utils': 3.1.3
   '@iconify/vue': ^5.0.1
   '@internationalized/date': 3.12.2
@@ -135,14 +132,14 @@ catalog:
   '@vueuse/core': ^14.3.0
   '@vueuse/nuxt': ^14.3.0
   '@webgpu/glslang': ^0.0.15
-  '@webgpu/types': ^0.1.70
+  '@webgpu/types': ^0.1.72
   aria-hidden: 1.2.6
   bail: 2.0.2
   baseline-buildhooks: https://b0650beb-2bfb-4a53-af8a-b8f14c4decaf.netlify.app/packages/buildhooks.tgz
   baseline-status: ^1.1.1
   better-sqlite3: ^12.10.0
   birpc: 2.9.0
-  browserslist: ^4.28.2
+  browserslist: ^4.28.8
   browserslist-config-baseline: ^0.5.0
   ccount: 2.0.1
   csstype: ^3.2.3
@@ -266,7 +263,7 @@ catalog:
   node-emoji: 2.2.0
   node-gyp: ^12.3.0
   npm-check-updates: ^22.2.2
-  nuxt: ^4.4.7
+  nuxt: latest
   'nuxt-auth-utils': ^0.5.0
   '@nuxt/test-utils': ^4.0.3
   oniguruma-parser: 0.12.2
@@ -277,15 +274,15 @@ catalog:
   peberminta: 0.9.0
   perfect-debounce: 2.1.0
   pinia: ^4.0.2
-  '@vitejs/plugin-vue': ^6.0.7
+  '@vitejs/plugin-vue': ^6.0.8
   postcss-html: ^1.8.1
   prerender-buildhooks: https://6abe5a43-4668-4f72-b3f7-823e2d8bbbbf.netlify.app/packages/buildhooks.tgz
   prettier: ^3.8.3
   prettier-plugin-css-order: ^2.2.0
-  prettier-plugin-glsl: ^0.3.0
+  prettier-plugin-glsl: ^0.3.1
   prettier-plugin-organize-attributes: ^1.0.0
   prettier-plugin-tailwind-styled-components: ^2.0.2
-  prettier-plugin-tailwindcss: ^0.8.0
+  prettier-plugin-tailwindcss: ^0.8.1
   property-information: 7.2.0
   react: 19.2.7
   react-dom: 19.2.7
@@ -308,7 +305,7 @@ catalog:
   scule: 1.3.0
   selderee: 0.11.0
   shiki: 4.1.0
-  skills: ^1.5.10
+  skills: ^1.5.23
   skin-tone: 2.0.0
   source-map-js: 1.2.1
   space-separated-tokens: 2.0.2
@@ -322,7 +319,7 @@ catalog:
   stylelint-prettier: ^5.0.3
   tailwind-merge: 3.6.0
   tailwind-variants: 3.2.2
-  tailwindcss: ^4.3.3
+  tailwindcss: latest
   three: ^0.184.0
   trim-lines: 3.0.1
   type-fest: ^5.7.0
@@ -345,15 +342,15 @@ catalog:
   vfile: 6.0.3
   vfile-location: 5.0.3
   vfile-message: 4.0.3
-  vite: ^7.3.2
-  vite-plugin-checker: ^0.14.1
-  vitest: ^4.1.8
-  '@vitest/coverage-v8': ^4.1.8
-  vue: ^3.5.35
+  vite: ^8.2.2
+  vite-plugin-checker: ^0.14.5
+  vitest: ^4.1.11
+  '@vitest/coverage-v8': ^4.1.11
+  vue: ^3.5.42
   '@vue/test-utils': ^2.4.10
   vue-bundle-renderer: 2.2.0
   vue-router: ^5.1.0
-  vue-tsc: 3.3.3
+  vue-tsc: 3.3.11
   web-namespaces: 2.0.1
   xml-js: 1.6.11
   yaml: 2.9.0

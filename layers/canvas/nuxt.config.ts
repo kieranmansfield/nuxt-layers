@@ -175,9 +175,6 @@ export default defineNuxtConfig({
     plugins: [threeWebGPUSSRStub()],
     optimizeDeps: {
       include: ['three', 'three/webgpu', 'three/tsl'],
-      esbuildOptions: {
-        target: 'esnext',
-      },
     },
     build: {
       target: 'esnext',
