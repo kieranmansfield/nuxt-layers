@@ -70,40 +70,7 @@
 }
 
 /**
- * LayoutContainer size utilities
- *
- * Used by the <LayoutContainer> component. Each class constrains the element
- * width and centres it within its parent.
+ * Container size utilities moved to layers/core/app/assets/css/tokens/container.css
+ * (`.container-*`, unprefixed) — <LayoutContainer> is now a back-compat shim
+ * around the shared <Container> component. See nuxt-declarative-layout-system-spec.md §10/§20.
  */
-.layout-container-content {
-  box-sizing: border-box;
-  container-type: inline-size;
-  margin-inline: auto;
-  width: 100%;
-  max-width: 65ch;
-}
-
-.layout-container-wide {
-  box-sizing: border-box;
-  container-type: inline-size;
-  margin-inline: auto;
-  width: 100%;
-  max-width: 90rem;
-}
-
-.layout-container-fluid {
-  box-sizing: border-box;
-  container-type: inline-size;
-  width: 100%;
-  max-width: 100%;
-}
-
-.layout-container-full {
-  box-sizing: border-box;
-  container-type: inline-size;
-  margin-inline: calc(var(--grid-padding, clamp(1rem, 2.5vw, 2rem)) * -1);
-
-  /* Escape parent padding to reach the viewport edge */
-  width: 100vw;
-  max-width: 100vw;
-}

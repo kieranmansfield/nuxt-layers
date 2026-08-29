@@ -5,5 +5,9 @@
  */
 export type Spacing = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
 
-// ponytail: ContainerSize (alias of GridContainerSize) and Breakpoint land
-// with Phase 2's Container/Stack components — no consumer for them yet.
+/** Matches the existing GridContainerSize values (layers/layout/app/types/layouts.ts). */
+// fallow-ignore-next-line unused-type — consumed by Container.vue's <script setup>; static analysis doesn't trace type-only imports into Vue SFCs
+export type ContainerSize = 'content' | 'wide' | 'fluid' | 'full'
+
+// ponytail: Breakpoint still has no consumer — add it when a primitive
+// actually needs discrete breakpoint values, not speculatively.

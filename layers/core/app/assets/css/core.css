@@ -18,6 +18,7 @@
 @import '#layers/core/app/assets/css/base.css';
 @import '#layers/core/app/assets/css/tokens/breakpoints.css';
 @import '#layers/core/app/assets/css/tokens/spacing-fluid.css';
+@import '#layers/core/app/assets/css/tokens/container.css';
 
 /* Relative path, not the '#layers/typography' alias — that alias only exists
    when the typography layer is in a consumer's `extends`. This file is a CSS

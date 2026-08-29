@@ -6,13 +6,15 @@ import type { Spacing } from '../types/tokens'
 export type Align = 'start' | 'center' | 'end' | 'stretch' | 'baseline'
 export type Justify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
 
+// `| undefined` on each is explicit (not just `?`) so component prop objects
+// — which have it too, under exactOptionalPropertyTypes — are assignable here.
 export type LayoutAttrsInput = {
-  gap?: ResponsiveValue<Spacing> | Spacing
-  align?: ResponsiveValue<Align> | Align
-  justify?: ResponsiveValue<Justify> | Justify
-  p?: ResponsiveValue<Spacing> | Spacing
-  px?: ResponsiveValue<Spacing> | Spacing
-  py?: ResponsiveValue<Spacing> | Spacing
+  gap?: ResponsiveValue<Spacing> | Spacing | undefined
+  align?: ResponsiveValue<Align> | Align | undefined
+  justify?: ResponsiveValue<Justify> | Justify | undefined
+  p?: ResponsiveValue<Spacing> | Spacing | undefined
+  px?: ResponsiveValue<Spacing> | Spacing | undefined
+  py?: ResponsiveValue<Spacing> | Spacing | undefined
 }
 
 const ALIGN_MAP: Record<Align, string> = {
