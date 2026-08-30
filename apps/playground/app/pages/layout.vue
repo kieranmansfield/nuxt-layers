@@ -1108,6 +1108,135 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
           </UCard>
         </section>
 
+        <!-- Declarative Layout Primitives (Phase 1-3) -->
+        <section class="space-y-8">
+          <div>
+            <h2 class="text-2xl font-bold mb-2">Declarative Layout Primitives</h2>
+            <p class="text-muted">
+              HStack / VStack / ZStack / Spacer / Container — from
+              <code class="font-mono text-xs">layers/core</code>
+              and
+              <code class="font-mono text-xs">layers/ui</code>. Fluid
+              <code class="font-mono text-xs">gap</code>
+              tokens scale continuously with viewport width — resize the window, no breakpoint jump.
+            </p>
+          </div>
+
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-layout-panel-left" class="text-primary" />
+                <h3 class="text-xl font-semibold">Project card example</h3>
+                <UBadge color="primary" size="sm">spec §17</UBadge>
+              </div>
+              <p class="text-sm text-muted mt-1">
+                Container + VStack + HStack composed around Nuxt UI components — layout stays ours,
+                interactive components stay Nuxt UI's.
+              </p>
+            </template>
+
+            <Container size="content" class="bg-elevated rounded-lg">
+              <VStack gap="lg" class="p-6">
+                <VStack gap="sm">
+                  <h1 class="text-2xl font-bold text-highlighted">Projects</h1>
+                  <p class="text-muted">Things I have been working on.</p>
+                </VStack>
+                <HStack gap="sm" align="center" justify="between">
+                  <UButton size="sm">View project</UButton>
+                  <UBadge>Shipped</UBadge>
+                </HStack>
+              </VStack>
+            </Container>
+          </UCard>
+
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-move-horizontal" class="text-primary" />
+                <h3 class="text-xl font-semibold">Fluid gap — resize test</h3>
+              </div>
+              <p class="text-sm text-muted mt-1">
+                Same HStack, three fixed <code class="font-mono text-xs">gap</code> tokens — watch
+                the spacing scale smoothly while resizing, never snap at a breakpoint.
+              </p>
+            </template>
+
+            <VStack gap="md">
+              <div v-for="size in ['sm', 'md', 'xl'] as const" :key="size">
+                <p class="text-xs font-mono text-muted mb-2">gap="{{ size }}"</p>
+                <HStack :gap="size">
+                  <div
+                    v-for="n in 4"
+                    :key="n"
+                    class="h-12 flex-1 rounded bg-primary/20 flex items-center justify-center font-mono text-xs text-primary"
+                  >
+                    {{ n }}
+                  </div>
+                </HStack>
+              </div>
+            </VStack>
+          </UCard>
+
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-layers-2" class="text-primary" />
+                <h3 class="text-xl font-semibold">ZStack + Spacer</h3>
+              </div>
+              <p class="text-sm text-muted mt-1">
+                ZStack layers children via CSS (no JS positioning); Spacer fills remaining space in
+                a flex axis.
+              </p>
+            </template>
+
+            <VStack gap="md">
+              <ZStack class="h-32 rounded-lg overflow-hidden">
+                <div class="bg-primary/20 flex items-center justify-center text-sm">Back</div>
+                <div class="flex items-center justify-center text-sm">
+                  <UBadge color="primary">Front</UBadge>
+                </div>
+              </ZStack>
+
+              <HStack class="bg-elevated rounded-lg p-3">
+                <UBadge variant="soft">left</UBadge>
+                <Spacer />
+                <UBadge variant="soft">right</UBadge>
+              </HStack>
+            </VStack>
+          </UCard>
+
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-align-center-horizontal" class="text-primary" />
+                <h3 class="text-xl font-semibold">LayoutContainer vs. Container</h3>
+                <UBadge color="neutral" variant="subtle" size="sm">back-compat check</UBadge>
+              </div>
+              <p class="text-sm text-muted mt-1">
+                <code class="font-mono text-xs">LayoutContainer</code> is now a thin shim over
+                core's <code class="font-mono text-xs">Container</code> — both render identically.
+              </p>
+            </template>
+
+            <div class="grid gap-4 md:grid-cols-2">
+              <div>
+                <p class="text-xs font-mono text-muted mb-2">
+                  &lt;LayoutContainer size="content"&gt;
+                </p>
+                <LayoutContainer size="content" class="bg-primary/10 rounded p-4">
+                  <p class="text-sm">65ch max-width, centred.</p>
+                </LayoutContainer>
+              </div>
+              <div>
+                <p class="text-xs font-mono text-muted mb-2">&lt;Container size="content"&gt;</p>
+                <Container size="content" class="bg-primary/10 rounded p-4">
+                  <p class="text-sm">65ch max-width, centred.</p>
+                </Container>
+              </div>
+            </div>
+          </UCard>
+        </section>
+
         <!-- Sub-demos -->
         <section class="space-y-4">
           <div>

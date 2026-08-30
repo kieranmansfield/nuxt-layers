@@ -21,7 +21,10 @@
     position: relative;
   }
 
-  :slotted(*) {
+  /* > * (not bare *) — :slotted(*) compiles to a descendant selector and
+     would also stretch nested component roots (e.g. UBadge) to fill the
+     stack, not just the direct slot children. */
+  :slotted(> *) {
     position: absolute;
     inset: 0;
   }

@@ -128,6 +128,16 @@ export default defineConfig({
     },
     projects: [
       {
+        // Unlike the other projects, 'unit' has no Nuxt/Vite plugin resolving
+        // #layers/* aliases for it — add the ones actually crossed by a
+        // runtime (non-type-only) import from a unit-tested file.
+        resolve: {
+          alias: {
+            '#layers/core/types': fileURLToPath(
+              new URL('./layers/core/app/types', import.meta.url)
+            ),
+          },
+        },
         test: {
           name: 'unit',
           include: ['layers/**/*.test.ts', 'layers/**/*.spec.ts'],

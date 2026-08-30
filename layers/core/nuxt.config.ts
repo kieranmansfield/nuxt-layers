@@ -5,8 +5,11 @@ export default defineNuxtConfig({
   },
 
   alias: {
-    '#layers/core': import.meta.dirname,
+    // More specific key first — Vite/vite-node's alias matcher is first-match-wins
+    // (declaration order), not longest-prefix. '#layers/core' would otherwise
+    // intercept '#layers/core/types/*' lookups before this entry is reached.
     '#layers/core/types': `${import.meta.dirname}/app/types`,
+    '#layers/core': import.meta.dirname,
     '#types': `${import.meta.dirname}/../../types`,
   },
 
