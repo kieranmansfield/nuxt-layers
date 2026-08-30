@@ -3,10 +3,13 @@
   const {
     staggerDelay = 100,
     initialDelay = 0,
-    animation = 'fadeIn',
+    animation = 'fade-in',
   } = defineProps<{
     staggerDelay?: number
     initialDelay?: number
+    /**
+     * Suffix of a `transitions` layer `animate-*` class (e.g. 'fade-in', 'slide-in-up').
+     */
     animation?: string
   }>()
 

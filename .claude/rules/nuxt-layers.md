@@ -51,7 +51,7 @@ Placing it at the layer root silently ignores it — `useAppConfig()` returns `u
 | `forms`            | Form UI components, Zod validation                                                             | `mailer`                                                  |
 | `database`         | Drizzle ORM + Neon Postgres connection; useSql(), useDrizzle(schema) server utils              | `core`                                                    |
 | `auth`             | nuxt-auth-utils + GitHub OAuth handler; sealed-cookie sessions, opt-in `auth` route middleware | `core`                                                    |
-| `theme`            | Design tokens and theming utilities                                                            | `core`                                                    |
+| `theming`          | Design tokens and theming utilities                                                            | `core`                                                    |
 | `content`          | Nuxt Content v3 collections and components                                                     | `core`                                                    |
 | `routing`          | Advanced routing, maintenance mode, feature flags                                              | `core`                                                    |
 
@@ -73,6 +73,18 @@ Import examples:
 
 - `import { formsLayerHooks } from '#layers/forms/server/utils/hooks'`
 - `import type { GridConfig } from '#layers/layout/types/layouts'`
+
+## CSS Single Build-Root Rule
+
+Tailwind v4 is CSS-first and only tolerates **one** `@import 'tailwindcss/...'` build root per
+app. Any layer adding Tailwind-consuming CSS (custom properties, `@utility` blocks) must fold
+into `core.css`'s import chain via a relative path, and must never open its own
+`@import 'tailwindcss/...'` root. A second build root fails silently — no error, just broken
+utility output (e.g. `typography.css` opening its own root once broke `@nuxt/ui`'s
+`UNavigationMenu` padding in production with zero warning).
+
+This is a permanent, documented exception to "core has zero layer deps" — true for JS/TS, not
+true for CSS build-root ownership.
 
 ## Dependency Graph
 

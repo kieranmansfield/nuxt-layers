@@ -85,7 +85,7 @@
             <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Gradients & Tints</h2>
             <p class="text-muted text-lg">
               <code class="text-primary">useGradient()</code> resolves preset names from
-              <code class="text-primary">app.config.uiLayer.gradients</code>
+              <code class="text-primary">app.config.visualLayer.gradients</code>
             </p>
           </div>
 

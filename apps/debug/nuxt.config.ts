@@ -3,9 +3,11 @@
 //
 // Available layers (add in this order — each depends on the ones above it):
 //   '../../layers/core'
-//   '../../layers/ui'
+//   '../../layers/typography'
+//   '../../layers/navigation'
+//   '../../layers/visual'
 //   '../../layers/layout'
-//   '../../layers/theme'
+//   '../../layers/theming'
 //   '../../layers/motion'
 //   '../../layers/content'
 //   '../../layers/forms'
@@ -16,9 +18,11 @@ export default defineNuxtConfig({
 
   extends: [
     '../../layers/core',
-    '../../layers/ui',
+    '../../layers/typography',
+    '../../layers/navigation',
+    '../../layers/visual',
     // '../../layers/layout',
-    // '../../layers/theme',
+    // '../../layers/theming',
     // '../../layers/motion',
     // '../../layers/content',
     // '../../layers/forms',

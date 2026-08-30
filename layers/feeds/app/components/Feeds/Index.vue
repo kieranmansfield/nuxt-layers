@@ -1,9 +1,13 @@
 <script setup lang="ts">
   import contentManifest from '#content/manifest'
 
-  import { createFeedCatalog } from '../../utils/feed-catalog'
+  import { createFeedCatalog, type FeedCatalogInput } from '../../utils/feed-catalog'
 
-  const appConfig = useAppConfig()
+  type AppFeedAppConfig = FeedCatalogInput & {
+    feedsLayer?: { feed?: FeedCatalogInput['feed'] }
+  }
+
+  const appConfig = useAppConfig() as unknown as AppFeedAppConfig
 
   const catalog = computed(() =>
     createFeedCatalog({

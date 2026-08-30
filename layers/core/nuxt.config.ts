@@ -20,8 +20,9 @@ export default defineNuxtConfig({
     // '@nuxt/image'
     '@vueuse/nuxt',
     '@nuxtjs/device',
-    // PWA module - only in production
-    ...(process.env.NODE_ENV === 'production' ? ['@vite-pwa/nuxt'] : []),
+    // PWA module — disabled pending a decision on the PWA approach; useCache/usePWAInfo
+    // stay in place, dormant, ready to re-enable.
+    // ...(process.env.NODE_ENV === 'production' ? ['@vite-pwa/nuxt'] : []),
   ],
 
   css: ['#layers/core/app/assets/css/core.css'],
@@ -41,7 +42,7 @@ export default defineNuxtConfig({
   },
 
   future: {
-    compatibilityVersion: 4,
+    compatibilityVersion: 5,
   },
 
   compatibilityDate: '2026-01-24',
@@ -79,11 +80,11 @@ export default defineNuxtConfig({
     },
   },
 
-  // PWA configuration (only applied when module is loaded in production)
-  pwa: {
-    workbox: {
-      globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff,woff2}'],
-      globIgnores: ['**/node_modules/**/*', 'sw.js', 'workbox-*.js'],
-    },
-  },
+  // PWA configuration — dormant while @vite-pwa/nuxt is disabled above.
+  // pwa: {
+  //   workbox: {
+  //     globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff,woff2}'],
+  //     globIgnores: ['**/node_modules/**/*', 'sw.js', 'workbox-*.js'],
+  //   },
+  // },
 })

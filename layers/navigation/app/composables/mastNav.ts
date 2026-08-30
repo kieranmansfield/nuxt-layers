@@ -1,26 +1,15 @@
+import { createModal } from '../utils/createModal'
 import MastNavModal from '../components/Mast/NavModal.vue'
 
-function _useMastNav() {
-  if (import.meta.server) return { open: () => {}, close: () => {} }
-
-  const overlay = useOverlay()
-  const modal = overlay.create(MastNavModal)
-
-  function open() {
+export const useMastNav = createModal(MastNavModal, {
+  onOpen: () => {
     try {
       useSmoothScroll().lockScrolling()
     } catch {}
-    modal.open()
-  }
-
-  function close() {
-    modal.close()
+  },
+  onClose: () => {
     try {
       useSmoothScroll().unlockScrolling()
     } catch {}
-  }
-
-  return { open, close }
-}
-
-export const useMastNav = createSharedComposable(_useMastNav)
+  },
+})

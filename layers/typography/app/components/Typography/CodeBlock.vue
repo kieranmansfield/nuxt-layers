@@ -1,41 +1,65 @@
 <script lang="ts" setup>
   import { useColor } from '../../composables/color'
+  import { useTypography } from '../../composables/typography'
   import type { UiColors } from '../../types/colors'
-  import type { FontSize } from '../../types/typography'
-
-  defineOptions({ inheritAttrs: false })
+  import type {
+    FluidFontSize,
+    FontFamily,
+    FontLeading,
+    FontSize,
+    FontSlant,
+    FontTracking,
+    FontWeight,
+    FontWidth,
+    TextAlign,
+    TextTransform,
+  } from '../../types/typography'
 
   const {
     language = undefined,
+    weight = 'font-normal',
+    width = 'font-stretch-normal',
+    slant = 'normal',
+    leading = 'leading-normal',
+    tracking = 'tracking-normal',
+    align = 'left',
+    transform = 'none',
     color = 'default',
     size = undefined,
-    class: classProp = '',
+    fluidSize = undefined,
+    font = 'mono',
   } = defineProps<{
     language?: string
+    weight?: FontWeight
+    width?: FontWidth
+    slant?: FontSlant
+    leading?: FontLeading
+    tracking?: FontTracking
+    align?: TextAlign
+    transform?: TextTransform
     color?: UiColors
     size?: FontSize
-    class?: string
+    fluidSize?: FluidFontSize
+    font?: FontFamily
   }>()
+  const { classes } = useTypography(() => ({
+    weight,
+    width,
+    slant,
+    leading,
+    tracking,
+    align,
+    transform,
+    font,
+    ...(size !== undefined && { size }),
+    ...(fluidSize !== undefined && { fluidSize }),
+  }))
   const colorClass = useColor(color, 'text')
 </script>
 
 <template>
-  <Typography
-    tag="pre"
-    v-bind="{
-      ...$attrs,
-      ...(size !== undefined && { size: size }),
-      ...(language !== undefined && { 'data-language': language }),
-    }"
+  <pre
     class="overflow-x-auto"
-    :class="[classProp]"
-  >
-    <Typography
-      tag="code"
-      class="font-mono"
-      :class="[colorClass, language ? `language-${language}` : '']"
-    >
-      <slot />
-    </Typography>
-  </Typography>
+    :data-language="language"
+  ><code :class="[classes, colorClass, language ? `language-${language}` : '']"><slot /></code></pre>
 </template>

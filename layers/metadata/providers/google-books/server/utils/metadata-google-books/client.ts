@@ -32,7 +32,11 @@ export async function searchGoogleBooks(
   const apiKey = getApiKey()
   if (apiKey) params.key = apiKey
 
-  return $fetch<GoogleBooksSearchResponse>(`${BASE}/volumes`, { query: params })
+  try {
+    return await $fetch<GoogleBooksSearchResponse>(`${BASE}/volumes`, { query: params })
+  } catch (err) {
+    throw new MetadataProviderError('google-books', `API error: ${String(err)}`)
+  }
 }
 
 export async function fetchGoogleBooksVolume(id: string): Promise<GoogleBooksVolume> {
@@ -40,5 +44,9 @@ export async function fetchGoogleBooksVolume(id: string): Promise<GoogleBooksVol
   const apiKey = getApiKey()
   if (apiKey) params.key = apiKey
 
-  return $fetch<GoogleBooksVolume>(`${BASE}/volumes/${id}`, { query: params })
+  try {
+    return await $fetch<GoogleBooksVolume>(`${BASE}/volumes/${id}`, { query: params })
+  } catch (err) {
+    throw new MetadataProviderError('google-books', `API error: ${String(err)}`)
+  }
 }

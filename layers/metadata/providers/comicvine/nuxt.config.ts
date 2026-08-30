@@ -26,7 +26,7 @@ export default defineNuxtConfig({
 })
 
 declare module '@nuxt/schema' {
-  type RuntimeConfig = {
+  interface RuntimeConfig {
     metadataComicvine: {
       apiKey: string
       baseUrl: string

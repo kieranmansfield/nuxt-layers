@@ -91,7 +91,7 @@ const activeSection = useState('activeSection', () => '')
           description="The hamburger button is live in the top-right corner of this page. Click it to open the nav modal."
         >
           <template #actions>
-            <UButton size="sm" variant="subtle" color="info" @click="open">
+            <UButton size="sm" variant="subtle" color="info" @click="() => open()">
               Or open it here
             </UButton>
           </template>

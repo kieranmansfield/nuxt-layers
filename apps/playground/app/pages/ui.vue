@@ -1,6 +1,7 @@
 <script setup lang="ts">
-  import type { UiColors } from '#layers/ui/app/types/colors'
-  import type { TintLevel } from '#layers/ui/app/types/tint'
+  // fallow-ignore-next-line code-duplication
+  import type { UiColors } from '#layers/typography/app/types/colors'
+  import type { TintLevel } from '#layers/visual/app/types/tint'
 
   const { setPageAccent } = useAccentColor()
   setPageAccent('pink')

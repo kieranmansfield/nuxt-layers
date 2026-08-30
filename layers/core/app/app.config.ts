@@ -1,4 +1,7 @@
-export default {
+import type { SiteConfig } from './types/site'
+import type { NotFoundConfig } from './types/notFound'
+
+export default defineAppConfig({
   coreLayer: {
     // 404 Page defaults (all optional)
     notFound: {
@@ -53,21 +56,35 @@ export default {
       // External error service token/key
       externalToken: '',
     },
-
-    // Horizontal scroll guard configuration
-    scrollGuard: {
-      // Master toggle - set to false to disable completely
-      enabled: false,
-      // CSS selectors for elements allowed to overflow intentionally
-      excludeSelectors: ['.carousel', '.overflow-intent'],
-      // Enable automatic clamping of overflowing elements
-      strict: true,
-      // Duration (ms) for element width clamp animations
-      transitionDuration: 200,
-      // Debounce delay (ms) for resize re-scans
-      resizeDebounce: 150,
-      // Temporarily highlight overflowing elements with a red outline
-      debug: false,
-    },
   },
+})
+
+declare module '@nuxt/schema' {
+  interface AppConfigInput {
+    /** Shared site metadata — consumed by feeds, SEO, and any layer needing canonical site info. */
+    site?: SiteConfig
+    coreLayer?: {
+      /** Project name */
+      name?: string
+
+      /** 404 Not Found page configuration */
+      notFound?: NotFoundConfig
+
+      loading?: {
+        enabled?: boolean
+        minDuration?: number
+        maxDuration?: number
+        background?: string
+        textColor?: string
+        zIndex?: number
+      }
+
+      errors?: {
+        logToConsole?: boolean
+        logToExternal?: boolean
+        externalUrl?: string
+        externalToken?: string
+      }
+    }
+  }
 }

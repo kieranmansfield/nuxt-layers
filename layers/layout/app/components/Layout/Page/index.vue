@@ -3,8 +3,8 @@
    * LayoutPage — canonical page wrapper for the Swiss Grid System.
    *
    * This is a fragment component (no wrapper element). The grid root is already
-   * provided by MastMain at the layout level via <div class="mastmain">.
-   * Adding another mastmain wrapper here would nest grids and misalign everything.
+   * provided by LayoutMain at the layout level via <main class="grid-root">.
+   * Adding another grid-root wrapper here would nest grids and misalign everything.
    *
    * Responsibilities:
    *   - SEO via useHead()
@@ -64,6 +64,6 @@
     </LayoutGridItem>
   </LayoutSection>
 
-  <!-- Page content — direct children of mastmain (via MastMain in the layout) -->
+  <!-- Page content — direct children of grid-root (via LayoutMain in the layout) -->
   <slot />
 </template>

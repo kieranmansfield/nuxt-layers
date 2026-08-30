@@ -8,6 +8,8 @@ export default defineNuxtConfig({
     '#layers/page-transitions/types': `${import.meta.dirname}/app/types`,
   },
 
+  css: ['#layers/page-transitions/app/assets/css/page-transitions.css'],
+
   compatibilityDate: '2026-06-06',
 
   typescript: {

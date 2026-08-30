@@ -1,0 +1,30 @@
+.fade-enter-active,
+.fade-leave-active,
+.default-enter-active,
+.default-leave-active {
+  transition: opacity var(--page-transition-duration, 300ms) ease;
+}
+
+.fade-enter-from,
+.fade-leave-to,
+.default-enter-from,
+.default-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition:
+    transform var(--page-transition-duration, 300ms) ease,
+    opacity var(--page-transition-duration, 300ms) ease;
+}
+
+.slide-enter-from {
+  transform: translateX(24px);
+  opacity: 0;
+}
+
+.slide-leave-to {
+  transform: translateX(-24px);
+  opacity: 0;
+}

@@ -5,7 +5,7 @@
   import ThemeLavaLamp from '#layers/shader/app/components/Preset/ThemeLavaLamp.client.vue'
   import ThemePlasma from '#layers/shader/app/components/Preset/ThemePlasma.client.vue'
   import ThemeWave from '#layers/shader/app/components/Preset/ThemeWave.client.vue'
-  import type { AccentColor } from '#layers/theme/app/types/theme'
+  import type { AccentColor } from '#layers/theming/app/types/theme'
 
   definePageMeta({ ssr: false, layout: false })
 

@@ -55,8 +55,8 @@
   ]
 
   const configRows = computed(() => [
-    { label: 'Site URL', value: site.value?.url ?? '—' },
-    { label: 'Site Name', value: site.value?.name ?? '—' },
+    { label: 'Site URL', value: site?.url ?? '—' },
+    { label: 'Site Name', value: site?.title ?? '—' },
     { label: 'OG Image Component', value: ogImageComponent },
     { label: 'Twitter Card', value: twitterCard },
     { label: 'Schema.org', value: schemaOrgEnabled ? 'Enabled' : 'Disabled' },

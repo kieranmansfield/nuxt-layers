@@ -1,9 +1,11 @@
+import type { SiteConfig } from '#layers/core/app/types/site'
+
 export default defineAppConfig({
   site: {
     title: '',
     subtitle: '',
     description: '',
-  },
+  } satisfies SiteConfig,
   mastNav: {
     links: [] as Array<{
       id: string
@@ -18,11 +20,7 @@ export default defineAppConfig({
 
 declare module '@nuxt/schema' {
   interface AppConfigInput {
-    site?: {
-      title?: string
-      subtitle?: string
-      description?: string
-    }
+    // `site` is already typed by core's own AppConfigInput augmentation — no need to redeclare it.
     mastNav?: {
       links?: Array<{
         id: string

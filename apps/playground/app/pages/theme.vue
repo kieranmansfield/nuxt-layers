@@ -1,8 +1,7 @@
 <script setup lang="ts">
-  import { useThemePreferenceModels } from '#layers/theme/app/composables/useThemePreferenceModels'
+  import { useThemePreferenceModels } from '#layers/theming/app/composables/useThemePreferenceModels'
 
   const {
-    activeAccent,
     contrastOverride,
     motionOverride,
     transparencyOverride,
@@ -10,6 +9,8 @@
     motionModel,
     transparencyModel,
   } = useThemePreferenceModels()
+
+  const { activeAccent } = useAccentColor()
 
   const { systemContrast, systemMotion, systemTransparency } = useTheme()
 

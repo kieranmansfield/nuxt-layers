@@ -9,7 +9,7 @@ describe('resolveSeoConfig', () => {
   it('applies all defaults when no seoLayer config is given', () => {
     expect(resolveSeoConfig(site)).toEqual({
       site,
-      ogImageComponent: 'OgImageBasic',
+      ogImageComponent: 'OgImageNuxtSeo',
       ogImageProps: {},
       twitterCard: 'summary_large_image',
       schemaOrgEnabled: true,
@@ -20,7 +20,7 @@ describe('resolveSeoConfig', () => {
   it('applies all defaults when seoLayer is an empty object', () => {
     expect(resolveSeoConfig(site, {})).toEqual({
       site,
-      ogImageComponent: 'OgImageBasic',
+      ogImageComponent: 'OgImageNuxtSeo',
       ogImageProps: {},
       twitterCard: 'summary_large_image',
       schemaOrgEnabled: true,

@@ -1,7 +1,6 @@
 import {
   QUALITY_PRESETS,
   type QualityLevel,
-  type QualitySettings,
   type RendererCapabilities,
 } from '#layers/canvas/types/renderer'
 import type { WebGLRenderer } from 'three'
@@ -78,13 +77,6 @@ export async function checkWebGPUSupport(): Promise<boolean> {
   } catch {
     return false
   }
-}
-
-/**
- * Get quality settings for a given level
- */
-export function getQualitySettings(level: QualityLevel): QualitySettings {
-  return QUALITY_PRESETS[level]
 }
 
 /**

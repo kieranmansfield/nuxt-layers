@@ -36,13 +36,13 @@ The layer auto-imports its CSS, components, and composables. No additional setup
 </template>
 ```
 
-> **Architecture note:** The `mastmain` grid root is on `MastMain` in the default layout, not on `LayoutPage`. `LayoutPage` must not add its own `mastmain` wrapper — nesting two `mastmain` elements breaks subgrid alignment. `LayoutGridDebug` is also owned by the default layout.
+> **Architecture note:** The `grid-root` grid root is on `MastMain` in the default layout, not on `LayoutPage`. `LayoutPage` must not add its own `grid-root` wrapper — nesting two `grid-root` elements breaks subgrid alignment. `LayoutGridDebug` is also owned by the default layout.
 
 ---
 
 ## 3. Divide pages into sections with `<LayoutSection>`
 
-Each `LayoutSection` spans the full 18 columns and 12 rows (one viewport height). It uses CSS subgrid to inherit the parent grid lines from `mastmain`.
+Each `LayoutSection` spans the full 18 columns and 12 rows (one viewport height). It uses CSS subgrid to inherit the parent grid lines from `grid-root`.
 
 ```vue
 <LayoutPage title="Home">

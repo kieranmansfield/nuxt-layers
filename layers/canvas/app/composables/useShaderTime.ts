@@ -131,15 +131,3 @@ export function useShaderTime(options: ShaderTimeOptions = {}) {
     setTime,
   }
 }
-
-/**
- * Simple global time singleton for basic use cases
- */
-const _globalTime = { instance: null as ReturnType<typeof useShaderTime> | null }
-
-export function useGlobalShaderTime() {
-  if (!_globalTime.instance) {
-    _globalTime.instance = useShaderTime({ autoStart: true })
-  }
-  return _globalTime.instance
-}

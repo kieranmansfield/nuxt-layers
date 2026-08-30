@@ -2,7 +2,7 @@ import type { AccentSceneConfig } from './types/accent'
 import type { GradientConfig } from './types/gradient'
 
 export default defineAppConfig({
-  uiLayer: {
+  visualLayer: {
     gradients: {
       brand: {
         shape: 'linear' as const,
@@ -108,7 +108,7 @@ export default defineAppConfig({
 
 declare module '@nuxt/schema' {
   interface AppConfigInput {
-    uiLayer?: {
+    visualLayer?: {
       name?: string
       gradients?: Record<string, GradientConfig>
       accentScenes?: Record<string, AccentSceneConfig>

@@ -5,25 +5,33 @@ import type {
 } from '#layers/metadata/shared/types'
 
 type UseMetadataSearchOptions = {
-  mediaType?: MetadataMediaType
-  providers?: MetadataProviderId[]
-  limit?: number
+  mediaType?: MaybeRef<MetadataMediaType | undefined>
+  providers?: MaybeRef<MetadataProviderId[] | undefined>
+  limit?: MaybeRef<number | undefined>
+  /** Debounce the query before firing a request. Set 0 to disable. Default 300ms. */
+  debounceMs?: number
 }
 
 export function useMetadataSearch(query: MaybeRef<string>, options: UseMetadataSearchOptions = {}) {
-  const q = computed(() => toValue(query).trim())
+  const { mediaType, providers, limit, debounceMs = 300 } = options
+
+  const raw = computed(() => toValue(query).trim())
+  const q = debounceMs > 0 ? refDebounced(raw, debounceMs) : raw
+  const mt = computed(() => toValue(mediaType))
 
   return useAsyncData(
-    () => `metadata-search:${q.value}`,
-    () =>
-      $fetch('/api/metadata/search', {
+    () => `metadata-search:${q.value}:${mt.value ?? ''}`,
+    () => {
+      if (!q.value) return Promise.resolve([])
+      return $fetch('/api/metadata/search', {
         query: {
           q: q.value,
-          mediaType: options.mediaType,
-          providers: options.providers?.join(','),
-          limit: options.limit,
+          mediaType: mt.value,
+          providers: toValue(providers)?.join(','),
+          limit: toValue(limit),
         },
-      }) as Promise<MetadataSearchResult[]>,
-    { watch: [q], immediate: false }
+      }) as Promise<MetadataSearchResult[]>
+    },
+    { watch: [q, mt], immediate: false }
   )
 }

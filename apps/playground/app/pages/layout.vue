@@ -7,6 +7,7 @@
   setPageAccent('amber')
   onUnmounted(() => setPageAccent(null))
 
+  // fallow-ignore-next-line code-duplication
   const galleryItems = [
     { id: 1, title: 'Item 1', color: 'bg-blue-500' },
     { id: 2, title: 'Item 2', color: 'bg-green-500' },
@@ -160,7 +161,7 @@
                 <div class="p-4 bg-elevated rounded-lg">
                   <h4 class="font-medium mb-2">Grid Context</h4>
                   <p class="text-sm text-muted">
-                    Wraps page in &lt;main class="mastmain"&gt; — the root of the Swiss Grid
+                    Wraps page in &lt;main class="grid-root"&gt; — the root of the Swiss Grid
                   </p>
                 </div>
                 <div class="p-4 bg-elevated rounded-lg">
@@ -287,7 +288,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
               </div>
               <p class="text-sm text-muted mt-1">
                 The grid root element — renders
-                <code class="font-mono text-xs">&lt;main class="mastmain"&gt;</code> and owns the
+                <code class="font-mono text-xs">&lt;main class="grid-root"&gt;</code> and owns the
                 stacking context. Drops the class when
                 <code class="font-mono text-xs">mode: 'disabled'</code>.
               </p>
@@ -324,13 +325,12 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
             </div>
           </UCard>
 
-          <!-- LayoutContainer -->
+          <!-- AppContainer -->
           <UCard>
             <template #header>
               <div class="flex items-center gap-2">
                 <UIcon name="i-lucide-align-center-horizontal" class="text-primary" />
-                <h3 class="text-xl font-semibold">LayoutContainer</h3>
-                <UBadge color="primary" size="sm">New</UBadge>
+                <h3 class="text-xl font-semibold">AppContainer</h3>
               </div>
               <p class="text-sm text-muted mt-1">
                 Constrains content to a max-width and centres it within the grid.
@@ -360,29 +360,11 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
               <pre
                 class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
               ><code>&lt;LayoutGridItem preset="fullWidth"&gt;
-  &lt;LayoutContainer size="content"&gt;
+  &lt;AppContainer size="content"&gt;
     &lt;p&gt;Prose constrained to ~65 characters.&lt;/p&gt;
-  &lt;/LayoutContainer&gt;
+  &lt;/AppContainer&gt;
 &lt;/LayoutGridItem&gt;</code></pre>
             </div>
-          </UCard>
-
-          <!-- PageContainer (legacy) -->
-          <UCard>
-            <template #header>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-file-x" class="text-muted" />
-                <h3 class="text-xl font-semibold text-muted">LayoutPageContainer</h3>
-                <UBadge color="neutral" variant="subtle" size="sm">Legacy</UBadge>
-              </div>
-              <p class="text-sm text-muted mt-1">
-                Kept for backwards compatibility. Use LayoutPage for new pages.
-              </p>
-            </template>
-            <p class="text-sm text-muted">
-              LayoutPageContainer remains functional but LayoutPage is now the canonical API. It
-              offers the same SEO + grid debug, with the feature flag built in.
-            </p>
           </UCard>
         </section>
 
@@ -1135,7 +1117,7 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
               </p>
             </template>
 
-            <Container size="content" class="bg-elevated rounded-lg">
+            <AppContainer size="content" class="bg-elevated rounded-lg">
               <VStack gap="lg" class="p-6">
                 <VStack gap="sm">
                   <h1 class="text-2xl font-bold text-highlighted">Projects</h1>
@@ -1146,7 +1128,7 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
                   <UBadge>Shipped</UBadge>
                 </HStack>
               </VStack>
-            </Container>
+            </AppContainer>
           </UCard>
 
           <UCard>
@@ -1205,36 +1187,6 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
             </VStack>
           </UCard>
 
-          <UCard>
-            <template #header>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-align-center-horizontal" class="text-primary" />
-                <h3 class="text-xl font-semibold">LayoutContainer vs. Container</h3>
-                <UBadge color="neutral" variant="subtle" size="sm">back-compat check</UBadge>
-              </div>
-              <p class="text-sm text-muted mt-1">
-                <code class="font-mono text-xs">LayoutContainer</code> is now a thin shim over
-                core's <code class="font-mono text-xs">Container</code> — both render identically.
-              </p>
-            </template>
-
-            <div class="grid gap-4 md:grid-cols-2">
-              <div>
-                <p class="text-xs font-mono text-muted mb-2">
-                  &lt;LayoutContainer size="content"&gt;
-                </p>
-                <LayoutContainer size="content" class="bg-primary/10 rounded p-4">
-                  <p class="text-sm">65ch max-width, centred.</p>
-                </LayoutContainer>
-              </div>
-              <div>
-                <p class="text-xs font-mono text-muted mb-2">&lt;Container size="content"&gt;</p>
-                <Container size="content" class="bg-primary/10 rounded p-4">
-                  <p class="text-sm">65ch max-width, centred.</p>
-                </Container>
-              </div>
-            </div>
-          </UCard>
         </section>
 
         <!-- Sub-demos -->

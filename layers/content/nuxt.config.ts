@@ -2,6 +2,7 @@
 const studioModule: string[] = []
 if (process.env.NODE_ENV === 'development') {
   try {
+    // @ts-expect-error nuxt-studio is an optional peer dependency, not always installed
     await import('nuxt-studio')
     studioModule.push('nuxt-studio')
   } catch {}

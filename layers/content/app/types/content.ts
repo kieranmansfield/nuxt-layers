@@ -4,6 +4,15 @@ export type ContentAuthor = {
   avatar?: string
 } & Author
 
+export type ContentLayerConfig = {
+  name?: string
+  sections?: {
+    blog?: boolean
+    portfolio?: boolean
+    gallery?: boolean
+  }
+}
+
 export type GalleryImage = {
   src: string
   alt: string

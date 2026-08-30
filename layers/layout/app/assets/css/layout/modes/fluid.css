@@ -1,7 +1,7 @@
 /**
  * Fluid Mode — Container-Query Based Grid Utilities
  *
- * These utilities complement .mastmain/.basesection and are safe to use
+ * These utilities complement .grid-root/.basesection and are safe to use
  * alongside them — they only take effect when their class is applied.
  *
  * Design goals:
@@ -33,6 +33,19 @@
  * These use container queries so the number of columns degrades gracefully
  * when the container is too narrow.
  */
+/**
+ * Named container-query thresholds for the .fluid-grid-N variants below —
+ * the point each adds one more forced column, tuned empirically per column
+ * count (not derived from the viewport breakpoint scale).
+ *
+ * Documentation-only, like core's --breakpoint-* vs grids.css's @media
+ * literals (custom properties aren't valid inside @container conditions,
+ * same restriction as @media) — keep the literals below in sync with these:
+ *   --fluid-grid-2-bp: 30rem
+ *   --fluid-grid-3-bp: 44rem
+ *   --fluid-grid-4-bp: 52rem
+ */
+
 .fluid-grid-2 {
   --fluid-col-min: 14rem;
 
@@ -70,7 +83,6 @@
 }
 
 /**
- * Container size utilities moved to layers/core/app/assets/css/tokens/container.css
- * (`.container-*`, unprefixed) — <LayoutContainer> is now a back-compat shim
- * around the shared <Container> component. See nuxt-declarative-layout-system-spec.md §10/§20.
+ * Container size utilities live in layers/core/app/assets/css/tokens/container.css
+ * (`.container-*`, unprefixed) — consumed via the shared <AppContainer> component.
  */

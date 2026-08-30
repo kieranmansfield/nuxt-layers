@@ -7,10 +7,8 @@ export type Spacing = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
 
 /**
  * Matches the existing GridContainerSize values (layers/layout/app/types/layouts.ts).
- * Only consumed by Container.vue's <script setup> — static analysis doesn't trace
- * type-only imports into Vue SFCs, hence the suppression below.
+ * Consumed by AppContainer.vue's <script setup>.
  */
-// fallow-ignore-next-line unused-type
 export type ContainerSize = 'content' | 'wide' | 'fluid' | 'full'
 
 /**
@@ -18,9 +16,8 @@ export type ContainerSize = 'content' | 'wide' | 'fluid' | 'full'
  * vars (rem). JS/TS consumers that need a number (matchMedia, resize
  * listeners) read this instead of hand-duplicating Tailwind's defaults.
  * Consumed cross-package (layers/layout, layers/visual) via the
- * `#layers/core/types` alias — static analysis doesn't trace that either.
+ * `#layers/core/types` alias.
  */
-// fallow-ignore-next-line unused-export
 export const BREAKPOINT_PX = {
   sm: 640,
   md: 768,

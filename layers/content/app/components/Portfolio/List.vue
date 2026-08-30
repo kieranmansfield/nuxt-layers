@@ -8,8 +8,20 @@
     collection?: keyof Collections
   }>()
 
-  const { useItems } = createPortfolioComposables(collection)
-  const { data: items, status } = await useItems(options)
+  const { featured, tags, limit } = options
+  const { data: items, status } = await useCollectionItems(collection, {
+    tags,
+    limit,
+    sortKey: 'year',
+    sortDirection: 'desc',
+    filter: featured !== undefined ? (item) => fieldFeatured(item) === featured : undefined,
+  })
+
+  function fieldFeatured(item: unknown): boolean {
+    return typeof item === 'object' && item !== null && 'featured' in item
+      ? Boolean((item as { featured?: boolean }).featured)
+      : false
+  }
 
   // Items may come from any collection — normalize the portfolio-style
   // metadata so the template works on a single shape

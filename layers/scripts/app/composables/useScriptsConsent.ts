@@ -1,5 +1,8 @@
+import type { ScriptsLayerConfig } from '../utils/scriptClients'
+
 export function useScriptsConsent() {
-  const { scriptsLayer } = useAppConfig()
+  const appConfig = useAppConfig()
+  const scriptsLayer = appConfig.scriptsLayer as ScriptsLayerConfig | undefined
   const storageKey = scriptsLayer?.consent?.storageKey ?? 'scripts-consent'
 
   const hasConsent = useState<boolean>(`scripts:consent`, () => {

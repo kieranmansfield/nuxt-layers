@@ -1,11 +1,15 @@
 <script setup lang="ts">
   import type { PageCollections } from '@nuxt/content'
 
+  import type { ContentLayerConfig } from '#layers/content/app/types/content'
+
   const { slug, collection = 'portfolio' } = defineProps<{
     slug: string
     collection?: keyof PageCollections
   }>()
-  const { contentLayer } = useAppConfig()
+
+  const appConfig = useAppConfig()
+  const contentLayer = appConfig.contentLayer as ContentLayerConfig | undefined
   if (contentLayer?.sections?.portfolio === false) {
     throw createError({ statusCode: 404, statusMessage: 'Not Found' })
   }

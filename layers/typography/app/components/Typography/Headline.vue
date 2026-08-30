@@ -4,6 +4,7 @@
   import type { UiColors } from '../../types/colors'
   import type {
     FluidFontSize,
+    FontFamily,
     FontLeading,
     FontSize,
     FontSlant,
@@ -13,8 +14,6 @@
     TextAlign,
     TextTransform,
   } from '../../types/typography'
-
-  defineOptions({ inheritAttrs: false })
 
   const {
     level = 1,
@@ -28,7 +27,7 @@
     color = undefined,
     size = undefined,
     fluidSize = undefined,
-    class: classProp = '',
+    font = undefined,
   } = defineProps<{
     level?: 1 | 2 | 3 | 4 | 5 | 6
     weight?: FontWeight
@@ -41,7 +40,7 @@
     color?: UiColors
     size?: FontSize
     fluidSize?: FluidFontSize
-    class?: string
+    font?: FontFamily
   }>()
   const tag = computed(() => `h${level}` as const)
 
@@ -60,37 +59,23 @@
     size !== undefined ? undefined : (fluidSize ?? defaultFluidSizes[level])
   )
 
-  const { classes } = useTypography({
-    weight: weight,
-    width: width,
-    slant: slant,
-    leading: leading,
-    tracking: tracking,
-    align: align,
-    transform: transform,
-    ...(size !== undefined && { size: size }),
+  const { classes } = useTypography(() => ({
+    weight,
+    width,
+    slant,
+    leading,
+    tracking,
+    align,
+    transform,
+    ...(font !== undefined && { font }),
+    ...(size !== undefined && { size }),
     ...(appliedFluidSize.value !== undefined && { fluidSize: appliedFluidSize.value }),
-  })
+  }))
   const colorClass = useColor(color, 'text')
 </script>
 
 <template>
-  <Typography
-    :tag
-    :weight
-    :width
-    :slant
-    :leading
-    :tracking
-    :align
-    :transform
-    :class="[classes, colorClass, classProp]"
-    v-bind="{
-      ...(size !== undefined && { size: size }),
-      ...(appliedFluidSize !== undefined && { fluidSize: appliedFluidSize }),
-      ...$attrs,
-    }"
-  >
+  <component :is="tag" :class="[classes, colorClass]">
     <slot />
-  </Typography>
+  </component>
 </template>

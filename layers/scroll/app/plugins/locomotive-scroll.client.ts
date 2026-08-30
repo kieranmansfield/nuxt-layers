@@ -47,7 +47,8 @@ export default defineNuxtPlugin({
 
     const router = useRouter()
     const appConfig = useAppConfig()
-    const smoothScroll: boolean | string[] = appConfig.scroll?.smoothScroll ?? true
+    const scrollConfig = appConfig.scroll as { smoothScroll?: boolean | string[] } | undefined
+    const smoothScroll: boolean | string[] = scrollConfig?.smoothScroll ?? true
 
     const nuxtApp = useNuxtApp()
 

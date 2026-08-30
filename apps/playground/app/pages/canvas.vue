@@ -1,5 +1,7 @@
 <script setup lang="ts">
   import type { TresContext } from '@tresjs/core'
+  import type { WebGLRenderer } from 'three'
+  import type { WebGPURenderer } from 'three/webgpu'
 
   definePageMeta({ layout: false })
   const { setPageAccent } = useAccentColor()
@@ -25,7 +27,7 @@
 
   function onCanvasReady(context: TresContext) {
     if (context?.renderer?.instance) {
-      detectFromRenderer(context.renderer.instance)
+      detectFromRenderer(context.renderer.instance as WebGPURenderer | WebGLRenderer)
     }
   }
 </script>

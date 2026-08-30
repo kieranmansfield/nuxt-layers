@@ -2,10 +2,12 @@ import {
   createAnalyticsClient,
   resolveScriptTrigger,
   type AnalyticsClient,
+  type ScriptsLayerConfig,
 } from '../utils/scriptClients'
 
 export function useAnalytics(): AnalyticsClient {
-  const { scriptsLayer } = useAppConfig()
+  const appConfig = useAppConfig()
+  const scriptsLayer = appConfig.scriptsLayer as ScriptsLayerConfig | undefined
   const { hasConsent, consentRequired } = useScriptsConsent()
 
   const provider = scriptsLayer?.analytics?.provider

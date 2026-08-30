@@ -72,7 +72,7 @@ Catalogue of layout shift (CLS) issues found and fixed in this monorepo, with ro
 
 ## 9. `NuxtAnnouncer` / `NuxtRouteAnnouncer` inside a CSS grid — `app.vue`
 
-**Cause:** `<NuxtAnnouncer>` and `<NuxtRouteAnnouncer>` were inside the `<NuxtLayout>` slot, making them direct children of the `mastmain` CSS grid. Before their `position: absolute` CSS loaded, they auto-placed as grid rows and pushed the `basesection` down by ~85px. When the CSS loaded and removed them from grid flow, the section jumped back up.
+**Cause:** `<NuxtAnnouncer>` and `<NuxtRouteAnnouncer>` were inside the `<NuxtLayout>` slot, making them direct children of the `grid-root` CSS grid. Before their `position: absolute` CSS loaded, they auto-placed as grid rows and pushed the `basesection` down by ~85px. When the CSS loaded and removed them from grid flow, the section jumped back up.
 
 **Fix:** Remove `<NuxtAnnouncer>` and `<NuxtRouteAnnouncer>` entirely — they are boilerplate and not needed in this project.
 

@@ -8,10 +8,13 @@
 export function usePageTransition(name?: string) {
   const appConfig = useAppConfig()
   const route = useRoute()
+  const pageTransitions = appConfig.pageTransitions as
+    | { default?: string; duration?: number }
+    | undefined
 
   const currentTransition = useState('page-transition:current', () => ({
-    name: appConfig.pageTransitions?.default ?? 'fade',
-    duration: appConfig.pageTransitions?.duration ?? 300,
+    name: pageTransitions?.default ?? 'fade',
+    duration: pageTransitions?.duration ?? 300,
   }))
 
   if (name) {
@@ -20,6 +23,15 @@ export function usePageTransition(name?: string) {
 
   const transitionName = computed(() => currentTransition.value.name)
   const duration = computed(() => currentTransition.value.duration)
+
+  if (import.meta.client) {
+    watchEffect(() => {
+      document.documentElement.style.setProperty(
+        '--page-transition-duration',
+        `${duration.value}ms`
+      )
+    })
+  }
 
   function setTransition(transitionName: string, transitionDuration?: number) {
     currentTransition.value.name = transitionName

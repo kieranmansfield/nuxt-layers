@@ -2,7 +2,7 @@ import type { SiteConfig } from '#layers/core/app/types/site'
 
 import type { FeedConfig } from './types'
 
-type AppFeedConfig = {
+export type AppFeedConfig = {
   site?: SiteConfig
   feedsLayer?: {
     feed?: {

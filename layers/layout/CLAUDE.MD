@@ -13,25 +13,31 @@ layers/layout/
 ├── app/
 │   ├── assets/css/
 │   │   ├── layout/
-│   │   │   ├── grids.css              # .mastmain, .basesection, prose-rhythm utilities
+│   │   │   ├── grids.css              # .grid-root, .basesection, prose-rhythm utilities
 │   │   │   └── modes/
 │   │   │       └── fluid.css          # .fluid-grid, .layout-container-* utilities
 │   │   └── main.css                   # entry point (imports grids.css + fluid.css)
+│   ├── components/
+│   │   ├── HStack.vue                 # HStack — flexbox row (moved from the dissolved `ui` layer)
+│   │   ├── VStack.vue                 # VStack — flexbox column
+│   │   ├── ZStack.vue                 # ZStack — single-area grid, layered children
+│   │   └── Spacer.vue                 # Spacer — flexible remaining space
 │   ├── components/Layout/
-│   │   ├── Main.vue                   # LayoutMain — <main class="mastmain"> wrapper
-│   │   ├── Container.vue              # LayoutContainer — content/wide/fluid/full sizing
+│   │   ├── Main.vue                   # LayoutMain — <main class="grid-root"> wrapper
 │   │   ├── Grid/
 │   │   │   ├── Item.vue               # LayoutGridItem — positioned grid child
 │   │   │   └── Debug.vue              # LayoutGridDebug — Cmd+G column overlay
 │   │   ├── Page/
 │   │   │   ├── index.vue              # LayoutPage — fragment: SEO + optional header
-│   │   │   ├── Container.vue          # LayoutPageContainer — legacy, kept for compat
 │   │   │   └── Header.vue             # LayoutPageHeader — title + description block
 │   │   └── Section/
 │   │       ├── index.vue              # LayoutSection — full-viewport subgrid section
 │   │       ├── Hero.vue               # LayoutSectionHero — background/content/footer slots
 │   │       ├── Gallery.vue            # LayoutSectionGallery — auto-placing grid
-│   │       └── Split.vue              # LayoutSectionSplit — 50/50 two-column layout
+│   │       ├── Grid.vue               # LayoutSectionGrid — RAM auto-fit grid
+│   │       ├── Sidebar.vue            # LayoutSectionSidebar — clamped sidebar + main
+│   │       ├── Split.vue              # LayoutSectionSplit — 50/50 two-column layout
+│   │       └── Stack.vue              # LayoutSectionStack — header/main/footer stack
 │   ├── composables/
 │   │   └── useGridConfig.ts           # config, isEnabled, mode, layers, getPreset, useZIndex
 │   └── types/
@@ -45,10 +51,10 @@ layers/layout/
 
 ## Core Concept
 
-The grid is a single `display: grid` on `<main>` (`.mastmain`). Sections and items participate via CSS `subgrid` — they inherit the parent's column and row lines. No JS is involved in the grid itself.
+The grid is a single `display: grid` on `<main>` (`.grid-root`). Sections and items participate via CSS `subgrid` — they inherit the parent's column and row lines. No JS is involved in the grid itself.
 
 ```
-LayoutMain (<main class="mastmain">)        ← defines the grid
+LayoutMain (<main class="grid-root">)        ← defines the grid
   LayoutSection (<section class="basesection">)  ← subgrid, 12 rows = 100vh
     LayoutGridItem                               ← positioned via inline style
 ```
@@ -56,6 +62,10 @@ LayoutMain (<main class="mastmain">)        ← defines the grid
 ---
 
 ## Playground Setup
+
+`layout` now ships its own `default.vue` (`<LayoutMain><slot /></LayoutMain>`) — any consumer
+using the default layout gets the real grid root instead of a bare passthrough. For a page that
+also wants header/nav/footer chrome or the debug overlay, build a richer named layout, e.g.:
 
 `LayoutPage` is a fragment component — it provides no grid wrapper. You need:
 
@@ -95,15 +105,15 @@ layoutLayer.ui.grid.mode: 'swiss' | 'fluid' | 'disabled'
 
 ## Component Quick Reference
 
-### `LayoutMain` — `<main class="mastmain">`
+### `LayoutMain` — `<main class="grid-root">`
 
 - **Props:** `tag` (default `'main'`)
 - Renders plain `<main>` when `mode === 'disabled'`
 
-### `LayoutContainer` — width constraint
+### `AppContainer` (from `layers/core`) — width constraint
 
 - **Props:** `size` (`'content' | 'wide' | 'fluid' | 'full'`, default `'wide'`), `tag`
-- Maps to `.layout-container-*` CSS classes
+- Maps to `.container-*` CSS classes (`layers/core/app/assets/css/tokens/container.css`)
 
 ### `LayoutPage` — fragment: SEO + optional header
 
@@ -157,5 +167,5 @@ const { config, getPreset, isEnabled, mode, layers, useZIndex } = useGridConfig(
 | TypeScript types         | `app/types/layouts.ts`                  |
 | Config composable        | `app/composables/useGridConfig.ts`      |
 | Grid wrapper component   | `app/components/Layout/Main.vue`        |
-| Container component      | `app/components/Layout/Container.vue`   |
+| Container component      | `layers/core/app/components/AppContainer.vue` |
 | Full reference docs      | `../../docs/LAYOUT.md`                  |

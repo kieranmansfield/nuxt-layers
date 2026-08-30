@@ -11,10 +11,6 @@
   const { isLoading, progress } = useLoading()
   const config = useAppConfig()
 
-  // Debug logs
-  // console.log('[LoadingScreen] Component created!')
-  // console.log('[LoadingScreen] Initial - isLoading:', isLoading.value, 'progress:', progress.value)
-
   // Type-safe access to loading config
   const loadingConfig = computed(() => {
     const coreLayer = config.coreLayer as { loading?: LoadingConfig }
@@ -37,21 +33,10 @@
   watch(
     [isLoading, progress],
     ([loading, prog]) => {
-      // console.log(
-      //   '[LoadingScreen] Watch fired - isLoading:',
-      //   loading,
-      //   'progress:',
-      //   prog,
-      //   'visible:',
-      //   visible.value
-      // )
-
       if (!loading && prog >= 100 && !hasFinished.value) {
         hasFinished.value = true
-        // console.log('[LoadingScreen] Loading finished! Will hide after', minDuration.value, 'ms')
 
         setTimeout(() => {
-          // console.log('[LoadingScreen] Hiding now')
           visible.value = false
         }, minDuration.value)
       }

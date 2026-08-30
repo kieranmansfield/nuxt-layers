@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@nuxt/scripts": "catalog:"
+    "@nuxt/scripts": "catalog:",
+    "baseline-status": "catalog:"
   }
 }

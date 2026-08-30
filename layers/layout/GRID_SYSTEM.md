@@ -60,20 +60,20 @@ Traditional grid systems require duplicating grid definitions at every level. **
 ### Component Hierarchy
 
 ```text
-Default layout (MastMain → <div class="mastmain"> — root grid container)
+Default layout (MastMain → <div class="grid-root"> — root grid container)
   └── LayoutPage (fragment — SEO only, no wrapper element)
        └── LayoutSection (subgrid, 12 rows, basesection)
             └── LayoutGridItem (positioned on inherited grid lines)
                  └── Your Content
 ```
 
-> **Important:** `mastmain` lives on `MastMain` at the layout level — not on `LayoutPage`. Adding a second `mastmain` inside the first would nest grids and break alignment.
+> **Important:** `grid-root` lives on `MastMain` at the layout level — not on `LayoutPage`. Adding a second `grid-root` inside the first would nest grids and break alignment.
 
 ### CSS Utilities
 
 The system provides three core CSS utilities (defined in `app/assets/css/layout/grids.css`):
 
-1. **`mastmain`** - Root grid container
+1. **`grid-root`** - Root grid container
 2. **`basesection`** - Full-viewport section using subgrid
 3. **`prose-rhythm`** - Typography vertical rhythm utilities
 
@@ -310,7 +310,7 @@ The canonical page wrapper. Use this for all new pages.
 
 **Behaviour**:
 
-- When `layoutLayer.ui.grid.enabled` is `true` (default): renders `<main class="mastmain">` as the grid root
+- When `layoutLayer.ui.grid.enabled` is `true` (default): renders `<main class="grid-root">` as the grid root
 - When `enabled` is `false`: falls back to `<UMain><UPage><UPageBody>` standard Nuxt UI layout
 - Always calls `useHead()` and `provide('pageTitle', title)`
 - Always renders `LayoutGridDebug` (toggle with Cmd+G)
@@ -619,7 +619,7 @@ In your project's `app.vue` or layout file, ensure the root grid is initialized:
 
 ```vue
 <template>
-  <div class="mastmain">
+  <div class="grid-root">
     <NuxtPage />
   </div>
 </template>
@@ -848,7 +848,7 @@ Add to your layout:
 
 ```vue
 <template>
-  <div class="mastmain">
+  <div class="grid-root">
     <NuxtPage />
     <LayoutGridDebug v-if="isDev" />
   </div>
@@ -988,10 +988,10 @@ For older browsers, consider:
 
 **Problem**: Items don't align to grid lines.
 
-**Solution**: Ensure parent has `mastmain` or `basesection` utility class:
+**Solution**: Ensure parent has `grid-root` or `basesection` utility class:
 
 ```vue
-<div class="mastmain">
+<div class="grid-root">
   <LayoutSection>...</LayoutSection>
 </div>
 ```
@@ -1046,7 +1046,7 @@ Override breakpoints by extending the CSS:
 /* Your project's CSS */
 @import '@your-org/ui-layout-layer/app/assets/css/main.css';
 
-@utility mastmain {
+@utility grid-root {
   /* Override tablet breakpoint to 64rem (1024px) */
   @media (width >= 64rem) {
     :root {

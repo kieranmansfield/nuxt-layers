@@ -1,23 +1,62 @@
 <script setup lang="ts">
   import { useColor } from '../../composables/color'
+  import { useTypography } from '../../composables/typography'
   import type { UiColors } from '../../types/colors'
-  import type { FontSize } from '../../types/typography'
+  import type {
+    FluidFontSize,
+    FontFamily,
+    FontLeading,
+    FontSize,
+    FontSlant,
+    FontTracking,
+    FontWeight,
+    FontWidth,
+    TextAlign,
+    TextTransform,
+  } from '../../types/typography'
 
-  defineOptions({ inheritAttrs: false })
-
-  const { color = undefined, size = undefined } = defineProps<{
+  const {
+    weight = 'font-normal',
+    width = 'font-stretch-normal',
+    slant = 'italic',
+    leading = 'leading-normal',
+    tracking = 'tracking-normal',
+    align = 'left',
+    transform = 'none',
+    color = undefined,
+    size = undefined,
+    fluidSize = undefined,
+    font = undefined,
+  } = defineProps<{
+    weight?: FontWeight
+    width?: FontWidth
+    slant?: FontSlant
+    leading?: FontLeading
+    tracking?: FontTracking
+    align?: TextAlign
+    transform?: TextTransform
     color?: UiColors
     size?: FontSize
+    fluidSize?: FluidFontSize
+    font?: FontFamily
   }>()
+  const { classes } = useTypography(() => ({
+    weight,
+    width,
+    slant,
+    leading,
+    tracking,
+    align,
+    transform,
+    ...(font !== undefined && { font }),
+    ...(size !== undefined && { size }),
+    ...(fluidSize !== undefined && { fluidSize }),
+  }))
   const colorClass = useColor(color, 'text')
 </script>
 
 <template>
-  <Typography
-    tag="blockquote"
-    :class="colorClass"
-    v-bind="{ ...(size !== undefined && { size: size }), ...$attrs }"
-  >
+  <blockquote :class="[classes, colorClass]">
     <slot />
-  </Typography>
+  </blockquote>
 </template>

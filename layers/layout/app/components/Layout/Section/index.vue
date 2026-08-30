@@ -2,7 +2,7 @@
   /**
    * BaseSection - Full-viewport section using subgrid
    *
-   * Inherits the parent MastMain's 18-column grid lines using CSS subgrid.
+   * Inherits the parent LayoutMain's 18-column grid lines using CSS subgrid.
    * Spans 12 rows (1 viewport height) for full-screen sections.
    * Child GridItem elements position themselves on these inherited grid lines.
    *

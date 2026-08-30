@@ -5,6 +5,15 @@
  * parallel Tailwind build and breaks content-scan coverage for @nuxt/ui
  * utilities elsewhere in the app (see kmcom-nuxt-layers-typography-css-bug.md).
  */
+/* Font-family tokens — generate Tailwind's font-sans/font-mono/font-display
+   utilities. System-font stacks only for now; real webfont choice deferred,
+   non-blocking (matches core/base.css's existing `system-ui, sans-serif`). */
+@theme {
+  --font-sans: system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-display: system-ui, sans-serif;
+}
+
 :root {
   /* Fluid type scale — rounding interval. rem, never px (see §5 a11y). */
   --fluid-step: 0.25rem;

@@ -1,7 +1,13 @@
-import { createGtmClient, resolveScriptTrigger, type GtmClient } from '../utils/scriptClients'
+import {
+  createGtmClient,
+  resolveScriptTrigger,
+  type GtmClient,
+  type ScriptsLayerConfig,
+} from '../utils/scriptClients'
 
 export function useGtm(): GtmClient {
-  const { scriptsLayer } = useAppConfig()
+  const appConfig = useAppConfig()
+  const scriptsLayer = appConfig.scriptsLayer as ScriptsLayerConfig | undefined
   const { hasConsent, consentRequired } = useScriptsConsent()
 
   const gtmConfig = scriptsLayer?.gtm

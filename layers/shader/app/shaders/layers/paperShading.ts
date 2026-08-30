@@ -3,7 +3,7 @@
  * Inspired by Paper Shaders - organic, hand-drawn aesthetic
  */
 import { Color } from 'three'
-import { abs, float, mix, smoothstep, time as tslTime, uniform, uv, vec3 } from 'three/tsl'
+import { abs, clamp, float, mix, smoothstep, time as tslTime, uniform, uv, vec3 } from 'three/tsl'
 
 import { grain as grainFn, paperTexture } from '../common/grain'
 import { fbm2D, simplexNoise2D } from '../common/noise'

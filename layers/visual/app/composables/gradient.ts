@@ -28,7 +28,7 @@ function resolveGradientPreset(
 }
 
 function getGradientPresetMap(appConfig: ReturnType<typeof useAppConfig>) {
-  return (appConfig.uiLayer as Record<string, unknown> | undefined)?.['gradients'] as
+  return (appConfig.visualLayer as Record<string, unknown> | undefined)?.['gradients'] as
     | Record<string, GradientConfig>
     | undefined
 }

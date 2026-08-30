@@ -1,11 +1,15 @@
 import contentManifest from '#content/manifest'
 
-import { createFeedCatalog } from '../utils/feed-catalog'
+import { createFeedCatalog, type FeedCatalogInput } from '../utils/feed-catalog'
+
+type AppFeedAppConfig = FeedCatalogInput & {
+  feedsLayer?: { feed?: FeedCatalogInput['feed'] }
+}
 
 export default defineNuxtPlugin({
   name: 'feeds:feed-head',
   setup() {
-    const appConfig = useAppConfig()
+    const appConfig = useAppConfig() as unknown as AppFeedAppConfig
     const site = appConfig.site ?? {}
     const siteTitle: string = site.title ?? ''
     const catalog = createFeedCatalog({

@@ -521,7 +521,7 @@ definePageMeta({
 // No chrome needed (content-only page):
 definePageMeta({ layout: 'grid' })
 
-// Full-bleed pages (no mastmain grid at all):
+// Full-bleed pages (no grid-root grid at all):
 definePageMeta({ layout: false })
 ```
 

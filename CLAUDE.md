@@ -65,7 +65,7 @@ nuxt-layers/
 │   │       ├── google-books/   # Google Books provider (fallback/enrichment)
 │   │       └── themoviedb/     # TMDB provider (movies, TV shows; IMDB ID passthrough)
 │   │
-│   ├── theme/              # Design tokens and theming utilities
+│   ├── theming/            # Design tokens and theming utilities
 │   ├── content/            # Nuxt Content v3 collections and components
 │   └── routing/            # Advanced routing, maintenance mode, feature flags
 └── packages/               # Shared utilities (placeholder)
@@ -107,7 +107,7 @@ metadata/providers/openlibrary → metadata
 metadata/providers/google-books → metadata
 metadata/providers/themoviedb → metadata
 
-theme → core
+theming → core
 content → core
 routing → core
 ```

@@ -20,7 +20,9 @@ const _timers = {
  */
 export function useLoading() {
   const appConfig = useAppConfig()
-  const isLoading = useState('core:loading', () => appConfig.coreLayer?.loading?.enabled !== false)
+  const loadingConfig = (appConfig.coreLayer as { loading?: { enabled?: boolean } } | undefined)
+    ?.loading
+  const isLoading = useState('core:loading', () => loadingConfig?.enabled !== false)
   const progress = useState('core:loading:progress', () => 0)
 
   function startLoading(): void {

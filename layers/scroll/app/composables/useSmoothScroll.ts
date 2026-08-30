@@ -25,7 +25,8 @@ export function useSmoothScroll() {
     () => (nuxtApp.$locomotiveScroll as Ref<LocomotiveScroll | null>)?.value ?? undefined
   )
 
-  const isEnabled = computed(() => (appConfig.scroll?.smoothScroll ?? true) !== false)
+  const scrollConfig = appConfig.scroll as { smoothScroll?: boolean | string[] } | undefined
+  const isEnabled = computed(() => (scrollConfig?.smoothScroll ?? true) !== false)
   const isReady = computed(() => locomotiveScroll.value !== null)
 
   const scrollState = computed(

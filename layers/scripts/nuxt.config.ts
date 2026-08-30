@@ -10,7 +10,12 @@ export default defineNuxtConfig({
 
   alias: {
     '#layers/scripts': import.meta.dirname,
-    '#layers/scripts/types': `${import.meta.dirname}/app/types`,
+  },
+
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => tag === 'baseline-status' || tag === 'baseline-icon',
+    },
   },
 
   compatibilityDate: '2026-06-06',

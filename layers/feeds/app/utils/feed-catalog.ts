@@ -17,12 +17,14 @@ export type FeedCatalogSiteInput = {
 }
 
 export type FeedCatalogInput = {
-  site?: FeedCatalogSiteInput
-  feed?: {
-    collections?: readonly string[]
-    defaultCollection?: string
-    limit?: number
-  }
+  site?: FeedCatalogSiteInput | undefined
+  feed?:
+    | {
+        collections?: readonly string[]
+        defaultCollection?: string
+        limit?: number
+      }
+    | undefined
   manifest?: FeedManifest
 }
 

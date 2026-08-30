@@ -1,7 +1,11 @@
+<script setup lang="ts">
+  const { transitionName } = usePageTransition()
+</script>
+
 <template>
   <UApp>
     <NuxtLayout>
-      <NuxtPage />
+      <NuxtPage :transition="{ name: transitionName, mode: 'out-in' }" />
     </NuxtLayout>
 
     <ClientOnly>

@@ -48,11 +48,13 @@ export function useErrorLog() {
   const appConfig = useAppConfig()
   const route = useRoute()
 
+  const errorConfig = (appConfig.coreLayer as { errors?: ErrorLogConfig } | undefined)?.errors
+
   const config = computed(() => ({
-    logToConsole: appConfig.coreLayer?.errors?.logToConsole ?? true,
-    logToExternal: appConfig.coreLayer?.errors?.logToExternal ?? false,
-    externalUrl: appConfig.coreLayer?.errors?.externalUrl,
-    externalToken: appConfig.coreLayer?.errors?.externalToken,
+    logToConsole: errorConfig?.logToConsole ?? true,
+    logToExternal: errorConfig?.logToExternal ?? false,
+    externalUrl: errorConfig?.externalUrl,
+    externalToken: errorConfig?.externalToken,
   }))
 
   /**

@@ -1,6 +1,6 @@
 import type { SiteConfig } from '#layers/core/app/types/site'
 
-type SeoLayerConfig = {
+export type SeoLayerConfig = {
   ogImage?: {
     component?: string
     props?: Record<string, unknown>
@@ -15,7 +15,7 @@ type SeoLayerConfig = {
 // fallow-ignore-next-line complexity
 function resolveOgImageConfig(seoLayer?: SeoLayerConfig) {
   return {
-    ogImageComponent: seoLayer?.ogImage?.component ?? 'OgImageBasic',
+    ogImageComponent: seoLayer?.ogImage?.component ?? 'OgImageNuxtSeo',
     ogImageProps: seoLayer?.ogImage?.props ?? {},
   }
 }

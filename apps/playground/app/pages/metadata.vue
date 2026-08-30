@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import type { MetadataMediaType, MetadataSearchResult } from '#layers/metadata/shared/types'
+  import type { MetadataMediaType } from '#layers/metadata/shared/types'
 
   definePageMeta({ layout: false })
 
@@ -20,39 +20,18 @@
 
   const activeTab = ref(0)
   const rawQuery = ref('')
-  const query = refDebounced(rawQuery, 350)
+  const query = computed(() => rawQuery.value.trim())
 
   const mediaType = computed(() => mediaTypeTabs[activeTab.value]?.value)
 
-  const results = ref<MetadataSearchResult[]>([])
-  const hasSearched = ref(false)
-  const isLoading = ref(false)
-  const error = ref<Error | null>(null)
+  const {
+    data: results,
+    status,
+    error,
+  } = useMetadataSearch(rawQuery, { mediaType, limit: 20 })
 
-  async function runSearch() {
-    if (!query.value) return
-    isLoading.value = true
-    error.value = null
-    try {
-      results.value = await $fetch<MetadataSearchResult[]>('/api/metadata/search', {
-        query: {
-          q: query.value,
-          ...(mediaType.value && { mediaType: mediaType.value }),
-          limit: 20,
-        },
-      })
-      hasSearched.value = true
-    } catch (e) {
-      error.value = e as Error
-    } finally {
-      isLoading.value = false
-    }
-  }
-
-  watch(query, runSearch)
-  watch(mediaType, () => {
-    if (query.value) runSearch()
-  })
+  const isLoading = computed(() => status.value === 'pending')
+  const hasSearched = computed(() => status.value === 'success' || status.value === 'error')
 
   const mediaTypeIcons: Record<string, string> = {
     book: 'i-lucide-book-open',
@@ -199,7 +178,7 @@
             </div>
 
             <div
-              v-else-if="hasSearched && !results.length"
+              v-else-if="hasSearched && !results?.length"
               class="text-sm text-muted py-8 text-center"
             >
               No results for "{{ query }}"<span v-if="mediaType"> in {{ mediaType }}</span>

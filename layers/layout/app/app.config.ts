@@ -1,4 +1,6 @@
-export default {
+import type { GridConfig } from './types/layouts'
+
+export default defineAppConfig({
   /**
    * Nuxt UI component theming — aligned to the Swiss Grid System.
    *
@@ -6,7 +8,7 @@ export default {
    * viewport width, using clamp-based gutters that match the grid padding.
    *
    * UPage / UPage* components: participate as subgrid members so their
-   * columns align to the inherited mastmain grid lines.
+   * columns align to the inherited grid-root grid lines.
    *
    * These overrides are additive and safe when the swiss grid is disabled —
    * col-span-full / grid-cols-subgrid have no effect outside a grid context.
@@ -14,17 +16,21 @@ export default {
    */
   ui: {
     header: {
-      container: 'max-w-full px-[clamp(1rem,2.5vw,2rem)]',
+      slots: {
+        container: 'max-w-full px-[clamp(1rem,2.5vw,2rem)]',
+      },
     },
 
     // UPage: transparent subgrid participant; left/center/right slots map
     // to named column ranges on the 18-column grid (sidebar 4, content 10,
     // right sidebar 4; all col-start values are explicit to avoid overlap)
     page: {
-      root: 'col-span-full grid grid-cols-subgrid',
-      left: 'col-span-4',
-      center: 'col-start-5 col-span-10',
-      right: 'col-start-15 col-span-4',
+      slots: {
+        root: 'col-span-full grid grid-cols-subgrid',
+        left: 'col-span-4',
+        center: 'col-start-5 col-span-10',
+        right: 'col-start-15 col-span-4',
+      },
     },
 
     // UPageBody: no opinionated padding — the grid and sections own spacing
@@ -51,7 +57,7 @@ export default {
          * Layout mode.
          * - 'swiss'    — Swiss Grid System (default)
          * - 'fluid'    — Container-query based auto-fit grid
-         * - 'disabled' — Falls back to standard UMain > UPage layout
+         * - 'disabled' — Falls back to standard Nuxt UI layout
          */
         mode: 'swiss',
 
@@ -87,7 +93,7 @@ export default {
           hero: { colSpan: 'full', rowSpan: 12 },
 
           // Full-width content area within the grid's own padding.
-          // mastmain already applies padding-inline (clamp-based gutters),
+          // grid-root already applies padding-inline (clamp-based gutters),
           // so col-start:1 / col-end:-1 is already visually centred.
           // Use preset="prose" for a narrower reading-width column.
           centered: {
@@ -177,4 +183,15 @@ export default {
       },
     },
   },
+})
+
+declare module '@nuxt/schema' {
+  interface AppConfigInput {
+    layoutLayer?: {
+      name?: string
+      ui?: {
+        grid?: GridConfig
+      }
+    }
+  }
 }

@@ -1,8 +1,6 @@
 /**
- * Container size utilities — used by the shared <Container> component
- * (layers/core/app/components/Container.vue). Migrated from
- * layers/layout/app/assets/css/layout/modes/fluid.css's `.layout-container-*`
- * rules verbatim (values unchanged) — see nuxt-declarative-layout-system-spec.md §10/§20.
+ * Container size utilities — used by the shared <AppContainer> component
+ * (layers/core/app/components/AppContainer.vue).
  */
 .container-content {
   box-sizing: border-box;
@@ -17,7 +15,7 @@
   container-type: inline-size;
   margin-inline: auto;
   width: 100%;
-  max-width: 90rem;
+  max-width: clamp(var(--breakpoint-lg), 85vw, 90rem);
 }
 
 .container-fluid {

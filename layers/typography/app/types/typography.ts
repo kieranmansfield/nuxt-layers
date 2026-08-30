@@ -157,6 +157,13 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify'
 export type TextTransform = 'none' | 'uppercase' | 'lowercase' | 'capitalize'
 
 /* ======================================================
+   Font Family
+   - Maps to Tailwind's --font-* theme tokens (typography.css)
+   ====================================================== */
+
+export type FontFamily = 'sans' | 'mono' | 'display'
+
+/* ======================================================
    Base Typography Props
    - Used by Text / Heading / Prose components
    ====================================================== */
@@ -171,4 +178,5 @@ export type TypographyProps = {
   tracking?: FontTracking
   align?: TextAlign
   transform?: TextTransform
+  font?: FontFamily
 }

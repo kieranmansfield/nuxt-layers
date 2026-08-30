@@ -563,7 +563,7 @@
                 class="flex flex-col gap-3 p-4 rounded-xl border-2 transition-colors group"
                 :class="
                   layerDemoColors[demo.layer]
-                    ? [layerDemoColors[demo.layer].border, layerDemoColors[demo.layer].bg]
+                    ? [layerDemoColors[demo.layer]!.border, layerDemoColors[demo.layer]!.bg]
                     : ['border-default', 'bg-elevated', 'hover:bg-muted']
                 "
               >

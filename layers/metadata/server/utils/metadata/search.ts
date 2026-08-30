@@ -20,10 +20,17 @@ export async function searchMetadata(input: MetadataSearchInput): Promise<Metada
   const cached = await getSearchCache<MetadataSearchResult[]>(cacheKey)
   if (cached) return cached
 
-  const settled = await Promise.all(
-    targets.map(async (p) => {
+  type SearchOutcome = {
+    provider: (typeof targets)[number]
+    value?: MetadataSearchResult[]
+    reason?: unknown
+  }
+
+  const settled: SearchOutcome[] = await Promise.all(
+    targets.map(async (p): Promise<SearchOutcome> => {
       try {
-        return { provider: p, value: await p.search(input) }
+        const value = await p.search(input)
+        return { provider: p, value }
       } catch (reason) {
         return { provider: p, reason }
       }
@@ -32,7 +39,7 @@ export async function searchMetadata(input: MetadataSearchInput): Promise<Metada
 
   const results: MetadataSearchResult[] = []
   for (const outcome of settled) {
-    if ('value' in outcome) {
+    if (outcome.value) {
       results.push(...outcome.value)
       continue
     }

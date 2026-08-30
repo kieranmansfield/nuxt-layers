@@ -37,7 +37,7 @@
   }
 
   // Track column count in JS so v-for renders the correct number of divs.
-  // Mirrors the same breakpoints as mastmain (BREAKPOINT_PX.md = 768px, .xl = 1280px).
+  // Mirrors the same breakpoints as .grid-root (BREAKPOINT_PX.md = 768px, .xl = 1280px).
   const cols = ref(6)
 
   const updateCols = () => {

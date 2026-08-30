@@ -2,6 +2,25 @@ import type { Ref } from 'vue'
 
 export type ScriptTrigger = ReturnType<typeof useScriptTriggerConsent> | 'onNuxtReady'
 
+export type ScriptsLayerConfig = {
+  consent?: {
+    required?: boolean
+    storageKey?: string
+  }
+  analytics?: {
+    provider?: 'ga4' | 'plausible' | 'fathom' | null
+    id?: string
+  }
+  gtm?: {
+    enabled?: boolean
+    id?: string
+  }
+  performance?: {
+    prefetchLinks?: boolean
+    preconnect?: string[]
+  }
+}
+
 export type AnalyticsClient = {
   track: (event: string, params?: Record<string, unknown>) => void
   load: () => void

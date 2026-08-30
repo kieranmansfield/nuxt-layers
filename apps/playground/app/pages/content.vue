@@ -182,11 +182,22 @@
 
               <div class="space-y-3 text-sm">
                 <p>
-                  The content layer provides default pages at
+                  The content layer is components-only — it never registers pages itself (an
+                  earlier version did, and generated stray unused routes). Instead each domain
+                  ships a ready-made
+                  <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">Page</code>
+                  /
+                  <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">ItemPage</code>
+                  pair you copy into your own
+                  <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">app/pages/</code> as a
+                  1–3 line wrapper — see
                   <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">/blog</code>,
                   <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">/portfolio</code>, and
-                  <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">/gallery</code> that work
-                  out of the box. Override them by creating your own pages at the same paths.
+                  <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">/gallery</code> in this
+                  playground for the exact pattern (e.g.
+                  <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded"
+                    >&lt;template&gt;&lt;BlogPage /&gt;&lt;/template&gt;</code
+                  >).
                 </p>
                 <p>
                   All detail components extend

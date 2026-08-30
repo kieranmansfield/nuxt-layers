@@ -16,7 +16,7 @@
   const resolvedBlobs = computed((): BlobConfig[] => {
     if (blobs) return blobs
     if (preset) {
-      const scenes = (appConfig.uiLayer as Record<string, unknown> | undefined)?.accentScenes as
+      const scenes = (appConfig.visualLayer as Record<string, unknown> | undefined)?.accentScenes as
         | Record<string, AccentSceneConfig>
         | undefined
       return scenes?.[preset]?.blobs ?? []

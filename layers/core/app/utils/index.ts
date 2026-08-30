@@ -4,5 +4,6 @@
  * Central export for all utility functions
  */
 
-export * from './helpers'
-export * from './regex'
+export * from './browserInfo'
+export * from './featureClasses'
+export * from './scrollGuardClamp'

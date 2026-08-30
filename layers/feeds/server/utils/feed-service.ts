@@ -5,6 +5,7 @@ import {
   resolveFeedCollection,
   resolveFeedLimit,
   resolveFeedSiteConfig,
+  type AppFeedConfig,
 } from './feed-config'
 import type { FeedConfig, FeedItem } from './types'
 
@@ -13,7 +14,7 @@ export async function buildFeed(
   collection?: string,
   options?: { unlimited?: boolean }
 ): Promise<{ items: FeedItem[]; config: FeedConfig }> {
-  const appConfig = useAppConfig()
+  const appConfig = useAppConfig() as unknown as AppFeedConfig
   const feedConfig = appConfig.feedsLayer?.feed
   const requestUrl = getRequestURL(event)
   const { site, siteUrl } = resolveFeedSiteConfig(appConfig, requestUrl)

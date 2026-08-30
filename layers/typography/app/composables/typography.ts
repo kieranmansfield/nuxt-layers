@@ -2,6 +2,7 @@ import { toValue, type MaybeRefOrGetter } from 'vue'
 
 import type {
   FluidFontSize,
+  FontFamily,
   FontLeading,
   FontSize,
   FontSlant,
@@ -81,11 +82,14 @@ export function useTypography(
     transform?: TextTransform
     size?: FontSize
     fluidSize?: FluidFontSize
+    font?: FontFamily
   }>
 ) {
   const classes = computed(() => {
     const p = toValue(props)
     return [
+      p.font ? `font-${p.font}` : '',
+
       normalizeAxis(p.weight, {
         prefix: 'font',
         fallback: 'font-normal',

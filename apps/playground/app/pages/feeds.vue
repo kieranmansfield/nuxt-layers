@@ -60,7 +60,7 @@
   }
 
   function fmt(format: string) {
-    return formatConfig[format] ?? formatConfig['RSS 2.0']
+    return formatConfig[format] ?? formatConfig['RSS 2.0']!
   }
 
   const copied = ref<string | null>(null)
@@ -91,7 +91,9 @@
     previewFetchError.value = null
     previewContent.value = ''
     try {
-      const raw = await $fetch<string>(previewRoutes[format], { responseType: 'text' })
+      const route = previewRoutes[format]
+      if (!route) return
+      const raw = await $fetch<string>(route, { responseType: 'text' })
       const text = raw as string
       if (format === 'JSON Feed 1.1') {
         previewContent.value = JSON.stringify(JSON.parse(text), null, 2)

@@ -24,7 +24,7 @@ export default defineNuxtConfig({
 })
 
 declare module '@nuxt/schema' {
-  type RuntimeConfig = {
+  interface RuntimeConfig {
     metadataGoogleBooks: {
       apiKey: string
     }

@@ -23,17 +23,6 @@ export type ImageLoading = 'lazy' | 'eager'
 export type ImageFit = 'cover' | 'contain' | 'fill' | 'inside' | 'outside'
 
 /**
- * Re-export breakpoint types for convenience
- */
-export type {
-  ResponsiveBreakpoint,
-  DeviceBreakpoint,
-  PhoneBreakpoint,
-  TabletBreakpoint,
-  DeviceOrientation,
-} from './breakpoints'
-
-/**
  * Responsive sizes configuration
  * Allows defining different image sizes per breakpoint
  * Supports Tailwind, device, phone, tablet, and orientation breakpoints

@@ -2,10 +2,10 @@
 
 ## The Problem
 
-`<LayoutMain>` renders `<main class="mastmain">` which sets:
+`<LayoutMain>` renders `<main class="grid-root">` which sets:
 
 ```css
-.mastmain {
+.grid-root {
   grid-auto-rows: calc((100vh - 11 * gap) / 12); /* ≈ 8.5vh per row */
 }
 ```
@@ -31,7 +31,7 @@ Every direct child that doesn't explicitly span rows becomes ~8.5vh tall. `<UPag
 **Change in `grids.css`:**
 
 ```css
-.mastmain {
+.grid-root {
   /* Before */
   grid-auto-rows: var(--grid-row-height);
 
@@ -67,7 +67,7 @@ ui: {
 }
 ```
 
-With `display: contents`, `<UPage>` generates no box — its children (`UPageHero`, `UPageSection`, etc.) become direct grid items in `mastmain`.
+With `display: contents`, `<UPage>` generates no box — its children (`UPageHero`, `UPageSection`, etc.) become direct grid items in `grid-root`.
 
 **What changes:**
 
@@ -93,7 +93,7 @@ A new component that gives pages an explicit choice between Swiss Grid and norma
 </script>
 
 <template>
-  <!-- Swiss: children participate directly in mastmain grid (use LayoutSection) -->
+  <!-- Swiss: children participate directly in grid-root grid (use LayoutSection) -->
   <template v-if="mode === 'swiss'">
     <slot />
   </template>
@@ -162,7 +162,7 @@ Don't apply `<LayoutMain>` in the layouts at all. Let pages that want the Swiss 
 </template>
 ```
 
-**This is the current approach after the revert.** The layout layer is available everywhere but not globally applied. The `mastmain` CSS class exists — any element can opt in via `class="mastmain"` or `<LayoutMain tag="div">`.
+**This is the current approach after the revert.** The layout layer is available everywhere but not globally applied. The `grid-root` CSS class exists — any element can opt in via `class="grid-root"` or `<LayoutMain tag="div">`.
 
 **Trade-off:** No automatic column alignment across pages. Pages must explicitly adopt the grid.
 

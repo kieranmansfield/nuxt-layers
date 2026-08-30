@@ -5,13 +5,13 @@
  * Uses CSS subgrid for precise alignment across layout hierarchy.
  *
  * Hierarchy:
- *   MastMain (.mastmain)
+ *   LayoutMain (.grid-root)
  *   └── BaseSection (.basesection, uses subgrid)
  *       └── BaseGridItem (positioned via inline grid-column/grid-row)
  */
 
 /**
- * .mastmain - Root grid container with responsive density
+ * .grid-root - Root grid container with responsive density
  *
  * Creates responsive grid:
  * - Mobile: 6 columns (default)
@@ -26,7 +26,7 @@
  * source; keep these in sync with it by convention (see
  * nuxt-declarative-layout-system-spec.md §14/Phase 3).
  */
-.mastmain {
+.grid-root {
   --grid-cols: 6;
   --grid-rows-per-section: 12;
   --grid-gap: clamp(0.75rem, 1.5vw, 1.5rem);
