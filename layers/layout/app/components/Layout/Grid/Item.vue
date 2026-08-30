@@ -139,6 +139,10 @@
 
 <style>
   /* stylelint-disable custom-property-pattern */
+  /* 48rem/80rem below match core's --breakpoint-md/--breakpoint-xl (see
+     layers/core/app/assets/css/tokens/breakpoints.css) — can't reference the
+     custom properties directly, @media conditions don't accept var(). Keep
+     in sync by convention (nuxt-declarative-layout-system-spec.md §14/Phase 3). */
   .gi-placed {
     grid-row: var(--_rs, auto) / span var(--_re, 1);
     grid-column: var(--_cs, auto) / span var(--_ce, 1);

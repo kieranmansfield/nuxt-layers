@@ -15,10 +15,16 @@
  *
  * Creates responsive grid:
  * - Mobile: 6 columns (default)
- * - Tablet: 12 columns (≥ 48rem / 768px)
- * - Desktop: 18 columns (≥ 80rem / 1280px)
+ * - Tablet: 12 columns (≥ 48rem / 768px — matches core's --breakpoint-md)
+ * - Desktop: 18 columns (≥ 80rem / 1280px — matches core's --breakpoint-xl)
  *
  * Each row height is calculated to fit 12 rows per viewport.
+ *
+ * The 48rem/80rem literals below can't reference core's --breakpoint-* vars
+ * directly — CSS custom properties aren't valid inside @media conditions.
+ * layers/core/app/assets/css/tokens/breakpoints.css is still the canonical
+ * source; keep these in sync with it by convention (see
+ * nuxt-declarative-layout-system-spec.md §14/Phase 3).
  */
 .mastmain {
   --grid-cols: 6;
@@ -81,7 +87,6 @@
     box-sizing: border-box;
     min-width: 0;
     max-width: 100%;
-    overflow-wrap: break-word;
     overflow-wrap: break-word;
   }
 

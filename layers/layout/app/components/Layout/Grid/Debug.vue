@@ -13,6 +13,8 @@
    * <GridDebug color="rgba(0, 100, 255, 0.15)" />
    */
 
+  import { BREAKPOINT_PX } from '#layers/core/types/tokens'
+
   interface Props {
     gap?: string
     color?: string
@@ -35,12 +37,12 @@
   }
 
   // Track column count in JS so v-for renders the correct number of divs.
-  // Mirrors the same breakpoints as mastmain (48rem = 768px, 80rem = 1280px).
+  // Mirrors the same breakpoints as mastmain (BREAKPOINT_PX.md = 768px, .xl = 1280px).
   const cols = ref(6)
 
   const updateCols = () => {
-    if (window.matchMedia('(min-width: 80rem)').matches) cols.value = 18
-    else if (window.matchMedia('(min-width: 48rem)').matches) cols.value = 12
+    if (window.matchMedia(`(min-width: ${BREAKPOINT_PX.xl}px)`).matches) cols.value = 18
+    else if (window.matchMedia(`(min-width: ${BREAKPOINT_PX.md}px)`).matches) cols.value = 12
     else cols.value = 6
   }
 

@@ -5,6 +5,8 @@
  * Used for responsive sizing, layouts, and media queries across the design system.
  */
 
+import { BREAKPOINT_PX } from '#layers/core/types/tokens'
+
 /**
  * Responsive breakpoint names matching Tailwind defaults
  */
@@ -14,13 +16,14 @@ export type ResponsiveBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
  * Breakpoint values in pixels
  * Matches Tailwind's default breakpoint system
  *
+ * sm/md/lg/xl repoint at layers/core's canonical BREAKPOINT_PX (same values,
+ * one source) — see nuxt-declarative-layout-system-spec.md §14/Phase 3.
+ * '2xl' has no core equivalent yet, so it stays hand-written here.
+ *
  * @see https://tailwindcss.com/docs/responsive-design
  */
 export const BREAKPOINT_VALUES = {
-  sm: 640,
-  md: 768,
-  lg: 1024,
-  xl: 1280,
+  ...BREAKPOINT_PX,
   '2xl': 1536,
 } as const
 
