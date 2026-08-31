@@ -17,7 +17,7 @@
     {
       label: 'Standard',
       value: 'standard',
-      icon: 'i-lucide-circle-half-stroke',
+      icon: 'i-lucide-sun-moon',
       description: 'Balanced contrast for everyday reading.',
     },
     {
