@@ -31,10 +31,11 @@
     return (theme.colourMappings[role] ?? '').startsWith('#')
   }
 
-  /** Value to show in the USelect (hides raw hex; returns '__custom__' for custom mode). */
+  /** Value to show in the USelect (hides raw hex; returns '__custom__' for custom mode, '__auto__' for unset). */
   function selectValue(theme: ThemeVariant, role: keyof ThemeVariant['colourMappings']) {
     const v = theme.colourMappings[role] ?? ''
-    return v.startsWith('#') ? '__custom__' : v
+    if (v.startsWith('#')) return '__custom__'
+    return v || '__auto__'
   }
 
   /** Resolved display hex for the live swatch. */
@@ -55,7 +56,7 @@
       const theme = state.value.themes.find((t) => t.id === themeId)!
       setThemeColour(themeId, role, resolvedHex(theme, role))
     } else {
-      setThemeColour(themeId, role, value || null)
+      setThemeColour(themeId, role, value === '__auto__' ? null : value)
     }
   }
 
@@ -143,7 +144,7 @@
   // ── Select items ─────────────────────────────────────────────────────────
 
   const colourSelectItems = computed(() => [
-    { label: 'Auto (matching role)', value: '' },
+    { label: 'Auto (matching role)', value: '__auto__' },
     ...state.value.colours.map((c) => ({ label: `${c.name}  ${c.hex}`, value: c.id })),
     { label: 'Custom hex…', value: '__custom__' },
   ])
