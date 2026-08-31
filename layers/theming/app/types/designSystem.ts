@@ -1,8 +1,12 @@
-// fallow-ignore-file unused-file — Phase 5 token foundation (spec §21); the
-// theme adapter and CSS token file consume it by convention (hand-synced
-// values), not by import, matching layers/core/app/types/tokens.ts's
-// existing pattern. Future consumers (theme adapter component overrides,
-// standalone token exports) will import it directly.
+// fallow-ignore-file unused-file
+
+/**
+ * Phase 5 token foundation (spec §21); the theme adapter and CSS token file
+ * consume it by convention (hand-synced values), not by import, matching
+ * layers/core/app/types/tokens.ts's existing pattern. Future consumers
+ * (theme adapter component overrides, standalone token exports) will import
+ * it directly.
+ */
 import type { UiColors } from '#types'
 import type { FluidFontSize } from '#layers/typography/app/types/typography'
 

@@ -109,7 +109,7 @@
       </div>
     </div>
 
-    <UButton icon="i-lucide-plus" variant="outline" @click="addColour"> Add colour </UButton>
+    <UButton icon="i-lucide-plus" variant="outline" @click="() => addColour()"> Add colour </UButton>
 
     <!-- Empty state -->
     <div

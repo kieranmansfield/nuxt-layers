@@ -1,7 +1,11 @@
-// fallow-ignore-file unused-file — Phase 5 semantic colour types (spec §4.3),
-// first real implementation. Not yet consumed by any component prop; wiring
-// them into the theme adapter / component prop types is deferred follow-up
-// work per the Phase 5 plan's stated scope boundary.
+// fallow-ignore-file unused-file
+
+/**
+ * Phase 5 semantic colour types (spec §4.3), first real implementation. Not
+ * yet consumed by any component prop; wiring them into the theme adapter /
+ * component prop types is deferred follow-up work per the Phase 5 plan's
+ * stated scope boundary.
+ */
 import type { ColorUsage, UiColors } from '#types'
 
 /**
