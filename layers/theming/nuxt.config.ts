@@ -1,4 +1,5 @@
 // Theme Layer - Color mode, accent colors, accessibility preferences
+import { resolveUiColors } from './app/utils/themeAdapter'
 
 declare module '@nuxt/schema' {
   interface PublicRuntimeConfig {
@@ -24,7 +25,7 @@ export default defineNuxtConfig({
     '#layers/theming/types': `${import.meta.dirname}/app/types`,
   },
 
-  css: ['#layers/theming/app/assets/css/theme.css'],
+  css: ['#layers/theming/app/assets/css/theme.css', '#layers/theming/app/assets/css/tokens.css'],
 
   plugins: ['#layers/theming/app/plugins/theme.client.ts'],
 
@@ -35,11 +36,7 @@ export default defineNuxtConfig({
 
   appConfig: {
     ui: {
-      colors: {
-        primary: 'blue',
-        secondary: 'indigo',
-        info: 'sky',
-      },
+      colors: resolveUiColors('blue'),
     },
   },
 

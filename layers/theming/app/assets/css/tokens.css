@@ -1,0 +1,26 @@
+/**
+ * Radius/shadow/motion custom properties — mirrors layers/theming/app/types/
+ * designSystem.ts by convention (colours are already fully handled by
+ * accent-css.ts's per-accent --ui-color-* generation, so this file only
+ * covers the two net-new token categories plus motion).
+ */
+@theme {
+  --radius-none: 0;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  --shadow-none: none;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* --duration-base matches theme.css's existing .theme-transition value —
+     not a new default, just giving the real value in use a named token. */
+  --duration-fast: 150ms;
+  --duration-base: 700ms;
+  --duration-slow: 1000ms;
+}

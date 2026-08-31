@@ -22,11 +22,11 @@ const ACCENTS = [
   'rose',
 ] as const
 
-type AccentName = (typeof ACCENTS)[number]
+export type AccentName = (typeof ACCENTS)[number]
 
 const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const
 
-const ACCENT_PALETTES: Record<AccentName, { secondary: AccentName; info: AccentName }> = {
+export const ACCENT_PALETTES: Record<AccentName, { secondary: AccentName; info: AccentName }> = {
   red: { secondary: 'rose', info: 'orange' },
   orange: { secondary: 'amber', info: 'red' },
   amber: { secondary: 'orange', info: 'yellow' },
