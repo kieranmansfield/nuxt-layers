@@ -21,21 +21,13 @@
       buttonClass: 'bg-blue-500/10 text-blue-500 hover:bg-blue-500/20',
     },
     {
-      name: 'UI',
-      description: 'Typography, gradients, navigation, modals, and visual identity components',
+      name: 'Element',
+      description:
+        'Polymorphic layout/spacing/sizing/surface/interaction primitive for every layer',
       loaded: true,
-      icon: 'i-lucide-palette',
-      to: '/ui',
-      features: [
-        'Typography System',
-        'Color Tokens',
-        'Gradient System',
-        'Tint Overlays',
-        'Accent Blobs',
-        'Navigation',
-        'Modals & Toasts',
-        'Responsive Images',
-      ],
+      icon: 'i-lucide-component',
+      to: '/element',
+      features: ['Layout', 'Grid', 'Spacing', 'Sizing', 'Surface', 'Interaction'],
       borderColor: 'border-pink-500/50',
       bgColor: 'bg-pink-500/10',
       iconBg: 'bg-pink-500/10',
@@ -109,11 +101,11 @@
       buttonClass: 'bg-violet-500/10 text-violet-500 hover:bg-violet-500/20',
     },
     {
-      name: 'Theme',
+      name: 'Theming',
       description: 'Config-driven theme system with dark mode and accent colour support',
       loaded: true,
       icon: 'i-lucide-swatch-book',
-      to: '/theme',
+      to: '/theming',
       features: ['Dark Mode', 'Accent Colors', 'Color Themes', 'CSS Variables'],
       borderColor: 'border-indigo-500/50',
       bgColor: 'bg-indigo-500/10',
@@ -349,19 +341,6 @@
       buttonClass: 'bg-teal-500/10 text-teal-500 hover:bg-teal-500/20',
     },
     {
-      name: 'Baseline',
-      description: 'Browser compatibility badges from the Web Platform Baseline initiative',
-      loaded: true,
-      icon: 'i-lucide-shield-check',
-      to: '/baseline',
-      features: ['BaselineStatus', 'Widely Available', 'Newly Available', 'Live API Data'],
-      borderColor: 'border-sky-500/50',
-      bgColor: 'bg-sky-500/10',
-      iconBg: 'bg-sky-500/10',
-      iconColor: 'text-sky-500',
-      buttonClass: 'bg-sky-500/10 text-sky-500 hover:bg-sky-500/20',
-    },
-    {
       name: 'Metadata',
       description:
         'Unified metadata search and lookup across Open Library, Google Books, Comic Vine, and TMDB',
@@ -458,6 +437,13 @@
       icon: 'i-lucide-library',
       layer: 'Metadata',
     },
+    { label: 'UI Overview', to: '/ui', icon: 'i-lucide-palette', layer: 'UI' },
+    {
+      label: 'Baseline Status',
+      to: '/baseline',
+      icon: 'i-lucide-shield-check',
+      layer: 'Scripts',
+    },
   ]
 
   const layerDemoColors: Record<string, { icon: string; border: string; bg: string }> = {
@@ -469,6 +455,7 @@
     Routing: { icon: 'text-orange-500', border: 'border-orange-500/50', bg: 'bg-orange-500/10' },
     Metadata: { icon: 'text-teal-500', border: 'border-teal-500/50', bg: 'bg-teal-500/10' },
     Typography: { icon: 'text-sky-500', border: 'border-sky-500/50', bg: 'bg-sky-500/10' },
+    Scripts: { icon: 'text-lime-500', border: 'border-lime-500/50', bg: 'bg-lime-500/10' },
   }
 
   definePageMeta({ layout: { name: 'grid', props: { showHeader: false, showFooter: false } } })

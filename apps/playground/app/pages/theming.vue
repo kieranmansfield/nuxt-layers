@@ -45,12 +45,12 @@
 
 <template>
   <LayoutPage
-    title="Theme Layer Demo"
-    description="Demonstrating the Theme layer color system, palettes, and design tokens"
+    title="Theming Layer Demo"
+    description="Demonstrating the Theming layer color system, palettes, and design tokens"
   >
     <div class="bg-default min-h-screen">
       <DemoPageHero
-        name="THEME"
+        name="THEMING"
         description="Config-driven theme system with dark mode, accent colours, and CSS variable tokens."
       />
       <UContainer class="space-y-12 py-8">
@@ -278,7 +278,7 @@
         </section>
       </UContainer>
       <DemoPageFooter
-        name="Theme Layer"
+        name="Theming Layer"
         description="Design tokens and theming utilities"
         :links="[
           { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
