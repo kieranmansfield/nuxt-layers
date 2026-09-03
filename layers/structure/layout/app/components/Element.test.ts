@@ -44,4 +44,42 @@ describe('Element', () => {
     expect(style).toContain('padding: var(--fluid-space-md)')
     expect(style).toContain('--_ce: 6')
   })
+
+  it('applies the gi-placed class when a numeric colSpan is set, making --_ce effective', () => {
+    const wrapper = mount(Element, {
+      props: { colSpan: 6 },
+    })
+    const style = wrapper.attributes('style') ?? ''
+    expect(wrapper.classes()).toContain('gi-placed')
+    expect(style).toContain('--_ce: 6')
+  })
+
+  it('applies container-axis grid styles without item placement when only grid/cols are set', () => {
+    const wrapper = mount(Element, {
+      props: { grid: true, cols: 12 },
+    })
+    const style = wrapper.attributes('style') ?? ''
+    expect(style).toContain('display: grid')
+    expect(style).toContain('grid-template-columns: repeat(12, 1fr)')
+    expect(wrapper.classes()).not.toContain('gi-placed')
+    expect(style).not.toContain('grid-column')
+    expect(style).not.toContain('grid-row')
+  })
+
+  it('gives hidden priority over grid so display: none is not overwritten', () => {
+    const wrapper = mount(Element, {
+      props: { grid: true, hidden: true },
+    })
+    const style = wrapper.attributes('style') ?? ''
+    expect(style).toContain('display: none')
+    expect(style).not.toContain('display: grid')
+  })
+
+  it('reaches margin through useLayoutAttrs', () => {
+    const wrapper = mount(Element, {
+      props: { m: 'md' },
+    })
+    const style = wrapper.attributes('style') ?? ''
+    expect(style).toContain('margin: var(--fluid-space-md)')
+  })
 })
