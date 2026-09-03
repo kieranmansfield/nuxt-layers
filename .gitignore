@@ -63,6 +63,7 @@ dist
 .claude-flow/
 .swarm/
 .mcp.json
+.claude/worktrees/
 
 # Superpowers skills
 .superpowers/
