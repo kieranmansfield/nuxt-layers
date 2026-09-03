@@ -3,13 +3,13 @@
   // component still mounts under vitest's 'vue' project, which has no Nuxt auto-import
   // context — same tension as Group.vue/BaselineStatus.vue, exempted below.
   import { computed, type CSSProperties } from 'vue'
+  import { useLayoutAttrs } from '#layers/core/app/composables/useLayoutAttrs'
 
   import { useElementGrid } from '../composables/useElementGrid'
   import { useElementInteraction } from '../composables/useElementInteraction'
   import { useElementLayout } from '../composables/useElementLayout'
   import { useElementSizing } from '../composables/useElementSizing'
   import { useElementSurface } from '../composables/useElementSurface'
-  import { useLayoutAttrs } from '../composables/useLayoutAttrs'
   import type { ElementProps } from '../types/element'
 
   const {

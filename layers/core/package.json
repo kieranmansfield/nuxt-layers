@@ -23,7 +23,6 @@
     "@iconify/vue": "catalog:"
   },
   "devDependencies": {
-    "@vite-pwa/nuxt": "catalog:",
-    "@vue/test-utils": "catalog:"
+    "@vite-pwa/nuxt": "catalog:"
   }
 }

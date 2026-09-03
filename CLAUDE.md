@@ -45,6 +45,8 @@ nuxt-layers/
 │   │                                 Base utilities, 404, loading, design tokens — always the foundation
 │   │
 │   ├── design-system/              # Tier 1
+│   │   ├── element/                  # Element polymorphic primitive — layout/spacing/sizing/
+│   │   │                               surface/interaction vocabulary, used across every layer
 │   │   ├── theming/                 # Accent/contrast/motion/transparency preferences, ThemePicker UI
 │   │   ├── typography/              # Typography components + useTypography, useColor
 │   │   └── visual/                  # Accent, Gradient, Tint, Progress, Modal, Picture
@@ -115,6 +117,7 @@ done or dropped; don't assume the absorption already happened.
 core → (nothing)
 
 # Tier 1 — Design System
+element → core
 theming → core
 typography → core
 visual → core

@@ -294,3 +294,34 @@ File moves (git history preserved via `git mv`):
 - `layers/structure/layout/app/types/element.ts` → `layers/core/app/types/element.ts`
 - `@vue/test-utils` devDependency moved from `layout`'s `package.json` to `core`'s.
 - The `#layers/core` vitest alias added for the old cross-layer import was removed (dead — `Element`'s imports are relative now that it lives in `core`).
+
+## §11 Second amendment (2026-09-03, same day): moved again, to its own layer
+
+Reconsidered §10's placement almost immediately: putting `Element` inside
+`core` means core stops being pure foundation and starts carrying an
+opinionated design-vocabulary component. The user's framing — `Element`
+"provides containment," a distinct concern from core's browser/device/PWA
+utilities — matches the tier taxonomy better than folding it into `core`.
+
+**Resolution:** new layer, `layers/design-system/element/`, alongside
+`theming`/`typography`/`visual` (same tier, same shape: one dependency,
+`core`). This is *not* a reversion to §7's original mistake (`layout`,
+tier 2) — `element` depends only on `core`, so it costs every consuming
+layer/app exactly one `extends` entry, same as `typography` or `visual`
+already do. §10's core objection (§7's placement inverting the tier-2
+`layout` → tier-0 `core` boundary if item-placement stayed) is unaffected —
+`useElementGrid` is still container-axis only; nothing about this second
+move reopens the dropped item-placement question.
+
+Mechanically: `Element.vue`'s `useLayoutAttrs` import goes back to the
+`#layers/core/...` alias (cross-layer again), and `types/element.ts`'s
+`LayoutAttrsInput` import goes back to the four-level relative path (same
+SFC-macro-can't-see-aliases reason as §7). The `#layers/core` vitest alias
+removed in §10 is restored. New layer scaffolding: `nuxt.config.ts`
+(`extends: ['../../core']`, matching `typography`'s exact shape),
+`package.json` (`kmcom-layer-element`, `@vue/test-utils` devDependency
+moved here from `core`). Registered in
+`apps/playground/nuxt.config.ts`'s `AVAILABLE_LAYERS`/`LAYER_PATHS`/
+`LAYER_DEPENDENCIES` (depends on `core` only, same as `typography`/`visual`).
+`CLAUDE.md` and `.claude/rules/nuxt-layers.md` updated to list the new
+layer and its `element → core` dependency-graph line.

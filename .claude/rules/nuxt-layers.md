@@ -35,6 +35,7 @@ Placing it at the layer root silently ignores it — `useAppConfig()` returns `u
 | `core`             | Base utilities, 404, loading screen, scroll guard                                              | nothing (loads @nuxt/ui, @vueuse/nuxt, @nuxtjs/device)    |
 | `seo`              | SEO: robots, sitemap, og-image, schema-org via @nuxtjs/seo                                     | `core`                                                    |
 | `scripts`          | Third-party script loading via @nuxt/scripts (analytics, GTM, embeds)                          | `core`                                                    |
+| `element`          | Element polymorphic primitive — layout/grid/spacing/sizing/surface/interaction vocabulary      | `core`                                                    |
 | `typography`       | Typography components (Headline, TextStroke, CodeBlock) + useTypography, useColor              | `core`                                                    |
 | `navigation`       | Nav/header/footer, site title, links, useMastNav, useSite, useAppToast                         | `core`, `scroll`, `layout`, `typography`                  |
 | `visual`           | Accent blobs, gradients, tints, modals, picture, progress + their composables                  | `core`                                                    |

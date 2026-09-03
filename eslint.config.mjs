@@ -440,7 +440,7 @@ export default defineConfigWithVueTs(
   // Needs a real `computed` import to mount under vitest's 'vue' project, which has
   // no Nuxt auto-import context (unlike the real Nuxt runtime, where auto-import applies).
   {
-    files: ['layers/core/app/components/Element.vue'],
+    files: ['layers/design-system/element/app/components/Element.vue'],
     rules: {
       '@typescript-eslint/no-restricted-imports': 'off',
     },
