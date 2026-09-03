@@ -1,3 +1,4 @@
+import { computed, toValue } from 'vue'
 import type { ComputedRef, CSSProperties, MaybeRefOrGetter } from 'vue'
 
 import type { ResponsiveValue } from '../types/responsive'
@@ -15,6 +16,9 @@ export type LayoutAttrsInput = {
   p?: ResponsiveValue<Spacing> | Spacing | undefined
   px?: ResponsiveValue<Spacing> | Spacing | undefined
   py?: ResponsiveValue<Spacing> | Spacing | undefined
+  m?: ResponsiveValue<Spacing> | Spacing | undefined
+  mx?: ResponsiveValue<Spacing> | Spacing | undefined
+  my?: ResponsiveValue<Spacing> | Spacing | undefined
 }
 
 const ALIGN_MAP: Record<Align, string> = {
@@ -49,7 +53,7 @@ function spacingVar(token: Spacing): string {
 
 function applySpacing(
   result: CSSProperties,
-  cssProp: 'gap' | 'padding' | 'paddingInline' | 'paddingBlock',
+  cssProp: 'gap' | 'padding' | 'paddingInline' | 'paddingBlock' | 'margin' | 'marginInline' | 'marginBlock',
   value: ResponsiveValue<Spacing> | Spacing | undefined
 ): void {
   const resolved = resolveDefault(value)
@@ -60,13 +64,16 @@ export function useLayoutAttrs(input: MaybeRefOrGetter<LayoutAttrsInput>): {
   style: ComputedRef<CSSProperties>
 } {
   const style = computed((): CSSProperties => {
-    const { gap, align, justify, p, px, py } = toValue(input)
+    const { gap, align, justify, p, px, py, m, mx, my } = toValue(input)
     const result: CSSProperties = {}
 
     applySpacing(result, 'gap', gap)
     applySpacing(result, 'padding', p)
     applySpacing(result, 'paddingInline', px)
     applySpacing(result, 'paddingBlock', py)
+    applySpacing(result, 'margin', m)
+    applySpacing(result, 'marginInline', mx)
+    applySpacing(result, 'marginBlock', my)
 
     const resolvedAlign = resolveDefault(align)
     if (resolvedAlign) result.alignItems = ALIGN_MAP[resolvedAlign]
