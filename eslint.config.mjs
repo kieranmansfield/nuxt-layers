@@ -437,6 +437,15 @@ export default defineConfigWithVueTs(
     },
   },
 
+  // Needs a real `computed` import to mount under vitest's 'vue' project, which has
+  // no Nuxt auto-import context (unlike the real Nuxt runtime, where auto-import applies).
+  {
+    files: ['layers/structure/layout/app/components/Element.vue'],
+    rules: {
+      '@typescript-eslint/no-restricted-imports': 'off',
+    },
+  },
+
   // Module augmentation (`declare module`) only works through interface merging —
   // converting these to `type` aliases silently breaks AppConfig/RuntimeConfig and
   // Nuxt Content collection typing. Keep `interface` allowed in the files that
