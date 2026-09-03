@@ -1,25 +1,10 @@
 <template>
   <Element block p="xl">
-    <h2>Grid container + item placement</h2>
+    <h2>Grid container (container axis only)</h2>
     <Element grid :cols="12" gap="lg" p="lg" bg="var(--ui-bg-elevated)" radius="0.5rem">
-      <Element :col-span="12" bg="var(--color-green-400)" color="white" p="md" radius="0.25rem">
-        colSpan 12
-      </Element>
-      <Element :col-span="8" bg="var(--color-green-500)" color="white" p="md" radius="0.25rem">
-        colSpan 8
-      </Element>
-      <Element :col-span="4" bg="var(--color-green-600)" color="white" p="md" radius="0.25rem">
-        colSpan 4
-      </Element>
-      <Element
-        :col-start="3"
-        :col-span="6"
-        bg="var(--color-green-700)"
-        color="white"
-        p="md"
-        radius="0.25rem"
-      >
-        colStart 3 / colSpan 6
+      <Element bg="var(--color-green-400)" color="white" p="md" radius="0.25rem">
+        Item placement isn't part of Element — use LayoutGridItem inside a grid for that, or CSS
+        `grid-column`/`grid-row` directly via `:style`.
       </Element>
     </Element>
   </Element>
@@ -76,7 +61,7 @@
   </Element>
 
   <Element block p="xl">
-    <h2>Margin (Task 1 verification)</h2>
+    <h2>Margin</h2>
     <Element bg="var(--ui-bg-elevated)" p="md">
       <Element bg="var(--color-green-500)" color="white" p="sm" m="lg" radius="0.25rem">
         m="lg" pushes this box away from its siblings

@@ -160,11 +160,6 @@ export default defineConfig({
       },
       {
         plugins: [vue()],
-        resolve: {
-          alias: {
-            '#layers/core': fileURLToPath(new URL('./layers/core', import.meta.url)),
-          },
-        },
         test: {
           name: 'vue',
           // Component-mount tests colocated with their .vue file (layer components

@@ -33,35 +33,13 @@ describe('Element', () => {
     expect(style).toContain('background: var(--ui-bg-elevated)')
   })
 
-  it('merges spacing (via useLayoutAttrs) and grid item-placement styles together', () => {
-    const wrapper = mount(Element, {
-      props: {
-        p: 'md',
-        colSpan: 6,
-      },
-    })
-    const style = wrapper.attributes('style') ?? ''
-    expect(style).toContain('padding: var(--fluid-space-md)')
-    expect(style).toContain('--_ce: 6')
-  })
-
-  it('applies the gi-placed class when a numeric colSpan is set, making --_ce effective', () => {
-    const wrapper = mount(Element, {
-      props: { colSpan: 6 },
-    })
-    const style = wrapper.attributes('style') ?? ''
-    expect(wrapper.classes()).toContain('gi-placed')
-    expect(style).toContain('--_ce: 6')
-  })
-
-  it('applies container-axis grid styles without item placement when only grid/cols are set', () => {
+  it('applies container-axis grid styles', () => {
     const wrapper = mount(Element, {
       props: { grid: true, cols: 12 },
     })
     const style = wrapper.attributes('style') ?? ''
     expect(style).toContain('display: grid')
     expect(style).toContain('grid-template-columns: repeat(12, 1fr)')
-    expect(wrapper.classes()).not.toContain('gi-placed')
     expect(style).not.toContain('grid-column')
     expect(style).not.toContain('grid-row')
   })
@@ -75,11 +53,12 @@ describe('Element', () => {
     expect(style).not.toContain('display: grid')
   })
 
-  it('reaches margin through useLayoutAttrs', () => {
+  it('reaches margin and padding through useLayoutAttrs', () => {
     const wrapper = mount(Element, {
-      props: { m: 'md' },
+      props: { m: 'md', p: 'lg' },
     })
     const style = wrapper.attributes('style') ?? ''
     expect(style).toContain('margin: var(--fluid-space-md)')
+    expect(style).toContain('padding: var(--fluid-space-lg)')
   })
 })

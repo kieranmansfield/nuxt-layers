@@ -2,7 +2,7 @@ import type { CSSProperties } from 'vue'
 
 // `| undefined` on each is explicit (not just `?`) so component prop objects
 // — which have it too, under exactOptionalPropertyTypes — are assignable here.
-export interface ElementSizingProps {
+export type ElementSizingProps = {
   w?: CSSProperties['width'] | undefined
   h?: CSSProperties['height'] | undefined
   minW?: CSSProperties['minWidth'] | undefined

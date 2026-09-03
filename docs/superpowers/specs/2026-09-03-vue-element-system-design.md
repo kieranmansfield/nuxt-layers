@@ -257,3 +257,40 @@ layers/core/app/composables/
    the fluid-rebuild spec's territory covers.
 4. `HStack`/`VStack` unaffected by the `useLayoutAttrs` margin addition.
 5. No new semantic colour/token system introduced.
+
+## §10 Amendment (2026-09-03, post-ship): relocated to `core`, item placement dropped
+
+Shipped as designed above, in `layers/structure/layout`, then relocated the
+same day. The stated intent was for `Element` to be usable across
+essentially every layer to replace class-attribute soup generally — not a
+layout-tier-only primitive. That breaks criterion 2 above: `layout` is a
+tier-2 layer, and forcing every other layer (typography, visual, data,
+motion, render, delivery — everything) to `extends: ['../layout']` just to
+use `Element` is a far heavier dependency footprint than a shared-vocabulary
+component should ask for.
+
+**Resolution:** moved `Element` and its five composables
+(`useElementLayout`/`useElementGrid`/`useElementSizing`/`useElementSurface`/
+`useElementInteraction`) into `layers/core` (zero layer deps, already
+extended by everything). This forced dropping `useElementGrid`'s item-axis
+(`colStart`/`colSpan`/`rowStart`/`rowSpan`) support outright — that axis
+delegated to `buildGridPlacementStyle`, which lives in `layout` and can't be
+imported from `core` without inverting the dependency graph. `useElementGrid`
+is now container-axis only (`grid`/`cols`/`rows` → `display: grid` +
+`gridTemplateColumns`/`gridTemplateRows`). Item placement inside an
+`Element`-built grid still works — just via `LayoutGridItem` directly, in
+the `layout` layer, unchanged.
+
+Superseded from §9: criterion 2 (item placement, no longer part of
+`Element`) and criterion 3's `LayoutGridItem`/`gridPlacementStyle.ts`
+clause (moot — `Element` no longer imports either). Criteria 1, 4, 5 still
+hold. `Element.vue`'s duplicated `.gi-placed` CSS block (added during the
+final-review fix wave, §8's ledger) was removed along with the item axis —
+no longer needed.
+
+File moves (git history preserved via `git mv`):
+- `layers/structure/layout/app/components/Element.vue` → `layers/core/app/components/Element.vue`
+- `layers/structure/layout/app/composables/useElement*.ts(.test.ts)` → `layers/core/app/composables/`
+- `layers/structure/layout/app/types/element.ts` → `layers/core/app/types/element.ts`
+- `@vue/test-utils` devDependency moved from `layout`'s `package.json` to `core`'s.
+- The `#layers/core` vitest alias added for the old cross-layer import was removed (dead — `Element`'s imports are relative now that it lives in `core`).
