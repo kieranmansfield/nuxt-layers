@@ -2,8 +2,8 @@ import { defineComponent } from 'vue'
 import { mockNuxtImport, mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it } from 'vitest'
 
-import { useGridConfig } from '../../layers/layout/app/composables/useGridConfig'
-import type { GridConfig, GridLayers, GridPresetsItem } from '../../layers/layout/app/types/layouts'
+import { useGridConfig } from '../../layers/structure/layout/app/composables/useGridConfig'
+import type { GridConfig, GridLayers, GridPresetsItem } from '../../layers/structure/layout/app/types/layouts'
 
 type LayoutAppConfig = {
   layoutLayer?: {
@@ -120,7 +120,7 @@ describe('useGridConfig', () => {
       layoutLayer: {
         ui: {
           grid: {
-            mode: 'fluid',
+            mode: 'swiss',
             enabled: false,
             columns: {
               default: 6,
@@ -138,7 +138,7 @@ describe('useGridConfig', () => {
 
     const resolved = await mountGridConfig()
 
-    expect(resolved.mode.value).toBe('fluid')
+    expect(resolved.mode.value).toBe('swiss')
     expect(resolved.isEnabled.value).toBe(true)
     expect(resolved.useZIndex('toast')).toBe(500)
     expect(resolved.config.value?.rowsPerSection).toBe(16)

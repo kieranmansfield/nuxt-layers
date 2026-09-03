@@ -3,6 +3,8 @@
 packages:
   - 'apps/*'
   - 'layers/*'
+  - 'layers/*/*'
+  - 'layers/*/*/providers/*'
   - 'layers/*/providers/*'
   - 'packages/*'
 

@@ -17,8 +17,8 @@
   ],
   "compilerOptions": {
     "paths": {
-      "#layers/theming": ["../../layers/theming"],
-      "#layers/theming/*": ["../../layers/theming/*"],
+      "#layers/theming": ["../../layers/design-system/theming"],
+      "#layers/theming/*": ["../../layers/design-system/theming/*"],
       "#types": ["../../types"],
       "#types/*": ["../../types/*"]
     }

@@ -1,8 +1,8 @@
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it } from 'vitest'
 
-import GradientText from '../../layers/visual/app/components/Gradient/Text.vue'
-import TintOverlay from '../../layers/visual/app/components/Tint/Overlay.vue'
+import GradientText from '../../layers/design-system/visual/app/components/Gradient/Text.vue'
+import TintOverlay from '../../layers/design-system/visual/app/components/Tint/Overlay.vue'
 
 describe('TintOverlay', () => {
   it('renders the overlay span with the resolved tint styles', async () => {

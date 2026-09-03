@@ -62,6 +62,10 @@ export default defineConfigWithVueTs(
       'layers/*/app/**/*.tsx',
       'layers/*/app/**/*.mts',
       'layers/*/app/**/*.vue',
+      'layers/*/*/app/**/*.ts',
+      'layers/*/*/app/**/*.tsx',
+      'layers/*/*/app/**/*.mts',
+      'layers/*/*/app/**/*.vue',
     ],
     languageOptions: {
       parserOptions: {
@@ -404,6 +408,9 @@ export default defineConfigWithVueTs(
       'layers/*/server/**/*.ts',
       'layers/*/shared/**/*.ts',
       'layers/*/providers/*/server/**/*.ts',
+      'layers/*/*/server/**/*.ts',
+      'layers/*/*/shared/**/*.ts',
+      'layers/*/*/providers/*/server/**/*.ts',
     ],
     ...typescript.configs['flat/disable-type-checked'],
   },
@@ -422,8 +429,8 @@ export default defineConfigWithVueTs(
   // which Nuxt does not auto-import.
   {
     files: [
-      'layers/navigation/app/components/Links/Group.vue',
-      'layers/baseline/app/components/BaselineStatus.vue',
+      'layers/structure/navigation/app/components/Links/Group.vue',
+      'layers/delivery/scripts/app/components/BaselineStatus.vue',
     ],
     rules: {
       '@typescript-eslint/no-restricted-imports': 'off',
@@ -439,8 +446,8 @@ export default defineConfigWithVueTs(
       '**/*.d.ts',
       '**/app.config.ts',
       '**/types/runtime-config.ts',
-      'layers/database/nuxt.config.ts',
-      'layers/theme/nuxt.config.ts',
+      'layers/data/database/nuxt.config.ts',
+      'layers/design-system/theming/nuxt.config.ts',
     ],
     rules: {
       '@typescript-eslint/consistent-type-definitions': 'off',

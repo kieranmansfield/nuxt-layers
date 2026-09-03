@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { createFeedCatalog } from '../../layers/feeds/app/utils/feed-catalog'
+import { createFeedCatalog } from '../../layers/delivery/feeds/app/utils/feed-catalog'
 
 describe('feed catalog smoke', () => {
   it('builds the default site routes from a minimal manifest', () => {

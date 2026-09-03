@@ -6,11 +6,11 @@ export default defineNuxtConfig({
 
   extends: [
     '../../layers/core',
-    '../../layers/typography',
-    '../../layers/navigation',
-    '../../layers/visual',
-    '../../layers/layout',
-    '../../layers/motion',
+    '../../layers/design-system/typography',
+    '../../layers/structure/navigation',
+    '../../layers/design-system/visual',
+    '../../layers/structure/layout',
+    '../../layers/motion/motion',
   ],
 
   compatibilityDate: '2026-06-20',

@@ -1,7 +1,7 @@
 import { mockComponent, mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it, vi } from 'vitest'
 
-import FeedsIndex from '../../layers/feeds/app/components/Feeds/Index.vue'
+import FeedsIndex from '../../layers/delivery/feeds/app/components/Feeds/Index.vue'
 
 mockComponent('UCard', {
   template: '<div><slot /></div>',

@@ -55,7 +55,6 @@ pnpm typecheck
 - [layers/theme](./fallow-refactor/layers-theme.md)
 - [layers/transitions](./fallow-refactor/layers-transitions.md)
 - [layers/typography](./fallow-refactor/layers-typography.md)
-- [layers/ui](./fallow-refactor/layers-ui.md)
 - [layers/visual](./fallow-refactor/layers-visual.md)
 
 ## Non-Goals

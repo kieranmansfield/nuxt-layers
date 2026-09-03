@@ -1,6 +1,6 @@
 # Layout Layer
 
-Swiss Grid System for Nuxt 4 applications. Provides a responsive 6/12/18-column CSS subgrid, page structure components, a mode system, and fluid layout utilities.
+Swiss Grid System for Nuxt 4 applications. Provides a responsive 6/12/18-column CSS subgrid, page structure components, and a mode system.
 
 ---
 
@@ -63,13 +63,12 @@ The layout layer requires a dedicated Nuxt layout file and page-level layout dec
 
 ## Mode system
 
-The grid has three modes controlled via `app.config.ts`:
+The grid has two modes controlled via `app.config.ts`:
 
-| Mode         | Behaviour                                                                       |
-| ------------ | ------------------------------------------------------------------------------- |
-| `'swiss'`    | Default. Full Swiss grid with `grid-root`/`basesection` CSS subgrid.             |
-| `'fluid'`    | Container-query-based auto-fit grid. `basesection` still gets `container-type`. |
-| `'disabled'` | `LayoutMain` renders a plain `<main>` without grid CSS.                         |
+| Mode         | Behaviour                                                             |
+| ------------ | ---------------------------------------------------------------------- |
+| `'swiss'`    | Default. Full Swiss grid with `grid-root`/`basesection` CSS subgrid. |
+| `'disabled'` | `LayoutMain` renders a plain `<main>` without grid CSS.               |
 
 Set in your `app.config.ts`:
 
@@ -78,7 +77,7 @@ export default defineAppConfig({
   layoutLayer: {
     ui: {
       grid: {
-        mode: 'swiss', // 'swiss' | 'fluid' | 'disabled'
+        mode: 'swiss', // 'swiss' | 'disabled'
       },
     },
   },
@@ -91,7 +90,7 @@ Read in code:
 
 ```ts
 const { mode, isEnabled } = useGridConfig()
-// mode.value === 'swiss' | 'fluid' | 'disabled'
+// mode.value === 'swiss' | 'disabled'
 // isEnabled.value === mode !== 'disabled'
 ```
 
@@ -218,19 +217,10 @@ Positioned child within a subgrid section. Use `preset` for common layouts or se
 
 **Built-in presets:**
 
-| Preset              | Columns        | Rows        |
-| ------------------- | -------------- | ----------- |
-| `hero`              | full width     | full height |
-| `centered`          | centre 10 cols | rows 2–10   |
-| `fullWidth`         | full width     | auto        |
-| `sidebar`           | cols 1–4       | full height |
-| `content`           | cols 5–14      | rows 2–10   |
-| `splitLeft`         | left half      | full        |
-| `splitRight`        | right half     | full        |
-| `quarterLeft`       | first quarter  | full        |
-| `threeQuarterRight` | right 3/4      | full        |
-| `halfTop`           | full width     | top half    |
-| `halfBottom`        | full width     | bottom half |
+| Preset     | Columns        | Rows        |
+| ---------- | -------------- | ----------- |
+| `hero`     | full width     | full height |
+| `centered` | full width     | 12 rows     |
 
 ---
 
@@ -298,7 +288,7 @@ const { config, getPreset, isEnabled, mode, layers, useZIndex } = useGridConfig(
 | ------------------ | ------------------------------ | ---------------------------------- |
 | `config`           | `Ref<GridConfig>`              | Raw config from `app.config`       |
 | `isEnabled`        | `ComputedRef<boolean>`         | `true` when `mode !== 'disabled'`  |
-| `mode`             | `ComputedRef<GridMode>`        | `'swiss' \| 'fluid' \| 'disabled'` |
+| `mode`             | `ComputedRef<GridMode>`        | `'swiss' \| 'disabled'`            |
 | `layers`           | `ComputedRef<GridLayers>`      | All z-index values                 |
 | `getPreset(name)`  | `GridPresetsItem \| undefined` | Look up a preset by name           |
 | `useZIndex(layer)` | `number`                       | Get a z-index value by layer name  |
@@ -343,23 +333,6 @@ CSS custom properties exposed:
 **`.basesection`** — Subgrid section (12 rows = 100vh).
 
 **Vertical rhythm utilities** (`.leading-rhythm-*`, `.space-rhythm-*`, `.prose-rhythm`)
-
-### `modes/fluid.css` — Fluid grid classes
-
-Container-query-based auto-fit grids for components that should respond to their container width rather than the viewport.
-
-```vue
-<div class="fluid-grid">          <!-- auto-fit, min col 16rem -->
-<div class="fluid-grid-2">        <!-- 2-column at container ≥ 30rem -->
-<div class="fluid-grid-3">        <!-- 3-column at container ≥ 44rem -->
-<div class="fluid-grid-4">        <!-- 4-column at container ≥ 52rem -->
-```
-
-Tune minimum column width per-instance:
-
-```vue
-<div class="fluid-grid" style="--fluid-col-min: 20rem">
-```
 
 **Container size classes** (used by `LayoutContainer`):
 
@@ -423,7 +396,7 @@ Full type from `layers/layout/app/types/layouts.ts`:
 
 ```ts
 interface GridConfig {
-  mode?: 'swiss' | 'fluid' | 'disabled'
+  mode?: 'swiss' | 'disabled'
   /** @deprecated use mode: 'disabled' */
   enabled?: boolean
   layers?: Partial<GridLayers>

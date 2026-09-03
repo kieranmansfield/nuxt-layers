@@ -2,9 +2,9 @@ import { defineComponent } from 'vue'
 import { mockNuxtImport, mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it } from 'vitest'
 
-import { useMaintenance } from '../../layers/routing/app/composables/useMaintenance'
-import { useRoutingConfig } from '../../layers/routing/app/composables/useRoutingConfig'
-import type { RoutingLayerConfig } from '../../layers/routing/app/types/routing'
+import { useMaintenance } from '../../layers/structure/routing/app/composables/useMaintenance'
+import { useRoutingConfig } from '../../layers/structure/routing/app/composables/useRoutingConfig'
+import type { RoutingLayerConfig } from '../../layers/structure/routing/app/types/routing'
 
 type RoutingAppConfig = {
   routingLayer?: Partial<RoutingLayerConfig>

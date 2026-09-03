@@ -25,4 +25,4 @@
    import (needed so Tailwind treats it as part of this one build root, see
    typography.css's header comment), and must resolve even for consumers that
    only extend core, since it lives in the same single published package. */
-@import '../../../../typography/app/assets/css/typography.css';
+@import '../../../../design-system/typography/app/assets/css/typography.css';

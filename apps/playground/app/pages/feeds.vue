@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import FeedsIndex from '../../../../layers/feeds/app/components/Feeds/Index.vue'
+  import FeedsIndex from '../../../../layers/delivery/feeds/app/components/Feeds/Index.vue'
 
   const { setPageAccent } = useAccentColor()
   setPageAccent('orange')

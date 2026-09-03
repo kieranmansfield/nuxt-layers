@@ -3,30 +3,30 @@
 //
 // Available layers (add in this order — each depends on the ones above it):
 //   '../../layers/core'
-//   '../../layers/typography'
-//   '../../layers/navigation'
-//   '../../layers/visual'
-//   '../../layers/layout'
-//   '../../layers/theming'
-//   '../../layers/motion'
+//   '../../layers/design-system/typography'
+//   '../../layers/structure/navigation'
+//   '../../layers/design-system/visual'
+//   '../../layers/structure/layout'
+//   '../../layers/design-system/theming'
+//   '../../layers/motion/motion'
 //   '../../layers/content'
-//   '../../layers/forms'
-//   '../../layers/shader'
+//   '../../layers/data/forms'
+//   '../../layers/render/shader'
 
 export default defineNuxtConfig({
   compatibilityDate: '2026-01-24',
 
   extends: [
     '../../layers/core',
-    '../../layers/typography',
-    '../../layers/navigation',
-    '../../layers/visual',
-    // '../../layers/layout',
-    // '../../layers/theming',
-    // '../../layers/motion',
+    '../../layers/design-system/typography',
+    '../../layers/structure/navigation',
+    '../../layers/design-system/visual',
+    // '../../layers/structure/layout',
+    // '../../layers/design-system/theming',
+    // '../../layers/motion/motion',
     // '../../layers/content',
-    // '../../layers/forms',
-    // '../../layers/shader',
+    // '../../layers/data/forms',
+    // '../../layers/render/shader',
   ],
 
   future: {

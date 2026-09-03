@@ -32,32 +32,32 @@ type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
 const LAYER_PATHS: Record<LayerName, string> = {
   core: '../../layers/core',
-  seo: '../../layers/seo',
-  scripts: '../../layers/scripts',
-  typography: '../../layers/typography',
-  navigation: '../../layers/navigation',
-  visual: '../../layers/visual',
-  layout: '../../layers/layout',
-  scroll: '../../layers/scroll',
-  animations: '../../layers/animations',
-  transitions: '../../layers/transitions',
-  'page-transitions': '../../layers/page-transitions',
-  motion: '../../layers/motion',
-  canvas: '../../layers/canvas',
-  shader: '../../layers/shader',
-  mailer: '../../layers/mailer',
-  forms: '../../layers/forms',
-  theming: '../../layers/theming',
+  seo: '../../layers/delivery/seo',
+  scripts: '../../layers/delivery/scripts',
+  typography: '../../layers/design-system/typography',
+  navigation: '../../layers/structure/navigation',
+  visual: '../../layers/design-system/visual',
+  layout: '../../layers/structure/layout',
+  scroll: '../../layers/motion/scroll',
+  animations: '../../layers/motion/animations',
+  transitions: '../../layers/motion/transitions',
+  'page-transitions': '../../layers/motion/page-transitions',
+  motion: '../../layers/motion/motion',
+  canvas: '../../layers/render/canvas',
+  shader: '../../layers/render/shader',
+  mailer: '../../layers/data/mailer',
+  forms: '../../layers/data/forms',
+  theming: '../../layers/design-system/theming',
   content: '../../layers/content',
-  routing: '../../layers/routing',
-  feeds: '../../layers/feeds',
-  database: '../../layers/database',
-  auth: '../../layers/auth',
-  metadata: '../../layers/metadata',
-  'metadata-comicvine': '../../layers/metadata/providers/comicvine',
-  'metadata-openlibrary': '../../layers/metadata/providers/openlibrary',
-  'metadata-google-books': '../../layers/metadata/providers/google-books',
-  'metadata-tmdb': '../../layers/metadata/providers/themoviedb',
+  routing: '../../layers/structure/routing',
+  feeds: '../../layers/delivery/feeds',
+  database: '../../layers/data/database',
+  auth: '../../layers/data/auth',
+  metadata: '../../layers/data/metadata',
+  'metadata-comicvine': '../../layers/data/metadata/providers/comicvine',
+  'metadata-openlibrary': '../../layers/data/metadata/providers/openlibrary',
+  'metadata-google-books': '../../layers/data/metadata/providers/google-books',
+  'metadata-tmdb': '../../layers/data/metadata/providers/themoviedb',
 }
 
 // Layer dependencies - if a layer is enabled, its dependencies are auto-included
@@ -95,7 +95,7 @@ const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
  * Resolves which layers to extend based on environment configuration
  * Automatically includes layer dependencies.
  *
- * PLAYGROUND_LAYERS: Comma-separated list (e.g., "core,ui")
+ * PLAYGROUND_LAYERS: Comma-separated list (e.g., "core,typography")
  * If not set, all layers are enabled
  */
 function resolveExtendedLayers(): string[] {

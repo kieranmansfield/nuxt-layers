@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import RouteCard from '../../layers/feeds/app/components/Feeds/RouteCard.vue'
-import type { FeedRoute } from '../../layers/feeds/app/utils/feed-catalog'
+import RouteCard from '../../layers/delivery/feeds/app/components/Feeds/RouteCard.vue'
+import type { FeedRoute } from '../../layers/delivery/feeds/app/utils/feed-catalog'
 
 const cardStub = {
   template: '<div><slot /></div>',

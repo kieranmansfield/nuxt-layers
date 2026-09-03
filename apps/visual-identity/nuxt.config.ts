@@ -1,10 +1,10 @@
 export default defineNuxtConfig({
   extends: [
     '../../layers/core',
-    '../../layers/typography',
-    '../../layers/navigation',
-    '../../layers/visual',
-    '../../layers/theming',
+    '../../layers/design-system/typography',
+    '../../layers/structure/navigation',
+    '../../layers/design-system/visual',
+    '../../layers/design-system/theming',
   ],
 
   modules: ['@nuxt/fonts'],

@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import RouteCard from '../../layers/feeds/app/components/Feeds/RouteCard.vue'
+import RouteCard from '../../layers/delivery/feeds/app/components/Feeds/RouteCard.vue'
 
 const cardStub = {
   template: '<div><slot /></div>',

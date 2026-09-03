@@ -1,0 +1,8 @@
+{
+  "extends": "../../../apps/playground/tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "types": ["@webgpu/types"]
+  },
+  "exclude": ["node_modules"]
+}

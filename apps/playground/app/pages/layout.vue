@@ -23,84 +23,7 @@
       label: 'Full-width',
       presets: [
         { name: 'hero', desc: 'Full width · all 12 rows', lgStart: 1, lgSpan: 18 },
-        { name: 'fullWidth', desc: 'All columns, no bleed', lgStart: 1, lgSpan: 18 },
-        { name: 'superCentered', desc: 'Full width · content centered', lgStart: 1, lgSpan: 18 },
-      ],
-    },
-    {
-      label: 'Width variants',
-      presets: [
-        { name: 'wide', desc: 'lg: cols 2–17 · 16 cols', lgStart: 2, lgSpan: 16 },
         { name: 'centered', desc: 'Full width · 12 rows (100vh)', lgStart: 1, lgSpan: 18 },
-        { name: 'prose', desc: 'lg: cols 5–14 · 10 cols', lgStart: 5, lgSpan: 10 },
-      ],
-    },
-    {
-      label: 'Sidebar pair',
-      presets: [
-        { name: 'sidebar', desc: 'lg: cols 1–4 · 4 cols', lgStart: 1, lgSpan: 4 },
-        { name: 'content', desc: 'lg: cols 5–18 · 14 cols', lgStart: 5, lgSpan: 14 },
-      ],
-    },
-    {
-      label: '50/50 vertical split',
-      presets: [
-        { name: 'splitLeft', desc: 'lg: cols 1–9', lgStart: 1, lgSpan: 9 },
-        { name: 'splitRight', desc: 'lg: cols 10–18', lgStart: 10, lgSpan: 9 },
-      ],
-    },
-    {
-      label: '25/75 vertical split',
-      presets: [
-        { name: 'quarterLeft', desc: 'lg: cols 1–5', lgStart: 1, lgSpan: 5 },
-        { name: 'threeQuarterRight', desc: 'lg: cols 6–18', lgStart: 6, lgSpan: 13 },
-        { name: 'threeQuarterLeft', desc: 'lg: cols 1–13', lgStart: 1, lgSpan: 13 },
-        { name: 'quarterRight', desc: 'lg: cols 14–18', lgStart: 14, lgSpan: 5 },
-      ],
-    },
-    {
-      label: 'Horizontal stacks',
-      presets: [
-        { name: 'halfTop', desc: 'Full width · rows 1–6', lgStart: 1, lgSpan: 18 },
-        { name: 'halfBottom', desc: 'Full width · rows 7–12', lgStart: 1, lgSpan: 18 },
-      ],
-    },
-  ]
-
-  type PresetPart = { name: string; lgStart: number; lgSpan: number; colorClass: string }
-
-  // Paired presets — shown as combined 18-column visualizations (lg layout)
-  const presetPairs: { label: string; note: string; parts: [PresetPart, PresetPart] }[] = [
-    {
-      label: 'Sidebar pair',
-      note: '4 + 14 = 18 ✓',
-      parts: [
-        { name: 'sidebar', lgStart: 1, lgSpan: 4, colorClass: 'bg-green-500/30' },
-        { name: 'content', lgStart: 5, lgSpan: 14, colorClass: 'bg-teal-500/30' },
-      ],
-    },
-    {
-      label: '50/50 vertical split',
-      note: '9 + 9 = 18 ✓',
-      parts: [
-        { name: 'splitLeft', lgStart: 1, lgSpan: 9, colorClass: 'bg-orange-500/30' },
-        { name: 'splitRight', lgStart: 10, lgSpan: 9, colorClass: 'bg-rose-500/30' },
-      ],
-    },
-    {
-      label: '25/75 vertical split',
-      note: '5 + 13 = 18 ✓',
-      parts: [
-        { name: 'quarterLeft', lgStart: 1, lgSpan: 5, colorClass: 'bg-indigo-500/30' },
-        { name: 'threeQuarterRight', lgStart: 6, lgSpan: 13, colorClass: 'bg-cyan-500/30' },
-      ],
-    },
-    {
-      label: '75/25 vertical split',
-      note: '13 + 5 = 18 ✓',
-      parts: [
-        { name: 'threeQuarterLeft', lgStart: 1, lgSpan: 13, colorClass: 'bg-emerald-500/30' },
-        { name: 'quarterRight', lgStart: 14, lgSpan: 5, colorClass: 'bg-pink-500/30' },
       ],
     },
   ]
@@ -237,19 +160,15 @@
                 <h3 class="text-xl font-semibold">Layout Mode</h3>
               </div>
               <p class="text-sm text-muted mt-1">
-                Switch between Swiss Grid, fluid container-query grid, or disabled fallback
+                Switch between Swiss Grid and the disabled fallback
               </p>
             </template>
 
             <div class="space-y-4">
-              <div class="grid gap-3 sm:grid-cols-3">
+              <div class="grid gap-3 sm:grid-cols-2">
                 <div class="p-3 bg-elevated rounded-lg">
                   <div class="font-mono text-sm text-primary">'swiss'</div>
                   <p class="text-xs text-muted mt-1">Default. 6/12/18-column subgrid.</p>
-                </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">'fluid'</div>
-                  <p class="text-xs text-muted mt-1">Container-query auto-fit grid.</p>
                 </div>
                 <div class="p-3 bg-elevated rounded-lg">
                   <div class="font-mono text-sm text-primary">'disabled'</div>
@@ -264,7 +183,7 @@ export default defineAppConfig({
   layoutLayer: {
     ui: {
       grid: {
-        mode: 'fluid', // 'swiss' | 'fluid' | 'disabled'
+        mode: 'swiss', // 'swiss' | 'disabled'
         // enabled: false is still supported (maps to mode: 'disabled')
       },
     },
@@ -359,7 +278,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
 
               <pre
                 class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
-              ><code>&lt;LayoutGridItem preset="fullWidth"&gt;
+              ><code>&lt;LayoutGridItem preset="centered"&gt;
   &lt;AppContainer size="content"&gt;
     &lt;p&gt;Prose constrained to ~65 characters.&lt;/p&gt;
   &lt;/AppContainer&gt;
@@ -568,69 +487,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                 class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
               ><code>&lt;LayoutGridItem preset="centered"&gt;
   &lt;!-- full width within the grid's padding · 12 rows (100vh) --&gt;
-&lt;/LayoutGridItem&gt;
-
-&lt;!-- Pair two presets for a sidebar layout --&gt;
-&lt;LayoutGridItem preset="sidebar"&gt;Nav&lt;/LayoutGridItem&gt;
-&lt;LayoutGridItem preset="content"&gt;Main&lt;/LayoutGridItem&gt;</code></pre>
-            </div>
-          </UCard>
-
-          <!-- Preset Pairs -->
-          <UCard>
-            <template #header>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-columns-2" class="text-primary" />
-                <h3 class="text-xl font-semibold">Preset Pairs</h3>
-              </div>
-              <p class="text-sm text-muted mt-1">
-                Some presets are designed to be used together — they sum to 18 columns at lg and
-                stack to full-width on mobile. The bars below show both presets simultaneously.
-              </p>
-            </template>
-
-            <div class="space-y-6">
-              <div v-for="pair in presetPairs" :key="pair.label" class="space-y-2">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="text-sm font-medium">{{ pair.label }}</span>
-                  <span class="text-xs text-muted font-mono">{{ pair.note }}</span>
-                </div>
-
-                <!-- Combined 18-column bar -->
-                <div class="flex gap-0.5" style="height: 2.5rem">
-                  <div
-                    v-for="col in 18"
-                    :key="col"
-                    class="flex-1 rounded-sm"
-                    :class="
-                      col >= pair.parts[0].lgStart &&
-                      col < pair.parts[0].lgStart + pair.parts[0].lgSpan
-                        ? pair.parts[0].colorClass
-                        : pair.parts[1].colorClass
-                    "
-                  />
-                </div>
-
-                <!-- Legend -->
-                <div class="flex flex-wrap gap-4 text-xs text-muted">
-                  <div
-                    v-for="part in pair.parts"
-                    :key="part.name"
-                    class="flex items-center gap-1.5"
-                  >
-                    <div class="w-3 h-3 rounded-sm shrink-0" :class="part.colorClass" />
-                    <code class="font-mono">{{ part.name }}</code>
-                    <span>lg: cols {{ part.lgStart }}–{{ part.lgStart + part.lgSpan - 1 }}</span>
-                  </div>
-                </div>
-              </div>
-
-              <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
-              ><code>&lt;LayoutSection&gt;
-  &lt;LayoutGridItem preset="splitLeft" :row-span="12"&gt;Left&lt;/LayoutGridItem&gt;
-  &lt;LayoutGridItem preset="splitRight" :row-span="12"&gt;Right&lt;/LayoutGridItem&gt;
-&lt;/LayoutSection&gt;</code></pre>
+&lt;/LayoutGridItem&gt;</code></pre>
             </div>
           </UCard>
         </section>
@@ -983,80 +840,6 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
           </UCard>
         </section>
 
-        <!-- Fluid Mode -->
-        <section class="space-y-8">
-          <div>
-            <h2 class="text-2xl font-bold mb-2">Fluid Mode</h2>
-            <p class="text-muted">
-              Container-query auto-fit grid utilities — active when
-              <code class="font-mono text-sm">mode: 'fluid'</code>
-            </p>
-          </div>
-
-          <UCard>
-            <template #header>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-grid-2x2" class="text-primary" />
-                <h3 class="text-xl font-semibold">fluid-grid utilities</h3>
-              </div>
-              <p class="text-sm text-muted mt-1">
-                Auto-fit columns that respond to the container width, not the viewport
-              </p>
-            </template>
-
-            <div class="space-y-4">
-              <div class="grid gap-3 sm:grid-cols-2">
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">fluid-grid</div>
-                  <p class="text-xs text-muted mt-1">
-                    auto-fit, min <code class="font-mono">--fluid-col-min</code> (default 16rem)
-                  </p>
-                </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">fluid-grid-2</div>
-                  <p class="text-xs text-muted mt-1">2 cols ≥ 30rem container</p>
-                </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">fluid-grid-3</div>
-                  <p class="text-xs text-muted mt-1">3 cols ≥ 44rem container</p>
-                </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">fluid-grid-4</div>
-                  <p class="text-xs text-muted mt-1">4 cols ≥ 52rem container</p>
-                </div>
-              </div>
-
-              <!-- Live demo -->
-              <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
-                  Live demo — fluid-grid-3 (resize the window)
-                </h4>
-                <div class="fluid-grid-3 @container">
-                  <div
-                    v-for="n in 6"
-                    :key="n"
-                    class="bg-primary/10 rounded-lg p-6 flex items-center justify-center font-mono text-sm text-primary"
-                  >
-                    {{ n }}
-                  </div>
-                </div>
-              </div>
-
-              <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
-              ><code>&lt;!-- Custom min-width override --&gt;
-&lt;div class="fluid-grid" style="--fluid-col-min: 20rem"&gt;
-  &lt;div v-for="item in items" :key="item.id"&gt;…&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- Named column variant --&gt;
-&lt;div class="fluid-grid-3"&gt;
-  &lt;div v-for="item in items" :key="item.id"&gt;…&lt;/div&gt;
-&lt;/div&gt;</code></pre>
-            </div>
-          </UCard>
-        </section>
-
         <!-- Developer Tools -->
         <section class="space-y-8">
           <div>
@@ -1095,10 +878,10 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
           <div>
             <h2 class="text-2xl font-bold mb-2">Declarative Layout Primitives</h2>
             <p class="text-muted">
-              HStack / VStack / ZStack / Spacer / Container — from
+              HStack / VStack / ZStack / Spacer / AppContainer — from
               <code class="font-mono text-xs">layers/core</code>
               and
-              <code class="font-mono text-xs">layers/ui</code>. Fluid
+              <code class="font-mono text-xs">layers/layout</code>. Fluid
               <code class="font-mono text-xs">gap</code>
               tokens scale continuously with viewport width — resize the window, no breakpoint jump.
             </p>
@@ -1186,7 +969,6 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
               </HStack>
             </VStack>
           </UCard>
-
         </section>
 
         <!-- Sub-demos -->

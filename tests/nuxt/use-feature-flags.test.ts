@@ -2,8 +2,8 @@ import { defineComponent } from 'vue'
 import { mockNuxtImport, mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it } from 'vitest'
 
-import { useFeatureFlags } from '../../layers/routing/app/composables/useFeatureFlags'
-import type { RoutingLayerConfig } from '../../layers/routing/app/types/routing'
+import { useFeatureFlags } from '../../layers/structure/routing/app/composables/useFeatureFlags'
+import type { RoutingLayerConfig } from '../../layers/structure/routing/app/types/routing'
 
 type RoutingAppConfig = {
   routingLayer?: Partial<RoutingLayerConfig>
