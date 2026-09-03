@@ -7,7 +7,9 @@
   const statusCode = computed(() => error?.statusCode || 500)
   const title = computed(() => (is404.value ? 'Page Not Found' : 'Something Went Wrong'))
   const message = computed(() =>
-    is404.value ? 'This page could not be found.' : error?.message || 'An unexpected error occurred.'
+    is404.value
+      ? 'This page could not be found.'
+      : error?.message || 'An unexpected error occurred.'
   )
   const icon = computed(() => (is404.value ? 'i-lucide-file-question' : 'i-lucide-alert-triangle'))
 

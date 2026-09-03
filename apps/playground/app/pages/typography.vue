@@ -1,7 +1,7 @@
 <script setup lang="ts">
   // fallow-ignore-next-line code-duplication
-  import type { FluidFontSize } from '#layers/typography/app/types/typography'
   import type { UiColors } from '#layers/typography/app/types/colors'
+  import type { FluidFontSize } from '#layers/typography/app/types/typography'
   import type { TintLevel } from '#layers/visual/app/types/tint'
 
   const { setPageAccent } = useAccentColor()

@@ -58,6 +58,6 @@ export function useCollectionItems<K extends keyof Collections>(
     // Cast back to the specific collection's item type — the sort/filter/tag
     // machinery above is generic across all collections, but callers always
     // know their own `K` and expect e.g. BlogCollectionItem[], not the union.
-    return items as unknown as Collections[K][]
+    return items as unknown as Array<Collections[K]>
   })
 }

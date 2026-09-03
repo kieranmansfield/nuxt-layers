@@ -440,7 +440,10 @@ export default defineConfigWithVueTs(
   // Needs a real `computed` import to mount under vitest's 'vue' project, which has
   // no Nuxt auto-import context (unlike the real Nuxt runtime, where auto-import applies).
   {
-    files: ['layers/design-system/element/app/components/Element.vue'],
+    files: [
+      'layers/design-system/element/app/components/Element.vue',
+      'layers/delivery/feeds/app/components/Feeds/RouteCard.vue',
+    ],
     rules: {
       '@typescript-eslint/no-restricted-imports': 'off',
     },
@@ -456,6 +459,10 @@ export default defineConfigWithVueTs(
       '**/app.config.ts',
       '**/types/runtime-config.ts',
       'layers/data/database/nuxt.config.ts',
+      'layers/data/mailer/nuxt.config.ts',
+      'layers/data/metadata/providers/comicvine/nuxt.config.ts',
+      'layers/data/metadata/providers/google-books/nuxt.config.ts',
+      'layers/data/metadata/providers/themoviedb/nuxt.config.ts',
       'layers/design-system/theming/nuxt.config.ts',
     ],
     rules: {

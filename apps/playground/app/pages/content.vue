@@ -182,15 +182,15 @@
 
               <div class="space-y-3 text-sm">
                 <p>
-                  The content layer is components-only — it never registers pages itself (an
-                  earlier version did, and generated stray unused routes). Instead each domain
-                  ships a ready-made
+                  The content layer is components-only — it never registers pages itself (an earlier
+                  version did, and generated stray unused routes). Instead each domain ships a
+                  ready-made
                   <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">Page</code>
                   /
                   <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">ItemPage</code>
                   pair you copy into your own
-                  <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">app/pages/</code> as a
-                  1–3 line wrapper — see
+                  <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">app/pages/</code> as a 1–3
+                  line wrapper — see
                   <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">/blog</code>,
                   <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">/portfolio</code>, and
                   <code class="text-xs bg-muted/50 px-1.5 py-0.5 rounded">/gallery</code> in this

@@ -24,11 +24,7 @@
 
   const mediaType = computed(() => mediaTypeTabs[activeTab.value]?.value)
 
-  const {
-    data: results,
-    status,
-    error,
-  } = useMetadataSearch(rawQuery, { mediaType, limit: 20 })
+  const { data: results, status, error } = useMetadataSearch(rawQuery, { mediaType, limit: 20 })
 
   const isLoading = computed(() => status.value === 'pending')
   const hasSearched = computed(() => status.value === 'success' || status.value === 'error')

@@ -147,7 +147,7 @@ export default defineConfig({
         test: {
           name: 'unit',
           include: ['layers/**/*.test.ts', 'layers/**/*.spec.ts'],
-          exclude: ['layers/**/app/components/**/*.test.ts'],
+          exclude: ['layers/**/app/components/**/*.test.ts', '**/node_modules/**'],
           environment: 'node',
         },
       },

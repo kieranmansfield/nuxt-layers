@@ -3,14 +3,14 @@
 Pure orchestrator layer. It has no components or composables of its own — it just
 `extends` the four real motion layers so an app can load one dependency instead of four:
 
-```
+```text
 motion → scroll, animations, transitions, page-transitions
 ```
 
 ## Usage
 
 ```bash
-PLAYGROUND_LAYERS=core,ui,layout,motion pnpm dev
+PLAYGROUND_LAYERS=core,layout,motion pnpm dev
 ```
 
 ## Where the real API lives
