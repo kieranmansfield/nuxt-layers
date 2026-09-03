@@ -3,14 +3,16 @@ import type { CSSProperties } from 'vue'
 import type { ResponsiveValue } from '../types/layouts'
 import { buildGridPlacementStyle } from '../utils/gridPlacementStyle'
 
+// `| undefined` on each is explicit (not just `?`) so component prop objects
+// — which have it too, under exactOptionalPropertyTypes — are assignable here.
 export interface ElementGridProps {
-  grid?: boolean
-  cols?: number | string
-  rows?: number | string
-  colStart?: number | ResponsiveValue<number>
-  colSpan?: number | 'full' | ResponsiveValue<number>
-  rowStart?: number | ResponsiveValue<number>
-  rowSpan?: number | ResponsiveValue<number>
+  grid?: boolean | undefined
+  cols?: number | string | undefined
+  rows?: number | string | undefined
+  colStart?: number | ResponsiveValue<number> | undefined
+  colSpan?: number | 'full' | ResponsiveValue<number> | undefined
+  rowStart?: number | ResponsiveValue<number> | undefined
+  rowSpan?: number | ResponsiveValue<number> | undefined
 }
 
 function track(value: number | string | undefined): string | undefined {

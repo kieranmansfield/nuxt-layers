@@ -1,9 +1,11 @@
 import type { CSSProperties } from 'vue'
 
+// `| undefined` on each is explicit (not just `?`) so component prop objects
+// — which have it too, under exactOptionalPropertyTypes — are assignable here.
 export interface ElementInteractionProps {
-  cursor?: CSSProperties['cursor']
-  select?: CSSProperties['userSelect']
-  pointer?: CSSProperties['pointerEvents']
+  cursor?: CSSProperties['cursor'] | undefined
+  select?: CSSProperties['userSelect'] | undefined
+  pointer?: CSSProperties['pointerEvents'] | undefined
 }
 
 export function useElementInteraction(

@@ -1,10 +1,12 @@
 import type { CSSProperties } from 'vue'
 
+// `| undefined` on each is explicit (not just `?`) so component prop objects
+// — which have it too, under exactOptionalPropertyTypes — are assignable here.
 export interface ElementLayoutProps {
-  block?: boolean
-  flex?: boolean
-  grid?: boolean
-  hidden?: boolean
+  block?: boolean | undefined
+  flex?: boolean | undefined
+  grid?: boolean | undefined
+  hidden?: boolean | undefined
 }
 
 type Mode = 'hidden' | 'grid' | 'flex' | 'block'

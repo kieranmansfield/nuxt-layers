@@ -1,11 +1,13 @@
 import type { CSSProperties } from 'vue'
 
+// `| undefined` on each is explicit (not just `?`) so component prop objects
+// — which have it too, under exactOptionalPropertyTypes — are assignable here.
 export interface ElementSurfaceProps {
-  bg?: CSSProperties['background']
-  color?: CSSProperties['color']
-  border?: CSSProperties['border']
-  radius?: CSSProperties['borderRadius']
-  shadow?: CSSProperties['boxShadow']
+  bg?: CSSProperties['background'] | undefined
+  color?: CSSProperties['color'] | undefined
+  border?: CSSProperties['border'] | undefined
+  radius?: CSSProperties['borderRadius'] | undefined
+  shadow?: CSSProperties['boxShadow'] | undefined
 }
 
 export function useElementSurface(

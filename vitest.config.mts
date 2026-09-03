@@ -147,6 +147,7 @@ export default defineConfig({
         test: {
           name: 'unit',
           include: ['layers/**/*.test.ts', 'layers/**/*.spec.ts'],
+          exclude: ['layers/**/app/components/**/*.test.ts'],
           environment: 'node',
         },
       },
@@ -159,9 +160,16 @@ export default defineConfig({
       },
       {
         plugins: [vue()],
+        resolve: {
+          alias: {
+            '#layers/core': fileURLToPath(new URL('./layers/core', import.meta.url)),
+          },
+        },
         test: {
           name: 'vue',
-          include: ['tests/vue/**/*.{test,spec}.ts'],
+          // Component-mount tests colocated with their .vue file (layer components
+          // need happy-dom + the vue plugin, unlike the plain-function 'unit' project).
+          include: ['tests/vue/**/*.{test,spec}.ts', 'layers/**/app/components/**/*.test.ts'],
           environment: 'happy-dom',
         },
       },
