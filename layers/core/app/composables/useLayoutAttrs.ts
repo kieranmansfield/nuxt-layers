@@ -53,7 +53,14 @@ function spacingVar(token: Spacing): string {
 
 function applySpacing(
   result: CSSProperties,
-  cssProp: 'gap' | 'padding' | 'paddingInline' | 'paddingBlock' | 'margin' | 'marginInline' | 'marginBlock',
+  cssProp:
+    | 'gap'
+    | 'padding'
+    | 'paddingInline'
+    | 'paddingBlock'
+    | 'margin'
+    | 'marginInline'
+    | 'marginBlock',
   value: ResponsiveValue<Spacing> | Spacing | undefined
 ): void {
   const resolved = resolveDefault(value)
