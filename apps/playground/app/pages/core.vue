@@ -558,6 +558,9 @@
             <UButton to="/diagnostics" variant="outline" icon="i-lucide-activity">
               Full Diagnostics
             </UButton>
+            <UButton to="/element" variant="outline" icon="i-lucide-component">
+              Element Demo
+            </UButton>
             <UButton to="/ui" icon="i-lucide-arrow-right"> UI Layer Demo </UButton>
           </div>
 
@@ -571,6 +574,7 @@
           name="Core Layer"
           description="Foundation utilities and composables"
           :links="[
+            { label: 'Element', to: '/element', icon: 'i-lucide-component' },
             { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
             { label: 'Layout', to: '/layout', icon: 'i-lucide-layout' },
           ]"
