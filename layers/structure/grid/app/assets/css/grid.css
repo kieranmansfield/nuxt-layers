@@ -1,0 +1,39 @@
+/* Grid layer rhythm — derives all vertical spacing from --fs. See
+   docs/superpowers/specs/2026-09-04-grid-layer-design.md and root LAYOUT-SYSTEM.md
+   for the full derivation rationale. Column composition is NOT here — it comes from
+   useGridTracks().toColumnsCss(), applied inline per grid-root instance. */
+
+@property --fs {
+  syntax: '<length>'
+  inherits: true
+  initial-value: 1rem
+}
+
+:root {
+  /* rem term keeps this WCAG 1.4.4 zoom-safe; svi never vw (viewport-bar-collapse safe) */
+  --fs: clamp(1rem, 0.95rem + 0.25svi, 1.125rem)
+  font-size: var(--fs)
+  /* rounded, not raw, so grid boundaries land on-pixel */
+  line-height: round(nearest, var(--fs) * 1.5, 1px)
+}
+
+.grid-root {
+  /* rlh not lh: always resolves against root, unaffected by a nested element's own
+     line-height */
+  --unit: 1rlh
+  --measure-min: 22rem
+  /* margin floor > 0, steep svi slope so it shrinks fast on narrow screens */
+  --edge-min: clamp(1rlh, 8svi, 3rlh)
+  --avail-b: calc(100svh - 2 * var(--edge-min))
+  --lines: calc(round(down, var(--avail-b), var(--unit)) / var(--unit))
+  --lpf: clamp(4, round(down, calc(100svh / var(--unit) / 4.5), 1), 8)
+  --fields: max(1, round(down, calc((var(--lines) + 1) / (var(--lpf) + 1)), 1))
+
+  display: grid
+  gap: var(--unit)
+  padding-block: var(--edge-min)
+  padding-inline: var(--edge-min)
+  grid-auto-rows: minmax(calc(var(--lpf) * var(--unit)), max-content)
+  container-type: inline-size
+  container-name: grid-root
+}
