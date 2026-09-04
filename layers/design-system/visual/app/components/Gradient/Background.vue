@@ -15,7 +15,7 @@
 </script>
 
 <template>
-  <component :is="tag" :style>
+  <ElementTw :as="tag" :component-props="{ style }">
     <slot />
-  </component>
+  </ElementTw>
 </template>

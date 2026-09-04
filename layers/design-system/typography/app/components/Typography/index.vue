@@ -16,8 +16,6 @@
     TypographyTag,
   } from '../../types/typography'
 
-  defineOptions({ inheritAttrs: false })
-
   const {
     tag = 'p',
     weight = 'font-normal',
@@ -61,7 +59,7 @@
 </script>
 
 <template>
-  <component :is="tag" :class="[classes, colorClass]" v-bind="$attrs">
+  <ElementTw :as="tag" :component-props="{ class: [classes, colorClass] }">
     <slot />
-  </component>
+  </ElementTw>
 </template>

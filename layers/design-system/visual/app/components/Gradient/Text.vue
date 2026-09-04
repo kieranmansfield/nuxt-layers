@@ -15,7 +15,7 @@
 </script>
 
 <template>
-  <component :is="tag" :style class="gradient-text inline-block">
+  <ElementTw :as="tag" :component-props="{ style, class: 'gradient-text inline-block' }">
     <slot />
-  </component>
+  </ElementTw>
 </template>

@@ -25,5 +25,5 @@
 </script>
 
 <template>
-  <div class="accent-blob" :style aria-hidden="true" />
+  <ElementTw :component-props="{ style, class: 'accent-blob', 'aria-hidden': true }" />
 </template>

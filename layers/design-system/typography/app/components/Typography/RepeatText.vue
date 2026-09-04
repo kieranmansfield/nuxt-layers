@@ -5,8 +5,6 @@
   import type { UiColors } from '../../types/colors'
   import type { FluidFontSize, FontWeight, TypographyTag } from '../../types/typography'
 
-  defineOptions({ inheritAttrs: false })
-
   const {
     rows = 1,
     direction = 'vertical',
@@ -108,12 +106,12 @@
 </script>
 
 <template>
-  <component
-    :is="tag"
-    v-bind="$attrs"
-    class="flex"
-    :class="direction === 'vertical' ? 'flex-row h-full' : 'flex-col'"
-    :style="{ gap: rowGap }"
+  <ElementTw
+    :as="tag"
+    :component-props="{
+      class: ['flex', direction === 'vertical' ? 'flex-row h-full' : 'flex-col'],
+      style: { gap: rowGap },
+    }"
   >
     <div
       v-for="i in rows"
@@ -145,5 +143,5 @@
         </template>
       </div>
     </div>
-  </component>
+  </ElementTw>
 </template>
