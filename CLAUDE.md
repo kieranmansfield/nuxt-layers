@@ -42,11 +42,11 @@ nuxt-layers/
 │   └── starter/            # Standalone starter/demo app — not a layer, lives outside layers/
 ├── layers/
 │   ├── core/                       # Tier 0 — Foundation (single layer, no tier-parent folder)
-│   │                                 Base utilities, 404, loading, design tokens — always the foundation
+│   │                                 Base utilities, 404, loading, design tokens, Element/ElementTw
+│   │                                 polymorphic primitives (layout/spacing/sizing/surface/
+│   │                                 interaction vocabulary) — always the foundation
 │   │
 │   ├── design-system/              # Tier 1
-│   │   ├── element/                  # Element polymorphic primitive — layout/spacing/sizing/
-│   │   │                               surface/interaction vocabulary, used across every layer
 │   │   ├── theming/                 # Accent/contrast/motion/transparency preferences, ThemePicker UI
 │   │   ├── typography/              # Typography components + useTypography, useColor
 │   │   └── visual/                  # Accent, Gradient, Tint, Progress, Modal, Picture
@@ -103,7 +103,11 @@ whole tier reshaped, in a future pass — not folded into this one.
 dissolved (its 4 stack primitives moved into `layout`, `Container` renamed `AppContainer` and
 moved into `core`), and `baseline` was merged into `scripts` (it wrapped a third-party embed, the
 same shape as `scripts`' other embed facades). `theme` was renamed `theming`. `starter` was
-relocated out of `layers/` into `apps/` — it's a demo app, not a layer.
+relocated out of `layers/` into `apps/` — it's a demo app, not a layer. `element` (formerly Tier 1)
+was folded into `core` — it had no layer deps of its own beyond `core`, no other layer depended on
+it, and every layer benefits from the primitive being always-present rather than opt-in; `core`
+now ships both `Element` (inline-`:style`) and `ElementTw` (Tailwind arbitrary-property classes,
+same props, same underlying style composables).
 
 **Open item, not yet decided:** the tier design's summary table describes `transitions` as
 absorbing `page-transitions`, but that merge was never implemented — both still exist as separate,
@@ -117,7 +121,6 @@ done or dropped; don't assume the absorption already happened.
 core → (nothing)
 
 # Tier 1 — Design System
-element → core
 theming → core
 typography → core
 visual → core

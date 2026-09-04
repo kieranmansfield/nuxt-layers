@@ -4,7 +4,7 @@ import type { Component } from 'vue'
 // resolution (defineProps<ElementProps>() in Element.vue) walks tsconfig
 // "paths" directly and doesn't see Nuxt's generated layer aliases outside
 // a running Nuxt instance — a plain relative import resolves everywhere.
-import type { LayoutAttrsInput } from '../../../../core/app/composables/useLayoutAttrs'
+import type { LayoutAttrsInput } from '../composables/useLayoutAttrs'
 
 import type { ElementGridProps } from '../composables/useElementGrid'
 import type { ElementInteractionProps } from '../composables/useElementInteraction'

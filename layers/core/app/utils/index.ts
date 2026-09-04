@@ -7,3 +7,4 @@
 export * from './browserInfo'
 export * from './featureClasses'
 export * from './scrollGuardClamp'
+export * from './styleToTailwindClasses'

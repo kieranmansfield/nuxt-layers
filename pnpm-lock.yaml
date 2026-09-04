@@ -700,6 +700,9 @@ importers:
       '@vite-pwa/nuxt':
         specifier: 'catalog:'
         version: 1.1.1(magicast@0.5.4)(supports-color@10.2.2)(vite@8.2.2(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))(workbox-build@7.4.1(supports-color@10.2.2))(workbox-window@7.4.1)
+      '@vue/test-utils':
+        specifier: 'catalog:'
+        version: 2.4.11(@vue/compiler-dom@3.5.42)(@vue/server-renderer@3.5.42)(vue@3.5.42(typescript@6.0.3))
 
   layers/data/auth:
     dependencies:
@@ -774,12 +777,6 @@ importers:
       '@nuxtjs/seo':
         specifier: 'catalog:'
         version: 5.2.0(4d369a9350e048dca1d83a885b90d258)
-
-  layers/design-system/element:
-    devDependencies:
-      '@vue/test-utils':
-        specifier: 'catalog:'
-        version: 2.4.11(@vue/compiler-dom@3.5.42)(@vue/server-renderer@3.5.42)(vue@3.5.42(typescript@6.0.3))
 
   layers/design-system/theming: {}
 
