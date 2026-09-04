@@ -208,18 +208,6 @@
       ['pointer', pointer],
     ])
 
-  // Data for the "Reference examples" real-pattern demos below.
-  const statRowData = [
-    { value: '128', label: 'Active users' },
-    { value: '4.9', label: 'Avg. rating' },
-    { value: '99.9%', label: 'Uptime' },
-  ]
-  const pricingGridData = [
-    { name: 'Starter', price: '$0', blurb: 'Personal projects, community support.' },
-    { name: 'Team', price: '$29', blurb: 'Unlimited projects, priority support.' },
-    { name: 'Enterprise', price: 'Custom', blurb: 'SSO, audit logs, dedicated support.' },
-  ]
-
   // Only the props actually set — mirrors the escape-hatch spirit of Element itself:
   // absent props stay absent rather than resolving to a noisy default value.
   const elementBindings = computed<Record<string, unknown>>(() => ({
@@ -487,98 +475,6 @@
       </div>
     </UCard>
 
-    <!-- Reference examples: real compositions, not abstract prop showcases -->
-    <div class="space-y-6">
-      <h2 class="text-xl font-semibold">Reference examples</h2>
-      <p class="text-muted -mt-2">
-        Four small real patterns, each built with Element doing the layout/spacing/surface work
-        around ordinary Nuxt UI components.
-      </p>
-
-      <div class="rounded-lg border border-default p-6 space-y-3">
-        <div>
-          <h3 class="font-medium">Stat row</h3>
-          <p class="text-xs text-muted">flex · gap · sizing</p>
-        </div>
-        <Element flex gap="md">
-          <Element
-            v-for="stat in statRowData"
-            :key="stat.label"
-            flex
-            block
-            p="md"
-            radius="0.5rem"
-            bg="var(--ui-bg-elevated)"
-            class="flex-1 text-center"
-          >
-            <div>
-              <p class="text-2xl font-bold">{{ stat.value }}</p>
-              <p class="text-xs text-muted uppercase tracking-wide">{{ stat.label }}</p>
-            </div>
-          </Element>
-        </Element>
-      </div>
-
-      <div class="rounded-lg border border-default p-6 space-y-3">
-        <div>
-          <h3 class="font-medium">Toolbar</h3>
-          <p class="text-xs text-muted">flex · justify · align</p>
-        </div>
-        <Element
-          flex
-          justify="between"
-          align="center"
-          p="md"
-          bg="var(--ui-bg-elevated)"
-          radius="0.5rem"
-        >
-          <Element flex gap="sm" align="center">
-            <UButton icon="i-lucide-bold" variant="ghost" color="neutral" size="sm" />
-            <UButton icon="i-lucide-italic" variant="ghost" color="neutral" size="sm" />
-            <UButton icon="i-lucide-underline" variant="ghost" color="neutral" size="sm" />
-          </Element>
-          <UButton label="Publish" size="sm" trailing-icon="i-lucide-arrow-right" />
-        </Element>
-      </div>
-
-      <div class="rounded-lg border border-default p-6 space-y-3">
-        <div>
-          <h3 class="font-medium">Pricing card grid</h3>
-          <p class="text-xs text-muted">grid (container axis) around real UCards</p>
-        </div>
-        <Element grid :cols="3" gap="md">
-          <UCard v-for="plan in pricingGridData" :key="plan.name">
-            <h4 class="font-semibold">{{ plan.name }}</h4>
-            <p class="text-2xl font-bold mt-1">{{ plan.price }}</p>
-            <p class="text-sm text-muted mt-1">{{ plan.blurb }}</p>
-          </UCard>
-        </Element>
-      </div>
-
-      <div class="rounded-lg border border-default p-6 space-y-3">
-        <div>
-          <h3 class="font-medium">Inline notice</h3>
-          <p class="text-xs text-muted">surface (bg/border/radius) · margin</p>
-        </div>
-        <Element bg="var(--ui-bg-elevated)" p="md" radius="0.5rem">
-          <Element
-            flex
-            align="center"
-            gap="sm"
-            p="md"
-            m="md"
-            bg="light-dark(var(--ui-color-warning-50), var(--ui-color-warning-950))"
-            border="1px solid light-dark(var(--ui-color-warning-200), var(--ui-color-warning-800))"
-            color="light-dark(var(--ui-color-warning-900), var(--ui-color-warning-100))"
-            radius="0.5rem"
-          >
-            <UIcon name="i-lucide-triangle-alert" class="text-warning shrink-0" />
-            <p class="text-sm">Your trial ends in 3 days — upgrade to keep your projects.</p>
-          </Element>
-        </Element>
-      </div>
-    </div>
-
     <!-- Syntax documentation -->
     <div class="space-y-6">
       <h2 class="text-xl font-semibold">Syntax reference</h2>
@@ -590,8 +486,8 @@
       <UCard v-for="group in propertyGroups" :key="group.name">
         <template #header>
           <div class="flex items-center gap-2">
-            <UIcon :name="group.icon" class="text-primary" />
-            <h3 class="font-semibold">{{ group.name }}</h3>
+            <UIcon :name="group.icon" class="text-primary size-5" />
+            <h3 class="font-semibold mb-0">{{ group.name }}</h3>
           </div>
         </template>
 
