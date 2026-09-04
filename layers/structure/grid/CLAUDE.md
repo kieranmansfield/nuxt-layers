@@ -7,7 +7,7 @@ Named presets (`swiss`, `editorial`, `sidebar`, `magazine`, `holy-grail`) or cus
 
 ## Layer Structure
 
-```
+```text
 layers/structure/grid/
 ├── app/
 │   ├── assets/css/grid.css        # .grid-tracks rhythm custom properties
