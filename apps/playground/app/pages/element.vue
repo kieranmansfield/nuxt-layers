@@ -26,6 +26,37 @@
     UBadge: resolveComponent('UBadge'),
   }
 
+  // Stock slot content per component — plain text for UButton/UBadge (their slot
+  // is just a label), a small real block for UCard, which needs actual body
+  // content to look like anything. Native tags keep the user-editable default.
+  const COMPONENT_CONTENT: Record<string, string> = {
+    UButton: 'Continue',
+    UBadge: 'New',
+  }
+  const UCARD_DEMO_MARKUP = `  <div class="space-y-2">
+    <h3 class="font-semibold">Team plan</h3>
+    <p class="text-sm text-muted">Unlimited projects, priority support, billed monthly.</p>
+    <UButton label="Upgrade" trailing-icon="i-lucide-arrow-right" size="sm" />
+  </div>`
+
+  // Surface defaults exist to make the *native-tag* preview visible (a bare div
+  // has no shape). Nuxt UI components already look like something on their own —
+  // forcing the same overrides on them just flattens their real styling, which is
+  // the whole reason "switching component" didn't visibly change anything before.
+  const NATIVE_SURFACE_DEFAULTS = {
+    h: '120px',
+    bg: 'light-dark(#eef1fb, #16233d)',
+    color: 'light-dark(#1e2a4a, #dbe4f7)',
+    radius: '0.5rem',
+  }
+  // Layout/spacing defaults have the same problem as surface ones — flex + p="lg"
+  // stretches a compact UBadge pill into a big square. Reset alongside surface.
+  const NATIVE_LAYOUT_DEFAULTS = {
+    layoutMode: 'flex' as const,
+    gap: 'md' as const,
+    p: 'lg' as const,
+  }
+
   const LAYOUT_MODE_OPTIONS = [
     { label: 'none', value: 'none' },
     { label: 'block', value: 'block' },
@@ -48,14 +79,11 @@
   const p = ref<SpacingToken | typeof UNSET>('lg')
   const m = ref<SpacingToken | typeof UNSET>(UNSET)
   const w = ref('')
-  const h = ref('120px')
-  // light-dark() picks the calmer tone per colour scheme — a saturated flat
-  // colour (e.g. green-500) reads as the same block in every "as" choice,
-  // which is also why switching component didn't look like it did anything.
-  const bg = ref('light-dark(#eef1fb, #16233d)')
-  const color = ref('light-dark(#1e2a4a, #dbe4f7)')
+  const h = ref(NATIVE_SURFACE_DEFAULTS.h)
+  const bg = ref(NATIVE_SURFACE_DEFAULTS.bg)
+  const color = ref(NATIVE_SURFACE_DEFAULTS.color)
   const border = ref('')
-  const radius = ref('0.5rem')
+  const radius = ref(NATIVE_SURFACE_DEFAULTS.radius)
   const shadow = ref('')
   const cursor = ref('')
   const select = ref('')
@@ -68,6 +96,32 @@
   const asAttr = computed(() =>
     NATIVE_TAGS.has(as.value) ? `as="${as.value}"` : `:as="${as.value}"`
   )
+
+  // Switching to/from a Nuxt UI component toggles the surface + layout defaults:
+  // clear them going to a component (so its own default styling shows through,
+  // unstretched by flex/padding), restore them coming back to a native tag (so
+  // the box stays visible).
+  watch(as, (next) => {
+    if (NATIVE_TAGS.has(next)) {
+      h.value = NATIVE_SURFACE_DEFAULTS.h
+      bg.value = NATIVE_SURFACE_DEFAULTS.bg
+      color.value = NATIVE_SURFACE_DEFAULTS.color
+      radius.value = NATIVE_SURFACE_DEFAULTS.radius
+      layoutMode.value = NATIVE_LAYOUT_DEFAULTS.layoutMode
+      gap.value = NATIVE_LAYOUT_DEFAULTS.gap
+      p.value = NATIVE_LAYOUT_DEFAULTS.p
+      slotText.value = 'Element content'
+    } else {
+      h.value = ''
+      bg.value = ''
+      color.value = ''
+      radius.value = ''
+      layoutMode.value = 'none'
+      gap.value = UNSET
+      p.value = UNSET
+      slotText.value = COMPONENT_CONTENT[next] ?? slotText.value
+    }
+  })
 
   // Each group's own resolver — one branchy computed per property group is easier to
   // reason about (and keeps complexity per function low) than one function covering all six.
@@ -143,7 +197,8 @@
     for (const [key, value] of Object.entries(elementBindings.value)) {
       if (key !== 'as') attrs.push(formatAttr(key, value))
     }
-    return `<Element ${attrs.join(' ')}>\n  ${slotText.value}\n</Element>`
+    const body = as.value === 'UCard' ? UCARD_DEMO_MARKUP : `  ${slotText.value}`
+    return `<Element ${attrs.join(' ')}>\n${body}\n</Element>`
   })
 
   const propertyGroups = [
@@ -329,9 +384,13 @@
             </div>
           </div>
 
-          <UFormField label="Content">
+          <UFormField v-if="as !== 'UCard'" label="Content">
             <UInput v-model="slotText" />
           </UFormField>
+          <p v-else class="text-xs text-muted">
+            UCard uses fixed demo content (title, description, action) — see the preview and
+            generated markup.
+          </p>
         </div>
 
         <!-- Preview + generated code -->
@@ -349,7 +408,14 @@
             class="rounded-lg border border-default p-6 flex items-center justify-center min-h-40"
           >
             <Element v-bind="elementBindings">
-              {{ slotText }}
+              <div v-if="as === 'UCard'" class="space-y-2">
+                <h3 class="font-semibold">Team plan</h3>
+                <p class="text-sm text-muted">
+                  Unlimited projects, priority support, billed monthly.
+                </p>
+                <UButton label="Upgrade" trailing-icon="i-lucide-arrow-right" size="sm" />
+              </div>
+              <template v-else>{{ slotText }}</template>
             </Element>
           </div>
 
