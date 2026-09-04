@@ -1,17 +1,78 @@
 <script setup lang="ts">
-  // computed() needs an explicit import here (rather than Nuxt's auto-import) so this
-  // component still mounts under vitest's 'vue' project, which has no Nuxt auto-import
-  // context — same tension as Group.vue/BaselineStatus.vue, exempted below.
   import { useElementStyle } from '../composables/useElementStyle'
   import type { ElementProps } from '../types/element'
 
-  const props = defineProps<ElementProps>()
+  const {
+    as = 'div',
+    componentProps,
+    block,
+    flex,
+    grid: gridMode,
+    hidden,
+    cols,
+    rows,
+    gap,
+    align,
+    justify,
+    p,
+    px,
+    py,
+    m,
+    mx,
+    my,
+    w,
+    h,
+    minW,
+    maxW,
+    minH,
+    maxH,
+    aspect,
+    bg,
+    color,
+    border,
+    radius,
+    shadow,
+    cursor,
+    select,
+    pointer,
+  } = defineProps<ElementProps>()
 
-  const style = useElementStyle(props)
+  const style = useElementStyle(() => ({
+    block,
+    flex,
+    grid: gridMode,
+    hidden,
+    cols,
+    rows,
+    gap,
+    align,
+    justify,
+    p,
+    px,
+    py,
+    m,
+    mx,
+    my,
+    w,
+    h,
+    minW,
+    maxW,
+    minH,
+    maxH,
+    aspect,
+    bg,
+    color,
+    border,
+    radius,
+    shadow,
+    cursor,
+    select,
+    pointer,
+  }))
 </script>
 
 <template>
-  <component :is="props.as ?? 'div'" v-bind="props.componentProps" :style>
+  <component :is="as" v-bind="componentProps" :style>
     <slot />
   </component>
 </template>

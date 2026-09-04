@@ -441,7 +441,7 @@ export default defineConfigWithVueTs(
   // no Nuxt auto-import context (unlike the real Nuxt runtime, where auto-import applies).
   {
     files: [
-      'layers/design-system/element/app/components/Element.vue',
+      'layers/core/app/components/ElementTw.vue',
       'layers/delivery/feeds/app/components/Feeds/RouteCard.vue',
     ],
     rules: {
