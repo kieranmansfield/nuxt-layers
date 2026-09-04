@@ -144,7 +144,13 @@
             <UBadge :label="`#${index + 1}`" variant="subtle" color="neutral" />
 
             <UFormField label="size">
-              <UInput v-model.number="segment.size" type="number" min="0.5" step="0.5" class="w-20" />
+              <UInput
+                v-model.number="segment.size"
+                type="number"
+                min="0.5"
+                step="0.5"
+                class="w-20"
+              />
             </UFormField>
 
             <UButtonGroup>
