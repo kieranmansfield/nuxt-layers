@@ -24,6 +24,61 @@ export default defineAppConfig({
           },
         ],
       },
+      sidebar: {
+        name: 'sidebar',
+        columns: [
+          {
+            size: 1,
+            lineStart: 'sidebar-start',
+            lineEnd: 'sidebar-end',
+          },
+          {
+            size: 4,
+            lineStart: 'content-start',
+            lineEnd: 'content-end',
+          },
+        ],
+      },
+      magazine: {
+        name: 'magazine',
+        columns: [
+          {
+            size: 2,
+            lineStart: 'feature-start',
+            lineEnd: 'feature-end',
+          },
+          {
+            size: 3,
+            lineStart: 'body-start',
+            lineEnd: 'body-end',
+          },
+          {
+            size: 1,
+            lineStart: 'aside-start',
+            lineEnd: 'aside-end',
+          },
+        ],
+      },
+      'holy-grail': {
+        name: 'holy-grail',
+        columns: [
+          {
+            size: 1,
+            lineStart: 'aside-left-start',
+            lineEnd: 'aside-left-end',
+          },
+          {
+            size: 4,
+            lineStart: 'main-start',
+            lineEnd: 'main-end',
+          },
+          {
+            size: 1,
+            lineStart: 'aside-right-start',
+            lineEnd: 'aside-right-end',
+          },
+        ],
+      },
     },
   },
 })

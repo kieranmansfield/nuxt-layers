@@ -1,8 +1,8 @@
 # Grid Layer
 
 Font-size-derived vertical rhythm + data-driven column composition for Nuxt 4 applications.
-Named presets (`swiss`, `editorial`) or custom `TrackSegment[]` arrays resolve to
-`grid-template-columns` strings via `useGridTracks()`. See
+Named presets (`swiss`, `editorial`, `sidebar`, `magazine`, `holy-grail`) or custom
+`TrackSegment[]` arrays resolve to `grid-template-columns` strings via `useGridTracks()`. See
 `docs/superpowers/specs/2026-09-04-grid-layer-design.md` for the full design.
 
 ## Layer Structure
@@ -45,4 +45,7 @@ placementFromIndex(2, 'full')                     // → '2 / -1'
 - No row-track presets beyond the rhythm-derived floor.
 - No Bento-grid preset.
 - `layers/structure/layout/**` is untouched — reworking it to consume this layer is a future pass.
-- No automatic viewport-based column degradation — explicit track lists render at their configured sizes and scroll horizontally (`.grid-tracks` has `overflow-x: auto`) rather than dropping columns; pick a preset/`minTrackWidth` sized for your target viewport.
+- No automatic viewport-based column degradation — explicit track lists render at their
+  configured sizes and overflow rather than dropping columns; wrap the grid in a scrollable
+  wrapper element (`overflow-x: auto`, not on `.grid-tracks` itself) or pick a preset/
+  `minTrackWidth` sized for your target viewport.

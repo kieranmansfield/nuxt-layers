@@ -57,19 +57,6 @@
       buttonClass: 'bg-amber-500/10 text-amber-500 hover:bg-amber-500/20',
     },
     {
-      name: 'Grid',
-      description: 'Font-size-derived rhythm + data-driven column composition, visual builder',
-      loaded: true,
-      icon: 'i-lucide-grid-3x3',
-      to: '/grid-builder',
-      features: ['Swiss Preset', 'Editorial Preset', 'Custom Tracks', 'Named Lines', 'Builder UI'],
-      borderColor: 'border-green-500/50',
-      bgColor: 'bg-green-500/10',
-      iconBg: 'bg-green-500/10',
-      iconColor: 'text-green-500',
-      buttonClass: 'bg-green-500/10 text-green-500 hover:bg-green-500/20',
-    },
-    {
       name: 'Motion',
       description: 'GSAP, Locomotive Scroll, scrollytelling, and micro-interaction primitives',
       loaded: true,
@@ -432,6 +419,18 @@
       layer: 'Layout',
     },
     {
+      label: 'Layout: Swiss Grid',
+      to: '/layout-swiss',
+      icon: 'i-lucide-grid-3x3',
+      layer: 'Layout',
+    },
+    {
+      label: 'Grid Builder',
+      to: '/grid-builder',
+      icon: 'i-lucide-layout-panel-top',
+      layer: 'Grid',
+    },
+    {
       label: 'Layout: Stacking',
       to: '/layout-stacking',
       icon: 'i-lucide-square-stack',
@@ -469,6 +468,7 @@
     Metadata: { icon: 'text-teal-500', border: 'border-teal-500/50', bg: 'bg-teal-500/10' },
     Typography: { icon: 'text-sky-500', border: 'border-sky-500/50', bg: 'bg-sky-500/10' },
     Scripts: { icon: 'text-lime-500', border: 'border-lime-500/50', bg: 'bg-lime-500/10' },
+    Grid: { icon: 'text-green-500', border: 'border-green-500/50', bg: 'bg-green-500/10' },
   }
 
   definePageMeta({ layout: { name: 'grid', props: { showHeader: false, showFooter: false } } })

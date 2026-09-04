@@ -19,9 +19,10 @@ function toBracket(names: string[]): string {
  * Builds a `grid-template-columns` value from a TrackConfig. Each segment becomes a
  * `minmax(floor, Nfr)` track; adjacent lineEnd/lineStart names merge into one bracket,
  * per standard named-grid-line syntax. Unlike `repeat(auto-fill, ...)`, an explicit track
- * list cannot drop columns to fit a narrow viewport — it only overflows (scrolling inside
- * `.grid-tracks`); pass a smaller `minTrackWidth` or fewer segments if you need columns to
- * degrade for a narrower target viewport.
+ * list cannot drop columns to fit a narrow viewport — it only overflows. Wrap the grid in
+ * a scrollable container (e.g. `overflow-x: auto` on a wrapper element, not on
+ * `.grid-tracks` itself) if segments may overflow the target viewport, or pass a smaller
+ * `minTrackWidth`/fewer segments to avoid overflow entirely.
  */
 export function toColumnsCss(config: TrackConfig): string {
   const minWidth = config.minTrackWidth ?? 'var(--measure-min)'

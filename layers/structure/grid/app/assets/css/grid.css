@@ -35,5 +35,4 @@
   grid-auto-rows: minmax(calc(var(--lpf) * var(--unit)), max-content);
   container-type: inline-size;
   container-name: grid-tracks;
-  overflow-x: auto;
 }
