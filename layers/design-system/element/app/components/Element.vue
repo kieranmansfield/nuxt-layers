@@ -14,6 +14,7 @@
 
   const {
     as = 'div',
+    componentProps,
     block,
     flex,
     grid: gridMode,
@@ -57,7 +58,7 @@
 </script>
 
 <template>
-  <component :is="as" :style>
+  <component :is="as" v-bind="componentProps" :style>
     <slot />
   </component>
 </template>

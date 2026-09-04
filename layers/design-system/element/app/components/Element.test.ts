@@ -1,7 +1,18 @@
 import { mount } from '@vue/test-utils'
+import { defineComponent, h } from 'vue'
 import { describe, expect, it } from 'vitest'
 
 import Element from './Element.vue'
+
+// Stands in for a real component (e.g. UBadge) whose own `color` prop is
+// semantic, not a raw CSS value — the same name Element uses for its own
+// raw-CSS text colour passthrough.
+const ColorPropStub = defineComponent({
+  props: { color: { type: String, default: undefined } },
+  setup(props) {
+    return () => h('div', { 'data-received-color': props.color }, 'stub')
+  },
+})
 
 describe('Element', () => {
   it('renders as a div by default', () => {
@@ -60,5 +71,20 @@ describe('Element', () => {
     const style = wrapper.attributes('style') ?? ''
     expect(style).toContain('margin: var(--fluid-space-md)')
     expect(style).toContain('padding: var(--fluid-space-lg)')
+  })
+
+  it('passes componentProps to the resolved component, past a colliding prop name', () => {
+    const wrapper = mount(Element, {
+      props: {
+        as: ColorPropStub,
+        color: 'crimson',
+        componentProps: { color: 'error' },
+      },
+    })
+    // Element's own `color` still resolves to raw CSS text colour...
+    expect(wrapper.attributes('style') ?? '').toContain('color: crimson')
+    // ...while the stub's semantic `color` prop comes from componentProps, not
+    // from Element's own `color`.
+    expect(wrapper.attributes('data-received-color')).toBe('error')
   })
 })

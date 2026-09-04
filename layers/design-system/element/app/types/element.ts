@@ -19,4 +19,8 @@ export type ElementProps = ElementLayoutProps &
   ElementSurfaceProps &
   ElementInteractionProps & {
     as?: string | Component
+    // Escape hatch for prop names that collide with Element's own (e.g. `color`
+    // is Element's raw-CSS text colour, but also UBadge's semantic colour prop).
+    // Non-colliding component props still reach `as` for free via attrs fallthrough.
+    componentProps?: Record<string, unknown>
   }
