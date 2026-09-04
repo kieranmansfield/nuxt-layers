@@ -65,10 +65,10 @@ The layout layer requires a dedicated Nuxt layout file and page-level layout dec
 
 The grid has two modes controlled via `app.config.ts`:
 
-| Mode         | Behaviour                                                             |
-| ------------ | ---------------------------------------------------------------------- |
+| Mode         | Behaviour                                                            |
+| ------------ | -------------------------------------------------------------------- |
 | `'swiss'`    | Default. Full Swiss grid with `grid-root`/`basesection` CSS subgrid. |
-| `'disabled'` | `LayoutMain` renders a plain `<main>` without grid CSS.               |
+| `'disabled'` | `LayoutMain` renders a plain `<main>` without grid CSS.              |
 
 Set in your `app.config.ts`:
 
@@ -217,10 +217,10 @@ Positioned child within a subgrid section. Use `preset` for common layouts or se
 
 **Built-in presets:**
 
-| Preset     | Columns        | Rows        |
-| ---------- | -------------- | ----------- |
-| `hero`     | full width     | full height |
-| `centered` | full width     | 12 rows     |
+| Preset     | Columns    | Rows        |
+| ---------- | ---------- | ----------- |
+| `hero`     | full width | full height |
+| `centered` | full width | 12 rows     |
 
 ---
 
@@ -284,14 +284,14 @@ Column overlay toggled with `Cmd+G`. Place once in your grid layout file, not in
 const { config, getPreset, isEnabled, mode, layers, useZIndex } = useGridConfig()
 ```
 
-| Return             | Type                           | Description                        |
-| ------------------ | ------------------------------ | ---------------------------------- |
-| `config`           | `Ref<GridConfig>`              | Raw config from `app.config`       |
-| `isEnabled`        | `ComputedRef<boolean>`         | `true` when `mode !== 'disabled'`  |
-| `mode`             | `ComputedRef<GridMode>`        | `'swiss' \| 'disabled'`            |
-| `layers`           | `ComputedRef<GridLayers>`      | All z-index values                 |
-| `getPreset(name)`  | `GridPresetsItem \| undefined` | Look up a preset by name           |
-| `useZIndex(layer)` | `number`                       | Get a z-index value by layer name  |
+| Return             | Type                           | Description                       |
+| ------------------ | ------------------------------ | --------------------------------- |
+| `config`           | `Ref<GridConfig>`              | Raw config from `app.config`      |
+| `isEnabled`        | `ComputedRef<boolean>`         | `true` when `mode !== 'disabled'` |
+| `mode`             | `ComputedRef<GridMode>`        | `'swiss' \| 'disabled'`           |
+| `layers`           | `ComputedRef<GridLayers>`      | All z-index values                |
+| `getPreset(name)`  | `GridPresetsItem \| undefined` | Look up a preset by name          |
+| `useZIndex(layer)` | `number`                       | Get a z-index value by layer name |
 
 **`useZIndex` example:**
 

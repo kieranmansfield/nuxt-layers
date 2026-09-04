@@ -55,10 +55,12 @@ docs/LAYOUT-MIGRATION.md                # NEW — old→new API mapping for late
 ### Task 1: Types and config
 
 **Files:**
+
 - Modify: `layers/structure/layout/app/types/layouts.ts`
 - Modify: `layers/structure/layout/app/app.config.ts`
 
 **Interfaces:**
+
 - Produces: `GridMode = 'fluid' | 'disabled'`, `GridLayers` (unchanged shape), `GridTunables = { measureMin: string; edgeMin: { min: string; max: string }; lpf: { min: number; max: number } }`, `GridConfig = { mode?: GridMode; tunables: GridTunables; layers: GridLayers }` — every later task that imports from `layouts.ts` uses these exact names.
 
 - [ ] **Step 1: Rewrite `layouts.ts`**
@@ -217,9 +219,11 @@ git commit -m "feat(layout): replace preset-based grid config with fluid tunable
 ### Task 2: Fluid grid CSS engine
 
 **Files:**
+
 - Modify: `layers/structure/layout/app/assets/css/layout/grids.css`
 
 **Interfaces:**
+
 - Produces: CSS classes `.layout-grid`, `.layout-section`, `.layout-section[data-align='center']`, `.layout-section[data-align='split']`, `.layout-cell`, `.layout-cell--block`, `.layout-cell--plate`, `.layout-cell--span-2`, `.layout-cell--span-2-rows`, `.layout-cell--span-3-rows`, `.layout-hero`, and custom properties `--fs`/`--unit`/`--edge-min`/`--measure-min`/`--lpf` on `:root` — every component task below (3 onward) targets these exact class names.
 - Consumes: nothing (this is the base layer).
 
@@ -313,14 +317,6 @@ The file currently has three sections: `.grid-root`, `.basesection`, and the rhy
  */
 .layout-grid {
   display: grid;
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 100%;
-  padding-inline: var(--edge-min);
-  gap: var(--unit);
-  /* Boundary for .layout-section's viewport-scoped span-2 gate below. */
-  container-type: inline-size;
-  container-name: layout-viewport;
   /* auto-fill computes column count natively (floor((avail+gutter) /
      (measure+gutter))) — no var()-derived integer needed. See Pitfall 1:
      repeat()'s track-count argument requires a literal <integer> at
@@ -329,11 +325,19 @@ The file currently has three sections: `.grid-root`, `.basesection`, and the rhy
      implicit, content-sized auto-placement — cells silently squash to
      unreadable slivers. */
   grid-template-columns: repeat(auto-fill, minmax(var(--measure-min), 1fr));
+  grid-auto-rows: minmax(calc(var(--lpf) * var(--unit)), max-content);
   /* Belt-and-braces: if a span ever outruns the explicit tracks, the
      forced implicit column is sized the same way, not auto/content
      (Pitfall 2). */
   grid-auto-columns: minmax(var(--measure-min), 1fr);
-  grid-auto-rows: minmax(calc(var(--lpf) * var(--unit)), max-content);
+  gap: var(--unit);
+  box-sizing: border-box;
+  container-name: layout-viewport;
+  /* Boundary for .layout-section's viewport-scoped span-2 gate below. */
+  container-type: inline-size;
+  padding-inline: var(--edge-min);
+  width: 100%;
+  max-width: 100%;
   /* clip without creating a scroll container (overflow-x:hidden would
      force overflow-y:auto) */
   overflow-x: clip;
@@ -351,11 +355,11 @@ The file currently has three sections: `.grid-root`, `.basesection`, and the rhy
  */
 .layout-section {
   display: grid;
-  box-sizing: border-box;
-  grid-column: 1 / -1;
   grid-template-columns: subgrid;
-  container-type: inline-size;
+  grid-column: 1 / -1;
+  box-sizing: border-box;
   container-name: layout-section;
+  container-type: inline-size;
 }
 
 .layout-section[data-align='center'] {
@@ -381,8 +385,8 @@ The file currently has three sections: `.grid-root`, `.basesection`, and the rhy
  * boolean utility classes. No numbered colStart/rowStart placement.
  */
 .layout-cell {
-  container-type: inline-size;
   container-name: layout-cell;
+  container-type: inline-size;
 }
 
 .layout-cell--block {
@@ -392,8 +396,8 @@ The file currently has three sections: `.grid-root`, `.basesection`, and the rhy
 
 .layout-cell--plate {
   background: var(--ui-bg-elevated, #16161a);
-  color: var(--ui-text-highlighted, #fbfbf9);
   padding: calc(var(--unit) / 2);
+  color: var(--ui-text-highlighted, #fbfbf9);
 }
 
 /* Threshold mirrors --measure-min (22rem) — container query conditions
@@ -430,13 +434,13 @@ The file currently has three sections: `.grid-root`, `.basesection`, and the rhy
  * No --fields, no column derivation — matches the doc's own .hero.
  */
 .layout-hero {
-  min-height: 100svh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: var(--unit);
   padding-inline: var(--edge-min);
+  min-height: 100svh;
   text-align: center;
 }
 
@@ -550,10 +554,12 @@ git commit -m "feat(layout): replace breakpoint grid CSS with --fs-derived fluid
 ### Task 3: `useGridConfig` composable
 
 **Files:**
+
 - Modify: `layers/structure/layout/app/composables/useGridConfig.ts`
 - Test: `tests/nuxt/use-grid-config.test.ts`
 
 **Interfaces:**
+
 - Consumes: `GridConfig`, `GridLayers`, `GridMode` from `layers/structure/layout/app/types/layouts.ts` (Task 1).
 - Produces: `useGridConfig(): { config: ComputedRef<GridConfig | undefined>; mode: ComputedRef<GridMode>; isEnabled: ComputedRef<boolean>; layers: ComputedRef<GridLayers | undefined>; useZIndex: (layer: keyof GridLayers) => number; cssVars: ComputedRef<Record<string, string>> }` — `LayoutMain` (Task 4) binds `cssVars` via `:style` and reads `mode`.
 
@@ -788,9 +794,11 @@ git commit -m "feat(layout): rebuild useGridConfig around fluid tunables and css
 ### Task 4: `LayoutMain` rebuild
 
 **Files:**
+
 - Modify: `layers/structure/layout/app/components/Layout/Main.vue`
 
 **Interfaces:**
+
 - Consumes: `useGridConfig()` → `{ mode, cssVars }` (Task 3).
 - Produces: renders `.layout-grid` (Task 2's CSS) with `cssVars` bound as inline custom properties. `LayoutSection`/`LayoutCell` (Tasks 5-6) rely on being mounted inside this element for `--unit`/`--edge-min`/`--measure-min`/`--lpf` to resolve from the config-driven values rather than the `:root` defaults alone.
 
@@ -826,7 +834,11 @@ git commit -m "feat(layout): rebuild useGridConfig around fluid tunables and css
 </script>
 
 <template>
-  <component :is="tag" :class="mode !== 'disabled' ? 'layout-grid' : undefined" :style="mode !== 'disabled' ? cssVars : undefined">
+  <component
+    :is="tag"
+    :class="mode !== 'disabled' ? 'layout-grid' : undefined"
+    :style="mode !== 'disabled' ? cssVars : undefined"
+  >
     <slot />
   </component>
 </template>
@@ -849,6 +861,7 @@ git commit -m "feat(layout): rebuild LayoutMain around the fluid grid"
 ### Task 5: `LayoutSection` (new) and deletion of the old Section directory
 
 **Files:**
+
 - Create: `layers/structure/layout/app/components/Layout/Section.vue`
 - Delete: `layers/structure/layout/app/components/Layout/Section/index.vue`
 - Delete: `layers/structure/layout/app/components/Layout/Section/Gallery.vue`
@@ -856,6 +869,7 @@ git commit -m "feat(layout): rebuild LayoutMain around the fluid grid"
 - Delete: `layers/structure/layout/app/components/Layout/Section/Split.vue`
 
 **Interfaces:**
+
 - Produces: `LayoutSection` — props `{ height?: string; align?: 'split' | 'center' }`, renders `.layout-section` (Task 2's CSS) with `data-align` and `block-size` bound.
 
 - [ ] **Step 1: Delete the old Section directory**
@@ -922,12 +936,14 @@ git commit -m "feat(layout): add LayoutSection, drop the old subgrid Section dir
 ### Task 6: `LayoutCell` (replaces `LayoutGridItem`)
 
 **Files:**
+
 - Create: `layers/structure/layout/app/components/Layout/Cell.vue`
 - Delete: `layers/structure/layout/app/components/Layout/Grid/Item.vue`
 - Delete: `layers/structure/layout/app/utils/gridPlacementStyle.ts`
 - Delete: `layers/structure/layout/app/utils/gridPlacementStyle.test.ts`
 
 **Interfaces:**
+
 - Produces: `LayoutCell` — props `{ as?: string; variant?: 'block' | 'plate'; span2?: boolean; span2Rows?: boolean; span3Rows?: boolean }`, renders the element with `layout-cell layout-cell--<variant>` plus the requested span modifier classes.
 
 - [ ] **Step 1: Delete the old GridItem component and placement utility**
@@ -1011,9 +1027,11 @@ git commit -m "feat(layout): add LayoutCell, drop LayoutGridItem and gridPlaceme
 ### Task 7: `LayoutHero` (new)
 
 **Files:**
+
 - Create: `layers/structure/layout/app/components/Layout/Hero.vue`
 
 **Interfaces:**
+
 - Produces: `LayoutHero` — prop `{ as?: string }`, renders `.layout-hero` (Task 2's CSS).
 
 - [ ] **Step 1: Create `Hero.vue`**
@@ -1064,9 +1082,11 @@ git commit -m "feat(layout): add LayoutHero"
 ### Task 8: `LayoutGridDebug` rebuild
 
 **Files:**
+
 - Modify: `layers/structure/layout/app/components/Layout/Grid/Debug.vue`
 
 **Interfaces:**
+
 - Produces: `LayoutGridDebug` — no props, `defineExpose({ toggle })`, same `⌘/Ctrl+G` shortcut as before.
 
 - [ ] **Step 1: Rewrite `Debug.vue`**
@@ -1148,9 +1168,11 @@ git commit -m "feat(layout): rebuild LayoutGridDebug as a --unit band overlay"
 ### Task 9: Playground demo page rewrite
 
 **Files:**
+
 - Modify: `apps/playground/app/pages/layout.vue`
 
 **Interfaces:**
+
 - Consumes: `LayoutMain`, `LayoutSection`, `LayoutCell`, `LayoutHero`, `LayoutGridDebug`, `LayoutPage` (unchanged), `useGridConfig()` — all from Tasks 3-8.
 
 - [ ] **Step 1: Rewrite `apps/playground/app/pages/layout.vue`**
@@ -1175,10 +1197,7 @@ The old page documented the 6/12/18 preset system in detail; that entire API is 
 </script>
 
 <template>
-  <LayoutPage
-    title="Layout Layer"
-    description="Demonstrating the fluid, --fs-derived layout grid"
-  >
+  <LayoutPage title="Layout Layer" description="Demonstrating the fluid, --fs-derived layout grid">
     <div class="bg-default min-h-screen">
       <LayoutGridDebug />
       <DemoPageHero
@@ -1233,8 +1252,8 @@ The old page documented the 6/12/18 preset system in detail; that entire API is 
             <div class="text-center space-y-2">
               <h2 class="text-2xl font-bold">LayoutSection align="center"</h2>
               <p class="text-muted">
-                place-content: center — true horizontal+vertical centering, no fighting
-                align-items: stretch.
+                place-content: center — true horizontal+vertical centering, no fighting align-items:
+                stretch.
               </p>
             </div>
           </LayoutSection>
@@ -1301,15 +1320,17 @@ git commit -m "feat(layout): rebuild the playground layout demo against the flui
 ### Task 10: Documentation rewrite
 
 **Files:**
+
 - Modify: `docs/LAYOUT.md`
 - Modify: `layers/structure/layout/CLAUDE.md`
 
 **Interfaces:**
+
 - Consumes: nothing new — documents Tasks 1-9's final API surface.
 
 - [ ] **Step 1: Rewrite `docs/LAYOUT.md`**
 
-```markdown
+````markdown
 # Layout Layer
 
 A fluid, `--fs`-derived grid for Nuxt 4 applications. One root unit derives column floor, edge margins, and per-section vertical rhythm — no breakpoints, no numbered column placement.
@@ -1342,6 +1363,7 @@ One root custom property, `--fs`, drives everything else via CSS `calc()`/`round
         → --lines, --fields, --slack (per LayoutSection)
           → padding-block, grid tracks, gap
 ```
+````
 
 The root grid (`LayoutMain`, class `.layout-grid`) is a continuous `repeat(auto-fill, minmax(--measure-min, 1fr))` grid — column count is native and emergent, not a config value. `LayoutSection` is an opt-in full-width row that adopts the root's resolved columns via CSS `subgrid` and runs its own vertical-rhythm derivation, scoped to itself. `LayoutCell` is a positioned/styled grid child — variant (`block`/`plate`) plus span utility classes, no numbered `colStart`/`rowStart`. `LayoutHero` sits deliberately outside the grid.
 
@@ -1435,13 +1457,13 @@ layoutLayer.ui.grid.mode: 'fluid' | 'disabled'
 const { config, mode, isEnabled, layers, useZIndex, cssVars } = useGridConfig()
 ```
 
-| Return             | Description                                          |
-| ------------------ | ----------------------------------------------------- |
-| `config`           | Raw `GridConfig` from app.config                      |
-| `mode`             | `'fluid' \| 'disabled'`                                |
-| `isEnabled`        | `true` when `mode !== 'disabled'`                      |
-| `layers`           | All z-index values                                     |
-| `useZIndex(layer)` | Get z-index value: `useZIndex('modal')` → `400`        |
+| Return             | Description                                                                 |
+| ------------------ | --------------------------------------------------------------------------- |
+| `config`           | Raw `GridConfig` from app.config                                            |
+| `mode`             | `'fluid' \| 'disabled'`                                                     |
+| `isEnabled`        | `true` when `mode !== 'disabled'`                                           |
+| `layers`           | All z-index values                                                          |
+| `useZIndex(layer)` | Get z-index value: `useZIndex('modal')` → `400`                             |
 | `cssVars`          | Tunables mapped to CSS custom properties — bound by `LayoutMain`'s `:style` |
 
 ---
@@ -1450,15 +1472,15 @@ const { config, mode, isEnabled, layers, useZIndex, cssVars } = useGridConfig()
 
 Every derived property is registered via `@property` (browser-enforced typing — see [Known pitfalls](#known-pitfalls)):
 
-| Property | `syntax` | Meaning |
-| --- | --- | --- |
-| `--fs` | `<length>` | Root fluid font-size clamp |
-| `--unit` | `<length>` | `1rlh` — the one unit everything else derives from |
-| `--edge-min` | `<length>` | Inline/block edge margin floor |
-| `--measure-min` | `<length>` | Narrowest column / `auto-fill` floor |
-| `--lpf` | `<integer>` | Lines-per-field (vertical rhythm chunk size) |
-| `--avail-b`, `--type-b`, `--slack` | `<length>` | Per-`LayoutSection` derivation intermediates (only present with `align="split"`) |
-| `--lines`, `--fields` | `<integer>` | Per-`LayoutSection` derivation intermediates (only present with `align="split"`) |
+| Property                           | `syntax`    | Meaning                                                                          |
+| ---------------------------------- | ----------- | -------------------------------------------------------------------------------- |
+| `--fs`                             | `<length>`  | Root fluid font-size clamp                                                       |
+| `--unit`                           | `<length>`  | `1rlh` — the one unit everything else derives from                               |
+| `--edge-min`                       | `<length>`  | Inline/block edge margin floor                                                   |
+| `--measure-min`                    | `<length>`  | Narrowest column / `auto-fill` floor                                             |
+| `--lpf`                            | `<integer>` | Lines-per-field (vertical rhythm chunk size)                                     |
+| `--avail-b`, `--type-b`, `--slack` | `<length>`  | Per-`LayoutSection` derivation intermediates (only present with `align="split"`) |
+| `--lines`, `--fields`              | `<integer>` | Per-`LayoutSection` derivation intermediates (only present with `align="split"`) |
 
 ---
 
@@ -1510,7 +1532,8 @@ layoutLayer: {
 ### 3. Hand-synced container-query thresholds
 
 `@container` conditions can't reference custom properties. The `22rem` in `@container layout-cell (max-width: 22rem)` and the `2 * 22rem + 1rlh` in the span-2 gate both mirror `--measure-min`'s default — if you change `tunables.measureMin` in `app.config.ts`, these thresholds in `grids.css` need updating by hand.
-```
+
+````
 
 - [ ] **Step 2: Rewrite `layers/structure/layout/CLAUDE.md`**
 
@@ -1525,34 +1548,36 @@ Full documentation: `docs/LAYOUT.md` in the monorepo root.
 
 ## Layer Structure
 
-```
+````
+
 layers/layout/
 ├── app/
-│   ├── assets/css/
-│   │   └── layout/
-│   │       └── grids.css              # fluid grid engine + @property + rhythm utilities
-│   ├── components/
-│   │   ├── HStack.vue                 # HStack — flexbox row (unchanged)
-│   │   ├── VStack.vue                 # VStack — flexbox column (unchanged)
-│   │   ├── ZStack.vue                 # ZStack — single-area grid, layered children (unchanged)
-│   │   └── Spacer.vue                 # Spacer — flexible remaining space (unchanged)
-│   ├── components/Layout/
-│   │   ├── Main.vue                   # LayoutMain — <main class="layout-grid"> wrapper, binds cssVars
-│   │   ├── Section.vue                # LayoutSection — opt-in full-width subgrid row
-│   │   ├── Cell.vue                   # LayoutCell — variant + span-N utility classes
-│   │   ├── Hero.vue                   # LayoutHero — deliberately outside the grid
-│   │   ├── Grid/
-│   │   │   └── Debug.vue              # LayoutGridDebug — Cmd+G --unit band overlay
-│   │   └── Page/
-│   │       ├── index.vue              # LayoutPage — fragment: SEO + optional header (unchanged)
-│   │       └── Header.vue             # LayoutPageHeader — title + description block (unchanged)
-│   ├── composables/
-│   │   └── useGridConfig.ts           # config, isEnabled, mode, layers, useZIndex, cssVars
-│   └── types/
-│       └── layouts.ts                 # GridConfig, GridMode, GridLayers, GridTunables
-│   └── app.config.ts                  # Config defaults + Nuxt UI component theming
-├── nuxt.config.ts                     # Layer meta, alias (#layers/layout), CSS import
-└── CLAUDE.md                          # This file
+│ ├── assets/css/
+│ │ └── layout/
+│ │ └── grids.css # fluid grid engine + @property + rhythm utilities
+│ ├── components/
+│ │ ├── HStack.vue # HStack — flexbox row (unchanged)
+│ │ ├── VStack.vue # VStack — flexbox column (unchanged)
+│ │ ├── ZStack.vue # ZStack — single-area grid, layered children (unchanged)
+│ │ └── Spacer.vue # Spacer — flexible remaining space (unchanged)
+│ ├── components/Layout/
+│ │ ├── Main.vue # LayoutMain — <main class="layout-grid"> wrapper, binds cssVars
+│ │ ├── Section.vue # LayoutSection — opt-in full-width subgrid row
+│ │ ├── Cell.vue # LayoutCell — variant + span-N utility classes
+│ │ ├── Hero.vue # LayoutHero — deliberately outside the grid
+│ │ ├── Grid/
+│ │ │ └── Debug.vue # LayoutGridDebug — Cmd+G --unit band overlay
+│ │ └── Page/
+│ │ ├── index.vue # LayoutPage — fragment: SEO + optional header (unchanged)
+│ │ └── Header.vue # LayoutPageHeader — title + description block (unchanged)
+│ ├── composables/
+│ │ └── useGridConfig.ts # config, isEnabled, mode, layers, useZIndex, cssVars
+│ └── types/
+│ └── layouts.ts # GridConfig, GridMode, GridLayers, GridTunables
+│ └── app.config.ts # Config defaults + Nuxt UI component theming
+├── nuxt.config.ts # Layer meta, alias (#layers/layout), CSS import
+└── CLAUDE.md # This file
+
 ```
 
 ---
@@ -1562,11 +1587,13 @@ layers/layout/
 The grid is a single `display: grid` on `<main>` (`.layout-grid`), sized only by `--measure-min`/`--unit` — no breakpoints. `LayoutSection` opts a full-width row into `subgrid`, inheriting the root's resolved `auto-fill` columns. No JS is involved in the grid mechanics themselves.
 
 ```
-LayoutMain (<main class="layout-grid">)         ← continuous auto-fill grid
-  LayoutSection (<section class="layout-section">)  ← opt-in, subgrid, own field rhythm
-    LayoutCell                                       ← variant + span classes
-  LayoutHero                                          ← deliberately outside the grid
-```
+
+LayoutMain (<main class="layout-grid">) ← continuous auto-fill grid
+LayoutSection (<section class="layout-section">) ← opt-in, subgrid, own field rhythm
+LayoutCell ← variant + span classes
+LayoutHero ← deliberately outside the grid
+
+````
 
 ---
 
@@ -1585,7 +1612,7 @@ LayoutMain (<main class="layout-grid">)         ← continuous auto-fill grid
     <LayoutGridDebug />
   </LayoutMain>
 </template>
-```
+````
 
 **In each page using the grid:**
 
@@ -1648,14 +1675,14 @@ layoutLayer.ui.grid.mode: 'fluid' | 'disabled'
 const { config, isEnabled, mode, layers, useZIndex, cssVars } = useGridConfig()
 ```
 
-| Return             | Description                                    |
-| ------------------ | ----------------------------------------------- |
-| `config`           | Raw `GridConfig` from app.config                |
-| `isEnabled`        | `true` when `mode !== 'disabled'`               |
-| `mode`             | `'fluid' \| 'disabled'`                          |
-| `layers`           | All z-index values                              |
-| `useZIndex(layer)` | Get z-index value: `useZIndex('modal')` → 400   |
-| `cssVars`          | Tunables mapped to CSS custom properties         |
+| Return             | Description                                   |
+| ------------------ | --------------------------------------------- |
+| `config`           | Raw `GridConfig` from app.config              |
+| `isEnabled`        | `true` when `mode !== 'disabled'`             |
+| `mode`             | `'fluid' \| 'disabled'`                       |
+| `layers`           | All z-index values                            |
+| `useZIndex(layer)` | Get z-index value: `useZIndex('modal')` → 400 |
+| `cssVars`          | Tunables mapped to CSS custom properties      |
 
 ---
 
@@ -1671,32 +1698,35 @@ const { config, isEnabled, mode, layers, useZIndex, cssVars } = useGridConfig()
 
 ## Key Files
 
-| Task                     | File                                           |
-| ------------------------ | ----------------------------------------------- |
-| Grid CSS                 | `app/assets/css/layout/grids.css`              |
-| Config + Nuxt UI theming | `app/app.config.ts`                            |
-| TypeScript types         | `app/types/layouts.ts`                         |
-| Config composable        | `app/composables/useGridConfig.ts`             |
-| Grid wrapper component   | `app/components/Layout/Main.vue`               |
-| Container component      | `layers/core/app/components/AppContainer.vue`  |
-| Full reference docs      | `../../docs/LAYOUT.md`                         |
-```
+| Task                     | File                                          |
+| ------------------------ | --------------------------------------------- |
+| Grid CSS                 | `app/assets/css/layout/grids.css`             |
+| Config + Nuxt UI theming | `app/app.config.ts`                           |
+| TypeScript types         | `app/types/layouts.ts`                        |
+| Config composable        | `app/composables/useGridConfig.ts`            |
+| Grid wrapper component   | `app/components/Layout/Main.vue`              |
+| Container component      | `layers/core/app/components/AppContainer.vue` |
+| Full reference docs      | `../../docs/LAYOUT.md`                        |
+
+````
 
 - [ ] **Step 3: Commit**
 
 ```bash
 git add docs/LAYOUT.md layers/structure/layout/CLAUDE.md
 git commit -m "docs(layout): rewrite LAYOUT.md and layer CLAUDE.md for the fluid grid"
-```
+````
 
 ---
 
 ### Task 11: Migration guide
 
 **Files:**
+
 - Create: `docs/LAYOUT-MIGRATION.md`
 
 **Interfaces:**
+
 - Consumes: nothing — reference document only, for the later (out-of-scope) pass that updates `layers/content`, `layers/structure/navigation`, and `apps/starter`.
 
 - [ ] **Step 1: Create `docs/LAYOUT-MIGRATION.md`**
@@ -1708,50 +1738,50 @@ For the later pass that updates `layers/content`, `layers/structure/navigation`,
 
 ## Removed components
 
-| Old | New | Notes |
-| --- | --- | --- |
-| `LayoutGridItem` | `LayoutCell` | No numbered placement. `preset` prop removed entirely. |
-| `LayoutSection` (12-row, subgrid, no align control) | `LayoutSection` (same name, new props) | `fullHeight`/`fullWidth` props removed; use `height`/`align` instead. |
-| `LayoutSectionHero` | `LayoutHero` | Slot-based (`#background`/`#default`/`#footer`) API dropped — `LayoutHero` is a single default slot. Rebuild background/footer composition with plain markup inside the slot, or a `HStack`/`VStack` from this same layer. |
-| `LayoutSectionSplit` | *(no direct replacement)* | Was a 9+9 two-column layout keyed to the 18-col grid. Rebuild with `HStack` (`layers/structure/layout`) or a plain CSS grid — there's no addressable "half the columns" concept left. |
-| `LayoutSectionGallery` | *(no direct replacement)* | Was an auto-placing grid with a `columns` prop. The fluid grid's own `auto-fill` already does this — drop the wrapper, use `LayoutCell` children directly inside a `LayoutMain` or a plain `<div class="layout-grid">`-styled container. |
+| Old                                                 | New                                    | Notes                                                                                                                                                                                                                                    |
+| --------------------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `LayoutGridItem`                                    | `LayoutCell`                           | No numbered placement. `preset` prop removed entirely.                                                                                                                                                                                   |
+| `LayoutSection` (12-row, subgrid, no align control) | `LayoutSection` (same name, new props) | `fullHeight`/`fullWidth` props removed; use `height`/`align` instead.                                                                                                                                                                    |
+| `LayoutSectionHero`                                 | `LayoutHero`                           | Slot-based (`#background`/`#default`/`#footer`) API dropped — `LayoutHero` is a single default slot. Rebuild background/footer composition with plain markup inside the slot, or a `HStack`/`VStack` from this same layer.               |
+| `LayoutSectionSplit`                                | _(no direct replacement)_              | Was a 9+9 two-column layout keyed to the 18-col grid. Rebuild with `HStack` (`layers/structure/layout`) or a plain CSS grid — there's no addressable "half the columns" concept left.                                                    |
+| `LayoutSectionGallery`                              | _(no direct replacement)_              | Was an auto-placing grid with a `columns` prop. The fluid grid's own `auto-fill` already does this — drop the wrapper, use `LayoutCell` children directly inside a `LayoutMain` or a plain `<div class="layout-grid">`-styled container. |
 
 ## Removed props
 
 `LayoutGridItem`/`LayoutCell`:
 
-| Removed prop | Replacement |
-| --- | --- |
-| `preset` | None — presets removed from config. Compose spans directly. |
+| Removed prop                      | Replacement                                                                                                                                                                                               |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `preset`                          | None — presets removed from config. Compose spans directly.                                                                                                                                               |
 | `colStart`, `colSpan`, `rowStart` | None — no addressable columns. If you need "half width," reconsider the layout as `LayoutCell span2` (claims 2 of however many columns resolved) or a plain flex/grid composition outside the fluid grid. |
-| `rowSpan` | `span2Rows` / `span3Rows` boolean props (only 2/3-row spans are supported; add more span classes to `grids.css` if a wider range is needed). |
-| `container` | Use `AppContainer` (from `layers/core`) directly inside the cell instead of a `container` prop on the cell itself. |
-| `gap` | Not carried over — override `--unit` locally via inline style if a specific cell needs a different internal gap. |
-| `density` | Not carried over — use the rhythm utility classes (`.leading-rhythm-*`, `.space-rhythm-*`, `.prose-rhythm`) directly, unchanged from before. |
-| `layer` | Still supported conceptually via `useGridConfig().useZIndex(layer)` — apply the z-index via `:style="{ zIndex: useZIndex('front') }"` instead of a `layer` prop. |
-| `bleed` | Not carried over — edge-to-edge bleed needs a manual `margin-inline: calc(-1 * var(--edge-min))` on the cell, mirroring the old `resolveBleedStyles` logic if needed. |
+| `rowSpan`                         | `span2Rows` / `span3Rows` boolean props (only 2/3-row spans are supported; add more span classes to `grids.css` if a wider range is needed).                                                              |
+| `container`                       | Use `AppContainer` (from `layers/core`) directly inside the cell instead of a `container` prop on the cell itself.                                                                                        |
+| `gap`                             | Not carried over — override `--unit` locally via inline style if a specific cell needs a different internal gap.                                                                                          |
+| `density`                         | Not carried over — use the rhythm utility classes (`.leading-rhythm-*`, `.space-rhythm-*`, `.prose-rhythm`) directly, unchanged from before.                                                              |
+| `layer`                           | Still supported conceptually via `useGridConfig().useZIndex(layer)` — apply the z-index via `:style="{ zIndex: useZIndex('front') }"` instead of a `layer` prop.                                          |
+| `bleed`                           | Not carried over — edge-to-edge bleed needs a manual `margin-inline: calc(-1 * var(--edge-min))` on the cell, mirroring the old `resolveBleedStyles` logic if needed.                                     |
 
 `LayoutSection`:
 
-| Removed prop | Replacement |
-| --- | --- |
-| `fullHeight` | `height` prop (default already `'100svh'` — pass a different value like `'auto'` for content-driven height). |
-| `fullWidth` | No direct replacement — the old edge-to-edge "bleed" behavior needs manual `margin-inline: calc(-1 * var(--edge-min))`, same as `LayoutCell`'s removed `bleed` prop. |
+| Removed prop | Replacement                                                                                                                                                          |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fullHeight` | `height` prop (default already `'100svh'` — pass a different value like `'auto'` for content-driven height).                                                         |
+| `fullWidth`  | No direct replacement — the old edge-to-edge "bleed" behavior needs manual `margin-inline: calc(-1 * var(--edge-min))`, same as `LayoutCell`'s removed `bleed` prop. |
 
 ## Config changes
 
 `app.config.ts`'s `layoutLayer.ui.grid`:
 
-| Old key | New key | Notes |
-| --- | --- | --- |
-| `mode: 'swiss'` | `mode: 'fluid'` | Rename only — same semantics (the enabled default). |
-| `enabled: boolean` | *(removed)* | Was a deprecated alias for `mode: 'disabled'`. Use `mode` directly. |
-| `columns: ResponsiveValue<number>` | *(removed)* | No configurable column count — `tunables.measureMin` controls the `auto-fill` floor instead. |
-| `rowsPerSection: number` | *(removed)* | No fixed row count per section — `tunables.lpf` (lines-per-field) plus the section's own derivation replace it. |
-| `rhythm: string` | *(removed)* | Was the base unit for the `.leading-rhythm-*`/`.space-rhythm-*` utilities, which are unchanged and still hardcode `0.25rem` in `grids.css` directly — not currently configurable. |
-| `presets: GridPresets` | *(removed)* | No preset system. Compose `LayoutCell`/`LayoutSection` props directly. |
-| *(new)* | `tunables: GridTunables` | `{ measureMin, edgeMin: {min,max}, lpf: {min,max} }` — see `docs/LAYOUT.md`'s config reference. |
-| `layers: GridLayers` | `layers: GridLayers` | Unchanged. |
+| Old key                            | New key                  | Notes                                                                                                                                                                             |
+| ---------------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mode: 'swiss'`                    | `mode: 'fluid'`          | Rename only — same semantics (the enabled default).                                                                                                                               |
+| `enabled: boolean`                 | _(removed)_              | Was a deprecated alias for `mode: 'disabled'`. Use `mode` directly.                                                                                                               |
+| `columns: ResponsiveValue<number>` | _(removed)_              | No configurable column count — `tunables.measureMin` controls the `auto-fill` floor instead.                                                                                      |
+| `rowsPerSection: number`           | _(removed)_              | No fixed row count per section — `tunables.lpf` (lines-per-field) plus the section's own derivation replace it.                                                                   |
+| `rhythm: string`                   | _(removed)_              | Was the base unit for the `.leading-rhythm-*`/`.space-rhythm-*` utilities, which are unchanged and still hardcode `0.25rem` in `grids.css` directly — not currently configurable. |
+| `presets: GridPresets`             | _(removed)_              | No preset system. Compose `LayoutCell`/`LayoutSection` props directly.                                                                                                            |
+| _(new)_                            | `tunables: GridTunables` | `{ measureMin, edgeMin: {min,max}, lpf: {min,max} }` — see `docs/LAYOUT.md`'s config reference.                                                                                   |
+| `layers: GridLayers`               | `layers: GridLayers`     | Unchanged.                                                                                                                                                                        |
 
 `ui.page` slots (Nuxt UI theming, same file): `left`/`center`/`right` used to map to a numbered 18-column sidebar split (`col-start-5`, `col-start-15`). That addressing doesn't exist anymore — all three slots are now `col-span-full`. Any app relying on the sidebar split visually will need a different approach (e.g. `HStack` composing `UPageAside` + body directly, outside `UPage`'s slot system).
 
@@ -1759,11 +1789,11 @@ For the later pass that updates `layers/content`, `layers/structure/navigation`,
 
 `useGridConfig()`:
 
-| Old | New |
-| --- | --- |
-| `getPreset(name)` | Removed — nothing to look up. |
-| `mode.value === 'swiss'` | `mode.value === 'fluid'` |
-| *(new)* | `cssVars` — the tunables mapped to CSS custom properties, for anyone building a custom grid-root wrapper instead of using `LayoutMain`. |
+| Old                      | New                                                                                                                                     |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `getPreset(name)`        | Removed — nothing to look up.                                                                                                           |
+| `mode.value === 'swiss'` | `mode.value === 'fluid'`                                                                                                                |
+| _(new)_                  | `cssVars` — the tunables mapped to CSS custom properties, for anyone building a custom grid-root wrapper instead of using `LayoutMain`. |
 
 `useZIndex`, `layers`, `isEnabled`, `config` are unchanged.
 ```

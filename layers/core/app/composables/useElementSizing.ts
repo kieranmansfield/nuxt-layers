@@ -12,9 +12,7 @@ export type ElementSizingProps = {
   aspect?: CSSProperties['aspectRatio'] | undefined
 }
 
-export function useElementSizing(
-  props: ElementSizingProps,
-): Partial<CSSProperties> {
+export function useElementSizing(props: ElementSizingProps): Partial<CSSProperties> {
   return {
     width: props.w,
     height: props.h,

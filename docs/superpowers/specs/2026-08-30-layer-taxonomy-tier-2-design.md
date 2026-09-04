@@ -71,7 +71,7 @@ other three layers should match. No changes needed.
 `app/utils/createModal.ts` is a well-designed generic factory (`createModal(Component)` →
 `{ open, close, patch }`, wraps `createSharedComposable` + `useOverlay`) — real and consumed by
 the playground's demo modals (`useConfirmModal`, `useInfoModal`, `useFormModal`) and documented in
-`visual/Base/Modal.vue`'s own JSDoc as *the* pattern to use. `useMastNav` (`mastNav.ts`) hand-rolled
+`visual/Base/Modal.vue`'s own JSDoc as _the_ pattern to use. `useMastNav` (`mastNav.ts`) hand-rolled
 the identical `overlay.create()` pattern manually instead of calling `createModal()`, plus wrapped
 `open`/`close` with `useSmoothScroll().lockScrolling()`/`unlockScrolling()`.
 
@@ -84,7 +84,7 @@ implemented in this pass (`createModal.ts`, `mastNav.ts`).
 
 Confirmed three separate `ResponsiveValue<T>` shapes exist: `core`'s canonical 5-key
 (`default/sm/md/lg/xl`, documented as canonical for `core`+`ui`), `layout/types/layouts.ts`'s own
-5-key copy (explicitly documented in `core`'s own type file as intentionally *not* migrated —
+5-key copy (explicitly documented in `core`'s own type file as intentionally _not_ migrated —
 "stays as-is, used by GridConfig/GridPresetsItem"), and `gridPlacementStyle.ts`'s private
 3-key (`default/md/lg`, module-local, unexported, matches the Swiss Grid's own 3-tier column
 system). All three are already-considered, deliberate divergences from prior sessions, not new

@@ -1,5 +1,4 @@
-import { computed, toValue } from 'vue'
-import type { ComputedRef, CSSProperties, MaybeRefOrGetter } from 'vue'
+import { computed, toValue, type ComputedRef, type CSSProperties, type MaybeRefOrGetter } from 'vue'
 
 import type { ResponsiveValue } from '../types/responsive'
 import type { Spacing } from '../types/tokens'

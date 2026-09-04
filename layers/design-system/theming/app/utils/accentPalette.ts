@@ -1,5 +1,5 @@
-import twColors from 'tailwindcss/colors'
 import type { AccentColor } from '#layers/theming/app/types/theme'
+import twColors from 'tailwindcss/colors'
 
 /**
  * Single source of truth for each accent's representative swatch colour

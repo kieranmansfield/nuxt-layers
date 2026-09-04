@@ -8,9 +8,7 @@ export type ElementInteractionProps = {
   pointer?: CSSProperties['pointerEvents'] | undefined
 }
 
-export function useElementInteraction(
-  props: ElementInteractionProps,
-): Partial<CSSProperties> {
+export function useElementInteraction(props: ElementInteractionProps): Partial<CSSProperties> {
   return {
     cursor: props.cursor,
     userSelect: props.select,

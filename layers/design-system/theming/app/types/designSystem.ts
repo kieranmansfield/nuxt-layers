@@ -7,8 +7,8 @@
  * (theme adapter component overrides, standalone token exports) will import
  * it directly.
  */
-import type { UiColors } from '#types'
 import type { FluidFontSize } from '#layers/typography/app/types/typography'
+import type { UiColors } from '#types'
 
 /**
  * Design-system tokens — first real config-object source of truth (Phase 5,

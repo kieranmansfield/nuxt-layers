@@ -24,8 +24,8 @@ layers/structure/grid/
 ```ts
 const { resolve, toColumnsCss } = useGridTracks()
 
-const config = resolve('swiss')          // named preset from app.config
-const custom = resolve({ columns: [{ size: 1 }, { size: 2 }] })  // passthrough
+const config = resolve('swiss') // named preset from app.config
+const custom = resolve({ columns: [{ size: 1 }, { size: 2 }] }) // passthrough
 
 const css = toColumnsCss(config)
 // → 'minmax(var(--measure-min), 1fr) minmax(var(--measure-min), 1fr) ...'
@@ -34,9 +34,9 @@ const css = toColumnsCss(config)
 ```ts
 import { placementFromIndex, placementFromLines } from '#layers/grid/app/utils/placement'
 
-placementFromLines('feature-start', 'aside-end')  // → 'feature-start / aside-end'
-placementFromIndex(2, 3)                          // → '2 / span 3'
-placementFromIndex(2, 'full')                     // → '2 / -1'
+placementFromLines('feature-start', 'aside-end') // → 'feature-start / aside-end'
+placementFromIndex(2, 3) // → '2 / span 3'
+placementFromIndex(2, 'full') // → '2 / -1'
 ```
 
 ## Out of scope (this layer, this phase)

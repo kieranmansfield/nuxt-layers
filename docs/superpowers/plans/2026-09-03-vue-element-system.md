@@ -53,10 +53,12 @@ Each composable owns exactly one property group, mirrors the existing `gridPlace
 ### Task 1: Extend `useLayoutAttrs` with margin support
 
 **Files:**
+
 - Modify: `layers/core/app/composables/useLayoutAttrs.ts`
 - Test: `layers/core/app/composables/useLayoutAttrs.test.ts` (create if it doesn't exist)
 
 **Interfaces:**
+
 - Consumes: nothing new — extends existing `LayoutAttrsInput`, `Spacing` type from `../types/tokens`, `ResponsiveValue` from `../types/responsive`.
 - Produces: `LayoutAttrsInput` gains `m?`, `mx?`, `my?` fields (same shape as existing `p`/`px`/`py`). `useLayoutAttrs()`'s returned `style` now also sets `margin`/`marginInline`/`marginBlock` when those props are passed.
 
@@ -148,7 +150,14 @@ Update the `applySpacing` call signature to accept the margin CSS props, then ex
 ```ts
 function applySpacing(
   result: CSSProperties,
-  cssProp: 'gap' | 'padding' | 'paddingInline' | 'paddingBlock' | 'margin' | 'marginInline' | 'marginBlock',
+  cssProp:
+    | 'gap'
+    | 'padding'
+    | 'paddingInline'
+    | 'paddingBlock'
+    | 'margin'
+    | 'marginInline'
+    | 'marginBlock',
   value: ResponsiveValue<Spacing> | Spacing | undefined
 ): void {
   const resolved = resolveDefault(value)
@@ -208,10 +217,12 @@ Claude-Session: https://claude.ai/code/session_017vMSCbNb6g9hyb9sBUsAQN"
 ### Task 2: `useElementLayout` — display mode composable
 
 **Files:**
+
 - Create: `layers/structure/layout/app/composables/useElementLayout.ts`
 - Test: `layers/structure/layout/app/composables/useElementLayout.test.ts`
 
 **Interfaces:**
+
 - Consumes: nothing (pure function, no imports beyond Vue's `CSSProperties` type).
 - Produces: `ElementLayoutProps` type (`{ block?: boolean; flex?: boolean; grid?: boolean; hidden?: boolean }`) and `useElementLayout(props: ElementLayoutProps): Partial<CSSProperties>`. Both are imported by Task 6 (`Element.vue`).
 
@@ -319,10 +330,12 @@ Claude-Session: https://claude.ai/code/session_017vMSCbNb6g9hyb9sBUsAQN"
 ### Task 3: `useElementSizing` — dimension composable
 
 **Files:**
+
 - Create: `layers/structure/layout/app/composables/useElementSizing.ts`
 - Test: `layers/structure/layout/app/composables/useElementSizing.test.ts`
 
 **Interfaces:**
+
 - Consumes: nothing.
 - Produces: `ElementSizingProps` type and `useElementSizing(props: ElementSizingProps): Partial<CSSProperties>`, imported by Task 6.
 
@@ -427,12 +440,14 @@ Claude-Session: https://claude.ai/code/session_017vMSCbNb6g9hyb9sBUsAQN"
 ### Task 4: `useElementSurface` and `useElementInteraction` — surface & interaction composables
 
 **Files:**
+
 - Create: `layers/structure/layout/app/composables/useElementSurface.ts`
 - Create: `layers/structure/layout/app/composables/useElementInteraction.ts`
 - Test: `layers/structure/layout/app/composables/useElementSurface.test.ts`
 - Test: `layers/structure/layout/app/composables/useElementInteraction.test.ts`
 
 **Interfaces:**
+
 - Consumes: nothing.
 - Produces: `ElementSurfaceProps`/`useElementSurface()` and `ElementInteractionProps`/`useElementInteraction()`, both imported by Task 6.
 
@@ -583,10 +598,12 @@ Claude-Session: https://claude.ai/code/session_017vMSCbNb6g9hyb9sBUsAQN"
 ### Task 5: `useElementGrid` — container-axis template + item-axis delegate
 
 **Files:**
+
 - Create: `layers/structure/layout/app/composables/useElementGrid.ts`
 - Test: `layers/structure/layout/app/composables/useElementGrid.test.ts`
 
 **Interfaces:**
+
 - Consumes: `buildGridPlacementStyle`, `GridPlacementInput` from `../utils/gridPlacementStyle` (existing, unmodified — see `layers/structure/layout/app/utils/gridPlacementStyle.ts:132`).
 - Produces: `ElementGridProps` type and `useElementGrid(props: ElementGridProps): Partial<CSSProperties>`, imported by Task 6. `ElementGridProps` shape: `{ grid?: boolean; cols?: number | string; rows?: number | string; colStart?: number | ResponsiveValue<number>; colSpan?: number | 'full' | ResponsiveValue<number>; rowStart?: number | ResponsiveValue<number>; rowSpan?: number | ResponsiveValue<number> }`.
 
@@ -726,12 +743,14 @@ Claude-Session: https://claude.ai/code/session_017vMSCbNb6g9hyb9sBUsAQN"
 ### Task 6: `Element.vue` + `ElementProps` type + playground verification page
 
 **Files:**
+
 - Create: `layers/structure/layout/app/types/element.ts`
 - Create: `layers/structure/layout/app/components/Element.vue`
 - Test: `layers/structure/layout/app/components/Element.test.ts`
 - Create: `apps/playground/app/pages/element.vue`
 
 **Interfaces:**
+
 - Consumes: `ElementLayoutProps`/`useElementLayout` (Task 2), `ElementGridProps`/`useElementGrid` (Task 5), `ElementSizingProps`/`useElementSizing` (Task 3), `ElementSurfaceProps`/`useElementSurface` (Task 4), `ElementInteractionProps`/`useElementInteraction` (Task 4), `LayoutAttrsInput`/`useLayoutAttrs` (core, Task 1).
 - Produces: `ElementProps` type (exported union) and the `<Element>` component itself — the final deliverable, consumed by application pages.
 
@@ -800,7 +819,6 @@ Create `layers/structure/layout/app/types/element.ts`:
 
 ```ts
 import type { Component } from 'vue'
-
 import type { LayoutAttrsInput } from '#layers/core/app/composables/useLayoutAttrs'
 
 import type { ElementGridProps } from '../composables/useElementGrid'
@@ -861,6 +879,7 @@ If auto-imports aren't resolved in the Vitest environment (composables not globa
 
 ```ts
 import { useLayoutAttrs } from '#layers/core/app/composables/useLayoutAttrs'
+
 import { useElementGrid } from '../composables/useElementGrid'
 import { useElementInteraction } from '../composables/useElementInteraction'
 import { useElementLayout } from '../composables/useElementLayout'
@@ -888,7 +907,14 @@ Create `apps/playground/app/pages/element.vue`:
       <Element :col-span="4" bg="var(--color-green-600)" color="white" p="md" radius="0.25rem">
         colSpan 4
       </Element>
-      <Element :col-start="3" :col-span="6" bg="var(--color-green-700)" color="white" p="md" radius="0.25rem">
+      <Element
+        :col-start="3"
+        :col-span="6"
+        bg="var(--color-green-700)"
+        color="white"
+        p="md"
+        radius="0.25rem"
+      >
         colStart 3 / colSpan 6
       </Element>
     </Element>
@@ -897,7 +923,14 @@ Create `apps/playground/app/pages/element.vue`:
   <Element block p="xl">
     <h2>Flex + sizing + interaction</h2>
     <Element flex gap="md" p="lg" bg="var(--ui-bg-elevated)" radius="0.5rem">
-      <Element w="80px" h="80px" bg="var(--color-green-400)" radius="9999px" cursor="pointer" select="none" />
+      <Element
+        w="80px"
+        h="80px"
+        bg="var(--color-green-400)"
+        radius="9999px"
+        cursor="pointer"
+        select="none"
+      />
       <Element
         w="160px"
         h="80px"
@@ -909,7 +942,15 @@ Create `apps/playground/app/pages/element.vue`:
       >
         card
       </Element>
-      <Element min-w="120px" max-w="240px" h="80px" bg="var(--color-green-600)" color="white" p="sm" radius="0.5rem">
+      <Element
+        min-w="120px"
+        max-w="240px"
+        h="80px"
+        bg="var(--color-green-600)"
+        color="white"
+        p="sm"
+        radius="0.5rem"
+      >
         min/max width
       </Element>
     </Element>
@@ -918,7 +959,9 @@ Create `apps/playground/app/pages/element.vue`:
   <Element block p="xl">
     <h2>Layout modes</h2>
     <Element flex gap="sm">
-      <Element block bg="var(--color-green-400)" p="sm" radius="0.25rem" color="white">block</Element>
+      <Element block bg="var(--color-green-400)" p="sm" radius="0.25rem" color="white"
+        >block</Element
+      >
       <Element flex bg="var(--color-green-500)" p="sm" radius="0.25rem" color="white">flex</Element>
       <Element hidden bg="var(--color-green-600)" p="sm" radius="0.25rem" color="white">
         hidden (not rendered visibly)
@@ -968,6 +1011,7 @@ Claude-Session: https://claude.ai/code/session_017vMSCbNb6g9hyb9sBUsAQN"
 ## Self-Review
 
 **Spec coverage:**
+
 - §3.1 Layout group → Task 2. §3.2 Spacing (incl. margin) → Task 1. §3.3 Grid (both axes) → Task 5. §3.4 Sizing → Task 3. §3.5 Surface → Task 4. §3.6 Interaction → Task 4. §4 `Element.vue` → Task 6. §5 `ElementProps` type → Task 6. §6 out-of-scope items — no task touches them (confirmed: no typography props, no semantic colour, no align/justify/bleed/density/layer exposed on Element, no LayoutGridItem/gridPlacementStyle edits, no new Grid/Section container component). §7 file layout → matches the File Structure section above exactly, plus a playground page for manual verification not explicitly required by the spec but implied by its own worked examples (§4, §5). §8 testing → per-composable unit tests (Task 1–5) plus an `Element.vue` mount test (Task 6) covering `as` passthrough, slot rendering, and style merge order, matching the spec's stated testing requirements. §9 success criteria — criterion 3 ("zero changes to LayoutGridItem/gridPlacementStyle.ts") is enforced by Task 5 Step 6 (full layout suite re-run) and the Global Constraints section; criterion 4 (HStack/VStack unaffected) is enforced by Task 1 Step 6.
 
 **Placeholder scan:** No TBD/TODO/"add appropriate handling" patterns present. Every step has literal code or an exact command.

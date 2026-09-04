@@ -65,4 +65,3 @@ export const TABLET_BREAKPOINT_VALUES = {
   'tablet-md': 834,
   'tablet-lg': 1024,
 } as const
-

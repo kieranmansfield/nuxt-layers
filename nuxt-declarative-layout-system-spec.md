@@ -400,7 +400,7 @@ export type ResponsiveValue<T> = {
 
 ## 14. Design Tokens — CSS-first for this pass
 
-All system values are centrally normalized, but the *mechanism* for this pass is CSS custom
+All system values are centrally normalized, but the _mechanism_ for this pass is CSS custom
 properties, not a TypeScript config object (see §4's "what changed" callout).
 
 ```text
@@ -533,7 +533,7 @@ layers/layout/app/components/Layout/
    not migrated, in this pass.
 3. **`Section` stays in `layout`** — it's structurally part of the grid engine being deferred,
    not a decoupled primitive like `Container` was.
-4. Token *values* those systems read from are normalized now (§14); the placement *logic* is
+4. Token _values_ those systems read from are normalized now (§14); the placement _logic_ is
    untouched.
 
 ---
@@ -552,12 +552,12 @@ this pass, and depend on this pass's token-normalization foundation landing firs
   layout, not just theme, until re-supplied.
 - **Current state:** `@nuxt/ui` loads at `layers/core/nuxt.config.ts:16` with no `unstyled`
   config — full default theme active everywhere. `layers/layout/app/app.config.ts:15-19`
-  already carries live overrides against the *default* (styled) theme; other layers likely do
+  already carries live overrides against the _default_ (styled) theme; other layers likely do
   too (not yet fully audited).
 - **Blast radius:** flipping the flag immediately strips styling from every Nuxt UI component,
   every layer, every page — `apps/playground`, `layers/content`'s Gallery/Portfolio, everything
   — until variants are rebuilt. The flag has no per-component staging, so the full
-  variant/theme-adapter rebuild must be ready *before* the flip, not staged after.
+  variant/theme-adapter rebuild must be ready _before_ the flip, not staged after.
 - **Scope this phase actually covers:** the full token set the original docs described —
   colours, radii, shadows, typography scale, motion — assembled into one `designSystem`/
   `tokens.ts` source of truth (`layers/core` or `layers/theme`, which currently only holds
@@ -671,7 +671,7 @@ See §21. Not started, not scoped to files yet, deliberately sequenced after Pha
    through Phase 2.
 6. CSS remains available as an escape hatch.
 7. The existing Swiss Grid System (`layers/layout`) is untouched in placement logic; only its
-   duplicated token *values* are normalized.
+   duplicated token _values_ are normalized.
 8. No hand-written union exists for a token that Phase 2's `designSystem` config will
    eventually own — but Phase 2 is not blocked on, or conflated with, this pass.
 9. `Container`'s migration is invisible to existing call sites (`<LayoutContainer>` still works).

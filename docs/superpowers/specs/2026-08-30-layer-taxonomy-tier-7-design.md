@@ -52,7 +52,7 @@ regardless of layer), so `apps/playground/app/pages/baseline.vue` and `index.vue
   playground. `app.config.ts`, `feed-catalog.ts` (collection resolution, missing-collection
   warnings), `feed-head.ts` plugin (auto-discovery `<link rel="alternate">` tags), `feed-service.ts`,
   all `server/routes/feed/**` handlers (sampled `rss.get.ts`, `index.get.ts` — consistent), `Feeds/
-  Index.vue`, `Feeds/RouteCard.vue` — real, thorough, already well-tested
+Index.vue`, `Feeds/RouteCard.vue` — real, thorough, already well-tested
   (`content-adapter.test.ts`, `feed-author.test.ts`, `feed-config.test.ts`, `formats.test.ts`),
   consumed by `apps/playground/app/pages/feeds.vue`.
 

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines a web-native adaptation of Josef Müller-Brockmann's grid methodology from *Grid Systems in Graphic Design*.
+This document defines a web-native adaptation of Josef Müller-Brockmann's grid methodology from _Grid Systems in Graphic Design_.
 
 The goal is **not** to reproduce a fixed 12-column print grid. Instead, the system treats the browser viewport as a responsive canvas and derives a two-dimensional grid from that canvas.
 
@@ -176,13 +176,9 @@ A basic implementation:
 ```css
 .canvas {
   container-type: size;
-  min-block-size: 100vb;
 
-  padding-inline: clamp(
-    1rem,
-    5vi,
-    8rem
-  );
+  padding-inline: clamp(1rem, 5vi, 8rem);
+  min-block-size: 100vb;
 }
 ```
 
@@ -224,17 +220,9 @@ Example:
 
 ```css
 .canvas {
-  padding-inline: clamp(
-    1rem,
-    5vi,
-    8rem
-  );
+  padding-inline: clamp(1rem, 5vi, 8rem);
 
-  padding-block-start: clamp(
-    2rem,
-    8vb,
-    10rem
-  );
+  padding-block-start: clamp(2rem, 8vb, 10rem);
 }
 ```
 
@@ -324,28 +312,22 @@ Example:
   --grid-gutter-inline: 1cqi;
   --grid-gutter-block: 1cqb;
 
-  container-type: size;
-
   display: grid;
-
-  grid-template-columns:
-    [canvas-start content-start]
-    repeat(
-      var(--grid-density-inline),
-      [column-start] minmax(0, 1fr) [column-end]
-    )
-    [content-end canvas-end];
 
   grid-template-rows:
     [canvas-top content-top]
-    repeat(
-      var(--grid-density-block),
-      [row-start] minmax(0, 1fr) [row-end]
-    )
+    repeat(var(--grid-density-block), [row-start] minmax(0, 1fr) [row-end])
     [content-bottom canvas-bottom];
+
+  grid-template-columns:
+    [canvas-start content-start]
+    repeat(var(--grid-density-inline), [column-start] minmax(0, 1fr) [column-end])
+    [content-end canvas-end];
 
   column-gap: var(--grid-gutter-inline);
   row-gap: var(--grid-gutter-block);
+
+  container-type: size;
 }
 ```
 
@@ -459,13 +441,12 @@ Example:
 
 ```css
 .hero {
-  grid-column: column-start 1 / column-end 8;
-  grid-row: row-start 1 / row-end 5;
-
   display: grid;
+  grid-template-rows: subgrid;
 
   grid-template-columns: subgrid;
-  grid-template-rows: subgrid;
+  grid-row: row-start 1 / row-end 5;
+  grid-column: column-start 1 / column-end 8;
 }
 ```
 
@@ -590,17 +571,9 @@ Example:
 
 ```css
 .canvas {
-  --grid-gutter-inline: clamp(
-    0.5rem,
-    1cqi,
-    2rem
-  );
+  --grid-gutter-inline: clamp(0.5rem, 1cqi, 2rem);
 
-  --grid-gutter-block: clamp(
-    0.5rem,
-    1cqb,
-    2rem
-  );
+  --grid-gutter-block: clamp(0.5rem, 1cqb, 2rem);
 }
 ```
 
@@ -636,11 +609,7 @@ Use this for a Müller-Brockmann-inspired master grid where the designer intenti
 CSS Grid can also determine how many tracks fit:
 
 ```css
-grid-template-columns:
-  repeat(
-    auto-fit,
-    minmax(var(--module), 1fr)
-  );
+grid-template-columns: repeat(auto-fit, minmax(var(--module), 1fr));
 ```
 
 This is useful for fluid component grids.
@@ -699,48 +668,30 @@ A starting implementation:
     --grid-density-inline: 12;
     --grid-density-block: 8;
 
-    --grid-gutter-inline: clamp(
-      0.5rem,
-      1cqi,
-      2rem
-    );
+    --grid-gutter-inline: clamp(0.5rem, 1cqi, 2rem);
 
-    --grid-gutter-block: clamp(
-      0.5rem,
-      1cqb,
-      2rem
-    );
-
-    container-type: size;
-
-    min-block-size: 100vb;
-
-    padding-inline: clamp(
-      1rem,
-      5vi,
-      8rem
-    );
+    --grid-gutter-block: clamp(0.5rem, 1cqb, 2rem);
 
     display: grid;
 
-    grid-template-columns:
-      [canvas-start content-start]
-      repeat(
-        var(--grid-density-inline),
-        [column-start] minmax(0, 1fr) [column-end]
-      )
-      [content-end canvas-end];
-
     grid-template-rows:
       [canvas-top content-top]
-      repeat(
-        var(--grid-density-block),
-        [row-start] minmax(0, 1fr) [row-end]
-      )
+      repeat(var(--grid-density-block), [row-start] minmax(0, 1fr) [row-end])
       [content-bottom canvas-bottom];
+
+    grid-template-columns:
+      [canvas-start content-start]
+      repeat(var(--grid-density-inline), [column-start] minmax(0, 1fr) [column-end])
+      [content-end canvas-end];
 
     column-gap: var(--grid-gutter-inline);
     row-gap: var(--grid-gutter-block);
+
+    container-type: size;
+
+    padding-inline: clamp(1rem, 5vi, 8rem);
+
+    min-block-size: 100vb;
   }
 }
 ```
@@ -751,20 +702,14 @@ A starting implementation:
 
 ```html
 <main class="canvas">
-
   <section class="hero">
     <h1>Swiss Grid</h1>
-    <p>
-      A responsive modular grid for the web.
-    </p>
+    <p>A responsive modular grid for the web.</p>
   </section>
 
   <section class="intro">
-    <p>
-      Content aligned to the master coordinate system.
-    </p>
+    <p>Content aligned to the master coordinate system.</p>
   </section>
-
 </main>
 ```
 
@@ -774,18 +719,13 @@ A starting implementation:
 
 ```css
 .hero {
-  grid-column:
-    column-start 1 /
-    column-end 9;
-
-  grid-row:
-    row-start 1 /
-    row-end 5;
-
   display: grid;
+  grid-template-rows: subgrid;
 
   grid-template-columns: subgrid;
-  grid-template-rows: subgrid;
+
+  grid-row: row-start 1 / row-end 5;
+  grid-column: column-start 1 / column-end 9;
 }
 ```
 
@@ -793,13 +733,8 @@ Child content can then occupy the inherited tracks.
 
 ```css
 .hero h1 {
-  grid-column:
-    column-start 1 /
-    column-end 7;
-
-  grid-row:
-    row-start 1 /
-    row-end 3;
+  grid-row: row-start 1 / row-end 3;
+  grid-column: column-start 1 / column-end 7;
 }
 ```
 
@@ -880,8 +815,8 @@ For example:
 
 ```css
 .article {
-  columns: 3;
   column-gap: var(--grid-gutter-inline);
+  columns: 3;
 }
 ```
 

@@ -114,9 +114,15 @@ export type GridPreset = TrackConfig & {
 
 ```ts
 columns: [
-  { size: 1 }, { size: 1 }, { size: 1 }, { size: 1 },
-  { size: 1 }, { size: 1 }, { size: 1 },
-  { size: 2 }, { size: 3 },
+  { size: 1 },
+  { size: 1 },
+  { size: 1 },
+  { size: 1 },
+  { size: 1 },
+  { size: 1 },
+  { size: 1 },
+  { size: 2 },
+  { size: 3 },
 ]
 ```
 
@@ -149,8 +155,8 @@ composable.
 ```ts
 const { toColumnsCss, resolve } = useGridTracks()
 
-resolve('swiss')                 // → GridPreset from app.config
-resolve(customTrackConfig)       // → passes a TrackConfig straight through
+resolve('swiss') // → GridPreset from app.config
+resolve(customTrackConfig) // → passes a TrackConfig straight through
 
 toColumnsCss(trackConfig)
 // → 'minmax(min-content, [feature-start] 2fr [feature-end aside-start] 1fr [aside-end])'

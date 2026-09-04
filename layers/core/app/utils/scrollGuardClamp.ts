@@ -4,7 +4,10 @@
  * a characterization test subject only — nothing imports this in production.
  */
 
-export function shouldExclude(matches: (selector: string) => boolean, excludeSelectors: string[]): boolean {
+export function shouldExclude(
+  matches: (selector: string) => boolean,
+  excludeSelectors: string[]
+): boolean {
   return excludeSelectors.some((sel) => {
     try {
       return matches(sel)

@@ -1,5 +1,5 @@
-import type { SiteConfig } from './types/site'
 import type { NotFoundConfig } from './types/notFound'
+import type { SiteConfig } from './types/site'
 
 export default defineAppConfig({
   coreLayer: {

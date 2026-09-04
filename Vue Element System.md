@@ -9,15 +9,7 @@ Rather than replacing CSS or creating another Tailwind-like compiler, the system
 The central primitive is called **`Element`**.
 
 ```vue
-<Element
-  as="section"
-  grid
-  cols="12"
-  gap="6"
-  p="8 12"
-  bg="surface"
-  color="foreground"
->
+<Element as="section" grid cols="12" gap="6" p="8 12" bg="surface" color="foreground">
   ...
 </Element>
 ```
@@ -35,7 +27,7 @@ This is **not** intended to be a replacement for Tailwind’s compiler.
 We do not want:
 
 ```html
-<div class="a8f32c b17e91 c91d20">
+<div class="a8f32c b17e91 c91d20"></div>
 ```
 
 or any other generated/random class names.
@@ -57,16 +49,7 @@ Not every CSS property needs to become an attribute.
 The goal is to establish a small design vocabulary such as:
 
 ```vue
-grid
-cols="12"
-gap="6"
-
-p="8 12"
-
-span="8"
-
-bg="surface"
-color="foreground"
+grid cols="12" gap="6" p="8 12" span="8" bg="surface" color="foreground"
 ```
 
 rather than exposing every possible CSS property.
@@ -91,12 +74,7 @@ Its purpose is to provide the shared design-language API while allowing the call
 ### **Native HTML**
 
 ```vue
-<Element
-  as="section"
-  grid
-  cols="12"
-  gap="6"
->
+<Element as="section" grid cols="12" gap="6">
   ...
 </Element>
 ```
@@ -122,21 +100,13 @@ The `as` property separates **composition** from **semantics**.
 For example:
 
 ```vue
-<Element
-  :as="MyCardHome"
-  span="8"
-  p="6"
-  bg="surface"
-/>
+<Element :as="MyCardHome" span="8" p="6" bg="surface" />
 ```
 
 or Nuxt UI components:
 
 ```vue
-<Element
-  :as="UButton"
-  p="3 5"
->
+<Element :as="UButton" p="3 5">
   Continue
 </Element>
 ```
@@ -175,13 +145,7 @@ Element
 The markup remains flat:
 
 ```vue
-<Element
-  grid
-  cols="12"
-  gap="6"
-  p="8"
-  bg="surface"
-/>
+<Element grid cols="12" gap="6" p="8" bg="surface" />
 ```
 
 The grouping exists internally so that components can opt into specific capabilities.
@@ -195,17 +159,13 @@ Responsible for the fundamental layout mode of an element.
 Potential vocabulary:
 
 ```vue
-block
-flex
-grid
-hidden
+block flex grid hidden
 ```
 
 Potential higher-level primitives may eventually be considered, such as:
 
 ```vue
-stack
-cluster
+stack cluster
 ```
 
 but these should only be introduced where they provide meaningful design-level abstractions.
@@ -219,12 +179,7 @@ Grid is a first-class property group.
 Potential API:
 
 ```vue
-grid
-cols="12"
-rows="8"
-span="8"
-start="3"
-end="11"
+grid cols="12" rows="8" span="8" start="3" end="11"
 ```
 
 Example:
@@ -258,17 +213,7 @@ Spacing uses short, predictable attributes and logical CSS properties.
 Examples:
 
 ```vue
-p="8"
-p="8 12"
-
-px="12"
-py="8"
-
-m="auto"
-mx="auto"
-my="6"
-
-gap="6"
+p="8" p="8 12" px="12" py="8" m="auto" mx="auto" my="6" gap="6"
 ```
 
 The system should favour logical properties such as:
@@ -293,16 +238,7 @@ Sizing provides common dimensional controls.
 Potential vocabulary:
 
 ```vue
-w="full"
-h="full"
-
-min-w="..."
-max-w="..."
-
-min-h="..."
-max-h="..."
-
-aspect="..."
+w="full" h="full" min-w="..." max-w="..." min-h="..." max-h="..." aspect="..."
 ```
 
 Again, these should generally map to design tokens or controlled values rather than arbitrary CSS.
@@ -316,11 +252,7 @@ Surface properties describe the visual container rather than typography.
 Potential vocabulary:
 
 ```vue
-bg="surface"
-color="foreground"
-border="subtle"
-radius="lg"
-shadow="sm"
+bg="surface" color="foreground" border="subtle" radius="lg" shadow="sm"
 ```
 
 Colours should integrate with the project’s semantic token system.
@@ -328,8 +260,7 @@ Colours should integrate with the project’s semantic token system.
 For example:
 
 ```vue
-bg="surface"
-color="foreground"
+bg="surface" color="foreground"
 ```
 
 should resolve to semantic design tokens rather than encouraging arbitrary colour values.
@@ -345,9 +276,7 @@ A smaller property group can handle common interaction behaviour.
 Potential examples:
 
 ```vue
-cursor="pointer"
-select="none"
-pointer="none"
+cursor="pointer" select="none" pointer="none"
 ```
 
 This group should remain deliberately small.
@@ -436,12 +365,7 @@ type GridProps = {
 Components can then compose the capabilities they need:
 
 ```ts
-type ElementProps =
-  & LayoutProps
-  & GridProps
-  & SpacingProps
-  & SizingProps
-  & SurfaceProps
+type ElementProps = LayoutProps & GridProps & SpacingProps & SizingProps & SurfaceProps
 ```
 
 while a more specialised component can expose a smaller subset.
@@ -485,11 +409,7 @@ They can internally use `Element` and/or the same property-group system.
 For example:
 
 ```vue
-<Card
-  span="4"
-  p="6"
-  bg="surface"
-/>
+<Card span="4" p="6" bg="surface" />
 ```
 
 can use the shared vocabulary without requiring every component to implement its own incompatible layout API.
@@ -559,5 +479,3 @@ The desired result is a consistent vocabulary that makes component composition *
 ```
 
 The next design phase should define the actual **property groups, vocabulary, value grammar, TypeScript types, and boundaries** of the system before implementation begins.
-
-

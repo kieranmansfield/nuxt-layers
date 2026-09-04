@@ -29,10 +29,10 @@
   --fields: max(1, round(down, calc((var(--lines) + 1) / (var(--lpf) + 1)), 1));
 
   display: grid;
-  gap: var(--unit);
-  padding-block: var(--edge-min);
-  padding-inline: var(--edge-min);
   grid-auto-rows: minmax(calc(var(--lpf) * var(--unit)), max-content);
-  container-type: inline-size;
+  gap: var(--unit);
   container-name: grid-tracks;
+  container-type: inline-size;
+  padding-inline: var(--edge-min);
+  padding-block: var(--edge-min);
 }

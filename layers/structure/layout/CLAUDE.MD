@@ -153,12 +153,12 @@ const { config, getPreset, isEnabled, mode, layers, useZIndex } = useGridConfig(
 
 ## Key Files
 
-| Task                     | File                                           |
-| ------------------------ | ----------------------------------------------- |
-| Grid CSS                 | `app/assets/css/layout/grids.css`              |
-| Config + Nuxt UI theming | `app/app.config.ts`                            |
-| TypeScript types         | `app/types/layouts.ts`                         |
-| Config composable        | `app/composables/useGridConfig.ts`             |
-| Grid wrapper component   | `app/components/Layout/Main.vue`               |
-| Container component      | `layers/core/app/components/AppContainer.vue`  |
-| Full reference docs      | `../../docs/LAYOUT.md`                         |
+| Task                     | File                                          |
+| ------------------------ | --------------------------------------------- |
+| Grid CSS                 | `app/assets/css/layout/grids.css`             |
+| Config + Nuxt UI theming | `app/app.config.ts`                           |
+| TypeScript types         | `app/types/layouts.ts`                        |
+| Config composable        | `app/composables/useGridConfig.ts`            |
+| Grid wrapper component   | `app/components/Layout/Main.vue`              |
+| Container component      | `layers/core/app/components/AppContainer.vue` |
+| Full reference docs      | `../../docs/LAYOUT.md`                        |

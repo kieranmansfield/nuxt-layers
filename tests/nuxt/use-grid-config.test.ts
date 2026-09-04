@@ -3,7 +3,11 @@ import { mockNuxtImport, mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it } from 'vitest'
 
 import { useGridConfig } from '../../layers/structure/layout/app/composables/useGridConfig'
-import type { GridConfig, GridLayers, GridPresetsItem } from '../../layers/structure/layout/app/types/layouts'
+import type {
+  GridConfig,
+  GridLayers,
+  GridPresetsItem,
+} from '../../layers/structure/layout/app/types/layouts'
 
 type LayoutAppConfig = {
   layoutLayer?: {

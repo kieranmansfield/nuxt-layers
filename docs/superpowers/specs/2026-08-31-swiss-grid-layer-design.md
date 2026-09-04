@@ -9,7 +9,7 @@ translates that spec into a concrete new layer for this monorepo.
 New layer: `layers/structure/swiss-grid` — tier 2, sibling to `layout`.
 Depends only on `core`.
 
-`layers/structure/layout` (Swiss Grid *subgrid* system: `LayoutMain` /
+`layers/structure/layout` (Swiss Grid _subgrid_ system: `LayoutMain` /
 `LayoutSection` / `LayoutGridItem`, hero/centered presets, `HStack` /
 `VStack` / `ZStack` / `Spacer`, `useGridConfig()`) is **untouched** by this
 work. It stays the system in use by `layers/content` (Gallery/Blog/Portfolio
@@ -29,18 +29,18 @@ Two components, matching the artifact's §3 API surface exactly:
 ```ts
 // SwissGrid — grid root
 interface SwissGridProps {
-  columns?: ResponsiveValue<number>   // default: xs:4 sm:4 md:8 lg:12 xl:12
-  gap?: ResponsiveValue<Spacing>      // Spacing token from core, e.g. 'md'
-  tag?: string                        // default: 'div'
+  columns?: ResponsiveValue<number> // default: xs:4 sm:4 md:8 lg:12 xl:12
+  gap?: ResponsiveValue<Spacing> // Spacing token from core, e.g. 'md'
+  tag?: string // default: 'div'
 }
 
 // SwissGridItem — positioned child
 type SpanAlias = 'full' | 'half' | 'third' | 'quarter'
 interface SwissGridItemProps {
   start?: number
-  span?: number | SpanAlias           // default: 'full'
+  span?: number | SpanAlias // default: 'full'
   order?: number
-  tag?: string                        // default: 'div'
+  tag?: string // default: 'div'
 }
 ```
 
@@ -64,11 +64,11 @@ versa.
 The artifact leaves the exact alias set open (§13). Resolved here:
 
 - Aliases are expressed in a fixed **12-unit vocabulary**: `full=12,
-  half=6, third=4, quarter=3` — independent of the grid's live column
+half=6, third=4, quarter=3` — independent of the grid's live column
   count, the same mental model as Bootstrap-style 12-col systems.
 - Because `columns` can be less than 12 at smaller breakpoints (4 at `xs`,
   8 at `sm`/`md` per §1's default), an alias's rendered span is `min(alias
-  value, current column count)` — computed in the component, not CSS
+value, current column count)` — computed in the component, not CSS
   `calc()` (integer `grid-column: span N` can't come from a fractional
   division). This keeps `half` always rendering as "half of whatever this
   breakpoint's grid actually has," clamped so it never overflows a
@@ -85,7 +85,7 @@ New components, this layer, alongside `SwissGrid`/`SwissGridItem`:
   For groups of items that wrap as a unit (tag lists, button rows,
   metadata chips) — distinct from `SwissGrid`, which is column-track-based.
 - **`Flow`** — vertical stack with automatic rhythm: renders `> * + *
-  { margin-block-start: var(--fluid-space-<size>) }` scoped via a CSS
+{ margin-block-start: var(--fluid-space-<size>) }` scoped via a CSS
   class, `size` prop selecting the `core` fluid-space token. For prose-like
   vertical sequences where every child needs the same gap, without each
   child managing its own margin.
@@ -113,7 +113,7 @@ first-rung ladder work nobody asked for.
 ## §5 Container queries (§7)
 
 `container-type: inline-size` ships on `SwissGrid` by default (not opt-in)
-— every grid is nestable. Column-count and gap responsiveness *can* be
+— every grid is nestable. Column-count and gap responsiveness _can_ be
 expressed via `@container` queries scoped to a `SwissGrid`'s own inline
 size (for a grid inside a sidebar vs. full page) as well as via the
 viewport-keyed `ResponsiveValue` breakpoints in §1 — both are supported,

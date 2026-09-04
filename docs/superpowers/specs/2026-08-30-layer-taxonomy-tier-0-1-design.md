@@ -11,16 +11,16 @@ later tiers being finished, except where explicitly noted.
 
 Full 8-tier map, for reference:
 
-| Tier | Name | Layers |
-|---|---|---|
-| 0 | Foundation | `core` |
-| 1 | Design System | `theming`, `typography`, `visual` (`ui` dissolved, see below) |
-| 2 | Structure | `layout`, `navigation`, `routing` |
-| 3 | Content | `content` |
-| 4 | Data | `database`, `auth`, `metadata` (+ 4 provider sub-folders), `forms`, `mailer` |
-| 5 | Motion | `scroll`, `animations`, `transitions` (absorbs `page-transitions`), `motion` |
-| 6 | Render | `canvas`, `shader` |
-| 7 | Delivery | `seo`, `scripts`, `feeds` |
+| Tier | Name          | Layers                                                                       |
+| ---- | ------------- | ---------------------------------------------------------------------------- |
+| 0    | Foundation    | `core`                                                                       |
+| 1    | Design System | `theming`, `typography`, `visual` (`ui` dissolved, see below)                |
+| 2    | Structure     | `layout`, `navigation`, `routing`                                            |
+| 3    | Content       | `content`                                                                    |
+| 4    | Data          | `database`, `auth`, `metadata` (+ 4 provider sub-folders), `forms`, `mailer` |
+| 5    | Motion        | `scroll`, `animations`, `transitions` (absorbs `page-transitions`), `motion` |
+| 6    | Render        | `canvas`, `shader`                                                           |
+| 7    | Delivery      | `seo`, `scripts`, `feeds`                                                    |
 
 `baseline` merges into `scripts` (Tier 7, Delivery) rather than `core` — corrected after full
 audit: it's not just compiler config, it wraps a real third-party widget (`baseline-status` npm
@@ -107,37 +107,37 @@ below.
    Open item: read both files' actual contents and decide keep-in-core / move-to-`layout`-tier /
    delete per content, before this tier is considered fully closed.
 
-11. **Types — mostly fine, one still-open.**
-    - `types/tokens.ts` (`Spacing`, `ContainerSize`, `BREAKPOINT_PX`, `Breakpoint`) — correctly
-      homed, deliberately cross-consumed by `layout`/`visual` via the `#layers/core/types` alias.
-      No action.
-    - `types/responsive.ts` (canonical `ResponsiveValue<T>`) — deliberately kept separate from
-      `layout`'s own `ResponsiveValue` per an explicit code comment. Same item as the "3 duplicate
-      `ResponsiveValue` types" flagged in the original pre-redesign audit — still open: permanent
-      split or future merge target, not decided.
+5. **Types — mostly fine, one still-open.**
+   - `types/tokens.ts` (`Spacing`, `ContainerSize`, `BREAKPOINT_PX`, `Breakpoint`) — correctly
+     homed, deliberately cross-consumed by `layout`/`visual` via the `#layers/core/types` alias.
+     No action.
+   - `types/responsive.ts` (canonical `ResponsiveValue<T>`) — deliberately kept separate from
+     `layout`'s own `ResponsiveValue` per an explicit code comment. Same item as the "3 duplicate
+     `ResponsiveValue` types" flagged in the original pre-redesign audit — still open: permanent
+     split or future merge target, not decided.
 
-12. **`init.ts` — delete entirely.** 190 lines that call nearly every composable in `core`
-    (`useDevice`, `useBrowser`, `useScreen`, `useNetworkInfo`, `useFeatures`, `useCache`,
-    `useRendering`, `useEnv`) purely to `console.log` their output in dev mode. Zero production
-    behavior. Its one artifact — `provide: { $coreLayer: {...} } ` — is never read anywhere in the
-    repo. Duplicates `DiagnosticsPage.vue`. Confirmed leftover scaffolding from when the layer was
-    being built, not load-bearing.
+6. **`init.ts` — delete entirely.** 190 lines that call nearly every composable in `core`
+   (`useDevice`, `useBrowser`, `useScreen`, `useNetworkInfo`, `useFeatures`, `useCache`,
+   `useRendering`, `useEnv`) purely to `console.log` their output in dev mode. Zero production
+   behavior. Its one artifact — `provide: { $coreLayer: {...} } ` — is never read anywhere in the
+   repo. Duplicates `DiagnosticsPage.vue`. Confirmed leftover scaffolding from when the layer was
+   being built, not load-bearing.
 
-13. **Misc utils — three of four dead or near-dead, one folded into the PWA decision.**
-    - `useCache` — PWA-only (hardcoded `'workbox-precache-v2'`), only caller was `init.ts`. Folds
-      into decision 8 (PWA disabled, not deleted) rather than standing alone.
-    - `useEnv` — delete. 4-line pass-through of `useRuntimeConfig()`, adds nothing despite its doc
-      comment's claims. Only caller was `init.ts`. Consumers use `useRuntimeConfig()` directly.
-    - `helpers.ts` — delete. ~20-function grab-bag (`debounce`, `throttle`, `sleep`, `retry`,
-      `clamp`, `deepClone`, `pick`, `omit`, `groupBy`, etc). Confirmed zero real usage anywhere in
-      the repo outside its own test file and `useScrollGuard`'s `debounce` import (already being
-      deleted per decision 7) — checked specifically against the loading cluster too, no imports
-      there. Recoverable from git history if a real need appears later.
-    - `regex.ts` — delete. Dead duplicate: `navigation` has its own separate `regex.ts` with the
-      same `splitSpaces` job, actually consumed by `navigation/app/utils/site.ts`. `core`'s copy
-      has zero consumers.
+7. **Misc utils — three of four dead or near-dead, one folded into the PWA decision.**
+   - `useCache` — PWA-only (hardcoded `'workbox-precache-v2'`), only caller was `init.ts`. Folds
+     into decision 8 (PWA disabled, not deleted) rather than standing alone.
+   - `useEnv` — delete. 4-line pass-through of `useRuntimeConfig()`, adds nothing despite its doc
+     comment's claims. Only caller was `init.ts`. Consumers use `useRuntimeConfig()` directly.
+   - `helpers.ts` — delete. ~20-function grab-bag (`debounce`, `throttle`, `sleep`, `retry`,
+     `clamp`, `deepClone`, `pick`, `omit`, `groupBy`, etc). Confirmed zero real usage anywhere in
+     the repo outside its own test file and `useScrollGuard`'s `debounce` import (already being
+     deleted per decision 7) — checked specifically against the loading cluster too, no imports
+     there. Recoverable from git history if a real need appears later.
+   - `regex.ts` — delete. Dead duplicate: `navigation` has its own separate `regex.ts` with the
+     same `splitSpaces` job, actually consumed by `navigation/app/utils/site.ts`. `core`'s copy
+     has zero consumers.
 
-9. **Loading cluster — mostly fine, one real gap, minor cruft.**
+8. **Loading cluster — mostly fine, one real gap, minor cruft.**
    - `LoadingScreen`/`useLoading`/`loading.client.ts` = app-level, one-time boot splash (runs
      once via `app:mounted`). Confirmed intentional design, kept as-is. Progress is simulated
      (random 3-8% increments every 150ms to 90%, not tied to real asset/network state) — expected
@@ -150,46 +150,46 @@ below.
      splash, `NuxtLoadingIndicator` = page-level per-navigation bar. Add
      `<NuxtLoadingIndicator />` to `core/app.vue` alongside `<NuxtLayout>`/`<NuxtPage>`.
 
-10. **Error/404 cluster — one real production bug.**
-    - `[...slug].vue` (catch-all 404 route) is solid: config-driven, `setResponseStatus(404)`,
-      matches unmatched routes correctly.
-    - `error-handler.ts` (global Vue/Nuxt error hooks → `useErrorLog`) and `useErrorLog` itself
-      (console + optional external-service logging, app.config-driven) are both correctly wired
-      and fine.
-    - **`error.vue` — Nuxt's actual global error page, shown for any *thrown* error (500s,
-      `createError()`, unhandled exceptions) — is a bare stub in production**: `<div><p>error</p>
-      </div>`, no message, no status code, no way back. Its full real implementation (same
-      UEmpty/actions/stack-trace pattern as the working 404 page) exists but is entirely commented
-      out. Confirmed: this was always meant as a fallback and the real version was never finished
-      — not a regression, an unfinished build. Ships broken today regardless. Open item: finish
-      it (the commented code is already written, needs uncommenting + wiring against the same
-      pattern `[...slug].vue` already proves out) — not yet scheduled, logged here so it isn't
-      lost.
+9. **Error/404 cluster — one real production bug.**
+   - `[...slug].vue` (catch-all 404 route) is solid: config-driven, `setResponseStatus(404)`,
+     matches unmatched routes correctly.
+   - `error-handler.ts` (global Vue/Nuxt error hooks → `useErrorLog`) and `useErrorLog` itself
+     (console + optional external-service logging, app.config-driven) are both correctly wired
+     and fine.
+   - **`error.vue` — Nuxt's actual global error page, shown for any _thrown_ error (500s,
+     `createError()`, unhandled exceptions) — is a bare stub in production**: `<div><p>error</p>
+     </div>`, no message, no status code, no way back. Its full real implementation (same
+     UEmpty/actions/stack-trace pattern as the working 404 page) exists but is entirely commented
+     out. Confirmed: this was always meant as a fallback and the real version was never finished
+     — not a regression, an unfinished build. Ships broken today regardless. Open item: finish
+     it (the commented code is already written, needs uncommenting + wiring against the same
+     pattern `[...slug].vue` already proves out) — not yet scheduled, logged here so it isn't
+     lost.
 
-5. **`useRendering` — keep as-is.** Zero current consumers, but cheap: computed refs only, no
-   side effects, no auto-run plugin. Real use case documented (gate interactivity until
-   `isHydrated`, e.g. `:disabled="!isHydrated"`) even though nothing uses it yet. Not worth
-   cutting something inert on the chance it's needed.
+10. **`useRendering` — keep as-is.** Zero current consumers, but cheap: computed refs only, no
+    side effects, no auto-run plugin. Real use case documented (gate interactivity until
+    `isHydrated`, e.g. `:disabled="!isHydrated"`) even though nothing uses it yet. Not worth
+    cutting something inert on the chance it's needed.
 
-6. **`useFeatures` — keep the composable, delete the auto-run plugin.** Traced actual consumers:
-   zero outside the diagnostics demo page, despite the plugin (`feature-detection.client.ts`)
-   running CSS/JS-API/image-format detection, `sessionStorage` writes, and `<html>` classList
-   mutation on every single page load for every `core` consumer. Delete
-   `plugins/feature-detection.client.ts`. Composable itself stays, callable on-demand by whichever
-   future consumer actually needs it (candidate: `layout`'s subgrid fallback).
+11. **`useFeatures` — keep the composable, delete the auto-run plugin.** Traced actual consumers:
+    zero outside the diagnostics demo page, despite the plugin (`feature-detection.client.ts`)
+    running CSS/JS-API/image-format detection, `sessionStorage` writes, and `<html>` classList
+    mutation on every single page load for every `core` consumer. Delete
+    `plugins/feature-detection.client.ts`. Composable itself stays, callable on-demand by whichever
+    future consumer actually needs it (candidate: `layout`'s subgrid fallback).
 
-7. **`useScrollGuard` — delete entirely** (composable, `plugins/scroll-guard.client.ts`,
-   `types/scroll-guard.ts`). Traced: auto-enabled on every page load, zero code anywhere calls its
-   exposed runtime controls (`enable`/`disable`/`toggle`), yet it walks the full DOM on load and
-   runs a `MutationObserver` on the entire `<body>` subtree indefinitely — real always-on perf
-   cost for a problem never confirmed to exist in practice. The clamping behavior it implements is
-   preserved as a vitest characterization test instead of shipped runtime code, so the logic isn't
-   lost, just no longer running live.
+12. **`useScrollGuard` — delete entirely** (composable, `plugins/scroll-guard.client.ts`,
+    `types/scroll-guard.ts`). Traced: auto-enabled on every page load, zero code anywhere calls its
+    exposed runtime controls (`enable`/`disable`/`toggle`), yet it walks the full DOM on load and
+    runs a `MutationObserver` on the entire `<body>` subtree indefinitely — real always-on perf
+    cost for a problem never confirmed to exist in practice. The clamping behavior it implements is
+    preserved as a vitest characterization test instead of shipped runtime code, so the logic isn't
+    lost, just no longer running live.
 
-8. **PWA — disabled, not deleted**, pending a separate decision on Nuxt's PWA direction. Comment
-   out (don't remove) `@vite-pwa/nuxt` from `core`'s conditional prod `modules` array and the
-   `pwa: { workbox: {...} }` config block in `core/nuxt.config.ts`. `usePWAInfo` composable stays
-   in place, dormant, same status as `useRendering` — unused but harmless.
+13. **PWA — disabled, not deleted**, pending a separate decision on Nuxt's PWA direction. Comment
+    out (don't remove) `@vite-pwa/nuxt` from `core`'s conditional prod `modules` array and the
+    `pwa: { workbox: {...} }` config block in `core/nuxt.config.ts`. `usePWAInfo` composable stays
+    in place, dormant, same status as `useRendering` — unused but harmless.
 
 ## Tier 1 — Design System (`theming`, `typography`, `visual`)
 
@@ -232,6 +232,7 @@ points at its own `layouts/grid.vue` — but a silent trap for any future consum
 unmodified default layout.
 
 **Decisions:**
+
 - Delete `navigation/Mast/Main.vue` outright — not salvageable, the real implementation already
   exists in `layout`.
 - Grid-root ownership moves fully to `layout` (Tier 2, Structure) — it was never a Design System
@@ -276,12 +277,12 @@ unlike `core`'s debug-only diagnostics page).
 excluded — different domain, an SVG stroke-effect component with no typography props, not an
 inconsistency to fix):
 
-| Component | Props declared |
-|---|---|
+| Component           | Props declared                                                                           |
+| ------------------- | ---------------------------------------------------------------------------------------- |
 | `Typography` (base) | `tag, weight, width, slant, leading, tracking, align, transform, color, size, fluidSize` |
-| `Headline` | same 11, via `level` instead of `tag`, + `class` |
-| `CodeBlock` | only `language, color, size, class` |
-| `QuoteBlock` | only `color, size` |
+| `Headline`          | same 11, via `level` instead of `tag`, + `class`                                         |
+| `CodeBlock`         | only `language, color, size, class`                                                      |
+| `QuoteBlock`        | only `color, size`                                                                       |
 
 `CodeBlock`/`QuoteBlock` already render through `<Typography>` under the hood and forward
 `$attrs` to it — so the other 9 axes technically work if passed, they're just untyped and
@@ -326,7 +327,7 @@ runtime and what's typed, not building new architecture.
    `color.ts`) are already pure, headless, no-DOM functions — props in, class string out. That's
    already the abstraction layer being asked for; it's just not used as the primary interface.
    Right now `Headline`/`CodeBlock`/`QuoteBlock` reach it indirectly by wrapping the
-   `<Typography>` *component*, adding an extra nested-component hop in the render tree
+   `<Typography>` _component_, adding an extra nested-component hop in the render tree
    (`<Headline>` → `<Typography>` → actual DOM tag) to reach logic that already sits one level
    lower as a plain function.
 
@@ -355,7 +356,7 @@ only coincidentally match 2 of Tailwind's 4 values (`48rem`=768px=`md`, `80rem`=
 
 Separately, "container breakpoints" turned out to name two different things: `core`'s
 `container.css` is max-width sizing classes (`.container-content/wide/fluid/full`), unrelated to
-breakpoints. The actual container-*query* breakpoints (`@container (width >= 30rem/44rem/52rem)`)
+breakpoints. The actual container-_query_ breakpoints (`@container (width >= 30rem/44rem/52rem)`)
 live hardcoded, ad-hoc, directly in `layout/fluid.css` — no shared token/type backs them.
 
 **Decisions:**
@@ -379,6 +380,7 @@ variants already use. That half already ships, just not used as a deliberate str
 contrast, is one static value per variant — it doesn't itself respond to viewport width.
 
 **Decision:** combine both deliberately, split by scope —
+
 - **Viewport breakpoints** (the new custom scale from decision 2 above) decide macro/page-level
   layout: which container size variant is active, grid-mode switches, nav collapse points,
   structural decisions that need to know about the whole page/device.
@@ -395,12 +397,13 @@ contrast, is one static value per variant — it doesn't itself respond to viewp
 themselves, extending the same pattern `typography.css`'s fluid type scale already proves out
 (clamp scale + `-cq` container-relative variant + breakpoint-derived endpoints). Each technique
 answers a different question:
-- **Breakpoints** decide *which mode* — which named size variant is active, when macro/structural
+
+- **Breakpoints** decide _which mode_ — which named size variant is active, when macro/structural
   switches happen — and set the `clamp()` bounds themselves (the min/max endpoints).
-- **`clamp()`** decides *how it moves within that mode* — continuous scaling instead of an abrupt
+- **`clamp()`** decides _how it moves within that mode_ — continuous scaling instead of an abrupt
   jump at a hard breakpoint. E.g. `wide` becomes `clamp(65rem, 85vw, 90rem)` instead of a flat
   `90rem`.
-- **Container queries** decide how *descendants* respond to `AppContainer`'s real rendered width,
+- **Container queries** decide how _descendants_ respond to `AppContainer`'s real rendered width,
   independent of both of the above.
 
 `AppContainer`'s size variants (`content`/`wide`/`fluid`/`full`) move from single fixed values to
@@ -429,6 +432,7 @@ instead.
   decision needed, just the rename.
 
 **Decisions:**
+
 1. Rename `visual`'s `uiLayer` config namespace → `visualLayer`.
 2. Fix `theme`'s `app.config.ts`: real defaults for `accents`/`defaultAccent`, use
    `defineAppConfig()`, move the type augmentation into the same file per the repo's own rule.

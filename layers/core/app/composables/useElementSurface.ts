@@ -10,9 +10,7 @@ export type ElementSurfaceProps = {
   shadow?: CSSProperties['boxShadow'] | undefined
 }
 
-export function useElementSurface(
-  props: ElementSurfaceProps,
-): Partial<CSSProperties> {
+export function useElementSurface(props: ElementSurfaceProps): Partial<CSSProperties> {
   return {
     background: props.bg,
     color: props.color,

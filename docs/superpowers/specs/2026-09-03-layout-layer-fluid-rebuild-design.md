@@ -76,7 +76,7 @@ Ported from the validated prototype (`swiss-test/src/layout.css`):
    `round(nearest, fs * 1.5, 1px)` — rounded, not raw, so grid boundaries
    land on-pixel.
 2. **Unit.** `--unit: 1rlh`. `rlh` not `lh`: `lh` resolves against the
-   *current* element, so a heading with a different line-height would
+   _current_ element, so a heading with a different line-height would
    silently produce a different unit for anything nested in it. `rlh`
    always resolves against root.
 3. **Minimums.**
@@ -114,7 +114,7 @@ wrapped in a `LayoutSection` flows and wraps normally, sized only by
 - `grid-column: 1 / -1`, `grid-template-columns: subgrid` — inherits
   however many explicit columns the root's `auto-fill` resolved. This is
   legal: subgrid adopts the parent's resolved explicit track count
-  whatever it is; it only breaks when something tries to *address* a
+  whatever it is; it only breaks when something tries to _address_ a
   column by number, which nothing in this design does. A `.span-2` class
   inside a subgridded section asks for "2 of however many columns exist,"
   the same trick the prototype's own `.span-2` container-query gate uses
@@ -155,7 +155,7 @@ layers/structure/layout/app/components/
   properties via `:style`.
 - **`LayoutSection`** — see §4.
 - **`LayoutCell`** (replaces `LayoutGridItem`) — `variant: 'block' |
-  'plate'` prop (border vs. filled, matching the prototype's `.block`/
+'plate'` prop (border vs. filled, matching the prototype's `.block`/
   `.plate`), `span2` / `span2Rows` / `span3Rows` boolean/enum props. No
   `colStart`/`rowStart`/`preset`/`layer`/`bleed` — those go in the
   migration guide as removed, with the nearest equivalent noted.
@@ -174,16 +174,16 @@ layers/structure/layout/app/components/
 Every derived custom property gets a `syntax` descriptor, extending the
 prototype's existing `--fs` registration:
 
-| Property | `syntax` |
-|---|---|
-| `--fs` | `<length>` |
-| `--unit` | `<length>` |
-| `--edge-min` | `<length>` |
-| `--measure-min` | `<length>` |
-| `--lpf` | `<integer>` |
-| `--lines` | `<integer>` |
-| `--fields` | `<integer>` |
-| `--avail-b`, `--type-b`, `--slack` | `<length>` |
+| Property                           | `syntax`    |
+| ---------------------------------- | ----------- |
+| `--fs`                             | `<length>`  |
+| `--unit`                           | `<length>`  |
+| `--edge-min`                       | `<length>`  |
+| `--measure-min`                    | `<length>`  |
+| `--lpf`                            | `<integer>` |
+| `--lines`                          | `<integer>` |
+| `--fields`                         | `<integer>` |
+| `--avail-b`, `--type-b`, `--slack` | `<length>`  |
 
 Registration guards against Pitfall 1's failure mode (§7) as new CSS is
 added later: an unregistered custom property built from `calc()`/
@@ -199,7 +199,7 @@ inspection.
    track-count argument requires a literal `<integer>` at computed-value
    time — an unregistered `calc()`/`round()`-derived custom property
    doesn't satisfy that. Fix: `repeat(auto-fill, minmax(<length>, 1fr))`,
-   never a `var()`-derived count. This is *why* §2 rejects a mathematical
+   never a `var()`-derived count. This is _why_ §2 rejects a mathematical
    `--cols` ladder for v1.
 2. **Span utilities forcing malformed implicit tracks.** `span-2`
    unconditionally applying `grid-column: span 2` can force CSS Grid to
@@ -207,11 +207,11 @@ inspection.
    resolved (narrow/medium viewport), squashing siblings. Fix:
    `grid-auto-columns: minmax(measure-min, 1fr)` (belt-and-braces) plus
    gating `.span-2` behind `@container viewport (min-width: 2 *
-   measure-min + gutter)` so it only activates once 2 columns have
+measure-min + gutter)` so it only activates once 2 columns have
    genuinely resolved.
 3. **Hand-synced container-query thresholds.** `@container` conditions
    can't reference custom properties — the `@container cell (max-width:
-   22rem)` / `@container viewport (min-width: 46rem)` thresholds must be
+22rem)` / `@container viewport (min-width: 46rem)` thresholds must be
    hand-kept in sync with `--measure-min`, commented at both ends.
 
 ## §8 Constraints to preserve
@@ -237,11 +237,17 @@ layoutLayer: {
     grid: {
       mode: 'fluid' | 'disabled'
       tunables: {
-        measureMin: string           // e.g. '22rem'
-        edgeMin: { min: string; max: string }   // clamp bounds
-        lpf: { min: number; max: number }       // lines-per-field bounds
+        measureMin: string // e.g. '22rem'
+        edgeMin: {
+          min: string
+          max: string
+        } // clamp bounds
+        lpf: {
+          min: number
+          max: number
+        } // lines-per-field bounds
       }
-      layers: GridLayers             // z-index system, unchanged
+      layers: GridLayers // z-index system, unchanged
     }
   }
 }

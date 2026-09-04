@@ -65,6 +65,7 @@ interface ElementLayoutProps {
   hidden?: boolean
 }
 ```
+
 Resolves to `display`. Exactly one of the four booleans wins (first match:
 hidden > grid > flex > block), matching the prototype's `displayFor` map.
 
@@ -122,6 +123,7 @@ interface ElementSizingProps {
   aspect?: CSSProperties['aspectRatio']
 }
 ```
+
 Raw CSS passthrough, same shape as the prototype. No token constraint — sizing is inherently arbitrary (pixel dimensions, percentages).
 
 ### 3.5 Surface — `useElementSurface.ts` (new)
@@ -135,6 +137,7 @@ interface ElementSurfaceProps {
   shadow?: CSSProperties['boxShadow']
 }
 ```
+
 Raw CSS passthrough (per user decision) — `bg="var(--ui-color-primary-500)"`, not `bg="primary"`. No semantic colour resolution; that stays Phase 2 territory, untouched. No new `radius`/`shadow` token files exist in `core` yet — not created here.
 
 ### 3.6 Interaction — `useElementInteraction.ts` (new)
@@ -146,33 +149,41 @@ interface ElementInteractionProps {
   pointer?: CSSProperties['pointerEvents']
 }
 ```
+
 Direct port of the prototype's composable — already minimal and correct.
 
 ## §4 `Element.vue`
 
 ```vue
 <script setup lang="ts">
-import type { Component, CSSProperties } from 'vue'
-import type { ElementGridProps } from '#layers/layout/app/composables/useElementGrid'
-import type { ElementInteractionProps } from '#layers/layout/app/composables/useElementInteraction'
-import type { ElementLayoutProps } from '#layers/layout/app/composables/useElementLayout'
-import type { ElementSizingProps } from '#layers/layout/app/composables/useElementSizing'
-import type { ElementSurfaceProps } from '#layers/layout/app/composables/useElementSurface'
-import type { LayoutAttrsInput } from '#layers/core/app/composables/useLayoutAttrs'
+  import type { Component, CSSProperties } from 'vue'
+  import type { LayoutAttrsInput } from '#layers/core/app/composables/useLayoutAttrs'
+  import type { ElementGridProps } from '#layers/layout/app/composables/useElementGrid'
+  import type { ElementInteractionProps } from '#layers/layout/app/composables/useElementInteraction'
+  import type { ElementLayoutProps } from '#layers/layout/app/composables/useElementLayout'
+  import type { ElementSizingProps } from '#layers/layout/app/composables/useElementSizing'
+  import type { ElementSurfaceProps } from '#layers/layout/app/composables/useElementSurface'
 
-const props = withDefaults(defineProps<
-  ElementLayoutProps & ElementGridProps & LayoutAttrsInput & ElementSizingProps &
-  ElementSurfaceProps & ElementInteractionProps & { as?: string | Component }
->(), { as: 'div' })
+  const props = withDefaults(
+    defineProps<
+      ElementLayoutProps &
+        ElementGridProps &
+        LayoutAttrsInput &
+        ElementSizingProps &
+        ElementSurfaceProps &
+        ElementInteractionProps & { as?: string | Component }
+    >(),
+    { as: 'div' }
+  )
 
-const style = computed<CSSProperties>(() => ({
-  ...useElementLayout(props).value,
-  ...useLayoutAttrs(() => props).style.value,
-  ...useElementGrid(props).value,
-  ...useElementSizing(props).value,
-  ...useElementSurface(props).value,
-  ...useElementInteraction(props).value,
-}))
+  const style = computed<CSSProperties>(() => ({
+    ...useElementLayout(props).value,
+    ...useLayoutAttrs(() => props).style.value,
+    ...useElementGrid(props).value,
+    ...useElementSizing(props).value,
+    ...useElementSurface(props).value,
+    ...useElementInteraction(props).value,
+  }))
 </script>
 
 <template>
@@ -190,11 +201,14 @@ Root-level, unprefixed component name (`<Element>`), matching `HStack`/
 `layers/structure/layout/app/types/element.ts` re-exports the union:
 
 ```ts
-export type ElementProps =
-  & ElementLayoutProps & ElementGridProps & LayoutAttrsInput &
-    ElementSizingProps & ElementSurfaceProps & ElementInteractionProps
-  & { as?: string | Component }
+export type ElementProps = ElementLayoutProps &
+  ElementGridProps &
+  LayoutAttrsInput &
+  ElementSizingProps &
+  ElementSurfaceProps &
+  ElementInteractionProps & { as?: string | Component }
 ```
+
 Consumed by future semantic components (`Card`, `Section` variants) that
 want a documented subset — per source doc's "Component Capabilities"
 section. No such consumer is built in this pass; the type just exists for
@@ -289,6 +303,7 @@ final-review fix wave, §8's ledger) was removed along with the item axis —
 no longer needed.
 
 File moves (git history preserved via `git mv`):
+
 - `layers/structure/layout/app/components/Element.vue` → `layers/core/app/components/Element.vue`
 - `layers/structure/layout/app/composables/useElement*.ts(.test.ts)` → `layers/core/app/composables/`
 - `layers/structure/layout/app/types/element.ts` → `layers/core/app/types/element.ts`
@@ -305,7 +320,7 @@ utilities — matches the tier taxonomy better than folding it into `core`.
 
 **Resolution:** new layer, `layers/design-system/element/`, alongside
 `theming`/`typography`/`visual` (same tier, same shape: one dependency,
-`core`). This is *not* a reversion to §7's original mistake (`layout`,
+`core`). This is _not_ a reversion to §7's original mistake (`layout`,
 tier 2) — `element` depends only on `core`, so it costs every consuming
 layer/app exactly one `extends` entry, same as `typography` or `visual`
 already do. §10's core objection (§7's placement inverting the tier-2

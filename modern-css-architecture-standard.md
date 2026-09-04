@@ -92,16 +92,16 @@ Cascade layers are the foundation of the architecture.
 
 ## Layer responsibilities
 
-| Layer | Purpose |
-|---|---|
-| `reset` | Browser normalisation |
-| `tokens` | Design tokens and `@property` registrations |
-| `theme` | Theme-specific values |
-| `base` | Global element/document styles |
-| `layout` | Layout primitives and page structure |
-| `components` | Application components |
-| `utilities` | Small utilities and minimal Tailwind |
-| `overrides` | Explicit exceptions |
+| Layer        | Purpose                                     |
+| ------------ | ------------------------------------------- |
+| `reset`      | Browser normalisation                       |
+| `tokens`     | Design tokens and `@property` registrations |
+| `theme`      | Theme-specific values                       |
+| `base`       | Global element/document styles              |
+| `layout`     | Layout primitives and page structure        |
+| `components` | Application components                      |
+| `utilities`  | Small utilities and minimal Tailwind        |
+| `overrides`  | Explicit exceptions                         |
 
 ### Rules
 
@@ -165,19 +165,19 @@ Use `@property` for custom properties representing known CSS types.
 
 ```css
 @property --color-accent {
-  syntax: "<color>";
+  syntax: '<color>';
   inherits: true;
   initial-value: oklch(65% 0.2 250);
 }
 
 @property --space-md {
-  syntax: "<length>";
+  syntax: '<length>';
   inherits: true;
   initial-value: 1rem;
 }
 
 @property --opacity {
-  syntax: "<number>";
+  syntax: '<number>';
   inherits: false;
   initial-value: 1;
 }
@@ -299,18 +299,18 @@ This makes components more portable across writing modes and directions.
 
 Use the unit that represents the dependency of the value.
 
-| Dependency | Preferred unit |
-|---|---|
-| Root typography | `rem` |
-| Text-relative sizing | `em` |
-| Container-relative sizing | `cqi`, `cqw` |
-| Viewport composition | `vw`, `vh`, `vi`, `vb` |
-| Fixed design geometry | `rem` |
-| Grid distribution | `fr` |
-| Relative sizing | `%` |
-| Fluid values | `clamp()` |
-| Calculated values | `calc()` |
-| Bounds | `min()` / `max()` |
+| Dependency                | Preferred unit         |
+| ------------------------- | ---------------------- |
+| Root typography           | `rem`                  |
+| Text-relative sizing      | `em`                   |
+| Container-relative sizing | `cqi`, `cqw`           |
+| Viewport composition      | `vw`, `vh`, `vi`, `vb` |
+| Fixed design geometry     | `rem`                  |
+| Grid distribution         | `fr`                   |
+| Relative sizing           | `%`                    |
+| Fluid values              | `clamp()`              |
+| Calculated values         | `calc()`               |
+| Bounds                    | `min()` / `max()`      |
 
 Do not convert everything to a single unit.
 
@@ -329,11 +329,7 @@ font-size: clamp(1rem, 2cqi, 1.5rem);
 ```
 
 ```css
-padding-inline: clamp(
-  var(--space-md),
-  4cqi,
-  var(--space-xl)
-);
+padding-inline: clamp(var(--space-md), 4cqi, var(--space-xl));
 ```
 
 Avoid unnecessary breakpoint staircases:
@@ -374,11 +370,7 @@ Example:
 ```css
 .card-grid {
   display: grid;
-  grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(min(100%, 20rem), 1fr)
-    );
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
 }
 ```
 
@@ -413,9 +405,7 @@ Use media queries when the condition genuinely concerns the viewport or environm
 Good examples:
 
 ```css
-@media (prefers-reduced-motion: reduce)
-@media (hover: hover)
-@media (pointer: coarse)
+@media (prefers-reduced-motion: reduce) @media (hover: hover) @media (pointer: coarse);
 ```
 
 ---
@@ -523,7 +513,7 @@ Components are the primary application-level styling abstraction.
 Prefer:
 
 ```html
-<article class="card">
+<article class="card"></article>
 ```
 
 over constructing a component from a long utility string.
@@ -535,12 +525,12 @@ Example:
   .card {
     display: grid;
     gap: var(--space-md);
-    padding: var(--space-lg);
 
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
 
     background: var(--color-surface);
+    padding: var(--space-lg);
     color: var(--color-text);
   }
 }
@@ -557,19 +547,19 @@ State should be explicit.
 Prefer:
 
 ```html
-<div class="card" data-state="error">
+<div class="card" data-state="error"></div>
 ```
 
 over:
 
 ```html
-<div class="card card-active card-error card-loading">
+<div class="card card-active card-error card-loading"></div>
 ```
 
 Then:
 
 ```css
-.card[data-state="error"] {
+.card[data-state='error'] {
   border-color: var(--color-error);
 }
 ```
@@ -629,13 +619,13 @@ Motion should be tokenised.
 
 ```css
 @property --duration-fast {
-  syntax: "<time>";
+  syntax: '<time>';
   inherits: false;
   initial-value: 150ms;
 }
 
 @property --ease-standard {
-  syntax: "<easing-function>";
+  syntax: '<easing-function>';
   inherits: false;
   initial-value: ease;
 }
@@ -753,13 +743,13 @@ However:
 Avoid:
 
 ```html
-<div class="flex flex-col gap-6 px-4 md:px-8 lg:px-12 max-w-7xl mx-auto">
+<div class="flex flex-col gap-6 px-4 md:px-8 lg:px-12 max-w-7xl mx-auto"></div>
 ```
 
 Prefer:
 
 ```html
-<div class="page-container">
+<div class="page-container"></div>
 ```
 
 with:
@@ -767,11 +757,8 @@ with:
 ```css
 @layer layout {
   .page-container {
-    inline-size: min(
-      calc(100% - 2 * var(--page-gutter)),
-      var(--content-max)
-    );
     margin-inline: auto;
+    inline-size: min(calc(100% - 2 * var(--page-gutter)), var(--content-max));
   }
 }
 ```
@@ -786,14 +773,16 @@ Examples:
 
 ```html
 <div class="sr-only">
-<div class="hidden">
-<div class="truncate">
+  <div class="hidden">
+    <div class="truncate"></div>
+  </div>
+</div>
 ```
 
 Potentially:
 
 ```html
-<div class="flex">
+<div class="flex"></div>
 ```
 
 when there is no meaningful semantic component abstraction.
@@ -1060,29 +1049,28 @@ overrides
 ```css
 @layer components {
   @property --card-padding {
-    syntax: "<length>";
+    syntax: '<length>';
     inherits: false;
     initial-value: 1rem;
   }
 
   .card {
-    container-type: inline-size;
-
     display: grid;
     gap: var(--space-md);
 
-    inline-size: 100%;
-    padding: var(--card-padding);
+    transition:
+      background-color var(--duration-fast) var(--ease-standard),
+      border-color var(--duration-fast) var(--ease-standard);
+    container-type: inline-size;
 
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
 
     background: var(--color-surface);
-    color: var(--color-text);
+    padding: var(--card-padding);
 
-    transition:
-      background-color var(--duration-fast) var(--ease-standard),
-      border-color var(--duration-fast) var(--ease-standard);
+    inline-size: 100%;
+    color: var(--color-text);
   }
 
   @container (inline-size > 35rem) {
@@ -1092,7 +1080,7 @@ overrides
     }
   }
 
-  .card[data-state="error"] {
+  .card[data-state='error'] {
     border-color: var(--color-error);
   }
 }
@@ -1117,16 +1105,13 @@ This demonstrates:
 
 ```vue
 <script setup lang="ts">
-defineProps<{
-  loading?: boolean
-}>()
+  defineProps<{
+    loading?: boolean
+  }>()
 </script>
 
 <template>
-  <UButton
-    class="app-button"
-    :loading="loading"
-  >
+  <UButton class="app-button" :loading="loading">
     <slot />
   </UButton>
 </template>

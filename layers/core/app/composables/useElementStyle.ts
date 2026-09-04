@@ -1,12 +1,12 @@
 import { computed, type ComputedRef, type CSSProperties } from 'vue'
 
-import { useLayoutAttrs } from './useLayoutAttrs'
+import type { ElementProps } from '../types/element'
 import { useElementGrid } from './useElementGrid'
 import { useElementInteraction } from './useElementInteraction'
 import { useElementLayout } from './useElementLayout'
 import { useElementSizing } from './useElementSizing'
 import { useElementSurface } from './useElementSurface'
-import type { ElementProps } from '../types/element'
+import { useLayoutAttrs } from './useLayoutAttrs'
 
 /**
  * Merges the 5 element composables + core's useLayoutAttrs into one style
@@ -55,7 +55,11 @@ export function useElementStyle(
         radius: props.radius,
         shadow: props.shadow,
       }),
-      ...useElementInteraction({ cursor: props.cursor, select: props.select, pointer: props.pointer }),
+      ...useElementInteraction({
+        cursor: props.cursor,
+        select: props.select,
+        pointer: props.pointer,
+      }),
     }
   })
 }

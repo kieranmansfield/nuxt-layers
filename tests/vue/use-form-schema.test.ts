@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
-import { getFieldValidation, useFormSchema } from '../../layers/data/forms/app/composables/useFormSchema'
+import {
+  getFieldValidation,
+  useFormSchema,
+} from '../../layers/data/forms/app/composables/useFormSchema'
 
 describe('useFormSchema', () => {
   it('builds a schema that validates the selected field types', () => {

@@ -15,9 +15,15 @@ describe('toColumnsCss', () => {
   it('renders mixed sizes (8 equal + double + triple)', () => {
     const config: TrackConfig = {
       columns: [
-        { size: 1 }, { size: 1 }, { size: 1 }, { size: 1 },
-        { size: 1 }, { size: 1 }, { size: 1 },
-        { size: 2 }, { size: 3 },
+        { size: 1 },
+        { size: 1 },
+        { size: 1 },
+        { size: 1 },
+        { size: 1 },
+        { size: 1 },
+        { size: 1 },
+        { size: 2 },
+        { size: 3 },
       ],
     }
     const css = toColumnsCss(config)
@@ -30,9 +36,7 @@ describe('toColumnsCss', () => {
     const config: TrackConfig = {
       columns: [{ size: 1, lineStart: 'a-start', lineEnd: 'a-end' }],
     }
-    expect(toColumnsCss(config)).toBe(
-      '[a-start] minmax(var(--measure-min), 1fr) [a-end]'
-    )
+    expect(toColumnsCss(config)).toBe('[a-start] minmax(var(--measure-min), 1fr) [a-end]')
   })
 
   it('merges an adjacent lineEnd and lineStart into one bracket', () => {

@@ -41,8 +41,8 @@ since it has no fixed domain to wrap. `createPortfolioComposables.ts` deleted, f
 
 ### Missing `/blog` and `/portfolio` routes — resolved (design was misread, corrected by user)
 
-Initial read: `content.vue`'s own demo page claimed *"the content layer provides default pages at
-`/blog`, `/portfolio`, and `/gallery`... out of the box"*, but `layers/content` has no `app/pages/`
+Initial read: `content.vue`'s own demo page claimed _"the content layer provides default pages at
+`/blog`, `/portfolio`, and `/gallery`... out of the box"_, but `layers/content` has no `app/pages/`
 directory and the playground had no `/blog` or `/portfolio` routes — only `/gallery`.
 
 **User correction**: the layer has never auto-registered routes — that was tried once and produced
@@ -54,6 +54,7 @@ consuming app copies into `app/pages/` as a 1–3 line wrapper — exactly what 
 pair built at all.
 
 **Implemented**:
+
 - Added `Blog/Page.vue` and `Blog/ItemPage.vue`, mirroring `Portfolio/Page.vue`/`ItemPage.vue`
   exactly (`contentLayer.sections.blog` guard, `LayoutSection`/`LayoutGridItem` wrapper).
 - Added the four thin playground route wrappers: `apps/playground/app/pages/blog/index.vue`,

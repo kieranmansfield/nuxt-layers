@@ -54,6 +54,7 @@ apps/playground/app/pages/grid-builder.vue  # Task 7 — dev-only visual builder
 ### Task 1: Layer scaffold + track types
 
 **Files:**
+
 - Create: `layers/structure/grid/nuxt.config.ts`
 - Create: `layers/structure/grid/package.json`
 - Create: `layers/structure/grid/CLAUDE.md`
@@ -61,6 +62,7 @@ apps/playground/app/pages/grid-builder.vue  # Task 7 — dev-only visual builder
 - Test: `layers/structure/grid/app/types/tracks.test.ts`
 
 **Interfaces:**
+
 - Produces: `TrackSegment` (`{ size: number; lineStart?: string | string[]; lineEnd?: string | string[] }`), `TrackConfig` (`{ columns: TrackSegment[]; minTrackWidth?: string }`), `GridPreset` (`TrackConfig & { name: string }`) — all subsequent tasks import from `#layers/grid/types/tracks` (or relative `../types/tracks` within the layer).
 
 - [ ] **Step 1: Create the layer directories**
@@ -206,11 +208,11 @@ Named presets (`swiss`, `editorial`) or custom `TrackSegment[]` arrays resolve t
 \`\`\`
 layers/structure/grid/
 ├── app/
-│   ├── assets/css/grid.css        # .grid-root rhythm custom properties
-│   ├── composables/useGridTracks.ts  # resolve() + toColumnsCss()
-│   ├── types/tracks.ts            # TrackSegment, TrackConfig, GridPreset
-│   ├── utils/placement.ts         # placementFromLines, placementFromIndex
-│   └── app.config.ts              # gridLayer.presets registry
+│ ├── assets/css/grid.css # .grid-root rhythm custom properties
+│ ├── composables/useGridTracks.ts # resolve() + toColumnsCss()
+│ ├── types/tracks.ts # TrackSegment, TrackConfig, GridPreset
+│ ├── utils/placement.ts # placementFromLines, placementFromIndex
+│ └── app.config.ts # gridLayer.presets registry
 ├── nuxt.config.ts
 └── package.json
 \`\`\`
@@ -220,8 +222,8 @@ layers/structure/grid/
 \`\`\`ts
 const { resolve, toColumnsCss } = useGridTracks()
 
-const config = resolve('swiss')          // named preset from app.config
-const custom = resolve({ columns: [{ size: 1 }, { size: 2 }] })  // passthrough
+const config = resolve('swiss') // named preset from app.config
+const custom = resolve({ columns: [{ size: 1 }, { size: 2 }] }) // passthrough
 
 const css = toColumnsCss(config)
 // → 'minmax(var(--measure-min), 1fr) minmax(var(--measure-min), 1fr) ...'
@@ -230,9 +232,9 @@ const css = toColumnsCss(config)
 \`\`\`ts
 import { placementFromIndex, placementFromLines } from '#layers/grid/app/utils/placement'
 
-placementFromLines('feature-start', 'aside-end')  // → 'feature-start / aside-end'
-placementFromIndex(2, 3)                          // → '2 / span 3'
-placementFromIndex(2, 'full')                     // → '2 / -1'
+placementFromLines('feature-start', 'aside-end') // → 'feature-start / aside-end'
+placementFromIndex(2, 3) // → '2 / span 3'
+placementFromIndex(2, 'full') // → '2 / -1'
 \`\`\`
 
 ## Out of scope (this layer, this phase)
@@ -257,9 +259,11 @@ git commit -m "feat(grid): scaffold new grid layer, add track types"
 ### Task 2: Rhythm CSS
 
 **Files:**
+
 - Create: `layers/structure/grid/app/assets/css/grid.css`
 
 **Interfaces:**
+
 - Consumes: nothing (pure CSS, no TS dependency).
 - Produces: `.grid-root` class with `--unit`, `--measure-min`, `--edge-min`, `--lines`, `--lpf`,
   `--fields` custom properties, consumed visually by Task 7's builder page (no TS import — CSS
@@ -304,12 +308,12 @@ instead, applied per-consumer via inline `style="grid-template-columns: ..."`).
   --fields: max(1, round(down, calc((var(--lines) + 1) / (var(--lpf) + 1)), 1));
 
   display: grid;
-  gap: var(--unit);
-  padding-block: var(--edge-min);
-  padding-inline: var(--edge-min);
   grid-auto-rows: minmax(calc(var(--lpf) * var(--unit)), max-content);
-  container-type: inline-size;
+  gap: var(--unit);
   container-name: grid-root;
+  container-type: inline-size;
+  padding-inline: var(--edge-min);
+  padding-block: var(--edge-min);
 }
 ```
 
@@ -338,10 +342,12 @@ Pitfall 1's own lesson: `pnpm build`/static checks don't catch computed-value fa
 ### Task 3: `useGridTracks()` — track resolution and CSS generation
 
 **Files:**
+
 - Create: `layers/structure/grid/app/composables/useGridTracks.ts`
 - Test: `layers/structure/grid/app/composables/useGridTracks.test.ts`
 
 **Interfaces:**
+
 - Consumes: `TrackSegment`, `TrackConfig`, `GridPreset` from `../types/tracks` (Task 1).
 - Produces: `resolve(input: string | TrackConfig, presets?: Record<string, GridPreset>): TrackConfig`
   and `toColumnsCss(config: TrackConfig): string` — both exported as standalone pure functions
@@ -370,9 +376,15 @@ describe('toColumnsCss', () => {
   it('renders mixed sizes (8 equal + double + triple)', () => {
     const config: TrackConfig = {
       columns: [
-        { size: 1 }, { size: 1 }, { size: 1 }, { size: 1 },
-        { size: 1 }, { size: 1 }, { size: 1 },
-        { size: 2 }, { size: 3 },
+        { size: 1 },
+        { size: 1 },
+        { size: 1 },
+        { size: 1 },
+        { size: 1 },
+        { size: 1 },
+        { size: 1 },
+        { size: 2 },
+        { size: 3 },
       ],
     }
     const css = toColumnsCss(config)
@@ -385,9 +397,7 @@ describe('toColumnsCss', () => {
     const config: TrackConfig = {
       columns: [{ size: 1, lineStart: 'a-start', lineEnd: 'a-end' }],
     }
-    expect(toColumnsCss(config)).toBe(
-      '[a-start] minmax(var(--measure-min), 1fr) [a-end]'
-    )
+    expect(toColumnsCss(config)).toBe('[a-start] minmax(var(--measure-min), 1fr) [a-end]')
   })
 
   it('merges an adjacent lineEnd and lineStart into one bracket', () => {
@@ -543,10 +553,12 @@ git commit -m "feat(grid): add useGridTracks composable (resolve, toColumnsCss)"
 ### Task 4: Placement utils
 
 **Files:**
+
 - Create: `layers/structure/grid/app/utils/placement.ts`
 - Test: `layers/structure/grid/app/utils/placement.test.ts`
 
 **Interfaces:**
+
 - Consumes: nothing (pure string functions, no type imports needed).
 - Produces: `placementFromLines(startLine: string, endLine: string): string`,
   `placementFromIndex(colStart: number, colSpan: number | 'full'): string` — used by Task 7's
@@ -621,9 +633,11 @@ git commit -m "feat(grid): add placement utils (named-line and numeric fallback)
 ### Task 5: Preset registry (`app.config.ts`)
 
 **Files:**
+
 - Create: `layers/structure/grid/app/app.config.ts`
 
 **Interfaces:**
+
 - Consumes: `GridPreset` from `./types/tracks` (Task 1).
 - Produces: `gridLayer.presets.swiss` and `gridLayer.presets.editorial`, read by
   `useGridTracks()` (Task 3) via `useAppConfig()`. Task 7's builder page uses `resolve('swiss')`
@@ -687,9 +701,11 @@ git commit -m "feat(grid): add swiss and editorial preset registry"
 ### Task 6: Register `grid` in the playground layer resolver
 
 **Files:**
+
 - Modify: `apps/playground/nuxt.config.ts:2-95`
 
 **Interfaces:**
+
 - Consumes: nothing new — this task only wires the layer path into the existing
   `AVAILABLE_LAYERS`/`LAYER_PATHS`/`LAYER_DEPENDENCIES` resolver so
   `PLAYGROUND_LAYERS=core,grid pnpm dev` (Task 7's manual verification) can load it.
@@ -768,9 +784,11 @@ git commit -m "feat(grid): register grid layer in playground resolver"
 ### Task 7: Playground visual builder (`/grid-builder`)
 
 **Files:**
+
 - Create: `apps/playground/app/pages/grid-builder.vue`
 
 **Interfaces:**
+
 - Consumes: `useGridTracks()` (Task 3, `resolve`/`toColumnsCss`), `TrackSegment`/`TrackConfig`
   types (Task 1), `.grid-root` CSS class (Task 2), `gridLayer.presets` (Task 5), the `grid`
   layer registration (Task 6).
@@ -925,6 +943,7 @@ Run: `PLAYGROUND_LAYERS=core,grid pnpm dev` (from `apps/playground/`), open
 `http://localhost:3000/grid-builder`.
 
 Expected, checked by eye:
+
 1. Click "Swiss (18 equal)" — 18 equal-width preview cells render, all the same width.
 2. Click "Editorial" — 2 preview cells render, the first roughly twice the width of the second.
 3. Click "Custom", adjust segment sizes/add a segment (e.g. the 8-equal + double + triple shape

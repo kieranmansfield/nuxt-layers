@@ -1,4 +1,5 @@
 import { defineNitroPlugin, useRuntimeConfig } from 'nitropack/runtime'
+
 import { buildAccentCSS } from '../utils/accent-css'
 import { buildThemeInitScript } from '../utils/fouc-config'
 
