@@ -26,18 +26,50 @@
     UBadge: resolveComponent('UBadge'),
   }
 
-  // Stock slot content per component — plain text for UButton/UBadge (their slot
-  // is just a label), a small real block for UCard, which needs actual body
-  // content to look like anything. Native tags keep the user-editable default.
-  const COMPONENT_CONTENT: Record<string, string> = {
-    UButton: 'Continue',
-    UBadge: 'New',
-  }
-  const UCARD_DEMO_MARKUP = `  <div class="space-y-2">
+  // Content presets aren't tied to a particular "as" — any tag or component can
+  // hold any of these, so a bare <div> gets the same "stock content" options a
+  // UCard does instead of just an editable text label.
+  const CONTENT_PRESET_OPTIONS = [
+    { label: 'Plain text', value: 'text' },
+    { label: 'Card body (title + description + action)', value: 'card' },
+    { label: 'Stat (number + label)', value: 'stat' },
+    { label: 'List (checklist)', value: 'list' },
+  ]
+  const contentPreset = ref<'text' | 'card' | 'stat' | 'list'>('text')
+
+  // Sensible starting point per "as" — still just a default, not a lock. Picking
+  // a different content preset afterwards works for any "as" value.
+  const AS_CONTENT_DEFAULTS: Record<string, { preset: typeof contentPreset.value; text?: string }> =
+    {
+      div: { preset: 'text', text: 'Element content' },
+      section: { preset: 'text', text: 'Element content' },
+      article: { preset: 'text', text: 'Element content' },
+      span: { preset: 'text', text: 'Element content' },
+      button: { preset: 'text', text: 'Element content' },
+      UButton: { preset: 'text', text: 'Continue' },
+      UBadge: { preset: 'text', text: 'New' },
+      UCard: { preset: 'card' },
+    }
+
+  const CARD_DEMO_MARKUP = `  <div class="space-y-2">
     <h3 class="font-semibold">Team plan</h3>
     <p class="text-sm text-muted">Unlimited projects, priority support, billed monthly.</p>
     <UButton label="Upgrade" trailing-icon="i-lucide-arrow-right" size="sm" />
   </div>`
+  const STAT_DEMO_MARKUP = `  <div class="text-center">
+    <p class="text-3xl font-bold">128</p>
+    <p class="text-xs text-muted uppercase tracking-wide">Active users</p>
+  </div>`
+  const LIST_DEMO_MARKUP = `  <ul class="space-y-1 text-sm text-left">
+    <li>Unlimited projects</li>
+    <li>Priority support</li>
+    <li>Custom domains</li>
+  </ul>`
+  const CONTENT_DEMO_MARKUP: Record<'card' | 'stat' | 'list', string> = {
+    card: CARD_DEMO_MARKUP,
+    stat: STAT_DEMO_MARKUP,
+    list: LIST_DEMO_MARKUP,
+  }
 
   // Surface defaults exist to make the *native-tag* preview visible (a bare div
   // has no shape). Nuxt UI components already look like something on their own —
@@ -110,7 +142,6 @@
       layoutMode.value = NATIVE_LAYOUT_DEFAULTS.layoutMode
       gap.value = NATIVE_LAYOUT_DEFAULTS.gap
       p.value = NATIVE_LAYOUT_DEFAULTS.p
-      slotText.value = 'Element content'
     } else {
       h.value = ''
       bg.value = ''
@@ -119,8 +150,10 @@
       layoutMode.value = 'none'
       gap.value = UNSET
       p.value = UNSET
-      slotText.value = COMPONENT_CONTENT[next] ?? slotText.value
     }
+    const preset = AS_CONTENT_DEFAULTS[next] ?? { preset: 'text', text: 'Element content' }
+    contentPreset.value = preset.preset
+    if (preset.text) slotText.value = preset.text
   })
 
   // Each group's own resolver — one branchy computed per property group is easier to
@@ -175,6 +208,18 @@
       ['pointer', pointer],
     ])
 
+  // Data for the "Reference examples" real-pattern demos below.
+  const statRowData = [
+    { value: '128', label: 'Active users' },
+    { value: '4.9', label: 'Avg. rating' },
+    { value: '99.9%', label: 'Uptime' },
+  ]
+  const pricingGridData = [
+    { name: 'Starter', price: '$0', blurb: 'Personal projects, community support.' },
+    { name: 'Team', price: '$29', blurb: 'Unlimited projects, priority support.' },
+    { name: 'Enterprise', price: 'Custom', blurb: 'SSO, audit logs, dedicated support.' },
+  ]
+
   // Only the props actually set — mirrors the escape-hatch spirit of Element itself:
   // absent props stay absent rather than resolving to a noisy default value.
   const elementBindings = computed<Record<string, unknown>>(() => ({
@@ -197,7 +242,10 @@
     for (const [key, value] of Object.entries(elementBindings.value)) {
       if (key !== 'as') attrs.push(formatAttr(key, value))
     }
-    const body = as.value === 'UCard' ? UCARD_DEMO_MARKUP : `  ${slotText.value}`
+    const body =
+      contentPreset.value === 'text'
+        ? `  ${slotText.value}`
+        : CONTENT_DEMO_MARKUP[contentPreset.value]
     return `<Element ${attrs.join(' ')}>\n${body}\n</Element>`
   })
 
@@ -384,17 +432,16 @@
             </div>
           </div>
 
-          <UFormField v-if="as !== 'UCard'" label="Content">
+          <UFormField label="Content">
+            <USelect v-model="contentPreset" :items="CONTENT_PRESET_OPTIONS" class="w-full" />
+          </UFormField>
+          <UFormField v-if="contentPreset === 'text'" label="Text">
             <UInput v-model="slotText" />
           </UFormField>
-          <p v-else class="text-xs text-muted">
-            UCard uses fixed demo content (title, description, action) — see the preview and
-            generated markup.
-          </p>
         </div>
 
         <!-- Preview + generated code -->
-        <div class="space-y-4">
+        <div class="space-y-4 min-w-0">
           <div class="flex items-center gap-2">
             <span class="text-xs font-semibold uppercase tracking-wide text-muted"
               >Rendered as</span
@@ -408,18 +455,27 @@
             class="rounded-lg border border-default p-6 flex items-center justify-center min-h-40"
           >
             <Element v-bind="elementBindings">
-              <div v-if="as === 'UCard'" class="space-y-2">
+              <div v-if="contentPreset === 'card'" class="space-y-2">
                 <h3 class="font-semibold">Team plan</h3>
                 <p class="text-sm text-muted">
                   Unlimited projects, priority support, billed monthly.
                 </p>
                 <UButton label="Upgrade" trailing-icon="i-lucide-arrow-right" size="sm" />
               </div>
+              <div v-else-if="contentPreset === 'stat'" class="text-center">
+                <p class="text-3xl font-bold">128</p>
+                <p class="text-xs text-muted uppercase tracking-wide">Active users</p>
+              </div>
+              <ul v-else-if="contentPreset === 'list'" class="space-y-1 text-sm text-left">
+                <li>Unlimited projects</li>
+                <li>Priority support</li>
+                <li>Custom domains</li>
+              </ul>
               <template v-else>{{ slotText }}</template>
             </Element>
           </div>
 
-          <div>
+          <div class="min-w-0">
             <p class="text-xs font-semibold uppercase tracking-wide text-muted mb-2">
               Generated markup
             </p>
@@ -431,79 +487,96 @@
       </div>
     </UCard>
 
-    <!-- Static reference examples -->
+    <!-- Reference examples: real compositions, not abstract prop showcases -->
     <div class="space-y-6">
       <h2 class="text-xl font-semibold">Reference examples</h2>
+      <p class="text-muted -mt-2">
+        Four small real patterns, each built with Element doing the layout/spacing/surface work
+        around ordinary Nuxt UI components.
+      </p>
 
-      <Element block p="xl" class="rounded-lg border border-default">
-        <h3 class="font-medium mb-3">Grid container (container axis only)</h3>
-        <Element grid :cols="12" gap="lg" p="lg" bg="var(--ui-bg-elevated)" radius="0.5rem">
-          <Element bg="var(--ui-color-primary-400)" color="white" p="md" radius="0.25rem">
-            Item placement isn't part of Element — use LayoutGridItem inside a grid for that, or CSS
-            `grid-column`/`grid-row` directly via `:style`.
-          </Element>
-        </Element>
-      </Element>
-
-      <Element block p="xl" class="rounded-lg border border-default">
-        <h3 class="font-medium mb-3">Flex + sizing + interaction</h3>
-        <Element flex gap="md" p="lg" bg="var(--ui-bg-elevated)" radius="0.5rem">
+      <div class="rounded-lg border border-default p-6 space-y-3">
+        <div>
+          <h3 class="font-medium">Stat row</h3>
+          <p class="text-xs text-muted">flex · gap · sizing</p>
+        </div>
+        <Element flex gap="md">
           <Element
-            w="80px"
-            h="80px"
-            bg="var(--ui-color-primary-400)"
-            radius="9999px"
-            cursor="pointer"
-            select="none"
-          />
-          <Element
-            w="160px"
-            h="80px"
-            bg="var(--ui-color-primary-500)"
-            color="white"
-            p="sm"
-            radius="0.5rem"
-            shadow="0 4px 12px rgb(0 0 0 / 0.15)"
-          >
-            card
-          </Element>
-          <Element
-            min-w="120px"
-            max-w="240px"
-            h="80px"
-            bg="var(--ui-color-primary-600)"
-            color="white"
-            p="sm"
-            radius="0.5rem"
-          >
-            min/max width
-          </Element>
-        </Element>
-      </Element>
-
-      <Element block p="xl" class="rounded-lg border border-default">
-        <h3 class="font-medium mb-3">Layout modes</h3>
-        <Element flex gap="sm">
-          <Element block bg="var(--ui-color-primary-400)" p="sm" radius="0.25rem" color="white">
-            block
-          </Element>
-          <Element flex bg="var(--ui-color-primary-500)" p="sm" radius="0.25rem" color="white">
+            v-for="stat in statRowData"
+            :key="stat.label"
             flex
-          </Element>
-          <Element hidden bg="var(--ui-color-primary-600)" p="sm" radius="0.25rem" color="white">
-            hidden (not rendered visibly)
+            block
+            p="md"
+            radius="0.5rem"
+            bg="var(--ui-bg-elevated)"
+            class="flex-1 text-center"
+          >
+            <div>
+              <p class="text-2xl font-bold">{{ stat.value }}</p>
+              <p class="text-xs text-muted uppercase tracking-wide">{{ stat.label }}</p>
+            </div>
           </Element>
         </Element>
-      </Element>
+      </div>
 
-      <Element block p="xl" class="rounded-lg border border-default">
-        <h3 class="font-medium mb-3">Margin</h3>
-        <Element bg="var(--ui-bg-elevated)" p="md">
-          <Element bg="var(--ui-color-primary-500)" color="white" p="sm" m="lg" radius="0.25rem">
-            m="lg" pushes this box away from its siblings
+      <div class="rounded-lg border border-default p-6 space-y-3">
+        <div>
+          <h3 class="font-medium">Toolbar</h3>
+          <p class="text-xs text-muted">flex · justify · align</p>
+        </div>
+        <Element
+          flex
+          justify="between"
+          align="center"
+          p="md"
+          bg="var(--ui-bg-elevated)"
+          radius="0.5rem"
+        >
+          <Element flex gap="sm" align="center">
+            <UButton icon="i-lucide-bold" variant="ghost" color="neutral" size="sm" />
+            <UButton icon="i-lucide-italic" variant="ghost" color="neutral" size="sm" />
+            <UButton icon="i-lucide-underline" variant="ghost" color="neutral" size="sm" />
+          </Element>
+          <UButton label="Publish" size="sm" trailing-icon="i-lucide-arrow-right" />
+        </Element>
+      </div>
+
+      <div class="rounded-lg border border-default p-6 space-y-3">
+        <div>
+          <h3 class="font-medium">Pricing card grid</h3>
+          <p class="text-xs text-muted">grid (container axis) around real UCards</p>
+        </div>
+        <Element grid :cols="3" gap="md">
+          <UCard v-for="plan in pricingGridData" :key="plan.name">
+            <h4 class="font-semibold">{{ plan.name }}</h4>
+            <p class="text-2xl font-bold mt-1">{{ plan.price }}</p>
+            <p class="text-sm text-muted mt-1">{{ plan.blurb }}</p>
+          </UCard>
+        </Element>
+      </div>
+
+      <div class="rounded-lg border border-default p-6 space-y-3">
+        <div>
+          <h3 class="font-medium">Inline notice</h3>
+          <p class="text-xs text-muted">surface (bg/border/radius) · margin</p>
+        </div>
+        <Element bg="var(--ui-bg-elevated)" p="md" radius="0.5rem">
+          <Element
+            flex
+            align="center"
+            gap="sm"
+            p="md"
+            m="md"
+            bg="light-dark(var(--ui-color-warning-50), var(--ui-color-warning-950))"
+            border="1px solid light-dark(var(--ui-color-warning-200), var(--ui-color-warning-800))"
+            color="light-dark(var(--ui-color-warning-900), var(--ui-color-warning-100))"
+            radius="0.5rem"
+          >
+            <UIcon name="i-lucide-triangle-alert" class="text-warning shrink-0" />
+            <p class="text-sm">Your trial ends in 3 days — upgrade to keep your projects.</p>
           </Element>
         </Element>
-      </Element>
+      </div>
     </div>
 
     <!-- Syntax documentation -->
