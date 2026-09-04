@@ -53,7 +53,7 @@
       if (segment.lineEnd) parts.push(`lineEnd: '${segment.lineEnd}'`)
       return `    { ${parts.join(', ')} },`
     })
-    return `{\n  columns: [\n${lines.join('\n')}\n  ],\n}`
+    return `{\n  name: 'custom',\n  columns: [\n${lines.join('\n')}\n  ],\n}`
   })
 </script>
 
@@ -108,7 +108,7 @@
 
     <section>
       <h2>Preview</h2>
-      <div class="grid-root" :style="{ gridTemplateColumns: columnsCss }">
+      <div class="grid-tracks" :style="{ gridTemplateColumns: columnsCss }">
         <div
           v-for="(segment, index) in activeConfig.columns"
           :key="index"

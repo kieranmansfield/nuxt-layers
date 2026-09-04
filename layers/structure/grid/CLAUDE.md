@@ -10,7 +10,7 @@ Named presets (`swiss`, `editorial`) or custom `TrackSegment[]` arrays resolve t
 ```
 layers/structure/grid/
 ├── app/
-│   ├── assets/css/grid.css        # .grid-root rhythm custom properties
+│   ├── assets/css/grid.css        # .grid-tracks rhythm custom properties
 │   ├── composables/useGridTracks.ts  # resolve() + toColumnsCss()
 │   ├── types/tracks.ts            # TrackSegment, TrackConfig, GridPreset
 │   ├── utils/placement.ts         # placementFromLines, placementFromIndex
@@ -45,3 +45,4 @@ placementFromIndex(2, 'full')                     // → '2 / -1'
 - No row-track presets beyond the rhythm-derived floor.
 - No Bento-grid preset.
 - `layers/structure/layout/**` is untouched — reworking it to consume this layer is a future pass.
+- No automatic viewport-based column degradation — explicit track lists render at their configured sizes and scroll horizontally (`.grid-tracks` has `overflow-x: auto`) rather than dropping columns; pick a preset/`minTrackWidth` sized for your target viewport.
