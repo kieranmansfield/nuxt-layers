@@ -49,8 +49,11 @@
   const m = ref<SpacingToken | typeof UNSET>(UNSET)
   const w = ref('')
   const h = ref('120px')
-  const bg = ref('var(--color-green-500)')
-  const color = ref('white')
+  // light-dark() picks the calmer tone per colour scheme — a saturated flat
+  // colour (e.g. green-500) reads as the same block in every "as" choice,
+  // which is also why switching component didn't look like it did anything.
+  const bg = ref('light-dark(#eef1fb, #16233d)')
+  const color = ref('light-dark(#1e2a4a, #dbe4f7)')
   const border = ref('')
   const radius = ref('0.5rem')
   const shadow = ref('')
@@ -333,6 +336,15 @@
 
         <!-- Preview + generated code -->
         <div class="space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold uppercase tracking-wide text-muted"
+              >Rendered as</span
+            >
+            <UBadge color="neutral" variant="subtle" size="sm" class="font-mono">
+              {{ as }}
+            </UBadge>
+          </div>
+
           <div
             class="rounded-lg border border-default p-6 flex items-center justify-center min-h-40"
           >
@@ -360,7 +372,7 @@
       <Element block p="xl" class="rounded-lg border border-default">
         <h3 class="font-medium mb-3">Grid container (container axis only)</h3>
         <Element grid :cols="12" gap="lg" p="lg" bg="var(--ui-bg-elevated)" radius="0.5rem">
-          <Element bg="var(--color-green-400)" color="white" p="md" radius="0.25rem">
+          <Element bg="var(--ui-color-primary-400)" color="white" p="md" radius="0.25rem">
             Item placement isn't part of Element — use LayoutGridItem inside a grid for that, or CSS
             `grid-column`/`grid-row` directly via `:style`.
           </Element>
@@ -373,7 +385,7 @@
           <Element
             w="80px"
             h="80px"
-            bg="var(--color-green-400)"
+            bg="var(--ui-color-primary-400)"
             radius="9999px"
             cursor="pointer"
             select="none"
@@ -381,7 +393,7 @@
           <Element
             w="160px"
             h="80px"
-            bg="var(--color-green-500)"
+            bg="var(--ui-color-primary-500)"
             color="white"
             p="sm"
             radius="0.5rem"
@@ -393,7 +405,7 @@
             min-w="120px"
             max-w="240px"
             h="80px"
-            bg="var(--color-green-600)"
+            bg="var(--ui-color-primary-600)"
             color="white"
             p="sm"
             radius="0.5rem"
@@ -406,13 +418,13 @@
       <Element block p="xl" class="rounded-lg border border-default">
         <h3 class="font-medium mb-3">Layout modes</h3>
         <Element flex gap="sm">
-          <Element block bg="var(--color-green-400)" p="sm" radius="0.25rem" color="white">
+          <Element block bg="var(--ui-color-primary-400)" p="sm" radius="0.25rem" color="white">
             block
           </Element>
-          <Element flex bg="var(--color-green-500)" p="sm" radius="0.25rem" color="white">
+          <Element flex bg="var(--ui-color-primary-500)" p="sm" radius="0.25rem" color="white">
             flex
           </Element>
-          <Element hidden bg="var(--color-green-600)" p="sm" radius="0.25rem" color="white">
+          <Element hidden bg="var(--ui-color-primary-600)" p="sm" radius="0.25rem" color="white">
             hidden (not rendered visibly)
           </Element>
         </Element>
@@ -421,7 +433,7 @@
       <Element block p="xl" class="rounded-lg border border-default">
         <h3 class="font-medium mb-3">Margin</h3>
         <Element bg="var(--ui-bg-elevated)" p="md">
-          <Element bg="var(--color-green-500)" color="white" p="sm" m="lg" radius="0.25rem">
+          <Element bg="var(--ui-color-primary-500)" color="white" p="sm" m="lg" radius="0.25rem">
             m="lg" pushes this box away from its siblings
           </Element>
         </Element>
