@@ -3,6 +3,15 @@
    and the resulting HMR layout shift on first load. */
 @custom-variant dark (&:where([data-theme-mode="dark"], [data-theme-mode="dark"] *));
 
+/* Explicit cascade-layer priority (low -> high). Tailwind's own
+   `@import 'tailwindcss'` and `@nuxt/ui` register into `theme`/`base`/
+   `components`/`utilities` — naming this order up front means any future
+   re-ordering of the @import statements below this line can never change
+   which layer wins. Vanilla element defaults (base.css/layout.css) are
+   deliberately ranked ABOVE Nuxt UI's own base/components rules so project
+   overrides always win regardless of import order. */
+@layer theme, base, components, utilities;
+
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
