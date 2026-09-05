@@ -1,26 +1,55 @@
 /**
- * Radius/shadow/motion custom properties — mirrors layers/theming/app/types/
- * designSystem.ts by convention (colours are already fully handled by
- * accent-css.ts's per-accent --ui-color-* generation, so this file only
- * covers the two net-new token categories plus motion).
+ * Radius/shadow/duration — vanilla custom properties are the source of
+ * truth (:root block below); the @theme static block bridges them into
+ * Tailwind's namespace so `rounded-md`, `shadow-lg`, etc. and any future
+ * non-Tailwind consumer read the same values from one place. `static` is
+ * required — Tailwind v4 tree-shakes @theme entries that no utility in
+ * the scanned source actually uses; without it, an unused shade here
+ * silently disappears from the theme namespace instead of just being
+ * unused. Mirrors layers/core's colour bridge pattern in tw-test's
+ * tailwind.css and the font-token pattern in
+ * layers/design-system/typography/app/assets/css/typography.css.
+ *
+ * Colours are NOT here — they're already single-sourced dynamically via
+ * accent-css.ts's per-accent --ui-color-* generation (runtime accent
+ * switching), a different mechanism this file does not touch.
  */
-@theme {
-  --radius-none: 0;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-full: 9999px;
+:root {
+  --radius-token-none: 0;
+  --radius-token-sm: 0.25rem;
+  --radius-token-md: 0.5rem;
+  --radius-token-lg: 0.75rem;
+  --radius-token-xl: 1rem;
+  --radius-token-full: 9999px;
 
-  --shadow-none: none;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-token-none: none;
+  --shadow-token-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-token-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-token-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-token-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
-  /* --duration-base matches theme.css's existing .theme-transition value —
+  /* --duration-token-base matches theme.css's .theme-transition value —
      not a new default, just giving the real value in use a named token. */
-  --duration-fast: 150ms;
-  --duration-base: 700ms;
-  --duration-slow: 1000ms;
+  --duration-token-fast: 150ms;
+  --duration-token-base: 700ms;
+  --duration-token-slow: 1000ms;
+}
+
+@theme static {
+  --radius-none: var(--radius-token-none);
+  --radius-sm: var(--radius-token-sm);
+  --radius-md: var(--radius-token-md);
+  --radius-lg: var(--radius-token-lg);
+  --radius-xl: var(--radius-token-xl);
+  --radius-full: var(--radius-token-full);
+
+  --shadow-none: var(--shadow-token-none);
+  --shadow-sm: var(--shadow-token-sm);
+  --shadow-md: var(--shadow-token-md);
+  --shadow-lg: var(--shadow-token-lg);
+  --shadow-xl: var(--shadow-token-xl);
+
+  --duration-fast: var(--duration-token-fast);
+  --duration-base: var(--duration-token-base);
+  --duration-slow: var(--duration-token-slow);
 }
