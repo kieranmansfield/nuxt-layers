@@ -1,7 +1,7 @@
 /**
- * Radius/duration — vanilla custom properties are the source of truth
+ * Shadow/duration — vanilla custom properties are the source of truth
  * (:root block below); the @theme static block bridges them into
- * Tailwind's namespace so `rounded-md`, `duration-base`, etc. and any
+ * Tailwind's namespace so `shadow-lg`, `duration-base`, etc. and any
  * future non-Tailwind consumer read the same values from one place.
  * `static` is required — Tailwind v4 tree-shakes @theme entries that no
  * utility in the scanned source actually uses; without it, an unused
@@ -9,31 +9,39 @@
  * just being unused. Mirrors the font-token pattern in
  * layers/design-system/typography/app/assets/css/typography.css.
  *
- * Shadow is bridged in the OPPOSITE direction: @theme static holds the
- * literal shadow values, and :root's --shadow-token-* point at them via
- * var(). Tailwind v4's box-shadow utility parses each shadow's resolved
- * theme value at BUILD TIME to rewrite its color into a
- * `var(--tw-shadow-color, <original>)` slot — that's the mechanism
+ * Radius is deliberately NOT here. Nuxt UI already owns the rounded-*
+ * scale via its own --ui-radius-based overrides (rounded-sm through
+ * rounded-3xl all resolve to calc(var(--ui-radius) * N)), registered in
+ * a lower-priority cascade layer than Tailwind's own generated
+ * utilities. Defining --radius-* in @theme here made Tailwind generate
+ * competing utilities-layer rules for rounded-sm/md/lg/xl that silently
+ * beat Nuxt UI's design-system scaling app-wide (confirmed: every Nuxt
+ * UI component's corner radius changed), while rounded-2xl/3xl (never
+ * given a --radius-* entry here) stayed on Nuxt UI's scale — a visible,
+ * inconsistent split. Bridging radius through this file needs its
+ * values aligned to --ui-radius's own multipliers to avoid this, which
+ * is out of scope here; until then, Nuxt UI stays the single source of
+ * truth for radius.
+ *
+ * Shadow is bridged in the OPPOSITE direction from duration: @theme
+ * static holds the literal shadow values, and :root's --shadow-token-*
+ * point at them via var(). Tailwind v4's box-shadow utility parses each
+ * shadow's resolved theme value at BUILD TIME to rewrite its color into
+ * a `var(--tw-shadow-color, <original>)` slot — that's the mechanism
  * behind `shadow-primary/25` and other shadow-color opacity modifiers.
  * A var() indirection in @theme is opaque to that build-time parser, so
- * pointing --shadow-md etc. at --shadow-token-md (as radius/duration do)
+ * pointing --shadow-md etc. at --shadow-token-md (as duration does)
  * would silently drop the --tw-shadow-color slot and opacity modifiers
- * would render a plain black shadow. Radius and duration don't have
- * this constraint — they resolve purely via var() at use time, with no
- * build-time parsing involved.
+ * would render a plain black shadow. Duration doesn't have this
+ * constraint — it resolves purely via var() at use time, with no
+ * build-time parsing involved. Nuxt UI doesn't override shadow-*, so
+ * this collision risk doesn't apply to it.
  *
  * Colours are NOT here — they're already single-sourced dynamically via
  * accent-css.ts's per-accent --ui-color-* generation (runtime accent
  * switching), a different mechanism this file does not touch.
  */
 :root {
-  --radius-token-none: 0;
-  --radius-token-sm: 0.25rem;
-  --radius-token-md: 0.5rem;
-  --radius-token-lg: 0.75rem;
-  --radius-token-xl: 1rem;
-  --radius-token-full: 9999px;
-
   --shadow-token-none: var(--shadow-none);
   --shadow-token-sm: var(--shadow-sm);
   --shadow-token-md: var(--shadow-md);
@@ -48,19 +56,11 @@
 }
 
 @theme static {
-  --radius-none: var(--radius-token-none);
-  --radius-sm: var(--radius-token-sm);
-  --radius-md: var(--radius-token-md);
-  --radius-lg: var(--radius-token-lg);
-  --radius-xl: var(--radius-token-xl);
-  --radius-full: var(--radius-token-full);
-
   --shadow-none: none;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-
   --duration-fast: var(--duration-token-fast);
   --duration-base: var(--duration-token-base);
   --duration-slow: var(--duration-token-slow);
