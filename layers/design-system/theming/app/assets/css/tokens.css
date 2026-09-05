@@ -1,14 +1,26 @@
 /**
- * Radius/shadow/duration — vanilla custom properties are the source of
- * truth (:root block below); the @theme static block bridges them into
- * Tailwind's namespace so `rounded-md`, `shadow-lg`, etc. and any future
- * non-Tailwind consumer read the same values from one place. `static` is
- * required — Tailwind v4 tree-shakes @theme entries that no utility in
- * the scanned source actually uses; without it, an unused shade here
- * silently disappears from the theme namespace instead of just being
- * unused. Mirrors layers/core's colour bridge pattern in tw-test's
- * tailwind.css and the font-token pattern in
+ * Radius/duration — vanilla custom properties are the source of truth
+ * (:root block below); the @theme static block bridges them into
+ * Tailwind's namespace so `rounded-md`, `duration-base`, etc. and any
+ * future non-Tailwind consumer read the same values from one place.
+ * `static` is required — Tailwind v4 tree-shakes @theme entries that no
+ * utility in the scanned source actually uses; without it, an unused
+ * shade here silently disappears from the theme namespace instead of
+ * just being unused. Mirrors the font-token pattern in
  * layers/design-system/typography/app/assets/css/typography.css.
+ *
+ * Shadow is bridged in the OPPOSITE direction: @theme static holds the
+ * literal shadow values, and :root's --shadow-token-* point at them via
+ * var(). Tailwind v4's box-shadow utility parses each shadow's resolved
+ * theme value at BUILD TIME to rewrite its color into a
+ * `var(--tw-shadow-color, <original>)` slot — that's the mechanism
+ * behind `shadow-primary/25` and other shadow-color opacity modifiers.
+ * A var() indirection in @theme is opaque to that build-time parser, so
+ * pointing --shadow-md etc. at --shadow-token-md (as radius/duration do)
+ * would silently drop the --tw-shadow-color slot and opacity modifiers
+ * would render a plain black shadow. Radius and duration don't have
+ * this constraint — they resolve purely via var() at use time, with no
+ * build-time parsing involved.
  *
  * Colours are NOT here — they're already single-sourced dynamically via
  * accent-css.ts's per-accent --ui-color-* generation (runtime accent
@@ -22,11 +34,11 @@
   --radius-token-xl: 1rem;
   --radius-token-full: 9999px;
 
-  --shadow-token-none: none;
-  --shadow-token-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-token-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-token-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-token-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-token-none: var(--shadow-none);
+  --shadow-token-sm: var(--shadow-sm);
+  --shadow-token-md: var(--shadow-md);
+  --shadow-token-lg: var(--shadow-lg);
+  --shadow-token-xl: var(--shadow-xl);
 
   /* --duration-token-base matches theme.css's .theme-transition value —
      not a new default, just giving the real value in use a named token. */
@@ -43,11 +55,11 @@
   --radius-xl: var(--radius-token-xl);
   --radius-full: var(--radius-token-full);
 
-  --shadow-none: var(--shadow-token-none);
-  --shadow-sm: var(--shadow-token-sm);
-  --shadow-md: var(--shadow-token-md);
-  --shadow-lg: var(--shadow-token-lg);
-  --shadow-xl: var(--shadow-token-xl);
+  --shadow-none: none;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
   --duration-fast: var(--duration-token-fast);
   --duration-base: var(--duration-token-base);

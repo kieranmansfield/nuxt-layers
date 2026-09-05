@@ -4,12 +4,17 @@
 @custom-variant dark (&:where([data-theme-mode="dark"], [data-theme-mode="dark"] *));
 
 /* Explicit cascade-layer priority (low -> high). Tailwind's own
-   `@import 'tailwindcss'` and `@nuxt/ui` register into `theme`/`base`/
-   `components`/`utilities` — naming this order up front means any future
-   re-ordering of the @import statements below this line can never change
-   which layer wins. Vanilla element defaults (base.css/layout.css) are
-   deliberately ranked ABOVE Nuxt UI's own base/components rules so project
-   overrides always win regardless of import order. */
+   `@import 'tailwindcss'` and `@nuxt/ui` already register into this same
+   `theme`/`base`/`components`/`utilities` order internally — this statement
+   pins that order explicitly rather than relying on Tailwind/Nuxt UI's own
+   internal default, so a future re-ordering of the @import statements below,
+   or a change to how Tailwind/Nuxt UI register their layers, can't silently
+   change which of these four layers wins over another.
+   This only fixes ordering BETWEEN the four named layers — it does NOT
+   control precedence WITHIN a layer. base.css registers into `base` and
+   layout.css into `components`, the same layers Nuxt UI's own CSS uses;
+   between project rules and Nuxt UI rules inside the same layer, plain
+   source/import order still decides the winner. */
 @layer theme, base, components, utilities;
 
 @import 'tailwindcss';
