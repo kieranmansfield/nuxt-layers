@@ -25,7 +25,10 @@ export default defineNuxtConfig({
     '#layers/theming/types': `${import.meta.dirname}/app/types`,
   },
 
-  css: ['#layers/theming/app/assets/css/theme.css', '#layers/theming/app/assets/css/tokens.css'],
+  // tokens.css is NOT listed here — it defines a Tailwind `@theme static` block, so per the
+  // CSS single-build-root rule (see .claude/rules/nuxt-layers.md) it must fold into core.css's
+  // @import chain via relative path instead, or its @theme block is silently inert.
+  css: ['#layers/theming/app/assets/css/theme.css'],
 
   plugins: ['#layers/theming/app/plugins/theme.client.ts'],
 

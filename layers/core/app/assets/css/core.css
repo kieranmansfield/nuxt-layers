@@ -40,3 +40,15 @@
    typography.css's header comment), and must resolve even for consumers that
    only extend core, since it lives in the same single published package. */
 @import '../../../../design-system/typography/app/assets/css/typography.css';
+
+/* Same relative-path requirement as typography.css above. tokens.css defines
+   an `@theme static` block (radius/shadow/duration) — per the CSS
+   single-build-root rule, that only merges into Tailwind's theme if Tailwind's
+   own PostCSS pipeline actually processes the file via @import from this one
+   root. It previously was NOT imported here — only registered as a standalone
+   stylesheet via theming/nuxt.config.ts's `css:` array — so its @theme block
+   was silently inert: the browser just ignores the unrecognized at-rule, and
+   every rounded-, shadow-, duration- utility fell back to Tailwind's stock
+   defaults instead of this file's values. Confirmed via compiled dev output:
+   the custom --shadow-sm value never appeared; Tailwind's built-in default did. */
+@import '../../../../design-system/theming/app/assets/css/tokens.css';
