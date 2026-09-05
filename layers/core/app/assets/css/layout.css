@@ -1,9 +1,4 @@
 @layer components {
-  table {
-    border-color: inherit;
-    border-collapse: collapse;
-  }
-
   th {
     vertical-align: top;
     padding: 0;
@@ -20,8 +15,6 @@
     margin: 1rem 0;
     border: 0;
     border-top: 1px solid #ccc;
-    height: 0;
-    color: inherit;
   }
 
   img,
