@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import type { Vector3 } from 'three'
+
   const {
     width = 2,
     height = 2,
@@ -17,7 +19,7 @@
 </script>
 
 <template>
-  <TresMesh :position :rotation>
+  <TresMesh :position="position as unknown as Vector3" :rotation="rotation as unknown as Vector3">
     <TresPlaneGeometry :args="[width, height, widthSegments, heightSegments]" />
     <slot />
   </TresMesh>
