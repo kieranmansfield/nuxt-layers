@@ -1,6 +1,6 @@
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
-@@ -631,14 +631,16 @@
+@@ -722,14 +722,16 @@
  			try {
  				fs.chmodSync(socketPath, 384);
  			} catch (error) {

@@ -65,7 +65,7 @@ overrides:
   '@opentelemetry/core': '>=2.8.0'
 
 patchedDependencies:
-  '@nuxt/vite-builder@4.5.2': patches/@nuxt__vite-builder@4.5.2.patch
+  '@nuxt/vite-builder@4.6.1': patches/@nuxt__vite-builder@4.6.1.patch
 catalog:
   '@babel/parser': 7.29.7
   '@commitlint/cli': ^21.0.2
@@ -93,7 +93,7 @@ catalog:
   '@nuxt/ui': latest
   '@playwright/test': 1.61.0
   '@nuxtjs/device': ^4.0.0
-  '@nuxtjs/seo': ^5.0.0
+  '@nuxtjs/seo': ^6.0.1
   '@oxc-parser/binding-darwin-arm64': ^0.134.0
   '@perplex-digital/stylelint-config': ^17.4.0
   '@pinia/nuxt': ^0.11.3
