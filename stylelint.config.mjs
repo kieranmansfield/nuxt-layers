@@ -6,7 +6,7 @@ export default {
     'stylelint-config-recommended-vue',
   ],
 
-  plugins: ['stylelint-prettier', 'stylelint-no-unsupported-browser-features'],
+  plugins: ['stylelint-no-unsupported-browser-features'],
 
   overrides: [
     {
@@ -27,8 +27,6 @@ export default {
   ],
 
   rules: {
-    'prettier/prettier': true,
-
     'color-function-notation': 'modern',
     'alpha-value-notation': 'number',
     'media-feature-range-notation': 'context',

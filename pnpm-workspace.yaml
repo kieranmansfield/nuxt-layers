@@ -278,12 +278,6 @@ catalog:
   '@vitejs/plugin-vue': ^6.0.8
   postcss-html: ^1.8.1
   prerender-buildhooks: https://6abe5a43-4668-4f72-b3f7-823e2d8bbbbf.netlify.app/packages/buildhooks.tgz
-  prettier: ^3.8.3
-  prettier-plugin-css-order: ^2.2.0
-  prettier-plugin-glsl: ^0.3.1
-  prettier-plugin-organize-attributes: ^1.0.0
-  prettier-plugin-tailwind-styled-components: ^2.0.2
-  prettier-plugin-tailwindcss: ^0.8.1
   property-information: 7.2.0
   react: 19.2.7
   react-dom: 19.2.7
