@@ -405,7 +405,7 @@ catalogs:
 
 # minimumReleaseAge: 0
 patchedDependencies:
-  '@nuxt/vite-builder@4.6.0': patches/@nuxt__vite-builder@4.6.0.patch
+  '@nuxt/vite-builder@4.6.1': patches/@nuxt__vite-builder@4.6.1.patch
 peerDependencyRules:
   allowAny:
     - vite
