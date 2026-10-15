@@ -41,7 +41,7 @@
       :style="{ zIndex: useGridConfig().useZIndex('modal') }"
     >
       <button
-        class="absolute right-[5vw] top-[3vh] cursor-pointer border-0 bg-transparent p-2"
+        class="absolute top-[3vh] right-[5vw] cursor-pointer border-0 bg-transparent p-2"
         aria-label="Close navigation"
         @click="dismiss"
       >
@@ -52,7 +52,7 @@
         <button
           v-for="link in links"
           :key="link.id"
-          class="cursor-pointer border-0 bg-transparent px-4 py-3 text-3xl uppercase tracking-widest transition-all"
+          class="cursor-pointer border-0 bg-transparent px-4 py-3 text-3xl tracking-widest uppercase transition-all"
           :class="activeSection === link.id ? 'font-normal' : 'font-light'"
           @click="() => handleNav(link)"
         >

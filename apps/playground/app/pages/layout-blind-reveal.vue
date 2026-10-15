@@ -62,7 +62,7 @@
   <!-- Content section 1: Hero -->
   <LayoutSection data-blind-content="1" :style="contentStyle" class="bg-default">
     <LayoutGridItem bleed="both" :row-span="12" layer="back" class="bg-default">
-      <div class="w-full h-full bg-background" />
+      <div class="bg-background h-full w-full" />
     </LayoutGridItem>
 
     <LayoutGridItem
@@ -73,7 +73,7 @@
       justify="center"
       class="bg-default"
     >
-      <div class="text-center space-y-6 px-4">
+      <div class="space-y-6 px-4 text-center">
         <div class="flex justify-center gap-3">
           <UButton
             to="/layout"
@@ -94,13 +94,13 @@
             Stacking Demo
           </UButton>
         </div>
-        <h1 class="text-4xl lg:text-5xl font-bold tracking-tight">Blind Reveal</h1>
-        <p class="text-lg text-muted max-w-xl mx-auto">
+        <h1 class="text-4xl font-bold tracking-tight lg:text-5xl">Blind Reveal</h1>
+        <p class="text-muted mx-auto max-w-xl text-lg">
           The footer sits <em>behind</em> the body content at a lower z-index, pinned to the
           viewport bottom with <code class="font-mono text-sm">position: sticky; bottom: 0</code>.
           As you scroll, the body slides away upward — revealing the footer like rolling up a blind.
         </p>
-        <p class="text-sm text-muted/70">Scroll down to see it in action</p>
+        <p class="text-muted/70 text-sm">Scroll down to see it in action</p>
       </div>
     </LayoutGridItem>
   </LayoutSection>
@@ -108,7 +108,7 @@
   <!-- Content section 2: Explanation -->
   <LayoutSection data-blind-content="2" :style="contentStyle" class="bg-default">
     <LayoutGridItem bleed="both" :row-span="12" layer="back" class="bg-default">
-      <div class="w-full h-full bg-linear-to-br from-slate-900 via-slate-800 to-zinc-900" />
+      <div class="h-full w-full bg-linear-to-br from-slate-900 via-slate-800 to-zinc-900" />
     </LayoutGridItem>
 
     <LayoutGridItem
@@ -121,22 +121,22 @@
       class="bg-default"
     >
       <div
-        class="w-full bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 lg:p-12 text-highlighted space-y-6"
+        class="text-highlighted w-full space-y-6 rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm lg:p-12"
       >
         <h2 class="text-3xl font-bold">How it works</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm text-highlighted/70">
+        <div class="text-highlighted/70 grid grid-cols-1 gap-6 text-sm lg:grid-cols-2">
           <div class="space-y-2">
-            <div class="text-highlighted font-semibold text-base">Body content</div>
-            <p><code class="font-mono bg-white/10 px-1 rounded">position: relative</code></p>
-            <p><code class="font-mono bg-white/10 px-1 rounded">z-index: 2</code></p>
+            <div class="text-highlighted text-base font-semibold">Body content</div>
+            <p><code class="rounded bg-white/10 px-1 font-mono">position: relative</code></p>
+            <p><code class="rounded bg-white/10 px-1 font-mono">z-index: 2</code></p>
             <p>Scrolls normally through the document flow.</p>
           </div>
           <div class="space-y-2">
-            <div class="text-highlighted font-semibold text-base">Footer</div>
+            <div class="text-highlighted text-base font-semibold">Footer</div>
             <p>
-              <code class="font-mono bg-white/10 px-1 rounded">position: sticky; bottom: 0</code>
+              <code class="rounded bg-white/10 px-1 font-mono">position: sticky; bottom: 0</code>
             </p>
-            <p><code class="font-mono bg-white/10 px-1 rounded">z-index: 1</code></p>
+            <p><code class="rounded bg-white/10 px-1 font-mono">z-index: 1</code></p>
             <p>Pinned to the viewport bottom, but always behind the body.</p>
           </div>
         </div>
@@ -151,7 +151,7 @@
   <!-- Content section 3: Last — its exit triggers the footer reveal -->
   <LayoutSection data-blind-content="3" :style="contentStyle" class="bg-default">
     <LayoutGridItem bleed="both" :row-span="12" layer="back">
-      <div class="w-full h-full bg-linear-to-b from-indigo-950 to-violet-950" />
+      <div class="h-full w-full bg-linear-to-b from-indigo-950 to-violet-950" />
     </LayoutGridItem>
 
     <LayoutGridItem
@@ -162,14 +162,14 @@
       justify="center"
       layer="mid"
     >
-      <div class="text-center space-y-6 px-4">
+      <div class="space-y-6 px-4 text-center">
         <div class="text-5xl">↓</div>
-        <h2 class="text-3xl font-bold text-highlighted">Keep scrolling</h2>
-        <p class="text-highlighted/60 max-w-md mx-auto">
+        <h2 class="text-highlighted text-3xl font-bold">Keep scrolling</h2>
+        <p class="text-highlighted/60 mx-auto max-w-md">
           As this section exits the top of the viewport, the footer beneath it will be fully
           revealed. A GSAP scrub scales it from
-          <code class="font-mono text-sm bg-white/10 px-1 rounded">0.92 → 1</code> with
-          <code class="font-mono text-sm bg-white/10 px-1 rounded">
+          <code class="rounded bg-white/10 px-1 font-mono text-sm">0.92 → 1</code> with
+          <code class="rounded bg-white/10 px-1 font-mono text-sm">
             transform-origin: bottom center
           </code>
           — the bottom edge stays pinned while the panel grows upward.
@@ -181,19 +181,19 @@
   <!-- Footer: sticky bottom, revealed from underneath -->
   <LayoutSection data-blind-footer :style="footerStyle">
     <LayoutGridItem bleed="both" :row-span="12" layer="back">
-      <div class="w-full h-full bg-default" />
+      <div class="bg-default h-full w-full" />
     </LayoutGridItem>
 
     <LayoutGridItem :row-start="3" :row-span="6" align="center" justify="center" layer="mid">
-      <div class="text-center space-y-8 px-4">
-        <h2 class="text-4xl lg:text-6xl font-bold text-highlighted tracking-tight">
+      <div class="space-y-8 px-4 text-center">
+        <h2 class="text-highlighted text-4xl font-bold tracking-tight lg:text-6xl">
           The blind is open.
         </h2>
-        <p class="text-highlighted/40 max-w-lg mx-auto">
+        <p class="text-highlighted/40 mx-auto max-w-lg">
           The footer was here all along — fixed at the bottom of the document, waiting for the body
           content to scroll away.
         </p>
-        <div class="flex justify-center gap-3 flex-wrap">
+        <div class="flex flex-wrap justify-center gap-3">
           <UButton
             to="/layout-stacking"
             leading-icon="i-lucide-layers"
@@ -210,7 +210,7 @@
     </LayoutGridItem>
 
     <LayoutGridItem :row-start="10" :row-span="2" align="end" justify="center" layer="mid">
-      <p class="font-mono text-xs text-highlighted/20 pb-4">
+      <p class="text-highlighted/20 pb-4 font-mono text-xs">
         position: sticky · bottom: 0 · z-index: 1 · scale: 0.92 → 1
       </p>
     </LayoutGridItem>

@@ -154,13 +154,13 @@
                 <UIcon name="i-lucide-globe" class="text-primary" />
                 <h2 class="text-xl font-semibold">useBrowser()</h2>
               </div>
-              <p class="text-sm text-muted mt-1">Detect browser, engine, version, and OS</p>
+              <p class="text-muted mt-1 text-sm">Detect browser, engine, version, and OS</p>
             </template>
 
             <div class="grid gap-6 md:grid-cols-2">
               <!-- Browser Info -->
               <div class="space-y-3">
-                <h3 class="font-medium text-sm uppercase tracking-wide text-muted">Browser Info</h3>
+                <h3 class="text-muted text-sm font-medium tracking-wide uppercase">Browser Info</h3>
                 <div class="space-y-2">
                   <div class="flex justify-between">
                     <span class="text-toned dark:text-muted">Name</span>
@@ -183,7 +183,7 @@
 
               <!-- Flags -->
               <div class="space-y-3">
-                <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
+                <h3 class="text-muted text-sm font-medium tracking-wide uppercase">
                   Detection Flags
                 </h3>
                 <div class="flex flex-wrap gap-2">
@@ -211,13 +211,13 @@
                 <UIcon name="i-lucide-monitor" class="text-primary" />
                 <h2 class="text-xl font-semibold">useScreen()</h2>
               </div>
-              <p class="text-sm text-muted mt-1">Screen dimensions, breakpoints, and orientation</p>
+              <p class="text-muted mt-1 text-sm">Screen dimensions, breakpoints, and orientation</p>
             </template>
 
             <div class="grid gap-6 md:grid-cols-3">
               <!-- Dimensions -->
               <div class="space-y-3">
-                <h3 class="font-medium text-sm uppercase tracking-wide text-muted">Dimensions</h3>
+                <h3 class="text-muted text-sm font-medium tracking-wide uppercase">Dimensions</h3>
                 <div class="space-y-2">
                   <div class="flex justify-between">
                     <span class="text-toned dark:text-muted">Width</span>
@@ -242,9 +242,9 @@
 
               <!-- Breakpoints -->
               <div class="space-y-3">
-                <h3 class="font-medium text-sm uppercase tracking-wide text-muted">Breakpoints</h3>
+                <h3 class="text-muted text-sm font-medium tracking-wide uppercase">Breakpoints</h3>
                 <div class="space-y-2">
-                  <div class="flex justify-between items-center">
+                  <div class="flex items-center justify-between">
                     <span class="text-toned dark:text-muted">Current</span>
                     <UBadge color="primary">{{ breakpoint }}</UBadge>
                   </div>
@@ -271,7 +271,7 @@
 
               <!-- Orientation -->
               <div class="space-y-3">
-                <h3 class="font-medium text-sm uppercase tracking-wide text-muted">Orientation</h3>
+                <h3 class="text-muted text-sm font-medium tracking-wide uppercase">Orientation</h3>
                 <div class="space-y-2">
                   <div class="flex justify-between">
                     <span class="text-toned dark:text-muted">Current</span>
@@ -297,17 +297,17 @@
                 <UIcon name="i-lucide-wifi" class="text-primary" />
                 <h2 class="text-xl font-semibold">useNetworkInfo()</h2>
               </div>
-              <p class="text-sm text-muted mt-1">Network connection status and quality</p>
+              <p class="text-muted mt-1 text-sm">Network connection status and quality</p>
             </template>
 
             <div class="grid gap-6 md:grid-cols-2">
               <!-- Status -->
               <div class="space-y-3">
-                <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
+                <h3 class="text-muted text-sm font-medium tracking-wide uppercase">
                   Connection Status
                 </h3>
                 <div class="space-y-2">
-                  <div class="flex justify-between items-center">
+                  <div class="flex items-center justify-between">
                     <span class="text-toned dark:text-muted">Online</span>
                     <UBadge :color="isOnline ? 'success' : 'error'">
                       {{ isOnline ? 'Connected' : 'Offline' }}
@@ -317,7 +317,7 @@
                     <span class="text-toned dark:text-muted">Type</span>
                     <span class="font-mono">{{ effectiveType || 'unknown' }}</span>
                   </div>
-                  <div class="flex justify-between items-center">
+                  <div class="flex items-center justify-between">
                     <span class="text-toned dark:text-muted">Quality</span>
                     <UBadge
                       :color="
@@ -338,7 +338,7 @@
 
               <!-- Flags -->
               <div class="space-y-3">
-                <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
+                <h3 class="text-muted text-sm font-medium tracking-wide uppercase">
                   Network Flags
                 </h3>
                 <div class="flex flex-wrap gap-2">
@@ -359,13 +359,13 @@
                 <UIcon name="i-lucide-cpu" class="text-primary" />
                 <h2 class="text-xl font-semibold">useFeatures()</h2>
               </div>
-              <p class="text-sm text-muted mt-1">CSS features, JS APIs, and user preferences</p>
+              <p class="text-muted mt-1 text-sm">CSS features, JS APIs, and user preferences</p>
             </template>
 
             <div class="grid gap-6 md:grid-cols-3">
               <!-- CSS Features -->
               <div class="space-y-3">
-                <h3 class="font-medium text-sm uppercase tracking-wide text-muted">CSS Features</h3>
+                <h3 class="text-muted text-sm font-medium tracking-wide uppercase">CSS Features</h3>
                 <div class="space-y-1.5">
                   <div
                     v-for="feature in cssFeatures"
@@ -383,7 +383,7 @@
 
               <!-- JS APIs -->
               <div class="space-y-3">
-                <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
+                <h3 class="text-muted text-sm font-medium tracking-wide uppercase">
                   JavaScript APIs
                 </h3>
                 <div class="space-y-1.5">
@@ -403,7 +403,7 @@
 
               <!-- User Preferences & Formats -->
               <div class="space-y-3">
-                <h3 class="font-medium text-sm uppercase tracking-wide text-muted">
+                <h3 class="text-muted text-sm font-medium tracking-wide uppercase">
                   Preferences & Formats
                 </h3>
                 <div class="space-y-1.5">
@@ -430,7 +430,7 @@
                 <UIcon name="i-lucide-smartphone" class="text-primary" />
                 <h2 class="text-xl font-semibold">useDevice()</h2>
               </div>
-              <p class="text-sm text-muted mt-1">Server-side device detection via @nuxtjs/device</p>
+              <p class="text-muted mt-1 text-sm">Server-side device detection via @nuxtjs/device</p>
             </template>
 
             <div class="flex gap-4">
@@ -523,7 +523,7 @@
                 <UIcon name="i-lucide-loader-2" class="text-primary" />
                 <h2 class="text-xl font-semibold">useLoading()</h2>
               </div>
-              <p class="text-sm text-muted mt-1">Global loading state with simulated progress</p>
+              <p class="text-muted mt-1 text-sm">Global loading state with simulated progress</p>
             </template>
 
             <div class="space-y-4">
@@ -539,13 +539,13 @@
                 {{ showLoadingDemo ? 'Loading...' : 'Run Loading Demo' }}
               </UButton>
 
-              <div class="text-sm text-muted">
+              <div class="text-muted text-sm">
                 <p>The useLoading composable provides:</p>
-                <ul class="list-disc list-inside mt-2 space-y-1">
+                <ul class="mt-2 list-inside list-disc space-y-1">
                   <li>Simulated progress (0-90% auto, then waits)</li>
                   <li>Shared singleton state across components</li>
                   <li>
-                    <code class="bg-elevated dark:bg-accented px-1 rounded">withLoading(fn)</code>
+                    <code class="bg-elevated dark:bg-accented rounded px-1">withLoading(fn)</code>
                     wrapper for async functions
                   </li>
                 </ul>
@@ -554,7 +554,7 @@
           </UCard>
 
           <!-- Navigation -->
-          <div class="flex gap-4 justify-center pt-4">
+          <div class="flex justify-center gap-4 pt-4">
             <UButton to="/diagnostics" variant="outline" icon="i-lucide-activity">
               Full Diagnostics
             </UButton>
@@ -565,7 +565,7 @@
           </div>
 
           <template #fallback>
-            <div class="text-center text-muted py-16">Loading diagnostics…</div>
+            <div class="text-muted py-16 text-center">Loading diagnostics…</div>
           </template>
         </ClientOnly>
       </UContainer>

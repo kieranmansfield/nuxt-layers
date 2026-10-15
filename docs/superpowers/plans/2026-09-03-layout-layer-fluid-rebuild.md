@@ -1146,7 +1146,7 @@ Column count is now emergent (native `auto-fill`), so there's nothing left to tr
 
 <template>
   <Teleport to="body">
-    <div v-if="visible" :style class="layout-grid-debug z-9999 fixed inset-0" aria-hidden="true" />
+    <div v-if="visible" :style class="layout-grid-debug fixed inset-0 z-9999" aria-hidden="true" />
   </Teleport>
 </template>
 ```
@@ -1208,7 +1208,7 @@ The old page documented the 6/12/18 preset system in detail; that entire API is 
         <div class="flex items-center gap-4">
           <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" />
           <div>
-            <h1 class="text-3xl font-bold text-highlighted">Layout Layer</h1>
+            <h1 class="text-highlighted text-3xl font-bold">Layout Layer</h1>
             <p class="text-muted">Fluid grid, sections, and page components</p>
           </div>
           <div class="ml-auto">
@@ -1232,14 +1232,14 @@ The old page documented the 6/12/18 preset system in detail; that entire API is 
                 :span2="cell.span2"
               >
                 <h3 class="font-mono text-sm">Cell {{ cell.id }}</h3>
-                <p class="text-sm text-muted">variant: {{ cell.variant }}</p>
+                <p class="text-muted text-sm">variant: {{ cell.variant }}</p>
               </LayoutCell>
             </div>
           </section>
 
           <LayoutSection align="split" class="mt-12">
             <div class="flex items-center justify-center">
-              <div class="text-center space-y-2">
+              <div class="space-y-2 text-center">
                 <h2 class="text-2xl font-bold">LayoutSection align="split"</h2>
                 <p class="text-muted">
                   100svh block, optical 40/60 padding split derived from --lines/--fields.
@@ -1249,7 +1249,7 @@ The old page documented the 6/12/18 preset system in detail; that entire API is 
           </LayoutSection>
 
           <LayoutSection align="center">
-            <div class="text-center space-y-2">
+            <div class="space-y-2 text-center">
               <h2 class="text-2xl font-bold">LayoutSection align="center"</h2>
               <p class="text-muted">
                 place-content: center — true horizontal+vertical centering, no fighting align-items:
@@ -1268,7 +1268,7 @@ The old page documented the 6/12/18 preset system in detail; that entire API is 
 
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Z-Index System</h2>
+            <h2 class="mb-2 text-2xl font-bold">Z-Index System</h2>
             <p class="text-muted">
               Unchanged from the old system — read via
               <code class="font-mono text-sm">useGridConfig().useZIndex(layer)</code>
@@ -1276,13 +1276,13 @@ The old page documented the 6/12/18 preset system in detail; that entire API is 
           </div>
           <UCard>
             <pre
-              class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+              class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
             ><code>const { useZIndex } = useGridConfig()
 const zModal = useZIndex('modal') // → 400</code></pre>
           </UCard>
         </section>
 
-        <div class="flex gap-4 justify-center pt-4">
+        <div class="flex justify-center gap-4 pt-4">
           <UButton to="/ui" variant="outline" icon="i-lucide-arrow-left">UI Layer Demo</UButton>
           <UButton to="/" icon="i-lucide-home">Back to Home</UButton>
           <UButton to="/core" variant="outline" trailing-icon="i-lucide-arrow-right">

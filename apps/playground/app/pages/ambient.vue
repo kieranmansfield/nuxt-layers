@@ -72,7 +72,7 @@
     title="Ambient Backgrounds"
     description="Beautiful TSL-powered ambient backgrounds using WebGPU"
   >
-    <div class="min-h-screen bg-default text-highlighted">
+    <div class="bg-default text-highlighted min-h-screen">
       <!-- Hero Section -->
       <section class="relative overflow-hidden">
         <div
@@ -80,20 +80,20 @@
         />
 
         <UContainer class="relative py-12">
-          <div class="flex items-center gap-4 mb-6">
+          <div class="mb-6 flex items-center gap-4">
             <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" class="text-muted" />
             <UBadge color="primary" variant="subtle">Ambient Backgrounds</UBadge>
             <UBadge color="success" variant="subtle">WebGPU + TresJS</UBadge>
           </div>
 
-          <h1 class="text-4xl md:text-5xl font-black mb-4">
-            <span class="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">
+          <h1 class="mb-4 text-4xl font-black md:text-5xl">
+            <span class="bg-linear-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
               Ambient
             </span>
             Backgrounds
           </h1>
 
-          <p class="text-lg text-muted max-w-xl mb-8">
+          <p class="text-muted mb-8 max-w-xl text-lg">
             Beautiful, animated backgrounds powered by TSL shader functions. Combine noise,
             gradients, and effects for stunning visuals.
           </p>
@@ -103,10 +103,10 @@
       <!-- Main Demo Section -->
       <section class="py-8">
         <UContainer>
-          <div class="grid lg:grid-cols-3 gap-8">
+          <div class="grid gap-8 lg:grid-cols-3">
             <!-- Preview Canvas -->
             <div class="lg:col-span-2">
-              <div class="aspect-video bg-muted rounded-2xl overflow-hidden relative">
+              <div class="bg-muted relative aspect-video overflow-hidden rounded-2xl">
                 <ShaderRuntime :speed :mouse-smoothing="0.1">
                   <ShaderHost
                     :preset="currentPresetComponent"
@@ -120,41 +120,41 @@
 
                 <!-- Overlay info -->
                 <div
-                  class="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded-lg text-sm pointer-events-none"
+                  class="pointer-events-none absolute top-4 left-4 rounded-lg bg-black/60 px-3 py-1 text-sm backdrop-blur"
                 >
                   {{ mouseInteraction ? 'Move mouse to interact' : 'Mouse disabled' }}
                 </div>
 
-                <div class="absolute bottom-4 right-4 flex gap-2 pointer-events-none">
-                  <span class="bg-black/60 backdrop-blur px-2 py-1 rounded text-xs">
+                <div class="pointer-events-none absolute right-4 bottom-4 flex gap-2">
+                  <span class="rounded bg-black/60 px-2 py-1 text-xs backdrop-blur">
                     {{ activePreset }}
                   </span>
                 </div>
               </div>
 
               <!-- Preset selector cards -->
-              <div class="grid grid-cols-5 gap-3 mt-6">
+              <div class="mt-6 grid grid-cols-5 gap-3">
                 <button
                   v-for="preset in presets"
                   :key="preset.id"
-                  class="p-3 rounded-xl border transition-all text-left"
+                  class="rounded-xl border p-3 text-left transition-all"
                   :class="[
                     activePreset === preset.id
-                      ? 'bg-violet-600/20 border-violet-500'
+                      ? 'border-violet-500 bg-violet-600/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activePreset = preset.id)"
                 >
                   <!-- Color preview -->
-                  <div class="flex gap-1 mb-2">
+                  <div class="mb-2 flex gap-1">
                     <div
                       v-for="(color, i) in preset.colors.slice(0, 3)"
                       :key="i"
-                      class="w-4 h-4 rounded-full"
+                      class="h-4 w-4 rounded-full"
                       :style="{ backgroundColor: color }"
                     />
                   </div>
-                  <div class="text-sm font-medium truncate">{{ preset.name }}</div>
+                  <div class="truncate text-sm font-medium">{{ preset.name }}</div>
                 </button>
               </div>
             </div>
@@ -162,11 +162,11 @@
             <!-- Controls Panel -->
             <div class="space-y-6">
               <!-- Current preset info -->
-              <div class="bg-accented/50 border border-accented rounded-xl p-5">
-                <h3 class="font-semibold mb-2">
+              <div class="bg-accented/50 border-accented rounded-xl border p-5">
+                <h3 class="mb-2 font-semibold">
                   {{ presets.find((p) => p.id === activePreset)?.name }}
                 </h3>
-                <p class="text-sm text-muted mb-4">
+                <p class="text-muted mb-4 text-sm">
                   {{ presets.find((p) => p.id === activePreset)?.description }}
                 </p>
 
@@ -175,7 +175,7 @@
                   <div
                     v-for="(color, i) in presets.find((p) => p.id === activePreset)?.colors"
                     :key="i"
-                    class="w-8 h-8 rounded-lg border border-white/10"
+                    class="h-8 w-8 rounded-lg border border-white/10"
                     :style="{ backgroundColor: color }"
                     :title="color"
                   />
@@ -183,12 +183,12 @@
               </div>
 
               <!-- Controls -->
-              <div class="bg-accented/50 border border-accented rounded-xl p-5 space-y-4">
+              <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-5">
                 <h4 class="text-sm font-semibold text-violet-400">Controls</h4>
 
                 <div class="space-y-4">
                   <div>
-                    <div class="flex justify-between text-xs text-muted mb-1">
+                    <div class="text-muted mb-1 flex justify-between text-xs">
                       <span>Speed</span>
                       <span>{{ speed.toFixed(1) }}x</span>
                     </div>
@@ -198,12 +198,12 @@
                       min="0"
                       max="3"
                       step="0.1"
-                      class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-violet-500"
+                      class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
                     />
                   </div>
 
                   <div>
-                    <div class="flex justify-between text-xs text-muted mb-1">
+                    <div class="text-muted mb-1 flex justify-between text-xs">
                       <span>Intensity</span>
                       <span>{{ intensity.toFixed(1) }}</span>
                     </div>
@@ -213,36 +213,36 @@
                       min="0.5"
                       max="2"
                       step="0.1"
-                      class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-violet-500"
+                      class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
                     />
                   </div>
 
                   <!-- Toggle -->
                   <div class="flex items-center justify-between pt-2">
-                    <span class="text-xs text-muted">Mouse Interaction</span>
+                    <span class="text-muted text-xs">Mouse Interaction</span>
                     <USwitch v-model="mouseInteraction" />
                   </div>
                 </div>
               </div>
 
               <!-- TSL Functions Used -->
-              <div class="bg-accented/50 border border-accented rounded-xl p-5">
-                <h4 class="text-sm font-semibold text-cyan-400 mb-3">TSL Functions</h4>
+              <div class="bg-accented/50 border-accented rounded-xl border p-5">
+                <h4 class="mb-3 text-sm font-semibold text-cyan-400">TSL Functions</h4>
                 <div class="flex flex-wrap gap-2">
-                  <code class="text-xs bg-accented px-2 py-1 rounded text-violet-300">fbm2D</code>
-                  <code class="text-xs bg-accented px-2 py-1 rounded text-violet-300">
+                  <code class="bg-accented rounded px-2 py-1 text-xs text-violet-300">fbm2D</code>
+                  <code class="bg-accented rounded px-2 py-1 text-xs text-violet-300">
                     simplexNoise2D
                   </code>
-                  <code class="text-xs bg-accented px-2 py-1 rounded text-violet-300">
+                  <code class="bg-accented rounded px-2 py-1 text-xs text-violet-300">
                     cosinePalette
                   </code>
-                  <code class="text-xs bg-accented px-2 py-1 rounded text-violet-300">
+                  <code class="bg-accented rounded px-2 py-1 text-xs text-violet-300">
                     voronoi2D
                   </code>
-                  <code class="text-xs bg-accented px-2 py-1 rounded text-violet-300">
+                  <code class="bg-accented rounded px-2 py-1 text-xs text-violet-300">
                     ridgedFbm2d
                   </code>
-                  <code class="text-xs bg-accented px-2 py-1 rounded text-violet-300">
+                  <code class="bg-accented rounded px-2 py-1 text-xs text-violet-300">
                     warpedFbmCoords
                   </code>
                 </div>
@@ -250,7 +250,7 @@
 
               <!-- WebGPU Info -->
               <div
-                class="bg-accented/30 border border-accented/50 rounded-xl p-4 text-xs text-muted"
+                class="bg-accented/30 border-accented/50 text-muted rounded-xl border p-4 text-xs"
               >
                 <p class="mb-2">
                   <strong class="text-muted">Note:</strong> These backgrounds use TSL (Three.js
@@ -267,11 +267,11 @@
       </section>
 
       <!-- Footer -->
-      <section class="py-12 border-t border-default">
+      <section class="border-default border-t py-12">
         <UContainer>
-          <div class="flex flex-col md:flex-row gap-6 items-center justify-between">
+          <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
             <div>
-              <h2 class="text-xl font-bold mb-1">Ambient Backgrounds</h2>
+              <h2 class="mb-1 text-xl font-bold">Ambient Backgrounds</h2>
               <p class="text-muted text-sm">TSL-powered procedural graphics via TresJS</p>
             </div>
             <div class="flex gap-4">

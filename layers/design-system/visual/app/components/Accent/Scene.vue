@@ -25,8 +25,8 @@
 </script>
 
 <template>
-  <component :is="tag" class="relative overflow-clip isolate">
-    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+  <component :is="tag" class="relative isolate overflow-clip">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
       <AccentBlob
         v-for="(blob, i) in resolvedBlobs"
         :key="i"

@@ -16,6 +16,6 @@
     <template v-else-if="hasItems">
       <slot />
     </template>
-    <div v-else class="text-muted text-center py-12">{{ emptyMessage }}</div>
+    <div v-else class="text-muted py-12 text-center">{{ emptyMessage }}</div>
   </div>
 </template>

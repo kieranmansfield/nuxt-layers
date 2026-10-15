@@ -30,15 +30,15 @@
     <template v-if="back">
       <UButton :to="back" variant="ghost" icon="i-lucide-arrow-left" />
       <div>
-        <h1 class="text-3xl font-bold text-highlighted">{{ title }}</h1>
+        <h1 class="text-highlighted text-3xl font-bold">{{ title }}</h1>
         <p v-if="description" class="text-muted">{{ description }}</p>
       </div>
     </template>
 
     <!-- Centered page header (homepage, section intros) -->
     <template v-else>
-      <h1 class="text-4xl font-bold text-highlighted">{{ title }}</h1>
-      <p v-if="description" class="mt-3 text-lg text-muted">{{ description }}</p>
+      <h1 class="text-highlighted text-4xl font-bold">{{ title }}</h1>
+      <p v-if="description" class="text-muted mt-3 text-lg">{{ description }}</p>
     </template>
   </div>
 </template>

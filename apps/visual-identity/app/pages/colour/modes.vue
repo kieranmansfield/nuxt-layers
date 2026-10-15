@@ -80,7 +80,7 @@
 <template>
   <div class="vi-page">
     <div class="mb-8">
-      <h1 class="text-2xl font-semibold text-default mb-1">Light & Dark Modes</h1>
+      <h1 class="text-default mb-1 text-2xl font-semibold">Light & Dark Modes</h1>
       <p class="text-muted text-sm">
         Configure which colour schemes and contrast levels your brand supports.
       </p>
@@ -89,13 +89,13 @@
     <!-- Colour schemes (multi-select) -->
     <UCard class="mb-6">
       <template #header>
-        <p class="text-sm font-medium text-default">Colour schemes</p>
+        <p class="text-default text-sm font-medium">Colour schemes</p>
       </template>
-      <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+      <div class="flex flex-col gap-2 sm:flex-row sm:gap-3">
         <button
           v-for="option in schemeOptions"
           :key="option.value"
-          class="flex-1 flex items-center sm:flex-col gap-3 sm:gap-2 p-4 rounded-xl border-2 transition-colors cursor-pointer text-left sm:text-center"
+          class="flex flex-1 cursor-pointer items-center gap-3 rounded-xl border-2 p-4 text-left transition-colors sm:flex-col sm:gap-2 sm:text-center"
           :class="
             state.themeMode.schemes.includes(option.value)
               ? 'border-primary bg-primary/5'
@@ -103,12 +103,12 @@
           "
           @click="() => toggleScheme(option.value)"
         >
-          <UIcon :name="option.icon" class="size-5 sm:size-6 text-default shrink-0" />
-          <span class="text-sm font-medium text-default">{{ option.label }}</span>
+          <UIcon :name="option.icon" class="text-default size-5 shrink-0 sm:size-6" />
+          <span class="text-default text-sm font-medium">{{ option.label }}</span>
           <UIcon
             v-if="state.themeMode.schemes.includes(option.value)"
             name="i-lucide-check"
-            class="size-4 text-primary ml-auto sm:ml-0"
+            class="text-primary ml-auto size-4 sm:ml-0"
           />
         </button>
       </div>
@@ -117,13 +117,13 @@
     <!-- Contrast levels (multi-select) -->
     <UCard class="mb-6">
       <template #header>
-        <p class="text-sm font-medium text-default">Contrast levels</p>
+        <p class="text-default text-sm font-medium">Contrast levels</p>
       </template>
-      <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+      <div class="flex flex-col gap-2 sm:flex-row sm:gap-3">
         <button
           v-for="option in contrastOptions"
           :key="option.value"
-          class="flex-1 flex items-start gap-3 p-4 rounded-xl border-2 transition-colors cursor-pointer text-left"
+          class="flex flex-1 cursor-pointer items-start gap-3 rounded-xl border-2 p-4 text-left transition-colors"
           :class="
             state.themeMode.contrastLevels.includes(option.value)
               ? 'border-primary bg-primary/5'
@@ -131,15 +131,15 @@
           "
           @click="() => toggleContrast(option.value)"
         >
-          <UIcon :name="option.icon" class="size-5 text-default shrink-0 mt-0.5" />
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-default">{{ option.label }}</p>
-            <p class="text-xs text-muted mt-0.5 leading-snug">{{ option.description }}</p>
+          <UIcon :name="option.icon" class="text-default mt-0.5 size-5 shrink-0" />
+          <div class="min-w-0 flex-1">
+            <p class="text-default text-sm font-medium">{{ option.label }}</p>
+            <p class="text-muted mt-0.5 text-xs leading-snug">{{ option.description }}</p>
           </div>
           <UIcon
             v-if="state.themeMode.contrastLevels.includes(option.value)"
             name="i-lucide-check"
-            class="size-4 text-primary shrink-0 mt-0.5"
+            class="text-primary mt-0.5 size-4 shrink-0"
           />
         </button>
       </div>
@@ -148,13 +148,13 @@
     <!-- Background style -->
     <UCard class="mb-6">
       <template #header>
-        <p class="text-sm font-medium text-default">Background style</p>
+        <p class="text-default text-sm font-medium">Background style</p>
       </template>
-      <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+      <div class="flex flex-col gap-2 sm:flex-row sm:gap-3">
         <button
           v-for="option in bgOptions"
           :key="option.value"
-          class="flex-1 flex items-start gap-3 p-4 rounded-xl border-2 transition-colors cursor-pointer text-left"
+          class="flex flex-1 cursor-pointer items-start gap-3 rounded-xl border-2 p-4 text-left transition-colors"
           :class="
             state.themeMode.backgroundStyle === option.value
               ? 'border-primary bg-primary/5'
@@ -162,10 +162,10 @@
           "
           @click="() => (state.themeMode.backgroundStyle = option.value)"
         >
-          <UIcon :name="option.icon" class="size-5 text-default shrink-0 mt-0.5" />
+          <UIcon :name="option.icon" class="text-default mt-0.5 size-5 shrink-0" />
           <div>
-            <p class="text-sm font-medium text-default">{{ option.label }}</p>
-            <p class="text-xs text-muted mt-0.5 leading-snug">{{ option.description }}</p>
+            <p class="text-default text-sm font-medium">{{ option.label }}</p>
+            <p class="text-muted mt-0.5 text-xs leading-snug">{{ option.description }}</p>
           </div>
         </button>
       </div>
@@ -174,9 +174,9 @@
     <!-- Standard preview -->
     <UCard class="mb-4">
       <template #header>
-        <p class="text-sm font-medium text-default">Preview</p>
+        <p class="text-default text-sm font-medium">Preview</p>
       </template>
-      <div v-if="state.colours.length === 0" class="text-center py-8 text-muted text-sm">
+      <div v-if="state.colours.length === 0" class="text-muted py-8 text-center text-sm">
         Add brand colours to see a preview.
       </div>
       <div
@@ -199,8 +199,8 @@
     <UCard v-if="state.colours.length > 0 && highContrastActive">
       <template #header>
         <div class="flex items-center gap-2">
-          <UIcon name="i-lucide-contrast" class="size-4 text-muted" />
-          <p class="text-sm font-medium text-default">High contrast</p>
+          <UIcon name="i-lucide-contrast" class="text-muted size-4" />
+          <p class="text-default text-sm font-medium">High contrast</p>
         </div>
       </template>
       <div class="grid gap-3" :class="activeSchemes.length > 1 ? 'sm:grid-cols-2' : 'grid-cols-1'">

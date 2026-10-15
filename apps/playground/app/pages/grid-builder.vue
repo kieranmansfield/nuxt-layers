@@ -97,17 +97,17 @@
 </script>
 
 <template>
-  <div class="max-w-5xl mx-auto p-8 space-y-8">
+  <div class="mx-auto max-w-5xl space-y-8 p-8">
     <div class="space-y-1">
       <h1 class="text-2xl font-bold">Grid builder</h1>
-      <p class="text-sm text-muted">
+      <p class="text-muted text-sm">
         Swiss grid preset now lives at
         <ULink to="/layout-swiss" class="underline">/layout-swiss</ULink>
         .
       </p>
     </div>
 
-    <div class="flex gap-2 flex-wrap">
+    <div class="flex flex-wrap gap-2">
       <UButton
         v-for="option in presetOptions"
         :key="option.value"
@@ -123,7 +123,7 @@
       </template>
 
       <div class="space-y-4">
-        <div class="flex gap-4 items-end flex-wrap">
+        <div class="flex flex-wrap items-end gap-4">
           <UFormField label="Grid unit (fr)">
             <UInput v-model.number="unitSize" type="number" min="0.5" step="0.5" class="w-24" />
           </UFormField>
@@ -139,7 +139,7 @@
           <div
             v-for="(segment, index) in customSegments"
             :key="index"
-            class="flex gap-2 items-end flex-wrap p-2 rounded-lg border border-default"
+            class="border-default flex flex-wrap items-end gap-2 rounded-lg border p-2"
           >
             <UBadge :label="`#${index + 1}`" variant="subtle" color="neutral" />
 
@@ -226,12 +226,12 @@
         <h2 class="font-semibold">Preview</h2>
       </template>
 
-      <div class="overflow-x-auto max-w-full">
+      <div class="max-w-full overflow-x-auto">
         <div class="grid-tracks gap-2" :style="{ gridTemplateColumns: columnsCss }">
           <div
             v-for="(segment, index) in activeConfig.columns"
             :key="index"
-            class="border border-default rounded-md p-2 text-center text-sm"
+            class="border-default rounded-md border p-2 text-center text-sm"
           >
             {{ segment.size }}fr
           </div>
@@ -243,7 +243,7 @@
       <template #header>
         <h2 class="font-semibold">Output — paste into app.config.ts as a new preset</h2>
       </template>
-      <pre class="text-sm overflow-x-auto"><code>{{ outputCode }}</code></pre>
+      <pre class="overflow-x-auto text-sm"><code>{{ outputCode }}</code></pre>
     </UCard>
   </div>
 </template>

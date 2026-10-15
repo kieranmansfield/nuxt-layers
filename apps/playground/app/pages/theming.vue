@@ -64,7 +64,7 @@
         <section class="space-y-4">
           <h2 class="text-2xl font-bold">
             Accent Color
-            <span class="ml-2 text-primary capitalize">{{ activeAccent }}</span>
+            <span class="text-primary ml-2 capitalize">{{ activeAccent }}</span>
           </h2>
           <ThemePickerColors />
         </section>
@@ -74,16 +74,16 @@
           <h2 class="text-2xl font-bold">Color Palettes</h2>
           <div class="space-y-4">
             <div v-for="role in COLOR_ROLES" :key="role.key" class="space-y-1.5">
-              <p class="text-sm font-medium capitalize text-muted">{{ role.label }}</p>
-              <div class="flex rounded-lg overflow-hidden">
+              <p class="text-muted text-sm font-medium capitalize">{{ role.label }}</p>
+              <div class="flex overflow-hidden rounded-lg">
                 <div
                   v-for="shade in COLOR_SHADES"
                   :key="shade"
-                  class="flex-1 h-10 relative group"
+                  class="group relative h-10 flex-1"
                   :style="{ background: `var(--ui-color-${role.key}-${shade})` }"
                 >
                   <span
-                    class="absolute inset-0 flex items-end justify-center pb-1 text-[9px] font-mono opacity-0 group-hover:opacity-100 transition-opacity"
+                    class="absolute inset-0 flex items-end justify-center pb-1 font-mono text-[9px] opacity-0 transition-opacity group-hover:opacity-100"
                     :style="{
                       color:
                         shade < 500
@@ -101,7 +101,7 @@
           <!-- Component previews -->
           <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
             <div v-for="role in COLOR_ROLES" :key="role.key" class="space-y-2">
-              <p class="text-xs font-medium text-muted">{{ role.label }}</p>
+              <p class="text-muted text-xs font-medium">{{ role.label }}</p>
               <div class="flex flex-col gap-1.5">
                 <UButton
                   :color="role.key"
@@ -124,7 +124,7 @@
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2">
-                    <UIcon name="i-lucide-contrast" class="size-4 text-muted" />
+                    <UIcon name="i-lucide-contrast" class="text-muted size-4" />
                     <span class="font-semibold">High Contrast</span>
                   </div>
                   <USwitch
@@ -136,7 +136,7 @@
                 </div>
                 <div class="grid grid-cols-3 gap-3 text-sm">
                   <div class="space-y-1">
-                    <p class="text-xs text-muted font-medium uppercase tracking-wide">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">
                       Media Query
                     </p>
                     <UBadge
@@ -148,7 +148,7 @@
                     />
                   </div>
                   <div class="space-y-1">
-                    <p class="text-xs text-muted font-medium uppercase tracking-wide">System</p>
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">System</p>
                     <UBadge
                       :color="systemContrast === 'more' ? 'warning' : 'neutral'"
                       :label="systemContrast"
@@ -157,7 +157,7 @@
                     />
                   </div>
                   <div class="space-y-1">
-                    <p class="text-xs text-muted font-medium uppercase tracking-wide">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">
                       User Override
                     </p>
                     <UBadge
@@ -176,7 +176,7 @@
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2">
-                    <UIcon name="i-lucide-zap-off" class="size-4 text-muted" />
+                    <UIcon name="i-lucide-zap-off" class="text-muted size-4" />
                     <span class="font-semibold">Reduce Motion</span>
                   </div>
                   <USwitch
@@ -188,7 +188,7 @@
                 </div>
                 <div class="grid grid-cols-3 gap-3 text-sm">
                   <div class="space-y-1">
-                    <p class="text-xs text-muted font-medium uppercase tracking-wide">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">
                       Media Query
                     </p>
                     <UBadge
@@ -200,7 +200,7 @@
                     />
                   </div>
                   <div class="space-y-1">
-                    <p class="text-xs text-muted font-medium uppercase tracking-wide">System</p>
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">System</p>
                     <UBadge
                       :color="systemMotion === 'reduce' ? 'warning' : 'neutral'"
                       :label="systemMotion"
@@ -209,7 +209,7 @@
                     />
                   </div>
                   <div class="space-y-1">
-                    <p class="text-xs text-muted font-medium uppercase tracking-wide">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">
                       User Override
                     </p>
                     <UBadge
@@ -228,7 +228,7 @@
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2">
-                    <UIcon name="i-lucide-eye-off" class="size-4 text-muted" />
+                    <UIcon name="i-lucide-eye-off" class="text-muted size-4" />
                     <span class="font-semibold">Reduce Transparency</span>
                   </div>
                   <USwitch
@@ -240,7 +240,7 @@
                 </div>
                 <div class="grid grid-cols-3 gap-3 text-sm">
                   <div class="space-y-1">
-                    <p class="text-xs text-muted font-medium uppercase tracking-wide">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">
                       Media Query
                     </p>
                     <UBadge
@@ -252,7 +252,7 @@
                     />
                   </div>
                   <div class="space-y-1">
-                    <p class="text-xs text-muted font-medium uppercase tracking-wide">System</p>
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">System</p>
                     <UBadge
                       :color="systemTransparency === 'reduce' ? 'warning' : 'neutral'"
                       :label="systemTransparency"
@@ -261,7 +261,7 @@
                     />
                   </div>
                   <div class="space-y-1">
-                    <p class="text-xs text-muted font-medium uppercase tracking-wide">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">
                       User Override
                     </p>
                     <UBadge

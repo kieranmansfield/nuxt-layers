@@ -38,7 +38,7 @@
 <template>
   <div class="vi-page">
     <div class="mb-6">
-      <h1 class="text-2xl font-semibold text-default mb-1">Type Scale</h1>
+      <h1 class="text-default mb-1 text-2xl font-semibold">Type Scale</h1>
       <p class="text-muted text-sm">Define size and spacing scales for each font role.</p>
     </div>
 
@@ -54,12 +54,12 @@
     />
 
     <!-- 1 column on mobile, 2 columns on sm+ -->
-    <div v-if="currentFont" class="flex flex-col sm:flex-row gap-6">
+    <div v-if="currentFont" class="flex flex-col gap-6 sm:flex-row">
       <!-- Font sizes -->
       <UCard class="flex-1">
         <template #header>
           <div class="flex items-center justify-between">
-            <p class="text-sm font-medium text-default">Font sizes</p>
+            <p class="text-default text-sm font-medium">Font sizes</p>
             <UButton
               icon="i-lucide-plus"
               size="xs"
@@ -71,7 +71,7 @@
         <div class="flex flex-col gap-2">
           <div v-for="(size, i) in currentFont.sizeScale" :key="i" class="flex items-center gap-3">
             <div
-              class="overflow-hidden shrink-0 w-20"
+              class="w-20 shrink-0 overflow-hidden"
               :style="{
                 fontFamily: `'${currentFont.family}', sans-serif`,
                 fontVariationSettings: Object.entries(currentFont.axes)
@@ -92,7 +92,7 @@
               class="w-20"
               @update:model-value="($event) => updateSize('sizeScale', i, Number($event))"
             />
-            <span class="text-xs text-muted">px</span>
+            <span class="text-muted text-xs">px</span>
             <UButton
               icon="i-lucide-x"
               size="xs"
@@ -109,7 +109,7 @@
       <UCard class="flex-1">
         <template #header>
           <div class="flex items-center justify-between">
-            <p class="text-sm font-medium text-default">Spacing</p>
+            <p class="text-default text-sm font-medium">Spacing</p>
             <UButton
               icon="i-lucide-plus"
               size="xs"
@@ -125,7 +125,7 @@
             class="flex items-center gap-3"
           >
             <div
-              class="bg-primary/20 rounded shrink-0"
+              class="bg-primary/20 shrink-0 rounded"
               :style="{ height: '20px', width: Math.min(size * 1.5, 80) + 'px' }"
             />
             <UInput
@@ -135,7 +135,7 @@
               class="w-20"
               @update:model-value="($event) => updateSize('spacingScale', i, Number($event))"
             />
-            <span class="text-xs text-muted">px</span>
+            <span class="text-muted text-xs">px</span>
             <UButton
               icon="i-lucide-x"
               size="xs"

@@ -30,16 +30,16 @@
 </script>
 
 <template>
-  <nav class="flex flex-col h-full bg-default overflow-y-auto">
-    <div class="px-4 py-4 border-b border-default shrink-0">
-      <p class="text-xs font-semibold tracking-widest text-muted uppercase">Visual Identity</p>
+  <nav class="bg-default flex h-full flex-col overflow-y-auto">
+    <div class="border-default shrink-0 border-b px-4 py-4">
+      <p class="text-muted text-xs font-semibold tracking-widest uppercase">Visual Identity</p>
     </div>
 
-    <div class="flex-1 py-2 px-2 overflow-y-auto">
+    <div class="flex-1 overflow-y-auto px-2 py-2">
       <UNavigationMenu orientation="vertical" :items="navItems" highlight class="w-full" />
     </div>
 
-    <div class="shrink-0 px-2 pb-4 pt-3 border-t border-default">
+    <div class="border-default shrink-0 border-t px-2 pt-3 pb-4">
       <UButton
         icon="i-lucide-trash-2"
         variant="ghost"
@@ -55,7 +55,7 @@
 
   <UModal v-model:open="confirmOpen" title="Clear everything?">
     <template #body>
-      <p class="text-sm text-muted">
+      <p class="text-muted text-sm">
         This will remove all colours, typography settings, and saved state. This cannot be undone.
       </p>
     </template>

@@ -20,6 +20,6 @@
 <template>
   <component :is="tag" class="relative">
     <slot />
-    <span class="absolute inset-0 pointer-events-none" :style aria-hidden="true" />
+    <span class="pointer-events-none absolute inset-0" :style aria-hidden="true" />
   </component>
 </template>

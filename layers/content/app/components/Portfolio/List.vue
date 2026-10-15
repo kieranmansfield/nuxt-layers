@@ -56,7 +56,7 @@
           v-if="item.image"
           :src="item.image"
           :alt="item.title"
-          class="w-full h-48 object-cover rounded"
+          class="h-48 w-full rounded object-cover"
         />
         <template #footer>
           <div class="flex flex-wrap gap-1.5">

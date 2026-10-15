@@ -17,10 +17,10 @@
 <template>
   <UCard :to :target class="hover:ring-primary transition-colors">
     <div class="flex items-center gap-3">
-      <UIcon :name="icon" class="text-primary text-xl shrink-0" />
+      <UIcon :name="icon" class="text-primary shrink-0 text-xl" />
       <div>
-        <p class="font-semibold text-highlighted">{{ title }}</p>
-        <p class="text-sm text-muted">{{ description }}</p>
+        <p class="text-highlighted font-semibold">{{ title }}</p>
+        <p class="text-muted text-sm">{{ description }}</p>
       </div>
     </div>
   </UCard>

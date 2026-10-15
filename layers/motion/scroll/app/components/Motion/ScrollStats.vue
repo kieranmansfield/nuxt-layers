@@ -51,7 +51,7 @@
 
 <template>
   <div
-    class="bg-black/80 backdrop-blur-sm text-white rounded-xl transition-opacity duration-300"
+    class="rounded-xl bg-black/80 text-white backdrop-blur-sm transition-opacity duration-300"
     :class="[
       ...positionClasses,
       isScrolling ? 'opacity-100' : 'opacity-60',
@@ -61,31 +61,31 @@
     <div class="flex items-center" :class="[compact ? 'gap-4 text-xs' : 'gap-6 text-sm']">
       <!-- Scrolling indicator -->
       <div
-        class="w-2 h-2 rounded-full transition-colors duration-100"
+        class="h-2 w-2 rounded-full transition-colors duration-100"
         :class="isScrolling ? 'bg-green-500' : 'bg-gray-600'"
       />
 
       <!-- Velocity -->
       <div v-if="show.includes('velocity')" class="text-center">
-        <div v-if="!compact" class="text-gray-500 text-xs mb-0.5">VEL</div>
+        <div v-if="!compact" class="mb-0.5 text-xs text-gray-500">VEL</div>
         <div class="font-medium tabular-nums">{{ velocity.toFixed(2) }}</div>
       </div>
 
       <!-- Progress -->
       <div v-if="show.includes('progress')" class="text-center">
-        <div v-if="!compact" class="text-gray-500 text-xs mb-0.5">PROG</div>
+        <div v-if="!compact" class="mb-0.5 text-xs text-gray-500">PROG</div>
         <div class="font-medium tabular-nums">{{ (progress * 100).toFixed(0) }}%</div>
       </div>
 
       <!-- Direction -->
       <div v-if="show.includes('direction')" class="text-center">
-        <div v-if="!compact" class="text-gray-500 text-xs mb-0.5">DIR</div>
+        <div v-if="!compact" class="mb-0.5 text-xs text-gray-500">DIR</div>
         <div class="font-medium">{{ directionLabel }}</div>
       </div>
 
       <!-- Scroll Y -->
       <div v-if="show.includes('scrollY')" class="text-center">
-        <div v-if="!compact" class="text-gray-500 text-xs mb-0.5">Y</div>
+        <div v-if="!compact" class="mb-0.5 text-xs text-gray-500">Y</div>
         <div class="font-medium tabular-nums">{{ Math.round(scrollY) }}px</div>
       </div>
     </div>

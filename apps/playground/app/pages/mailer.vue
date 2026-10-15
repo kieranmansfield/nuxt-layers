@@ -83,7 +83,7 @@
         name="MAILER LAYER"
         description="Server-side transactional email via Resend — runtime config, a typed hook lifecycle, and the pipeline that powers the Forms layer's contact form."
       >
-        <div class="flex flex-wrap gap-4 justify-center">
+        <div class="flex flex-wrap justify-center gap-4">
           <UButton size="lg" @click="() => $router.push('#pipeline')">View Pipeline</UButton>
           <UButton size="lg" variant="outline" to="/forms">
             <UIcon name="i-lucide-file-input" class="mr-2" />
@@ -93,10 +93,10 @@
       </DemoPageHero>
 
       <!-- Status -->
-      <section class="py-24 bg-default">
+      <section class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">
               Runtime Configuration
             </h2>
             <p class="text-muted text-lg">
@@ -104,9 +104,9 @@
               <code class="text-primary">/api/forms/status</code>
             </p>
           </div>
-          <div class="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            <div class="bg-accented rounded-2xl p-6 text-center border border-accented">
-              <p class="text-xs uppercase tracking-widest text-muted mb-2">Configured</p>
+          <div class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-3">
+            <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
+              <p class="text-muted mb-2 text-xs tracking-widest uppercase">Configured</p>
               <UBadge
                 :color="status?.configured ? 'success' : 'warning'"
                 variant="subtle"
@@ -115,14 +115,14 @@
                 {{ status?.configured ? 'Resend API key set' : 'No API key' }}
               </UBadge>
             </div>
-            <div class="bg-accented rounded-2xl p-6 text-center border border-accented">
-              <p class="text-xs uppercase tracking-widest text-muted mb-2">From</p>
+            <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
+              <p class="text-muted mb-2 text-xs tracking-widest uppercase">From</p>
               <p class="text-highlighted font-mono text-sm break-all">
                 {{ status?.emailFrom ?? '—' }}
               </p>
             </div>
-            <div class="bg-accented rounded-2xl p-6 text-center border border-accented">
-              <p class="text-xs uppercase tracking-widest text-muted mb-2">To</p>
+            <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
+              <p class="text-muted mb-2 text-xs tracking-widest uppercase">To</p>
               <p class="text-highlighted font-mono text-sm break-all">
                 {{ status?.emailTo ?? '—' }}
               </p>
@@ -132,39 +132,39 @@
       </section>
 
       <!-- Pipeline -->
-      <section id="pipeline" class="py-24 bg-default">
+      <section id="pipeline" class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Send Pipeline</h2>
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">Send Pipeline</h2>
             <p class="text-muted text-lg">What happens between submit and inbox</p>
           </div>
-          <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-16">
+          <div class="mx-auto mb-16 grid max-w-4xl gap-6 md:grid-cols-3">
             <div
               v-for="item in pipeline"
               :key="item.step"
-              class="bg-muted rounded-2xl p-6 border border-default relative"
+              class="bg-muted border-default relative rounded-2xl border p-6"
             >
               <div
-                class="absolute -top-4 -left-4 w-9 h-9 rounded-full bg-primary text-highlighted flex items-center justify-center font-bold text-sm"
+                class="bg-primary text-highlighted absolute -top-4 -left-4 flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold"
               >
                 {{ item.step }}
               </div>
-              <UIcon :name="item.icon" class="text-3xl text-primary mb-3" />
-              <code class="text-highlighted font-mono text-sm block mb-2">{{ item.label }}</code>
+              <UIcon :name="item.icon" class="text-primary mb-3 text-3xl" />
+              <code class="text-highlighted mb-2 block font-mono text-sm">{{ item.label }}</code>
               <p class="text-muted text-sm">{{ item.description }}</p>
             </div>
           </div>
 
-          <div class="max-w-md mx-auto text-center">
+          <div class="mx-auto max-w-md text-center">
             <UButton size="lg" :loading="sending" @click="sendTestMessage">
               <UIcon name="i-lucide-send" class="mr-2" />
               Run pipeline (send test message)
             </UButton>
-            <p v-if="result === 'success'" class="text-green-400 text-sm mt-4">
+            <p v-if="result === 'success'" class="mt-4 text-sm text-green-400">
               <UIcon name="i-lucide-circle-check" class="mr-1" />
               contact:sent fired — message accepted by Resend
             </p>
-            <p v-else-if="result === 'error'" class="text-red-400 text-sm mt-4">
+            <p v-else-if="result === 'error'" class="mt-4 text-sm text-red-400">
               <UIcon name="i-lucide-circle-x" class="mr-1" />
               contact:failed fired — see server logs (likely missing API key in this environment)
             </p>
@@ -173,22 +173,22 @@
       </section>
 
       <!-- Surface -->
-      <section class="py-24 bg-default">
+      <section class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Server Surface</h2>
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">Server Surface</h2>
             <p class="text-muted text-lg">
               Mailer is server-only — no client components or composables
             </p>
           </div>
-          <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div class="mx-auto grid max-w-4xl gap-6 md:grid-cols-3">
             <div
               v-for="item in surface"
               :key="item.name"
-              class="bg-accented rounded-2xl p-6 border border-accented"
+              class="bg-accented border-accented rounded-2xl border p-6"
             >
-              <UIcon :name="item.icon" class="text-2xl text-primary mb-3" />
-              <code class="text-highlighted font-mono text-sm block mb-1">{{ item.name }}</code>
+              <UIcon :name="item.icon" class="text-primary mb-3 text-2xl" />
+              <code class="text-highlighted mb-1 block font-mono text-sm">{{ item.name }}</code>
               <UBadge variant="subtle" color="neutral" size="xs" class="mb-3">{{
                 item.kind
               }}</UBadge>

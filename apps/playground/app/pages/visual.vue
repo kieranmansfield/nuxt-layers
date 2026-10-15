@@ -66,7 +66,7 @@
         <template #background>
           <AccentScene preset="hero" class="absolute inset-0 opacity-60" />
         </template>
-        <div class="flex flex-wrap gap-4 justify-center">
+        <div class="flex flex-wrap justify-center gap-4">
           <UButton size="lg" @click="() => $router.push('#gradients')">Gradients & Tints</UButton>
           <UButton size="lg" variant="outline" @click="() => $router.push('#progress')">
             Progress
@@ -79,20 +79,20 @@
       </DemoPageHero>
 
       <!-- Gradients & Tints -->
-      <section id="gradients" class="py-24 bg-default">
+      <section id="gradients" class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Gradients & Tints</h2>
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">Gradients & Tints</h2>
             <p class="text-muted text-lg">
               <code class="text-primary">useGradient()</code> resolves preset names from
               <code class="text-primary">app.config.visualLayer.gradients</code>
             </p>
           </div>
 
-          <div class="grid lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div class="mx-auto grid max-w-4xl gap-8 lg:grid-cols-2">
             <div>
-              <h3 class="text-lg font-bold text-highlighted mb-4">GradientBackground presets</h3>
-              <div class="flex gap-2 mb-4">
+              <h3 class="text-highlighted mb-4 text-lg font-bold">GradientBackground presets</h3>
+              <div class="mb-4 flex gap-2">
                 <UButton
                   v-for="preset in gradientPresets"
                   :key="preset"
@@ -105,10 +105,10 @@
               </div>
               <GradientBackground
                 :preset="activeGradient"
-                class="h-48 rounded-2xl flex items-center justify-center"
+                class="flex h-48 items-center justify-center rounded-2xl"
               >
                 <code
-                  class="text-highlighted/90 font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg"
+                  class="text-highlighted/90 rounded-lg bg-black/30 px-3 py-1.5 font-mono text-sm"
                 >
                   preset="{{ activeGradient }}"
                 </code>
@@ -116,8 +116,8 @@
             </div>
 
             <div>
-              <h3 class="text-lg font-bold text-highlighted mb-4">TintOverlay levels</h3>
-              <div class="flex gap-2 mb-4">
+              <h3 class="text-highlighted mb-4 text-lg font-bold">TintOverlay levels</h3>
+              <div class="mb-4 flex gap-2">
                 <UButton
                   v-for="level in tintLevels"
                   :key="level"
@@ -129,12 +129,12 @@
                 </UButton>
               </div>
               <div
-                class="relative h-48 rounded-2xl overflow-hidden bg-linear-to-br from-blue-600 to-purple-700"
+                class="relative h-48 overflow-hidden rounded-2xl bg-linear-to-br from-blue-600 to-purple-700"
               >
                 <TintOverlay color="primary" :level="activeTintLevel" class="absolute inset-0" />
-                <div class="relative z-10 h-full flex items-center justify-center">
+                <div class="relative z-10 flex h-full items-center justify-center">
                   <code
-                    class="text-highlighted font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg"
+                    class="text-highlighted rounded-lg bg-black/30 px-3 py-1.5 font-mono text-sm"
                   >
                     level="{{ activeTintLevel }}"
                   </code>
@@ -146,23 +146,23 @@
       </section>
 
       <!-- Accent blobs -->
-      <section class="py-24 bg-default overflow-hidden">
+      <section class="bg-default overflow-hidden py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Accent Blobs</h2>
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">Accent Blobs</h2>
             <p class="text-muted text-lg">
               <code class="text-primary">useAccentBlob()</code> +
               <code class="text-primary">AccentScene</code>
               — soft blurred shapes positioned by percentage coordinates
             </p>
           </div>
-          <div class="relative h-72 rounded-3xl overflow-hidden bg-default max-w-4xl mx-auto">
+          <div class="bg-default relative mx-auto h-72 max-w-4xl overflow-hidden rounded-3xl">
             <AccentBlob :x="20" :y="30" size="14rem" color="primary" :opacity="50" blur="3xl" />
             <AccentBlob :x="75" :y="60" size="10rem" color="secondary" :opacity="40" blur="2xl" />
             <AccentBlob :x="50" :y="85" size="8rem" color="info" :opacity="35" blur="xl" />
-            <div class="relative z-10 h-full flex items-center justify-center">
+            <div class="relative z-10 flex h-full items-center justify-center">
               <code
-                class="text-highlighted/80 font-mono text-sm bg-black/30 px-3 py-1.5 rounded-lg"
+                class="text-highlighted/80 rounded-lg bg-black/30 px-3 py-1.5 font-mono text-sm"
               >
                 &lt;AccentBlob :x :y size color opacity blur /&gt;
               </code>
@@ -172,28 +172,28 @@
       </section>
 
       <!-- Progress -->
-      <section id="progress" class="py-24 bg-default">
+      <section id="progress" class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">
               Progress Indicators
             </h2>
             <p class="text-muted text-lg">Linear and circular progress, semantic colours</p>
           </div>
-          <div class="max-w-2xl mx-auto space-y-10">
-            <div class="bg-accented rounded-2xl p-8 border border-accented">
-              <p class="text-sm text-muted mb-4">ProgressBar — value: {{ circularProgress }}%</p>
+          <div class="mx-auto max-w-2xl space-y-10">
+            <div class="bg-accented border-accented rounded-2xl border p-8">
+              <p class="text-muted mb-4 text-sm">ProgressBar — value: {{ circularProgress }}%</p>
               <ProgressBar :progress="circularProgress / 100" color="primary" size="lg" />
               <input
                 v-model.number="circularProgress"
                 type="range"
                 min="0"
                 max="100"
-                class="w-full mt-6"
+                class="mt-6 w-full"
               />
             </div>
             <div
-              class="bg-accented rounded-2xl p-8 border border-accented flex items-center justify-center"
+              class="bg-accented border-accented flex items-center justify-center rounded-2xl border p-8"
             >
               <ProgressCircular
                 :progress="circularProgress / 100"
@@ -207,20 +207,20 @@
       </section>
 
       <!-- Surface -->
-      <section class="py-24 bg-default">
+      <section class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Component Surface</h2>
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">Component Surface</h2>
             <p class="text-muted text-lg">Everything the UI layer composes from Visual</p>
           </div>
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div class="mx-auto grid max-w-5xl gap-6 md:grid-cols-2 lg:grid-cols-3">
             <div
               v-for="item in components"
               :key="item.name"
-              class="bg-muted rounded-2xl p-6 border border-default"
+              class="bg-muted border-default rounded-2xl border p-6"
             >
-              <UIcon :name="item.icon" class="text-2xl text-primary mb-3" />
-              <h3 class="text-highlighted font-bold mb-2">{{ item.name }}</h3>
+              <UIcon :name="item.icon" class="text-primary mb-3 text-2xl" />
+              <h3 class="text-highlighted mb-2 font-bold">{{ item.name }}</h3>
               <p class="text-muted text-sm">{{ item.description }}</p>
             </div>
           </div>

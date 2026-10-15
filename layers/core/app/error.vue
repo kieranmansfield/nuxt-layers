@@ -34,7 +34,7 @@
           <template #description>
             <div class="space-y-2">
               <p class="text-muted">{{ message }}</p>
-              <code v-if="error?.statusMessage" class="block rounded bg-elevated px-2 py-1 text-sm">
+              <code v-if="error?.statusMessage" class="bg-elevated block rounded px-2 py-1 text-sm">
                 {{ error.statusMessage }}
               </code>
             </div>

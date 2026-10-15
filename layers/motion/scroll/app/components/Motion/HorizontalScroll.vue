@@ -57,7 +57,7 @@
 
 <template>
   <section ref="sectionRef" class="motion-horizontal-scroll h-screen overflow-hidden">
-    <div ref="trackRef" class="h-full flex items-center will-change-transform">
+    <div ref="trackRef" class="flex h-full items-center will-change-transform">
       <slot />
     </div>
   </section>

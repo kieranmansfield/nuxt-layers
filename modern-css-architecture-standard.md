@@ -743,7 +743,7 @@ However:
 Avoid:
 
 ```html
-<div class="flex flex-col gap-6 px-4 md:px-8 lg:px-12 max-w-7xl mx-auto"></div>
+<div class="mx-auto flex max-w-7xl flex-col gap-6 px-4 md:px-8 lg:px-12"></div>
 ```
 
 Prefer:

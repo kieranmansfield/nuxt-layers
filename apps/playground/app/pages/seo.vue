@@ -73,7 +73,7 @@
         name="SEO"
         description="@nuxtjs/seo wrapper — robots, sitemap, OG images, and schema-org structured data in one layer."
       >
-        <div class="flex flex-wrap gap-4 justify-center">
+        <div class="flex flex-wrap justify-center gap-4">
           <UButton size="lg" to="/sitemap.xml" target="_blank" icon="i-lucide-map">
             sitemap.xml
           </UButton>
@@ -84,7 +84,7 @@
       </DemoPageHero>
 
       <section class="bg-default pb-24">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div class="space-y-8 py-8">
             <!-- Modules Overview -->
             <UCard>
@@ -93,7 +93,7 @@
                   <UIcon name="i-lucide-package" class="text-primary" />
                   <h2 class="text-xl font-semibold">Included Modules</h2>
                 </div>
-                <p class="text-sm text-muted mt-1">
+                <p class="text-muted mt-1 text-sm">
                   Six @nuxtjs/seo sub-modules, configured via a single layer
                 </p>
               </template>
@@ -102,14 +102,14 @@
                 <div
                   v-for="mod in modules"
                   :key="mod.name"
-                  class="p-4 rounded-lg bg-elevated border border-default"
+                  class="bg-elevated border-default rounded-lg border p-4"
                 >
-                  <div class="flex items-center gap-2 mb-2">
+                  <div class="mb-2 flex items-center gap-2">
                     <UIcon :name="mod.icon" class="text-primary text-lg" />
-                    <code class="text-sm font-mono text-highlighted">{{ mod.name }}</code>
+                    <code class="text-highlighted font-mono text-sm">{{ mod.name }}</code>
                   </div>
-                  <p class="text-sm text-muted mb-3">{{ mod.description }}</p>
-                  <code class="text-xs text-muted bg-muted px-2 py-1 rounded block truncate">
+                  <p class="text-muted mb-3 text-sm">{{ mod.description }}</p>
+                  <code class="text-muted bg-muted block truncate rounded px-2 py-1 text-xs">
                     {{ mod.snippet }}
                   </code>
                 </div>
@@ -123,17 +123,17 @@
                   <UIcon name="i-lucide-settings" class="text-primary" />
                   <h2 class="text-xl font-semibold">useSeoConfig()</h2>
                 </div>
-                <p class="text-sm text-muted mt-1">Current resolved SEO configuration</p>
+                <p class="text-muted mt-1 text-sm">Current resolved SEO configuration</p>
               </template>
 
               <div class="space-y-2">
                 <div
                   v-for="row in configRows"
                   :key="row.label"
-                  class="flex justify-between items-center py-2 border-b border-default last:border-0"
+                  class="border-default flex items-center justify-between border-b py-2 last:border-0"
                 >
                   <span class="text-muted text-sm">{{ row.label }}</span>
-                  <span class="font-mono text-sm text-highlighted">{{ row.value }}</span>
+                  <span class="text-highlighted font-mono text-sm">{{ row.value }}</span>
                 </div>
               </div>
             </UCard>
@@ -149,9 +149,9 @@
 
               <div class="space-y-4">
                 <div>
-                  <h3 class="text-sm font-semibold text-highlighted mb-2">Per-page SEO meta</h3>
+                  <h3 class="text-highlighted mb-2 text-sm font-semibold">Per-page SEO meta</h3>
                   <pre
-                    class="text-xs bg-muted p-4 rounded-lg overflow-x-auto text-muted leading-relaxed"
+                    class="bg-muted text-muted overflow-x-auto rounded-lg p-4 text-xs leading-relaxed"
                   ><code>useSeoMeta({
   title: 'My Page Title',
   description: 'Page description for search engines',
@@ -160,20 +160,20 @@
 })</code></pre>
                 </div>
                 <div>
-                  <h3 class="text-sm font-semibold text-highlighted mb-2">
+                  <h3 class="text-highlighted mb-2 text-sm font-semibold">
                     Schema.org structured data
                   </h3>
                   <pre
-                    class="text-xs bg-muted p-4 rounded-lg overflow-x-auto text-muted leading-relaxed"
+                    class="bg-muted text-muted overflow-x-auto rounded-lg p-4 text-xs leading-relaxed"
                   ><code>useSchemaOrg([
   defineWebPage({ name: 'My App' }),
   defineOrganization({ name: 'My Org', url: 'https://myapp.com' }),
 ])</code></pre>
                 </div>
                 <div>
-                  <h3 class="text-sm font-semibold text-highlighted mb-2">OG image generation</h3>
+                  <h3 class="text-highlighted mb-2 text-sm font-semibold">OG image generation</h3>
                   <pre
-                    class="text-xs bg-muted p-4 rounded-lg overflow-x-auto text-muted leading-relaxed"
+                    class="bg-muted text-muted overflow-x-auto rounded-lg p-4 text-xs leading-relaxed"
                   ><code>// In a page component
 defineOgImage({ component: 'OgImageNuxtSeo', props: { title: 'My Page' } })</code></pre>
                 </div>

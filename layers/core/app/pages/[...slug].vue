@@ -88,10 +88,10 @@
         <UEmpty :icon :title :description size="xl">
           <!-- Show attempted path -->
           <template v-if="config.showPath !== false" #description>
-            <p class="mb-2 text-muted">
+            <p class="text-muted mb-2">
               {{ description }}
             </p>
-            <code class="rounded bg-elevated px-2 py-1 text-sm">
+            <code class="bg-elevated rounded px-2 py-1 text-sm">
               {{ attemptedPath }}
             </code>
           </template>

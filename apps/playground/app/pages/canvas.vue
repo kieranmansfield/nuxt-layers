@@ -63,7 +63,7 @@
             </div>
           </ClientOnly>
         </template>
-        <div class="flex flex-wrap gap-4 justify-center">
+        <div class="flex flex-wrap justify-center gap-4">
           <UButton size="lg" @click="() => $router.push('#clock')">Shader Clock</UButton>
           <UButton size="lg" variant="outline" to="/shader">
             <UIcon name="i-lucide-shapes" class="mr-2" />
@@ -73,26 +73,26 @@
       </DemoPageHero>
 
       <!-- Shader clock -->
-      <section id="clock" class="py-24 bg-default">
+      <section id="clock" class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">useShaderTime()</h2>
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">useShaderTime()</h2>
             <p class="text-muted text-lg">
               A controllable clock — the rotating mesh above is driven by
               <code class="text-primary">elapsed</code>
             </p>
           </div>
-          <div class="max-w-2xl mx-auto rounded-2xl border border-default overflow-hidden">
+          <div class="border-default mx-auto max-w-2xl overflow-hidden rounded-2xl border">
             <!-- Status bar -->
             <div
-              class="flex items-center justify-between px-6 py-4 bg-muted border-b border-default"
+              class="bg-muted border-default flex items-center justify-between border-b px-6 py-4"
             >
               <div class="flex items-center gap-3">
                 <div
-                  class="w-2 h-2 rounded-full transition-colors"
+                  class="h-2 w-2 rounded-full transition-colors"
                   :class="isRunning ? 'bg-emerald-400' : 'bg-accented'"
                 />
-                <span class="font-mono text-sm text-muted uppercase tracking-widest">
+                <span class="text-muted font-mono text-sm tracking-widest uppercase">
                   {{ isRunning ? 'Running' : 'Paused' }}
                 </span>
               </div>
@@ -112,25 +112,25 @@
               </div>
             </div>
             <!-- Stats -->
-            <div class="grid grid-cols-2 divide-x divide-gray-800 bg-default">
+            <div class="bg-default grid grid-cols-2 divide-x divide-gray-800">
               <div class="p-8">
-                <p class="text-xs uppercase tracking-widest text-muted mb-3">Elapsed</p>
-                <p class="text-5xl font-bold text-primary font-mono tabular-nums">
+                <p class="text-muted mb-3 text-xs tracking-widest uppercase">Elapsed</p>
+                <p class="text-primary font-mono text-5xl font-bold tabular-nums">
                   {{ elapsed.toFixed(2) }}
-                  <span class="text-2xl text-muted">s</span>
+                  <span class="text-muted text-2xl">s</span>
                 </p>
               </div>
               <div class="p-8">
-                <p class="text-xs uppercase tracking-widest text-muted mb-3">Speed</p>
-                <p class="text-5xl font-bold text-primary font-mono tabular-nums">
+                <p class="text-muted mb-3 text-xs tracking-widest uppercase">Speed</p>
+                <p class="text-primary font-mono text-5xl font-bold tabular-nums">
                   {{ speed.toFixed(2) }}
-                  <span class="text-2xl text-muted">×</span>
+                  <span class="text-muted text-2xl">×</span>
                 </p>
               </div>
             </div>
             <!-- Speed presets -->
-            <div class="px-6 py-5 bg-muted border-t border-default">
-              <p class="text-xs uppercase tracking-widest text-muted mb-3">Playback Speed</p>
+            <div class="bg-muted border-default border-t px-6 py-5">
+              <p class="text-muted mb-3 text-xs tracking-widest uppercase">Playback Speed</p>
               <div class="grid grid-cols-5 gap-2">
                 <UButton
                   v-for="preset in speedPresets"
@@ -149,10 +149,10 @@
       </section>
 
       <!-- Capabilities -->
-      <section class="py-24 bg-default">
+      <section class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">
               Renderer Capabilities
             </h2>
             <p class="text-muted text-lg">
@@ -160,18 +160,18 @@
               <code class="text-primary">useAutoQuality()</code> — detected from the canvas above
             </p>
           </div>
-          <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div class="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
             <!-- Renderer info panel -->
-            <div class="rounded-2xl border border-default overflow-hidden">
-              <div class="px-6 py-4 bg-muted border-b border-default">
+            <div class="border-default overflow-hidden rounded-2xl border">
+              <div class="bg-muted border-default border-b px-6 py-4">
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-cpu" class="text-primary" />
-                  <h3 class="font-semibold text-highlighted">Renderer Info</h3>
+                  <h3 class="text-highlighted font-semibold">Renderer Info</h3>
                 </div>
               </div>
-              <div class="divide-y divide-gray-800 bg-default">
-                <div class="px-6 py-4 flex items-center justify-between">
-                  <span class="text-sm text-muted">Backend</span>
+              <div class="bg-default divide-y divide-gray-800">
+                <div class="flex items-center justify-between px-6 py-4">
+                  <span class="text-muted text-sm">Backend</span>
                   <span
                     class="font-mono text-sm font-semibold"
                     :class="isWebGPU ? 'text-violet-400' : 'text-primary'"
@@ -179,21 +179,21 @@
                     {{ isReady ? backend.toUpperCase() : '…' }}
                   </span>
                 </div>
-                <div class="px-6 py-4 flex items-center justify-between">
-                  <span class="text-sm text-muted">Max Texture Size</span>
-                  <span class="font-mono text-sm text-highlighted">
+                <div class="flex items-center justify-between px-6 py-4">
+                  <span class="text-muted text-sm">Max Texture Size</span>
+                  <span class="text-highlighted font-mono text-sm">
                     {{ isReady ? maxTextureSize.toLocaleString() : '…' }}
                   </span>
                 </div>
-                <div class="px-6 py-4 flex items-center justify-between">
-                  <span class="text-sm text-muted">Precision</span>
-                  <span class="font-mono text-sm text-highlighted">{{
+                <div class="flex items-center justify-between px-6 py-4">
+                  <span class="text-muted text-sm">Precision</span>
+                  <span class="text-highlighted font-mono text-sm">{{
                     capabilities?.precision ?? '…'
                   }}</span>
                 </div>
-                <div class="px-6 py-4 flex items-center justify-between">
-                  <span class="text-sm text-muted">Pixel Ratio</span>
-                  <span class="font-mono text-sm text-highlighted">
+                <div class="flex items-center justify-between px-6 py-4">
+                  <span class="text-muted text-sm">Pixel Ratio</span>
+                  <span class="text-highlighted font-mono text-sm">
                     {{ capabilities?.devicePixelRatio?.toFixed(1) ?? '…' }}
                   </span>
                 </div>
@@ -201,25 +201,25 @@
             </div>
 
             <!-- Auto quality panel -->
-            <div class="rounded-2xl border border-default overflow-hidden">
-              <div class="px-6 py-4 bg-muted border-b border-default">
+            <div class="border-default overflow-hidden rounded-2xl border">
+              <div class="bg-muted border-default border-b px-6 py-4">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2">
                     <UIcon name="i-lucide-sliders-horizontal" class="text-primary" />
-                    <h3 class="font-semibold text-highlighted">Auto Quality</h3>
+                    <h3 class="text-highlighted font-semibold">Auto Quality</h3>
                   </div>
                   <UBadge color="primary" variant="subtle" class="capitalize">{{ quality }}</UBadge>
                 </div>
               </div>
-              <div class="divide-y divide-gray-800 bg-default">
-                <div class="px-6 py-4 flex items-center justify-between">
-                  <span class="text-sm text-muted">Particle Count</span>
-                  <span class="font-mono text-sm text-highlighted">{{
+              <div class="bg-default divide-y divide-gray-800">
+                <div class="flex items-center justify-between px-6 py-4">
+                  <span class="text-muted text-sm">Particle Count</span>
+                  <span class="text-highlighted font-mono text-sm">{{
                     qualitySettings.particleCount.toLocaleString()
                   }}</span>
                 </div>
-                <div class="px-6 py-4 flex items-center justify-between">
-                  <span class="text-sm text-muted">Shadows</span>
+                <div class="flex items-center justify-between px-6 py-4">
+                  <span class="text-muted text-sm">Shadows</span>
                   <UBadge
                     variant="subtle"
                     :color="qualitySettings.shadows ? 'success' : 'neutral'"
@@ -229,15 +229,15 @@
                   </UBadge>
                 </div>
               </div>
-              <div class="px-6 py-5 bg-muted border-t border-default">
-                <p class="text-xs uppercase tracking-widest text-muted mb-3">Override Level</p>
+              <div class="bg-muted border-default border-t px-6 py-5">
+                <p class="text-muted mb-3 text-xs tracking-widest uppercase">Override Level</p>
                 <div class="grid grid-cols-4 gap-2">
                   <UButton
                     v-for="level in qualityLevels"
                     :key="level"
                     size="sm"
                     :variant="quality === level ? 'solid' : 'ghost'"
-                    class="capitalize w-full"
+                    class="w-full capitalize"
                     @click="() => setQuality(level)"
                   >
                     {{ level }}
@@ -250,10 +250,10 @@
       </section>
 
       <!-- Shader Image Effects -->
-      <section class="py-24 bg-default">
+      <section class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">
               Shader Image Effects
             </h2>
             <p class="text-muted text-lg">
@@ -261,16 +261,16 @@
               <code class="text-primary">ShaderImageDemo</code>
             </p>
           </div>
-          <div class="max-w-3xl mx-auto rounded-2xl border border-default overflow-hidden">
+          <div class="border-default mx-auto max-w-3xl overflow-hidden rounded-2xl border">
             <ClientOnly>
               <div class="h-[420px]">
                 <ShaderImageDemo :rgb-shift :distortion :vignette="vignetteEnabled" />
               </div>
             </ClientOnly>
             <!-- Controls -->
-            <div class="grid sm:grid-cols-3 gap-6 px-6 py-5 bg-muted border-t border-default">
+            <div class="bg-muted border-default grid gap-6 border-t px-6 py-5 sm:grid-cols-3">
               <div>
-                <p class="text-xs uppercase tracking-widest text-muted mb-2">
+                <p class="text-muted mb-2 text-xs tracking-widest uppercase">
                   RGB Shift — {{ rgbShift.toFixed(1) }}
                 </p>
                 <input
@@ -283,7 +283,7 @@
                 />
               </div>
               <div>
-                <p class="text-xs uppercase tracking-widest text-muted mb-2">
+                <p class="text-muted mb-2 text-xs tracking-widest uppercase">
                   Distortion — {{ distortion.toFixed(3) }}
                 </p>
                 <input

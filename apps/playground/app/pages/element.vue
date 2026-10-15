@@ -323,8 +323,8 @@
       <p class="text-muted mt-2 max-w-2xl">
         A polymorphic primitive giving templates a small, typed vocabulary — layout, grid, spacing,
         sizing, surface, interaction — instead of utility-class strings. Lives in
-        <code class="bg-elevated px-1 rounded">layers/design-system/element</code>, depends only on
-        <code class="bg-elevated px-1 rounded">core</code>.
+        <code class="bg-elevated rounded px-1">layers/design-system/element</code>, depends only on
+        <code class="bg-elevated rounded px-1">core</code>.
       </p>
     </div>
 
@@ -332,7 +332,7 @@
     <UCard>
       <template #header>
         <h2 class="text-xl font-semibold">Playground</h2>
-        <p class="text-sm text-muted mt-1">
+        <p class="text-muted mt-1 text-sm">
           Pick a tag or component, tune the props, see the result and the generated markup.
         </p>
       </template>
@@ -358,7 +358,7 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-xs font-semibold uppercase tracking-wide text-muted">Spacing</p>
+            <p class="text-muted text-xs font-semibold tracking-wide uppercase">Spacing</p>
             <div class="grid grid-cols-3 gap-3">
               <UFormField label="gap">
                 <USelect v-model="gap" :items="emptyItems" />
@@ -373,7 +373,7 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-xs font-semibold uppercase tracking-wide text-muted">Sizing</p>
+            <p class="text-muted text-xs font-semibold tracking-wide uppercase">Sizing</p>
             <div class="grid grid-cols-2 gap-3">
               <UFormField label="w">
                 <UInput v-model="w" placeholder="e.g. 200px" />
@@ -385,7 +385,7 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-xs font-semibold uppercase tracking-wide text-muted">Surface</p>
+            <p class="text-muted text-xs font-semibold tracking-wide uppercase">Surface</p>
             <div class="grid grid-cols-2 gap-3">
               <UFormField label="bg">
                 <UInput v-model="bg" placeholder="var(--ui-bg-elevated)" />
@@ -406,7 +406,7 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-xs font-semibold uppercase tracking-wide text-muted">Interaction</p>
+            <p class="text-muted text-xs font-semibold tracking-wide uppercase">Interaction</p>
             <div class="grid grid-cols-3 gap-3">
               <UFormField label="cursor">
                 <UInput v-model="cursor" placeholder="pointer" />
@@ -429,9 +429,9 @@
         </div>
 
         <!-- Preview + generated code -->
-        <div class="space-y-4 min-w-0">
+        <div class="min-w-0 space-y-4">
           <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold uppercase tracking-wide text-muted"
+            <span class="text-muted text-xs font-semibold tracking-wide uppercase"
               >Rendered as</span
             >
             <UBadge color="neutral" variant="subtle" size="sm" class="font-mono">
@@ -440,21 +440,21 @@
           </div>
 
           <div
-            class="rounded-lg border border-default p-6 flex items-center justify-center min-h-40"
+            class="border-default flex min-h-40 items-center justify-center rounded-lg border p-6"
           >
             <Element v-bind="elementBindings">
               <div v-if="contentPreset === 'card'" class="space-y-2">
                 <h3 class="font-semibold">Team plan</h3>
-                <p class="text-sm text-muted">
+                <p class="text-muted text-sm">
                   Unlimited projects, priority support, billed monthly.
                 </p>
                 <UButton label="Upgrade" trailing-icon="i-lucide-arrow-right" size="sm" />
               </div>
               <div v-else-if="contentPreset === 'stat'" class="text-center">
                 <p class="text-3xl font-bold">128</p>
-                <p class="text-xs text-muted uppercase tracking-wide">Active users</p>
+                <p class="text-muted text-xs tracking-wide uppercase">Active users</p>
               </div>
-              <ul v-else-if="contentPreset === 'list'" class="space-y-1 text-sm text-left">
+              <ul v-else-if="contentPreset === 'list'" class="space-y-1 text-left text-sm">
                 <li>Unlimited projects</li>
                 <li>Priority support</li>
                 <li>Custom domains</li>
@@ -464,11 +464,11 @@
           </div>
 
           <div class="min-w-0">
-            <p class="text-xs font-semibold uppercase tracking-wide text-muted mb-2">
+            <p class="text-muted mb-2 text-xs font-semibold tracking-wide uppercase">
               Generated markup
             </p>
             <pre
-              class="bg-elevated rounded-lg p-4 text-sm overflow-x-auto font-mono"
+              class="bg-elevated overflow-x-auto rounded-lg p-4 font-mono text-sm"
             ><code>{{ codeSnippet }}</code></pre>
           </div>
         </div>
@@ -487,7 +487,7 @@
         <template #header>
           <div class="flex items-center gap-2">
             <UIcon :name="group.icon" class="text-primary size-5" />
-            <h3 class="font-semibold mb-0">{{ group.name }}</h3>
+            <h3 class="mb-0 font-semibold">{{ group.name }}</h3>
           </div>
         </template>
 
@@ -497,10 +497,10 @@
             :key="prop.name"
             class="grid gap-1 sm:grid-cols-[140px_1fr]"
           >
-            <code class="font-mono text-sm text-primary">{{ prop.name }}</code>
+            <code class="text-primary font-mono text-sm">{{ prop.name }}</code>
             <div>
               <p class="text-sm">{{ prop.type }}</p>
-              <p class="text-xs text-muted">{{ prop.description }}</p>
+              <p class="text-muted text-xs">{{ prop.description }}</p>
             </div>
           </div>
         </div>
@@ -513,13 +513,13 @@
         <div class="space-y-2 text-sm">
           <p>
             Controls what Element renders as. Accepts a native tag string (<code
-              class="bg-elevated px-1 rounded"
+              class="bg-elevated rounded px-1"
               >as="section"</code
-            >) or a component (<code class="bg-elevated px-1 rounded">:as="UButton"</code>).
-            Defaults to <code class="bg-elevated px-1 rounded">'div'</code>.
+            >) or a component (<code class="bg-elevated rounded px-1">:as="UButton"</code>).
+            Defaults to <code class="bg-elevated rounded px-1">'div'</code>.
           </p>
           <pre
-            class="bg-elevated rounded p-3 overflow-x-auto"
+            class="bg-elevated overflow-x-auto rounded p-3"
           ><code>&lt;Element :as="UButton" p="3 5"&gt;
   Continue
 &lt;/Element&gt;</code></pre>

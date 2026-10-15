@@ -37,7 +37,7 @@ export type TSLMat4 = any
 
 export type GradientStop = {
   position: number
-  color: TSLColor | TSLVec3
+  color: TSLColor
 }
 
 export type FBMOptions = {

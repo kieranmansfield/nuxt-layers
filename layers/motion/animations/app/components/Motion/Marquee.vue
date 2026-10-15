@@ -147,7 +147,7 @@
   >
     <div
       ref="contentRef"
-      class="motion-marquee__content flex will-change-transform w-max"
+      class="motion-marquee__content flex w-max will-change-transform"
       :style="{ gap }"
     >
       <slot />

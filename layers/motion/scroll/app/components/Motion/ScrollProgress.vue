@@ -49,7 +49,7 @@
   <!-- Linear Progress -->
   <div v-if="type === 'linear'" class="motion-scroll-progress-linear" v-bind="$attrs">
     <div
-      class="w-full rounded-full overflow-hidden"
+      class="w-full overflow-hidden rounded-full"
       :style="{ height: `${height}px`, backgroundColor: bgColor }"
     >
       <div
@@ -60,7 +60,7 @@
         }"
       />
     </div>
-    <span v-if="showPercentage" class="text-sm font-medium tabular-nums mt-2 block text-center">
+    <span v-if="showPercentage" class="mt-2 block text-center text-sm font-medium tabular-nums">
       {{ percentage }}%
     </span>
   </div>

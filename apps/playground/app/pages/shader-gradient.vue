@@ -126,22 +126,22 @@
       tone-mapping="aces"
     />
 
-    <div class="relative z-10 min-h-screen flex items-start justify-end p-6">
+    <div class="relative z-10 flex min-h-screen items-start justify-end p-6">
       <div
-        class="w-72 space-y-5 rounded-2xl p-5 border text-sm"
+        class="w-72 space-y-5 rounded-2xl border p-5 text-sm"
         :class="
           isDark
-            ? 'bg-black/50 backdrop-blur-lg border-white/10'
-            : 'bg-white/70 backdrop-blur-lg border-black/10'
+            ? 'border-white/10 bg-black/50 backdrop-blur-lg'
+            : 'border-black/10 bg-white/70 backdrop-blur-lg'
         "
       >
         <!-- Header -->
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="font-semibold text-base" :class="isDark ? 'text-highlighted' : 'text-black'">
+            <h1 class="text-base font-semibold" :class="isDark ? 'text-highlighted' : 'text-black'">
               Theme Gradient
             </h1>
-            <p class="text-xs mt-0.5" :class="isDark ? 'text-highlighted/40' : 'text-black/40'">
+            <p class="mt-0.5 text-xs" :class="isDark ? 'text-highlighted/40' : 'text-black/40'">
               Animated mesh — TSL / WebGPU
             </p>
           </div>
@@ -156,7 +156,7 @@
         <!-- Pattern selector -->
         <div>
           <p
-            class="text-xs font-medium uppercase tracking-wide mb-2.5"
+            class="mb-2.5 text-xs font-medium tracking-wide uppercase"
             :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
           >
             Pattern
@@ -165,14 +165,14 @@
             <button
               v-for="p in PATTERNS"
               :key="p.key"
-              class="flex-1 py-1.5 rounded-lg text-xs font-medium transition-all duration-150"
+              class="flex-1 rounded-lg py-1.5 text-xs font-medium transition-all duration-150"
               :class="
                 activePattern === p.key
                   ? isDark
-                    ? 'bg-white/20 text-highlighted'
+                    ? 'text-highlighted bg-white/20'
                     : 'bg-black/15 text-black'
                   : isDark
-                    ? 'bg-white/5 text-highlighted/50 hover:text-highlighted/80'
+                    ? 'text-highlighted/50 hover:text-highlighted/80 bg-white/5'
                     : 'bg-black/5 text-black/50 hover:text-black/80'
               "
               @click="() => (activePattern = p.key)"
@@ -187,7 +187,7 @@
         <!-- Accent preset -->
         <div>
           <p
-            class="text-xs font-medium uppercase tracking-wide mb-2.5"
+            class="mb-2.5 text-xs font-medium tracking-wide uppercase"
             :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
           >
             Accent preset
@@ -196,11 +196,11 @@
             <button
               v-for="accent in accents"
               :key="accent"
-              class="w-5 h-5 rounded-full ring-1 ring-offset-1 ring-offset-transparent transition-all duration-150"
+              class="h-5 w-5 rounded-full ring-1 ring-offset-1 ring-offset-transparent transition-all duration-150"
               :class="
                 activeAccent === accent
-                  ? 'ring-white scale-110'
-                  : 'ring-transparent opacity-80 hover:opacity-100'
+                  ? 'scale-110 ring-white'
+                  : 'opacity-80 ring-transparent hover:opacity-100'
               "
               :style="{ backgroundColor: ACCENT_HEX[accent] }"
               :aria-label="accent"
@@ -214,7 +214,7 @@
         <!-- 4 colour pickers -->
         <div>
           <p
-            class="text-xs font-medium uppercase tracking-wide mb-2.5"
+            class="mb-2.5 text-xs font-medium tracking-wide uppercase"
             :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
           >
             Gradient colours
@@ -223,18 +223,18 @@
             <label
               v-for="(label, i) in COLOR_LABELS"
               :key="label"
-              class="flex items-center gap-2 cursor-pointer group"
+              class="group flex cursor-pointer items-center gap-2"
             >
               <div
-                class="relative w-7 h-7 rounded-lg overflow-hidden border shrink-0"
+                class="relative h-7 w-7 shrink-0 overflow-hidden rounded-lg border"
                 :class="isDark ? 'border-white/20' : 'border-black/20'"
               >
                 <input
                   v-model="colorRefs[i]!.value"
                   type="color"
-                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
                 />
-                <div class="w-full h-full" :style="{ backgroundColor: colorRefs[i]!.value }" />
+                <div class="h-full w-full" :style="{ backgroundColor: colorRefs[i]!.value }" />
               </div>
               <span
                 class="text-xs leading-none transition-colors"
@@ -255,14 +255,14 @@
         <!-- Animation -->
         <div class="space-y-3">
           <p
-            class="text-xs font-medium uppercase tracking-wide"
+            class="text-xs font-medium tracking-wide uppercase"
             :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
           >
             Animation
           </p>
 
           <div>
-            <div class="flex justify-between mb-1">
+            <div class="mb-1 flex justify-between">
               <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'"
                 >Speed</span
               >
@@ -284,7 +284,7 @@
           </div>
 
           <div>
-            <div class="flex justify-between mb-1">
+            <div class="mb-1 flex justify-between">
               <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'"
                 >Intensity</span
               >
@@ -312,7 +312,7 @@
         <div class="space-y-3">
           <div class="flex items-center justify-between">
             <p
-              class="text-xs font-medium uppercase tracking-wide"
+              class="text-xs font-medium tracking-wide uppercase"
               :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
             >
               Mouse
@@ -341,7 +341,7 @@
           </div>
 
           <div v-if="mouseInteraction">
-            <div class="flex justify-between mb-1">
+            <div class="mb-1 flex justify-between">
               <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'"
                 >Strength</span
               >

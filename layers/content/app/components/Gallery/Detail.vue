@@ -25,7 +25,7 @@
   <NuxtContentDetail collection="gallery" :slug not-found-message="Gallery not found">
     <template #headline="{ item }">
       <div class="flex flex-wrap items-center gap-2">
-        <span v-if="asGallery(item).images?.length" class="text-sm text-muted">
+        <span v-if="asGallery(item).images?.length" class="text-muted text-sm">
           {{ asGallery(item).images!.length }} image{{
             asGallery(item).images!.length === 1 ? '' : 's'
           }}
@@ -49,30 +49,30 @@
           <div
             v-for="(img, idx) in asGallery(item).images"
             :key="img.src"
-            class="overflow-hidden rounded-lg group relative"
+            class="group relative overflow-hidden rounded-lg"
           >
-            <NuxtLink :to="`/gallery/${slug}/${idx}`" class="block relative overflow-hidden">
+            <NuxtLink :to="`/gallery/${slug}/${idx}`" class="relative block overflow-hidden">
               <img
                 :src="img.src"
                 :alt="img.alt"
-                class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div
-                class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                class="bg-primary/60 absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               >
-                <span class="text-white font-semibold text-sm text-center px-3">
+                <span class="px-3 text-center text-sm font-semibold text-white">
                   {{ img.title || img.alt }}
                 </span>
               </div>
             </NuxtLink>
             <button
-              class="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5 cursor-pointer"
+              class="absolute top-2 right-2 z-10 cursor-pointer rounded-full bg-black/50 p-1.5 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 hover:bg-black/70"
               @click.stop="() => openLightbox(asGallery(item).images!, idx)"
             >
               <UIcon name="i-lucide-expand" class="size-4" />
             </button>
             <div v-if="img.caption" class="p-2">
-              <p class="text-xs text-muted line-clamp-1">
+              <p class="text-muted line-clamp-1 text-xs">
                 {{ img.caption }}
               </p>
             </div>

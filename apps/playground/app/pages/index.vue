@@ -489,7 +489,7 @@
 
           <!-- Layer Cards -->
           <div>
-            <h2 class="text-xs font-semibold uppercase tracking-widest text-muted mb-4">Layers</h2>
+            <h2 class="text-muted mb-4 text-xs font-semibold tracking-widest uppercase">Layers</h2>
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               <div
                 v-for="layer in layers"
@@ -497,18 +497,18 @@
                 class="rounded-xl border-2 p-5"
                 :class="[layer.borderColor, layer.bgColor]"
               >
-                <div class="flex flex-col h-full">
+                <div class="flex h-full flex-col">
                   <!-- Header -->
-                  <div class="flex items-center justify-between mb-4">
+                  <div class="mb-4 flex items-center justify-between">
                     <div class="flex items-center gap-3">
                       <div
-                        class="w-10 h-10 rounded-lg flex items-center justify-center"
+                        class="flex h-10 w-10 items-center justify-center rounded-lg"
                         :class="[layer.iconBg]"
                       >
                         <UIcon :name="layer.icon" class="text-xl" :class="[layer.iconColor]" />
                       </div>
                       <div>
-                        <h3 class="font-semibold text-lg text-highlighted">
+                        <h3 class="text-highlighted text-lg font-semibold">
                           {{ layer.name }}
                         </h3>
                         <UBadge color="success" variant="subtle" size="xs">Loaded</UBadge>
@@ -517,12 +517,12 @@
                   </div>
 
                   <!-- Description -->
-                  <p class="text-sm text-muted mb-4">
+                  <p class="text-muted mb-4 text-sm">
                     {{ layer.description }}
                   </p>
 
                   <!-- Features -->
-                  <div class="flex flex-wrap gap-1.5 mb-4 grow">
+                  <div class="mb-4 flex grow flex-wrap gap-1.5">
                     <UBadge
                       v-for="feature in layer.features"
                       :key="feature"
@@ -538,7 +538,7 @@
                   <div class="mt-auto pt-4">
                     <NuxtLink
                       :to="layer.to"
-                      class="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg font-medium transition-colors"
+                      class="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 font-medium transition-colors"
                       :class="[layer.buttonClass]"
                     >
                       Explore {{ layer.name }}
@@ -552,7 +552,7 @@
 
           <!-- Demo Pages -->
           <div>
-            <h2 class="text-xs font-semibold uppercase tracking-widest text-muted mb-4">
+            <h2 class="text-muted mb-4 text-xs font-semibold tracking-widest uppercase">
               Featured Demos
             </h2>
             <div class="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
@@ -560,7 +560,7 @@
                 v-for="demo in demos"
                 :key="demo.to"
                 :to="demo.to"
-                class="flex flex-col gap-3 p-4 rounded-xl border-2 transition-colors group"
+                class="group flex flex-col gap-3 rounded-xl border-2 p-4 transition-colors"
                 :class="
                   layerDemoColors[demo.layer]
                     ? [layerDemoColors[demo.layer]!.border, layerDemoColors[demo.layer]!.bg]
@@ -575,7 +575,7 @@
                   "
                 />
                 <div>
-                  <div class="font-semibold text-sm text-highlighted leading-tight">
+                  <div class="text-highlighted text-sm leading-tight font-semibold">
                     {{ demo.label }}
                   </div>
                   <UBadge variant="subtle" color="neutral" size="xs" class="mt-1.5">
@@ -587,7 +587,7 @@
           </div>
 
           <!-- Quick Links -->
-          <div class="flex flex-wrap gap-4 justify-center pt-2">
+          <div class="flex flex-wrap justify-center gap-4 pt-2">
             <UButton to="/diagnostics" variant="outline" icon="i-lucide-activity">
               System Diagnostics
             </UButton>

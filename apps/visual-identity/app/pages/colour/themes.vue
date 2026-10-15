@@ -153,16 +153,16 @@
 <template>
   <div class="vi-page">
     <div class="mb-8">
-      <h1 class="text-2xl font-semibold text-default mb-1">Theme Superset</h1>
+      <h1 class="text-default mb-1 text-2xl font-semibold">Theme Superset</h1>
       <p class="text-muted text-sm">
         Define named theme variants that remap colours to different roles. Each theme exports as a
-        <code class="font-mono text-xs bg-elevated px-1 py-0.5 rounded">data-theme</code>
+        <code class="bg-elevated rounded px-1 py-0.5 font-mono text-xs">data-theme</code>
         CSS selector.
       </p>
     </div>
 
     <!-- Theme cards -->
-    <div class="flex flex-col gap-4 mb-6">
+    <div class="mb-6 flex flex-col gap-4">
       <UCard v-for="theme in state.themes" :key="theme.id">
         <template #header>
           <div class="flex items-center gap-3">
@@ -192,15 +192,15 @@
         </template>
 
         <div class="flex flex-col gap-3">
-          <div v-for="role in roles" :key="role" class="flex items-center gap-3 min-w-0">
+          <div v-for="role in roles" :key="role" class="flex min-w-0 items-center gap-3">
             <!-- Role label -->
-            <p class="text-xs font-medium text-default capitalize w-16 sm:w-20 shrink-0">
+            <p class="text-default w-16 shrink-0 text-xs font-medium capitalize sm:w-20">
               {{ role }}
             </p>
 
             <!-- Custom hex mode -->
             <template v-if="!theme.isDefault && isCustom(theme, role)">
-              <label class="cursor-pointer shrink-0">
+              <label class="shrink-0 cursor-pointer">
                 <input
                   type="color"
                   :value="theme.colourMappings[role] ?? '#6366f1'"
@@ -209,7 +209,7 @@
               </label>
               <UInput
                 :model-value="theme.colourMappings[role] ?? ''"
-                class="flex-1 min-w-0 font-mono text-sm"
+                class="min-w-0 flex-1 font-mono text-sm"
                 size="sm"
                 @update:model-value="($event) => setThemeColour(theme.id, role, $event || null)"
               />
@@ -229,7 +229,7 @@
                 :model-value="selectValue(theme, role)"
                 :items="colourSelectItems"
                 :disabled="theme.isDefault"
-                class="flex-1 min-w-0"
+                class="min-w-0 flex-1"
                 size="sm"
                 @update:model-value="($event) => onSelectChange(theme.id, role, $event as string)"
               />
@@ -237,7 +237,7 @@
 
             <!-- Live swatch -->
             <div
-              class="size-6 rounded-md border border-black/10 shrink-0"
+              class="size-6 shrink-0 rounded-md border border-black/10"
               :style="{ backgroundColor: resolvedHex(theme, role) }"
             />
           </div>
@@ -255,7 +255,7 @@
                 :style="{ backgroundColor: resolvedHex(theme, role) }"
               />
             </div>
-            <p class="text-xs text-muted font-mono">
+            <p class="text-muted font-mono text-xs">
               [data-theme="{{ theme.name.toLowerCase().replace(/\s+/g, '-') }}"]
             </p>
           </div>
@@ -266,24 +266,24 @@
     <!-- Quick presets -->
     <UCard class="mb-6">
       <template #header>
-        <p class="text-sm font-medium text-default">Quick presets</p>
+        <p class="text-default text-sm font-medium">Quick presets</p>
       </template>
-      <p class="text-xs text-muted mb-4">
+      <p class="text-muted mb-4 text-xs">
         Generate a new theme variant based on your existing palette.
       </p>
-      <div v-if="!canApplyPresets" class="text-xs text-muted italic">
+      <div v-if="!canApplyPresets" class="text-muted text-xs italic">
         Add brand colours on the Foundation page first.
       </div>
-      <div v-else class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      <div v-else class="grid grid-cols-2 gap-2 sm:grid-cols-4">
         <button
           v-for="preset in presets"
           :key="preset.label"
-          class="flex flex-col items-start gap-1.5 p-3 rounded-xl border border-default hover:border-accented hover:bg-elevated transition-colors text-left cursor-pointer"
+          class="border-default hover:border-accented hover:bg-elevated flex cursor-pointer flex-col items-start gap-1.5 rounded-xl border p-3 text-left transition-colors"
           @click="() => preset.apply()"
         >
-          <UIcon :name="preset.icon" class="size-4 text-muted" />
-          <p class="text-xs font-medium text-default">{{ preset.label }}</p>
-          <p class="text-[10px] text-muted leading-tight">{{ preset.description }}</p>
+          <UIcon :name="preset.icon" class="text-muted size-4" />
+          <p class="text-default text-xs font-medium">{{ preset.label }}</p>
+          <p class="text-muted text-[10px] leading-tight">{{ preset.description }}</p>
         </button>
       </div>
     </UCard>

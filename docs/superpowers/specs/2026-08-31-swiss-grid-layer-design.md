@@ -64,11 +64,11 @@ versa.
 The artifact leaves the exact alias set open (§13). Resolved here:
 
 - Aliases are expressed in a fixed **12-unit vocabulary**: `full=12,
-half=6, third=4, quarter=3` — independent of the grid's live column
+  half=6, third=4, quarter=3` — independent of the grid's live column
   count, the same mental model as Bootstrap-style 12-col systems.
 - Because `columns` can be less than 12 at smaller breakpoints (4 at `xs`,
   8 at `sm`/`md` per §1's default), an alias's rendered span is `min(alias
-value, current column count)` — computed in the component, not CSS
+  value, current column count)` — computed in the component, not CSS
   `calc()` (integer `grid-column: span N` can't come from a fractional
   division). This keeps `half` always rendering as "half of whatever this
   breakpoint's grid actually has," clamped so it never overflows a
@@ -85,7 +85,7 @@ New components, this layer, alongside `SwissGrid`/`SwissGridItem`:
   For groups of items that wrap as a unit (tag lists, button rows,
   metadata chips) — distinct from `SwissGrid`, which is column-track-based.
 - **`Flow`** — vertical stack with automatic rhythm: renders `> * + *
-{ margin-block-start: var(--fluid-space-<size>) }` scoped via a CSS
+  { margin-block-start: var(--fluid-space-<size>) }` scoped via a CSS
   class, `size` prop selecting the `core` fluid-space token. For prose-like
   vertical sequences where every child needs the same gap, without each
   child managing its own margin.

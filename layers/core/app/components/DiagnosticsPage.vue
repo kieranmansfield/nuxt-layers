@@ -30,7 +30,7 @@
       <ClientOnly>
         <div class="space-y-8">
           <div class="text-center">
-            <h1 class="text-4xl font-bold mb-2">Core Layer Diagnostics</h1>
+            <h1 class="mb-2 text-4xl font-bold">Core Layer Diagnostics</h1>
             <p class="text-gray-500 dark:text-gray-400">Feature detection and system information</p>
           </div>
 
@@ -124,7 +124,7 @@
             </template>
             <div class="space-y-2">
               <div class="flex items-center gap-2">
-                <span class="font-medium w-24">Type:</span>
+                <span class="w-24 font-medium">Type:</span>
                 <span v-if="isMobile" class="text-primary">Mobile</span>
                 <span v-else-if="isTablet" class="text-primary">Tablet</span>
                 <span v-else-if="isDesktop" class="text-primary">Desktop</span>
@@ -138,16 +138,16 @@
             </template>
             <div class="space-y-2">
               <div class="flex items-center gap-2">
-                <span class="font-medium w-24">Status:</span>
+                <span class="w-24 font-medium">Status:</span>
                 <span v-if="isOnline" class="text-green-500">Online</span>
                 <span v-else class="text-red-500">Offline</span>
               </div>
               <div class="flex items-center gap-2">
-                <span class="font-medium w-24">Type:</span>
+                <span class="w-24 font-medium">Type:</span>
                 <span>{{ effectiveType || 'unknown' }}</span>
               </div>
               <div class="flex items-center gap-2">
-                <span class="font-medium w-24">Quality:</span>
+                <span class="w-24 font-medium">Quality:</span>
                 <span
                   :class="{
                     'text-green-500': connectionQuality === 'excellent',
@@ -160,13 +160,13 @@
                 </span>
               </div>
               <div class="flex items-center gap-2">
-                <span class="font-medium w-24">Speed:</span>
+                <span class="w-24 font-medium">Speed:</span>
                 <span v-if="isFast" class="text-green-500">Fast</span>
                 <span v-else-if="isSlow" class="text-red-500">Slow</span>
                 <span v-else>Normal</span>
               </div>
               <div v-if="saveData" class="flex items-center gap-2">
-                <span class="font-medium w-24">Data Saver:</span>
+                <span class="w-24 font-medium">Data Saver:</span>
                 <span class="text-yellow-500">Enabled</span>
               </div>
             </div>
@@ -178,16 +178,16 @@
             </template>
             <div class="space-y-2">
               <div class="flex items-center gap-2">
-                <span class="font-medium w-24">Mode:</span>
-                <span class="uppercase text-primary">{{ mode }}</span>
+                <span class="w-24 font-medium">Mode:</span>
+                <span class="text-primary uppercase">{{ mode }}</span>
               </div>
               <div class="flex items-center gap-2">
-                <span class="font-medium w-24">Environment:</span>
+                <span class="w-24 font-medium">Environment:</span>
                 <span v-if="isClient" class="text-primary">Client</span>
                 <span v-else-if="isServer" class="text-primary">Server</span>
               </div>
               <div class="flex items-center gap-2">
-                <span class="font-medium w-24">Hydrated:</span>
+                <span class="w-24 font-medium">Hydrated:</span>
                 <span v-if="isHydrated" class="text-green-500">Yes</span>
                 <span v-else class="text-yellow-500">No</span>
               </div>
@@ -200,17 +200,17 @@
             </template>
             <div class="space-y-2">
               <div class="flex items-center gap-2">
-                <span class="font-medium w-24">Installed:</span>
+                <span class="w-24 font-medium">Installed:</span>
                 <span v-if="isInstalled" class="text-green-500">Yes</span>
                 <span v-else class="text-gray-500">No</span>
               </div>
               <div class="flex items-center gap-2">
-                <span class="font-medium w-24">Installable:</span>
+                <span class="w-24 font-medium">Installable:</span>
                 <span v-if="canInstall" class="text-green-500">Yes</span>
                 <span v-else class="text-gray-500">No</span>
               </div>
               <div v-if="needRefresh" class="flex items-center gap-2">
-                <span class="font-medium w-24">Update:</span>
+                <span class="w-24 font-medium">Update:</span>
                 <span class="text-yellow-500">Available</span>
               </div>
             </div>
@@ -218,7 +218,7 @@
         </div>
 
         <template #fallback>
-          <div class="text-center text-muted py-16">Loading diagnostics…</div>
+          <div class="text-muted py-16 text-center">Loading diagnostics…</div>
         </template>
       </ClientOnly>
     </UContainer>

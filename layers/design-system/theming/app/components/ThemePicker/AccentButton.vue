@@ -21,8 +21,8 @@
     class="size-8 rounded-full ring-1 ring-offset-2 transition-shadow duration-200"
     :class="[
       active
-        ? 'ring-2 ring-primary ring-offset-bg shadow-lg'
-        : 'ring-transparent hover:ring-muted ring-offset-bg hover:shadow-md',
+        ? 'ring-primary ring-offset-bg shadow-lg ring-2'
+        : 'hover:ring-muted ring-offset-bg ring-transparent hover:shadow-md',
     ]"
     :style="bgStyle"
     :aria-label="`Set accent color to ${color}`"

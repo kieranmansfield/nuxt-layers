@@ -135,32 +135,32 @@
         description="Feature flags, governance presets, maintenance mode, and advanced access control."
       />
       <section class="bg-default pb-24">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div class="space-y-12 py-8">
             <!-- 1. Preset Switcher -->
             <section class="space-y-4">
               <div>
                 <h2 class="text-2xl font-bold">Governance Preset</h2>
-                <p class="text-sm text-muted mt-1">
+                <p class="text-muted mt-1 text-sm">
                   Select a preset to configure access control behaviour. Changes are live and
                   reactive.
                 </p>
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <button
                   v-for="preset in PRESETS"
                   :key="preset"
-                  class="rounded-xl border-2 p-4 text-left transition-all cursor-pointer"
+                  class="cursor-pointer rounded-xl border-2 p-4 text-left transition-all"
                   :class="[
                     presetMeta[preset].borderColor,
                     presetMeta[preset].bgColor,
                     config.preset === preset
-                      ? 'ring-2 ring-primary-500 ring-offset-2'
+                      ? 'ring-primary-500 ring-2 ring-offset-2'
                       : 'opacity-80 hover:opacity-100',
                   ]"
                   @click="() => selectPreset(preset)"
                 >
-                  <div class="flex items-center justify-between mb-2">
+                  <div class="mb-2 flex items-center justify-between">
                     <span
                       class="font-semibold capitalize"
                       :class="presetMeta[preset].accentColor"
@@ -173,7 +173,7 @@
                       :class="presetMeta[preset].accentColor"
                     />
                   </div>
-                  <p class="text-xs text-muted mb-3">{{ presetMeta[preset].description }}</p>
+                  <p class="text-muted mb-3 text-xs">{{ presetMeta[preset].description }}</p>
                   <div class="flex flex-wrap gap-1">
                     <UBadge
                       v-for="flag in presetFlags(preset)"
@@ -184,7 +184,7 @@
                     >
                       {{ flag }}
                     </UBadge>
-                    <span v-if="presetFlags(preset).length === 0" class="text-xs text-muted italic">
+                    <span v-if="presetFlags(preset).length === 0" class="text-muted text-xs italic">
                       no flags active
                     </span>
                   </div>
@@ -196,7 +196,7 @@
                 <template #header>
                   <p class="text-sm font-semibold">Live Config (merged preset + overrides)</p>
                 </template>
-                <pre class="text-xs overflow-auto max-h-64">{{
+                <pre class="max-h-64 overflow-auto text-xs">{{
                   JSON.stringify(config, null, 2)
                 }}</pre>
               </UCard>
@@ -206,19 +206,19 @@
             <section class="space-y-4">
               <div>
                 <h2 class="text-2xl font-bold">Feature Flags</h2>
-                <p class="text-sm text-muted mt-1">
+                <p class="text-muted mt-1 text-sm">
                   Configure per-feature access. The governance middleware uses these values to
                   allow, block, or redirect routes.
                 </p>
               </div>
               <UCard>
-                <div class="divide-y divide-default">
+                <div class="divide-default divide-y">
                   <div
                     v-for="feature in DEMO_FEATURES"
                     :key="feature"
                     class="flex flex-wrap items-center gap-3 py-3 first:pt-0 last:pb-0"
                   >
-                    <span class="font-mono text-sm w-20 shrink-0">{{ feature }}</span>
+                    <span class="w-20 shrink-0 font-mono text-sm">{{ feature }}</span>
                     <USelect
                       :model-value="featureVariant(feature)"
                       :items="featureItems"
@@ -232,7 +232,7 @@
                     >
                       {{ outcomeLabel(featureVariant(feature)) }}
                     </UBadge>
-                    <span class="text-xs text-muted ml-auto hidden sm:block">
+                    <span class="text-muted ml-auto hidden text-xs sm:block">
                       <template v-if="featureVariant(feature) === 'enabled'">
                         Middleware allows access
                       </template>
@@ -250,11 +250,11 @@
             <section class="space-y-4">
               <div>
                 <h2 class="text-2xl font-bold">Governance Simulator</h2>
-                <p class="text-sm text-muted mt-1">
+                <p class="text-muted mt-1 text-sm">
                   See what the middleware would do for any route — no actual navigation occurs.
                 </p>
               </div>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
                 <div class="space-y-1">
                   <label class="text-sm font-medium">Route path</label>
                   <UInput v-model="simPath" placeholder="/dashboard" />
@@ -271,7 +271,7 @@
               </div>
 
               <UCard>
-                <div v-if="simResult.steps.length" class="space-y-2 mb-4">
+                <div v-if="simResult.steps.length" class="mb-4 space-y-2">
                   <div
                     v-for="(step, i) in simResult.steps"
                     :key="i"
@@ -298,11 +298,11 @@
                     </div>
                   </div>
                 </div>
-                <div v-else class="text-sm text-muted mb-4">
+                <div v-else class="text-muted mb-4 text-sm">
                   No active governance checks for the current preset.
                 </div>
 
-                <div class="flex items-center gap-3 pt-3 border-t border-default">
+                <div class="border-default flex items-center gap-3 border-t pt-3">
                   <span class="text-sm font-medium">Final outcome:</span>
                   <UBadge
                     :color="
@@ -330,7 +330,7 @@
             <section class="space-y-4">
               <div>
                 <h2 class="text-2xl font-bold">Maintenance Mode</h2>
-                <p class="text-sm text-muted mt-1">
+                <p class="text-muted mt-1 text-sm">
                   When enabled, all routes redirect to the maintenance page (except allowRoutes).
                 </p>
               </div>
@@ -339,10 +339,10 @@
               </div>
               <div
                 v-if="maintenanceEnabled"
-                class="rounded-lg border border-warning-300/50 bg-warning-500/10 px-4 py-3 text-sm"
+                class="border-warning-300/50 bg-warning-500/10 rounded-lg border px-4 py-3 text-sm"
               >
                 <div
-                  class="flex items-center gap-2 mb-1 font-semibold text-warning-600 dark:text-warning-400"
+                  class="text-warning-600 dark:text-warning-400 mb-1 flex items-center gap-2 font-semibold"
                 >
                   <UIcon name="i-lucide-triangle-alert" />
                   Maintenance mode active
@@ -351,7 +351,7 @@
                   All routes redirect to
                   <code class="font-mono text-xs">{{ config.maintenance.allowRoutes[0] }}</code>
                 </p>
-                <p class="text-xs text-muted mt-1">
+                <p class="text-muted mt-1 text-xs">
                   Allowed routes: {{ config.maintenance.allowRoutes.join(', ') }}
                 </p>
               </div>
@@ -361,27 +361,27 @@
             <section class="space-y-4">
               <div>
                 <h2 class="text-2xl font-bold">Scroll Routing</h2>
-                <p class="text-sm text-muted mt-1">
+                <p class="text-muted mt-1 text-sm">
                   Full-screen sections sync the URL hash as you scroll — no page reload.
                 </p>
               </div>
               <NuxtLink
                 to="/routing-scroll"
-                class="group flex items-center justify-between rounded-xl border border-default bg-elevated hover:border-primary-500/50 hover:bg-primary-500/5 px-5 py-4 transition-all"
+                class="group border-default bg-elevated hover:border-primary-500/50 hover:bg-primary-500/5 flex items-center justify-between rounded-xl border px-5 py-4 transition-all"
               >
                 <div class="space-y-1">
                   <div class="flex items-center gap-2">
                     <UIcon name="i-lucide-mouse" class="text-primary-500 text-lg" />
                     <span class="font-semibold">Open Scroll Demo</span>
                   </div>
-                  <p class="text-xs text-muted">
+                  <p class="text-muted text-xs">
                     Uses IntersectionObserver at threshold: 0.5 — same pattern as the scroll-routing
                     plugin
                   </p>
                 </div>
                 <UIcon
                   name="i-lucide-arrow-right"
-                  class="text-muted group-hover:text-primary-500 transition-colors text-lg shrink-0"
+                  class="text-muted group-hover:text-primary-500 shrink-0 text-lg transition-colors"
                 />
               </NuxtLink>
             </section>
@@ -390,20 +390,20 @@
             <section class="space-y-4">
               <div>
                 <h2 class="text-2xl font-bold">Behavior Matrix</h2>
-                <p class="text-sm text-muted mt-1">
+                <p class="text-muted mt-1 text-sm">
                   How each preset treats starter (app) routes vs. layer routes.
                 </p>
               </div>
               <UCard>
                 <table class="w-full text-sm">
                   <thead>
-                    <tr class="border-b border-default">
-                      <th class="text-left py-2 pr-6 font-semibold w-32">Preset</th>
-                      <th class="text-left py-2 pr-6 font-semibold">Starter Routes</th>
-                      <th class="text-left py-2 font-semibold">Layer Routes</th>
+                    <tr class="border-default border-b">
+                      <th class="w-32 py-2 pr-6 text-left font-semibold">Preset</th>
+                      <th class="py-2 pr-6 text-left font-semibold">Starter Routes</th>
+                      <th class="py-2 text-left font-semibold">Layer Routes</th>
                     </tr>
                   </thead>
-                  <tbody class="divide-y divide-default">
+                  <tbody class="divide-default divide-y">
                     <tr>
                       <td class="py-2.5 pr-6 font-mono text-green-500">simple</td>
                       <td class="py-2.5 pr-6">
@@ -456,7 +456,7 @@
             <!-- Sub-demos -->
             <section class="space-y-4">
               <div>
-                <h2 class="text-2xl font-bold mb-1">Sub-demos</h2>
+                <h2 class="mb-1 text-2xl font-bold">Sub-demos</h2>
                 <p class="text-muted">Scroll-driven routing built on the routing layer</p>
               </div>
               <div class="flex flex-wrap gap-3">
@@ -467,7 +467,7 @@
             </section>
 
             <!-- Navigation -->
-            <div class="flex gap-4 justify-center pt-4">
+            <div class="flex justify-center gap-4 pt-4">
               <UButton to="/" variant="outline" icon="i-lucide-arrow-left">Back to Home</UButton>
               <UButton to="/feeds" trailing-icon="i-lucide-arrow-right">Feeds</UButton>
             </div>
