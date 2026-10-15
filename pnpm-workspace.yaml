@@ -56,16 +56,15 @@ overrides:
   'citty': '0.2.2'
   'stylelint': '17.12.0'
   'eslint': '10.4.1'
-  'vite': '^8'
   'ws': '>=8.21.0'
   'undici': '>=6.27.0'
   'form-data': '>=4.0.6'
   'http-proxy-middleware': '>=3.0.7'
   'js-yaml': '>=4.1.2'
   '@opentelemetry/core': '>=2.8.0'
+  vite@*: 'catalog:'
+  vitest@*: 'catalog:'
 
-patchedDependencies:
-  '@nuxt/vite-builder@4.5.2': patches/@nuxt__vite-builder@4.5.2.patch
 catalog:
   '@babel/parser': 7.29.7
   '@commitlint/cli': ^21.0.2
@@ -344,10 +343,10 @@ catalog:
   vfile: 6.0.3
   vfile-location: 5.0.3
   vfile-message: 4.0.3
-  vite: ^8.2.2
+  vite: npm:@voidzero-dev/vite-plus-core@1.2.0
   vite-plugin-checker: ^0.14.5
-  vitest: ^4.1.11
-  '@vitest/coverage-v8': ^4.1.11
+  vitest: 5.0.4
+  '@vitest/coverage-v8': 5.0.4
   vue: ^3.5.42
   '@vue/test-utils': ^2.4.10
   vue-bundle-renderer: 2.2.0
@@ -359,6 +358,7 @@ catalog:
   zod: ^4.4.3
   zod-to-json-schema: ^3.25.2
   zwitch: 2.0.4
+  vite-plus: 1.2.0
 catalogs:
   conflicts_vue_latest:
     vue: latest
@@ -404,3 +404,12 @@ catalogs:
     pinia: ^4.0.3
 
 # minimumReleaseAge: 0
+patchedDependencies:
+  '@nuxt/vite-builder@4.6.0': patches/@nuxt__vite-builder@4.6.0.patch
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: '*'
+    vitest: '*'

@@ -76,3 +76,4 @@ dist
 /ambient-page.png
 .pnpm-store/
 coverage/
+.vitest/

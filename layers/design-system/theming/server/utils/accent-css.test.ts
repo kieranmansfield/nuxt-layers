@@ -1,5 +1,5 @@
 import twColors from 'tailwindcss/colors'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 
 import { buildAccentCSS } from './accent-css'
 

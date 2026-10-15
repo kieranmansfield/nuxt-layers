@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 
 import { getContentFeedItems } from './content-adapter'
 

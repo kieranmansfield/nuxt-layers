@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 
 import type { FeatureValue, RouteResolution, RoutingLayerConfig } from '../types/routing'
 import { resolveRoute } from './resolveRoute'

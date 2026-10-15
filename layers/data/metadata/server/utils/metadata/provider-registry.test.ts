@@ -1,5 +1,5 @@
 import type { MetadataProvider } from '#layers/metadata/shared/types'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 
 import { getProvider, getProviders, registerProvider } from './provider-registry'
 
