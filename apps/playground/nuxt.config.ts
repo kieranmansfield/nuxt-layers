@@ -185,6 +185,7 @@ export default defineNuxtConfig({
       // and throws "does not provide an export named 'default'".
       // include: ['slugify'],
       include: [
+        '@vue/devtools-core',
         '@vue/devtools-kit',
         'locomotive-scroll',
         'slugify',
@@ -213,6 +214,7 @@ export default defineNuxtConfig({
         // is always re-run when the cache is cleared.
         // include: ['slugify'],
         include: [
+          '@vue/devtools-core',
           '@vue/devtools-kit',
           'locomotive-scroll',
           'slugify',

@@ -1,4 +1,4 @@
-import { ACCENT_PALETTES, type AccentName } from '../../server/utils/accent-css'
+import { ACCENT_PALETTES, type AccentName } from '../../server/utils/accent-css.ts'
 
 /**
  * Derives Nuxt UI's `ui.colors` shape from the same accent-relationship table
