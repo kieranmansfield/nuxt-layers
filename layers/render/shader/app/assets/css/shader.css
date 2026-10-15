@@ -12,17 +12,17 @@
   z-index: 9999;
   backdrop-filter: blur(8px);
   border-radius: 0.5rem;
-  background: rgb(0 0 0 / 0.8);
+  background: oklch(0% 0 0deg / 0.8);
   padding: 0.75rem 1rem;
   min-width: 200px;
-  color: #fff;
+  color: oklch(100% 0 0deg);
   font-size: 0.75rem;
   font-family: ui-monospace, monospace;
 }
 
 .shader-debug-title {
   margin-bottom: 0.5rem;
-  color: #a78bfa;
+  color: oklch(70.9% 0.1592 293.54deg);
   font-weight: 600;
 }
 
@@ -33,9 +33,9 @@
 }
 
 .shader-debug-label {
-  color: #94a3b8;
+  color: oklch(71.07% 0.0351 256.79deg);
 }
 
 .shader-debug-value {
-  color: #22c55e;
+  color: oklch(72.27% 0.192 149.58deg);
 }

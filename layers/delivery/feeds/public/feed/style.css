@@ -12,13 +12,13 @@
 }
 
 :root {
-  --feed-bg: var(--ui-bg, #fff);
-  --feed-bg-elevated: var(--ui-bg-elevated, #f8fafc);
-  --feed-bg-accented: var(--ui-bg-accented, #f1f5f9);
-  --feed-border: var(--ui-border, #e2e8f0);
-  --feed-text: var(--ui-text, #0f172a);
-  --feed-text-muted: var(--ui-text-muted, #64748b);
-  --feed-text-toned: var(--ui-text-toned, #475569);
+  --feed-bg: var(--ui-bg, oklch(100% 0 0deg));
+  --feed-bg-elevated: var(--ui-bg-elevated, oklch(98.42% 0.0034 247.86deg));
+  --feed-bg-accented: var(--ui-bg-accented, oklch(96.83% 0.0069 247.9deg));
+  --feed-border: var(--ui-border, oklch(92.88% 0.0126 255.51deg));
+  --feed-text: var(--ui-text, oklch(20.77% 0.0398 265.75deg));
+  --feed-text-muted: var(--ui-text-muted, oklch(55.44% 0.0407 257.42deg));
+  --feed-text-toned: var(--ui-text-toned, oklch(44.55% 0.0374 257.28deg));
   --feed-primary: var(--ui-color-primary-500, oklch(62.3% 0.214 259.5deg));
   --feed-primary-text: var(--ui-color-primary-600, oklch(54.6% 0.214 259.5deg));
   --feed-primary-bg: var(--ui-color-primary-50, oklch(97% 0.03 259.5deg));
@@ -28,13 +28,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --feed-bg: var(--ui-bg, #020617);
-    --feed-bg-elevated: var(--ui-bg-elevated, #0f172a);
-    --feed-bg-accented: var(--ui-bg-accented, #1e293b);
-    --feed-border: var(--ui-border, #1e293b);
-    --feed-text: var(--ui-text, #f8fafc);
-    --feed-text-muted: var(--ui-text-muted, #94a3b8);
-    --feed-text-toned: var(--ui-text-toned, #cbd5e1);
+    --feed-bg: var(--ui-bg, oklch(12.88% 0.0406 264.7deg));
+    --feed-bg-elevated: var(--ui-bg-elevated, oklch(20.77% 0.0398 265.75deg));
+    --feed-bg-accented: var(--ui-bg-accented, oklch(27.95% 0.0368 260.03deg));
+    --feed-border: var(--ui-border, oklch(27.95% 0.0368 260.03deg));
+    --feed-text: var(--ui-text, oklch(98.42% 0.0034 247.86deg));
+    --feed-text-muted: var(--ui-text-muted, oklch(71.07% 0.0351 256.79deg));
+    --feed-text-toned: var(--ui-text-toned, oklch(86.9% 0.0198 252.89deg));
     --feed-primary: var(--ui-color-primary-400, oklch(71% 0.18 259.5deg));
     --feed-primary-text: var(--ui-color-primary-400, oklch(71% 0.18 259.5deg));
     --feed-primary-bg: var(--ui-color-primary-950, oklch(22% 0.06 259.5deg));
@@ -160,7 +160,7 @@ a:hover {
   border-radius: var(--feed-radius);
   background-color: var(--feed-primary);
   padding: 0.5rem 1.125rem;
-  color: #fff;
+  color: oklch(100% 0 0deg);
   font-weight: 600;
   font-size: 0.875rem;
   line-height: 1;
@@ -169,7 +169,7 @@ a:hover {
 
 .feed-subscribe:hover {
   opacity: 0.85;
-  color: #fff;
+  color: oklch(100% 0 0deg);
   text-decoration: none;
 }
 

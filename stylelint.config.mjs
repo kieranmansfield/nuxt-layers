@@ -18,6 +18,12 @@ export default {
       customSyntax: 'postcss',
     },
     {
+      // postcss-html parses inline `style="..."` attributes as bare declarations, which
+      // this rule reports as "outside a rule" — a false positive for template attributes.
+      files: ['**/*.vue', '**/*.html'],
+      rules: { 'no-invalid-position-declaration': null },
+    },
+    {
       files: ['**/tokens.css', '**/design-tokens.css', '**/_tokens.css'],
       rules: {
         'color-no-hex': null,
@@ -102,6 +108,10 @@ export default {
       {
         severity: 'warning',
         ignore: [
+          // `ui-*` families and `text-decoration-skip-ink` are progressive enhancements that
+          // always sit behind fallbacks in this repo, so partial support is intentional.
+          'extended-system-fonts',
+          'text-decoration',
           'css-variables',
           'css-cascade-layers',
           'css-nesting',
@@ -113,7 +123,33 @@ export default {
     ],
 
     'custom-property-pattern': null,
+
+    // Unquoted font names (SFMono-Regular, Menlo, Consolas) are family names, not keywords.
+    'value-keyword-case': ['lower', { ignoreProperties: ['font-family', 'font', '/^--.*font/'] }],
+
+    // Tailwind v4 entry files declare `@layer a, b;` and `@custom-variant` before `@import`;
+    // Tailwind's compiler accepts that, plain-CSS validity rules don't know its at-rules.
+    'no-invalid-position-at-import-rule': [
+      true,
+      { ignoreAtRules: ['layer', 'config', 'custom-variant', 'source', 'plugin'] },
+    ],
+    // Declarations nested in `@supports`/`@media` inside Tailwind's `@utility`/`@variant`
+    // are valid but look "outside a rule" to stylelint.
+    'no-invalid-position-declaration': [
+      true,
+      { ignoreAtRules: ['utility', 'variant', 'custom-variant'] },
+    ],
   },
 
-  ignoreFiles: ['node_modules/**', '.nuxt/**', '.output/**', '.data', '.playground/**'],
+  ignoreFiles: [
+    '**/node_modules/**',
+    '**/.nuxt/**',
+    '**/.output/**',
+    '**/.netlify/**',
+    '**/.turbo/**',
+    '**/.data/**',
+    '**/.playground/**',
+    '**/dist/**',
+    '**/coverage/**',
+  ],
 }
