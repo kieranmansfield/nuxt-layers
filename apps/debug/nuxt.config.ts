@@ -28,8 +28,4 @@ export default defineNuxtConfig({
     // '../../layers/data/forms',
     // '../../layers/render/shader',
   ],
-
-  future: {
-    compatibilityVersion: 4,
-  },
 })
