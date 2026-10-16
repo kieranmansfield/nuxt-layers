@@ -1,5 +1,5 @@
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 
 import AppContainer from '../../layers/core/app/components/AppContainer.vue'
 import HStack from '../../layers/structure/layout/app/components/HStack.vue'

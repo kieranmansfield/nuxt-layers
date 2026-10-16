@@ -2,7 +2,7 @@ import { fileURLToPath } from 'node:url'
 import { toRaw } from 'vue'
 import { defineVitestProject } from '@nuxt/test-utils/config'
 import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vite-plus'
 
 const nuxtRootDir = fileURLToPath(new URL('./apps/playground', import.meta.url))
 
@@ -120,16 +120,6 @@ async function withStructuredCloneFallback<T>(callback: () => Promise<T>): Promi
 
 export default defineConfig({
   test: {
-    // Vitest v4 compatibility: preserve mock call history.
-    // Remove after tests no longer rely on calls from setup or earlier tests.
-    // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
-    // https://vitest.dev/guide/migration/#clearmocks-is-enabled-by-default
-    clearMocks: false,
-    // Vitest v4 compatibility: keep separate Vite servers for inline projects.
-    // Remove when plugins and config hooks can run once for shared projects.
-    // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
-    // https://vitest.dev/guide/migration/#inline-projects-share-the-vite-server-by-default
-    sharedViteServer: false,
     coverage: {
       provider: 'v8',
       include: [
@@ -144,11 +134,6 @@ export default defineConfig({
     },
     projects: [
       {
-        // Vitest v4 compatibility: keep this inline project independent of the root config.
-        // Remove to inherit root options, including plugins and setup files.
-        // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
-        // https://vitest.dev/guide/migration/#inline-projects-inherit-the-root-config-by-default
-        extends: false,
         // Unlike the other projects, 'unit' has no Nuxt/Vite plugin resolving
         // #layers/* aliases for it — add the ones actually crossed by a
         // runtime (non-type-only) import from a unit-tested file.
@@ -160,11 +145,6 @@ export default defineConfig({
           },
         },
         test: {
-          // Vitest v4 compatibility: preserve mock call history.
-          // Remove after tests no longer rely on calls from setup or earlier tests.
-          // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
-          // https://vitest.dev/guide/migration/#clearmocks-is-enabled-by-default
-          clearMocks: false,
           name: 'unit',
           include: ['layers/**/*.test.ts', 'layers/**/*.spec.ts'],
           exclude: ['layers/**/app/components/**/*.test.ts', '**/node_modules/**'],
@@ -172,28 +152,13 @@ export default defineConfig({
         },
       },
       {
-        // Vitest v4 compatibility: keep this inline project independent of the root config.
-        // Remove to inherit root options, including plugins and setup files.
-        // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
-        // https://vitest.dev/guide/migration/#inline-projects-inherit-the-root-config-by-default
-        extends: false,
         test: {
-          // Vitest v4 compatibility: preserve mock call history.
-          // Remove after tests no longer rely on calls from setup or earlier tests.
-          // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
-          // https://vitest.dev/guide/migration/#clearmocks-is-enabled-by-default
-          clearMocks: false,
           name: 'vitest',
           include: ['tests/vitest/**/*.{test,spec}.ts'],
           environment: 'node',
         },
       },
       {
-        // Vitest v4 compatibility: keep this inline project independent of the root config.
-        // Remove to inherit root options, including plugins and setup files.
-        // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
-        // https://vitest.dev/guide/migration/#inline-projects-inherit-the-root-config-by-default
-        extends: false,
         plugins: [vue()],
         resolve: {
           alias: {
@@ -201,11 +166,6 @@ export default defineConfig({
           },
         },
         test: {
-          // Vitest v4 compatibility: preserve mock call history.
-          // Remove after tests no longer rely on calls from setup or earlier tests.
-          // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
-          // https://vitest.dev/guide/migration/#clearmocks-is-enabled-by-default
-          clearMocks: false,
           name: 'vue',
           // Component-mount tests colocated with their .vue file (layer components
           // need happy-dom + the vue plugin, unlike the plain-function 'unit' project).

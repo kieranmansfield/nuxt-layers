@@ -17,8 +17,8 @@
    source/import order still decides the winner. */
 @layer theme, base, components, utilities;
 
-@import "tailwindcss";
-@import "@nuxt/ui";
+@import 'tailwindcss';
+@import '@nuxt/ui';
 
 @config '#layers/core/tailwind.config.js';
 
@@ -28,18 +28,18 @@
 @source '../../../../*/app/**/*.{vue,ts}';
 @source '../../../../../apps/*/app/**/*.{vue,ts}';
 
-@import "#layers/core/app/assets/css/layout.css";
-@import "#layers/core/app/assets/css/base.css";
-@import "#layers/core/app/assets/css/tokens/breakpoints.css";
-@import "#layers/core/app/assets/css/tokens/spacing-fluid.css";
-@import "#layers/core/app/assets/css/tokens/container.css";
+@import '#layers/core/app/assets/css/layout.css';
+@import '#layers/core/app/assets/css/base.css';
+@import '#layers/core/app/assets/css/tokens/breakpoints.css';
+@import '#layers/core/app/assets/css/tokens/spacing-fluid.css';
+@import '#layers/core/app/assets/css/tokens/container.css';
 
 /* Relative path, not the '#layers/typography' alias — that alias only exists
    when the typography layer is in a consumer's `extends`. This file is a CSS
    import (needed so Tailwind treats it as part of this one build root, see
    typography.css's header comment), and must resolve even for consumers that
    only extend core, since it lives in the same single published package. */
-@import "../../../../design-system/typography/app/assets/css/typography.css";
+@import '../../../../design-system/typography/app/assets/css/typography.css';
 
 /* Same relative-path requirement as typography.css above. tokens.css defines
    an `@theme static` block (radius/shadow/duration) — per the CSS
@@ -51,4 +51,4 @@
    every rounded-, shadow-, duration- utility fell back to Tailwind's stock
    defaults instead of this file's values. Confirmed via compiled dev output:
    the custom --shadow-sm value never appeared; Tailwind's built-in default did. */
-@import "../../../../design-system/theming/app/assets/css/tokens.css";
+@import '../../../../design-system/theming/app/assets/css/tokens.css';

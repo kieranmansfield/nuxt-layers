@@ -6,13 +6,8 @@ export default defineConfig({
     rules: { 'vite-plus/prefer-vite-plus-imports': 'error' },
     options: { typeAware: false, typeCheck: false },
   },
-  test: {
-    // Vitest v4 compatibility: preserve mock call history.
-    // Remove after tests no longer rely on calls from setup or earlier tests.
-    // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
-    // https://vitest.dev/guide/migration/#clearmocks-is-enabled-by-default
-    clearMocks: false,
-  },
+  // Test config lives in vitest.config.mts (it boots Nuxt via defineVitestProject, which
+  // must not run when vp lint/fmt load this file).
   fmt: {
     semi: false,
     singleQuote: true,
@@ -95,6 +90,7 @@ export default defineConfig({
       'README.md',
       'CHANGELOG.md',
       '.agents/',
+      '.fallow-baseline/',
       '.claude/',
     ],
   },

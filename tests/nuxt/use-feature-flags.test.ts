@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 import { mockNuxtImport, mountSuspended } from '@nuxt/test-utils/runtime'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 
 import { useFeatureFlags } from '../../layers/structure/routing/app/composables/useFeatureFlags'
 import type { RoutingLayerConfig } from '../../layers/structure/routing/app/types/routing'

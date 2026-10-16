@@ -1,4 +1,4 @@
-import type { Plugin } from 'vite'
+import type { Plugin } from 'vite-plus'
 
 /**
  * Intercepts three.webgpu.js in SSR via the transform hook.
