@@ -2,9 +2,12 @@
   /**
    * LayoutPage — canonical page wrapper for the Swiss Grid System.
    *
-   * This is a fragment component (no wrapper element). The grid root is already
-   * provided by LayoutMain at the layout level via <main class="grid-root">.
-   * Adding another grid-root wrapper here would nest grids and misalign everything.
+   * The grid root is already provided by LayoutMain at the layout level via
+   * <main class="grid-root">. Adding another grid-root wrapper here would nest grids and
+   * misalign everything, so the single root element below is `display: contents` — it
+   * generates no box, and the header section and slot content still lay out as direct
+   * children of the grid root. A real root element (rather than a fragment) is what Vue's
+   * <Transition> and Nuxt's page-root check (NUXT_E4004) require.
    *
    * Responsibilities:
    *   - SEO via useHead()
@@ -57,13 +60,15 @@
 </script>
 
 <template>
-  <!-- Optional visible page header — rendered as a grid section -->
-  <LayoutSection v-if="showHeader">
-    <LayoutGridItem preset="centered">
-      <LayoutPageHeader :title v-bind="description !== undefined ? { description } : {}" />
-    </LayoutGridItem>
-  </LayoutSection>
+  <div class="contents">
+    <!-- Optional visible page header — rendered as a grid section -->
+    <LayoutSection v-if="showHeader">
+      <LayoutGridItem preset="centered">
+        <LayoutPageHeader :title v-bind="description !== undefined ? { description } : {}" />
+      </LayoutGridItem>
+    </LayoutSection>
 
-  <!-- Page content — direct children of grid-root (via LayoutMain in the layout) -->
-  <slot />
+    <!-- Page content — grid items of grid-root (via LayoutMain in the layout) -->
+    <slot />
+  </div>
 </template>

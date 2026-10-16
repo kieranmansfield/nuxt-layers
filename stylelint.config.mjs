@@ -24,6 +24,17 @@ export default {
       rules: { 'no-invalid-position-declaration': null },
     },
     {
+      // Accessibility/preference overrides that must beat Tailwind utilities and inline
+      // styles (reduced motion, reduced transparency, hidden accent blobs). They cannot be
+      // expressed through app.config.ts, and an inline style can only be overridden by
+      // !important — so the rule is intentionally off for these two files only.
+      files: [
+        'layers/design-system/theming/app/assets/css/theme.css',
+        'layers/design-system/visual/app/assets/css/visual.css',
+      ],
+      rules: { 'declaration-no-important': null },
+    },
+    {
       files: ['**/tokens.css', '**/design-tokens.css', '**/_tokens.css'],
       rules: {
         'color-no-hex': null,

@@ -14,7 +14,7 @@ export default defineNuxtPlugin({
     // while hydrating. Plugin setup runs BEFORE hydration, so the stored values are
     // applied on `app:mounted` (after hydration) instead of here.
     useNuxtApp().hook('app:mounted', () => {
-      const restorers: [key: string, apply: (value: string) => void][] = [
+      const restorers: Array<[key: string, apply: (value: string) => void]> = [
         ['theme-colour', (v) => setAccent(v as AccentColor)],
         ['theme-contrast', (v) => setContrastOverride(v as PreferenceOverride)],
         ['theme-motion', (v) => setMotionOverride(v as PreferenceOverride)],

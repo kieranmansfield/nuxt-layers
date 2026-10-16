@@ -12,5 +12,8 @@
     "nuxt": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:conflicts_conflicts_vue-router_5_1_0_h5_1_0"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
   }
 }

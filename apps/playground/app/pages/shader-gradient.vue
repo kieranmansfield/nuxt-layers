@@ -116,253 +116,264 @@
 </script>
 
 <template>
-  <ShaderRuntime>
-    <ShaderHost
-      :preset="activePreset"
-      :preset-props
-      fixed
-      :z-index="0"
-      :clear-color
-      tone-mapping="aces"
-    />
+  <div class="contents">
+    <ShaderRuntime>
+      <ShaderHost
+        :preset="activePreset"
+        :preset-props
+        fixed
+        :z-index="0"
+        :clear-color
+        tone-mapping="aces"
+      />
 
-    <div class="relative z-10 flex min-h-screen items-start justify-end p-6">
-      <div
-        class="w-72 space-y-5 rounded-2xl border p-5 text-sm"
-        :class="
-          isDark
-            ? 'border-white/10 bg-black/50 backdrop-blur-lg'
-            : 'border-black/10 bg-white/70 backdrop-blur-lg'
-        "
-      >
-        <!-- Header -->
-        <div class="flex items-center justify-between">
-          <div>
-            <h1 class="text-base font-semibold" :class="isDark ? 'text-highlighted' : 'text-black'">
-              Theme Gradient
-            </h1>
-            <p class="mt-0.5 text-xs" :class="isDark ? 'text-highlighted/40' : 'text-black/40'">
-              Animated mesh — TSL / WebGPU
-            </p>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <UColorModeSelect size="xs" />
-            <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" size="xs" color="neutral" />
-          </div>
-        </div>
-
-        <div class="h-px" :class="isDark ? 'bg-white/10' : 'bg-black/10'" />
-
-        <!-- Pattern selector -->
-        <div>
-          <p
-            class="mb-2.5 text-xs font-medium tracking-wide uppercase"
-            :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
-          >
-            Pattern
-          </p>
-          <div class="flex gap-1.5">
-            <button
-              v-for="p in PATTERNS"
-              :key="p.key"
-              class="flex-1 rounded-lg py-1.5 text-xs font-medium transition-all duration-150"
-              :class="
-                activePattern === p.key
-                  ? isDark
-                    ? 'text-highlighted bg-white/20'
-                    : 'bg-black/15 text-black'
-                  : isDark
-                    ? 'text-highlighted/50 hover:text-highlighted/80 bg-white/5'
-                    : 'bg-black/5 text-black/50 hover:text-black/80'
-              "
-              @click="() => (activePattern = p.key)"
-            >
-              {{ p.label }}
-            </button>
-          </div>
-        </div>
-
-        <div class="h-px" :class="isDark ? 'bg-white/10' : 'bg-black/10'" />
-
-        <!-- Accent preset -->
-        <div>
-          <p
-            class="mb-2.5 text-xs font-medium tracking-wide uppercase"
-            :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
-          >
-            Accent preset
-          </p>
-          <div class="flex flex-wrap gap-1.5">
-            <button
-              v-for="accent in accents"
-              :key="accent"
-              class="h-5 w-5 rounded-full ring-1 ring-offset-1 ring-offset-transparent transition-all duration-150"
-              :class="
-                activeAccent === accent
-                  ? 'scale-110 ring-white'
-                  : 'opacity-80 ring-transparent hover:opacity-100'
-              "
-              :style="{ backgroundColor: ACCENT_HEX[accent] }"
-              :aria-label="accent"
-              @click="() => setAccent(accent)"
-            />
-          </div>
-        </div>
-
-        <div class="h-px" :class="isDark ? 'bg-white/10' : 'bg-black/10'" />
-
-        <!-- 4 colour pickers -->
-        <div>
-          <p
-            class="mb-2.5 text-xs font-medium tracking-wide uppercase"
-            :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
-          >
-            Gradient colours
-          </p>
-          <div class="grid grid-cols-2 gap-2">
-            <label
-              v-for="(label, i) in COLOR_LABELS"
-              :key="label"
-              class="group flex cursor-pointer items-center gap-2"
-            >
-              <div
-                class="relative h-7 w-7 shrink-0 overflow-hidden rounded-lg border"
-                :class="isDark ? 'border-white/20' : 'border-black/20'"
-              >
-                <input
-                  v-model="colorRefs[i]!.value"
-                  type="color"
-                  class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-                />
-                <div class="h-full w-full" :style="{ backgroundColor: colorRefs[i]!.value }" />
-              </div>
-              <span
-                class="text-xs leading-none transition-colors"
-                :class="
-                  isDark
-                    ? 'text-highlighted/60 group-hover:text-highlighted/90'
-                    : 'text-black/60 group-hover:text-black/90'
-                "
-              >
-                {{ label }}
-              </span>
-            </label>
-          </div>
-        </div>
-
-        <div class="h-px" :class="isDark ? 'bg-white/10' : 'bg-black/10'" />
-
-        <!-- Animation -->
-        <div class="space-y-3">
-          <p
-            class="text-xs font-medium tracking-wide uppercase"
-            :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
-          >
-            Animation
-          </p>
-
-          <div>
-            <div class="mb-1 flex justify-between">
-              <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'"
-                >Speed</span
-              >
-              <span
-                class="text-xs tabular-nums"
-                :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
-                >{{ speed.toFixed(1) }}×</span
-              >
-            </div>
-            <input
-              v-model.number="speed"
-              type="range"
-              min="0.1"
-              max="3.0"
-              step="0.1"
-              class="w-full"
-              :class="isDark ? 'accent-white' : 'accent-black'"
-            />
-          </div>
-
-          <div>
-            <div class="mb-1 flex justify-between">
-              <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'"
-                >Intensity</span
-              >
-              <span
-                class="text-xs tabular-nums"
-                :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
-                >{{ intensity.toFixed(1) }}</span
-              >
-            </div>
-            <input
-              v-model.number="intensity"
-              type="range"
-              min="0.1"
-              max="2.0"
-              step="0.1"
-              class="w-full"
-              :class="isDark ? 'accent-white' : 'accent-black'"
-            />
-          </div>
-        </div>
-
-        <div class="h-px" :class="isDark ? 'bg-white/10' : 'bg-black/10'" />
-
-        <!-- Mouse interaction -->
-        <div class="space-y-3">
+      <div class="relative z-10 flex min-h-screen items-start justify-end p-6">
+        <div
+          class="w-72 space-y-5 rounded-2xl border p-5 text-sm"
+          :class="
+            isDark
+              ? 'border-white/10 bg-black/50 backdrop-blur-lg'
+              : 'border-black/10 bg-white/70 backdrop-blur-lg'
+          "
+        >
+          <!-- Header -->
           <div class="flex items-center justify-between">
+            <div>
+              <h1
+                class="text-base font-semibold"
+                :class="isDark ? 'text-highlighted' : 'text-black'"
+              >
+                Theme Gradient
+              </h1>
+              <p class="mt-0.5 text-xs" :class="isDark ? 'text-highlighted/40' : 'text-black/40'">
+                Animated mesh — TSL / WebGPU
+              </p>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <UColorModeSelect size="xs" />
+              <UButton
+                to="/"
+                variant="ghost"
+                icon="i-lucide-arrow-left"
+                size="xs"
+                color="neutral"
+              />
+            </div>
+          </div>
+
+          <div class="h-px" :class="isDark ? 'bg-white/10' : 'bg-black/10'" />
+
+          <!-- Pattern selector -->
+          <div>
+            <p
+              class="mb-2.5 text-xs font-medium tracking-wide uppercase"
+              :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
+            >
+              Pattern
+            </p>
+            <div class="flex gap-1.5">
+              <button
+                v-for="p in PATTERNS"
+                :key="p.key"
+                class="flex-1 rounded-lg py-1.5 text-xs font-medium transition-all duration-150"
+                :class="
+                  activePattern === p.key
+                    ? isDark
+                      ? 'text-highlighted bg-white/20'
+                      : 'bg-black/15 text-black'
+                    : isDark
+                      ? 'text-highlighted/50 hover:text-highlighted/80 bg-white/5'
+                      : 'bg-black/5 text-black/50 hover:text-black/80'
+                "
+                @click="() => (activePattern = p.key)"
+              >
+                {{ p.label }}
+              </button>
+            </div>
+          </div>
+
+          <div class="h-px" :class="isDark ? 'bg-white/10' : 'bg-black/10'" />
+
+          <!-- Accent preset -->
+          <div>
+            <p
+              class="mb-2.5 text-xs font-medium tracking-wide uppercase"
+              :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
+            >
+              Accent preset
+            </p>
+            <div class="flex flex-wrap gap-1.5">
+              <button
+                v-for="accent in accents"
+                :key="accent"
+                class="h-5 w-5 rounded-full ring-1 ring-offset-1 ring-offset-transparent transition-all duration-150"
+                :class="
+                  activeAccent === accent
+                    ? 'scale-110 ring-white'
+                    : 'opacity-80 ring-transparent hover:opacity-100'
+                "
+                :style="{ backgroundColor: ACCENT_HEX[accent] }"
+                :aria-label="accent"
+                @click="() => setAccent(accent)"
+              />
+            </div>
+          </div>
+
+          <div class="h-px" :class="isDark ? 'bg-white/10' : 'bg-black/10'" />
+
+          <!-- 4 colour pickers -->
+          <div>
+            <p
+              class="mb-2.5 text-xs font-medium tracking-wide uppercase"
+              :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
+            >
+              Gradient colours
+            </p>
+            <div class="grid grid-cols-2 gap-2">
+              <label
+                v-for="(label, i) in COLOR_LABELS"
+                :key="label"
+                class="group flex cursor-pointer items-center gap-2"
+              >
+                <div
+                  class="relative h-7 w-7 shrink-0 overflow-hidden rounded-lg border"
+                  :class="isDark ? 'border-white/20' : 'border-black/20'"
+                >
+                  <input
+                    v-model="colorRefs[i]!.value"
+                    type="color"
+                    class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                  />
+                  <div class="h-full w-full" :style="{ backgroundColor: colorRefs[i]!.value }" />
+                </div>
+                <span
+                  class="text-xs leading-none transition-colors"
+                  :class="
+                    isDark
+                      ? 'text-highlighted/60 group-hover:text-highlighted/90'
+                      : 'text-black/60 group-hover:text-black/90'
+                  "
+                >
+                  {{ label }}
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="h-px" :class="isDark ? 'bg-white/10' : 'bg-black/10'" />
+
+          <!-- Animation -->
+          <div class="space-y-3">
             <p
               class="text-xs font-medium tracking-wide uppercase"
               :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
             >
-              Mouse
+              Animation
             </p>
-            <button
-              class="relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200"
-              :class="
-                mouseInteraction
-                  ? isDark
-                    ? 'bg-white/80'
-                    : 'bg-black/70'
-                  : isDark
-                    ? 'bg-white/20'
-                    : 'bg-black/20'
-              "
-              @click="() => (mouseInteraction = !mouseInteraction)"
-            >
-              <span
-                class="inline-block h-3.5 w-3.5 rounded-full transition-transform duration-200"
-                :class="[
-                  mouseInteraction ? 'translate-x-4' : 'translate-x-1',
-                  isDark ? 'bg-black' : 'bg-white',
-                ]"
+
+            <div>
+              <div class="mb-1 flex justify-between">
+                <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'"
+                  >Speed</span
+                >
+                <span
+                  class="text-xs tabular-nums"
+                  :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
+                  >{{ speed.toFixed(1) }}×</span
+                >
+              </div>
+              <input
+                v-model.number="speed"
+                type="range"
+                min="0.1"
+                max="3.0"
+                step="0.1"
+                class="w-full"
+                :class="isDark ? 'accent-white' : 'accent-black'"
               />
-            </button>
+            </div>
+
+            <div>
+              <div class="mb-1 flex justify-between">
+                <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'"
+                  >Intensity</span
+                >
+                <span
+                  class="text-xs tabular-nums"
+                  :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
+                  >{{ intensity.toFixed(1) }}</span
+                >
+              </div>
+              <input
+                v-model.number="intensity"
+                type="range"
+                min="0.1"
+                max="2.0"
+                step="0.1"
+                class="w-full"
+                :class="isDark ? 'accent-white' : 'accent-black'"
+              />
+            </div>
           </div>
 
-          <div v-if="mouseInteraction">
-            <div class="mb-1 flex justify-between">
-              <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'"
-                >Strength</span
-              >
-              <span
-                class="text-xs tabular-nums"
+          <div class="h-px" :class="isDark ? 'bg-white/10' : 'bg-black/10'" />
+
+          <!-- Mouse interaction -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <p
+                class="text-xs font-medium tracking-wide uppercase"
                 :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
-                >{{ mouseStrength.toFixed(2) }}</span
               >
+                Mouse
+              </p>
+              <button
+                class="relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200"
+                :class="
+                  mouseInteraction
+                    ? isDark
+                      ? 'bg-white/80'
+                      : 'bg-black/70'
+                    : isDark
+                      ? 'bg-white/20'
+                      : 'bg-black/20'
+                "
+                @click="() => (mouseInteraction = !mouseInteraction)"
+              >
+                <span
+                  class="inline-block h-3.5 w-3.5 rounded-full transition-transform duration-200"
+                  :class="[
+                    mouseInteraction ? 'translate-x-4' : 'translate-x-1',
+                    isDark ? 'bg-black' : 'bg-white',
+                  ]"
+                />
+              </button>
             </div>
-            <input
-              v-model.number="mouseStrength"
-              type="range"
-              min="0.05"
-              max="1.0"
-              step="0.05"
-              class="w-full"
-              :class="isDark ? 'accent-white' : 'accent-black'"
-            />
+
+            <div v-if="mouseInteraction">
+              <div class="mb-1 flex justify-between">
+                <span class="text-xs" :class="isDark ? 'text-highlighted/60' : 'text-black/60'"
+                  >Strength</span
+                >
+                <span
+                  class="text-xs tabular-nums"
+                  :class="isDark ? 'text-highlighted/40' : 'text-black/40'"
+                  >{{ mouseStrength.toFixed(2) }}</span
+                >
+              </div>
+              <input
+                v-model.number="mouseStrength"
+                type="range"
+                min="0.05"
+                max="1.0"
+                step="0.05"
+                class="w-full"
+                :class="isDark ? 'accent-white' : 'accent-black'"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </ShaderRuntime>
+    </ShaderRuntime>
+  </div>
 </template>
