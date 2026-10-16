@@ -1,5 +1,5 @@
 // Theme Layer - Color mode, accent colors, accessibility preferences
-import { resolveUiColors } from './app/utils/themeAdapter'
+import { resolveUiColors } from './app/utils/themeAdapter.ts'
 
 declare module '@nuxt/schema' {
   interface PublicRuntimeConfig {

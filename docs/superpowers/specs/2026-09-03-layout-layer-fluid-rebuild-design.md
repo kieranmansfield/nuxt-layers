@@ -155,7 +155,7 @@ layers/structure/layout/app/components/
   properties via `:style`.
 - **`LayoutSection`** — see §4.
 - **`LayoutCell`** (replaces `LayoutGridItem`) — `variant: 'block' |
-'plate'` prop (border vs. filled, matching the prototype's `.block`/
+  'plate'` prop (border vs. filled, matching the prototype's `.block`/
   `.plate`), `span2` / `span2Rows` / `span3Rows` boolean/enum props. No
   `colStart`/`rowStart`/`preset`/`layer`/`bleed` — those go in the
   migration guide as removed, with the nearest equivalent noted.
@@ -207,11 +207,11 @@ inspection.
    resolved (narrow/medium viewport), squashing siblings. Fix:
    `grid-auto-columns: minmax(measure-min, 1fr)` (belt-and-braces) plus
    gating `.span-2` behind `@container viewport (min-width: 2 *
-measure-min + gutter)` so it only activates once 2 columns have
+   measure-min + gutter)` so it only activates once 2 columns have
    genuinely resolved.
 3. **Hand-synced container-query thresholds.** `@container` conditions
    can't reference custom properties — the `@container cell (max-width:
-22rem)` / `@container viewport (min-width: 46rem)` thresholds must be
+   22rem)` / `@container viewport (min-width: 46rem)` thresholds must be
    hand-kept in sync with `--measure-min`, commented at both ends.
 
 ## §8 Constraints to preserve

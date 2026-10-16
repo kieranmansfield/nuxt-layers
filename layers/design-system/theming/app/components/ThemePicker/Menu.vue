@@ -34,7 +34,7 @@
             <li class="flex w-full flex-row items-center justify-between py-1">
               <div>
                 <h2 class="text-lg font-semibold">High Contrast</h2>
-                <p v-if="contrastOverride === 'system'" class="text-sm text-muted">
+                <p v-if="contrastOverride === 'system'" class="text-muted text-sm">
                   Following system
                 </p>
               </div>
@@ -49,7 +49,7 @@
             <li class="flex w-full flex-row items-center justify-between py-1">
               <div>
                 <h2 class="text-lg font-semibold">Reduce Motion</h2>
-                <p v-if="motionOverride === 'system'" class="text-sm text-muted">
+                <p v-if="motionOverride === 'system'" class="text-muted text-sm">
                   Following system
                 </p>
               </div>
@@ -64,7 +64,7 @@
             <li class="flex w-full flex-row items-center justify-between py-1">
               <div>
                 <h2 class="text-lg font-semibold">Reduce Transparency</h2>
-                <p v-if="transparencyOverride === 'system'" class="text-sm text-muted">
+                <p v-if="transparencyOverride === 'system'" class="text-muted text-sm">
                   Following system
                 </p>
               </div>

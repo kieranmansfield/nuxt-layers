@@ -66,20 +66,20 @@
     <div class="scripts-page">
       <!-- Hero -->
       <section
-        class="min-h-[70vh] flex items-center justify-center relative overflow-hidden bg-default"
+        class="bg-default relative flex min-h-[70vh] items-center justify-center overflow-hidden"
       >
         <div
-          class="absolute inset-0 bg-linear-to-b from-primary/10 via-transparent to-transparent"
+          class="from-primary/10 absolute inset-0 bg-linear-to-b via-transparent to-transparent"
         />
-        <div class="text-center z-10 px-4">
-          <h1 class="text-5xl sm:text-7xl md:text-8xl font-black text-highlighted mb-8">
+        <div class="z-10 px-4 text-center">
+          <h1 class="text-highlighted mb-8 text-5xl font-black sm:text-7xl md:text-8xl">
             <span class="text-primary">SCRIPTS</span> LAYER
           </h1>
-          <p class="text-xl text-muted mb-12 max-w-2xl mx-auto">
+          <p class="text-muted mx-auto mb-12 max-w-2xl text-xl">
             Consent-aware third-party script loading — analytics, GTM, and facade-pattern embeds
             built on <code class="text-primary">@nuxt/scripts</code>.
           </p>
-          <div class="flex flex-wrap gap-4 justify-center">
+          <div class="flex flex-wrap justify-center gap-4">
             <UButton size="lg" @click="() => $router.push('#consent')">Consent Demo</UButton>
             <UButton size="lg" variant="outline" @click="() => $router.push('#embed')">
               YouTube Embed
@@ -93,24 +93,24 @@
       </section>
 
       <!-- Composables grid -->
-      <section class="py-24 bg-default">
+      <section class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Composables</h2>
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">Composables</h2>
             <p class="text-muted text-lg">The public surface of the scripts layer</p>
           </div>
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <div
               v-for="item in integrations"
               :key="item.name"
-              class="bg-accented rounded-2xl p-6 border border-accented hover:border-primary/50 transition-colors"
+              class="bg-accented border-accented hover:border-primary/50 rounded-2xl border p-6 transition-colors"
             >
-              <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                <UIcon :name="item.icon" class="text-2xl text-primary" />
+              <div class="bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-xl">
+                <UIcon :name="item.icon" class="text-primary text-2xl" />
               </div>
-              <h3 class="text-lg font-bold text-highlighted mb-2">{{ item.name }}</h3>
-              <p class="text-muted text-sm mb-3">{{ item.description }}</p>
-              <code class="text-xs text-muted bg-muted px-2 py-1 rounded block overflow-x-auto">
+              <h3 class="text-highlighted mb-2 text-lg font-bold">{{ item.name }}</h3>
+              <p class="text-muted mb-3 text-sm">{{ item.description }}</p>
+              <code class="text-muted bg-muted block overflow-x-auto rounded px-2 py-1 text-xs">
                 {{ item.snippet }}
               </code>
             </div>
@@ -119,27 +119,27 @@
       </section>
 
       <!-- Consent -->
-      <section id="consent" class="py-24 bg-default">
+      <section id="consent" class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Consent Management</h2>
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">Consent Management</h2>
             <p class="text-muted text-lg">
               <code class="text-primary">useScriptsConsent()</code> — gate script loading on user
               consent
             </p>
           </div>
-          <div class="max-w-2xl mx-auto bg-default rounded-2xl p-8 border border-default">
-            <div class="grid sm:grid-cols-3 gap-4 mb-8">
+          <div class="bg-default border-default mx-auto max-w-2xl rounded-2xl border p-8">
+            <div class="mb-8 grid gap-4 sm:grid-cols-3">
               <div
                 v-for="row in consentRows"
                 :key="row.label"
                 class="bg-accented rounded-xl p-4 text-center"
               >
-                <p class="text-xs uppercase tracking-widest text-muted mb-1">{{ row.label }}</p>
-                <p class="text-lg font-bold text-highlighted">{{ row.value }}</p>
+                <p class="text-muted mb-1 text-xs tracking-widest uppercase">{{ row.label }}</p>
+                <p class="text-highlighted text-lg font-bold">{{ row.value }}</p>
               </div>
             </div>
-            <div class="flex flex-wrap gap-4 justify-center">
+            <div class="flex flex-wrap justify-center gap-4">
               <UButton :disabled="hasConsent" @click="grantConsent">
                 <UIcon name="i-lucide-check" class="mr-2" />
                 Grant Consent
@@ -154,42 +154,42 @@
       </section>
 
       <!-- YouTube Embed -->
-      <section id="embed" class="py-24 bg-default">
+      <section id="embed" class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">YouTube Facade</h2>
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">YouTube Facade</h2>
             <p class="text-muted text-lg">
               <code class="text-primary">useYoutubeEmbed()</code> — shows a thumbnail until the
               viewer opts in to load the IFrame API
             </p>
           </div>
-          <div class="max-w-2xl mx-auto">
+          <div class="mx-auto max-w-2xl">
             <div
-              class="relative aspect-video rounded-2xl overflow-hidden bg-default border border-default flex items-center justify-center cursor-pointer group"
+              class="bg-default border-default group relative flex aspect-video cursor-pointer items-center justify-center overflow-hidden rounded-2xl border"
               @click="loadVideo"
             >
               <template v-if="!ytLoaded">
                 <img
                   :src="thumbnailUrl"
                   alt="Video thumbnail"
-                  class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity"
+                  class="absolute inset-0 h-full w-full object-cover opacity-60 transition-opacity group-hover:opacity-80"
                 />
                 <div
-                  class="relative z-10 w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center"
+                  class="bg-primary/90 relative z-10 flex h-16 w-16 items-center justify-center rounded-full"
                 >
-                  <UIcon name="i-lucide-play" class="text-2xl text-highlighted" />
+                  <UIcon name="i-lucide-play" class="text-highlighted text-2xl" />
                 </div>
               </template>
               <iframe
                 v-else
                 :src="embedUrl"
-                class="w-full h-full"
+                class="h-full w-full"
                 title="YouTube embed"
                 allow="autoplay; encrypted-media"
                 allowfullscreen
               />
             </div>
-            <p class="text-muted text-sm mt-4 text-center">
+            <p class="text-muted mt-4 text-center text-sm">
               proxy status: <code class="text-primary">{{ ytProxy ? 'ready' : 'idle' }}</code> ·
               click the thumbnail to load the iframe on demand
             </p>
@@ -198,11 +198,11 @@
       </section>
 
       <!-- Footer Nav -->
-      <section class="py-16 bg-default">
+      <section class="bg-default py-16">
         <UContainer>
-          <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
+          <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
             <div>
-              <h2 class="text-2xl font-bold text-highlighted mb-2">Scripts Layer</h2>
+              <h2 class="text-highlighted mb-2 text-2xl font-bold">Scripts Layer</h2>
               <p class="text-muted">Consent-aware analytics, GTM, and third-party embeds</p>
             </div>
             <div class="flex flex-wrap gap-4">

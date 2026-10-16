@@ -12,17 +12,17 @@
 </script>
 
 <template>
-  <div class="flex flex-col md:flex-row h-dvh overflow-hidden bg-default">
+  <div class="bg-default flex h-dvh flex-col overflow-hidden md:flex-row">
     <!-- Mobile header -->
     <header
-      class="md:hidden flex items-center justify-between px-4 h-14 border-b border-default shrink-0 bg-default"
+      class="border-default bg-default flex h-14 shrink-0 items-center justify-between border-b px-4 md:hidden"
     >
-      <p class="text-sm font-semibold text-default tracking-wide">Visual Identity</p>
+      <p class="text-default text-sm font-semibold tracking-wide">Visual Identity</p>
 
       <UDrawer v-model:open="mobileNavOpen" direction="left" :handle="false">
         <UButton icon="i-lucide-menu" variant="ghost" color="neutral" size="sm" />
         <template #content>
-          <div class="w-64 h-full flex flex-col">
+          <div class="flex h-full w-64 flex-col">
             <BrandNav />
           </div>
         </template>
@@ -30,12 +30,12 @@
     </header>
 
     <!-- Desktop sidebar -->
-    <div class="hidden md:flex flex-col w-56 shrink-0 border-r border-default">
+    <div class="border-default hidden w-56 shrink-0 flex-col border-r md:flex">
       <BrandNav />
     </div>
 
     <!-- Page content -->
-    <main class="flex-1 overflow-y-auto min-h-0">
+    <main class="min-h-0 flex-1 overflow-y-auto">
       <slot />
     </main>
   </div>

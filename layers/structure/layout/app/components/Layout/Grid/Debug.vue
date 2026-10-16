@@ -72,7 +72,7 @@
 
 <template>
   <Teleport to="body">
-    <div v-if="visible" :style class="grid-debug z-9999 fixed inset-0" aria-hidden="true">
+    <div v-if="visible" :style class="grid-debug fixed inset-0 z-9999" aria-hidden="true">
       <div v-for="i in cols" :key="i" :style="{ backgroundColor: color }" class="h-full" />
     </div>
   </Teleport>

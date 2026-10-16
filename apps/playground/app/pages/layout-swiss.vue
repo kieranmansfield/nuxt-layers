@@ -21,7 +21,7 @@
         <div
           v-for="(segment, index) in swissConfig.columns"
           :key="index"
-          style="border: 1px solid currentColor; padding: 0.5rem; text-align: center"
+          style="border: 1px solid currentcolor; padding: 0.5rem; text-align: center"
         >
           {{ segment.size }}fr
         </div>

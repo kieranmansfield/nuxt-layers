@@ -1,5 +1,5 @@
 import type { SiteConfig } from '#layers/core/app/types/site'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 
 import { resolveSeoConfig } from './seoConfig'
 

@@ -48,7 +48,7 @@
         v-if="asPortfolio(item).image"
         :src="asPortfolio(item).image"
         :alt="item.title"
-        class="w-full rounded-lg mb-8"
+        class="mb-8 w-full rounded-lg"
       />
     </template>
 

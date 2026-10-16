@@ -48,7 +48,7 @@ already sets up for the whole app. Consumer apps built on this monorepo
 warning about this exact class of bug:
 
 > `/* tailwindcss + @nuxt/ui are already imported by the core layer's css.
-   Importing them again here would just double the Tailwind v4 build pass. */`
+>    Importing them again here would just double the Tailwind v4 build pass. */`
 
 Having two independent `@import 'tailwindcss/...'` build roots in the same
 Vite module graph causes Tailwind's Vite plugin to lose full content-scan
@@ -119,5 +119,5 @@ In a consumer app (or this monorepo's own playground) with `ui: true`
 2. Load the page, inspect the header nav's `UNavigationMenu` link element —
    confirm `getComputedStyle(link).paddingTop` is `6px`, not `0px`.
 3. Re-run the dev server and use a `PerformanceObserver({type:'layout-shift',
-buffered:true})` on page load — confirm no entries (CLS 0), not just that
+   buffered:true})` on page load — confirm no entries (CLS 0), not just that
    it's not visually obvious.

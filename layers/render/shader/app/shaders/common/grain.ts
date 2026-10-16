@@ -334,7 +334,7 @@ export function crtEffect(
 
 // 8x8 Bayer matrix values (normalized to 0-1 range)
 const BAYER_8X8_MATRIX = [
-  0.0 / 64.0,
+  0, // 0 / 64
   48.0 / 64.0,
   12.0 / 64.0,
   60.0 / 64.0,

@@ -635,9 +635,9 @@
 </script>
 
 <template>
-  <div class="min-h-screen bg-neutral-950 text-highlighted flex flex-col">
+  <div class="text-highlighted flex min-h-screen flex-col bg-neutral-950">
     <!-- Header -->
-    <div class="flex items-center gap-4 px-6 py-4 border-b border-white/8">
+    <div class="flex items-center gap-4 border-b border-white/8 px-6 py-4">
       <UButton
         to="/shader-pipeline"
         variant="ghost"
@@ -646,8 +646,8 @@
         color="neutral"
       />
       <div>
-        <h1 class="font-semibold text-sm text-highlighted">Shader Background</h1>
-        <p class="text-xs text-highlighted/40">
+        <h1 class="text-highlighted text-sm font-semibold">Shader Background</h1>
+        <p class="text-highlighted/40 text-xs">
           60+ presets · Gradients, Mesh, Noise, Atmospheric, Abstract, Theme
         </p>
       </div>
@@ -665,15 +665,15 @@
     <!-- Main layout -->
     <div class="flex flex-1 overflow-hidden">
       <!-- Canvas column -->
-      <div class="flex-1 flex items-center justify-center p-6">
+      <div class="flex flex-1 items-center justify-center p-6">
         <div
-          class="relative w-full aspect-video rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl"
+          class="relative aspect-video w-full overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10"
         >
           <ClientOnly>
             <!-- Theme presets: same ShaderPipelineContext path as all other categories -->
             <template v-if="activeCategory === 'theme'">
               <ShaderPipelineContext :key="activeTheme">
-                <div class="hidden pointer-events-none" aria-hidden="true">
+                <div class="pointer-events-none hidden" aria-hidden="true">
                   <DemoThemeNode
                     :theme-id="activeTheme"
                     :speed="theme.speed"
@@ -762,7 +762,7 @@
             <!-- All other categories: pipeline path -->
             <ShaderPipelineContext v-else>
               <!-- Hidden block registry -->
-              <div class="hidden pointer-events-none" aria-hidden="true">
+              <div class="pointer-events-none hidden" aria-hidden="true">
                 <!-- ══ GRADIENTS ══════════════════════════════════════ -->
                 <template v-if="activeCategory === 'gradients'">
                   <template v-if="activeGrad === 'linear-h'">
@@ -1456,13 +1456,13 @@
       </div>
 
       <!-- Right panel -->
-      <div class="w-80 shrink-0 border-l border-white/8 flex flex-col overflow-hidden">
+      <div class="flex w-80 shrink-0 flex-col overflow-hidden border-l border-white/8">
         <!-- Category tabs -->
-        <div class="flex gap-1 px-4 pt-4 pb-3 border-b border-white/5 flex-wrap">
+        <div class="flex flex-wrap gap-1 border-b border-white/5 px-4 pt-4 pb-3">
           <button
             v-for="cat in bgCategories"
             :key="cat.id"
-            class="px-3 py-1 rounded-lg text-xs font-medium transition-all duration-150 whitespace-nowrap"
+            class="rounded-lg px-3 py-1 text-xs font-medium whitespace-nowrap transition-all duration-150"
             :class="
               activeCategory === cat.id
                 ? 'bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/30'
@@ -1475,10 +1475,10 @@
         </div>
 
         <!-- Scrollable content: presets + controls -->
-        <div class="flex-1 overflow-y-auto p-4 space-y-5">
+        <div class="flex-1 space-y-5 overflow-y-auto p-4">
           <!-- Preset grid -->
           <div>
-            <p class="text-xs font-semibold uppercase tracking-wider text-highlighted/30 mb-2">
+            <p class="text-highlighted/30 mb-2 text-xs font-semibold tracking-wider uppercase">
               Presets
             </p>
 
@@ -1487,11 +1487,11 @@
               <button
                 v-for="p in gradientPresets"
                 :key="p.id"
-                class="px-2 py-2 rounded-lg text-xs text-center transition-all leading-tight"
+                class="rounded-lg px-2 py-2 text-center text-xs leading-tight transition-all"
                 :class="
                   activeGrad === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
+                    : 'text-highlighted/50 hover:text-highlighted/80 bg-white/5 hover:bg-white/8'
                 "
                 @click="() => (activeGrad = p.id)"
               >
@@ -1504,11 +1504,11 @@
               <button
                 v-for="p in meshPresets"
                 :key="p.id"
-                class="px-2 py-2 rounded-lg text-xs text-center transition-all leading-tight"
+                class="rounded-lg px-2 py-2 text-center text-xs leading-tight transition-all"
                 :class="
                   activeMesh === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
+                    : 'text-highlighted/50 hover:text-highlighted/80 bg-white/5 hover:bg-white/8'
                 "
                 @click="() => (activeMesh = p.id)"
               >
@@ -1521,11 +1521,11 @@
               <button
                 v-for="p in animatedPresets"
                 :key="p.id"
-                class="px-2 py-2 rounded-lg text-xs text-center transition-all leading-tight"
+                class="rounded-lg px-2 py-2 text-center text-xs leading-tight transition-all"
                 :class="
                   activeAnim === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
+                    : 'text-highlighted/50 hover:text-highlighted/80 bg-white/5 hover:bg-white/8'
                 "
                 @click="() => (activeAnim = p.id)"
               >
@@ -1538,11 +1538,11 @@
               <button
                 v-for="p in noiseBgPresets"
                 :key="p.id"
-                class="px-2 py-2 rounded-lg text-xs text-center transition-all leading-tight"
+                class="rounded-lg px-2 py-2 text-center text-xs leading-tight transition-all"
                 :class="
                   activeNoiseBg === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
+                    : 'text-highlighted/50 hover:text-highlighted/80 bg-white/5 hover:bg-white/8'
                 "
                 @click="() => (activeNoiseBg = p.id)"
               >
@@ -1555,11 +1555,11 @@
               <button
                 v-for="p in atmosphericPresets"
                 :key="p.id"
-                class="px-2 py-2 rounded-lg text-xs text-center transition-all leading-tight"
+                class="rounded-lg px-2 py-2 text-center text-xs leading-tight transition-all"
                 :class="
                   activeAtmo === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
+                    : 'text-highlighted/50 hover:text-highlighted/80 bg-white/5 hover:bg-white/8'
                 "
                 @click="() => (activeAtmo = p.id)"
               >
@@ -1572,11 +1572,11 @@
               <button
                 v-for="p in abstractPresets"
                 :key="p.id"
-                class="px-2 py-2 rounded-lg text-xs text-center transition-all leading-tight"
+                class="rounded-lg px-2 py-2 text-center text-xs leading-tight transition-all"
                 :class="
                   activeAbstract === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
+                    : 'text-highlighted/50 hover:text-highlighted/80 bg-white/5 hover:bg-white/8'
                 "
                 @click="() => (activeAbstract = p.id)"
               >
@@ -1589,11 +1589,11 @@
               <button
                 v-for="p in themePresets"
                 :key="p.id"
-                class="px-2 py-2 rounded-lg text-xs text-center transition-all leading-tight"
+                class="rounded-lg px-2 py-2 text-center text-xs leading-tight transition-all"
                 :class="
                   activeTheme === p.id
                     ? 'bg-violet-500/25 text-violet-200 ring-1 ring-violet-500/40'
-                    : 'bg-white/5 text-highlighted/50 hover:text-highlighted/80 hover:bg-white/8'
+                    : 'text-highlighted/50 hover:text-highlighted/80 bg-white/5 hover:bg-white/8'
                 "
                 @click="() => (activeTheme = p.id)"
               >
@@ -1606,7 +1606,7 @@
 
           <!-- Controls for selected preset -->
           <div class="space-y-4">
-            <p class="text-xs font-semibold uppercase tracking-wider text-violet-400">
+            <p class="text-xs font-semibold tracking-wider text-violet-400 uppercase">
               {{ activePresetLabel }}
             </p>
 
@@ -1666,16 +1666,16 @@
                 <template v-if="['linear-h', 'linear-v'].includes(activeGrad)">
                   <div class="h-px bg-white/5" />
                   <div>
-                    <p class="text-xs text-highlighted/30 font-medium mb-1.5">Colour Stops</p>
+                    <p class="text-highlighted/30 mb-1.5 text-xs font-medium">Colour Stops</p>
                     <div class="flex gap-1">
                       <button
                         v-for="n in [2, 3, 4]"
                         :key="n"
-                        class="flex-1 py-1 rounded-lg text-xs font-medium transition-all"
+                        class="flex-1 rounded-lg py-1 text-xs font-medium transition-all"
                         :class="
                           grad.numColors === n
                             ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
-                            : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
+                            : 'text-highlighted/40 hover:text-highlighted/70 bg-white/5'
                         "
                         @click="() => (grad.numColors = n)"
                       >
@@ -1691,13 +1691,13 @@
               <template v-if="!['sunrise', 'pastel'].includes(activeGrad)">
                 <div class="h-px bg-white/5" />
                 <div class="flex items-center justify-between">
-                  <p class="text-xs text-highlighted/30 font-medium">Vignette</p>
+                  <p class="text-highlighted/30 text-xs font-medium">Vignette</p>
                   <button
-                    class="px-2 py-0.5 rounded text-xs transition-all"
+                    class="rounded px-2 py-0.5 text-xs transition-all"
                     :class="
                       grad.vignette
                         ? 'bg-violet-500/25 text-violet-300'
-                        : 'bg-white/5 text-highlighted/40'
+                        : 'text-highlighted/40 bg-white/5'
                     "
                     @click="() => (grad.vignette = !grad.vignette)"
                   >
@@ -1742,7 +1742,7 @@
               <template v-if="activeMesh === 'organic'">
                 <div class="h-px bg-white/5" />
                 <div>
-                  <p class="text-xs text-highlighted/30 font-medium mb-1.5">Texture</p>
+                  <p class="text-highlighted/30 mb-1.5 text-xs font-medium">Texture</p>
                   <div class="flex gap-1">
                     <button
                       v-for="t in [
@@ -1751,11 +1751,11 @@
                         { id: 'twirl', label: 'Twirl' },
                       ]"
                       :key="t.id"
-                      class="flex-1 py-1 rounded-lg text-xs font-medium transition-all"
+                      class="flex-1 rounded-lg py-1 text-xs font-medium transition-all"
                       :class="
                         mesh.organicType === t.id
                           ? 'bg-violet-500/25 text-violet-300 ring-1 ring-violet-500/40'
-                          : 'bg-white/5 text-highlighted/40 hover:text-highlighted/70'
+                          : 'text-highlighted/40 hover:text-highlighted/70 bg-white/5'
                       "
                       @click="() => (mesh.organicType = t.id as typeof mesh.organicType)"
                     >

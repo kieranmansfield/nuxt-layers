@@ -48,7 +48,7 @@ and has no grid dependency — safe to move to a typography layer as-is.
 1. **Type.** `--fs: clamp(1rem, 0.95rem + 0.25svi, 1.125rem)`, registered
    via `@property` as `<length>` so downstream `calc()` gets a resolved
    length, not an unresolved token stream. `line-height` is `round(nearest,
-fs * 1.5, 1px)` — rounded, not raw, so grid boundaries land on-pixel.
+   fs * 1.5, 1px)` — rounded, not raw, so grid boundaries land on-pixel.
 
 2. **Unit.** `--unit: 1rlh`. `rlh` not `lh`: `lh` resolves against the
    _current_ element, so a heading with different line-height would
@@ -57,14 +57,14 @@ fs * 1.5, 1px)` — rounded, not raw, so grid boundaries land on-pixel.
 
 3. **Minimums.**
    - `--measure-min: 22rem` — narrowest column, also the `repeat(auto-fill,
-minmax(...))` floor and the `@container cell` padding-step threshold.
+     minmax(...))` floor and the `@container cell` padding-step threshold.
    - `--edge-min: clamp(1unit, 8svi, 3unit)` — margin floor > 0 (never
      flush edge), steep `svi` slope so it shrinks fast on narrow screens.
      Feeds `--avail-b`, so it also trims top/bottom slack, not just
      inline edges.
 
 4. **Lines.** `--avail-b: 100svh - 2*edge-min`. `--lines:
-round(down, avail-b, unit) / unit` — the only way to get an integer
+   round(down, avail-b, unit) / unit` — the only way to get an integer
    line-count out of a length in CSS.
 
 5. **Fields.** `--lpf` (lines-per-field) clamped 4–8, itself scaled by
@@ -83,7 +83,7 @@ round(down, avail-b, unit) / unit` — the only way to get an integer
    `auto-fill` computes column count from available space directly —
    `floor((avail+gutter)/(measure+gutter))` — without needing an integer
    derived via `calc()`. See Pitfall 1 for why this isn't `repeat(var(--n),
-...)`.
+   ...)`.
 
 Portrait/landscape fall out of steps 5 and 7 independently — no
 orientation branch anywhere.
@@ -113,7 +113,7 @@ would be redundant even if it worked.
   properties at all:
   - `@container cell (max-width: 22rem)` mirrors `--measure-min`.
   - `@container viewport (min-width: 46rem)` mirrors `2 * --measure-min +
-gutter`, gating `.span-2`.
+    gutter`, gating `.span-2`.
 
 ## Utility classes
 
@@ -164,7 +164,7 @@ Fix: two parts —
 - `grid-auto-columns: minmax(var(--measure-min), 1fr)` so _any_ forced
   implicit column gets the same sizing as explicit ones (belt-and-braces).
 - Gate `.span-2`'s `grid-column: span 2` behind `@container viewport
-(min-width: 46rem)` so it only activates once 2 columns have genuinely
+  (min-width: 46rem)` so it only activates once 2 columns have genuinely
   resolved — below that threshold `.span-2` cells stay normal 1×1,
   never forcing the fabrication in the first place.
 

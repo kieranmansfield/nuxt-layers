@@ -6,7 +6,7 @@
 <template>
   <button
     aria-label="Open navigation menu"
-    class="fixed right-0 top-0 flex cursor-pointer items-center justify-center border-0 bg-transparent p-4"
+    class="fixed top-0 right-0 flex cursor-pointer items-center justify-center border-0 bg-transparent p-4"
     :style="{ zIndex: z }"
     @click="() => open()"
   >

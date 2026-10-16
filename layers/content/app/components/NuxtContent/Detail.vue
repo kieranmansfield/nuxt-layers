@@ -58,6 +58,6 @@
         <NuxtContentToc v-bind="item.body?.toc?.links ? { links: item.body.toc.links } : {}" />
       </template>
     </UPage>
-    <div v-else class="text-muted text-center py-12">{{ notFoundMessage }}</div>
+    <div v-else class="text-muted py-12 text-center">{{ notFoundMessage }}</div>
   </div>
 </template>

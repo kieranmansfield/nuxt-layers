@@ -441,81 +441,81 @@
     title="Shader Layer Demo"
     description="TSL shader utilities — noise, SDF, lighting, tonemapping, patterns & effects"
   >
-    <div class="min-h-screen bg-default text-highlighted">
+    <div class="bg-default text-highlighted min-h-screen">
       <!-- Hero Section -->
       <section class="relative overflow-hidden">
         <div
           class="absolute inset-0 bg-linear-to-br from-violet-900/30 via-transparent to-cyan-900/20"
         />
         <div class="absolute inset-0">
-          <div class="absolute top-20 left-10 w-72 h-72 bg-violet-500/20 rounded-full blur-3xl" />
-          <div class="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl" />
+          <div class="absolute top-20 left-10 h-72 w-72 rounded-full bg-violet-500/20 blur-3xl" />
+          <div class="absolute right-10 bottom-20 h-96 w-96 rounded-full bg-cyan-500/15 blur-3xl" />
         </div>
 
         <UContainer class="relative py-20">
-          <div class="flex items-center gap-4 mb-8">
+          <div class="mb-8 flex items-center gap-4">
             <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" class="text-muted" />
             <UBadge color="primary" variant="subtle">Shader Layer</UBadge>
           </div>
 
-          <h1 class="text-5xl md:text-7xl font-black mb-6">
-            <span class="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">
+          <h1 class="mb-6 text-5xl font-black md:text-7xl">
+            <span class="bg-linear-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
               TSL Shader
             </span>
             <br />
             <span class="text-highlighted">Utilities</span>
           </h1>
 
-          <p class="text-xl text-muted max-w-2xl mb-8">
+          <p class="text-muted mb-8 max-w-2xl text-xl">
             Modular Three.js Shading Language (TSL) utilities for procedural graphics. Noise, SDF
             shapes, lighting, tonemapping, patterns, and post-processing effects.
           </p>
 
-          <div class="flex flex-wrap gap-4 mb-12">
-            <div class="bg-accented/50 backdrop-blur border border-accented rounded-xl px-6 py-4">
+          <div class="mb-12 flex flex-wrap gap-4">
+            <div class="bg-accented/50 border-accented rounded-xl border px-6 py-4 backdrop-blur">
               <div class="text-3xl font-bold text-violet-400">{{ totalNewFunctions }}+</div>
-              <div class="text-sm text-muted">New Functions</div>
+              <div class="text-muted text-sm">New Functions</div>
             </div>
-            <div class="bg-accented/50 backdrop-blur border border-accented rounded-xl px-6 py-4">
+            <div class="bg-accented/50 border-accented rounded-xl border px-6 py-4 backdrop-blur">
               <div class="text-3xl font-bold text-cyan-400">9</div>
-              <div class="text-sm text-muted">Categories</div>
+              <div class="text-muted text-sm">Categories</div>
             </div>
-            <div class="bg-accented/50 backdrop-blur border border-accented rounded-xl px-6 py-4">
+            <div class="bg-accented/50 border-accented rounded-xl border px-6 py-4 backdrop-blur">
               <div class="text-3xl font-bold text-pink-400">100%</div>
-              <div class="text-sm text-muted">TypeScript</div>
+              <div class="text-muted text-sm">TypeScript</div>
             </div>
             <NuxtLink
               to="/shader-pipeline"
-              class="bg-linear-to-r from-violet-600/20 to-purple-600/20 backdrop-blur border border-violet-500/50 rounded-xl px-6 py-4 hover:border-violet-500 transition-colors group"
+              class="group rounded-xl border border-violet-500/50 bg-linear-to-r from-violet-600/20 to-purple-600/20 px-6 py-4 backdrop-blur transition-colors hover:border-violet-500"
             >
               <div
-                class="text-lg font-bold text-highlighted group-hover:text-violet-300 transition-colors"
+                class="text-highlighted text-lg font-bold transition-colors group-hover:text-violet-300"
               >
                 Shader Pipeline
               </div>
-              <div class="text-sm text-muted">142 composable TSL blocks</div>
+              <div class="text-muted text-sm">142 composable TSL blocks</div>
             </NuxtLink>
             <NuxtLink
               to="/shader-background"
-              class="bg-linear-to-r from-violet-600/20 to-indigo-600/20 backdrop-blur border border-violet-500/50 rounded-xl px-6 py-4 hover:border-violet-500 transition-colors group"
+              class="group rounded-xl border border-violet-500/50 bg-linear-to-r from-violet-600/20 to-indigo-600/20 px-6 py-4 backdrop-blur transition-colors hover:border-violet-500"
             >
               <div
-                class="text-lg font-bold text-highlighted group-hover:text-violet-300 transition-colors"
+                class="text-highlighted text-lg font-bold transition-colors group-hover:text-violet-300"
               >
                 Shader Backgrounds
               </div>
-              <div class="text-sm text-muted">50+ pre-built background presets</div>
+              <div class="text-muted text-sm">50+ pre-built background presets</div>
             </NuxtLink>
             <NuxtLink
               to="/ambient"
-              class="bg-linear-to-r from-violet-600/20 to-cyan-600/20 backdrop-blur border border-violet-500/50 rounded-xl px-6 py-4 hover:border-violet-500 transition-colors group"
+              class="group rounded-xl border border-violet-500/50 bg-linear-to-r from-violet-600/20 to-cyan-600/20 px-6 py-4 backdrop-blur transition-colors hover:border-violet-500"
             >
               <div
-                class="text-lg font-bold text-highlighted group-hover:text-violet-300 transition-colors"
+                class="text-highlighted text-lg font-bold transition-colors group-hover:text-violet-300"
               >
                 Ambient Backgrounds
               </div>
-              <div class="text-sm text-muted">TSL-powered WebGPU demos</div>
+              <div class="text-muted text-sm">TSL-powered WebGPU demos</div>
             </NuxtLink>
           </div>
 
@@ -524,10 +524,10 @@
             <button
               v-for="cat in categories"
               :key="cat.id"
-              class="flex items-center gap-2 px-4 py-2 rounded-lg border transition-all"
+              class="flex items-center gap-2 rounded-lg border px-4 py-2 transition-all"
               :class="[
                 activeCategory === cat.id
-                  ? 'bg-violet-600 border-violet-500 text-highlighted'
+                  ? 'text-highlighted border-violet-500 bg-violet-600'
                   : 'bg-accented/50 border-accented text-muted hover:border-accented hover:text-highlighted',
               ]"
               @click="() => (activeCategory = cat.id)"
@@ -544,27 +544,27 @@
         <UContainer>
           <!-- Overview (No shader demo) -->
           <div v-if="activeCategory === 'overview'" class="space-y-12">
-            <div class="text-center mb-12">
-              <h2 class="text-3xl font-bold mb-4">Shader Utilities Overview</h2>
-              <p class="text-muted max-w-2xl mx-auto">
+            <div class="mb-12 text-center">
+              <h2 class="mb-4 text-3xl font-bold">Shader Utilities Overview</h2>
+              <p class="text-muted mx-auto max-w-2xl">
                 A comprehensive collection of TSL functions for creating procedural shaders. Click a
                 category to see interactive demos.
               </p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               <div
                 v-for="cat in categories.filter((c) => c.id !== 'overview')"
                 :key="cat.id"
-                class="bg-accented/50 border border-accented rounded-2xl p-6 hover:border-violet-500/50 transition-colors cursor-pointer group"
+                class="bg-accented/50 border-accented group cursor-pointer rounded-2xl border p-6 transition-colors hover:border-violet-500/50"
                 @click="() => (activeCategory = cat.id)"
               >
                 <div
-                  class="w-12 h-12 bg-violet-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-violet-500/20 transition-colors"
+                  class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/10 transition-colors group-hover:bg-violet-500/20"
                 >
                   <UIcon :name="cat.icon" class="text-2xl text-violet-400" />
                 </div>
-                <h3 class="text-xl font-bold mb-2">{{ cat.label }}</h3>
+                <h3 class="mb-2 text-xl font-bold">{{ cat.label }}</h3>
                 <p class="text-muted text-sm">
                   <template v-if="cat.id === 'noise'">
                     {{ noiseFunctions.length }} noise functions + {{ noiseHelpers.length }} helpers
@@ -592,7 +592,7 @@
                   </template>
                 </p>
                 <div
-                  class="mt-4 text-violet-400 text-sm flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                  class="mt-4 flex items-center gap-1 text-sm text-violet-400 opacity-0 transition-opacity group-hover:opacity-100"
                 >
                   View demos <UIcon name="i-lucide-arrow-right" />
                 </div>
@@ -600,10 +600,10 @@
             </div>
 
             <!-- File Structure -->
-            <div class="bg-accented/50 border border-accented rounded-2xl p-8">
-              <h3 class="text-xl font-bold mb-6">File Structure</h3>
+            <div class="bg-accented/50 border-accented rounded-2xl border p-8">
+              <h3 class="mb-6 text-xl font-bold">File Structure</h3>
               <pre
-                class="text-sm text-toned font-mono overflow-x-auto"
+                class="text-toned overflow-x-auto font-mono text-sm"
               ><code>layers/shader/app/shaders/
 ├── types.ts                    # TSL type definitions
 ├── createMaterial.ts           # Material factory
@@ -627,7 +627,7 @@
           <!-- Noise Section -->
           <div v-if="activeCategory === 'noise'" class="space-y-8">
             <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-4">Noise Functions</h2>
+              <h2 class="mb-4 text-3xl font-bold">Noise Functions</h2>
               <p class="text-muted">
                 Comprehensive noise library including simplex, Perlin, FBM variants, curl noise, and
                 more.
@@ -635,10 +635,10 @@
             </div>
 
             <!-- Interactive Demo with Cards -->
-            <div class="grid lg:grid-cols-5 gap-6 mb-12">
+            <div class="mb-12 grid gap-6 lg:grid-cols-5">
               <!-- Shader Canvas (3 cols) -->
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-muted rounded-2xl overflow-hidden relative"
+                class="bg-muted relative aspect-square overflow-hidden rounded-2xl lg:col-span-3 lg:aspect-auto lg:h-125"
                 @mousemove="onCanvasMouseMove"
               >
                 <ShaderDemoCanvas
@@ -651,7 +651,7 @@
                   :disable-zoom="!noiseControls.enableZoom"
                 />
                 <div
-                  class="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded-lg text-sm"
+                  class="absolute top-4 left-4 rounded-lg bg-black/60 px-3 py-1 text-sm backdrop-blur"
                 >
                   {{
                     noiseControls.mouseInteraction
@@ -662,38 +662,38 @@
               </div>
 
               <!-- Demo Cards + Controls (2 cols) -->
-              <div class="lg:col-span-2 space-y-4">
-                <h4 class="text-sm font-semibold text-muted uppercase tracking-wider">
+              <div class="space-y-4 lg:col-span-2">
+                <h4 class="text-muted text-sm font-semibold tracking-wider uppercase">
                   Select Demo
                 </h4>
                 <div
                   v-for="option in noiseDemoOptions"
                   :key="option.id"
-                  class="p-4 rounded-xl border cursor-pointer transition-all"
+                  class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activeNoiseDemo === option.id
-                      ? 'bg-violet-600/20 border-violet-500'
+                      ? 'border-violet-500 bg-violet-600/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activeNoiseDemo = option.id as DemoType)"
                 >
-                  <div class="flex items-center justify-between mb-1">
+                  <div class="mb-1 flex items-center justify-between">
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activeNoiseDemo === option.id"
-                      class="w-2 h-2 rounded-full bg-violet-400"
+                      class="h-2 w-2 rounded-full bg-violet-400"
                     />
                   </div>
-                  <p class="text-sm text-muted">{{ option.description }}</p>
+                  <p class="text-muted text-sm">{{ option.description }}</p>
                 </div>
 
                 <!-- Controls Panel -->
-                <div class="p-4 bg-accented/50 border border-accented rounded-xl space-y-4">
+                <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4">
                   <h5 class="text-sm font-semibold text-violet-400">Controls</h5>
 
                   <div class="space-y-3">
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Speed</span>
                         <span>{{ noiseControls.speed.toFixed(1) }}x</span>
                       </div>
@@ -703,12 +703,12 @@
                         min="0"
                         max="3"
                         step="0.1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-violet-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
                       />
                     </div>
 
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Mouse Strength</span>
                         <span>{{ noiseControls.mouseStrength.toFixed(1) }}</span>
                       </div>
@@ -718,31 +718,31 @@
                         min="0"
                         max="2"
                         step="0.1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-violet-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
                       />
                     </div>
 
                     <!-- Toggles -->
                     <div class="flex items-center justify-between pt-2">
-                      <span class="text-xs text-muted">Mouse Interaction</span>
+                      <span class="text-muted text-xs">Mouse Interaction</span>
                       <USwitch v-model="noiseControls.mouseInteraction" />
                     </div>
 
                     <div class="flex items-center justify-between">
-                      <span class="text-xs text-muted">Enable Zoom/Pan</span>
+                      <span class="text-muted text-xs">Enable Zoom/Pan</span>
                       <USwitch v-model="noiseControls.enableZoom" />
                     </div>
                   </div>
                 </div>
 
-                <div class="p-4 bg-accented/30 rounded-xl">
-                  <h5 class="text-xs font-semibold text-muted uppercase mb-2">Active Functions</h5>
+                <div class="bg-accented/30 rounded-xl p-4">
+                  <h5 class="text-muted mb-2 text-xs font-semibold uppercase">Active Functions</h5>
                   <div class="flex flex-wrap gap-2">
-                    <code class="text-xs bg-accented px-2 py-1 rounded text-violet-300">
+                    <code class="bg-accented rounded px-2 py-1 text-xs text-violet-300">
                       simplexNoise2D
                     </code>
-                    <code class="text-xs bg-accented px-2 py-1 rounded text-violet-300">fbm</code>
-                    <code class="text-xs bg-accented px-2 py-1 rounded text-violet-300">
+                    <code class="bg-accented rounded px-2 py-1 text-xs text-violet-300">fbm</code>
+                    <code class="bg-accented rounded px-2 py-1 text-xs text-violet-300">
                       hash21
                     </code>
                   </div>
@@ -753,14 +753,14 @@
             <!-- Function List -->
             <div v-for="category in ['Basic', 'FBM', 'Advanced']" :key="category" class="space-y-4">
               <h3 class="text-xl font-semibold text-violet-400">{{ category }} Noise</h3>
-              <div class="grid md:grid-cols-2 gap-4">
+              <div class="grid gap-4 md:grid-cols-2">
                 <div
                   v-for="fn in noiseFunctions.filter((f) => f.category === category)"
                   :key="fn.name"
-                  class="bg-accented/50 border border-accented rounded-xl p-4"
+                  class="bg-accented/50 border-accented rounded-xl border p-4"
                 >
-                  <div class="flex items-center gap-2 mb-1">
-                    <code class="text-violet-300 font-mono text-sm">{{ fn.name }}</code>
+                  <div class="mb-1 flex items-center gap-2">
+                    <code class="font-mono text-sm text-violet-300">{{ fn.name }}</code>
                     <UBadge v-if="fn.isNew" color="success" size="xs">NEW</UBadge>
                   </div>
                   <p class="text-muted text-sm">{{ fn.description }}</p>
@@ -772,7 +772,7 @@
           <!-- SDF Section -->
           <div v-if="activeCategory === 'sdf'" class="space-y-8">
             <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-4">SDF Shapes & Operations</h2>
+              <h2 class="mb-4 text-3xl font-bold">SDF Shapes & Operations</h2>
               <p class="text-muted">
                 Signed Distance Field primitives for procedural geometry. Combine shapes with smooth
                 blending operations.
@@ -780,9 +780,9 @@
             </div>
 
             <!-- Interactive Demo with Cards -->
-            <div class="grid lg:grid-cols-5 gap-6 mb-12">
+            <div class="mb-12 grid gap-6 lg:grid-cols-5">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-muted rounded-2xl overflow-hidden relative"
+                class="bg-muted relative aspect-square overflow-hidden rounded-2xl lg:col-span-3 lg:aspect-auto lg:h-125"
                 @mousemove="onCanvasMouseMove"
               >
                 <ShaderDemoCanvas
@@ -795,7 +795,7 @@
                   :disable-zoom="!sdfControls.enableZoom"
                 />
                 <div
-                  class="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded-lg text-sm"
+                  class="absolute top-4 left-4 rounded-lg bg-black/60 px-3 py-1 text-sm backdrop-blur"
                 >
                   {{
                     sdfControls.mouseInteraction
@@ -805,38 +805,38 @@
                 </div>
               </div>
 
-              <div class="lg:col-span-2 space-y-4">
-                <h4 class="text-sm font-semibold text-muted uppercase tracking-wider">
+              <div class="space-y-4 lg:col-span-2">
+                <h4 class="text-muted text-sm font-semibold tracking-wider uppercase">
                   Select Demo
                 </h4>
                 <div
                   v-for="option in sdfDemoOptions"
                   :key="option.id"
-                  class="p-4 rounded-xl border cursor-pointer transition-all"
+                  class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activeSdfDemo === option.id
-                      ? 'bg-violet-600/20 border-violet-500'
+                      ? 'border-violet-500 bg-violet-600/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activeSdfDemo = option.id as DemoType)"
                 >
-                  <div class="flex items-center justify-between mb-1">
+                  <div class="mb-1 flex items-center justify-between">
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activeSdfDemo === option.id"
-                      class="w-2 h-2 rounded-full bg-violet-400"
+                      class="h-2 w-2 rounded-full bg-violet-400"
                     />
                   </div>
-                  <p class="text-sm text-muted">{{ option.description }}</p>
+                  <p class="text-muted text-sm">{{ option.description }}</p>
                 </div>
 
                 <!-- Controls Panel -->
-                <div class="p-4 bg-accented/50 border border-accented rounded-xl space-y-4">
+                <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4">
                   <h5 class="text-sm font-semibold text-cyan-400">Controls</h5>
 
                   <div class="space-y-3">
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Speed</span>
                         <span>{{ sdfControls.speed.toFixed(1) }}x</span>
                       </div>
@@ -846,12 +846,12 @@
                         min="0"
                         max="3"
                         step="0.1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-cyan-500"
                       />
                     </div>
 
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Mouse Strength</span>
                         <span>{{ sdfControls.mouseStrength.toFixed(1) }}</span>
                       </div>
@@ -861,31 +861,31 @@
                         min="0"
                         max="1"
                         step="0.1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-cyan-500"
                       />
                     </div>
 
                     <!-- Toggles -->
                     <div class="flex items-center justify-between pt-2">
-                      <span class="text-xs text-muted">Mouse Interaction</span>
+                      <span class="text-muted text-xs">Mouse Interaction</span>
                       <USwitch v-model="sdfControls.mouseInteraction" />
                     </div>
 
                     <div class="flex items-center justify-between">
-                      <span class="text-xs text-muted">Enable Zoom/Pan</span>
+                      <span class="text-muted text-xs">Enable Zoom/Pan</span>
                       <USwitch v-model="sdfControls.enableZoom" />
                     </div>
                   </div>
                 </div>
 
-                <div class="p-4 bg-accented/30 rounded-xl">
-                  <h5 class="text-xs font-semibold text-muted uppercase mb-2">Active Functions</h5>
+                <div class="bg-accented/30 rounded-xl p-4">
+                  <h5 class="text-muted mb-2 text-xs font-semibold uppercase">Active Functions</h5>
                   <div class="flex flex-wrap gap-2">
-                    <code class="text-xs bg-accented px-2 py-1 rounded text-cyan-300">
+                    <code class="bg-accented rounded px-2 py-1 text-xs text-cyan-300">
                       sdSphere
                     </code>
-                    <code class="text-xs bg-accented px-2 py-1 rounded text-cyan-300">smin</code>
-                    <code class="text-xs bg-accented px-2 py-1 rounded text-cyan-300">
+                    <code class="bg-accented rounded px-2 py-1 text-xs text-cyan-300">smin</code>
+                    <code class="bg-accented rounded px-2 py-1 text-xs text-cyan-300">
                       smoothstep
                     </code>
                   </div>
@@ -894,15 +894,15 @@
             </div>
 
             <!-- Shapes Grid -->
-            <div class="grid md:grid-cols-2 gap-4">
+            <div class="grid gap-4 md:grid-cols-2">
               <div
                 v-for="shape in sdfShapes"
                 :key="shape.name"
-                class="bg-accented/50 border border-accented rounded-lg p-4"
+                class="bg-accented/50 border-accented rounded-lg border p-4"
               >
-                <code class="text-violet-300 font-mono text-sm">{{ shape.name }}</code>
-                <code class="text-muted font-mono text-xs ml-2">({{ shape.params }})</code>
-                <p class="text-muted text-sm mt-1">{{ shape.description }}</p>
+                <code class="font-mono text-sm text-violet-300">{{ shape.name }}</code>
+                <code class="text-muted ml-2 font-mono text-xs">({{ shape.params }})</code>
+                <p class="text-muted mt-1 text-sm">{{ shape.description }}</p>
               </div>
             </div>
           </div>
@@ -910,16 +910,16 @@
           <!-- Lighting Section -->
           <div v-if="activeCategory === 'lighting'" class="space-y-8">
             <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-4">Lighting Models</h2>
+              <h2 class="mb-4 text-3xl font-bold">Lighting Models</h2>
               <p class="text-muted">
                 Common lighting functions for 3D shading - fresnel, diffuse, specular, and combined
                 models.
               </p>
             </div>
 
-            <div class="grid lg:grid-cols-5 gap-6 mb-12">
+            <div class="mb-12 grid gap-6 lg:grid-cols-5">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-muted rounded-2xl overflow-hidden relative"
+                class="bg-muted relative aspect-square overflow-hidden rounded-2xl lg:col-span-3 lg:aspect-auto lg:h-125"
                 @mousemove="onCanvasMouseMove"
               >
                 <ShaderDemoCanvas
@@ -931,7 +931,7 @@
                   :disable-zoom="!lightingControls.enableZoom"
                 />
                 <div
-                  class="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded-lg text-sm"
+                  class="absolute top-4 left-4 rounded-lg bg-black/60 px-3 py-1 text-sm backdrop-blur"
                 >
                   {{
                     lightingControls.enableZoom
@@ -943,38 +943,38 @@
                 </div>
               </div>
 
-              <div class="lg:col-span-2 space-y-4">
-                <h4 class="text-sm font-semibold text-muted uppercase tracking-wider">
+              <div class="space-y-4 lg:col-span-2">
+                <h4 class="text-muted text-sm font-semibold tracking-wider uppercase">
                   Select Demo
                 </h4>
                 <div
                   v-for="option in lightingDemoOptions"
                   :key="option.id"
-                  class="p-4 rounded-xl border cursor-pointer transition-all"
+                  class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activeLightingDemo === option.id
-                      ? 'bg-violet-600/20 border-violet-500'
+                      ? 'border-violet-500 bg-violet-600/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activeLightingDemo = option.id as DemoType)"
                 >
-                  <div class="flex items-center justify-between mb-1">
+                  <div class="mb-1 flex items-center justify-between">
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activeLightingDemo === option.id"
-                      class="w-2 h-2 rounded-full bg-violet-400"
+                      class="h-2 w-2 rounded-full bg-violet-400"
                     />
                   </div>
-                  <p class="text-sm text-muted">{{ option.description }}</p>
+                  <p class="text-muted text-sm">{{ option.description }}</p>
                 </div>
 
                 <!-- Controls Panel -->
-                <div class="p-4 bg-accented/50 border border-accented rounded-xl space-y-4">
+                <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4">
                   <h5 class="text-sm font-semibold text-pink-400">Controls</h5>
 
                   <div class="space-y-3">
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Speed</span>
                         <span>{{ lightingControls.speed.toFixed(1) }}x</span>
                       </div>
@@ -984,44 +984,44 @@
                         min="0"
                         max="3"
                         step="0.1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-pink-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-pink-500"
                       />
                     </div>
 
                     <div class="flex items-center justify-between pt-2">
-                      <span class="text-xs text-muted">Mouse Interaction</span>
+                      <span class="text-muted text-xs">Mouse Interaction</span>
                       <USwitch v-model="lightingControls.mouseInteraction" />
                     </div>
 
                     <div class="flex items-center justify-between">
-                      <span class="text-xs text-muted">Enable Zoom/Pan</span>
+                      <span class="text-muted text-xs">Enable Zoom/Pan</span>
                       <USwitch v-model="lightingControls.enableZoom" />
                     </div>
                   </div>
                 </div>
 
-                <div class="p-4 bg-accented/30 rounded-xl">
-                  <h5 class="text-xs font-semibold text-muted uppercase mb-2">Active Functions</h5>
+                <div class="bg-accented/30 rounded-xl p-4">
+                  <h5 class="text-muted mb-2 text-xs font-semibold uppercase">Active Functions</h5>
                   <div class="flex flex-wrap gap-2">
-                    <code class="text-xs bg-accented px-2 py-1 rounded text-pink-300">fresnel</code>
-                    <code class="text-xs bg-accented px-2 py-1 rounded text-pink-300">
+                    <code class="bg-accented rounded px-2 py-1 text-xs text-pink-300">fresnel</code>
+                    <code class="bg-accented rounded px-2 py-1 text-xs text-pink-300">
                       normalize
                     </code>
-                    <code class="text-xs bg-accented px-2 py-1 rounded text-pink-300">dot</code>
+                    <code class="bg-accented rounded px-2 py-1 text-xs text-pink-300">dot</code>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-4">
+            <div class="grid gap-4 md:grid-cols-2">
               <div
                 v-for="fn in lightingFunctions"
                 :key="fn.name"
-                class="bg-accented/50 border border-accented rounded-xl p-5"
+                class="bg-accented/50 border-accented rounded-xl border p-5"
               >
-                <code class="text-violet-300 font-mono">{{ fn.name }}</code>
-                <p class="text-muted text-sm mt-2">{{ fn.description }}</p>
-                <code class="text-muted font-mono text-xs mt-2 block">{{ fn.params }}</code>
+                <code class="font-mono text-violet-300">{{ fn.name }}</code>
+                <p class="text-muted mt-2 text-sm">{{ fn.description }}</p>
+                <code class="text-muted mt-2 block font-mono text-xs">{{ fn.params }}</code>
               </div>
             </div>
           </div>
@@ -1029,15 +1029,15 @@
           <!-- Tonemapping Section -->
           <div v-if="activeCategory === 'tonemapping'" class="space-y-8">
             <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-4">Tonemapping Operators</h2>
+              <h2 class="mb-4 text-3xl font-bold">Tonemapping Operators</h2>
               <p class="text-muted">
                 HDR to LDR conversion with various looks - from photorealistic to stylized.
               </p>
             </div>
 
-            <div class="grid lg:grid-cols-5 gap-6 mb-12">
+            <div class="mb-12 grid gap-6 lg:grid-cols-5">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-muted rounded-2xl overflow-hidden relative"
+                class="bg-muted relative aspect-square overflow-hidden rounded-2xl lg:col-span-3 lg:aspect-auto lg:h-125"
                 @mousemove="onCanvasMouseMove"
               >
                 <ShaderDemoCanvas
@@ -1050,44 +1050,44 @@
                   :disable-zoom="!tonemappingControls.enableZoom"
                 />
                 <div
-                  class="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded-lg text-sm"
+                  class="absolute top-4 left-4 rounded-lg bg-black/60 px-3 py-1 text-sm backdrop-blur"
                 >
                   {{ tonemappingControls.mouseInteraction ? 'HDR Color Demo' : 'Mouse disabled' }}
                 </div>
               </div>
 
-              <div class="lg:col-span-2 space-y-4">
-                <h4 class="text-sm font-semibold text-muted uppercase tracking-wider">
+              <div class="space-y-4 lg:col-span-2">
+                <h4 class="text-muted text-sm font-semibold tracking-wider uppercase">
                   Select Demo
                 </h4>
                 <div
                   v-for="option in tonemappingDemoOptions"
                   :key="option.id"
-                  class="p-4 rounded-xl border cursor-pointer transition-all"
+                  class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activeTonemappingDemo === option.id
-                      ? 'bg-violet-600/20 border-violet-500'
+                      ? 'border-violet-500 bg-violet-600/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activeTonemappingDemo = option.id as DemoType)"
                 >
-                  <div class="flex items-center justify-between mb-1">
+                  <div class="mb-1 flex items-center justify-between">
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activeTonemappingDemo === option.id"
-                      class="w-2 h-2 rounded-full bg-violet-400"
+                      class="h-2 w-2 rounded-full bg-violet-400"
                     />
                   </div>
-                  <p class="text-sm text-muted">{{ option.description }}</p>
+                  <p class="text-muted text-sm">{{ option.description }}</p>
                 </div>
 
                 <!-- Controls Panel -->
-                <div class="p-4 bg-accented/50 border border-accented rounded-xl space-y-4">
+                <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4">
                   <h5 class="text-sm font-semibold text-amber-400">Controls</h5>
 
                   <div class="space-y-3">
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Speed</span>
                         <span>{{ tonemappingControls.speed.toFixed(1) }}x</span>
                       </div>
@@ -1097,12 +1097,12 @@
                         min="0"
                         max="3"
                         step="0.1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-amber-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-amber-500"
                       />
                     </div>
 
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Mouse Strength</span>
                         <span>{{ tonemappingControls.mouseStrength.toFixed(1) }}</span>
                       </div>
@@ -1112,18 +1112,18 @@
                         min="0"
                         max="1"
                         step="0.1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-amber-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-amber-500"
                       />
                     </div>
 
                     <!-- Toggles -->
                     <div class="flex items-center justify-between pt-2">
-                      <span class="text-xs text-muted">Mouse Interaction</span>
+                      <span class="text-muted text-xs">Mouse Interaction</span>
                       <USwitch v-model="tonemappingControls.mouseInteraction" />
                     </div>
 
                     <div class="flex items-center justify-between">
-                      <span class="text-xs text-muted">Enable Zoom/Pan</span>
+                      <span class="text-muted text-xs">Enable Zoom/Pan</span>
                       <USwitch v-model="tonemappingControls.enableZoom" />
                     </div>
                   </div>
@@ -1138,14 +1138,14 @@
               >
                 {{ style }} Tonemapping
               </h3>
-              <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <div
                   v-for="fn in tonemappingFunctions.filter((f) => f.style === style)"
                   :key="fn.name"
-                  class="bg-accented/50 border border-accented rounded-lg p-4"
+                  class="bg-accented/50 border-accented rounded-lg border p-4"
                 >
                   <code class="text-default font-mono text-sm">{{ fn.name }}</code>
-                  <p class="text-muted text-sm mt-1">{{ fn.description }}</p>
+                  <p class="text-muted mt-1 text-sm">{{ fn.description }}</p>
                 </div>
               </div>
             </div>
@@ -1154,13 +1154,13 @@
           <!-- Patterns Section -->
           <div v-if="activeCategory === 'patterns'" class="space-y-8">
             <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-4">Procedural Patterns</h2>
+              <h2 class="mb-4 text-3xl font-bold">Procedural Patterns</h2>
               <p class="text-muted">Texture patterns for materials and visual effects.</p>
             </div>
 
-            <div class="grid lg:grid-cols-5 gap-6 mb-12">
+            <div class="mb-12 grid gap-6 lg:grid-cols-5">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-muted rounded-2xl overflow-hidden relative"
+                class="bg-muted relative aspect-square overflow-hidden rounded-2xl lg:col-span-3 lg:aspect-auto lg:h-125"
                 @mousemove="onCanvasMouseMove"
               >
                 <ShaderDemoCanvas
@@ -1173,44 +1173,44 @@
                   :disable-zoom="!patternControls.enableZoom"
                 />
                 <div
-                  class="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded-lg text-sm"
+                  class="absolute top-4 left-4 rounded-lg bg-black/60 px-3 py-1 text-sm backdrop-blur"
                 >
                   {{ patternControls.mouseInteraction ? 'Procedural Pattern' : 'Mouse disabled' }}
                 </div>
               </div>
 
-              <div class="lg:col-span-2 space-y-4">
-                <h4 class="text-sm font-semibold text-muted uppercase tracking-wider">
+              <div class="space-y-4 lg:col-span-2">
+                <h4 class="text-muted text-sm font-semibold tracking-wider uppercase">
                   Select Demo
                 </h4>
                 <div
                   v-for="option in patternDemoOptions"
                   :key="option.id"
-                  class="p-4 rounded-xl border cursor-pointer transition-all"
+                  class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activePatternDemo === option.id
-                      ? 'bg-violet-600/20 border-violet-500'
+                      ? 'border-violet-500 bg-violet-600/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activePatternDemo = option.id as DemoType)"
                 >
-                  <div class="flex items-center justify-between mb-1">
+                  <div class="mb-1 flex items-center justify-between">
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activePatternDemo === option.id"
-                      class="w-2 h-2 rounded-full bg-violet-400"
+                      class="h-2 w-2 rounded-full bg-violet-400"
                     />
                   </div>
-                  <p class="text-sm text-muted">{{ option.description }}</p>
+                  <p class="text-muted text-sm">{{ option.description }}</p>
                 </div>
 
                 <!-- Controls Panel -->
-                <div class="p-4 bg-accented/50 border border-accented rounded-xl space-y-4">
+                <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4">
                   <h5 class="text-sm font-semibold text-emerald-400">Controls</h5>
 
                   <div class="space-y-3">
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Speed</span>
                         <span>{{ patternControls.speed.toFixed(1) }}x</span>
                       </div>
@@ -1220,12 +1220,12 @@
                         min="0"
                         max="3"
                         step="0.1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-emerald-500"
                       />
                     </div>
 
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Mouse Strength</span>
                         <span>{{ patternControls.mouseStrength.toFixed(1) }}</span>
                       </div>
@@ -1235,18 +1235,18 @@
                         min="0"
                         max="1"
                         step="0.1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-emerald-500"
                       />
                     </div>
 
                     <!-- Toggles -->
                     <div class="flex items-center justify-between pt-2">
-                      <span class="text-xs text-muted">Mouse Interaction</span>
+                      <span class="text-muted text-xs">Mouse Interaction</span>
                       <USwitch v-model="patternControls.mouseInteraction" />
                     </div>
 
                     <div class="flex items-center justify-between">
-                      <span class="text-xs text-muted">Enable Zoom/Pan</span>
+                      <span class="text-muted text-xs">Enable Zoom/Pan</span>
                       <USwitch v-model="patternControls.enableZoom" />
                     </div>
                   </div>
@@ -1254,14 +1254,14 @@
               </div>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               <div
                 v-for="fn in patternFunctions"
                 :key="fn.name"
-                class="bg-accented/50 border border-accented rounded-xl p-5"
+                class="bg-accented/50 border-accented rounded-xl border p-5"
               >
-                <div class="flex items-center gap-2 mb-2">
-                  <code class="text-violet-300 font-mono">{{ fn.name }}</code>
+                <div class="mb-2 flex items-center gap-2">
+                  <code class="font-mono text-violet-300">{{ fn.name }}</code>
                   <UBadge v-if="fn.isNew" color="success" size="xs">NEW</UBadge>
                 </div>
                 <p class="text-muted text-sm">{{ fn.description }}</p>
@@ -1272,15 +1272,15 @@
           <!-- Effects Section -->
           <div v-if="activeCategory === 'effects'" class="space-y-8">
             <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-4">Post-Processing Effects</h2>
+              <h2 class="mb-4 text-3xl font-bold">Post-Processing Effects</h2>
               <p class="text-muted">
                 Effects that sample and process textures for post-processing pipelines.
               </p>
             </div>
 
-            <div class="grid lg:grid-cols-5 gap-6 mb-12">
+            <div class="mb-12 grid gap-6 lg:grid-cols-5">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-muted rounded-2xl overflow-hidden relative"
+                class="bg-muted relative aspect-square overflow-hidden rounded-2xl lg:col-span-3 lg:aspect-auto lg:h-125"
                 @mousemove="onCanvasMouseMove"
               >
                 <template v-if="activeEffectDemo === 'image'">
@@ -1305,47 +1305,47 @@
                   />
                 </template>
                 <div
-                  class="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded-lg text-sm"
+                  class="absolute top-4 left-4 rounded-lg bg-black/60 px-3 py-1 text-sm backdrop-blur"
                 >
                   Move mouse to interact
                 </div>
               </div>
 
-              <div class="lg:col-span-2 space-y-4">
-                <h4 class="text-sm font-semibold text-muted uppercase tracking-wider">
+              <div class="space-y-4 lg:col-span-2">
+                <h4 class="text-muted text-sm font-semibold tracking-wider uppercase">
                   Select Demo
                 </h4>
                 <div
                   v-for="option in effectDemoOptions"
                   :key="option.id"
-                  class="p-4 rounded-xl border cursor-pointer transition-all"
+                  class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activeEffectDemo === option.id
-                      ? 'bg-violet-600/20 border-violet-500'
+                      ? 'border-violet-500 bg-violet-600/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activeEffectDemo = option.id as DemoType)"
                 >
-                  <div class="flex items-center justify-between mb-1">
+                  <div class="mb-1 flex items-center justify-between">
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activeEffectDemo === option.id"
-                      class="w-2 h-2 rounded-full bg-violet-400"
+                      class="h-2 w-2 rounded-full bg-violet-400"
                     />
                   </div>
-                  <p class="text-sm text-muted">{{ option.description }}</p>
+                  <p class="text-muted text-sm">{{ option.description }}</p>
                 </div>
 
                 <!-- Controls Panel (shown for image demo) -->
                 <div
                   v-if="activeEffectDemo === 'image'"
-                  class="p-4 bg-accented/50 border border-accented rounded-xl space-y-4"
+                  class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4"
                 >
                   <h5 class="text-sm font-semibold text-pink-400">Effect Controls</h5>
 
                   <div class="space-y-3">
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Distortion</span>
                         <span>{{ effectControls.distortion.toFixed(2) }}</span>
                       </div>
@@ -1355,12 +1355,12 @@
                         min="0"
                         max="0.1"
                         step="0.01"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-pink-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-pink-500"
                       />
                     </div>
 
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>RGB Shift</span>
                         <span>{{ effectControls.rgbShift }}</span>
                       </div>
@@ -1370,12 +1370,12 @@
                         min="0"
                         max="10"
                         step="1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-pink-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-pink-500"
                       />
                     </div>
 
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Grayscale</span>
                         <span>{{ Math.round(effectControls.grayscale * 100) }}%</span>
                       </div>
@@ -1385,23 +1385,23 @@
                         min="0"
                         max="1"
                         step="0.1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-pink-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-pink-500"
                       />
                     </div>
 
                     <!-- Toggle switches -->
                     <div class="flex items-center justify-between pt-2">
-                      <span class="text-xs text-muted">Mouse Ripple</span>
+                      <span class="text-muted text-xs">Mouse Ripple</span>
                       <USwitch v-model="effectControls.mouseRipple" />
                     </div>
 
                     <div class="flex items-center justify-between">
-                      <span class="text-xs text-muted">Vignette</span>
+                      <span class="text-muted text-xs">Vignette</span>
                       <USwitch v-model="effectControls.vignette" />
                     </div>
 
                     <div class="flex items-center justify-between">
-                      <span class="text-xs text-muted">Enable Zoom/Pan</span>
+                      <span class="text-muted text-xs">Enable Zoom/Pan</span>
                       <USwitch v-model="effectControls.enableZoom" />
                     </div>
                   </div>
@@ -1409,15 +1409,15 @@
               </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-4">
+            <div class="grid gap-4 md:grid-cols-2">
               <div
                 v-for="fn in effectFunctions"
                 :key="fn.name"
-                class="bg-accented/50 border border-accented rounded-xl p-5"
+                class="bg-accented/50 border-accented rounded-xl border p-5"
               >
-                <code class="text-violet-300 font-mono">{{ fn.name }}</code>
-                <p class="text-muted text-sm mt-2">{{ fn.description }}</p>
-                <code class="text-muted font-mono text-xs mt-2 block">{{ fn.params }}</code>
+                <code class="font-mono text-violet-300">{{ fn.name }}</code>
+                <p class="text-muted mt-2 text-sm">{{ fn.description }}</p>
+                <code class="text-muted mt-2 block font-mono text-xs">{{ fn.params }}</code>
               </div>
             </div>
           </div>
@@ -1425,15 +1425,15 @@
           <!-- Math Section -->
           <div v-if="activeCategory === 'math'" class="space-y-8">
             <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-4">Math Utilities</h2>
+              <h2 class="mb-4 text-3xl font-bold">Math Utilities</h2>
               <p class="text-muted">
                 Hyperbolic functions, complex number operations, and coordinate utilities.
               </p>
             </div>
 
-            <div class="grid lg:grid-cols-5 gap-6 mb-12">
+            <div class="mb-12 grid gap-6 lg:grid-cols-5">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-muted rounded-2xl overflow-hidden relative"
+                class="bg-muted relative aspect-square overflow-hidden rounded-2xl lg:col-span-3 lg:aspect-auto lg:h-125"
                 @mousemove="onCanvasMouseMove"
               >
                 <ShaderDemoCanvas
@@ -1446,20 +1446,20 @@
                   :disable-zoom="!mathControls.enableZoom"
                 />
                 <div
-                  class="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded-lg text-sm"
+                  class="absolute top-4 left-4 rounded-lg bg-black/60 px-3 py-1 text-sm backdrop-blur"
                 >
                   {{ mathControls.mouseInteraction ? 'Polar Coordinates' : 'Mouse disabled' }}
                 </div>
               </div>
 
-              <div class="lg:col-span-2 space-y-4">
+              <div class="space-y-4 lg:col-span-2">
                 <!-- Controls Panel -->
-                <div class="p-4 bg-accented/50 border border-accented rounded-xl space-y-4">
+                <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4">
                   <h5 class="text-sm font-semibold text-violet-400">Controls</h5>
 
                   <div class="space-y-3">
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Speed</span>
                         <span>{{ mathControls.speed.toFixed(1) }}x</span>
                       </div>
@@ -1469,12 +1469,12 @@
                         min="0"
                         max="3"
                         step="0.1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-violet-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
                       />
                     </div>
 
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Mouse Strength</span>
                         <span>{{ mathControls.mouseStrength.toFixed(1) }}</span>
                       </div>
@@ -1484,18 +1484,18 @@
                         min="0"
                         max="1"
                         step="0.1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-violet-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
                       />
                     </div>
 
                     <!-- Toggles -->
                     <div class="flex items-center justify-between pt-2">
-                      <span class="text-xs text-muted">Mouse Interaction</span>
+                      <span class="text-muted text-xs">Mouse Interaction</span>
                       <USwitch v-model="mathControls.mouseInteraction" />
                     </div>
 
                     <div class="flex items-center justify-between">
-                      <span class="text-xs text-muted">Enable Zoom/Pan</span>
+                      <span class="text-muted text-xs">Enable Zoom/Pan</span>
                       <USwitch v-model="mathControls.enableZoom" />
                     </div>
                   </div>
@@ -1520,7 +1520,7 @@
                     <code
                       v-for="fn in mathFunctions.filter((f) => f.category === category)"
                       :key="fn.name"
-                      class="bg-accented px-2 py-1 rounded text-xs text-toned"
+                      class="bg-accented text-toned rounded px-2 py-1 text-xs"
                     >
                       {{ fn.name.split(' / ')[0] }}
                     </code>
@@ -1544,14 +1544,14 @@
               >
                 {{ category }} Functions
               </h3>
-              <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <div
                   v-for="fn in mathFunctions.filter((f) => f.category === category)"
                   :key="fn.name"
-                  class="bg-accented/50 border border-accented rounded-lg p-4"
+                  class="bg-accented/50 border-accented rounded-lg border p-4"
                 >
                   <code class="text-default font-mono text-sm">{{ fn.name }}</code>
-                  <p class="text-muted text-sm mt-1">{{ fn.description }}</p>
+                  <p class="text-muted mt-1 text-sm">{{ fn.description }}</p>
                 </div>
               </div>
             </div>
@@ -1560,13 +1560,13 @@
           <!-- UV & Grain Section -->
           <div v-if="activeCategory === 'uv'" class="space-y-8">
             <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-4">UV Manipulation & Grain Effects</h2>
+              <h2 class="mb-4 text-3xl font-bold">UV Manipulation & Grain Effects</h2>
               <p class="text-muted">Transform, distort, and add texture to your shaders.</p>
             </div>
 
-            <div class="grid lg:grid-cols-5 gap-6 mb-12">
+            <div class="mb-12 grid gap-6 lg:grid-cols-5">
               <div
-                class="lg:col-span-3 aspect-square lg:aspect-auto lg:h-125 bg-muted rounded-2xl overflow-hidden relative"
+                class="bg-muted relative aspect-square overflow-hidden rounded-2xl lg:col-span-3 lg:aspect-auto lg:h-125"
                 @mousemove="onCanvasMouseMove"
               >
                 <template v-if="activeUvDemo === 'image'">
@@ -1591,47 +1591,47 @@
                   />
                 </template>
                 <div
-                  class="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded-lg text-sm"
+                  class="absolute top-4 left-4 rounded-lg bg-black/60 px-3 py-1 text-sm backdrop-blur"
                 >
                   Move mouse for ripple effect
                 </div>
               </div>
 
-              <div class="lg:col-span-2 space-y-4">
-                <h4 class="text-sm font-semibold text-muted uppercase tracking-wider">
+              <div class="space-y-4 lg:col-span-2">
+                <h4 class="text-muted text-sm font-semibold tracking-wider uppercase">
                   Select Demo
                 </h4>
                 <div
                   v-for="option in uvDemoOptions"
                   :key="option.id"
-                  class="p-4 rounded-xl border cursor-pointer transition-all"
+                  class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activeUvDemo === option.id
-                      ? 'bg-violet-600/20 border-violet-500'
+                      ? 'border-violet-500 bg-violet-600/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activeUvDemo = option.id as DemoType)"
                 >
-                  <div class="flex items-center justify-between mb-1">
+                  <div class="mb-1 flex items-center justify-between">
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activeUvDemo === option.id"
-                      class="w-2 h-2 rounded-full bg-violet-400"
+                      class="h-2 w-2 rounded-full bg-violet-400"
                     />
                   </div>
-                  <p class="text-sm text-muted">{{ option.description }}</p>
+                  <p class="text-muted text-sm">{{ option.description }}</p>
                 </div>
 
                 <!-- Controls Panel (shown for image demo) -->
                 <div
                   v-if="activeUvDemo === 'image'"
-                  class="p-4 bg-accented/50 border border-accented rounded-xl space-y-4"
+                  class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4"
                 >
                   <h5 class="text-sm font-semibold text-violet-400">UV Controls</h5>
 
                   <div class="space-y-3">
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>Distortion</span>
                         <span>{{ uvControls.distortion.toFixed(2) }}</span>
                       </div>
@@ -1641,12 +1641,12 @@
                         min="0"
                         max="0.15"
                         step="0.01"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-violet-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
                       />
                     </div>
 
                     <div>
-                      <div class="flex justify-between text-xs text-muted mb-1">
+                      <div class="text-muted mb-1 flex justify-between text-xs">
                         <span>RGB Shift</span>
                         <span>{{ uvControls.rgbShift }}</span>
                       </div>
@@ -1656,23 +1656,23 @@
                         min="0"
                         max="15"
                         step="1"
-                        class="w-full h-2 bg-accented rounded-lg appearance-none cursor-pointer accent-violet-500"
+                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
                       />
                     </div>
 
                     <!-- Toggle switches -->
                     <div class="flex items-center justify-between pt-2">
-                      <span class="text-xs text-muted">Mouse Ripple</span>
+                      <span class="text-muted text-xs">Mouse Ripple</span>
                       <USwitch v-model="uvControls.mouseRipple" />
                     </div>
 
                     <div class="flex items-center justify-between">
-                      <span class="text-xs text-muted">Vignette</span>
+                      <span class="text-muted text-xs">Vignette</span>
                       <USwitch v-model="uvControls.vignette" />
                     </div>
 
                     <div class="flex items-center justify-between">
-                      <span class="text-xs text-muted">Enable Zoom/Pan</span>
+                      <span class="text-muted text-xs">Enable Zoom/Pan</span>
                       <USwitch v-model="uvControls.enableZoom" />
                     </div>
                   </div>
@@ -1680,18 +1680,18 @@
               </div>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-8">
+            <div class="grid gap-8 lg:grid-cols-2">
               <div>
-                <h3 class="text-xl font-semibold text-violet-400 mb-4">UV Functions</h3>
-                <div class="space-y-2 max-h-100 overflow-y-auto pr-2">
+                <h3 class="mb-4 text-xl font-semibold text-violet-400">UV Functions</h3>
+                <div class="max-h-100 space-y-2 overflow-y-auto pr-2">
                   <div
                     v-for="fn in uvFunctions"
                     :key="fn.name"
-                    class="bg-accented/50 border border-accented rounded-lg p-3 flex items-center justify-between"
+                    class="bg-accented/50 border-accented flex items-center justify-between rounded-lg border p-3"
                   >
                     <div>
-                      <code class="text-violet-300 font-mono text-sm">{{ fn.name }}</code>
-                      <p class="text-muted text-xs mt-0.5">{{ fn.description }}</p>
+                      <code class="font-mono text-sm text-violet-300">{{ fn.name }}</code>
+                      <p class="text-muted mt-0.5 text-xs">{{ fn.description }}</p>
                     </div>
                     <UBadge v-if="fn.isNew" color="success" size="xs">NEW</UBadge>
                   </div>
@@ -1699,16 +1699,16 @@
               </div>
 
               <div>
-                <h3 class="text-xl font-semibold text-cyan-400 mb-4">Grain & Dithering</h3>
-                <div class="space-y-2 max-h-100 overflow-y-auto pr-2">
+                <h3 class="mb-4 text-xl font-semibold text-cyan-400">Grain & Dithering</h3>
+                <div class="max-h-100 space-y-2 overflow-y-auto pr-2">
                   <div
                     v-for="fn in grainFunctions"
                     :key="fn.name"
-                    class="bg-accented/50 border border-accented rounded-lg p-3 flex items-center justify-between"
+                    class="bg-accented/50 border-accented flex items-center justify-between rounded-lg border p-3"
                   >
                     <div>
-                      <code class="text-cyan-300 font-mono text-sm">{{ fn.name }}</code>
-                      <p class="text-muted text-xs mt-0.5">{{ fn.description }}</p>
+                      <code class="font-mono text-sm text-cyan-300">{{ fn.name }}</code>
+                      <p class="text-muted mt-0.5 text-xs">{{ fn.description }}</p>
                     </div>
                     <UBadge v-if="fn.isNew" color="success" size="xs">NEW</UBadge>
                   </div>
@@ -1720,11 +1720,11 @@
       </section>
 
       <!-- Footer Navigation -->
-      <section class="py-16 border-t border-default">
+      <section class="border-default border-t py-16">
         <UContainer>
-          <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
+          <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
             <div>
-              <h2 class="text-2xl font-bold mb-2">Shader Layer</h2>
+              <h2 class="mb-2 text-2xl font-bold">Shader Layer</h2>
               <p class="text-muted">TSL utilities for procedural graphics</p>
             </div>
             <div class="flex flex-wrap gap-4">

@@ -17,7 +17,7 @@
 <template>
   <figure class="my-6">
     <img :src :alt :width :height class="w-full rounded-lg" />
-    <figcaption v-if="caption" class="mt-2 text-center text-sm text-muted italic">
+    <figcaption v-if="caption" class="text-muted mt-2 text-center text-sm italic">
       {{ caption }}
     </figcaption>
   </figure>

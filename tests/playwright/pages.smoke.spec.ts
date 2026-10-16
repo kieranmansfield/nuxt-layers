@@ -10,7 +10,7 @@ const pages = [
   { path: '/scrollytelling', name: /SCROLLY/i },
   { path: '/forms', name: 'FORMS' },
   { path: '/content', name: 'CONTENT' },
-  { path: '/theme', name: 'THEME' },
+  { path: '/theming', name: 'THEMING' },
   { path: '/ui', name: 'UI' },
   { path: '/seo', name: 'SEO' },
   { path: '/nav', name: 'NAVIGATION' },

@@ -1,6 +1,8 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 16b53df9009169219abcfac5d95c1a1d467b6a00..92dfcfaf5f26363bf6ef71a00d37473c20af116d 100644
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
-@@ -631,14 +631,16 @@
+@@ -720,14 +720,16 @@ function listenAndRestrict(server, socketPath) {
  			try {
  				fs.chmodSync(socketPath, 384);
  			} catch (error) {

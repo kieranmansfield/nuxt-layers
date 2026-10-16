@@ -75,14 +75,14 @@
 
 <template>
   <div class="vi-page">
-    <div class="mb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+    <div class="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-start">
       <div>
-        <h1 class="text-2xl font-semibold text-default mb-1">Export</h1>
+        <h1 class="text-default mb-1 text-2xl font-semibold">Export</h1>
         <p class="text-muted text-sm">
           Export your brand configuration as code or a portable JSON file.
         </p>
       </div>
-      <label class="cursor-pointer shrink-0">
+      <label class="shrink-0 cursor-pointer">
         <UButton icon="i-lucide-upload" variant="outline" color="neutral" size="sm" as="span">
           Import JSON
         </UButton>
@@ -90,51 +90,51 @@
       </label>
     </div>
 
-    <p v-if="importError" class="text-red-500 text-sm mb-4">{{ importError }}</p>
+    <p v-if="importError" class="mb-4 text-sm text-red-500">{{ importError }}</p>
 
     <div
       v-if="isEmpty"
-      class="text-center py-16 text-muted border-2 border-dashed border-default rounded-xl"
+      class="text-muted border-default rounded-xl border-2 border-dashed py-16 text-center"
     >
-      <UIcon name="i-lucide-download" class="size-10 mx-auto mb-3" />
-      <p class="text-sm mb-4">Add colours and typography settings before exporting.</p>
+      <UIcon name="i-lucide-download" class="mx-auto mb-3 size-10" />
+      <p class="mb-4 text-sm">Add colours and typography settings before exporting.</p>
       <UButton to="/colour/foundation" variant="outline" size="sm">Get started</UButton>
     </div>
 
     <div v-else>
       <!-- Summary -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+      <div class="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
         <UCard>
           <div class="flex items-center gap-3">
             <div class="flex -space-x-2">
               <div
                 v-for="colour in state.colours.slice(0, 4)"
                 :key="colour.id"
-                class="size-6 rounded-full border-2 border-default"
+                class="border-default size-6 rounded-full border-2"
                 :style="{ backgroundColor: colour.hex }"
               />
             </div>
             <div>
-              <p class="text-xs text-muted">Colours</p>
-              <p class="font-semibold text-default">{{ state.colours.length }}</p>
+              <p class="text-muted text-xs">Colours</p>
+              <p class="text-default font-semibold">{{ state.colours.length }}</p>
             </div>
           </div>
         </UCard>
         <UCard>
           <div class="flex items-center gap-3">
-            <UIcon name="i-lucide-type" class="size-5 text-muted shrink-0" />
+            <UIcon name="i-lucide-type" class="text-muted size-5 shrink-0" />
             <div>
-              <p class="text-xs text-muted">Font roles</p>
-              <p class="font-semibold text-default">{{ state.typography.length }}</p>
+              <p class="text-muted text-xs">Font roles</p>
+              <p class="text-default font-semibold">{{ state.typography.length }}</p>
             </div>
           </div>
         </UCard>
         <UCard>
           <div class="flex items-center gap-3">
-            <UIcon name="i-lucide-sun-moon" class="size-5 text-muted shrink-0" />
+            <UIcon name="i-lucide-sun-moon" class="text-muted size-5 shrink-0" />
             <div>
-              <p class="text-xs text-muted">Modes</p>
-              <p class="font-semibold text-default capitalize">
+              <p class="text-muted text-xs">Modes</p>
+              <p class="text-default font-semibold capitalize">
                 {{ state.themeMode.schemes.join(' & ') }}
                 <span v-if="state.themeMode.contrastLevels.length > 1" class="text-muted text-xs">
                   · {{ state.themeMode.contrastLevels.length }} contrast levels
@@ -152,10 +152,10 @@
       <UCard>
         <template #header>
           <div class="flex items-center justify-between gap-2">
-            <p class="text-xs font-mono text-muted truncate">
+            <p class="text-muted truncate font-mono text-xs">
               {{ fileNames[activeTab] }}
             </p>
-            <div class="flex gap-2 shrink-0">
+            <div class="flex shrink-0 gap-2">
               <UButton
                 :icon="copied ? 'i-lucide-check' : 'i-lucide-copy'"
                 variant="ghost"
@@ -178,9 +178,8 @@
           </div>
         </template>
         <pre
-          class="text-xs font-mono text-default overflow-auto max-h-96 leading-relaxed whitespace-pre-wrap"
-          >{{ currentCode }}</pre
-        >
+          class="text-default max-h-96 overflow-auto font-mono text-xs leading-relaxed whitespace-pre-wrap"
+          >{{ currentCode }}</pre>
       </UCard>
     </div>
   </div>

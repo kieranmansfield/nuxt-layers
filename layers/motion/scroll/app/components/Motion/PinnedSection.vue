@@ -72,8 +72,8 @@
 </script>
 
 <template>
-  <section ref="sectionRef" class="motion-pinned-section h-screen relative">
-    <div ref="contentRef" class="motion-pinned-content h-full flex items-center justify-center">
+  <section ref="sectionRef" class="motion-pinned-section relative h-screen">
+    <div ref="contentRef" class="motion-pinned-content flex h-full items-center justify-center">
       <slot />
     </div>
   </section>

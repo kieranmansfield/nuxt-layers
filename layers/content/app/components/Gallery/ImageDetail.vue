@@ -43,13 +43,13 @@
         <!-- Ambient glow radiating from the image -->
         <div
           v-if="image.ambient"
-          class="absolute -inset-12 sm:-inset-20 pointer-events-none"
+          class="pointer-events-none absolute -inset-12 sm:-inset-20"
           aria-hidden="true"
         >
           <img
             :src="image.src"
             alt=""
-            class="w-full h-full object-cover blur-3xl bg-blend-luminosity mix-blend-darken dark:mix-blend-lighten opacity-40 dark:opacity-35 saturate-300 scale-x-200"
+            class="h-full w-full scale-x-200 object-cover opacity-40 bg-blend-luminosity mix-blend-darken blur-3xl saturate-300 dark:opacity-35 dark:mix-blend-lighten"
           />
           <!-- class="w-full h-full object-cover rounded-3xl blur-3xl opacity-80 dark:opacity-30 saturate-200 scale-110 bg-blend-overlay dark:mix-blend-color" -->
         </div>
@@ -63,13 +63,13 @@
         />
         <figcaption
           v-if="image.caption"
-          class="relative mt-3 text-center text-sm text-muted italic"
+          class="text-muted relative mt-3 text-center text-sm italic"
         >
           {{ image.caption }}
         </figcaption>
       </figure>
 
-      <div class="flex items-center justify-between mt-6">
+      <div class="mt-6 flex items-center justify-between">
         <UButton
           v-if="hasPrevious"
           :to="`/gallery/${slug}/${index - 1}`"
@@ -80,7 +80,7 @@
         </UButton>
         <span v-else />
 
-        <span class="text-sm text-muted"> {{ index + 1 }} / {{ totalImages }} </span>
+        <span class="text-muted text-sm"> {{ index + 1 }} / {{ totalImages }} </span>
 
         <UButton
           v-if="hasNext"
@@ -94,5 +94,5 @@
       </div>
     </UPageBody>
   </div>
-  <div v-else class="text-muted text-center py-12">Image not found</div>
+  <div v-else class="text-muted py-12 text-center">Image not found</div>
 </template>

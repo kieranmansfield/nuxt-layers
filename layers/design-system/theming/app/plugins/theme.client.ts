@@ -10,19 +10,21 @@ export default defineNuxtPlugin({
     const { setTransparencyOverride, effectiveReducedTransparency } = useThemeTransparency()
 
     // Restore persisted preferences. useState defaults were serialized from the
-    // server, so hydration matches. We update to the stored values here, after
-    // hydration completes, to avoid any mismatch.
-    const storedAccent = localStorage.getItem('theme-colour')
-    if (storedAccent) setAccent(storedAccent as AccentColor)
-
-    const storedContrast = localStorage.getItem('theme-contrast')
-    if (storedContrast) setContrastOverride(storedContrast as PreferenceOverride)
-
-    const storedMotion = localStorage.getItem('theme-motion')
-    if (storedMotion) setMotionOverride(storedMotion as PreferenceOverride)
-
-    const storedTransparency = localStorage.getItem('theme-transparency')
-    if (storedTransparency) setTransparencyOverride(storedTransparency as PreferenceOverride)
+    // server, so hydration matches only if client state is still at those defaults
+    // while hydrating. Plugin setup runs BEFORE hydration, so the stored values are
+    // applied on `app:mounted` (after hydration) instead of here.
+    useNuxtApp().hook('app:mounted', () => {
+      const restorers: Array<[key: string, apply: (value: string) => void]> = [
+        ['theme-colour', (v) => setAccent(v as AccentColor)],
+        ['theme-contrast', (v) => setContrastOverride(v as PreferenceOverride)],
+        ['theme-motion', (v) => setMotionOverride(v as PreferenceOverride)],
+        ['theme-transparency', (v) => setTransparencyOverride(v as PreferenceOverride)],
+      ]
+      for (const [key, apply] of restorers) {
+        const stored = localStorage.getItem(key)
+        if (stored) apply(stored)
+      }
+    })
 
     watch(
       activeAccent,

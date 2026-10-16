@@ -95,8 +95,8 @@
   onMounted(async () => {
     await nextTick()
 
-    baseX.value = new Array(texts.length).fill(0)
-    directionFactors.value = new Array(texts.length).fill(1)
+    baseX.value = Array.from({ length: texts.length }, () => 0)
+    directionFactors.value = Array.from({ length: texts.length }, () => 1)
     animLastTime = performance.now()
 
     const firstContainer = containerRef.value?.[0]
@@ -131,7 +131,7 @@
       :style="parallaxStyle"
     >
       <div
-        :class="`${scrollerClassName} font-styles-logo flex py-2 text-center font-sans text-4xl font-medium tracking-[-0.02em] whitespace-nowrap text-neutral drop-shadow md:text-[5rem] md:leading-20`"
+        :class="`${scrollerClassName} font-styles-logo text-neutral flex py-2 text-center font-sans text-4xl font-medium tracking-[-0.02em] whitespace-nowrap drop-shadow md:text-[5rem] md:leading-20`"
         :style="{ transform: `translateX(${scrollTransforms[index] ?? '0px'})`, ...scrollerStyle }"
       >
         <span

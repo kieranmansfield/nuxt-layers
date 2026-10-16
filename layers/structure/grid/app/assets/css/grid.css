@@ -12,6 +12,7 @@
 :root {
   /* rem term keeps this WCAG 1.4.4 zoom-safe; svi never vw (viewport-bar-collapse safe) */
   --fs: clamp(1rem, 0.95rem + 0.25svi, 1.125rem);
+
   /* rounded, not raw, so grid boundaries land on-pixel */
   line-height: round(nearest, var(--fs) * 1.5, 1px);
 }
@@ -21,6 +22,7 @@
      line-height */
   --unit: 1rlh;
   --measure-min: 22rem;
+
   /* margin floor > 0, steep svi slope so it shrinks fast on narrow screens */
   --edge-min: clamp(1rlh, 8svi, 3rlh);
   --avail-b: calc(100svh - 2 * var(--edge-min));

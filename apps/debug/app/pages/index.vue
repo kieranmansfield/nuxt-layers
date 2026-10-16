@@ -17,10 +17,10 @@
 </script>
 
 <template>
-  <div class="min-h-screen p-8 bg-gray-50 dark:bg-gray-900">
-    <h1 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white">CSS Debug</h1>
+  <div class="min-h-screen bg-gray-50 p-8 dark:bg-gray-900">
+    <h1 class="mb-8 text-3xl font-bold text-gray-900 dark:text-white">CSS Debug</h1>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
       <UCard v-for="card in cards" :key="card.title">
         <template #header>
           <h2 class="text-lg font-semibold">{{ card.title }}</h2>
@@ -38,8 +38,8 @@
           Popover
         </UButton>
         <template #content>
-          <div class="p-4 space-y-2">
-            <p class="font-semibold text-sm">Popover content</p>
+          <div class="space-y-2 p-4">
+            <p class="text-sm font-semibold">Popover content</p>
             <p class="text-sm text-gray-500">Does opening this fix the cards above?</p>
           </div>
         </template>

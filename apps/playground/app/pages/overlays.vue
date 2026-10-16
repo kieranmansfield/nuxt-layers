@@ -189,7 +189,7 @@ open({ confirmLabel: 'Yes, delete it', onConfirm: () => toast.success('Deleted!'
                   min="1000"
                   max="10000"
                   step="500"
-                  class="w-full accent-primary-500"
+                  class="accent-primary-500 w-full"
                 />
               </UFormField>
               <UButton icon="lucide:send" @click="fireCustomToast"> Fire toast </UButton>

@@ -3,7 +3,7 @@ import type {
   MetadataSearchInput,
   MetadataSearchResult,
 } from '#layers/metadata/shared/types'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 
 import { hashQuery, makeCacheKey } from './cache'
 

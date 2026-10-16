@@ -31,7 +31,7 @@
     v-bind="$attrs"
   >
     <!-- Sizer: transparent text for natural sizing + selectable -->
-    <span class="text-stroke-sizer text-transparent whitespace-nowrap" aria-hidden="true">{{
+    <span class="text-stroke-sizer whitespace-nowrap text-transparent" aria-hidden="true">{{
       text
     }}</span>
 

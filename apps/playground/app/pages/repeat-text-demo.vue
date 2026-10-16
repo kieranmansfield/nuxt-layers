@@ -9,7 +9,7 @@
   >
     <div>
       <!-- Hero -->
-      <section class="h-[70vh] flex bg-default overflow-hidden">
+      <section class="bg-default flex h-[70vh] overflow-hidden">
         <TypographyRepeatText
           text="SWISS"
           size="7xl"
@@ -20,11 +20,11 @@
       </section>
 
       <!-- ─── Auto-fill, single column ───────────────────────────────────────── -->
-      <section class="py-16 bg-default border-t border-default">
+      <section class="bg-default border-default border-t py-16">
         <UContainer>
-          <div class="text-center mb-12">
+          <div class="mb-12 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Default</UBadge>
-            <h2 class="text-4xl font-bold text-highlighted mb-3">Auto-fill, single column</h2>
+            <h2 class="text-highlighted mb-3 text-4xl font-bold">Auto-fill, single column</h2>
             <p class="text-muted">
               <code class="text-primary">repeat="auto"</code> measures the container height and
               repeats the text edge-to-edge, top to bottom.
@@ -42,11 +42,11 @@
       </section>
 
       <!-- ─── Fixed repeat count ─────────────────────────────────────────────── -->
-      <section class="py-16 bg-default border-t border-default">
+      <section class="bg-default border-default border-t py-16">
         <UContainer>
-          <div class="text-center mb-12">
+          <div class="mb-12 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Fixed count</UBadge>
-            <h2 class="text-4xl font-bold text-highlighted mb-3">Explicit repeat</h2>
+            <h2 class="text-highlighted mb-3 text-4xl font-bold">Explicit repeat</h2>
             <p class="text-muted">
               <code class="text-primary">:repeat="6"</code> — a set number of copies per column.
             </p>
@@ -64,11 +64,11 @@
       </section>
 
       <!-- ─── Letter / word spacing ──────────────────────────────────────────── -->
-      <section class="py-16 bg-default border-t border-default">
+      <section class="bg-default border-default border-t py-16">
         <UContainer>
-          <div class="text-center mb-12">
+          <div class="mb-12 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Spacing</UBadge>
-            <h2 class="text-4xl font-bold text-highlighted mb-3">Letter &amp; word spacing</h2>
+            <h2 class="text-highlighted mb-3 text-4xl font-bold">Letter &amp; word spacing</h2>
             <p class="text-muted">
               <code class="text-primary">letter-spacing</code> /
               <code class="text-primary">word-spacing</code> accept arbitrary CSS values.
@@ -87,11 +87,11 @@
       </section>
 
       <!-- ─── Alternating stroke ─────────────────────────────────────────────── -->
-      <section class="py-16 bg-default border-t border-default">
+      <section class="bg-default border-default border-t py-16">
         <UContainer>
-          <div class="text-center mb-12">
+          <div class="mb-12 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Stroke</UBadge>
-            <h2 class="text-4xl font-bold text-highlighted mb-3">Alternating fill / outline</h2>
+            <h2 class="text-highlighted mb-3 text-4xl font-bold">Alternating fill / outline</h2>
             <p class="text-muted">
               <code class="text-primary">stroke="even"</code> renders every even repetition as
               outline-only instead of filled.
@@ -110,11 +110,11 @@
       </section>
 
       <!-- ─── Center fill ────────────────────────────────────────────────────── -->
-      <section class="py-16 bg-default border-t border-default">
+      <section class="bg-default border-default border-t py-16">
         <UContainer>
-          <div class="text-center mb-12">
+          <div class="mb-12 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Stroke</UBadge>
-            <h2 class="text-4xl font-bold text-highlighted mb-3">Center fill</h2>
+            <h2 class="text-highlighted mb-3 text-4xl font-bold">Center fill</h2>
             <p class="text-muted">
               <code class="text-primary">stroke="center"</code> fills only the middle repetition and
               outlines the rest.
@@ -134,11 +134,11 @@
       </section>
 
       <!-- Footer nav -->
-      <section class="py-16 bg-default border-t border-default">
+      <section class="bg-default border-default border-t py-16">
         <UContainer>
-          <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
+          <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
             <div>
-              <h2 class="text-2xl font-bold text-highlighted mb-2">RepeatText</h2>
+              <h2 class="text-highlighted mb-2 text-2xl font-bold">RepeatText</h2>
               <p class="text-muted">Static repeating text columns — typography layer</p>
             </div>
             <div class="flex flex-wrap gap-4">

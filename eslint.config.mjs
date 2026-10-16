@@ -7,7 +7,6 @@ import typescriptParser from '@typescript-eslint/parser'
 import compat from 'eslint-plugin-compat'
 // import pluginOxlint from 'eslint-plugin-oxlint'
 import { configs as pnpmConfigs } from 'eslint-plugin-pnpm'
-import prettier from 'eslint-plugin-prettier'
 // import pluginUnicorn from 'eslint-plugin-unicorn'
 import vue from 'eslint-plugin-vue'
 
@@ -90,12 +89,9 @@ export default defineConfigWithVueTs(
     },
     plugins: {
       vue,
-
-      prettier,
       compat,
     },
     rules: {
-      'prettier/prettier': ['error'],
       semi: ['error', 'never'],
       quotes: ['error', 'single', { avoidEscape: true }],
       'no-console': 'warn',
@@ -106,7 +102,7 @@ export default defineConfigWithVueTs(
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
 
-      // Disable formatting rules that conflict with Prettier
+      // Formatting is owned by oxfmt (`vp fmt`); disable template-formatting rules
       'vue/html-closing-bracket-newline': 'off',
       'vue/max-attributes-per-line': 'off',
       'vue/singleline-html-element-content-newline': 'off',
@@ -236,7 +232,6 @@ export default defineConfigWithVueTs(
       },
     },
     plugins: {
-      prettier,
       compat,
     },
     rules: {
@@ -360,7 +355,6 @@ export default defineConfigWithVueTs(
       sourceType: 'module',
     },
     plugins: {
-      prettier,
       compat,
     },
   },

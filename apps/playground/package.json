@@ -13,7 +13,8 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@types/three": "catalog:"
+    "@types/three": "catalog:",
+    "typescript": "catalog:"
   },
   "dependencies": {
     "@netlify/nuxt": "catalog:",

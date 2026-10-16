@@ -27,7 +27,7 @@
   >
     <div class="flex gap-4">
       <div
-        class="bg-info-100 dark:bg-(--ui-color-info-900)/30 flex size-10 shrink-0 items-center justify-center rounded-full"
+        class="bg-info-100 flex size-10 shrink-0 items-center justify-center rounded-full dark:bg-(--ui-color-info-900)/30"
       >
         <UIcon :name="icon" class="text-info-500 size-5" />
       </div>

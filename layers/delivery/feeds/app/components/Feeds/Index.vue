@@ -25,10 +25,10 @@
   >
     <div class="pointer-events-none absolute inset-0">
       <div
-        class="absolute -right-20 top-0 h-72 w-72 rounded-full bg-orange-400/20 blur-3xl dark:bg-orange-500/15"
+        class="absolute top-0 -right-20 h-72 w-72 rounded-full bg-orange-400/20 blur-3xl dark:bg-orange-500/15"
       />
       <div
-        class="absolute -left-20 bottom-0 h-80 w-80 rounded-full bg-sky-400/12 blur-3xl dark:bg-sky-500/10"
+        class="absolute bottom-0 -left-20 h-80 w-80 rounded-full bg-sky-400/12 blur-3xl dark:bg-sky-500/10"
       />
       <div
         class="absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-orange-400/35 to-transparent"
@@ -39,7 +39,7 @@
       <div class="feeds-split grid gap-6">
         <div class="space-y-6">
           <div
-            class="inline-flex items-center gap-2 rounded-full border border-amber-200/80 bg-white/80 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.35em] text-amber-700 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/60 dark:text-amber-200"
+            class="inline-flex items-center gap-2 rounded-full border border-amber-200/80 bg-white/80 px-3 py-1 text-[0.68rem] font-semibold tracking-[0.35em] text-amber-700 uppercase shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/60 dark:text-amber-200"
           >
             <UIcon name="i-lucide-rss" class="text-sm" />
             Feeds layer
@@ -63,7 +63,7 @@
               class="rounded-2xl border border-slate-200/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
             >
               <p
-                class="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400"
+                class="text-[0.68rem] font-semibold tracking-[0.3em] text-slate-500 uppercase dark:text-slate-400"
               >
                 Default
               </p>
@@ -79,7 +79,7 @@
               class="rounded-2xl border border-slate-200/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
             >
               <p
-                class="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400"
+                class="text-[0.68rem] font-semibold tracking-[0.3em] text-slate-500 uppercase dark:text-slate-400"
               >
                 Exposed
               </p>
@@ -95,7 +95,7 @@
               class="rounded-2xl border border-slate-200/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
             >
               <p
-                class="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400"
+                class="text-[0.68rem] font-semibold tracking-[0.3em] text-slate-500 uppercase dark:text-slate-400"
               >
                 Limit
               </p>
@@ -113,7 +113,7 @@
             class="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/70 px-4 py-3 text-sm shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
           >
             <span
-              class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400"
+              class="text-xs font-semibold tracking-[0.3em] text-slate-500 uppercase dark:text-slate-400"
             >
               Site
             </span>
@@ -134,7 +134,7 @@
         >
           <div class="flex items-center justify-between gap-3">
             <p
-              class="text-[0.68rem] font-semibold uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400"
+              class="text-[0.68rem] font-semibold tracking-[0.35em] text-slate-500 uppercase dark:text-slate-400"
             >
               Global routes
             </p>
@@ -162,7 +162,7 @@
         <div class="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p
-              class="text-[0.68rem] font-semibold uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400"
+              class="text-[0.68rem] font-semibold tracking-[0.35em] text-slate-500 uppercase dark:text-slate-400"
             >
               Collection routes
             </p>
@@ -190,7 +190,7 @@
             >
               <div>
                 <p
-                  class="text-[0.68rem] font-semibold uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400"
+                  class="text-[0.68rem] font-semibold tracking-[0.35em] text-slate-500 uppercase dark:text-slate-400"
                 >
                   Collection
                 </p>

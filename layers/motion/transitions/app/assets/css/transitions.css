@@ -21,31 +21,31 @@
 
 /* Animation classes */
 .animate-fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
+  animation: fade-in 0.3s ease-out forwards;
 }
 
 .animate-fade-out {
-  animation: fadeOut 0.3s ease-out forwards;
+  animation: fade-out 0.3s ease-out forwards;
 }
 
 .animate-slide-in-up {
-  animation: slideInUp 0.3s ease-out forwards;
+  animation: slide-in-up 0.3s ease-out forwards;
 }
 
 .animate-slide-in-down {
-  animation: slideInDown 0.3s ease-out forwards;
+  animation: slide-in-down 0.3s ease-out forwards;
 }
 
 .animate-slide-in-left {
-  animation: slideInLeft 0.3s ease-out forwards;
+  animation: slide-in-left 0.3s ease-out forwards;
 }
 
 .animate-slide-in-right {
-  animation: slideInRight 0.3s ease-out forwards;
+  animation: slide-in-right 0.3s ease-out forwards;
 }
 
 /* Keyframes */
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
   }
@@ -55,7 +55,7 @@
   }
 }
 
-@keyframes fadeOut {
+@keyframes fade-out {
   from {
     opacity: 1;
   }
@@ -65,7 +65,7 @@
   }
 }
 
-@keyframes slideInUp {
+@keyframes slide-in-up {
   from {
     transform: translateY(20px);
     opacity: 0;
@@ -77,7 +77,7 @@
   }
 }
 
-@keyframes slideInDown {
+@keyframes slide-in-down {
   from {
     transform: translateY(-20px);
     opacity: 0;
@@ -89,7 +89,7 @@
   }
 }
 
-@keyframes slideInLeft {
+@keyframes slide-in-left {
   from {
     transform: translateX(-20px);
     opacity: 0;
@@ -101,7 +101,7 @@
   }
 }
 
-@keyframes slideInRight {
+@keyframes slide-in-right {
   from {
     transform: translateX(20px);
     opacity: 0;

@@ -35,7 +35,7 @@
         name="TRANSITIONS"
         description="Lightweight CSS transition classes and the MotionTransition wrapper for element-level enter/leave effects."
       >
-        <div class="flex flex-wrap gap-4 justify-center">
+        <div class="flex flex-wrap justify-center gap-4">
           <UButton size="lg" @click="() => $router.push('#demo')">View Demo</UButton>
           <UButton size="lg" variant="ghost" to="/page-transitions">
             <UIcon name="i-lucide-square-stack" class="mr-2" />
@@ -49,21 +49,21 @@
       </DemoPageHero>
 
       <!-- Demo -->
-      <section id="demo" class="py-24 bg-default">
+      <section id="demo" class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">MotionTransition</h2>
+          <div class="mb-16 text-center">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">MotionTransition</h2>
             <p class="text-muted text-lg">Pick a variant, then replay to see the enter animation</p>
           </div>
 
-          <div class="grid lg:grid-cols-[280px_1fr] gap-8 max-w-5xl mx-auto">
+          <div class="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[280px_1fr]">
             <!-- Controls -->
             <div class="space-y-4">
               <button
                 v-for="variant in variants"
                 :key="variant.name"
                 type="button"
-                class="w-full rounded-xl border p-4 cursor-pointer transition-colors text-left"
+                class="w-full cursor-pointer rounded-xl border p-4 text-left transition-colors"
                 :class="
                   activeVariant === variant.name
                     ? 'border-primary bg-primary/10'
@@ -71,13 +71,13 @@
                 "
                 @click="activeVariant = variant.name"
               >
-                <div class="font-semibold text-highlighted">{{ variant.label }}</div>
-                <p class="text-sm text-muted">{{ variant.description }}</p>
-                <code class="text-xs text-primary">name="{{ variant.name }}"</code>
+                <div class="text-highlighted font-semibold">{{ variant.label }}</div>
+                <p class="text-muted text-sm">{{ variant.description }}</p>
+                <code class="text-primary text-xs">name="{{ variant.name }}"</code>
               </button>
 
-              <div class="rounded-xl border border-default bg-accented/50 p-4">
-                <label for="transition-duration" class="text-sm text-muted block mb-2">
+              <div class="border-default bg-accented/50 rounded-xl border p-4">
+                <label for="transition-duration" class="text-muted mb-2 block text-sm">
                   Duration: {{ duration }}ms
                 </label>
                 <input
@@ -98,15 +98,15 @@
             </div>
 
             <!-- Preview -->
-            <div class="bg-default rounded-3xl p-12 flex items-center justify-center min-h-90">
+            <div class="bg-default flex min-h-90 items-center justify-center rounded-3xl p-12">
               <MotionTransition :key="replayKey" :name="activeVariant" :duration>
                 <div
-                  class="w-64 h-64 rounded-3xl bg-linear-to-br from-primary to-purple-600 flex items-center justify-center shadow-2xl shadow-primary/30"
+                  class="from-primary shadow-primary/30 flex h-64 w-64 items-center justify-center rounded-3xl bg-linear-to-br to-purple-600 shadow-2xl"
                 >
-                  <div class="text-center text-highlighted p-6">
-                    <UIcon name="i-lucide-square-asterisk" class="text-5xl mb-3" />
+                  <div class="text-highlighted p-6 text-center">
+                    <UIcon name="i-lucide-square-asterisk" class="mb-3 text-5xl" />
                     <p class="text-lg font-bold">{{ activeVariant }}</p>
-                    <p class="text-sm text-highlighted/70">{{ duration }}ms</p>
+                    <p class="text-highlighted/70 text-sm">{{ duration }}ms</p>
                   </div>
                 </div>
               </MotionTransition>
@@ -116,17 +116,17 @@
       </section>
 
       <!-- CSS Reference -->
-      <section class="py-24 bg-default">
+      <section class="bg-default py-24">
         <UContainer>
-          <div class="max-w-3xl mx-auto">
-            <h3 class="text-3xl font-bold text-highlighted mb-8 text-center">
+          <div class="mx-auto max-w-3xl">
+            <h3 class="text-highlighted mb-8 text-center text-3xl font-bold">
               CSS Class Reference
             </h3>
             <div class="grid gap-4">
               <div
                 v-for="entry in cssClasses"
                 :key="entry.class"
-                class="bg-muted rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4 border border-default"
+                class="bg-muted border-default flex flex-col gap-4 rounded-xl border p-6 md:flex-row md:items-center"
               >
                 <code class="text-primary font-mono text-sm whitespace-nowrap">{{
                   entry.class
@@ -134,7 +134,7 @@
                 <span class="text-muted flex-1">{{ entry.props }}</span>
               </div>
             </div>
-            <p class="text-muted text-sm mt-6 text-center">
+            <p class="text-muted mt-6 text-center text-sm">
               Apply these classes directly to any element, or wrap content in
               <code class="text-primary">&lt;MotionTransition name="fade" /&gt;</code>
               for a managed enter/leave lifecycle.

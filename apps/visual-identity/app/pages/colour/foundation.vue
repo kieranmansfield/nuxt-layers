@@ -13,7 +13,7 @@
 <template>
   <div class="vi-page">
     <div class="mb-8">
-      <h1 class="text-2xl font-semibold text-default mb-1">Colour Foundation</h1>
+      <h1 class="text-default mb-1 text-2xl font-semibold">Colour Foundation</h1>
       <p class="text-muted text-sm">
         Define your brand colours. Start with a primary and build from there.
       </p>
@@ -22,7 +22,7 @@
     <!-- Brand identity -->
     <UCard class="mb-6">
       <template #header>
-        <p class="text-sm font-medium text-default">Brand Identity</p>
+        <p class="text-default text-sm font-medium">Brand Identity</p>
       </template>
       <div class="flex flex-col gap-3">
         <UInput
@@ -40,11 +40,11 @@
     </UCard>
 
     <!-- Colour cards -->
-    <div class="flex flex-col gap-3 mb-6">
+    <div class="mb-6 flex flex-col gap-3">
       <div
         v-for="colour in state.colours"
         :key="colour.id"
-        class="p-4 rounded-xl border border-default bg-elevated"
+        class="border-default bg-elevated rounded-xl border p-4"
       >
         <!--
           Mobile: 2 rows.
@@ -53,7 +53,7 @@
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
           <!-- Row 1 (mobile) / start of row (desktop): picker + hex + swatch -->
           <div class="flex items-center gap-3">
-            <label class="cursor-pointer shrink-0">
+            <label class="shrink-0 cursor-pointer">
               <input
                 type="color"
                 :value="colour.hex"
@@ -62,7 +62,7 @@
             </label>
             <UInput
               :model-value="colour.hex"
-              class="w-28 font-mono text-sm shrink-0"
+              class="w-28 shrink-0 font-mono text-sm"
               @update:model-value="($event) => updateColour(colour.id, { hex: $event })"
             />
             <ColourSwatch :hex="colour.hex" size="sm" class="shrink-0" />
@@ -72,17 +72,17 @@
               color="neutral"
               variant="ghost"
               size="sm"
-              class="sm:hidden ml-auto"
+              class="ml-auto sm:hidden"
               @click="() => removeColour(colour.id)"
             />
           </div>
 
           <!-- Row 2 (mobile) / rest of row (desktop): name + role + remove -->
-          <div class="flex items-center gap-3 flex-1 min-w-0">
+          <div class="flex min-w-0 flex-1 items-center gap-3">
             <UInput
               :model-value="colour.name"
               placeholder="Name"
-              class="flex-1 min-w-0"
+              class="min-w-0 flex-1"
               @update:model-value="($event) => updateColour(colour.id, { name: $event })"
             />
             <USelect
@@ -101,7 +101,7 @@
               color="neutral"
               variant="ghost"
               size="sm"
-              class="hidden sm:flex shrink-0"
+              class="hidden shrink-0 sm:flex"
               @click="() => removeColour(colour.id)"
             />
           </div>
@@ -116,9 +116,9 @@
     <!-- Empty state -->
     <div
       v-if="state.colours.length === 0"
-      class="mt-8 text-center py-12 border-2 border-dashed border-default rounded-xl"
+      class="border-default mt-8 rounded-xl border-2 border-dashed py-12 text-center"
     >
-      <UIcon name="i-lucide-palette" class="size-10 text-muted mx-auto mb-3" />
+      <UIcon name="i-lucide-palette" class="text-muted mx-auto mb-3 size-10" />
       <p class="text-muted text-sm">No colours yet. Add your first brand colour.</p>
     </div>
   </div>

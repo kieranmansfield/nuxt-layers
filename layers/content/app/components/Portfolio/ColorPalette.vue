@@ -16,18 +16,18 @@
 
 <template>
   <div v-if="colors.length" class="space-y-6">
-    <h3 class="text-2xl font-semibold tracking-tight text-highlighted">Palette</h3>
+    <h3 class="text-highlighted text-2xl font-semibold tracking-tight">Palette</h3>
     <LinksGroup class="palette-grid gap-3">
       <div v-for="color in colors" :key="color.value">
         <div
-          class="aspect-2/3 flex flex-col justify-between p-4 rounded-lg border border-default/20 shadow-lg cursor-default"
+          class="border-default/20 flex aspect-2/3 cursor-default flex-col justify-between rounded-lg border p-4 shadow-lg"
           :style="{ backgroundColor: color.value, color: contrastColor(color.value) }"
         >
           <div>
-            <p class="text-sm font-medium leading-tight">{{ color.name }}</p>
-            <p v-if="color.usage" class="text-xs mt-1 opacity-60">{{ color.usage }}</p>
+            <p class="text-sm leading-tight font-medium">{{ color.name }}</p>
+            <p v-if="color.usage" class="mt-1 text-xs opacity-60">{{ color.usage }}</p>
           </div>
-          <p class="text-xs font-mono uppercase opacity-50">{{ color.value }}</p>
+          <p class="font-mono text-xs uppercase opacity-50">{{ color.value }}</p>
         </div>
       </div>
     </LinksGroup>

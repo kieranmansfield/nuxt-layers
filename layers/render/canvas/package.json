@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@types/three": "catalog:",
-    "vite": "catalog:"
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
   }
 }

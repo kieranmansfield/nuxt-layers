@@ -246,7 +246,7 @@
 
 <template>
   <div class="min-h-screen">
-    <UContainer class="px-8 pb-4 pt-8">
+    <UContainer class="px-8 pt-8 pb-4">
       <!-- Hero -->
       <div ref="heroRef" class="space-y-6 py-8 text-center">
         <UBadge variant="subtle" color="primary" size="lg" icon="i-lucide-layers">
@@ -294,14 +294,14 @@
         <span
           v-for="item in marqueeItems"
           :key="item"
-          class="text-muted whitespace-nowrap text-xs font-semibold uppercase tracking-widest"
+          class="text-muted text-xs font-semibold tracking-widest whitespace-nowrap uppercase"
           >{{ item }}</span
         >
       </MotionMarquee>
     </div>
 
     <div ref="sectionsRef">
-      <UContainer class="px-8 pb-8 pt-10">
+      <UContainer class="px-8 pt-10 pb-8">
         <div class="space-y-12">
           <!-- Core Layers -->
           <section>
@@ -327,7 +327,7 @@
                       <UIcon :name="layer.icon" class="text-lg" :class="layer.iconColor" />
                     </div>
                     <div>
-                      <h3 class="text-highlighted text-sm font-semibold leading-tight">
+                      <h3 class="text-highlighted text-sm leading-tight font-semibold">
                         {{ layer.name }}
                       </h3>
                       <UBadge
@@ -388,7 +388,7 @@
                       <UIcon :name="layer.icon" class="text-lg" :class="layer.iconColor" />
                     </div>
                     <div>
-                      <h3 class="text-highlighted text-sm font-semibold leading-tight">
+                      <h3 class="text-highlighted text-sm leading-tight font-semibold">
                         {{ layer.name }}
                       </h3>
                       <UBadge
