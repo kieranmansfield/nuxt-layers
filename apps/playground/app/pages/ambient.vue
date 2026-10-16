@@ -107,16 +107,20 @@
             <!-- Preview Canvas -->
             <div class="lg:col-span-2">
               <div class="bg-muted relative aspect-video overflow-hidden rounded-2xl">
-                <ShaderRuntime :speed :mouse-smoothing="0.1">
-                  <ShaderHost
-                    :preset="currentPresetComponent"
-                    :transition-duration="1.0"
-                    :preset-props="{ speed, intensity, mouseInteraction }"
-                    clear-color="#000000"
-                    :fixed="false"
-                    pointer-events="auto"
-                    :z-index="0"
-                /></ShaderRuntime>
+                <!-- Static imports of *.client.vue bypass Nuxt's client-only handling, so the
+                     server would render them; ClientOnly keeps server and client output equal. -->
+                <ClientOnly>
+                  <ShaderRuntime :speed :mouse-smoothing="0.1">
+                    <ShaderHost
+                      :preset="currentPresetComponent"
+                      :transition-duration="1.0"
+                      :preset-props="{ speed, intensity, mouseInteraction }"
+                      clear-color="#000000"
+                      :fixed="false"
+                      pointer-events="auto"
+                      :z-index="0"
+                  /></ShaderRuntime>
+                </ClientOnly>
 
                 <!-- Overlay info -->
                 <div

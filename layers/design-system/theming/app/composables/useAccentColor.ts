@@ -13,7 +13,10 @@ export const useAccentColor = createSharedComposable(() => {
   // theme.client.ts reads localStorage after hydration and calls setAccent.
   const accent = useState<AccentColor>('theme-accent', () => defaultAccent)
 
-  const pageAccent = ref<AccentColor | null>(null)
+  // Page-scoped override. Must be useState (not a module-level ref): pages call
+  // setPageAccent() during setup, and a plain ref is not carried in the SSR payload,
+  // so the server rendered the default accent while the client had the page's.
+  const pageAccent = useState<AccentColor | null>('theme-page-accent', () => null)
   const activeAccent = computed<AccentColor>(() => pageAccent.value ?? accent.value)
 
   function setAccent(color: AccentColor) {
