@@ -38,8 +38,11 @@ for (const path of routes) {
 // hydration), so any non-default saved accent mismatched the server-rendered HTML.
 test('/theming hydrates cleanly with a non-default saved accent', async ({ page }) => {
   await page.addInitScript(() => {
-    localStorage.setItem('theme-colour', 'indigo')
-    localStorage.setItem('theme-motion', 'reduced')
+    // Also runs in sandboxed frames where localStorage access throws
+    try {
+      localStorage.setItem('theme-colour', 'indigo')
+      localStorage.setItem('theme-motion', 'reduced')
+    } catch {}
   })
   expect(await collectHydrationIssues(page, '/theming')).toEqual([])
   await expect(page.locator('html')).toHaveAttribute('data-theme-colour', 'indigo')
