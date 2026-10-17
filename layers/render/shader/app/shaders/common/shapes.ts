@@ -13,6 +13,7 @@ import {
   max,
   min,
   mix,
+  pow,
   sin,
   smoothstep,
   step,
@@ -389,4 +390,81 @@ export function polygon(
 
   const soft = toScalarNode(softness)
   return float(1).sub(smoothstep(edgeDist.sub(soft), edgeDist.add(soft), dist))
+}
+
+// ============================================
+// Heart, Flower, Chevron
+// ============================================
+
+/**
+ * Heart shape (implicit curve). `size` is the half-width in UV units; the point faces -y.
+ */
+export function heart(
+  uv: TSLNode,
+  ...args: [
+    center?: TSLNode | [number, number],
+    size?: TSLNode | number,
+    softness?: TSLNode | number,
+  ]
+): TSLNode {
+  const [center = [0.5, 0.5], size = 0.3, softness = 0.02] = args
+  const c = toVec2Node(center)
+  const s = toScalarNode(size)
+  const soft = toScalarNode(softness)
+
+  const p = uv.sub(c).div(s)
+  const x2 = p.x.mul(p.x)
+  const y = p.y
+  const a = x2.add(y.mul(y)).sub(1)
+  // (x² + y² − 1)³ − x²y³ < 0 inside the heart
+  const f = pow(a, 3).sub(x2.mul(y).mul(y).mul(y))
+  return smoothstep(soft, soft.negate(), f)
+}
+
+/**
+ * Flower shape — radius modulated by cos(petals · angle).
+ */
+export function flower(
+  uv: TSLNode,
+  ...args: [
+    center?: TSLNode | [number, number],
+    petals?: number,
+    radius?: TSLNode | number,
+    depth?: TSLNode | number,
+    softness?: TSLNode | number,
+  ]
+): TSLNode {
+  const [center = [0.5, 0.5], petals = 6, radius = 0.3, depth = 0.35, softness = 0.01] = args
+  const c = toVec2Node(center)
+  const r = toScalarNode(radius)
+  const dep = toScalarNode(depth)
+  const soft = toScalarNode(softness)
+
+  const p = uv.sub(c)
+  const angle = atan(p.y, p.x)
+  const target = r.mul(float(1).sub(dep).add(dep.mul(cos(angle.mul(petals)))))
+  return float(1).sub(smoothstep(target.sub(soft), target.add(soft), length(p)))
+}
+
+/**
+ * Repeating chevron (V) bands pointing in +y.
+ */
+export function chevron(
+  uv: TSLNode,
+  ...args: [
+    count?: TSLNode | number,
+    slope?: TSLNode | number,
+    thickness?: TSLNode | number,
+    softness?: TSLNode | number,
+  ]
+): TSLNode {
+  const [count = 8, slope = 1, thickness = 0.5, softness = 0.02] = args
+  const n = toScalarNode(count)
+  const k = toScalarNode(slope)
+  const t = toScalarNode(thickness)
+  const soft = toScalarNode(softness)
+
+  const phase = fract(uv.y.mul(n).sub(abs(uv.x.sub(0.5)).mul(k).mul(n)))
+  const d = abs(phase.sub(0.5)).mul(2)
+  return float(1).sub(smoothstep(t.sub(soft), t.add(soft), d))
 }

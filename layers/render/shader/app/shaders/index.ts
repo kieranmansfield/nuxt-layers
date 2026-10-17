@@ -88,6 +88,9 @@ export {
   radialLines,
   concentricCircles,
   polygon,
+  heart,
+  flower,
+  chevron,
 } from './common/shapes'
 
 // Blend modes
