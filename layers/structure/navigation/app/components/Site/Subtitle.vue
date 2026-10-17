@@ -1,5 +1,9 @@
+<script setup lang="ts">
+  const site = useSite()
+</script>
+
 <template>
-  <span v-for="(word, index) in useSite().subtitleWords" :key="index" class="site-word">
+  <span v-for="(word, index) in site.subtitleWords" :key="index" class="site-word">
     {{ word }}
   </span>
 </template>

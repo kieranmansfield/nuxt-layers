@@ -17,15 +17,17 @@
     color?: UiColors
   }>()
   const colorClass = useColor(color, 'text')
+  // `name` is a plain string here, not one of the app's typed route names
+  const to = computed(
+    () =>
+      ({ name, params: params ?? {}, query: query ?? {} }) as unknown as NonNullable<
+        Parameters<typeof navigateTo>[0]
+      >
+  )
 </script>
 
 <template>
-  <ULink
-    :to="{ name: name, params: params, query: query }"
-    :variant
-    :class="colorClass"
-    v-bind="$attrs"
-  >
+  <ULink :to="to" :variant :class="colorClass" v-bind="$attrs">
     <slot />
   </ULink>
 </template>

@@ -14,6 +14,7 @@
   const activeSection = useState<string>('activeSection', () => '')
   const route = useRoute()
   const { close: closeNav } = useMastNav()
+  const { useZIndex } = useGridConfig()
 
   function dismiss() {
     emit('update:open', false)
@@ -38,7 +39,7 @@
     <div
       v-if="open"
       class="bg-default text-default fixed inset-0 flex flex-col items-center justify-center"
-      :style="{ zIndex: useGridConfig().useZIndex('modal') }"
+      :style="{ zIndex: useZIndex('modal') }"
     >
       <button
         class="absolute top-[3vh] right-[5vw] cursor-pointer border-0 bg-transparent p-2"
