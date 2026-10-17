@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import type { ScrollTrigger as GSAPScrollTrigger } from 'gsap/ScrollTrigger'
 
-  import { SCROLL_SCENE_KEY, type ScrollSceneContext } from '../../composables/useScrollSteps'
+  import type { ScrollSceneContext } from '../../types/scroll'
+  import { SCROLL_SCENE_KEY } from '../../composables/useScrollSteps'
 
   const {
     name,

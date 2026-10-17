@@ -2,8 +2,6 @@ import type { ScrollSceneContext } from '../types/scroll'
 
 export const SCROLL_SCENE_KEY = Symbol('motionScrollScene')
 
-export type { ScrollSceneContext }
-
 /**
  * Step/waypoint state tracking — must be used inside a MotionScrollScene.
  *

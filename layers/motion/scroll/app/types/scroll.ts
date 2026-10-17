@@ -1,11 +1,11 @@
 import type { ComputedRef, Ref } from 'vue'
 
 export type ScrollToOptions = {
-  offset?: number
-  duration?: number
-  immediate?: boolean
-  lock?: boolean
-  onComplete?: () => void
+  offset?: number | undefined
+  duration?: number | undefined
+  immediate?: boolean | undefined
+  lock?: boolean | undefined
+  onComplete?: (() => void) | undefined
 }
 
 export type SectionProgressOptions = {

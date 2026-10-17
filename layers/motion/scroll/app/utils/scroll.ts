@@ -1,14 +1,8 @@
 import type LocomotiveScroll from 'locomotive-scroll'
 
-export type ScrollTarget = string | number | HTMLElement
+import type { ScrollToOptions } from '../types/scroll'
 
-export type ScrollToOptions = {
-  offset?: number | undefined
-  duration?: number | undefined
-  immediate?: boolean | undefined
-  lock?: boolean | undefined
-  onComplete?: (() => void) | undefined
-}
+export type ScrollTarget = string | number | HTMLElement
 
 function resolveScrollOffset(options?: ScrollToOptions) {
   return options?.offset ?? 0

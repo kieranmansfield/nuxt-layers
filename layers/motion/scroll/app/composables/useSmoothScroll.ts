@@ -1,12 +1,8 @@
 import type { Ref } from 'vue'
 import type LocomotiveScroll from 'locomotive-scroll'
 
-import {
-  runLocomotiveScroll,
-  runNativeScroll,
-  type ScrollTarget,
-  type ScrollToOptions,
-} from '../utils/scroll'
+import { runLocomotiveScroll, runNativeScroll, type ScrollTarget } from '../utils/scroll'
+import type { ScrollToOptions } from '../types/scroll'
 
 /**
  * Unified scroll composable using Locomotive Scroll v5 smooth scrolling

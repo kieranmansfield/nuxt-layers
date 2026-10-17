@@ -1,4 +1,4 @@
-export type BrowserInfo = {
+export type ParsedBrowserInfo = {
   name: string
   version: string
   engine: string
@@ -7,14 +7,14 @@ export type BrowserInfo = {
 
 type BrowserRule = {
   match: (ua: string) => boolean
-  name: BrowserInfo['name']
-  engine: BrowserInfo['engine']
+  name: ParsedBrowserInfo['name']
+  engine: ParsedBrowserInfo['engine']
   version: (ua: string) => string
 }
 
 type OsRule = {
   match: (ua: string) => boolean
-  os: BrowserInfo['os']
+  os: ParsedBrowserInfo['os']
 }
 
 const OS_RULES: OsRule[] = [
@@ -58,11 +58,11 @@ const BROWSER_RULES: BrowserRule[] = [
   },
 ]
 
-function detectOs(ua: string): BrowserInfo['os'] {
+function detectOs(ua: string): ParsedBrowserInfo['os'] {
   return OS_RULES.find((rule) => rule.match(ua))?.os ?? 'unknown'
 }
 
-function detectBrowser(ua: string): Pick<BrowserInfo, 'name' | 'version' | 'engine'> {
+function detectBrowser(ua: string): Pick<ParsedBrowserInfo, 'name' | 'version' | 'engine'> {
   const rule = BROWSER_RULES.find((candidate) => candidate.match(ua))
   if (!rule) return { name: 'unknown', version: '0', engine: 'unknown' }
   return {
@@ -72,7 +72,7 @@ function detectBrowser(ua: string): Pick<BrowserInfo, 'name' | 'version' | 'engi
   }
 }
 
-export function parseBrowserInfo(userAgent?: string | null): BrowserInfo {
+export function parseBrowserInfo(userAgent?: string | null): ParsedBrowserInfo {
   if (!import.meta.client) {
     return {
       name: 'unknown',
