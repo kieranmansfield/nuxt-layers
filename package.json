@@ -18,6 +18,7 @@
     "./layers/motion": "./layers/motion/motion/nuxt.config.ts",
     "./layers/canvas": "./layers/render/canvas/nuxt.config.ts",
     "./layers/shader": "./layers/render/shader/nuxt.config.ts",
+    "./layers/effects": "./layers/render/effects/nuxt.config.ts",
     "./layers/mailer": "./layers/data/mailer/nuxt.config.ts",
     "./layers/forms": "./layers/data/forms/nuxt.config.ts",
     "./layers/database": "./layers/data/database/nuxt.config.ts",

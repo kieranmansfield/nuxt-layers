@@ -47,6 +47,7 @@ Placing it at the layer root silently ignores it — `useAppConfig()` returns `u
 | `motion`           | Motion orchestrator — composes scroll, animations, transitions, page-transitions               | `scroll`, `animations`, `transitions`, `page-transitions` |
 | `canvas`           | WebGL/WebGPU/TresJS rendering context                                                          | `core`                                                    |
 | `shader`           | TSL shader pipeline blocks, materials, presets                                                 | `canvas`                                                  |
+| `effects`          | `shaders` package wrapper — WGSL/WebGPU effects in their own canvas (FxShader, FxSupport)      | `core`                                                    |
 | `mailer`           | Email sending via Resend, hooks, runtime config                                                | `core`                                                    |
 | `forms`            | Form UI components, Zod validation                                                             | `mailer`                                                  |
 | `database`         | Drizzle ORM + Neon Postgres connection; useSql(), useDrizzle(schema) server utils              | `core`                                                    |

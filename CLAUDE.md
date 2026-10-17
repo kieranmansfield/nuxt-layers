@@ -80,7 +80,8 @@ nuxt-layers/
 │   │
 │   ├── render/                     # Tier 6
 │   │   ├── canvas/                   # TresJS/WebGL/WebGPU rendering context
-│   │   └── shader/                   # TSL shader pipeline blocks, materials, presets
+│   │   ├── shader/                   # TSL shader pipeline blocks, materials, presets
+│   │   └── effects/                  # `shaders` package wrapper (WGSL/WebGPU, own renderer; not TresJS)
 │   │
 │   └── delivery/                   # Tier 7
 │       ├── seo/                      # @nuxtjs/seo wrapper (robots, sitemap, og-image, schema-org)
@@ -154,6 +155,7 @@ motion → scroll, animations, transitions, page-transitions
 # Tier 6 — Render
 canvas → core
 shader → canvas
+effects → core
 
 # Tier 7 — Delivery
 seo → core
