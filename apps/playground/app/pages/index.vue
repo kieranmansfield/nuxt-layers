@@ -404,6 +404,18 @@
       layer: 'Shader',
     },
     {
+      label: 'Shader Pipeline (ported)',
+      to: '/shader-pipeline-extras',
+      icon: 'i-lucide-layers-2',
+      layer: 'Shader',
+    },
+    {
+      label: 'Effects (shaders)',
+      to: '/effects',
+      icon: 'i-lucide-sparkles',
+      layer: 'Effects',
+    },
+    {
       label: 'Shader Background',
       to: '/shader-background',
       icon: 'i-lucide-wand-sparkles',
