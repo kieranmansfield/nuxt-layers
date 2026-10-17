@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import { float, uniform } from 'three/tsl'
+  import type { hashBlur as HashBlurFn } from 'three/addons/tsl/display/hashBlur.js'
   import { hashBlur } from 'three/addons/tsl/display/hashBlur.js'
 
+  type HashBlurOptions = NonNullable<Parameters<typeof HashBlurFn>[2]>
   const {
     amount = 0.02,
     repeats = 45,
@@ -24,5 +26,5 @@
 
   // Source-texture block: hashBlur renders the stages so far to a render target
   // (via convertToTexture) and re-samples it in a single pass.
-  useShaderStage((prev) => hashBlur(prev, amountNode, { repeats: float(repeats) }), order)
+  useShaderStage((prev) => hashBlur(prev, amountNode, { repeats: float(repeats) } as HashBlurOptions), order)
 </script>

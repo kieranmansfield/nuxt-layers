@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import type { TSLNode } from '../../types'
   import { abs, float, floor, fract, mix, mod, smoothstep, uniform, vec3, vec4 } from 'three/tsl'
 
   const {
@@ -31,9 +32,9 @@
   const pipeline = useShaderPipelineContext()
 
   useShaderStage(() => {
-    const p = pipeline.uvNode.value.mul(scaleNode)
-    const cell = floor(p)
-    const f = fract(p)
+    const p: TSLNode = pipeline.uvNode.value.mul(scaleNode)
+    const cell: TSLNode = floor(p)
+    const f: TSLNode = fract(p)
     // 2x2 twill: alternate which direction the thread highlight runs per cell
     const flip = mod(cell.x.add(cell.y), 2)
     const t = mix(f.x, f.y, flip)

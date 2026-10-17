@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import type { TSLNode } from '../../types'
   import { mix, uniform, vec3, vec4 } from 'three/tsl'
   import { sobel } from 'three/addons/tsl/display/SobelOperatorNode.js'
 
@@ -30,7 +31,7 @@
   )
 
   useShaderStage((prev) => {
-    const edges = sobel(prev).x.mul(strengthNode)
+    const edges = (sobel(prev) as unknown as TSLNode).x.mul(strengthNode)
     return vec4(mix(vec3(edges), prev.xyz, keepNode), prev.w)
   }, order)
 </script>

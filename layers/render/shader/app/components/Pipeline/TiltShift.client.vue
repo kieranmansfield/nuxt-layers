@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import { abs, float, smoothstep, uniform, uv } from 'three/tsl'
+  import type { hashBlur as HashBlurFn } from 'three/addons/tsl/display/hashBlur.js'
   import { hashBlur } from 'three/addons/tsl/display/hashBlur.js'
 
+  type HashBlurOptions = NonNullable<Parameters<typeof HashBlurFn>[2]>
   const {
     focus = 0.5,
     range = 0.2,
@@ -42,6 +44,6 @@
   useShaderStage((prev) => {
     const d = abs(uv().y.sub(focusNode))
     const k = smoothstep(rangeNode, rangeNode.add(0.3), d)
-    return hashBlur(prev, maxBlurNode.mul(k), { repeats: float(24) })
+    return hashBlur(prev, maxBlurNode.mul(k), { repeats: float(24) } as HashBlurOptions)
   }, order)
 </script>

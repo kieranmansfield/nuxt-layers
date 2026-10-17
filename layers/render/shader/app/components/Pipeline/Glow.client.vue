@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import { float, uniform, vec4 } from 'three/tsl'
+  import type { hashBlur as HashBlurFn } from 'three/addons/tsl/display/hashBlur.js'
   import { hashBlur } from 'three/addons/tsl/display/hashBlur.js'
 
+  type HashBlurOptions = NonNullable<Parameters<typeof HashBlurFn>[2]>
   const {
     amount = 0.04,
     intensity = 0.8,
@@ -41,7 +43,7 @@
 
   useShaderStage((prev) => {
     const bright = prev.xyz.sub(thresholdNode).max(0)
-    const blurred = hashBlur(vec4(bright, 1), amountNode, { repeats: float(24) })
+    const blurred = hashBlur(vec4(bright, 1), amountNode, { repeats: float(24) } as HashBlurOptions)
     return vec4(prev.xyz.add(blurred.xyz.mul(intensityNode)), prev.w)
   }, order)
 </script>
