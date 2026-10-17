@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import type { LinkProps } from '@nuxt/ui'
   import type { UiColors } from '#layers/typography/types/colors'
 
   defineOptions({ inheritAttrs: false })
@@ -19,10 +20,7 @@
   const colorClass = useColor(color, 'text')
   // `name` is a plain string here, not one of the app's typed route names
   const to = computed(
-    () =>
-      ({ name, params: params ?? {}, query: query ?? {} }) as unknown as NonNullable<
-        Parameters<typeof navigateTo>[0]
-      >
+    () => ({ name, params: params ?? {}, query: query ?? {} }) as unknown as LinkProps['to']
   )
 </script>
 
