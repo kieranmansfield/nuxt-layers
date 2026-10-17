@@ -27,7 +27,7 @@
 </script>
 
 <template>
-  <ULink :to="to" :variant :class="colorClass" v-bind="$attrs">
+  <ULink :to :variant :class="colorClass" v-bind="$attrs">
     <slot />
   </ULink>
 </template>
