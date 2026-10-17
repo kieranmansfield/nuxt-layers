@@ -20,7 +20,9 @@ export default defineConfig({
     singleAttributePerLine: false,
     htmlWhitespaceSensitivity: 'css',
     sortPackageJson: false,
-    sortTailwindcss: {},
+    sortTailwindcss: {
+      attributes: ['class', ':class', 'ui'],
+    },
     overrides: [
       {
         files: ['*.{md,mdx}'],

@@ -47,7 +47,7 @@
   <UModal
     v-model:open="open"
     fullscreen
-    :ui="{ content: 'bg-black/95 flex items-center justify-center' }"
+    :ui="{ content: 'flex items-center justify-center bg-black/95' }"
   >
     <template #content>
       <div class="relative flex h-full w-full items-center justify-center p-4">
