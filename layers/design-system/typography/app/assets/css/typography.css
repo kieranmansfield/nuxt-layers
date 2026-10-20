@@ -286,6 +286,9 @@
  * h1–h6 set --step/font-size — descendants inherit the computed size normally; a
  * universal `body *` rule would fight component CSS. @layer base, so any Tailwind or
  * Nuxt UI text-* utility on an element still wins. Heading margins stay in core/base.css.
+ * Author headings only: Nuxt UI renders its own titles (UModal, USlideover, …) as
+ * h1–h6 carrying a data-slot attribute and often no size class, so they keep inheriting.
+ * :where() keeps the specificity of a bare type selector.
  */
 @layer base {
   body {
@@ -295,7 +298,7 @@
   }
 
   /* Same expressions as the text-step-* utilities; h1 (display) also takes the damp. */
-  h1 {
+  h1:where(:not([data-slot])) {
     --step: var(--step-display);
 
     font-size: calc(
@@ -305,52 +308,52 @@
     text-wrap: balance;
   }
 
-  h2 {
+  h2:where(:not([data-slot])) {
     --step: 3;
 
     line-height: 1.2;
     text-wrap: balance;
   }
 
-  h3 {
+  h3:where(:not([data-slot])) {
     --step: 2;
 
     line-height: 1.2;
     text-wrap: balance;
   }
 
-  h4 {
+  h4:where(:not([data-slot])) {
     --step: 1;
   }
 
-  h5,
-  h6 {
+  h5:where(:not([data-slot])),
+  h6:where(:not([data-slot])) {
     --step: 0;
   }
 
   body,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h2:where(:not([data-slot])),
+  h3:where(:not([data-slot])),
+  h4:where(:not([data-slot])),
+  h5:where(:not([data-slot])),
+  h6:where(:not([data-slot])) {
     font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
   }
 
   @supports (font-size: round(1rem, 1rem)) {
     body,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
+    h2:where(:not([data-slot])),
+    h3:where(:not([data-slot])),
+    h4:where(:not([data-slot])),
+    h5:where(:not([data-slot])),
+    h6:where(:not([data-slot])) {
       font-size: round(
         calc(var(--type-base) * pow(var(--type-scale), var(--step))),
         var(--type-snap)
       );
     }
 
-    h1 {
+    h1:where(:not([data-slot])) {
       font-size: round(
         calc(
           var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
