@@ -35,5 +35,5 @@ jobs:
       - name: Update Browserslist
         uses: c2corg/browserslist-update-action@v2.5.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.DEPS_PR_TOKEN || secrets.GITHUB_TOKEN }}
           base_branch: main
