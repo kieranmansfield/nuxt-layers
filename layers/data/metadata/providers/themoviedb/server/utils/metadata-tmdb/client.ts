@@ -1,3 +1,4 @@
+import { providerFetch } from '#layers/metadata/server/utils/metadata/provider-fetch'
 import { useRuntimeConfig } from 'nitropack/runtime'
 import type { TMDBFindResponse, TMDBMovie, TMDBSearchResponse, TMDBTVShow } from './types'
 
@@ -22,13 +23,9 @@ async function tmdbFetch<T>(path: string, params: Record<string, string> = {}): 
   if (!isJwt) url.searchParams.set('api_key', apiKey)
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v)
 
-  try {
-    return await $fetch<T>(url.toString(), {
-      ...(isJwt && { headers: { Authorization: `Bearer ${apiKey}` } }),
-    })
-  } catch (err) {
-    throw new MetadataProviderError('tmdb', `API error: ${String(err)}`)
-  }
+  return providerFetch<T>('tmdb', url.toString(), {
+    ...(isJwt && { headers: { Authorization: `Bearer ${apiKey}` } }),
+  })
 }
 
 export async function searchTmdb(query: string, limit = 10): Promise<TMDBSearchResponse> {

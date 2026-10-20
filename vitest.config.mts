@@ -142,6 +142,7 @@ export default defineConfig({
             '#layers/core/types': fileURLToPath(
               new URL('./layers/core/app/types', import.meta.url)
             ),
+            '#layers/metadata': fileURLToPath(new URL('./layers/data/metadata', import.meta.url)),
             'nitropack/runtime': fileURLToPath(
               new URL('./tests/stubs/nitropack-runtime.ts', import.meta.url)
             ),

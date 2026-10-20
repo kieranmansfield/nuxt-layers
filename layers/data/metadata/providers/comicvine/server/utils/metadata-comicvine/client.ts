@@ -1,3 +1,4 @@
+import { MetadataProviderError } from '#layers/metadata/server/utils/metadata/errors'
 import { useRuntimeConfig } from 'nitropack/runtime'
 import type { ComicVineApiResponse, ComicVineIssue, ComicVineVolume } from './types'
 

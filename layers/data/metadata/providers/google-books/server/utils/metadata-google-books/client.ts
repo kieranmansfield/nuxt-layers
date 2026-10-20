@@ -1,3 +1,4 @@
+import { providerFetch } from '#layers/metadata/server/utils/metadata/provider-fetch'
 import { useRuntimeConfig } from 'nitropack/runtime'
 import type { MetadataMediaType } from '#layers/metadata/shared/types'
 
@@ -29,15 +30,17 @@ export async function searchGoogleBooks(
   query: string,
   limit = 10
 ): Promise<GoogleBooksSearchResponse> {
-  const params: Record<string, string> = { q: query, maxResults: String(limit), langRestrict: 'en' }
+  const params: Record<string, string> = {
+    q: query,
+    maxResults: String(limit),
+    langRestrict: 'en',
+  }
   const apiKey = getApiKey()
   if (apiKey) params.key = apiKey
 
-  try {
-    return await $fetch<GoogleBooksSearchResponse>(`${BASE}/volumes`, { query: params })
-  } catch (err) {
-    throw new MetadataProviderError('google-books', `API error: ${String(err)}`)
-  }
+  return providerFetch<GoogleBooksSearchResponse>('google-books', `${BASE}/volumes`, {
+    query: params,
+  })
 }
 
 export async function fetchGoogleBooksVolume(id: string): Promise<GoogleBooksVolume> {
@@ -45,9 +48,7 @@ export async function fetchGoogleBooksVolume(id: string): Promise<GoogleBooksVol
   const apiKey = getApiKey()
   if (apiKey) params.key = apiKey
 
-  try {
-    return await $fetch<GoogleBooksVolume>(`${BASE}/volumes/${id}`, { query: params })
-  } catch (err) {
-    throw new MetadataProviderError('google-books', `API error: ${String(err)}`)
-  }
+  return providerFetch<GoogleBooksVolume>('google-books', `${BASE}/volumes/${id}`, {
+    query: params,
+  })
 }
