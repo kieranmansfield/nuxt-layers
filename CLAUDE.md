@@ -107,7 +107,7 @@ relocated out of `layers/` into `apps/` — it's a demo app, not a layer. `eleme
 was folded into `core` — it had no layer deps of its own beyond `core`, no other layer depended on
 it, and every layer benefits from the primitive being always-present rather than opt-in; `core`
 now ships both `Element` (inline-`:style`) and `ElementTw` (Tailwind arbitrary-property classes,
-same props, same underlying style composables).
+same props, one shared `resolveElementStyle`).
 
 **Open item, not yet decided:** the tier design's summary table describes `transitions` as
 absorbing `page-transitions`, but that merge was never implemented — both still exist as separate,

@@ -66,29 +66,29 @@ function applySpacing(
   if (resolved) result[cssProp] = spacingVar(resolved)
 }
 
+export function resolveLayoutAttrsStyle(input: LayoutAttrsInput): CSSProperties {
+  const { gap, align, justify, p, px, py, m, mx, my } = input
+  const result: CSSProperties = {}
+
+  applySpacing(result, 'gap', gap)
+  applySpacing(result, 'padding', p)
+  applySpacing(result, 'paddingInline', px)
+  applySpacing(result, 'paddingBlock', py)
+  applySpacing(result, 'margin', m)
+  applySpacing(result, 'marginInline', mx)
+  applySpacing(result, 'marginBlock', my)
+
+  const resolvedAlign = resolveDefault(align)
+  if (resolvedAlign) result.alignItems = ALIGN_MAP[resolvedAlign]
+
+  const resolvedJustify = resolveDefault(justify)
+  if (resolvedJustify) result.justifyContent = JUSTIFY_MAP[resolvedJustify]
+
+  return result
+}
+
 export function useLayoutAttrs(input: MaybeRefOrGetter<LayoutAttrsInput>): {
   style: ComputedRef<CSSProperties>
 } {
-  const style = computed((): CSSProperties => {
-    const { gap, align, justify, p, px, py, m, mx, my } = toValue(input)
-    const result: CSSProperties = {}
-
-    applySpacing(result, 'gap', gap)
-    applySpacing(result, 'padding', p)
-    applySpacing(result, 'paddingInline', px)
-    applySpacing(result, 'paddingBlock', py)
-    applySpacing(result, 'margin', m)
-    applySpacing(result, 'marginInline', mx)
-    applySpacing(result, 'marginBlock', my)
-
-    const resolvedAlign = resolveDefault(align)
-    if (resolvedAlign) result.alignItems = ALIGN_MAP[resolvedAlign]
-
-    const resolvedJustify = resolveDefault(justify)
-    if (resolvedJustify) result.justifyContent = JUSTIFY_MAP[resolvedJustify]
-
-    return result
-  })
-
-  return { style }
+  return { style: computed(() => resolveLayoutAttrsStyle(toValue(input))) }
 }
