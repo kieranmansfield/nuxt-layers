@@ -1,3 +1,4 @@
+import { useStorage } from 'nitropack/runtime'
 import type { MetadataCacheRecord } from '#layers/metadata/shared/types'
 
 // Cache keys: metadata:{provider}:{resourceType}:{providerId}

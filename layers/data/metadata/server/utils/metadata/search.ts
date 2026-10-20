@@ -1,3 +1,5 @@
+import { getSearchCache, hashQuery, makeCacheKey, setSearchCache } from './cache'
+import { getProviders } from './provider-registry'
 import type { MetadataSearchInput, MetadataSearchResult } from '#layers/metadata/shared/types'
 
 // fallow-ignore-next-line complexity

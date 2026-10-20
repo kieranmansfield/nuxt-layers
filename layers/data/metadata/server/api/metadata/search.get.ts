@@ -1,3 +1,5 @@
+import { searchMetadata } from '../../utils/metadata/search'
+import { createError, defineEventHandler, getQuery } from 'h3'
 import type { MetadataMediaType, MetadataProviderId } from '#layers/metadata/shared/types'
 
 // fallow-ignore-next-line complexity

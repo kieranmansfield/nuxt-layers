@@ -13,7 +13,7 @@ npm install kmcom-nuxt-layers
 export default defineNuxtConfig({
   extends: [
     'kmcom-nuxt-layers/layers/core',
-    'kmcom-nuxt-layers/layers/ui',
+    'kmcom-nuxt-layers/layers/typography',
     // add more layers as needed
   ]
 })
@@ -23,16 +23,16 @@ export default defineNuxtConfig({
 
 | Layer | Description |
 |-------|-------------|
-| **core** | Foundation — Nuxt UI, VueUse, Pinia, loading screen, error handling, scroll guard |
-| **ui** | Design system — typography, color, media, branding components |
-| **layout** | Page structure — grids, containers, spacing |
-| **motion** | Animations — GSAP, Locomotive Scroll |
-| **shader** | 3D / WebGPU — Three.js, TresJS |
-| **forms** | Validation — Zod-based form system |
-| **database** | Storage — Drizzle ORM + Neon Postgres |
-| **auth** | Authentication — nuxt-auth-utils + GitHub OAuth |
-| **theme** | Theming — color mode, accent colors |
+| **core** | Foundation — Nuxt UI, VueUse, Pinia, loading screen, error handling, Element primitives |
+| **theming** / **typography** / **visual** | Design system — accents, type, gradients, modals |
+| **layout** / **navigation** / **routing** | Structure — grids, stacks, nav components, feature flags |
 | **content** | CMS — @nuxt/content, Nuxt Studio |
+| **database** / **auth** / **metadata** / **mailer** / **forms** | Data — Drizzle + Neon, GitHub OAuth, metadata providers, Resend, Zod forms |
+| **scroll** / **animations** / **transitions** / **page-transitions** / **motion** | Motion — GSAP, Locomotive Scroll |
+| **canvas** / **shader** | Render — TresJS, WebGPU/TSL |
+| **seo** / **scripts** / **feeds** | Delivery — @nuxtjs/seo, @nuxt/scripts, RSS/Atom/JSON feeds |
+
+Upgrading from v2: `ui` → `typography` + `navigation` + `visual`, `theme` → `theming`, `starter` removed.
 
 All layers depend on `core`. Always list `core` first in `extends`.
 

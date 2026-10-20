@@ -1,3 +1,4 @@
+import { useRuntimeConfig } from 'nitropack/runtime'
 import type { ComicVineApiResponse, ComicVineIssue, ComicVineVolume } from './types'
 
 const FIELD_LIST_ISSUE =

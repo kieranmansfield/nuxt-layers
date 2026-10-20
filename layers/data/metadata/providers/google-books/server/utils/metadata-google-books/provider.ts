@@ -1,3 +1,5 @@
+import { normaliseGoogleBooksVolume } from './normalise'
+import { fetchGoogleBooksVolume, searchGoogleBooks } from './client'
 import type { MetadataProvider } from '#layers/metadata/shared/types'
 
 export const googleBooksProvider: MetadataProvider = {

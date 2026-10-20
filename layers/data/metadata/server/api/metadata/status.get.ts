@@ -1,3 +1,6 @@
+import { getProviders } from '../../utils/metadata/provider-registry'
+import { defineEventHandler } from 'h3'
+
 export default defineEventHandler(async () => {
   const providers = getProviders()
 

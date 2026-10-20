@@ -1,3 +1,4 @@
+import { useRuntimeConfig } from 'nitropack/runtime'
 import type { TMDBFindResponse, TMDBMovie, TMDBSearchResponse, TMDBTVShow } from './types'
 
 function getConfig() {

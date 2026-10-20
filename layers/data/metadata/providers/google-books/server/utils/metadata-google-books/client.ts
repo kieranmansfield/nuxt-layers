@@ -1,3 +1,4 @@
+import { useRuntimeConfig } from 'nitropack/runtime'
 import type { MetadataMediaType } from '#layers/metadata/shared/types'
 
 import type { GoogleBooksSearchResponse, GoogleBooksVolume } from './types'

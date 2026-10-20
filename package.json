@@ -163,10 +163,11 @@
     "@tresjs/post-processing": "^3.7.2",
     "@vite-pwa/nuxt": "^1.1.1",
     "@vueuse/nuxt": "^14.3.0 || ^15.0.0",
+    "baseline-status": "^1.1.1",
     "better-sqlite3": "^12.10.0 || ^13.0.0",
     "gsap": "^3.15.0",
     "locomotive-scroll": "^5.0.1",
-    "nuxt": "^4.4.7",
+    "nuxt": "^4.6.1",
     "pinia": "^3.0.4 || ^4.1.0",
     "tailwindcss": "^4.3.0",
     "three": ">=0.184.0",
@@ -223,6 +224,9 @@
       "optional": true
     },
     "v-gsap-nuxt": {
+      "optional": true
+    },
+    "baseline-status": {
       "optional": true
     }
   },

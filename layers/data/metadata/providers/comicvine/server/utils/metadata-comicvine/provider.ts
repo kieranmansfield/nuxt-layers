@@ -1,3 +1,10 @@
+import { normaliseComicVineIssue, normaliseComicVineVolume } from './normalise'
+import {
+  fetchComicVineIssue,
+  fetchComicVineVolume,
+  searchComicVineIssues,
+  searchComicVineVolumes,
+} from './client'
 import type { MetadataProvider } from '#layers/metadata/shared/types'
 
 import type { ComicVineIssue, ComicVineVolume } from './types'

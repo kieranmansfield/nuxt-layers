@@ -1,3 +1,5 @@
+import { sendRedirect } from 'h3'
+
 export default defineOAuthGitHubEventHandler({
   async onSuccess(event, { user }) {
     await setUserSession(event, {

@@ -1,4 +1,6 @@
-import type { H3Event } from 'h3'
+import { getContentFeedItems } from './content-adapter'
+import { getRequestURL, type H3Event } from 'h3'
+import { useAppConfig } from 'nitropack/runtime'
 
 import {
   createFeedConfig,

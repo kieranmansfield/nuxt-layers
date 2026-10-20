@@ -1,5 +1,5 @@
+import { createError, type H3Event } from 'h3'
 import { queryCollection } from '@nuxt/content/nitro'
-import type { H3Event } from 'h3'
 
 import { resolveFeedAuthor, resolveFeedDate } from './feed-author'
 import type { FeedItem } from './types'

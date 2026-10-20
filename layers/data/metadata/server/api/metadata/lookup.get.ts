@@ -1,3 +1,6 @@
+import { getCacheRecord, makeCacheKey, setCacheRecord } from '../../utils/metadata/cache'
+import { getProvider } from '../../utils/metadata/provider-registry'
+import { createError, defineEventHandler, getQuery } from 'h3'
 import type { MetadataProviderId } from '#layers/metadata/shared/types'
 
 // fallow-ignore-next-line complexity

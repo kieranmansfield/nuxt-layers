@@ -1,3 +1,9 @@
+import {
+  normaliseOpenLibraryEdition,
+  normaliseOpenLibrarySearchDoc,
+  normaliseOpenLibraryWork,
+} from './normalise'
+import { lookupOpenLibraryEdition, lookupOpenLibraryWork, searchOpenLibrary } from './client'
 import type { MetadataProvider } from '#layers/metadata/shared/types'
 
 export const openLibraryProvider: MetadataProvider = {

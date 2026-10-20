@@ -1,3 +1,7 @@
+import { buildFeed } from '../../utils/feed-service'
+import { defineEventHandler, getRequestURL, setHeader } from 'h3'
+import { useAppConfig } from 'nitropack/runtime'
+
 const RSS_ICON = `<svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M2.5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V3Z"/>
         <path d="M4 8a6 6 0 0 1 6 6H8.5A4.5 4.5 0 0 0 4 9.5V8Z"/>

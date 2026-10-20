@@ -1,3 +1,5 @@
+import { useRuntimeConfig } from 'nitropack/runtime'
+
 type MailerLayerConfig = {
   resendApiKey: string
   emailFrom: string

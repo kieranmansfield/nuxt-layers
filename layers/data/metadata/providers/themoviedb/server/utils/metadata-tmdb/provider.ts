@@ -1,3 +1,5 @@
+import { normaliseTmdbMovie, normaliseTmdbSearchResult, normaliseTmdbTV } from './normalise'
+import { fetchTmdbMovie, fetchTmdbTV, findByImdbId, searchTmdb } from './client'
 import type { MetadataProvider } from '#layers/metadata/shared/types'
 
 export const tmdbProvider: MetadataProvider = {

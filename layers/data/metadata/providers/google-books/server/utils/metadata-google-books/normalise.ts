@@ -1,3 +1,4 @@
+import { googleBooksCoverUrl, googleBooksMediaType } from './client'
 import type { MetadataCreator, MetadataRecord } from '#layers/metadata/shared/types'
 
 import type { GoogleBooksVolume, GoogleBooksVolumeInfo } from './types'

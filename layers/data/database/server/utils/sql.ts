@@ -1,3 +1,5 @@
+import { createError } from 'h3'
+import { useRuntimeConfig } from 'nitropack/runtime'
 import { neon } from '@neondatabase/serverless'
 
 export function useSql() {

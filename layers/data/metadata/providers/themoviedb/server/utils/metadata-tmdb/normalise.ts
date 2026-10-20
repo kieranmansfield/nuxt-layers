@@ -1,3 +1,4 @@
+import { tmdbImageUrl } from './client'
 import type { MetadataCreator, MetadataRecord } from '#layers/metadata/shared/types'
 
 import type { TMDBMovie, TMDBSearchMultiResult, TMDBTVShow } from './types'

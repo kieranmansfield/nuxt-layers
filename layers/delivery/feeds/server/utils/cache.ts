@@ -1,5 +1,5 @@
+import { setHeader, type H3Event } from 'h3'
 import { createHash } from 'node:crypto'
-import type { H3Event } from 'h3'
 
 export function setFeedCacheHeaders(event: H3Event, content: string): void {
   const etag = `"${createHash('md5').update(content).digest('hex')}"`

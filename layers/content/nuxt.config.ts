@@ -33,6 +33,14 @@ export default defineNuxtConfig({
 
   css: ['#layers/content/app/assets/css/content.css'],
 
+  // Nuxt only references layer .d.ts files that live in generated .nuxt types, so register
+  // the @nuxt/content frontmatter augmentation explicitly for consumers.
+  hooks: {
+    'prepare:types': ({ references }) => {
+      references.push({ path: `${import.meta.dirname}/app/types/collections.d.ts` })
+    },
+  },
+
   compatibilityDate: '2026-01-24',
 
   typescript: {
