@@ -52,7 +52,7 @@
     ...(size !== undefined && { size }),
     ...(fluidSize !== undefined && { fluidSize }),
   }))
-  const colorClass = useColor(color, 'text')
+  const colorClass = useColor(() => color, 'text')
 </script>
 
 <template>

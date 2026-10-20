@@ -17,7 +17,7 @@
     variant?: string
     color?: UiColors
   }>()
-  const colorClass = useColor(color, 'text')
+  const colorClass = useColor(() => color, 'text')
   // `name` is a plain string here, not one of the app's typed route names
   const to = computed(
     () => ({ name, params: params ?? {}, query: query ?? {} }) as unknown as LinkProps['to']
