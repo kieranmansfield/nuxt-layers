@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           # The action rebases the existing browserslist-update branch onto main. With the
           # default shallow clone main looks like one unrelated commit, so every file

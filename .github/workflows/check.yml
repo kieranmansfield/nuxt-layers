@@ -18,7 +18,7 @@ jobs:
     name: Format & lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: voidzero-dev/setup-vp@v1.21.2
         with:
           node-version-file: .node-version
@@ -41,7 +41,7 @@ jobs:
     name: Typecheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: voidzero-dev/setup-vp@v1.21.2
         with:
           node-version-file: .node-version
@@ -52,7 +52,7 @@ jobs:
     name: Unit & Nuxt tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: voidzero-dev/setup-vp@v1.21.2
         with:
           node-version-file: .node-version
@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: voidzero-dev/setup-vp@v1.21.2
         with:
           node-version-file: .node-version
@@ -76,7 +76,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: voidzero-dev/setup-vp@v1.21.2
         with:
           node-version-file: .node-version
