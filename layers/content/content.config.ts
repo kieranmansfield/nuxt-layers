@@ -75,23 +75,13 @@ export const galleryCollectionSchema = z.object({
   date: z.string().optional(),
 })
 
-export const createContentCollection = (source = 'pages/**/*.md') =>
-  defineCollection({ type: 'page', source })
-
-export const createBlogCollection = (source = 'blog/**/*.md') =>
-  defineCollection({ type: 'page', source })
-
-export const createPortfolioCollection = (source = 'portfolio/**/*.md') =>
-  defineCollection({ type: 'page', source })
-
-export const createGalleryCollection = (source = 'gallery/**/*.md') =>
-  defineCollection({ type: 'page', source })
-
+// Only used when this layer runs standalone. A collection's `source` is rooted at the layer
+// that defines it, so consumer apps must declare their own collections — see CLAUDE.md.
 export default defineContentConfig({
   collections: {
-    content: createContentCollection(),
-    blog: createBlogCollection(),
-    portfolio: createPortfolioCollection(),
-    gallery: createGalleryCollection(),
+    content: defineCollection({ type: 'page', source: 'pages/**/*.md' }),
+    blog: defineCollection({ type: 'page', source: 'blog/**/*.md' }),
+    portfolio: defineCollection({ type: 'page', source: 'portfolio/**/*.md' }),
+    gallery: defineCollection({ type: 'page', source: 'gallery/**/*.md' }),
   },
 })
