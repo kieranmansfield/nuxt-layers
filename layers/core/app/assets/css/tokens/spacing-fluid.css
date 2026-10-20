@@ -1,25 +1,28 @@
 /**
- * Fluid spacing scale — clamp() + cqi container-relative variant, same
- * pattern as layers/typography's fluid type scale (see typography.css).
+ * Fluid spacing scale — one ratio, same idea as typography.css's type scale:
+ *   space = --space-base × --space-scale ^ n
+ * 1.414 ≈ 2^(1/2), so two steps double a gap. --space-base runs 8px at ≤320px to 16px
+ * at ≥1280px; the rem term in the middle keeps it zoom-safe (WCAG 1.4.4).
  * Backs the `Spacing` token (layers/core/app/types/tokens.ts) consumed by
- * useLayoutAttrs(). --fluid-space-none is 0, not clamp() — no scaling needed.
+ * useLayoutAttrs(). --space-none is 0, not a step.
+ * Plain :root properties, not @theme: --space-* is not a Tailwind namespace, and
+ * xs/md/xl declared there would risk colliding with --container-* size names.
+ *
+ * Trap: each step substitutes --space-base here at :root, so overriding --space-base
+ * on a subtree does NOT change --space-md inside it. Per-subtree spacing retuning is
+ * not a supported extension point (type retuning is — see typography.css).
  */
 :root {
-  --fluid-space-none: 0px;
-  --fluid-space-xs: clamp(0.5rem, 0.46rem + 0.2vi, 0.625rem);
-  --fluid-space-sm: clamp(0.75rem, 0.7rem + 0.25vi, 1rem);
-  --fluid-space-md: clamp(1rem, 0.9rem + 0.5vi, 1.5rem);
-  --fluid-space-lg: clamp(1.5rem, 1.3rem + 1vi, 2.5rem);
-  --fluid-space-xl: clamp(2rem, 1.7rem + 1.5vi, 3.5rem);
-  --fluid-space-2xl: clamp(3rem, 2.4rem + 3vi, 5rem);
-  --fluid-space-3xl: clamp(4rem, 3rem + 5vi, 7rem);
+  --space-scale: 1.414;
+  --space-base: clamp(0.5rem, 0.3333rem + 0.8333vw, 1rem);
 
-  /* Container-relative counterparts (cqi) — opt-in inside a `container-type` ancestor. */
-  --fluid-space-xs-cq: clamp(0.5rem, 0.46rem + 2cqi, 0.625rem);
-  --fluid-space-sm-cq: clamp(0.75rem, 0.65rem + 2.5cqi, 1rem);
-  --fluid-space-md-cq: clamp(1rem, 0.8rem + 5cqi, 1.5rem);
-  --fluid-space-lg-cq: clamp(1.5rem, 1.1rem + 10cqi, 2.5rem);
-  --fluid-space-xl-cq: clamp(2rem, 1.4rem + 15cqi, 3.5rem);
-  --fluid-space-2xl-cq: clamp(3rem, 2rem + 25cqi, 5rem);
-  --fluid-space-3xl-cq: clamp(4rem, 2.5rem + 37.5cqi, 7rem);
+  /* n = −1 … 5 */
+  --space-none: 0px;
+  --space-xs: calc(var(--space-base) * pow(var(--space-scale), -1));
+  --space-sm: calc(var(--space-base) * pow(var(--space-scale), 0));
+  --space-md: calc(var(--space-base) * pow(var(--space-scale), 1));
+  --space-lg: calc(var(--space-base) * pow(var(--space-scale), 2));
+  --space-xl: calc(var(--space-base) * pow(var(--space-scale), 3));
+  --space-2xl: calc(var(--space-base) * pow(var(--space-scale), 4));
+  --space-3xl: calc(var(--space-base) * pow(var(--space-scale), 5));
 }

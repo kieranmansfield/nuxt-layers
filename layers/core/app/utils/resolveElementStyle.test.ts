@@ -87,9 +87,9 @@ describe('resolveElementStyle prop mapping', () => {
   it('merges layout attrs (gap/align/padding) into the same object', () => {
     expect(resolveElementStyle({ flex: true, gap: 'md', align: 'center', p: 'sm' })).toMatchObject({
       display: 'flex',
-      gap: 'var(--fluid-space-md)',
+      gap: 'var(--space-md)',
       alignItems: 'center',
-      padding: 'var(--fluid-space-sm)',
+      padding: 'var(--space-sm)',
     })
   })
 

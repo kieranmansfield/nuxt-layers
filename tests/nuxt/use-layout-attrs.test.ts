@@ -5,12 +5,12 @@ import { useLayoutAttrs } from '../../layers/core/app/composables/useLayoutAttrs
 describe('useLayoutAttrs', () => {
   it('resolves a static token value', () => {
     const { style } = useLayoutAttrs(() => ({ gap: 'md' }))
-    expect(style.value.gap).toBe('var(--fluid-space-md)')
+    expect(style.value.gap).toBe('var(--space-md)')
   })
 
   it('resolves a responsive object to its default value', () => {
     const { style } = useLayoutAttrs(() => ({ gap: { default: 'sm', lg: 'md' } }))
-    expect(style.value.gap).toBe('var(--fluid-space-sm)')
+    expect(style.value.gap).toBe('var(--space-sm)')
   })
 
   it('omits a property when its value is missing', () => {
@@ -33,9 +33,9 @@ describe('useLayoutAttrs', () => {
 
   it('resolves p/px/py to distinct css properties', () => {
     const { style } = useLayoutAttrs(() => ({ p: 'lg', px: 'sm', py: 'xl' }))
-    expect(style.value.padding).toBe('var(--fluid-space-lg)')
-    expect(style.value.paddingInline).toBe('var(--fluid-space-sm)')
-    expect(style.value.paddingBlock).toBe('var(--fluid-space-xl)')
+    expect(style.value.padding).toBe('var(--space-lg)')
+    expect(style.value.paddingInline).toBe('var(--space-sm)')
+    expect(style.value.paddingBlock).toBe('var(--space-xl)')
   })
 
   it('prefers the responsive object default over treating it as a bare token', () => {

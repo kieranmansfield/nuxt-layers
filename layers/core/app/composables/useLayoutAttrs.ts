@@ -47,7 +47,7 @@ function resolveDefault<T>(value: ResponsiveValue<T> | T | undefined): T | undef
 }
 
 function spacingVar(token: Spacing): string {
-  return token === 'none' ? '0px' : `var(--fluid-space-${token})`
+  return token === 'none' ? '0px' : `var(--space-${token})`
 }
 
 function applySpacing(

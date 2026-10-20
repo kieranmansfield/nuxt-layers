@@ -69,8 +69,8 @@ describe('Element', () => {
       props: { m: 'md', p: 'lg' },
     })
     const style = wrapper.attributes('style') ?? ''
-    expect(style).toContain('margin: var(--fluid-space-md)')
-    expect(style).toContain('padding: var(--fluid-space-lg)')
+    expect(style).toContain('margin: var(--space-md)')
+    expect(style).toContain('padding: var(--space-lg)')
   })
 
   it('passes componentProps to the resolved component, past a colliding prop name', () => {

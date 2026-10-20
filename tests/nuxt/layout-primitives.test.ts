@@ -15,7 +15,7 @@ describe('HStack', () => {
     })
 
     expect(wrapper.classes()).toContain('h-stack')
-    expect(wrapper.attributes('style')).toContain('gap: var(--fluid-space-md)')
+    expect(wrapper.attributes('style')).toContain('gap: var(--space-md)')
     expect(wrapper.attributes('style')).toContain('align-items: center')
     expect(wrapper.attributes('style')).toContain('justify-content: space-between')
   })
@@ -33,7 +33,7 @@ describe('VStack', () => {
   it('renders a vertical flex column with resolved gap', async () => {
     const wrapper = await mountSuspended(VStack, { props: { gap: 'lg' } })
     expect(wrapper.classes()).toContain('v-stack')
-    expect(wrapper.attributes('style')).toContain('gap: var(--fluid-space-lg)')
+    expect(wrapper.attributes('style')).toContain('gap: var(--space-lg)')
   })
 
   it('nests inside an HStack without losing its own layout attrs', async () => {
@@ -45,8 +45,8 @@ describe('VStack', () => {
     })
     const nested = await mountSuspended(VStack, { props: { gap: 'xs' } })
 
-    expect(wrapper.attributes('style')).toContain('gap: var(--fluid-space-sm)')
-    expect(nested.attributes('style')).toContain('gap: var(--fluid-space-xs)')
+    expect(wrapper.attributes('style')).toContain('gap: var(--space-sm)')
+    expect(nested.attributes('style')).toContain('gap: var(--space-xs)')
   })
 })
 
