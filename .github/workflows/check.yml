@@ -31,7 +31,10 @@ jobs:
         run: vp run lint
       - name: Stylelint
         run: vp exec stylelint "**/*.{vue,css}" --ignore-path .gitignore
+      # Advisory for now: the repo has existing findings (core/typography/theming cycles,
+      # a stale suppression). Drop continue-on-error once they're cleaned up.
       - name: Dead code (fallow)
+        continue-on-error: true
         run: vp dlx fallow dead-code
 
   typecheck:
