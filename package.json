@@ -11,6 +11,7 @@
     "./layers/navigation": "./layers/structure/navigation/nuxt.config.ts",
     "./layers/visual": "./layers/design-system/visual/nuxt.config.ts",
     "./layers/layout": "./layers/structure/layout/nuxt.config.ts",
+    "./layers/grid": "./layers/structure/grid/nuxt.config.ts",
     "./layers/scroll": "./layers/motion/scroll/nuxt.config.ts",
     "./layers/animations": "./layers/motion/animations/nuxt.config.ts",
     "./layers/transitions": "./layers/motion/transitions/nuxt.config.ts",

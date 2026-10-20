@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     name: 'theming',
   },
 
-  extends: ['../../core'],
+  extends: ['../../core', '../typography'],
 
   runtimeConfig: {
     public: {

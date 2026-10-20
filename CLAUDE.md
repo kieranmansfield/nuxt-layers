@@ -121,12 +121,13 @@ done or dropped; don't assume the absorption already happened.
 core → (nothing)
 
 # Tier 1 — Design System
-theming → core
+theming → core, typography
 typography → core
 visual → core
 
 # Tier 2 — Structure
 layout → core
+grid → core
 navigation → core, scroll, layout, typography
 routing → core
 
@@ -153,7 +154,7 @@ motion → scroll, animations, transitions, page-transitions
 
 # Tier 6 — Render
 canvas → core
-shader → canvas
+shader → canvas, theming
 
 # Tier 7 — Delivery
 seo → core
@@ -165,7 +166,10 @@ feeds → core, content
 
 - `core` has no layer dependencies — it is always the base
 - Every non-core layer MUST declare its full `extends` list explicitly in `nuxt.config.ts`
-- Do not rely on playground load order to provide dependencies
+- Do not rely on playground load order to provide dependencies — the playground lists no
+  dependencies; Nuxt resolves each layer's `extends` transitively
+- `tests/vitest/layer-extends.test.ts` fails if a layer imports `#layers/<name>` without extending
+  it (auto-imported composables are not covered)
 - Nuxt deduplicates layers, so declaring a dep that's already loaded is safe and free
 
 ## Tech Stack

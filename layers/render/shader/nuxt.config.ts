@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-07-15',
 
-  extends: ['../canvas'],
+  extends: ['../canvas', '../../design-system/theming'],
 
   typescript: {
     typeCheck: false,

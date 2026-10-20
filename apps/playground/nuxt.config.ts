@@ -62,41 +62,14 @@ const LAYER_PATHS: Record<LayerName, string> = {
   'metadata-tmdb': '../../layers/data/metadata/providers/themoviedb',
 }
 
-// Layer dependencies - if a layer is enabled, its dependencies are auto-included
-const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
-  core: [],
-  seo: ['core'],
-  scripts: ['core'],
-  typography: ['core'],
-  navigation: ['core', 'scroll', 'layout', 'typography'],
-  visual: ['core'],
-  layout: ['core'],
-  grid: ['core'],
-  scroll: ['core'],
-  animations: ['scroll'],
-  transitions: ['core'],
-  'page-transitions': ['core'],
-  motion: ['scroll', 'animations', 'transitions', 'page-transitions'],
-  canvas: ['core'],
-  shader: ['canvas'],
-  mailer: ['core'],
-  forms: ['mailer'],
-  theming: ['core'],
-  content: ['core'],
-  routing: ['core'],
+// Nuxt resolves each layer's own `extends` transitively, so dependencies are NOT listed here.
+// Exception: feeds only extends core/content when FEEDS_STANDALONE is set, so name them here.
+const IMPLICIT_DEPENDENCIES: Partial<Record<LayerName, LayerName[]>> = {
   feeds: ['core', 'content'],
-  database: ['core'],
-  auth: ['core'],
-  metadata: ['core'],
-  'metadata-comicvine': ['metadata'],
-  'metadata-openlibrary': ['metadata'],
-  'metadata-google-books': ['metadata'],
-  'metadata-tmdb': ['metadata'],
 }
 
 /**
- * Resolves which layers to extend based on environment configuration
- * Automatically includes layer dependencies.
+ * Resolves which layers to extend based on environment configuration.
  *
  * PLAYGROUND_LAYERS: Comma-separated list (e.g., "core,typography")
  * If not set, all layers are enabled
@@ -109,27 +82,15 @@ function resolveExtendedLayers(): string[] {
     return AVAILABLE_LAYERS.map((name) => LAYER_PATHS[name])
   }
 
-  // Parse comma-separated layer names
-  const requestedLayers = layersEnv
+  const requested = layersEnv
     .split(',')
     .map((s) => s.trim().toLowerCase() as LayerName)
     .filter((name) => AVAILABLE_LAYERS.includes(name))
 
-  // Resolve dependencies
-  const resolvedLayers = new Set<LayerName>()
+  const resolved = new Set<LayerName>(requested)
+  requested.forEach((name) => IMPLICIT_DEPENDENCIES[name]?.forEach((dep) => resolved.add(dep)))
 
-  function addWithDependencies(layer: LayerName) {
-    if (resolvedLayers.has(layer)) return
-    LAYER_DEPENDENCIES[layer].forEach(addWithDependencies)
-    resolvedLayers.add(layer)
-  }
-
-  requestedLayers.forEach(addWithDependencies)
-
-  // Return paths in correct order (dependencies first)
-  return AVAILABLE_LAYERS.filter((name) => resolvedLayers.has(name)).map(
-    (name) => LAYER_PATHS[name]
-  )
+  return AVAILABLE_LAYERS.filter((name) => resolved.has(name)).map((name) => LAYER_PATHS[name])
 }
 
 export default defineNuxtConfig({
