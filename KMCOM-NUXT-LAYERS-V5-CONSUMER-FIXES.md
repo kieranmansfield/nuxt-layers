@@ -10,11 +10,11 @@ gallery content collections.
 
 ## Already fixed
 
-| Release | Fix |
-| --- | --- |
-| 5.0.3 | navigation templates called auto-imports (`useSite()`, `useGridConfig()`) directly in `<template>`, which `vue-tsc` cannot see (TS2339). Moved into `<script setup>`. |
-| 5.0.4 | `Links/Named.vue` `to` typed via `navigateTo`'s param, which is wider than `ULink`'s prop (TS2322). Cast to the router location type. |
-| 5.0.5 | "Duplicated imports" warnings: `TintConfig`/`TintColorSlot`/`TintLevel`/`TINT_LEVEL_OPACITY` (visual `types/index.ts` re-exported `tint.ts`), `ScrollToOptions` (defined in `utils/scroll.ts` and `types/scroll.ts`), `ScrollSceneContext` (re-exported from `useScrollSteps.ts`), `BrowserInfo` (two different shapes; the utils one is now `ParsedBrowserInfo`). |
+| Release | Fix                                                                                                                                                                                                                                                                                                                                                                |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 5.0.3   | navigation templates called auto-imports (`useSite()`, `useGridConfig()`) directly in `<template>`, which `vue-tsc` cannot see (TS2339). Moved into `<script setup>`.                                                                                                                                                                                              |
+| 5.0.4   | `Links/Named.vue` `to` typed via `navigateTo`'s param, which is wider than `ULink`'s prop (TS2322). Cast to the router location type.                                                                                                                                                                                                                              |
+| 5.0.5   | "Duplicated imports" warnings: `TintConfig`/`TintColorSlot`/`TintLevel`/`TINT_LEVEL_OPACITY` (visual `types/index.ts` re-exported `tint.ts`), `ScrollToOptions` (defined in `utils/scroll.ts` and `types/scroll.ts`), `ScrollSceneContext` (re-exported from `useScrollSteps.ts`), `BrowserInfo` (two different shapes; the utils one is now `ParsedBrowserInfo`). |
 
 ## 1. Server routes use Nitro auto-imports, which Nitro skips in `node_modules` (P1)
 
@@ -164,11 +164,11 @@ Current exports: `core`, `typography`, `navigation`, `visual`, `layout`, `scroll
 `forms`, `database`, `auth`, `theming`, `content`, `feeds`, `routing`, `metadata`, `seo`,
 `scripts`. Update the tables and examples, and add a "v2 to v5" rename table:
 
-| v2 | v5 |
-| --- | --- |
-| `ui` | `typography` + `navigation` + `visual` |
-| `theme` | `theming` |
-| `starter` | removed |
+| v2        | v5                                     |
+| --------- | -------------------------------------- |
+| `ui`      | `typography` + `navigation` + `visual` |
+| `theme`   | `theming`                              |
+| `starter` | removed                                |
 
 Consider making a missing layer a hard error (e.g. a `nuxt.config` `$meta` check) rather than a
 warning, since the failure mode is a half-working app.
