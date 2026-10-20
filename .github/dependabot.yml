@@ -1,13 +1,11 @@
 version: 2
 updates:
-  - package-ecosystem: npm
-    directory: /
-    schedule:
-      interval: weekly
-    groups:
-      minor-and-patch:
-        update-types: [minor, patch]
+  # npm updates are handled by .github/workflows/update-deps.yml (grouped, with release
+  # automation). Dependabot security updates still open PRs regardless of this file.
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
+    groups:
+      actions:
+        patterns: ['*']
