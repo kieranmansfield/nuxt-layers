@@ -33,14 +33,11 @@
 
   /* Fluid display step, 5 → 7 across 360 → 1280px. tan(atan2(length, 1rem)) casts the
      length to the unitless exponent pow() needs; normalised by 1rem (not 1px) so the
-     exponent stays 5 → 7 whatever the user's root font size. */
-  --step-display: tan(atan2(clamp(5rem, 4.2176rem + 3.4784vw, 7rem), 1rem));
-
-  /* Damp heading growth under large OS text-scale prefs (>100%) so words
-     don't break to one-per-line. Root font-size (rem) already scales by
-     env(preferred-text-scale); this backs that out then re-applies it at
-     half rate. No-op at 100% scale or without support (env() undefined → 1). */
-  --heading-text-scale-damp: calc(1 + (env(preferred-text-scale, 1) - 1) * 0.5);
+     exponent stays 5 → 7 whatever the user's root font size; the vw term is scaled by root / 16px so a
+     larger root doesn't lower the exponent at a given width (h1 stays visibly larger). */
+  --step-display: tan(
+    atan2(clamp(5rem, 4.2176rem + 3.4784vw * tan(atan2(1rem, 16px)), 7rem), 1rem)
+  );
 }
 
 @media (width >= 48rem) {
@@ -54,7 +51,7 @@
  * Do not override --text-xs..--text-9xl — Nuxt UI components consume those.
  * round() lives in a real declaration behind @supports, never in a custom property:
  * an unsupported browser then keeps the plain calc() above it instead of dropping
- * font-size entirely. Steps ≥ 7 and display also take --heading-text-scale-damp.
+ * font-size entirely.
  * Line heights are starting values measured from the reference system, not tuned.
  */
 @utility text-step-sm {
@@ -172,14 +169,12 @@
 @utility text-step-7 {
   --step: 7;
 
-  font-size: calc(
-    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
-  );
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
   line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(
-      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
       var(--type-snap)
     );
   }
@@ -188,14 +183,12 @@
 @utility text-step-8 {
   --step: 8;
 
-  font-size: calc(
-    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
-  );
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
   line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(
-      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
       var(--type-snap)
     );
   }
@@ -204,14 +197,12 @@
 @utility text-step-9 {
   --step: 9;
 
-  font-size: calc(
-    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
-  );
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
   line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(
-      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
       var(--type-snap)
     );
   }
@@ -220,14 +211,12 @@
 @utility text-step-10 {
   --step: 10;
 
-  font-size: calc(
-    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
-  );
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
   line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(
-      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
       var(--type-snap)
     );
   }
@@ -236,14 +225,12 @@
 @utility text-step-11 {
   --step: 11;
 
-  font-size: calc(
-    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
-  );
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
   line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(
-      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
       var(--type-snap)
     );
   }
@@ -252,14 +239,12 @@
 @utility text-step-12 {
   --step: 12;
 
-  font-size: calc(
-    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
-  );
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
   line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(
-      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
       var(--type-snap)
     );
   }
@@ -268,14 +253,12 @@
 @utility text-step-display {
   --step: var(--step-display);
 
-  font-size: calc(
-    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
-  );
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
   line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(
-      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
       var(--type-snap)
     );
   }
@@ -297,13 +280,11 @@
     line-height: 1.7;
   }
 
-  /* Same expressions as the text-step-* utilities; h1 (display) also takes the damp. */
+  /* Same expressions as the text-step-* utilities. h1 uses the display step. */
   h1:where(:not([data-slot])) {
     --step: var(--step-display);
 
-    font-size: calc(
-      var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
-    );
+    font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
     line-height: 0.95;
     text-wrap: balance;
   }
@@ -355,9 +336,7 @@
 
     h1:where(:not([data-slot])) {
       font-size: round(
-        calc(
-          var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
-        ),
+        calc(var(--type-base) * pow(var(--type-scale), var(--step))),
         var(--type-snap)
       );
     }
