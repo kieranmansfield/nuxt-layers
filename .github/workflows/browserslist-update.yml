@@ -45,9 +45,11 @@ jobs:
 
       # Requires the "Main" ruleset's required status checks: auto-merge waits for them,
       # then squash-merges (the repo's auto-delete setting removes the branch).
+      # Uses GITHUB_TOKEN, not DEPS_PR_TOKEN: the PAT can open the PR but got "Resource not
+      # accessible by personal access token (mergePullRequest)" when merging.
       - name: Enable auto-merge
         env:
-          GH_TOKEN: ${{ secrets.DEPS_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           pr=$(gh pr list --head browserslist-update --state open --json number -q '.[0].number')
           [ -n "$pr" ] || { echo "No open PR, nothing to merge"; exit 0; }
