@@ -1,3 +1,7 @@
+> **Superseded** by the modular step system —
+> `docs/adr/0003-modular-step-system-replaces-fluid-clamps.md`. The `text-fluid-*` utilities
+> and `--fluid-step` described here no longer exist; kept as a record.
+
 # Task: stepped fluid type scale with `round()` — UI layer
 
 **Repo:** `kmcom-nuxt-layers`
