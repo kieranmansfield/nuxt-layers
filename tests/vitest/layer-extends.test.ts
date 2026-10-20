@@ -54,7 +54,8 @@ describe('layer extends', () => {
         const src = readFileSync(file, 'utf8')
         for (const m of src.matchAll(/from\s+'#layers\/([a-z-]+)/g)) {
           const target = dirByAlias.get(m[1]!)
-          if (!target || !allowed.has(target)) bad.push(`${relative(root, file)} -> #layers/${m[1]}`)
+          if (!target || !allowed.has(target))
+            bad.push(`${relative(root, file)} -> #layers/${m[1]}`)
         }
       }
     }
@@ -84,7 +85,9 @@ describe('layer extends', () => {
 
   it('every layer is exported from package.json', () => {
     const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'))
-    const exported = new Set(Object.values<string>(pkg.exports).map((t) => resolve(root, dirname(t))))
+    const exported = new Set(
+      Object.values<string>(pkg.exports).map((t) => resolve(root, dirname(t)))
+    )
     const missing = [...layers.keys()].filter((d) => !exported.has(d)).map((d) => relative(root, d))
     expect(missing).toEqual([])
   })

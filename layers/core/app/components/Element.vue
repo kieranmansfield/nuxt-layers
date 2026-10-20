@@ -2,9 +2,9 @@
   import { useElementStyle } from '../composables/useElementStyle'
   import type { ElementProps } from '../types/element'
 
-  const props = withDefaults(defineProps<ElementProps>(), { as: 'div' })
+  const { as = 'div', componentProps, ...styleProps } = defineProps<ElementProps>()
 
-  const style = useElementStyle(() => props)
+  const style = useElementStyle(() => styleProps)
 </script>
 
 <template>

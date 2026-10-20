@@ -8,9 +8,9 @@
   import type { ElementProps } from '../types/element'
   import { styleToTailwindClasses } from '../utils/styleToTailwindClasses'
 
-  const props = withDefaults(defineProps<ElementProps>(), { as: 'div' })
+  const { as = 'div', componentProps, ...styleProps } = defineProps<ElementProps>()
 
-  const style = useElementStyle(() => props)
+  const style = useElementStyle(() => styleProps)
 
   const twClasses = computed(() => styleToTailwindClasses(style.value))
 </script>
