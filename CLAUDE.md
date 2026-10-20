@@ -53,6 +53,7 @@ nuxt-layers/
 │   │
 │   ├── structure/                  # Tier 2
 │   │   ├── layout/                  # Grid/spacing/breakpoints + HStack/VStack/ZStack/Spacer primitives
+│   │   ├── grid/                    # Data-driven column tracks + presets, rhythm CSS, named-line placement
 │   │   ├── navigation/              # Mast/Site/Links components + useMastNav, useSite
 │   │   └── routing/                 # Advanced routing, maintenance mode, feature flags
 │   │
@@ -113,6 +114,11 @@ same props, one shared `resolveElementStyle`).
 absorbing `page-transitions`, but that merge was never implemented — both still exist as separate,
 real layers with real content. Treat them as distinct Tier 5 members until that merge is either
 done or dropped; don't assume the absorption already happened.
+
+**Open item, deliberately deferred:** Tier 2 has two grid systems. `layout` still carries its
+fixed 6/12/18-column Swiss grid (`LayoutGridItem`, `useGridConfig`, `layoutLayer.ui.grid`), and
+`grid` is the data-driven replacement (`useGridTracks`, presets, named-line placement) that no
+layer consumes yet. Do not merge them piecemeal — see `docs/adr/0001-grid-replaces-layout-swiss-grid.md`.
 
 ## Layer Dependency Graph
 
