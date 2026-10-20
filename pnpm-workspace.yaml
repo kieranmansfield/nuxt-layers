@@ -75,12 +75,12 @@ catalog:
   '@floating-ui/dom': 1.7.6
   '@floating-ui/utils': 0.2.11
   '@iconify-json/lucide': ^1.2.126
-  '@iconify/utils': 3.1.3
+  '@iconify/utils': 3.1.7
   '@iconify/vue': ^5.0.1
   '@internationalized/date': 3.12.2
   '@internationalized/number': 3.6.7
   '@netlify/nuxt': 0.3.7
-  '@netlify/plugin-lighthouse': 6.0.1
+  '@netlify/plugin-lighthouse': 6.0.4
   '@neondatabase/serverless': ^0.10.0
   '@nuxt/content': ^3.15.2
   '@nuxt/eslint': ^1.15.2
@@ -88,20 +88,20 @@ catalog:
   '@nuxt/image': ^2.1.0
   '@nuxt/scripts': ^0.11.0
   '@nuxt/ui': latest
-  '@playwright/test': 1.61.0
+  '@playwright/test': 1.64.1
   '@nuxtjs/device': ^4.0.0
   '@nuxtjs/seo': ^5.0.0
   '@perplex-digital/stylelint-config': ^17.4.0
   '@pinia/nuxt': ^0.11.3
   '@react-email/render': 1.1.2
-  '@selderee/plugin-htmlparser2': 0.11.0
+  '@selderee/plugin-htmlparser2': 0.12.0
   '@shikijs/core': 4.1.0
   '@shikijs/engine-javascript': 4.1.0
   '@shikijs/engine-oniguruma': 4.1.0
   '@shikijs/langs': 4.1.0
   '@shikijs/primitive': 4.1.0
   '@shikijs/themes': 4.1.0
-  '@shikijs/transformers': 4.1.0
+  '@shikijs/transformers': 4.5.0
   '@shikijs/types': 4.1.0
   '@shikijs/vscode-textmate': 10.0.2
   '@sindresorhus/is': 4.6.0
@@ -113,20 +113,20 @@ catalog:
   '@types/three': ^0.184.1
   '@typescript-eslint/eslint-plugin': ^8.60.1
   '@typescript-eslint/parser': ^8.60.1
-  '@ungap/structured-clone': 1.3.1
+  '@ungap/structured-clone': 1.4.0
   '@vite-pwa/nuxt': ^1.1.1
-  '@vue/compiler-core': 3.5.35
-  '@vue/compiler-dom': 3.5.35
-  '@vue/compiler-ssr': 3.5.35
-  '@vue/devtools-api': 8.1.2
-  '@vue/devtools-kit': 8.1.2
-  '@vue/devtools-shared': 8.1.2
+  '@vue/compiler-core': 3.5.44
+  '@vue/compiler-dom': 3.5.44
+  '@vue/compiler-ssr': 3.5.44
+  '@vue/devtools-api': 8.2.1
+  '@vue/devtools-kit': 8.2.1
+  '@vue/devtools-shared': 8.2.1
   '@vue/eslint-config-typescript': ^14.7.0
-  '@vue/reactivity': 3.5.35
-  '@vue/runtime-core': 3.5.35
-  '@vue/runtime-dom': 3.5.35
-  '@vue/server-renderer': 3.5.35
-  '@vue/shared': 3.5.35
+  '@vue/reactivity': 3.5.44
+  '@vue/runtime-core': 3.5.44
+  '@vue/runtime-dom': 3.5.44
+  '@vue/server-renderer': 3.5.44
+  '@vue/shared': 3.5.44
   '@vueuse/core': ^14.3.0
   '@vueuse/nuxt': ^14.3.0
   '@webgpu/glslang': ^0.0.15
@@ -154,8 +154,8 @@ catalog:
   detab: 3.0.2
   devalue: 5.8.1
   devlop: 1.1.0
-  drizzle-kit: ^0.30.0
-  drizzle-orm: ^0.44.0
+  drizzle-kit: ^0.31.11
+  drizzle-orm: ^0.45.4
   dom-serializer: 2.0.0
   domelementtype: 2.3.0
   domhandler: 5.0.3
@@ -205,34 +205,34 @@ catalog:
   is-decimal: 2.0.1
   is-hexadecimal: 2.0.1
   is-plain-obj: 4.1.0
-  leac: 0.6.0
+  leac: 0.7.0
   locomotive-scroll: ^5.0.1
   longest-streak: 3.1.0
   markdown-table: 3.0.4
-  mdast-util-find-and-replace: 3.0.2
-  mdast-util-from-markdown: 2.0.3
+  mdast-util-find-and-replace: 3.0.3
+  mdast-util-from-markdown: 2.1.0
   mdast-util-gfm: 3.1.0
   mdast-util-gfm-autolink-literal: 2.0.1
   mdast-util-gfm-footnote: 2.1.0
-  mdast-util-gfm-strikethrough: 2.0.0
+  mdast-util-gfm-strikethrough: 2.0.1
   mdast-util-gfm-table: 2.0.0
   mdast-util-gfm-task-list-item: 2.0.0
   mdast-util-phrasing: 4.1.0
   mdast-util-to-hast: 13.2.1
-  mdast-util-to-markdown: 2.1.2
+  mdast-util-to-markdown: 2.2.0
   mdast-util-to-string: 4.0.0
-  micromark: 4.0.2
-  micromark-core-commonmark: 2.0.3
+  micromark: 4.0.3
+  micromark-core-commonmark: 2.0.4
   micromark-extension-gfm: 3.0.0
   micromark-extension-gfm-autolink-literal: 2.1.0
   micromark-extension-gfm-footnote: 2.1.0
   micromark-extension-gfm-strikethrough: 2.1.0
-  micromark-extension-gfm-table: 2.1.1
+  micromark-extension-gfm-table: 2.1.2
   micromark-extension-gfm-tagfilter: 2.0.0
   micromark-extension-gfm-task-list-item: 2.1.0
   micromark-factory-destination: 2.0.1
   micromark-factory-label: 2.0.1
-  micromark-factory-space: 2.0.1
+  micromark-factory-space: 2.1.0
   micromark-factory-title: 2.0.1
   micromark-factory-whitespace: 2.0.1
   micromark-util-character: 2.1.1
@@ -248,8 +248,8 @@ catalog:
   micromark-util-sanitize-uri: 2.0.1
   micromark-util-subtokenize: 2.1.0
   minimark: 0.2.0
-  motion-dom: 12.40.0
-  motion-utils: 12.39.0
+  motion-dom: 14.3.0
+  motion-utils: 14.1.1
   netlify-cli: ^26.1.0
   node-emoji: 2.2.0
   node-gyp: ^12.3.0
@@ -261,16 +261,16 @@ catalog:
   oniguruma-to-es: 4.3.6
   parse-entities: 4.0.2
   parse5: 7.3.0
-  parseley: 0.12.1
-  peberminta: 0.9.0
+  parseley: 0.13.1
+  peberminta: 0.10.0
   perfect-debounce: 2.1.0
-  pinia: ^4.0.2
+  pinia: ^4.0.3
   '@vitejs/plugin-vue': ^6.0.8
   postcss-html: ^1.8.1
   prerender-buildhooks: https://6abe5a43-4668-4f72-b3f7-823e2d8bbbbf.netlify.app/packages/buildhooks.tgz
   property-information: 7.2.0
-  react: 19.2.7
-  react-dom: 19.2.7
+  react: 19.3.1
+  react-dom: 19.3.1
   regex: 6.1.0
   regex-recursion: 6.0.2
   regex-utilities: 2.3.0
@@ -288,11 +288,11 @@ catalog:
   resend: ^4.0.0
   sax: 1.6.0
   scule: 1.3.0
-  selderee: 0.11.0
+  selderee: 0.12.0
   shiki: 4.1.0
   skills: ^1.5.23
   skin-tone: 2.0.0
-  source-map-js: 1.2.1
+  source-map-js: 1.2.2
   space-separated-tokens: 2.0.2
   stringify-entities: 4.0.4
   stylelint: ^17.12.0
@@ -304,7 +304,7 @@ catalog:
   tailwind-merge: 3.6.0
   tailwind-variants: 3.2.2
   tailwindcss: latest
-  three: ^0.184.0
+  three: ^0.186.1
   trim-lines: 3.0.1
   type-fest: ^5.7.0
   trim-trailing-lines: 2.1.0
@@ -330,15 +330,15 @@ catalog:
   vite-plugin-checker: ^0.14.5
   vitest: 5.0.5
   '@vitest/coverage-v8': 5.0.5
-  vue: ^3.5.42
+  vue: latest
   '@vue/test-utils': ^2.4.10
   vue-bundle-renderer: 2.2.0
-  vue-router: ^5.1.0
-  vue-tsc: 3.3.11
+  vue-router: 5.4.0
+  vue-tsc: 3.3.13
   web-namespaces: 2.0.1
   xml-js: 1.6.11
-  yaml: 2.9.0
-  zod: ^4.4.3
+  yaml: 2.9.1
+  zod: ^4.3.6
   zod-to-json-schema: ^3.25.2
   zwitch: 2.0.4
   vite-plus: 1.3.0
@@ -352,7 +352,7 @@ catalogs:
   conflicts_conflicts_vue_latest_h3_5_35:
     vue: ^3.5.35
   conflicts_conflicts_zod_h4_3_6_h4_4_3:
-    zod: ^4.4.3
+    zod: ^4.3.6
   conflicts_conflicts_zod-to-json-schema_h3_25_1_h3_25_2:
     zod-to-json-schema: ^3.25.2
   conflicts_feed_5_2_1:
@@ -360,7 +360,7 @@ catalogs:
   conflicts_hookable_6_1_1:
     hookable: 6.1.1
   conflicts_prettier_3_8_3:
-    prettier: 3.8.3
+    prettier: 3.9.10
   conflicts_resend_4_8_0:
     resend: 4.8.0
   conflicts_tailwindcss_4_3_0:
@@ -372,7 +372,7 @@ catalogs:
   conflicts_conflicts_zod_h4_3_6_4_4_3:
     zod: 4.4.3
   conflicts_conflicts_vue-router_5_1_0_h5_1_0:
-    vue-router: ^5.1.0
+    vue-router: 5.4.0
   conflicts_three_h0_181_2:
     three: ^0.181.2
   conflicts_conflicts_prettier_3_8_3_h3_7_4:
