@@ -1,1 +1,1 @@
-export * from '#layers/canvas/types/renderer'
+export * from '../../../canvas/app/types/renderer'
