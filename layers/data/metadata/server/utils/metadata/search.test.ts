@@ -3,23 +3,29 @@ import type {
   MetadataSearchInput,
   MetadataSearchResult,
 } from '#layers/metadata/shared/types'
+import type * as CacheModule from './cache'
 import { beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 
-import { hashQuery, makeCacheKey } from './cache'
+// search.ts imports its sibling helpers directly. Keep the pure cache helpers real, and
+// control provider/cache lookups via mocks.
+const { providerState, getProvidersMock, getSearchCacheMock, setSearchCacheMock } = vi.hoisted(
+  () => {
+    const providerState: { mockProviders: MetadataProvider[] } = { mockProviders: [] }
+    return {
+      providerState,
+      getProvidersMock: vi.fn(() => providerState.mockProviders),
+      getSearchCacheMock: vi.fn(async () => null as MetadataSearchResult[] | null),
+      setSearchCacheMock: vi.fn(async () => undefined),
+    }
+  }
+)
 
-// search.ts calls getProviders()/makeCacheKey()/hashQuery()/getSearchCache()/setSearchCache()
-// as Nitro auto-imports (sibling server/utils files). Stub the pure cache helpers with their
-// real implementations, and control provider/cache lookups directly via mocks.
-const providerState: { mockProviders: MetadataProvider[] } = { mockProviders: [] }
-const getProvidersMock = vi.fn(() => providerState.mockProviders)
-const getSearchCacheMock = vi.fn(async () => null as MetadataSearchResult[] | null)
-const setSearchCacheMock = vi.fn(async () => undefined)
-
-vi.stubGlobal('getProviders', getProvidersMock)
-vi.stubGlobal('makeCacheKey', makeCacheKey)
-vi.stubGlobal('hashQuery', hashQuery)
-vi.stubGlobal('getSearchCache', getSearchCacheMock)
-vi.stubGlobal('setSearchCache', setSearchCacheMock)
+vi.mock('./provider-registry', () => ({ getProviders: getProvidersMock }))
+vi.mock('./cache', async (importOriginal) => ({
+  ...(await importOriginal<typeof CacheModule>()),
+  getSearchCache: getSearchCacheMock,
+  setSearchCache: setSearchCacheMock,
+}))
 
 const { searchMetadata } = await import('./search')
 

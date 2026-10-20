@@ -25,8 +25,10 @@ jobs:
           cache: true
       - name: Format + Oxlint
         run: vp check
+      # Same as `pnpm lint`: per-package eslint via turbo. A root-level `eslint .` lints
+      # markdown docs and files outside any tsconfig, which the repo doesn't expect.
       - name: ESLint (Vue/Nuxt rules)
-        run: vp exec eslint . --max-warnings 0
+        run: vp run lint
       - name: Stylelint
         run: vp exec stylelint "**/*.{vue,css}" --ignore-path .gitignore
       - name: Dead code (fallow)
