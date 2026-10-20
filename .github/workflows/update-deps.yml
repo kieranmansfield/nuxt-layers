@@ -1,0 +1,126 @@
+name: Update Dependencies
+
+on:
+  schedule:
+    - cron: "0 6 * * 1-5" # weekdays: priority group only
+    - cron: "0 6 * * 1" # Mondays: every group
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    name: Update ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Priority: Nuxt, Nuxt UI, Tailwind. Minor + patch only, releases a minor.
+          # Runs on every schedule.
+          - name: core
+            priority: true
+            minor: true
+            prefix: feat
+            patterns: "nuxt @nuxt/ui tailwindcss"
+          - name: nuxt-modules
+            prefix: fix
+            patterns: "@nuxt/content @nuxt/eslint @nuxt/fonts @nuxt/image @nuxt/scripts @nuxt/test-utils @nuxtjs/* nuxt-* @pinia/nuxt tailwind-merge tailwind-variants"
+          - name: vueuse
+            prefix: fix
+            patterns: "@vueuse/*"
+          - name: three
+            override: three
+            prefix: fix
+            patterns: "three @types/three @tresjs/*"
+          - name: motion
+            prefix: fix
+            patterns: "gsap locomotive-scroll v-gsap-nuxt"
+    steps:
+      # Weekday cron only runs the priority group; Monday cron and manual runs run all.
+      - name: Skip non-priority on weekday schedule
+        id: gate
+        run: |
+          if [ "${{ github.event.schedule }}" = "0 6 * * 1-5" ] && [ "${{ matrix.priority }}" != "true" ]; then echo "skip=true" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/checkout@v5
+        if: steps.gate.outputs.skip != 'true'
+
+      - uses: pnpm/action-setup@v4
+        if: steps.gate.outputs.skip != 'true'
+
+      - uses: actions/setup-node@v5
+        if: steps.gate.outputs.skip != 'true'
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+        if: steps.gate.outputs.skip != 'true'
+
+      # The vite-builder patch is keyed to an exact nuxt version, so a stale key makes pnpm
+      # fail with an unused-patch error mid-update. Detach it, update, then re-key below.
+      - name: Detach vite-builder patch
+        if: steps.gate.outputs.skip != 'true' && matrix.name == 'core'
+        run: sed -i '/^  .@nuxt\/vite-builder@.*\.patch$/d' pnpm-workspace.yaml
+
+      # `latest` and exact catalog pins can't express "minor only", so rewrite them to
+      # ^<installed> first; plain `pnpm up` then stays inside the caret range.
+      - name: Update ${{ matrix.name }} (minor + patch)
+        if: steps.gate.outputs.skip != 'true' && matrix.minor
+        run: |
+          for p in ${{ matrix.patterns }}; do
+            v=$(node -p "require('./node_modules/$p/package.json').version")
+            sed -i -E "s#^(  '?$p'?): .*#\\1: ^$v#" pnpm-workspace.yaml
+            pnpm up -r "$p" --dedupe
+          done
+          pnpm install --no-frozen-lockfile
+
+      - name: Re-key vite-builder patch
+        id: patch
+        if: steps.gate.outputs.skip != 'true' && matrix.name == 'core'
+        run: |
+          v=$(node -p "require('./node_modules/@nuxt/vite-builder/package.json').version")
+          new="patches/@nuxt__vite-builder@$v.patch"
+          old=$(ls patches/@nuxt__vite-builder@*.patch | head -n1)
+          [ "$old" = "$new" ] || git mv "$old" "$new"
+          awk -v l="  '@nuxt/vite-builder@$v': $new" '{print} /^patchedDependencies:/{print l}' pnpm-workspace.yaml > w.tmp && mv w.tmp pnpm-workspace.yaml
+          if ! pnpm install --no-frozen-lockfile; then
+            # Patch no longer applies (or was fixed upstream): drop it and flag the PR.
+            sed -i "/^  .@nuxt\/vite-builder@.*\.patch$/d" pnpm-workspace.yaml
+            git rm -qf "$new"
+            pnpm install --no-frozen-lockfile
+            echo "dropped=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # --latest rewrites catalog: entries in pnpm-workspace.yaml too, so pins move with it.
+      - name: Update ${{ matrix.name }} (latest)
+        if: steps.gate.outputs.skip != 'true' && !matrix.minor
+        run: |
+          for p in ${{ matrix.patterns }}; do pnpm up -r "$p" --latest --dedupe || true; done
+          pnpm install --no-frozen-lockfile
+
+      # Exact-pinned override must follow the catalog or pnpm keeps the old version.
+      - name: Sync pinned override
+        if: steps.gate.outputs.skip != 'true' && matrix.override != ''
+        run: |
+          v=$(pnpm view ${{ matrix.override }} version)
+          sed -i "s#^  '${{ matrix.override }}': .*#  '${{ matrix.override }}': $v#" pnpm-workspace.yaml
+          pnpm install --no-frozen-lockfile
+
+      # Pushes made with GITHUB_TOKEN don't trigger check.yml. Add a PAT as DEPS_PR_TOKEN
+      # so these PRs get CI.
+      - uses: peter-evans/create-pull-request@v7
+        if: steps.gate.outputs.skip != 'true'
+        with:
+          token: ${{ secrets.DEPS_PR_TOKEN || github.token }}
+          branch: chore/update-${{ matrix.name }}
+          # feat(deps) -> minor release, fix(deps) -> patch release (see release.yml).
+          commit-message: "${{ matrix.prefix }}(deps): update ${{ matrix.name }} packages"
+          title: "${{ matrix.prefix }}(deps): update ${{ matrix.name }} packages"
+          body: |
+            Automated by `.github/workflows/update-deps.yml`. Squash-merge to release.
+            ${{ steps.patch.outputs.dropped == 'true' && '**The @nuxt/vite-builder patch no longer applied and was dropped. Check whether it is still needed.**' || '' }}
+          delete-branch: true

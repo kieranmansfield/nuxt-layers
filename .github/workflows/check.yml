@@ -1,0 +1,79 @@
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Format & lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: voidzero-dev/setup-vp@v1.21.2
+        with:
+          node-version-file: .node-version
+          cache: true
+      - name: Format + Oxlint
+        run: vp check
+      - name: ESLint (Vue/Nuxt rules)
+        run: vp exec eslint . --max-warnings 0
+      - name: Stylelint
+        run: vp exec stylelint "**/*.{vue,css}" --ignore-path .gitignore
+      - name: Dead code (fallow)
+        run: vp dlx fallow dead-code
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: voidzero-dev/setup-vp@v1.21.2
+        with:
+          node-version-file: .node-version
+          cache: true
+      - run: vp run typecheck
+
+  test:
+    name: Unit & Nuxt tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: voidzero-dev/setup-vp@v1.21.2
+        with:
+          node-version-file: .node-version
+          cache: true
+      - run: vp test run --coverage
+
+  hydration:
+    name: Hydration (Playwright)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: voidzero-dev/setup-vp@v1.21.2
+        with:
+          node-version-file: .node-version
+          cache: true
+      - run: vp exec playwright install --with-deps chromium
+      - run: vp exec playwright test hydration.spec.ts
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: voidzero-dev/setup-vp@v1.21.2
+        with:
+          node-version-file: .node-version
+          cache: true
+      - run: vp run build
