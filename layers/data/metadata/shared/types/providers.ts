@@ -1,6 +1,8 @@
 import type { MetadataMediaType, MetadataRecord } from './metadata'
 
-export type MetadataProviderId = 'comicvine' | 'openlibrary' | 'google-books' | 'tmdb' | 'local'
+// Open: a provider layer registers whatever id it likes (built-ins: comicvine, openlibrary,
+// google-books, tmdb). Unknown ids are rejected at runtime by the provider registry.
+export type MetadataProviderId = string
 
 export type MetadataSearchInput = {
   query: string
@@ -32,5 +34,4 @@ export type MetadataProvider = {
   mediaTypes: MetadataMediaType[]
   search: (input: MetadataSearchInput) => Promise<MetadataSearchResult[]>
   lookup: (input: MetadataLookupInput) => Promise<MetadataRecord | null>
-  sync?: (input: MetadataSyncInput) => Promise<MetadataRecord>
 }

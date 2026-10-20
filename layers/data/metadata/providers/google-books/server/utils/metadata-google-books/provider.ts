@@ -23,11 +23,4 @@ export const googleBooksProvider: MetadataProvider = {
     const volume = await fetchGoogleBooksVolume(providerId)
     return normaliseGoogleBooksVolume(volume)
   },
-
-  async sync({ providerId }) {
-    const record = await googleBooksProvider.lookup({ provider: 'google-books', providerId })
-    if (!record)
-      throw new MetadataProviderError('google-books', `No record found for ${providerId}`)
-    return record
-  },
 }

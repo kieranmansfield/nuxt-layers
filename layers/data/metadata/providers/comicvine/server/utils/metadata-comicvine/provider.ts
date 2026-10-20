@@ -58,14 +58,4 @@ export const comicVineProvider: MetadataProvider = {
     const res = await fetchComicVineIssue(providerId)
     return normaliseComicVineIssue(res.results as ComicVineIssue)
   },
-
-  async sync({ providerId, resourceType = 'issue' }) {
-    const record = await comicVineProvider.lookup({
-      provider: 'comicvine',
-      providerId,
-      resourceType,
-    })
-    if (!record) throw new MetadataProviderError('comicvine', `No record found for ${providerId}`)
-    return record
-  },
 }

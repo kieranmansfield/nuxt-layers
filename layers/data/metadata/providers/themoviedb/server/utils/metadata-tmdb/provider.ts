@@ -32,10 +32,4 @@ export const tmdbProvider: MetadataProvider = {
     if (resourceType === 'tv-show') return normaliseTmdbTV(await fetchTmdbTV(providerId))
     return normaliseTmdbMovie(await fetchTmdbMovie(providerId))
   },
-
-  async sync(input) {
-    const record = await tmdbProvider.lookup(input)
-    if (!record) throw new MetadataProviderError('tmdb', `No record found for ${input.providerId}`)
-    return record
-  },
 }

@@ -24,14 +24,4 @@ export const openLibraryProvider: MetadataProvider = {
     const work = await lookupOpenLibraryWork(providerId)
     return normaliseOpenLibraryWork(work)
   },
-
-  async sync({ providerId, resourceType = 'work' }) {
-    const record = await openLibraryProvider.lookup({
-      provider: 'openlibrary',
-      providerId,
-      resourceType,
-    })
-    if (!record) throw new MetadataProviderError('openlibrary', `No record found for ${providerId}`)
-    return record
-  },
 }
