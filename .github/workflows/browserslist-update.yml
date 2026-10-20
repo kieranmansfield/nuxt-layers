@@ -43,16 +43,12 @@ jobs:
           github_token: ${{ secrets.DEPS_PR_TOKEN || secrets.GITHUB_TOKEN }}
           base_branch: main
 
-      # The ruleset has no required status checks, so `gh pr merge --auto` would merge at
-      # once. Wait for the PR's checks to pass instead, then squash-merge (branch is
-      # deleted by the repo's auto-delete setting). No PR means nothing changed.
-      - name: Merge once checks pass
+      # Requires the "Main" ruleset's required status checks: auto-merge waits for them,
+      # then squash-merges (the repo's auto-delete setting removes the branch).
+      - name: Enable auto-merge
         env:
           GH_TOKEN: ${{ secrets.DEPS_PR_TOKEN || secrets.GITHUB_TOKEN }}
-        timeout-minutes: 30
         run: |
           pr=$(gh pr list --head browserslist-update --state open --json number -q '.[0].number')
           [ -n "$pr" ] || { echo "No open PR, nothing to merge"; exit 0; }
-          sleep 30 # let the PR's checks register
-          gh pr checks "$pr" --watch --fail-fast
-          gh pr merge "$pr" --squash
+          gh pr merge "$pr" --auto --squash
