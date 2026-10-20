@@ -3,14 +3,11 @@
    for the full derivation rationale. Column composition is NOT here — it comes from
    useGridTracks().toColumnsCss(), applied inline per grid-tracks instance. */
 
-@property --fs {
-  syntax: '<length>';
-  inherits: true;
-
-  /* px, not rem: initial values must be computationally independent — `1rem` makes
-     every engine drop this whole rule and leave --fs unregistered */
-  initial-value: 16px;
-}
+/* --fs stays unregistered on purpose: a registered <length> holding rem on :root, read by
+   :root's own line-height, is a dependency cycle in Gecko -- Firefox falls back to the initial
+   value and freezes the unit at 24px. Unregistered, it substitutes and resolves the same in
+   every engine. (An `initial-value: 1rem` @property is invalid anyway: rem is not
+   computationally independent.) */
 
 :root {
   /* Shares the type scale's endpoints (typography.css --type-min/--type-max) but stays
