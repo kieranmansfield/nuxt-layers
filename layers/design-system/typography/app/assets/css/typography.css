@@ -14,303 +14,349 @@
   --font-display: system-ui, sans-serif;
 }
 
+/*
+ * Modular type scale — every size is a step on one ratio, not a hand-tuned clamp:
+ *   font-size = round(--type-base × --type-scale ^ --step, --type-snap)
+ * 1.26 ≈ 2^(1/3), so three steps double a size. --step is set per element and the size
+ * is recomputed from the base each time, so nested steps never compound.
+ * Plain :root properties, not @theme: var(--step) must resolve on the element using it.
+ * Retune a subtree by overriding --type-base or --type-scale (both read where used);
+ * overriding --type-min/--type-max there does nothing — --type-base already substituted
+ * them at :root.
+ */
 :root {
-  /* Fluid type scale — rounding interval. rem, never px (see §5 a11y). */
-  --fluid-step: 0.25rem;
+  --type-min: 1rem; /* base below 48rem */
+  --type-max: 1.2rem; /* base from 48rem — every step jumps ×1.2 there, by design */
+  --type-base: var(--type-min);
+  --type-scale: 1.26;
+  --type-snap: 0.0625rem; /* rounding interval: rem so it scales with the root; never px, never 0 */
 
-  /* Unrounded fluid ranges. Endpoints MUST be integer multiples of --fluid-step. */
-  --fluid-text-xs-raw: clamp(0.5rem, 0.475rem + 0.1vi, 0.75rem);
-  --fluid-text-sm-raw: clamp(0.75rem, 0.7rem + 0.15vi, 1rem);
-  --fluid-text-md-raw: clamp(1rem, 0.9375rem + 0.35vi, 1.25rem);
-  --fluid-text-lg-raw: clamp(1.25rem, 1.125rem + 0.75vi, 1.75rem);
-  --fluid-text-xl-raw: clamp(1.5rem, 1.25rem + 1.5vi, 2.5rem);
-  --fluid-text-2xl-raw: clamp(2rem, 1.5rem + 2.5vi, 3.5rem);
-  --fluid-text-3xl-raw: clamp(2.5rem, 1.75rem + 4vi, 5rem);
-  --fluid-text-4xl-raw: clamp(3rem, 2rem + 5vi, 6rem);
-  --fluid-text-5xl-raw: clamp(3.75rem, 2.5rem + 6.5vi, 7.5rem);
-  --fluid-text-6xl-raw: clamp(4.5rem, 3rem + 8vi, 9rem);
-  --fluid-text-7xl-raw: clamp(5.5rem, 3.5rem + 10vi, 11rem);
-  --fluid-text-8xl-raw: clamp(6.75rem, 4rem + 14vi, 13.5rem);
-  --fluid-text-9xl-raw: clamp(8rem, 4.5rem + 20vi, 16rem);
+  /* Fluid display step, 5 → 7 across 360 → 1280px. tan(atan2(length, 1rem)) casts the
+     length to the unitless exponent pow() needs; normalised by 1rem (not 1px) so the
+     exponent stays 5 → 7 whatever the user's root font size. */
+  --step-display: tan(atan2(clamp(5rem, 4.2176rem + 3.4784vw, 7rem), 1rem));
 
   /* Damp heading growth under large OS text-scale prefs (>100%) so words
      don't break to one-per-line. Root font-size (rem) already scales by
      env(preferred-text-scale); this backs that out then re-applies it at
      half rate. No-op at 100% scale or without support (env() undefined → 1). */
   --heading-text-scale-damp: calc(1 + (env(preferred-text-scale, 1) - 1) * 0.5);
+}
 
-  /* Container-relative counterparts — same rem endpoints, cqi instead of vi.
-     Require a `container-type` ancestor (e.g. `@container`); with none, cqi
-     falls back to the small viewport per spec, so these are opt-in, not a
-     replacement for the vi-based scale above. */
-  /* Coefficients retuned vs the vi scale (not a straight port): small steps'
-     min→max diff is only 0.25-0.5rem (1-2 --fluid-step increments), so vi's
-     slope needs 250+rem of container width to cross even one rounding step —
-     reads as frozen. Retuned so the full min→max transition happens between
-     an 8rem and 24rem container (the actual draggable range in practice). */
-  --fluid-text-xs-cq-raw: clamp(0.5rem, 0.375rem + 1.5625cqi, 0.75rem);
-  --fluid-text-sm-cq-raw: clamp(0.75rem, 0.625rem + 1.5625cqi, 1rem);
-  --fluid-text-md-cq-raw: clamp(1rem, 0.875rem + 1.5625cqi, 1.25rem);
-  --fluid-text-lg-cq-raw: clamp(1.25rem, 1rem + 3.125cqi, 1.75rem);
-  --fluid-text-xl-cq-raw: clamp(1.5rem, 1.25rem + 1.5cqi, 2.5rem);
-  --fluid-text-2xl-cq-raw: clamp(2rem, 1.5rem + 2.5cqi, 3.5rem);
-  --fluid-text-3xl-cq-raw: clamp(2.5rem, 1.75rem + 4cqi, 5rem);
-  --fluid-text-4xl-cq-raw: clamp(3rem, 2rem + 5cqi, 6rem);
-  --fluid-text-5xl-cq-raw: clamp(3.75rem, 2.5rem + 6.5cqi, 7.5rem);
-  --fluid-text-6xl-cq-raw: clamp(4.5rem, 3rem + 8cqi, 9rem);
-  --fluid-text-7xl-cq-raw: clamp(5.5rem, 3.5rem + 10cqi, 11rem);
-  --fluid-text-8xl-cq-raw: clamp(6.75rem, 4rem + 14cqi, 13.5rem);
-  --fluid-text-9xl-cq-raw: clamp(8rem, 4.5rem + 20cqi, 16rem);
+@media (width >= 48rem) {
+  :root {
+    --type-base: var(--type-max);
+  }
 }
 
 /*
- * Fluid type utilities, parallel to Tailwind's --text-* namespace.
+ * Step utilities, parallel to Tailwind's --text-* namespace.
  * Do not override --text-xs..--text-9xl — Nuxt UI components consume those.
- * round() must live in the utility declaration (not a custom property) so
- * var(--fluid-step) resolves per-element, not frozen at :root.
+ * round() lives in a real declaration behind @supports, never in a custom property:
+ * an unsupported browser then keeps the plain calc() above it instead of dropping
+ * font-size entirely. Steps ≥ 7 and display also take --heading-text-scale-damp.
+ * Line heights are starting values measured from the reference system, not tuned.
  */
-@utility text-fluid-xs {
-  font-size: var(--fluid-text-xs-raw);
-  line-height: 1.5;
+@utility text-step-sm {
+  --step: -1;
+
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
+  line-height: 1.7;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-xs-raw), var(--fluid-step));
-  }
-}
-
-@utility text-fluid-sm {
-  font-size: var(--fluid-text-sm-raw);
-  line-height: 1.45;
-
-  @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-sm-raw), var(--fluid-step));
-  }
-}
-
-@utility text-fluid-md {
-  font-size: var(--fluid-text-md-raw);
-  line-height: 1.4;
-
-  @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-md-raw), var(--fluid-step));
-  }
-}
-
-@utility text-fluid-lg {
-  font-size: var(--fluid-text-lg-raw);
-  line-height: 1.25;
-
-  @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-lg-raw), var(--fluid-step));
-  }
-}
-
-@utility text-fluid-xl {
-  font-size: var(--fluid-text-xl-raw);
-  line-height: 1.15;
-
-  @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-xl-raw), var(--fluid-step));
-  }
-}
-
-@utility text-fluid-2xl {
-  font-size: var(--fluid-text-2xl-raw);
-  line-height: 1.1;
-
-  @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-2xl-raw), var(--fluid-step));
-  }
-}
-
-@utility text-fluid-3xl {
-  font-size: var(--fluid-text-3xl-raw);
-  line-height: 1.05;
-
-  @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-3xl-raw), var(--fluid-step));
-  }
-}
-
-@utility text-fluid-4xl {
-  font-size: calc(var(--fluid-text-4xl-raw) * var(--heading-text-scale-damp));
-  line-height: 1;
-
-  @supports (font-size: round(1rem, 1rem)) {
-    font-size: calc(
-      round(down, var(--fluid-text-4xl-raw), var(--fluid-step)) * var(--heading-text-scale-damp)
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
+      var(--type-snap)
     );
   }
 }
 
-@utility text-fluid-5xl {
-  font-size: calc(var(--fluid-text-5xl-raw) * var(--heading-text-scale-damp));
-  line-height: 1;
+@utility text-step-0 {
+  --step: 0;
+
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
+  line-height: 1.7;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: calc(
-      round(down, var(--fluid-text-5xl-raw), var(--fluid-step)) * var(--heading-text-scale-damp)
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
+      var(--type-snap)
     );
   }
 }
 
-@utility text-fluid-6xl {
-  font-size: calc(var(--fluid-text-6xl-raw) * var(--heading-text-scale-damp));
-  line-height: 1;
+@utility text-step-1 {
+  --step: 1;
+
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
+  line-height: 1.7;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: calc(
-      round(down, var(--fluid-text-6xl-raw), var(--fluid-step)) * var(--heading-text-scale-damp)
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
+      var(--type-snap)
     );
   }
 }
 
-@utility text-fluid-7xl {
-  font-size: calc(var(--fluid-text-7xl-raw) * var(--heading-text-scale-damp));
-  line-height: 1;
+@utility text-step-2 {
+  --step: 2;
+
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
+  line-height: 1.2;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: calc(
-      round(down, var(--fluid-text-7xl-raw), var(--fluid-step)) * var(--heading-text-scale-damp)
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
+      var(--type-snap)
     );
   }
 }
 
-@utility text-fluid-8xl {
-  font-size: calc(var(--fluid-text-8xl-raw) * var(--heading-text-scale-damp));
-  line-height: 1;
+@utility text-step-3 {
+  --step: 3;
+
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
+  line-height: 1.2;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: calc(
-      round(down, var(--fluid-text-8xl-raw), var(--fluid-step)) * var(--heading-text-scale-damp)
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
+      var(--type-snap)
     );
   }
 }
 
-@utility text-fluid-9xl {
-  font-size: calc(var(--fluid-text-9xl-raw) * var(--heading-text-scale-damp));
-  line-height: 1;
+@utility text-step-4 {
+  --step: 4;
+
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
+  line-height: 1.2;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: calc(
-      round(down, var(--fluid-text-9xl-raw), var(--fluid-step)) * var(--heading-text-scale-damp)
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
+      var(--type-snap)
     );
   }
 }
 
-@utility text-fluid-xs-cq {
-  font-size: var(--fluid-text-xs-cq-raw);
-  line-height: 1.5;
+@utility text-step-5 {
+  --step: 5;
+
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
+  line-height: 1.2;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-xs-cq-raw), var(--fluid-step));
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
+      var(--type-snap)
+    );
   }
 }
 
-@utility text-fluid-sm-cq {
-  font-size: var(--fluid-text-sm-cq-raw);
-  line-height: 1.45;
+@utility text-step-6 {
+  --step: 6;
+
+  font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
+  line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-sm-cq-raw), var(--fluid-step));
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
+      var(--type-snap)
+    );
   }
 }
 
-@utility text-fluid-md-cq {
-  font-size: var(--fluid-text-md-cq-raw);
-  line-height: 1.4;
+@utility text-step-7 {
+  --step: 7;
+
+  font-size: calc(
+    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
+  );
+  line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-md-cq-raw), var(--fluid-step));
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      var(--type-snap)
+    );
   }
 }
 
-@utility text-fluid-lg-cq {
-  font-size: var(--fluid-text-lg-cq-raw);
-  line-height: 1.25;
+@utility text-step-8 {
+  --step: 8;
+
+  font-size: calc(
+    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
+  );
+  line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-lg-cq-raw), var(--fluid-step));
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      var(--type-snap)
+    );
   }
 }
 
-@utility text-fluid-xl-cq {
-  font-size: var(--fluid-text-xl-cq-raw);
-  line-height: 1.15;
+@utility text-step-9 {
+  --step: 9;
+
+  font-size: calc(
+    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
+  );
+  line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-xl-cq-raw), var(--fluid-step));
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      var(--type-snap)
+    );
   }
 }
 
-@utility text-fluid-2xl-cq {
-  font-size: var(--fluid-text-2xl-cq-raw);
-  line-height: 1.1;
+@utility text-step-10 {
+  --step: 10;
+
+  font-size: calc(
+    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
+  );
+  line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-2xl-cq-raw), var(--fluid-step));
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      var(--type-snap)
+    );
   }
 }
 
-@utility text-fluid-3xl-cq {
-  font-size: var(--fluid-text-3xl-cq-raw);
-  line-height: 1.05;
+@utility text-step-11 {
+  --step: 11;
+
+  font-size: calc(
+    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
+  );
+  line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-3xl-cq-raw), var(--fluid-step));
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      var(--type-snap)
+    );
   }
 }
 
-@utility text-fluid-4xl-cq {
-  font-size: var(--fluid-text-4xl-cq-raw);
-  line-height: 1;
+@utility text-step-12 {
+  --step: 12;
+
+  font-size: calc(
+    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
+  );
+  line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-4xl-cq-raw), var(--fluid-step));
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      var(--type-snap)
+    );
   }
 }
 
-@utility text-fluid-5xl-cq {
-  font-size: var(--fluid-text-5xl-cq-raw);
-  line-height: 1;
+@utility text-step-display {
+  --step: var(--step-display);
+
+  font-size: calc(
+    var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
+  );
+  line-height: 0.95;
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-5xl-cq-raw), var(--fluid-step));
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)),
+      var(--type-snap)
+    );
   }
 }
 
-@utility text-fluid-6xl-cq {
-  font-size: var(--fluid-text-6xl-cq-raw);
-  line-height: 1;
+/*
+ * Element defaults: body text at step 1, headings at their own step. Only body and
+ * h1–h6 set --step/font-size — descendants inherit the computed size normally; a
+ * universal `body *` rule would fight component CSS. @layer base, so any Tailwind or
+ * Nuxt UI text-* utility on an element still wins. Heading margins stay in core/base.css.
+ */
+@layer base {
+  body {
+    --step: 1;
 
-  @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-6xl-cq-raw), var(--fluid-step));
+    line-height: 1.7;
   }
-}
 
-@utility text-fluid-7xl-cq {
-  font-size: var(--fluid-text-7xl-cq-raw);
-  line-height: 1;
+  /* Same expressions as the text-step-* utilities; h1 (display) also takes the damp. */
+  h1 {
+    --step: var(--step-display);
 
-  @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-7xl-cq-raw), var(--fluid-step));
+    font-size: calc(
+      var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
+    );
+    line-height: 0.95;
+    text-wrap: balance;
   }
-}
 
-@utility text-fluid-8xl-cq {
-  font-size: var(--fluid-text-8xl-cq-raw);
-  line-height: 1;
+  h2 {
+    --step: 3;
 
-  @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-8xl-cq-raw), var(--fluid-step));
+    line-height: 1.2;
+    text-wrap: balance;
   }
-}
 
-@utility text-fluid-9xl-cq {
-  font-size: var(--fluid-text-9xl-cq-raw);
-  line-height: 1;
+  h3 {
+    --step: 2;
+
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  h4 {
+    --step: 1;
+  }
+
+  h5,
+  h6 {
+    --step: 0;
+  }
+
+  body,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
+  }
 
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(down, var(--fluid-text-9xl-cq-raw), var(--fluid-step));
+    body,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: round(
+        calc(var(--type-base) * pow(var(--type-scale), var(--step))),
+        var(--type-snap)
+      );
+    }
+
+    h1 {
+      font-size: round(
+        calc(
+          var(--type-base) * pow(var(--type-scale), var(--step)) * var(--heading-text-scale-damp)
+        ),
+        var(--type-snap)
+      );
+    }
   }
 }

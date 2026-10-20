@@ -61,40 +61,13 @@ export type FontSize =
   | number
 
 /* ======================================================
-   Fluid Font Size
-   - Stepped clamp() scale, parallel to Tailwind's --text-*
-   - Companion to text-fluid-* utilities (typography.css)
+   Type Step
+   - Step on the modular scale: base × 1.26^step, parallel to Tailwind's --text-*
+   - Companion to text-step-* utilities (typography.css)
+   - 'sm' is step −1; 'display' is fluid, 5 → 7 with viewport width
    ====================================================== */
 
-export type FluidFontSize =
-  | 'xs'
-  | 'sm'
-  | 'md'
-  | 'lg'
-  | 'xl'
-  | '2xl'
-  | '3xl'
-  | '4xl'
-  | '5xl'
-  | '6xl'
-  | '7xl'
-  | '8xl'
-  | '9xl'
-  // Container-relative (cqi) variants — require a `container-type` ancestor
-  // (e.g. `@container`), otherwise cqi resolves against the small viewport.
-  | 'xs-cq'
-  | 'sm-cq'
-  | 'md-cq'
-  | 'lg-cq'
-  | 'xl-cq'
-  | '2xl-cq'
-  | '3xl-cq'
-  | '4xl-cq'
-  | '5xl-cq'
-  | '6xl-cq'
-  | '7xl-cq'
-  | '8xl-cq'
-  | '9xl-cq'
+export type TypeStep = 'sm' | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'display'
 
 /* ======================================================
    Font Width

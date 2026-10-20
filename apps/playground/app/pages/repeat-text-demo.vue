@@ -12,7 +12,7 @@
       <section class="bg-default flex h-[70vh] overflow-hidden">
         <TypographyRepeatText
           text="SWISS"
-          size="7xl"
+          :step="10"
           weight="font-black"
           color="highlighted"
           class="w-full"
@@ -32,12 +32,7 @@
           </div>
         </UContainer>
         <div class="h-[40vh]">
-          <TypographyRepeatText
-            text="MODERNIST"
-            size="4xl"
-            weight="font-bold"
-            color="highlighted"
-          />
+          <TypographyRepeatText text="MODERNIST" :step="7" weight="font-bold" color="highlighted" />
         </div>
       </section>
 
@@ -56,7 +51,7 @@
           <TypographyRepeatText
             text="POSTER"
             :repeat="6"
-            size="4xl"
+            :step="7"
             weight="font-black"
             color="primary"
           />
@@ -78,7 +73,7 @@
         <div class="h-[40vh]">
           <TypographyRepeatText
             text="GRID"
-            size="4xl"
+            :step="7"
             weight="font-bold"
             color="highlighted"
             letter-spacing="0.1em"
@@ -101,7 +96,7 @@
         <div class="h-[40vh]">
           <TypographyRepeatText
             text="FUTURA"
-            size="4xl"
+            :step="7"
             weight="font-black"
             color="highlighted"
             stroke="even"
@@ -125,7 +120,7 @@
           <TypographyRepeatText
             text="CENTRE"
             :repeat="7"
-            size="4xl"
+            :step="7"
             weight="font-black"
             color="highlighted"
             stroke="center"

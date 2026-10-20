@@ -437,6 +437,7 @@ export default defineConfigWithVueTs(
     files: [
       'layers/core/app/components/ElementTw.vue',
       'layers/delivery/feeds/app/components/Feeds/RouteCard.vue',
+      'layers/design-system/typography/app/components/Typography/Headline.vue',
     ],
     rules: {
       '@typescript-eslint/no-restricted-imports': 'off',

@@ -1,9 +1,12 @@
 <script lang="ts" setup>
+  // Explicit import so Headline mounts under vitest's 'vue' project (no Nuxt auto-imports)
+  // — same exemption as ElementTw.vue (eslint.config.mjs).
+  import { computed } from 'vue'
+
   import { useColor } from '../../composables/color'
   import { useTypography } from '../../composables/typography'
   import type { UiColors } from '../../types/colors'
   import type {
-    FluidFontSize,
     FontFamily,
     FontLeading,
     FontSize,
@@ -13,6 +16,7 @@
     FontWidth,
     TextAlign,
     TextTransform,
+    TypeStep,
   } from '../../types/typography'
 
   const {
@@ -26,7 +30,7 @@
     transform = 'none',
     color = undefined,
     size = undefined,
-    fluidSize = undefined,
+    step = undefined,
     font = undefined,
   } = defineProps<{
     level?: 1 | 2 | 3 | 4 | 5 | 6
@@ -39,25 +43,23 @@
     transform?: TextTransform
     color?: UiColors
     size?: FontSize
-    fluidSize?: FluidFontSize
+    step?: TypeStep
     font?: FontFamily
   }>()
   const tag = computed(() => `h${level}` as const)
 
-  // Fluid by default (continuous scaling, no mobile-first breakpoint step) —
-  // only used when the caller passes neither `size` nor `fluidSize`.
-  const defaultFluidSizes: Record<number, FluidFontSize> = {
-    1: '6xl',
-    2: '5xl',
-    3: '4xl',
-    4: '3xl',
-    5: 'xl',
-    6: 'lg',
+  // Modular step by default, mirroring typography.css's h1–h6 base defaults — only
+  // used when the caller passes neither `size` nor `step`. An explicit step beats size.
+  const defaultSteps: Record<number, TypeStep> = {
+    1: 'display',
+    2: 3,
+    3: 2,
+    4: 1,
+    5: 0,
+    6: 0,
   }
 
-  const appliedFluidSize = computed(() =>
-    size !== undefined ? undefined : (fluidSize ?? defaultFluidSizes[level])
-  )
+  const appliedStep = computed(() => step ?? (size === undefined ? defaultSteps[level] : undefined))
 
   const { classes } = useTypography(() => ({
     weight,
@@ -69,7 +71,7 @@
     transform,
     ...(font !== undefined && { font }),
     ...(size !== undefined && { size }),
-    ...(appliedFluidSize.value !== undefined && { fluidSize: appliedFluidSize.value }),
+    ...(appliedStep.value !== undefined && { step: appliedStep.value }),
   }))
   const colorClass = useColor(() => color, 'text')
 </script>

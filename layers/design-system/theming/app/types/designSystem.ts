@@ -7,19 +7,21 @@
  * (theme adapter component overrides, standalone token exports) will import
  * it directly.
  */
-import type { FluidFontSize } from '#layers/typography/app/types/typography'
+import type { TypeStep } from '#layers/typography/app/types/typography'
 import type { UiColors } from '#types'
 
 /**
  * Design-system tokens — first real config-object source of truth (Phase 5,
  * nuxt-declarative-layout-system-spec.md §21). Colours key off the existing
  * `UiColors` union rather than inventing new names; typography keys off the
- * existing `FluidFontSize` scale/CSS vars in layers/typography — this section
+ * existing `TypeStep` modular scale/CSS vars in layers/typography — this section
  * only gives them a config-object home so a Nuxt UI theme adapter and CSS
  * custom properties can derive from one place.
  */
 
-const fluidTextVar = (size: FluidFontSize) => `var(--fluid-text-${size}-raw)`
+// Unrounded size of one step, same expression as typography.css's text-step-* utilities.
+const stepSize = (exponent: number | string) =>
+  `calc(var(--type-base) * pow(var(--type-scale), ${exponent}))`
 
 export const designSystem = {
   colors: {
@@ -59,20 +61,22 @@ export const designSystem = {
   },
 
   typography: {
-    xs: fluidTextVar('xs'),
-    sm: fluidTextVar('sm'),
-    md: fluidTextVar('md'),
-    lg: fluidTextVar('lg'),
-    xl: fluidTextVar('xl'),
-    '2xl': fluidTextVar('2xl'),
-    '3xl': fluidTextVar('3xl'),
-    '4xl': fluidTextVar('4xl'),
-    '5xl': fluidTextVar('5xl'),
-    '6xl': fluidTextVar('6xl'),
-    '7xl': fluidTextVar('7xl'),
-    '8xl': fluidTextVar('8xl'),
-    '9xl': fluidTextVar('9xl'),
-  },
+    sm: stepSize(-1),
+    0: stepSize(0),
+    1: stepSize(1),
+    2: stepSize(2),
+    3: stepSize(3),
+    4: stepSize(4),
+    5: stepSize(5),
+    6: stepSize(6),
+    7: stepSize(7),
+    8: stepSize(8),
+    9: stepSize(9),
+    10: stepSize(10),
+    11: stepSize(11),
+    12: stepSize(12),
+    display: stepSize('var(--step-display)'),
+  } satisfies Record<TypeStep, string>,
 
   motion: {
     duration: {

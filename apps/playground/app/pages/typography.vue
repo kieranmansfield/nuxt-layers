@@ -1,7 +1,7 @@
 <script setup lang="ts">
   // fallow-ignore-next-line code-duplication
   import type { UiColors } from '#layers/typography/app/types/colors'
-  import type { FluidFontSize } from '#layers/typography/app/types/typography'
+  import type { TypeStep } from '#layers/typography/app/types/typography'
   import type { TintLevel } from '#layers/visual/app/types/tint'
 
   const { setPageAccent } = useAccentColor()
@@ -41,52 +41,20 @@
   return { isMobile, isDesktop }
 }`
 
-  // 7xl-9xl dropped from the demo — too large to read at typical page/demo
+  // 9-12 dropped from the demo — too large to read at typical page/demo
   // widths; the utilities still exist in typography.css for full-bleed hero use.
-  const fluidSizes: FluidFontSize[] = [
-    'xs',
-    'sm',
-    'md',
-    'lg',
-    'xl',
-    '2xl',
-    '3xl',
-    '4xl',
-    '5xl',
-    '6xl',
-  ]
+  const typeSteps: TypeStep[] = ['sm', 0, 1, 2, 3, 4, 5, 6, 7, 8, 'display']
 
-  // Capped at 4xl-cq: the ladder's rem endpoints were tuned for viewport-scale
-  // growth (vi), so 5xl-cq..9xl-cq only make sense in a viewport-scale
-  // container (e.g. a full-width hero @container), not a component-width box
-  // like the demo below — the same reason 9xl needs a wide viewport, not a card.
-  const fluidSizesCq: FluidFontSize[] = [
-    'xs-cq',
-    'sm-cq',
-    'md-cq',
-    'lg-cq',
-    'xl-cq',
-    '2xl-cq',
-    '3xl-cq',
-    '4xl-cq',
-  ]
-
-  const snippetFluidType = `<!-- via useTypography / Typography component -->
-<Typography fluid-size="md">Fluid, stepped body copy</Typography>
-<Typography tag="h2" fluid-size="2xl">Resize — snaps to 4px steps</Typography>
+  const snippetTypeStep = `<!-- via useTypography / Typography component -->
+<Typography :step="1">Body copy, step 1</Typography>
+<Typography tag="h2" :step="3">Three steps up — twice body size</Typography>
 
 <!-- or the utility class directly -->
-<p class="text-fluid-md">Fluid, stepped body copy</p>
+<p class="text-step-1">Body copy, step 1</p>
 
-<!-- retune the ladder for a subtree -->
-<div class="editorial-lede" style="--fluid-step: 0.125rem">
-  <p class="text-fluid-lg">Finer steps here only</p>
-</div>`
-
-  const snippetFluidTypeCq = `<!-- cqi instead of vi — scales with the nearest ancestor
-     that has container-type set (e.g. class="@container"), not the viewport -->
-<div class="@container">
-  <Typography fluid-size="xl-cq">Scales with this box, not the viewport</Typography>
+<!-- retune the ratio for a subtree -->
+<div style="--type-scale: 1.2">
+  <p class="text-step-4">Gentler scale here only</p>
 </div>`
 
   const snippetHeadline = '<TypographyHeadline :level="2">Headline Level 2</TypographyHeadline>'
@@ -379,13 +347,14 @@
           </UCard>
         </section>
 
-        <!-- Fluid Type Scale Section -->
+        <!-- Modular Type Scale Section -->
         <section class="space-y-8">
           <div>
-            <h2 class="mb-2 text-2xl font-bold">Fluid Type Scale</h2>
+            <h2 class="mb-2 text-2xl font-bold">Modular Type Scale</h2>
             <p class="text-muted">
-              Opt-in <code>clamp()</code> sizing rounded to discrete 4px steps via CSS
-              <code>round()</code> — resize the viewport to see it snap
+              Every size is <code>base × 1.26^step</code>, rounded via CSS <code>round()</code>. The
+              base switches from <code>1rem</code> to <code>1.2rem</code> at 48rem;
+              <code>display</code> grows from step 5 to 7 with the viewport
             </p>
           </div>
 
@@ -393,67 +362,27 @@
             <template #header>
               <div class="flex items-center gap-2">
                 <UIcon name="i-lucide-move-vertical" class="text-primary" />
-                <h3 class="text-xl font-semibold">text-fluid-*</h3>
+                <h3 class="text-xl font-semibold">text-step-*</h3>
               </div>
               <p class="text-muted mt-1 text-sm">
-                Via <code>useTypography</code>'s <code>fluidSize</code> prop — parallel namespace to
+                Via <code>useTypography</code>'s <code>step</code> prop — parallel namespace to
                 Tailwind's <code>--text-*</code>, no default token or Nuxt UI component size is
                 affected
               </p>
             </template>
 
             <div class="space-y-4">
-              <div v-for="size in fluidSizes" :key="size" class="flex items-baseline gap-4">
+              <div v-for="step in typeSteps" :key="step" class="flex items-baseline gap-4">
                 <span class="text-muted w-28 shrink-0 font-mono text-xs tracking-wide uppercase">{{
-                  size
+                  step
                 }}</span>
-                <Typography :fluid-size="size" weight="font-semibold">
-                  Stepped fluid type
-                </Typography>
+                <Typography :step weight="font-semibold">Modular type</Typography>
               </div>
             </div>
 
             <template #footer>
               <TypographyCodeBlock language="vue" class="text-sm">{{
-                snippetFluidType
-              }}</TypographyCodeBlock>
-            </template>
-          </UCard>
-
-          <UCard>
-            <template #header>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-scan" class="text-primary" />
-                <h3 class="text-xl font-semibold">text-fluid-*-cq</h3>
-              </div>
-              <p class="text-muted mt-1 text-sm">
-                Same ladder, <code>cqi</code> instead of <code>vi</code> — scales with the
-                <code>@container</code> box below, not the viewport. Drag the handle at its
-                bottom-right corner. Capped at <code>4xl-cq</code> — larger steps assume a
-                viewport-scale container, same as <code>9xl</code> assumes a wide viewport.
-              </p>
-            </template>
-
-            <div
-              class="border-default @container resize-x overflow-auto rounded border p-4"
-              style="min-width: 8rem; max-width: 100%; width: 28rem"
-            >
-              <div class="space-y-4">
-                <div v-for="size in fluidSizesCq" :key="size" class="flex items-baseline gap-4">
-                  <span
-                    class="text-muted w-28 shrink-0 font-mono text-xs tracking-wide uppercase"
-                    >{{ size }}</span
-                  >
-                  <Typography :fluid-size="size" weight="font-semibold" class="min-w-0">
-                    Stepped fluid type
-                  </Typography>
-                </div>
-              </div>
-            </div>
-
-            <template #footer>
-              <TypographyCodeBlock language="vue" class="text-sm">{{
-                snippetFluidTypeCq
+                snippetTypeStep
               }}</TypographyCodeBlock>
             </template>
           </UCard>

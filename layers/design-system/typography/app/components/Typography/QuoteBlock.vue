@@ -3,7 +3,6 @@
   import { useTypography } from '../../composables/typography'
   import type { UiColors } from '../../types/colors'
   import type {
-    FluidFontSize,
     FontFamily,
     FontLeading,
     FontSize,
@@ -13,6 +12,7 @@
     FontWidth,
     TextAlign,
     TextTransform,
+    TypeStep,
   } from '../../types/typography'
 
   const {
@@ -25,7 +25,7 @@
     transform = 'none',
     color = undefined,
     size = undefined,
-    fluidSize = undefined,
+    step = undefined,
     font = undefined,
   } = defineProps<{
     weight?: FontWeight
@@ -37,7 +37,7 @@
     transform?: TextTransform
     color?: UiColors
     size?: FontSize
-    fluidSize?: FluidFontSize
+    step?: TypeStep
     font?: FontFamily
   }>()
   const { classes } = useTypography(() => ({
@@ -50,7 +50,7 @@
     transform,
     ...(font !== undefined && { font }),
     ...(size !== undefined && { size }),
-    ...(fluidSize !== undefined && { fluidSize }),
+    ...(step !== undefined && { step }),
   }))
   const colorClass = useColor(() => color, 'text')
 </script>

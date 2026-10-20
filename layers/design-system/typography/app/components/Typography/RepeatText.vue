@@ -3,7 +3,7 @@
   import { useRepeatFill } from '../../composables/repeatFill'
   import { useTypography } from '../../composables/typography'
   import type { UiColors } from '../../types/colors'
-  import type { FluidFontSize, FontWeight, TypographyTag } from '../../types/typography'
+  import type { FontWeight, TypeStep, TypographyTag } from '../../types/typography'
 
   const {
     rows = 1,
@@ -12,7 +12,7 @@
     repeat = 'auto',
     separator = '',
     weight = undefined,
-    size = '4xl',
+    step = 7,
     color = undefined,
     offset = [],
     letterSpacing = undefined,
@@ -28,7 +28,7 @@
     repeat?: number | 'auto'
     separator?: string
     weight?: FontWeight | FontWeight[]
-    size?: FluidFontSize | FluidFontSize[]
+    step?: TypeStep | TypeStep[]
     color?: UiColors | UiColors[]
     offset?: string[]
     letterSpacing?: string | string[]
@@ -49,7 +49,7 @@
 
   const rowText = (i: number) => pick(text, i) ?? ''
   const rowWeight = (i: number) => pick(weight, i)
-  const rowSize = (i: number) => pick(size, i)
+  const rowStep = (i: number) => pick(step, i)
   const rowColor = (i: number) => pick(color, i)
   const rowOffset = (i: number) => offset[i] ?? '0'
   const rowLetterSpacing = (i: number) => pick(letterSpacing, i)
@@ -58,10 +58,10 @@
   const rowClasses = computed(() =>
     Array.from({ length: rows }, (_, i) => {
       const weight = rowWeight(i)
-      const fluidSize = rowSize(i)
+      const step = rowStep(i)
       return useTypography({
         ...(weight !== undefined && { weight }),
-        ...(fluidSize !== undefined && { fluidSize }),
+        ...(step !== undefined && { step }),
       }).classes.value
     })
   )
