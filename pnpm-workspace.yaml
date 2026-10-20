@@ -157,7 +157,7 @@ catalog:
   drizzle-kit: ^0.30.0
   drizzle-orm: ^0.44.0
   dom-serializer: 2.0.0
-  domelementtype: 2.3.0
+  domelementtype: 3.0.0
   domhandler: 5.0.3
   domutils: 3.2.2
   emojilib: 2.4.0
