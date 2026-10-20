@@ -19,6 +19,11 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
+        with:
+          # The action rebases the existing browserslist-update branch onto main. With the
+          # default shallow clone main looks like one unrelated commit, so every file
+          # add/add-conflicts.
+          fetch-depth: 0
 
       - name: Setup Vite+
         uses: voidzero-dev/setup-vp@v1.21.2
