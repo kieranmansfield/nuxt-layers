@@ -112,7 +112,7 @@ jobs:
 
       # Pushes made with GITHUB_TOKEN don't trigger check.yml. Add a PAT as DEPS_PR_TOKEN
       # so these PRs get CI.
-      - uses: peter-evans/create-pull-request@v7
+      - uses: peter-evans/create-pull-request@v8
         if: steps.gate.outputs.skip != 'true'
         with:
           token: ${{ secrets.DEPS_PR_TOKEN || github.token }}
