@@ -104,7 +104,7 @@ catalog:
   '@shikijs/transformers': 4.1.0
   '@shikijs/types': 4.1.0
   '@shikijs/vscode-textmate': 10.0.2
-  '@sindresorhus/is': 4.6.0
+  '@sindresorhus/is': 8.1.0
   '@tresjs/cientos': ^5.7.2
   '@tresjs/core': ^5.8.1
   '@tresjs/nuxt': ^5.6.1
