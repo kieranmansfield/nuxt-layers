@@ -33,7 +33,8 @@ the element using it.
   38px at 1280px). The bottom end is finer.
 - Body text grows from 16px to 20/24px, and body line-height from 1.5 to 1.7. Nuxt UI
   components with explicit `text-*` sizes are unaffected; anything that inherits body size
-  (card bodies, plain prose) grows.
+  (card bodies, plain prose) grows. Heading defaults skip `[data-slot]` headings, so Nuxt UI's
+  own titles (UModal, USlideover) inherit instead of jumping to a heading step.
 - Every step jumps ×1.2 at 48rem because the base switches there (h1 ≈ 62 → 75px at 768px).
 - Spacing is smaller at the small end and grows faster mid-range.
 - `--space-*` steps are substituted at `:root`, so per-subtree spacing retuning is not

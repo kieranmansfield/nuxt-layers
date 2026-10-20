@@ -22,9 +22,12 @@ font-size = round(--type-base × --type-scale ^ --step, --type-snap)
 
 Utilities (`app/assets/css/typography.css`): `text-step-sm` (step −1), `text-step-0` …
 `text-step-12`, `text-step-display`. Steps ≥ 7 and display also multiply by
-`--heading-text-scale-damp` (slows heading growth under OS text-scale > 100%).
+`--heading-text-scale-damp` = `1 + (env(preferred-text-scale) − 1) × 0.5`. It is meant to slow
+heading growth under OS text-scale > 100%, but as written it is > 1 there, so Chromium grows these
+steps faster, not slower (open question; Firefox has no `env(preferred-text-scale)` → 1).
 
-Element defaults (`@layer base`, so any `text-*` utility still wins):
+Element defaults (`@layer base`, so any `text-*` utility still wins). Headings only match without a
+`data-slot` attribute — Nuxt UI's own titles (UModal, USlideover, …) keep inheriting:
 
 | Element | Step    | Line height         |
 | ------- | ------- | ------------------- |
