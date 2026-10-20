@@ -3,6 +3,7 @@ name: Publish to npm
 on:
   release:
     types: [published]
+  workflow_dispatch: # run on a tag ref, dispatched by release.yml
 jobs:
   build:
     runs-on: ubuntu-latest

@@ -14,7 +14,7 @@ on:
 
 permissions:
   contents: write
-  id-token: write
+  actions: write
 
 jobs:
   release:
@@ -39,7 +39,9 @@ jobs:
       - run: node scripts/release.mjs ${{ inputs.bump || (startsWith(github.event.head_commit.message, 'feat(deps)') && 'minor') || 'patch' }}
         env:
           GH_TOKEN: ${{ github.token }}
-      # A release created with GITHUB_TOKEN doesn't fire npm-publish.yml, so publish here.
-      - run: pnpm publish --provenance --no-git-checks
+      # A release created with GITHUB_TOKEN doesn't fire npm-publish.yml's release trigger,
+      # so dispatch it on the new tag. Publishing stays in that workflow (npm auth is
+      # known-good there; a publish step in this file got a 404).
+      - run: gh workflow run npm-publish.yml --ref "v$(node -p "require('./package.json').version")"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
