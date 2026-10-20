@@ -6,7 +6,10 @@
 @property --fs {
   syntax: '<length>';
   inherits: true;
-  initial-value: 1rem;
+
+  /* px, not rem: initial values must be computationally independent — `1rem` makes
+     every engine drop this whole rule and leave --fs unregistered */
+  initial-value: 16px;
 }
 
 :root {
