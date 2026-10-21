@@ -1,8 +1,10 @@
 /**
  * Fluid spacing scale — one ratio, same idea as typography.css's type scale:
  *   space = --space-base × --space-scale ^ n
- * 1.414 ≈ 2^(1/2), so two steps double a gap. --space-base runs 8px at ≤320px to 16px
- * at ≥1280px; the rem term in the middle keeps it zoom-safe (WCAG 1.4.4).
+ * 1.414 ≈ 2^(1/2), so two steps double a gap. --space-base runs 11.3px at ≤320px to 16px
+ * at ≥1280px — one step of growth (√2), not the reference's two (8 → 16px), so phones keep
+ * the old fluid tokens' sizes (xs 8 · md 16 · xl 32 · 3xl 64px at 320px). The rem term in the
+ * middle keeps it zoom-safe (WCAG 1.4.4).
  * Backs the `Spacing` token (layers/core/app/types/tokens.ts) consumed by
  * useLayoutAttrs(). --space-none is 0, not a step.
  * Plain :root properties, not @theme: --space-* is not a Tailwind namespace, and
@@ -14,7 +16,7 @@
  */
 :root {
   --space-scale: 1.414;
-  --space-base: clamp(0.5rem, 0.3333rem + 0.8333vw, 1rem);
+  --space-base: clamp(0.7071rem, 0.6095rem + 0.4882vw, 1rem);
 
   /* n = −1 … 5 */
   --space-none: 0px;
