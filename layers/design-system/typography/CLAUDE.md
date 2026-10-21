@@ -75,9 +75,17 @@ Cascade notes:
   Headline defaults to `leading-tight`), and Tailwind sorts `leading-*` after `text-step-*`, so
   the step utilities' line heights only show where a `text-step-*` class is used directly.
 - A Tailwind `text-{size}` class on the same element also sorts after, and beats, `text-step-*`.
-- tailwind-merge (Nuxt UI's `class`/`:ui` merging) reads `text-step-*` as a text _colour_, so
-  `<UButton class="text-step-2">` drops the button's colour class and keeps its `text-sm`. Don't
-  pass step classes to Nuxt UI components without extending `twMergeConfig`.
+- `app/app.config.ts` registers `text-step-*` as a font-size group in Nuxt UI's tailwind-merge
+  (`ui.tv.twMergeConfig`). Without it tailwind-merge reads them as a text _colour_, so
+  `<UButton class="text-step-2">` would drop the button's colour and keep its `text-sm`. With it,
+  a step class on a Nuxt UI component replaces the component's `text-{size}`.
+
+## Nuxt UI prose (Nuxt Content)
+
+`app/app.config.ts` also retunes `ui.prose`: `h1` → `text-step-display`, `h2` → `text-step-3`,
+`h3` → `text-step-2`, `h4` → `text-step-1`, and `p`/`li` swap `leading-7` for `leading-[1.7]`, so
+copy inherits the body step at the body's leading. Without it Nuxt UI's fixed
+`text-4xl`/`2xl`/`xl`/`lg` headings sat at or below the 24px copy.
 
 ## Overrides
 

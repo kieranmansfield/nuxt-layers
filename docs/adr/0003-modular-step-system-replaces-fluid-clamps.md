@@ -47,6 +47,7 @@ the element using it.
   at a larger root".
 - `--fs` stays unregistered: a registered `<length>` holding `rem` on `:root`, read by the
   root's own line-height, is a dependency cycle in Gecko that freezes the grid unit.
-- Nuxt Content prose is not retuned here: prose `p`/`li` inherit the 20/24px body (Nuxt UI pins
-  them to `leading-7`) while prose headings keep fixed `text-2xl`/`text-xl`/`text-lg`, so the
-  prose hierarchy needs its own decision.
+- Nuxt UI prose is retuned onto the scale (typography `app.config.ts`): prose headings take
+  steps (h1 display, h2 3, h3 2, h4 1) and `p`/`li` keep the body's 1.7 leading. Otherwise the
+  24px copy sat at or above Nuxt UI's fixed `text-2xl`/`text-xl` prose headings. This needs
+  `text-step-*` registered as a font-size group in tailwind-merge (`ui.tv.twMergeConfig`).
