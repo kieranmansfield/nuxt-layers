@@ -48,18 +48,15 @@
   }>()
   const tag = computed(() => `h${level}` as const)
 
-  // Modular step by default, mirroring typography.css's h1–h6 base defaults — only
-  // used when the caller passes neither `size` nor `step`. An explicit step beats size.
-  const defaultSteps: Record<number, TypeStep> = {
-    1: 'display',
-    2: 3,
-    3: 2,
-    4: 1,
-    5: 0,
-    6: 0,
-  }
-
-  const appliedStep = computed(() => step ?? (size === undefined ? defaultSteps[level] : undefined))
+  // Display hierarchy by default: each level sits one scale step below the previous, starting
+  // at the fluid display step, so every level stays fluid (h1 51 → 97px, h2 40 → 77px …). Set as
+  // --step rather than a class so typography.css's h1–h6 base rules size it. Only when neither
+  // `step` nor `size` is passed; an explicit step beats size.
+  const defaultStepStyle = computed(() => {
+    if (step !== undefined || size !== undefined) return undefined
+    const below = level - 1
+    return { '--step': below ? `calc(var(--step-display) - ${below})` : 'var(--step-display)' }
+  })
 
   const { classes } = useTypography(() => ({
     weight,
@@ -71,13 +68,13 @@
     transform,
     ...(font !== undefined && { font }),
     ...(size !== undefined && { size }),
-    ...(appliedStep.value !== undefined && { step: appliedStep.value }),
+    ...(step !== undefined && { step }),
   }))
   const colorClass = useColor(() => color, 'text')
 </script>
 
 <template>
-  <component :is="tag" :class="[classes, colorClass]">
+  <component :is="tag" :class="[classes, colorClass]" :style="defaultStepStyle">
     <slot />
   </component>
 </template>
