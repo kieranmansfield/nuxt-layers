@@ -26,7 +26,9 @@
     align = 'left',
     transform = 'none',
     color = undefined,
-    size = 'base',
+    // No default size: body copy inherits the body step (20 → 24px) rather than pinning
+    // Tailwind's 16px text-base inside it.
+    size = undefined,
     step = undefined,
     font = undefined,
   } = defineProps<{
@@ -51,7 +53,7 @@
     tracking,
     align,
     transform,
-    size,
+    ...(size !== undefined && { size }),
     ...(font !== undefined && { font }),
     ...(step !== undefined && { step }),
   }))
