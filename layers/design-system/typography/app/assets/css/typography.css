@@ -52,13 +52,14 @@
  * round() lives in a real declaration behind @supports, never in a custom property:
  * an unsupported browser then keeps the plain calc() above it instead of dropping
  * font-size entirely.
- * Line heights are starting values measured from the reference system, not tuned.
+ * Line heights fall with size: anchored on the reference's measured body 1.7, h2/h3 1.2 and
+ * h1 0.95, eased in between (sm 1.5, 0 1.6 … 4 1.15, 5 1.1, 6 1.05, 7 1).
  */
 @utility text-step-sm {
   --step: -1;
 
   font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
-  line-height: 1.7;
+  line-height: 1.5;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(
@@ -72,7 +73,7 @@
   --step: 0;
 
   font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
-  line-height: 1.7;
+  line-height: 1.6;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(
@@ -128,7 +129,7 @@
   --step: 4;
 
   font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
-  line-height: 1.2;
+  line-height: 1.15;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(
@@ -142,7 +143,7 @@
   --step: 5;
 
   font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
-  line-height: 1.2;
+  line-height: 1.1;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(
@@ -156,7 +157,7 @@
   --step: 6;
 
   font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
-  line-height: 0.95;
+  line-height: 1.05;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(
@@ -170,7 +171,7 @@
   --step: 7;
 
   font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
-  line-height: 0.95;
+  line-height: 1;
 
   @supports (font-size: round(1rem, 1rem)) {
     font-size: round(

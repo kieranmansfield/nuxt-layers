@@ -44,4 +44,10 @@ describe('useTypography step', () => {
   it('falls back to size when no step is given', () => {
     expect(classesOf({ size: 'sm' })).toContain('text-sm')
   })
+
+  // A leading-* class sorts after text-step-* and would override the step's line height.
+  it('emits no leading class unless one is given', () => {
+    expect(classesOf({ step: 3 }).filter((c) => c.startsWith('leading-'))).toEqual([])
+    expect(classesOf({ step: 3, leading: 'leading-tight' })).toContain('leading-tight')
+  })
 })

@@ -22,6 +22,11 @@ describe('Headline step', () => {
     expect(classes.filter((c) => c.startsWith('text-step-'))).toEqual([])
   })
 
+  it('leaves line height to the step unless leading is given', () => {
+    expect(classesOf({ level: 2 }).filter((c) => c.startsWith('leading-'))).toEqual([])
+    expect(classesOf({ level: 2, leading: 'leading-tight' })).toContain('leading-tight')
+  })
+
   it('lets an explicit step win over size', () => {
     const classes = classesOf({ level: 2, size: 'sm', step: 5 })
     expect(classes).toContain('text-step-5')

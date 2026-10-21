@@ -17,6 +17,10 @@ describe('Typography size', () => {
     expect(classesOf()).not.toContain('text-base')
   })
 
+  it('inherits the body line height by default', () => {
+    expect(classesOf().filter((c) => c.startsWith('leading-'))).toEqual([])
+  })
+
   it('still applies an explicit size', () => {
     expect(classesOf({ size: 'lg' })).toContain('text-lg')
   })

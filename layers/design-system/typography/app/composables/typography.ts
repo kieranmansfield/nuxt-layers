@@ -89,10 +89,9 @@ export function useTypography(
         fallback: 'not-italic',
       }),
 
-      normalizeAxis(p.leading, {
-        prefix: 'leading',
-        fallback: 'leading-normal',
-      }),
+      // No fallback: a leading-* class sorts after text-step-* and would override the step's
+      // line height, so only emit one when asked.
+      normalizeAxis(p.leading, { prefix: 'leading' }),
 
       normalizeAxis(p.tracking, {
         prefix: 'tracking',

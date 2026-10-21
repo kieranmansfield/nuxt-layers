@@ -60,6 +60,7 @@
       const weight = rowWeight(i)
       const step = rowStep(i)
       return useTypography({
+        leading: 'leading-normal',
         ...(weight !== undefined && { weight }),
         ...(step !== undefined && { step }),
       }).classes.value
