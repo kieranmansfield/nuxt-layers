@@ -47,7 +47,7 @@
 
   const snippetTypeStep = `<!-- via useTypography / Typography component -->
 <Typography :step="1">Body copy, step 1</Typography>
-<Typography tag="h2" :step="3">Three steps up — twice body size</Typography>
+<Typography tag="h2" :step="3">Three steps up from 0 — twice its size</Typography>
 
 <!-- or the utility class directly -->
 <p class="text-step-1">Body copy, step 1</p>

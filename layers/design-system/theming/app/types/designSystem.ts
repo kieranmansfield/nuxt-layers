@@ -19,7 +19,7 @@ import type { UiColors } from '#types'
  * custom properties can derive from one place.
  */
 
-// Unrounded size of one step, same expression as typography.css's text-step-* utilities.
+// Unrounded size of one step — typography.css's text-step-* utilities also round() it.
 const stepSize = (exponent: number | string) =>
   `calc(var(--type-base) * pow(var(--type-scale), ${exponent}))`
 

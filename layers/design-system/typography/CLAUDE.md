@@ -11,20 +11,19 @@ Typography components (`Typography`, `TypographyHeadline`, `TypographyCodeBlock`
 font-size = round(--type-base × --type-scale ^ --step, --type-snap)
 ```
 
-| Token            | Value                                        | Notes                                     |
-| ---------------- | -------------------------------------------- | ----------------------------------------- |
-| `--type-min`     | `1rem`                                       | base below 48rem                          |
-| `--type-max`     | `1.2rem`                                     | base from 48rem                           |
-| `--type-base`    | `var(--type-min)`, `var(--type-max)` ≥ 48rem | read per element                          |
-| `--type-scale`   | `1.26`                                       | ≈ 2^(1/3) — three steps double a size     |
-| `--type-snap`    | `0.0625rem`                                  | rounding interval; rem, never px, never 0 |
-| `--step-display` | 5 → 7 across 360 → 1280px                    | `tan(atan2(clamp(…), 1rem))`              |
+| Token            | Value                                        | Notes                                                          |
+| ---------------- | -------------------------------------------- | -------------------------------------------------------------- |
+| `--type-min`     | `1rem`                                       | base below 48rem                                               |
+| `--type-max`     | `1.2rem`                                     | base from 48rem                                                |
+| `--type-base`    | `var(--type-min)`, `var(--type-max)` ≥ 48rem | read per element                                               |
+| `--type-scale`   | `1.26`                                       | ≈ 2^(1/3) — three steps double a size                          |
+| `--type-snap`    | `0.0625rem`                                  | rounding interval; rem, never px, never 0                      |
+| `--step-display` | 5 → 7 across 360 → 1280px                    | `vw` term × root / 16px, so the exponent depends on width only |
 
 Utilities (`app/assets/css/typography.css`): `text-step-sm` (step −1), `text-step-0` …
-`text-step-12`, `text-step-display`. Steps ≥ 7 and display also multiply by
-`--heading-text-scale-damp` = `1 + (env(preferred-text-scale) − 1) × 0.5`. It is meant to slow
-heading growth under OS text-scale > 100%, but as written it is > 1 there, so Chromium grows these
-steps faster, not slower (open question; Firefox has no `env(preferred-text-scale)` → 1).
+`text-step-12`, `text-step-display`. Everything is rem-based, so a larger user font size scales
+every step; the 48rem switch moves with it (rem in media queries = the browser default, e.g.
+1152px at a 24px default).
 
 Element defaults (`@layer base`, so any `text-*` utility still wins). Headings only match without a
 `data-slot` attribute — Nuxt UI's own titles (UModal, USlideover, …) keep inheriting:
@@ -68,16 +67,28 @@ matches the reference system; it is not a bug.
 
 `step` takes precedence over `size` (Tailwind `text-*`). `TypographyHeadline` defaults by
 level — `1: 'display', 2: 3, 3: 2, 4: 1, 5: 0, 6: 0` — only when neither `step` nor `size` is
-passed.
+passed. `Typography` has no default size: it inherits (body copy = the body step).
+
+Cascade notes:
+
+- `useTypography` always emits a `leading-*` class (`leading-normal` unless `leading` is set;
+  Headline defaults to `leading-tight`), and Tailwind sorts `leading-*` after `text-step-*`, so
+  the step utilities' line heights only show where a `text-step-*` class is used directly.
+- A Tailwind `text-{size}` class on the same element also sorts after, and beats, `text-step-*`.
+- tailwind-merge (Nuxt UI's `class`/`:ui` merging) reads `text-step-*` as a text _colour_, so
+  `<UButton class="text-step-2">` drops the button's colour class and keeps its `text-sm`. Don't
+  pass step classes to Nuxt UI components without extending `twMergeConfig`.
 
 ## Overrides
 
-- **Per element:** font-size is recomputed wherever a rule sets it from `--step` (body, h1–h6,
-  `text-step-*`), so override `--step` there, fractional steps included:
+- **Per element:** font-size is recomputed wherever a rule sets it from `--step` (body, h1–h6
+  without `data-slot`, `text-step-*`), so override `--step` there, fractional steps included:
   `<h2 style="--step: 4">`, `<p class="text-step-0" style="--step: 0.5">`. Setting `--step` on
   an element with no such rule does nothing on its own.
 - **Per subtree:** override `--type-base` or `--type-scale` — both are read where used, e.g.
-  `.card { --type-base: clamp(0.9rem, 0.8rem + 2cqi, 1.1rem); }`. `cqi` resolves against the
+  `.card { --type-base: clamp(0.9rem, 0.8rem + 2cqi, 1.1rem); }`. Only elements with a step
+  rule rebase (headings, `text-step-*`); plain `p`/`li` keep the size they inherit, so give the
+  wrapper a `text-step-*` class too if its body copy should follow. `cqi` resolves against the
   nearest _ancestor_ container, never the element's own. Overriding `--type-min`/`--type-max`
   on a subtree does nothing: `--type-base` already substituted them at `:root`.
 

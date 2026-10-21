@@ -39,5 +39,14 @@ the element using it.
 - Spacing is smaller at the small end and grows faster mid-range.
 - `--space-*` steps are substituted at `:root`, so per-subtree spacing retuning is not
   supported. Type retuning is: `--type-base` and `--type-scale` are read per element.
-- The display step is normalised by `1rem`, so it stays 5 → 7 at any root font size; with a
-  larger root the 5 → 7 transition happens at wider viewports (540 → 1920px at a 24px root).
+- The display step is normalised by `1rem` and its `vw` term is scaled by root / 16px, so its
+  exponent depends only on viewport width and every size grows with a larger root font size.
+  (Unscaled, the exponent fell as the root grew: h1 was only 1.02× larger at a 24px root.)
+- The old `--heading-text-scale-damp` multiplier is gone. As written it enlarged steps ≥ 7
+  under OS text-scale > 100% instead of damping them; a true damp would break "visibly larger
+  at a larger root".
+- `--fs` stays unregistered: a registered `<length>` holding `rem` on `:root`, read by the
+  root's own line-height, is a dependency cycle in Gecko that freezes the grid unit.
+- Nuxt Content prose is not retuned here: prose `p`/`li` inherit the 20/24px body (Nuxt UI pins
+  them to `leading-7`) while prose headings keep fixed `text-2xl`/`text-xl`/`text-lg`, so the
+  prose hierarchy needs its own decision.

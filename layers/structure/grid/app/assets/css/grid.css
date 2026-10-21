@@ -12,8 +12,9 @@
 :root {
   /* Shares the type scale's endpoints (typography.css --type-min/--type-max) but stays
      continuous across 320 → 1280px, so the unit never takes the type base's 48rem jump.
-     Fallbacks keep grid valid on core alone. rem term keeps this WCAG 1.4.4 zoom-safe;
-     svi never vw (viewport-bar-collapse safe) */
+     Fallbacks keep grid valid on core alone. The slope is hand-fitted to 1rem → 1.2rem over
+     320 → 1280px — retune it if --type-min/--type-max change. rem term keeps this WCAG
+     1.4.4 zoom-safe; svi never vw (viewport-bar-collapse safe) */
   --fs: clamp(var(--type-min, 1rem), 0.9333rem + 0.3333svi, var(--type-max, 1.2rem));
 
   /* rounded, not raw, so grid boundaries land on-pixel */
