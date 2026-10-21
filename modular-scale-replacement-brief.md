@@ -26,7 +26,7 @@
 
 ## 1. Goal
 
-Replace the two independent fluid systems (13 `text-fluid-*` clamp ranges; 8 `--fluid-space-*` clamp ranges) with **one ratio-driven system**, so every size is a *step on a scale* rather than a hand-tuned clamp:
+Replace the two independent fluid systems (13 `text-fluid-*` clamp ranges; 8 `--fluid-space-*` clamp ranges) with **one ratio-driven system**, so every size is a _step on a scale_ rather than a hand-tuned clamp:
 
 ```
 font-size = round(base × ratio^step, 0.0625rem)
@@ -68,8 +68,8 @@ Remove: `--fluid-step`, all `--fluid-text-*-raw` and `*-cq-raw`, all 26 `@utilit
 
 ```css
 :root {
-  --type-min: 1rem;       /* base below 48rem */
-  --type-max: 1.2rem;     /* base from 48rem  */
+  --type-min: 1rem; /* base below 48rem */
+  --type-max: 1.2rem; /* base from 48rem  */
   --type-base: var(--type-min);
   --type-scale: 1.26;
   --type-snap: 0.0625rem; /* rounding interval, rem, never 0 */
@@ -80,7 +80,9 @@ Remove: `--fluid-step`, all `--fluid-text-*-raw` and `*-cq-raw`, all 26 `@utilit
   --step-display: tan(atan2(clamp(5rem, 4.2176rem + 3.4784vw, 7rem), 1rem));
 }
 @media (min-width: 48rem) {
-  :root { --type-base: var(--type-max); }
+  :root {
+    --type-base: var(--type-max);
+  }
 }
 ```
 
@@ -96,7 +98,10 @@ Enumerate literal utilities (the Tailwind scanner needs literal class names in s
   font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
   line-height: 1.2;
   @supports (font-size: round(1rem, 1rem)) {
-    font-size: round(calc(var(--type-base) * pow(var(--type-scale), var(--step))), var(--type-snap));
+    font-size: round(
+      calc(var(--type-base) * pow(var(--type-scale), var(--step))),
+      var(--type-snap)
+    );
   }
 }
 ```
@@ -105,11 +110,11 @@ Set of utilities: `text-step-sm` (step −1), `text-step-0` … `text-step-12`, 
 
 Line height by step (starting values measured from the reference, **not tuned** — flag for review):
 
-| steps | line-height |
-|---|---|
-| sm, 0, 1 | 1.7 |
-| 2 – 5 | 1.2 |
-| 6 – 12, display | 0.95 |
+| steps           | line-height |
+| --------------- | ----------- |
+| sm, 0, 1        | 1.7         |
+| 2 – 5           | 1.2         |
+| 6 – 12, display | 0.95        |
 
 Steps ≥ 7 and `display` also multiply font-size by `var(--heading-text-scale-damp)` (preserves current behaviour for the former `4xl+`). Confirm it's not dead code before keeping it; if dead, drop it and say so.
 
@@ -119,12 +124,33 @@ Fallback: if `round()` is unsupported, the unrounded `calc()` stands. If `pow()`
 
 ```css
 @layer base {
-  body { --step: 1; font-size: /* same expression */; line-height: 1.7; }
-  h1 { --step: var(--step-display); line-height: 0.95; text-wrap: balance; }
-  h2 { --step: 3; line-height: 1.2; text-wrap: balance; }
-  h3 { --step: 2; line-height: 1.2; text-wrap: balance; }
-  h4 { --step: 1; }
-  h5, h6 { --step: 0; }
+  body {
+    --step: 1;
+    font-size: /* same expression */;
+    line-height: 1.7;
+  }
+  h1 {
+    --step: var(--step-display);
+    line-height: 0.95;
+    text-wrap: balance;
+  }
+  h2 {
+    --step: 3;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+  h3 {
+    --step: 2;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+  h4 {
+    --step: 1;
+  }
+  h5,
+  h6 {
+    --step: 0;
+  }
 }
 ```
 
@@ -132,22 +158,22 @@ Each heading also gets the matching font-size expression. Layer `base` loses to 
 
 Expected body/heading values (hand-computed, ±1px tolerance for engine float differences):
 
-| step | base 16px (<48rem) | base 19.2px (≥48rem) |
-|---|---|---|
-| sm (−1) | 13 | 15 |
-| 0 | 16 | 19 |
-| 1 (body) | 20 | 24 |
-| 2 (h3) | 25 | 30 |
-| 3 (h2) | 32 | 38 |
-| 4 | 40 | 48 |
-| 5 | 51 | 61 |
-| 6 | 64 | 77 |
-| 7 | 81 | 97 |
-| 8 | 102 | 122 |
-| 9 | 128 | 154 |
-| 10 | 161 | 194 |
-| 11 | 203 | 244 |
-| 12 | 256 | 307 |
+| step     | base 16px (<48rem) | base 19.2px (≥48rem) |
+| -------- | ------------------ | -------------------- |
+| sm (−1)  | 13                 | 15                   |
+| 0        | 16                 | 19                   |
+| 1 (body) | 20                 | 24                   |
+| 2 (h3)   | 25                 | 30                   |
+| 3 (h2)   | 32                 | 38                   |
+| 4        | 40                 | 48                   |
+| 5        | 51                 | 61                   |
+| 6        | 64                 | 77                   |
+| 7        | 81                 | 97                   |
+| 8        | 102                | 122                  |
+| 9        | 128                | 154                  |
+| 10       | 161                | 194                  |
+| 11       | 203                | 244                  |
+| 12       | 256                | 307                  |
 
 `text-step-display` (h1): 5 → 7 across 360 → 1280px viewport, i.e. ≈51 → 81px below 48rem and ≈61 → 97px above. **Expected, not a bug:** every step jumps by ×1.2 at 48rem because the base switches there (h1 goes ≈62 → ≈75px at 768). If that discontinuity is unwanted, say so in the PR instead of smoothing it silently.
 
@@ -173,11 +199,11 @@ Remove all `--fluid-space-*` and `-cq` variants (subject to §4.5). Replace with
   --space-base: clamp(0.5rem, 0.3333rem + 0.8333vw, 1rem);
 
   --space-none: 0px;
-  --space-xs:  calc(var(--space-base) * pow(var(--space-scale), -1));
-  --space-sm:  calc(var(--space-base) * pow(var(--space-scale), 0));
-  --space-md:  calc(var(--space-base) * pow(var(--space-scale), 1));
-  --space-lg:  calc(var(--space-base) * pow(var(--space-scale), 2));
-  --space-xl:  calc(var(--space-base) * pow(var(--space-scale), 3));
+  --space-xs: calc(var(--space-base) * pow(var(--space-scale), -1));
+  --space-sm: calc(var(--space-base) * pow(var(--space-scale), 0));
+  --space-md: calc(var(--space-base) * pow(var(--space-scale), 1));
+  --space-lg: calc(var(--space-base) * pow(var(--space-scale), 2));
+  --space-xl: calc(var(--space-base) * pow(var(--space-scale), 3));
   --space-2xl: calc(var(--space-base) * pow(var(--space-scale), 4));
   --space-3xl: calc(var(--space-base) * pow(var(--space-scale), 5));
 }
@@ -185,7 +211,7 @@ Remove all `--fluid-space-*` and `-cq` variants (subject to §4.5). Replace with
 
 The names are chosen so the existing `Spacing` union (`none | xs | sm | md | lg | xl | 2xl | 3xl`) is **unchanged**; only the values behind it move. Resulting ranges (px at ≤320 → ≥1280 viewport): xs 5.7→11.3, sm 8→16, md 11.3→22.6, lg 16→32, xl 22.6→45.2, 2xl 32→64, 3xl 45.2→90.4. Old ranges for comparison: xs 8→10, sm 12→16, md 16→24, lg 24→40, xl 32→56, 2xl 48→80, 3xl 64→112. **The new scale is smaller at the small end and grows faster mid-range; report this in the PR.** If a mapping looks wrong in the playground, shift the exponents (e.g. `md` → 2) rather than editing the base.
 
-Known trap (document it in the file): these tokens are substituted at `:root`, so overriding `--space-base` on a subtree does **not** change `--space-md` there. Per-subtree spacing retuning is therefore not a supported extension point in this PR. Type retuning *is* (`--type-base`, `--type-scale` are read at the element using them).
+Known trap (document it in the file): these tokens are substituted at `:root`, so overriding `--space-base` on a subtree does **not** change `--space-md` there. Per-subtree spacing retuning is therefore not a supported extension point in this PR. Type retuning _is_ (`--type-base`, `--type-scale` are read at the element using them).
 
 ### 4.2 Consumers
 
@@ -201,15 +227,15 @@ Rhythm values are not on a `1rlh` baseline. That is intended (the reference syst
 
 ### 4.5 Container-query variants
 
-If the inventory finds real `-cq` consumers, port them by **scoping the base, not by cloning utilities**: type uses `--type-base` and spacing could use a `--space-base-cq` / `--space-*-cq` set (unregistered custom properties keep `cqi` unresolved until use, same as today). Example type scope: `.card { --type-base: clamp(0.9rem, 0.8rem + 2cqi, 1.1rem); }`. Note that `cqi` resolves against the nearest *ancestor* container, never the element's own. If there are no consumers, delete the `-cq` tokens outright.
+If the inventory finds real `-cq` consumers, port them by **scoping the base, not by cloning utilities**: type uses `--type-base` and spacing could use a `--space-base-cq` / `--space-*-cq` set (unregistered custom properties keep `cqi` unresolved until use, same as today). Example type scope: `.card { --type-base: clamp(0.9rem, 0.8rem + 2cqi, 1.1rem); }`. Note that `cqi` resolves against the nearest _ancestor_ container, never the element's own. If there are no consumers, delete the `-cq` tokens outright.
 
 ---
 
 ## 5. Grid base (`layers/structure/grid/app/assets/css/grid.css`) — do this last, as its own commit
 
-Why this is the delicate part: `grid` derives everything from `--fs` → `line-height` → `--unit: 1rlh` (`--edge-min`, `--lpf`, `--lines`, `--fields`, gaps). Changing `--fs` or the root line-height rescales the whole grid. `LAYOUT-SYSTEM.md` calls this the invariant that must not break: *the grid has no size values of its own, only ratios against `--unit`.* Nothing consumes `grid` yet (CLAUDE.md, ADR 0001), so blast radius is low; the risk is a changed feel, not breakage.
+Why this is the delicate part: `grid` derives everything from `--fs` → `line-height` → `--unit: 1rlh` (`--edge-min`, `--lpf`, `--lines`, `--fields`, gaps). Changing `--fs` or the root line-height rescales the whole grid. `LAYOUT-SYSTEM.md` calls this the invariant that must not break: _the grid has no size values of its own, only ratios against `--unit`._ Nothing consumes `grid` yet (CLAUDE.md, ADR 0001), so blast radius is low; the risk is a changed feel, not breakage.
 
-**Do not** derive the unit from the body text size (step 1, 20–24px at line-height 1.7 → a ~34–41px unit, roughly +70% on every margin, gap and field height). Instead, share the *endpoint tokens* and keep the grid continuous:
+**Do not** derive the unit from the body text size (step 1, 20–24px at line-height 1.7 → a ~34–41px unit, roughly +70% on every margin, gap and field height). Instead, share the _endpoint tokens_ and keep the grid continuous:
 
 ```css
 :root {
@@ -253,7 +279,7 @@ Run: `pnpm typecheck`, `pnpm lint`, `pnpm build`, `pnpm test` (Vitest). Then in 
 8. **Zoom 200%.**
 9. **Cross-browser:** Chrome, Safari, Firefox. Note divergences (especially `tan(atan2())` with `rem`), don't work around silently.
 10. **Fallback path:** comment out the `@supports` block; text still renders sensibly.
-11. **Nuxt UI regression:** buttons, inputs, dropdowns, nav menu pixel-identical to `main` (they set explicit `text-*` sizes). Components that *inherit* body size (cards, alerts, prose) will grow with the new body size; list any, don't "fix" them silently.
+11. **Nuxt UI regression:** buttons, inputs, dropdowns, nav menu pixel-identical to `main` (they set explicit `text-*` sizes). Components that _inherit_ body size (cards, alerts, prose) will grow with the new body size; list any, don't "fix" them silently.
 12. **Single Tailwind root:** in a **production** build, the nav `UNavigationMenu` link has `padding-top: 6px` (the `py-1.5` regression from the typography CSS bug doc); only one `@import 'tailwindcss/…'` exists across layers.
 13. **Grid (if §5 kept):** before/after screenshots at 500 / 768 / 1024 / 1440 / 1920px with no horizontal scroll, and `getComputedStyle().gridTemplateColumns` unchanged in shape.
 

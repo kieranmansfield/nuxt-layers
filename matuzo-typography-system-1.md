@@ -12,12 +12,12 @@ Because 1.26 is the cube root of 2 and 1.414 is the square root of 2, both scale
 
 ## 2. Measured values
 
-| Width | Body | h1 | h2 | h3 | Chars/line (full lines) |
-|---|---|---|---|---|---|
-| 375px | 20px | 51px | 32px | 25px | ~35–39 |
-| 768px | 24px | 75px | 38px | 30px | ~51–60 |
-| 1024px | 24px | 85px | 38px | 30px | ~43–51 |
-| 1280px | 24px | 97px | 38px | 30px | ~73–74 |
+| Width  | Body | h1   | h2   | h3   | Chars/line (full lines)          |
+| ------ | ---- | ---- | ---- | ---- | -------------------------------- |
+| 375px  | 20px | 51px | 32px | 25px | ~35–39                           |
+| 768px  | 24px | 75px | 38px | 30px | ~51–60                           |
+| 1024px | 24px | 85px | 38px | 30px | ~43–51                           |
+| 1280px | 24px | 97px | 38px | 30px | ~73–74                           |
 | 1920px | 24px | 97px | 38px | 30px | ~73–74 (page maxes out at 80rem) |
 
 Other facts:
@@ -39,20 +39,20 @@ font-size = round( base × 1.26^step , 1px )
 
 - Base is **1rem** on phones and **1.2rem** from 48rem (768px) up.
 - Sizes are rounded to whole pixels with `round(…, 1px)`. All measured sizes were integers.
-- The step is a custom property, so children inherit it. The *size* is recomputed from base and step rather than inherited as a size, so sizes never compound the way nested `em` values do. A `<strong>` inside a paragraph is the same size as the paragraph.
+- The step is a custom property, so children inherit it. The _size_ is recomputed from base and step rather than inherited as a size, so sizes never compound the way nested `em` values do. A `<strong>` inside a paragraph is the same size as the paragraph.
 
 ### 3.2 Steps by element
 
-| Element | Step | Desktop size |
-|---|---|---|
-| Body text | 1 | 24px |
-| h3 | 2 | 30px |
-| h2 | 3 | 38px |
-| h1 | 5 → 7 (fluid, see 3.3) | 97px at ≥1280px |
-| Nav links, hgroup subtext | 0.5 | 22px |
-| Post-list titles | 0.4 | 21px |
-| Teaser text | 0.1 | 20px |
-| Dates (`<time>`) | 0 | 19px |
+| Element                   | Step                   | Desktop size    |
+| ------------------------- | ---------------------- | --------------- |
+| Body text                 | 1                      | 24px            |
+| h3                        | 2                      | 30px            |
+| h2                        | 3                      | 38px            |
+| h1                        | 5 → 7 (fluid, see 3.3) | 97px at ≥1280px |
+| Nav links, hgroup subtext | 0.5                    | 22px            |
+| Post-list titles          | 0.4                    | 21px            |
+| Teaser text               | 0.1                    | 20px            |
+| Dates (`<time>`)          | 0                      | 19px            |
 
 Ratios on desktop: h1 ≈ 4× body, h2 ≈ 1.59× body, h3 = 1.26× body.
 
@@ -66,13 +66,13 @@ That `clamp()` is `clamp(0.3125rem, 0.2636rem + 0.2174vw, 0.4375rem)`. At a 16px
 
 Spacing tokens come from `clamp(0.5rem, 0.3333rem + 0.8333vw, 1rem) × 1.414^n`, which is 16px at ≥1280px:
 
-| Token | n | At 1280px |
-|---|---|---|
-| xs | −1 | 11.3px |
-| s | 0 | 16px |
-| m | 1 | 22.6px |
-| l | 2 | 32px |
-| xl | 3 | 45.2px |
+| Token | n   | At 1280px |
+| ----- | --- | --------- |
+| xs    | −1  | 11.3px    |
+| s     | 0   | 16px      |
+| m     | 1   | 22.6px    |
+| l     | 2   | 32px      |
+| xl    | 3   | 45.2px    |
 
 I measured 22.6px paragraph and h2 bottom margins on the live site. h2 and h3 margins are defined as xl above and m (h2) or xs (h3) below.
 
@@ -97,12 +97,12 @@ Type steps once at 768px (plus the fluid h1). Whitespace changes continuously. T
 
 Calculated from the formulas, not measured (the one check I did make matches: paragraph margins of 22.6px at desktop and 11.3px at a narrow width):
 
-| Width | Base (s) | xs | m | l | xl | Section margin (n = 4.5) |
-|---|---|---|---|---|---|---|
-| 375px | 8.5px | 6.0px | 12.0px | 16.9px | 23.9px | 40px |
-| 768px | 11.7px | 8.3px | 16.6px | 23.5px | 33.2px | 56px |
-| 1024px | 13.9px | 9.8px | 19.6px | 27.7px | 39.2px | 66px |
-| 1280px+ | 16px | 11.3px | 22.6px | 32px | 45.2px | 76px |
+| Width   | Base (s) | xs     | m      | l      | xl     | Section margin (n = 4.5) |
+| ------- | -------- | ------ | ------ | ------ | ------ | ------------------------ |
+| 375px   | 8.5px    | 6.0px  | 12.0px | 16.9px | 23.9px | 40px                     |
+| 768px   | 11.7px   | 8.3px  | 16.6px | 23.5px | 33.2px | 56px                     |
+| 1024px  | 13.9px   | 9.8px  | 19.6px | 27.7px | 39.2px | 66px                     |
+| 1280px+ | 16px     | 11.3px | 22.6px | 32px   | 45.2px | 76px                     |
 
 ### 4.2 Where the tokens are used (observed)
 
@@ -143,8 +143,8 @@ Tested: the font-size part below reproduced all four rows of the table in sectio
 
 ```css
 :root {
-  --type-scale: 1.26;   /* 2^(1/3): three steps double a size */
-  --type-base: 1rem;    /* phones */
+  --type-scale: 1.26; /* 2^(1/3): three steps double a size */
+  --type-base: 1rem; /* phones */
   --space-scale: 1.414; /* 2^(1/2): two steps double a gap */
   --space-base: clamp(0.5rem, 0.3333rem + 0.8333vw, 1rem);
   --measure: 54rem;
@@ -153,12 +153,14 @@ Tested: the font-size part below reproduced all four rows of the table in sectio
   --h1-step: tan(atan2(clamp(0.3125rem, 0.2636rem + 0.2174vw, 0.4375rem), 1px));
 
   --space-xs: calc(var(--space-base) * pow(var(--space-scale), -1));
-  --space-m:  calc(var(--space-base) * pow(var(--space-scale), 1));
+  --space-m: calc(var(--space-base) * pow(var(--space-scale), 1));
   --space-xl: calc(var(--space-base) * pow(var(--space-scale), 3));
 }
 
 @media (min-width: 48rem) {
-  :root { --type-base: 1.2rem; }
+  :root {
+    --type-base: 1.2rem;
+  }
 }
 
 /* Not on :root, so html keeps the user's 16px and rem stays meaningful. */
@@ -166,16 +168,48 @@ Tested: the font-size part below reproduced all four rows of the table in sectio
   font-size: round(calc(var(--type-base) * pow(var(--type-scale), var(--step, 0))), 1px);
 }
 
-body { --step: 1; line-height: 1.7; }
-h1   { --step: var(--h1-step); line-height: 0.95; }
-h2   { --step: 3; line-height: 1.2; margin-block: var(--space-xl) var(--space-m); }
-h3   { --step: 2; line-height: 1.2; margin-block: var(--space-xl) var(--space-xs); }
-h1, h2, h3 { font-weight: 600; text-wrap: balance; }
+body {
+  --step: 1;
+  line-height: 1.7;
+}
+h1 {
+  --step: var(--h1-step);
+  line-height: 0.95;
+}
+h2 {
+  --step: 3;
+  line-height: 1.2;
+  margin-block: var(--space-xl) var(--space-m);
+}
+h3 {
+  --step: 2;
+  line-height: 1.2;
+  margin-block: var(--space-xl) var(--space-xs);
+}
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  text-wrap: balance;
+}
 
-:is(ul, ol) { line-height: calc(1.7 - 0.2); }
-p, ul, ol, blockquote { max-inline-size: var(--measure); margin-block: 0 var(--space-m); }
+:is(ul, ol) {
+  line-height: calc(1.7 - 0.2);
+}
+p,
+ul,
+ol,
+blockquote {
+  max-inline-size: var(--measure);
+  margin-block: 0 var(--space-m);
+}
 
-nav a { --step: 0.5; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+nav a {
+  --step: 0.5;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
 ```
 
 ### Tailwind v4 / Nuxt (untested)
@@ -199,7 +233,7 @@ Spacing tokens (also untested), reusing the `--space-*` variables from the recon
 ```css
 @theme inline {
   --spacing-xs: var(--space-xs);
-  --spacing-m:  var(--space-m);
+  --spacing-m: var(--space-m);
   --spacing-xl: var(--space-xl);
 }
 ```
