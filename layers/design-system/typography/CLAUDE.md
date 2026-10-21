@@ -23,7 +23,9 @@ font-size = round(--type-base × --type-scale ^ --step, --type-snap)
 Utilities (`app/assets/css/typography.css`): `text-step-sm` (step −1), `text-step-0` …
 `text-step-12`, `text-step-display`. Everything is rem-based, so a larger user font size scales
 every step; the 48rem switch moves with it (rem in media queries = the browser default, e.g.
-1152px at a 24px default).
+1152px at a 24px default). Line heights fall with size, anchored on the reference's body 1.7,
+h2/h3 1.2 and h1 0.95: sm 1.5 · 0 1.6 · 1 1.7 · 2–3 1.2 · 4 1.15 · 5 1.1 · 6 1.05 · 7 1 ·
+8–12 and display 0.95.
 
 Element defaults (`@layer base`, so any `text-*` utility still wins). Headings only match without a
 `data-slot` attribute — Nuxt UI's own titles (UModal, USlideover, …) keep inheriting:
@@ -60,20 +62,22 @@ matches the reference system; it is not a bug.
 
 ```vue
 <Typography :step="1">Body copy</Typography>
-<TypographyHeadline :level="2">Defaults to step 3</TypographyHeadline>
+<TypographyHeadline :level="2">One step below display</TypographyHeadline>
 <TypographyHeadline :level="2" :step="5">Explicit step</TypographyHeadline>
 <TypographyRepeatText text="SWISS" :step="10" />
 ```
 
-`step` takes precedence over `size` (Tailwind `text-*`). `TypographyHeadline` defaults by
-level — `1: 'display', 2: 3, 3: 2, 4: 1, 5: 0, 6: 0` — only when neither `step` nor `size` is
-passed. `Typography` has no default size: it inherits (body copy = the body step).
+`step` takes precedence over `size` (Tailwind `text-*`). `TypographyHeadline` is a display
+hierarchy: when neither `step` nor `size` is passed, each level sits one step below the previous,
+starting at the fluid display step (`--step: calc(var(--step-display) - (level − 1))`, set inline
+so the base h1–h6 rules size it) — 51/40/32/25/20/16px at 320px, 97/77/61/48/38/30px at 1280px.
+Plain `<h1>`–`<h6>` keep the reading scale (display, 3, 2, 1, 0, 0). `Typography` has no default
+size: it inherits (body copy = the body step).
 
 Cascade notes:
 
-- `useTypography` always emits a `leading-*` class (`leading-normal` unless `leading` is set;
-  Headline defaults to `leading-tight`), and Tailwind sorts `leading-*` after `text-step-*`, so
-  the step utilities' line heights only show where a `text-step-*` class is used directly.
+- `useTypography` only emits a `leading-*` class when `leading` is passed — Tailwind sorts
+  `leading-*` after `text-step-*`, so one would override the step's line height.
 - A Tailwind `text-{size}` class on the same element also sorts after, and beats, `text-step-*`.
 - `app/app.config.ts` registers `text-step-*` as a font-size group in Nuxt UI's tailwind-merge
   (`ui.tv.twMergeConfig`). Without it tailwind-merge reads them as a text _colour_, so
@@ -82,7 +86,8 @@ Cascade notes:
 
 ## Nuxt UI prose (Nuxt Content)
 
-`app/app.config.ts` also retunes `ui.prose`: `h1` → `text-step-display`, `h2` → `text-step-3`,
+`app/app.config.ts` also retunes `ui.prose`: `h1` → `text-step-4` (one step above h2 — content
+pages already show a page-header title), `h2` → `text-step-3`,
 `h3` → `text-step-2`, `h4` → `text-step-1`, and `p`/`li` swap `leading-7` for `leading-[1.7]`, so
 copy inherits the body step at the body's leading. Without it Nuxt UI's fixed
 `text-4xl`/`2xl`/`xl`/`lg` headings sat at or below the 24px copy.
@@ -106,9 +111,12 @@ copy inherits the body step at the body's leading. Without it Nuxt UI's fixed
 `Spacing` token used by `useLayoutAttrs()`:
 
 ```text
---space-* = --space-base × 1.414 ^ n     (--space-base: 8px at ≤ 320px → 16px at ≥ 1280px)
+--space-* = --space-base × 1.414 ^ n     (--space-base: 11.3px at ≤ 320px → 16px at ≥ 1280px)
 xs n=−1 · sm 0 · md 1 · lg 2 · xl 3 · 2xl 4 · 3xl 5
 ```
+
+The base grows one step (√2), not the reference's two (8 → 16px), so phones keep the old token
+sizes: xs 8 · sm 11.3 · md 16 · lg 22.6 · xl 32 · 2xl 45.2 · 3xl 64px at 320px, ×√2 by 1280px.
 
 Trap: the steps substitute `--space-base` at `:root`, so overriding `--space-base` on a subtree
 does **not** change `--space-md` inside it. Per-subtree spacing retuning is not supported.
