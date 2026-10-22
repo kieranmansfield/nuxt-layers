@@ -1,3 +1,4 @@
+import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import LocomotiveScroll from 'locomotive-scroll'
 
@@ -15,10 +16,13 @@ export default defineNuxtPlugin({
     })
 
     const instance = shallowRef<LocomotiveScroll | null>(null)
+    const { screen } = useLoading()
 
     function init() {
       if (instance.value) return
       instance.value = new LocomotiveScroll({
+        // Under core's boot loading screen, wait for its exit to start (watcher below)
+        autoStart: screen.value !== 'visible',
         lenisOptions: {
           lerp: 0.1,
           smoothWheel: true,
@@ -44,6 +48,24 @@ export default defineNuxtPlugin({
       instance.value?.destroy()
       instance.value = null
     }
+
+    // Hold motion until core's boot loading screen reveals the page: GSAP stays paused while the
+    // screen is up, so entrance animations play once it's gone; scrolling unlocks as it exits.
+    watch(
+      screen,
+      (state) => {
+        gsap.globalTimeline.paused(state !== 'hidden')
+
+        if (state !== 'leaving') return
+        instance.value?.start()
+        // Remeasure once the screen's scroll lock is off the page
+        requestAnimationFrame(() => {
+          instance.value?.resize()
+          ScrollTrigger.refresh()
+        })
+      },
+      { immediate: true }
+    )
 
     const router = useRouter()
     const appConfig = useAppConfig()
