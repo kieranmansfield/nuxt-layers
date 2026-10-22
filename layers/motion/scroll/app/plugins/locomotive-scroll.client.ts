@@ -18,6 +18,12 @@ export default defineNuxtPlugin({
     const instance = shallowRef<LocomotiveScroll | null>(null)
     const { screen } = useLoading()
 
+    // Under the loading screen Lenis must be stopped, not just left un-started: an unstopped
+    // Lenis still takes wheel/touch input and replays it as a jump once it starts
+    function holdForLoadingScreen(scroll: LocomotiveScroll) {
+      if (screen.value === 'visible') scroll.lenisInstance?.stop()
+    }
+
     function init() {
       if (instance.value) return
       instance.value = new LocomotiveScroll({
@@ -37,6 +43,7 @@ export default defineNuxtPlugin({
           ScrollTrigger.update()
         },
       })
+      holdForLoadingScreen(instance.value)
 
       // ScrollTriggers created before Lenis exists (page:finish can fire first)
       // refresh against a null instance — remeasure once real layout settles.
@@ -51,6 +58,7 @@ export default defineNuxtPlugin({
 
     // Hold motion until core's boot loading screen reveals the page: GSAP stays paused while the
     // screen is up, so entrance animations play once it's gone; scrolling unlocks as it exits.
+    // Without a mounted screen the state stays 'hidden' and GSAP is never touched.
     watch(
       screen,
       (state) => {
@@ -64,7 +72,7 @@ export default defineNuxtPlugin({
           ScrollTrigger.refresh()
         })
       },
-      { immediate: true }
+      { immediate: screen.value !== 'hidden' }
     )
 
     const router = useRouter()
