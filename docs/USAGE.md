@@ -188,14 +188,14 @@ export default defineAppConfig({
 
 ### Available Config Namespaces
 
-| Namespace               | Layer   | Key Options                                                                |
-| ----------------------- | ------- | -------------------------------------------------------------------------- |
-| `coreLayer.loading`     | core    | `enabled`, `minDuration`, `maxDuration`, `background`, `textColor`         |
-| `coreLayer.scrollGuard` | core    | `enabled`, `strict`, `excludeSelectors`, `debug`                           |
-| `coreLayer.errors`      | core    | `logToConsole`, `logToExternal`, `externalUrl`                             |
-| `coreLayer.notFound`    | core    | `icon`, `title`, `description`, `showHomeButton`, `actions`, `suggestions` |
-| `motion`                | motion  | `gsapScrollTrigger`, `lenis.*` (duration, smoothWheel, smoothTouch, etc.)  |
-| `themeLayer`            | theming | `accents`, `defaultAccent`                                                 |
+| Namespace               | Layer   | Key Options                                                                 |
+| ----------------------- | ------- | --------------------------------------------------------------------------- |
+| `coreLayer.loading`     | core    | `enabled`, `minDuration`, `maxDuration`, `label`, `background`, `textColor` |
+| `coreLayer.scrollGuard` | core    | `enabled`, `strict`, `excludeSelectors`, `debug`                            |
+| `coreLayer.errors`      | core    | `logToConsole`, `logToExternal`, `externalUrl`                              |
+| `coreLayer.notFound`    | core    | `icon`, `title`, `description`, `showHomeButton`, `actions`, `suggestions`  |
+| `motion`                | motion  | `gsapScrollTrigger`, `lenis.*` (duration, smoothWheel, smoothTouch, etc.)   |
+| `themeLayer`            | theming | `accents`, `defaultAccent`                                                  |
 
 ## Optional Modules
 

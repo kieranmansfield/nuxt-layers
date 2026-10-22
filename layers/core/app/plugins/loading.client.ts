@@ -1,24 +1,17 @@
 // plugins/loading.client.ts
 
-type LoadingConfig = {
-  enabled?: boolean
-  minDuration?: number
-  maxDuration?: number
-  background?: string
-  textColor?: string
-  zIndex?: number
-}
-
-type CoreLayerConfig = {
-  loading?: LoadingConfig
-}
+import { resolveLoadingConfig } from '../utils/loading'
 
 /**
  * Loading screen initialization plugin
  *
- * Runs on app mount (client-side only) to:
- * 1. Start simulated progress on page load
- * 2. Stop loading when app is fully mounted and hydrated
+ * Client-side only. Once the app has mounted (hydration done) it:
+ * 1. Starts the progress count, timed from navigation start - the SSR'd screen has been up
+ *    since first paint, so the count catches up smoothly rather than starting late
+ * 2. Waits for fonts and the initial page's images, capped at `maxDuration`
+ * 3. Marks loading done - the count then finishes to 100 before the screen exits
+ *
+ * Starting after mount keeps the counter at the SSR'd 0 through hydration (no mismatch).
  *
  * Configuration via app.config.ts:
  * - Set `coreLayer.loading.enabled: false` to disable
@@ -26,26 +19,27 @@ type CoreLayerConfig = {
 export default defineNuxtPlugin({
   name: 'core:loading',
   setup(nuxtApp) {
-    const config = useAppConfig()
-    const coreLayer = config.coreLayer as CoreLayerConfig | undefined
+    const { enabled, maxDuration } = resolveLoadingConfig(useAppConfig().coreLayer)
 
     // Check if loading is enabled
-    if (coreLayer?.loading?.enabled === false) {
+    if (!enabled) {
       return // Disabled, skip initialization
     }
 
     const { startLoading, stopLoading } = useLoading()
 
-    // Start loading immediately on plugin load
-    startLoading()
-
-    // Stop loading when app is fully mounted
+    // Not awaited: app:mounted handlers run serially, so waiting here would hold up other layers
     nuxtApp.hook('app:mounted', () => {
-      // Add a small delay to ensure LoadingScreen component has mounted
-      // and is visible before we stop loading
-      setTimeout(() => {
-        stopLoading()
-      }, 500) // 500ms delay to ensure component is visible
+      startLoading(0)
+      void Promise.race([
+        Promise.all([pageLoaded(), document.fonts?.ready]),
+        new Promise((resolve) => setTimeout(resolve, maxDuration)),
+      ]).then(stopLoading)
     })
   },
 })
+
+function pageLoaded(): Promise<unknown> {
+  if (document.readyState === 'complete') return Promise.resolve()
+  return new Promise((resolve) => window.addEventListener('load', resolve, { once: true }))
+}

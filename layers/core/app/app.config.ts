@@ -33,10 +33,12 @@ export default defineAppConfig({
     loading: {
       // Master toggle - set to false to disable completely
       enabled: true,
-      // Minimum time to display loading screen (prevents flash)
-      minDuration: 3000, // Temporarily increased for testing
-      // Maximum time for simulated progress
+      // Minimum time (ms, from navigation start) the count runs before reaching 100 (prevents flash)
+      minDuration: 1500,
+      // Longest wait (ms, after mount) for fonts and images before finishing anyway
       maxDuration: 3000,
+      // Small caption above the counter - empty string hides it
+      label: 'Loading',
       // Background color
       background: '#0a0a0a',
       // Progress text color
@@ -74,6 +76,7 @@ declare module '@nuxt/schema' {
         enabled?: boolean
         minDuration?: number
         maxDuration?: number
+        label?: string
         background?: string
         textColor?: string
         zIndex?: number

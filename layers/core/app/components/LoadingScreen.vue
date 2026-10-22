@@ -1,105 +1,88 @@
 <script setup lang="ts">
-  interface LoadingConfig {
-    enabled?: boolean
-    minDuration?: number
-    maxDuration?: number
-    background?: string
-    textColor?: string
-    zIndex?: number
-  }
+  import type { LoadingScreenState } from '../types/loading'
+  import { resolveLoadingConfig } from '../utils/loading'
+
+  // Beat on "100" so the finished count registers before the exit starts
+  const HOLD_MS = 350
+
+  const { enabled, label, background, textColor, zIndex } = resolveLoadingConfig(
+    useAppConfig().coreLayer
+  )
 
   const { isLoading, progress } = useLoading()
-  const config = useAppConfig()
+  // Written only here; everything else reads it through useLoading().screen
+  const screen = useState<LoadingScreenState>('core:loading:screen', () => 'hidden')
 
-  // Type-safe access to loading config
-  const loadingConfig = computed(() => {
-    const coreLayer = config.coreLayer as { loading?: LoadingConfig }
-    return coreLayer?.loading || {}
-  })
+  const visible = ref(enabled)
+  if (enabled) screen.value = 'visible'
 
-  const minDuration = computed(() => loadingConfig.value?.minDuration || 500)
-  const background = computed(() => loadingConfig.value?.background || '#0a0a0a')
-  const textColor = computed(() => loadingConfig.value?.textColor || '#ffffff')
-  const zIndex = computed(() => loadingConfig.value?.zIndex || 10000)
+  const displayProgress = computed(() => Math.floor(progress.value))
 
-  // Rounded progress for display
-  const displayProgress = computed(() => Math.round(progress.value))
+  if (enabled) {
+    useHead({
+      // Lock page scroll from the SSR'd first paint until the exit begins
+      htmlAttrs: {
+        style: computed(() => (screen.value === 'visible' ? 'overflow: hidden' : '')),
+      },
+      // Nothing dismisses the screen without JS - don't let it trap the page
+      noscript: [
+        { innerHTML: '<style>#loading-screen{display:none}html{overflow:auto!important}</style>' },
+      ],
+    })
+  }
 
-  // Control visibility
-  const visible = ref(true)
-  const hasFinished = ref(false)
-
-  // Watch for loading completion
   watch(
-    [isLoading, progress],
-    ([loading, prog]) => {
-      if (!loading && prog >= 100 && !hasFinished.value) {
-        hasFinished.value = true
-
-        setTimeout(() => {
-          visible.value = false
-        }, minDuration.value)
-      }
+    isLoading,
+    (loading) => {
+      if (loading || !visible.value) return
+      setTimeout(() => {
+        visible.value = false
+        screen.value = 'leaving'
+      }, HOLD_MS)
     },
     { immediate: true }
   )
 </script>
 
 <template>
-  <Transition name="fade">
+  <Transition name="loading-screen" @after-leave="screen = 'hidden'">
     <div
       v-if="visible"
       id="loading-screen"
-      :style="{
-        backgroundColor: background,
-        zIndex: zIndex,
-      }"
+      class="loading-screen"
+      :style="{ backgroundColor: background, color: textColor, zIndex }"
     >
-      <div class="loading-container">
-        <div class="loading-progress" :style="{ color: textColor }">
-          {{ displayProgress }}
-        </div>
+      <div
+        class="loading-content"
+        role="progressbar"
+        :aria-label="label || 'Loading'"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        :aria-valuenow="displayProgress"
+      >
+        <span v-if="label" class="loading-label" aria-hidden="true">{{ label }}</span>
+        <span class="loading-progress" aria-hidden="true"
+          >{{ displayProgress }}<span class="loading-unit">%</span></span
+        >
       </div>
+      <div class="loading-bar" :style="{ transform: `scaleX(${progress / 100})` }" />
     </div>
   </Transition>
 </template>
 
 <style scoped>
-  /* stylelint-disable selector-max-id */
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .fade-enter-from,
-  .fade-leave-to {
-    opacity: 0;
-  }
-
-  #loading-screen {
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-  }
-
-  .loading-container {
+  .loading-screen {
     display: grid;
+    position: fixed;
+    inset: 0;
     container-type: size;
-    width: 100%;
-    height: 100vh;
   }
 
-  .loading-progress {
+  .loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     place-self: center;
-    font-weight: 900;
-    font-stretch: ultra-expanded;
-    font-size: clamp(3rem, 35cqw + 1rem, 18rem);
     font-family:
       system-ui,
       -apple-system,
@@ -109,15 +92,98 @@
       'Helvetica Neue',
       Arial,
       sans-serif;
-    text-align: center;
-    /* stylelint-disable-next-line function-disallowed-list */
-    text-shadow: 0 0 20px rgb(0 0 0 / 0.3);
+    /* `backwards`, not `both` - a held end state would block the exit transition below */
+    animation: loading-enter 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+  }
+
+  .loading-label {
+    margin-bottom: 1em;
+    font-weight: 500;
+    font-size: clamp(0.75rem, 1cqw + 0.5rem, 1rem);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  .loading-progress {
+    font-weight: 900;
+    font-stretch: ultra-expanded;
+    font-size: clamp(3rem, 35cqw + 1rem, 18rem);
+    line-height: 0.8;
+    /* Equal-width digits - the counter doesn't jitter as it ticks */
+    font-variant-numeric: tabular-nums;
+  }
+
+  .loading-unit {
+    margin-left: 0.08em;
+    font-weight: 500;
+    font-size: 0.2em;
+    vertical-align: top;
+    opacity: 0.6;
+  }
+
+  .loading-bar {
+    position: absolute;
+    inset: auto 0 0;
+    height: 2px;
+    transform-origin: left;
+    background-color: currentcolor;
+    opacity: 0.5;
   }
 
   @media (width >= 768px) {
-    .loading-progress {
+    .loading-content {
+      align-items: flex-start;
       place-self: end start;
       padding: 2rem;
+    }
+  }
+
+  @keyframes loading-enter {
+    from {
+      transform: translateY(0.75rem);
+      opacity: 0;
+    }
+  }
+
+  /* Exit: the count lifts away first, then the screen fades to reveal the page */
+  .loading-screen-leave-active {
+    transition: opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.2s;
+  }
+
+  .loading-screen-leave-to {
+    opacity: 0;
+  }
+
+  .loading-screen-leave-active .loading-content,
+  .loading-screen-leave-active .loading-bar {
+    transition:
+      opacity 0.4s ease-in,
+      transform 0.5s cubic-bezier(0.7, 0, 0.84, 0);
+  }
+
+  .loading-screen-leave-to .loading-content {
+    transform: translateY(-1.5rem);
+    opacity: 0;
+  }
+
+  .loading-screen-leave-to .loading-bar {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loading-content {
+      animation-name: loading-fade-in;
+    }
+
+    .loading-screen-leave-to .loading-content {
+      transform: none;
+    }
+  }
+
+  @keyframes loading-fade-in {
+    from {
+      opacity: 0;
     }
   }
 </style>

@@ -6,5 +6,6 @@
 
 export * from './browserInfo'
 export * from './featureClasses'
+export * from './loading'
 export * from './scrollGuardClamp'
 export * from './styleToTailwindClasses'
