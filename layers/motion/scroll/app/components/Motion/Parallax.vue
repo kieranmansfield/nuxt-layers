@@ -34,32 +34,33 @@
   }>()
 
   const { gsap } = useGsap()
+  const reduced = useReducedMotion()
 
   const containerRef = useTemplateRef<HTMLElement | null>('containerRef')
   const contentRef = useTemplateRef<HTMLElement | null>('contentRef')
 
+  let tween: gsap.core.Tween | null = null
+
   onMounted(() => {
     if (!containerRef.value || !contentRef.value) return
+    // ponytail: checked once at mount — a later reduced-motion toggle applies on next mount/reload; re-run set-up in a watch if live toggling matters
+    if (reduced.value) return
 
-    const yAmount = direction === 'vertical' ? speed * -200 : 0
-    const xAmount = direction === 'horizontal' ? speed * 200 : 0
-
-    const animationProps: gsap.TweenVars = {
+    tween = gsap.to(contentRef.value, {
       scrollTrigger: {
         trigger: containerRef.value,
         start: 'top bottom',
         end: 'bottom top',
-        scrub: scrub,
+        scrub,
       },
       ease: 'none',
-    }
+      ...parallaxMotionVars({ speed, direction, rotate, scale }),
+    })
+  })
 
-    if (yAmount !== 0) animationProps.y = yAmount
-    if (xAmount !== 0) animationProps.x = xAmount
-    if (rotate !== 0) animationProps.rotation = rotate
-    if (scale !== 0) animationProps.scale = 1 + scale
-
-    gsap.to(contentRef.value, animationProps)
+  onUnmounted(() => {
+    tween?.scrollTrigger?.kill()
+    tween?.kill()
   })
 </script>
 

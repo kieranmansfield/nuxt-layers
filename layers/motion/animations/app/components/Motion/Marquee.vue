@@ -50,6 +50,7 @@
   }>()
 
   const { gsap } = useGsap()
+  const reduced = useReducedMotion()
   const { velocity: scrollVelocity, direction: scrollDirection } = useSmoothScroll()
 
   const containerRef = useTemplateRef<HTMLElement>('containerRef')
@@ -78,8 +79,12 @@
           return direction === 'left' ? parseFloat(x) % mod : Math.abs(parseFloat(x) % mod)
         }),
       },
+      paused: reduced.value,
     })
   })
+
+  // Reduced motion holds the marquee still (and resumes it if the preference is turned off)
+  watch(reduced, (r) => tweenRef.value?.paused(r))
 
   // Watch velocity changes for velocity-based animation
   watch(

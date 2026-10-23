@@ -14,13 +14,18 @@ export function resolvePointerSpring(
 
 export function usePointerMotionFrame(update: () => void, cleanup?: () => void) {
   const { gsap } = useGsap()
+  const reduced = useReducedMotion()
+
+  // Checked per frame so a reduced-motion toggle applies live; reduced holds the element at rest.
+  // ponytail: cleanup re-runs every frame while reduced — cheap gsap.set, gate it if it ever shows up in a profile
+  const frame = () => (reduced.value ? cleanup?.() : update())
 
   onMounted(() => {
-    gsap.ticker.add(update)
+    gsap.ticker.add(frame)
   })
 
   onUnmounted(() => {
-    gsap.ticker.remove(update)
+    gsap.ticker.remove(frame)
     cleanup?.()
   })
 

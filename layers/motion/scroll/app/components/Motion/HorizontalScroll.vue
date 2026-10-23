@@ -11,6 +11,7 @@
   }>()
 
   const { gsap } = useGsap()
+  const reduced = useReducedMotion()
 
   const sectionRef = useTemplateRef<HTMLElement>('sectionRef')
   const trackRef = useTemplateRef<HTMLElement>('trackRef')
@@ -21,6 +22,14 @@
     if (!sectionRef.value || !trackRef.value) return
 
     const track = trackRef.value
+
+    // Reduced motion: no pinned scrub — panels scroll natively sideways instead.
+    // ponytail: checked once at mount — a later reduced-motion toggle applies on next mount/reload; re-run set-up in a watch if live toggling matters
+    if (reduced.value) {
+      sectionRef.value.style.overflowX = 'auto'
+      return
+    }
+
     const trackWidth = track.scrollWidth - window.innerWidth
 
     const tween = gsap.to(track, {

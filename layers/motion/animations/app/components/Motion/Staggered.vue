@@ -18,11 +18,16 @@
 
   // Stagger the rendered DOM children, not slot vnodes: a `ref`/`class` on `<slot>` becomes a
   // slot prop and never reaches an element, which left every item hidden for good.
+  const reduced = useReducedMotion()
   const root = useTemplateRef<HTMLElement>('root')
   const timers: ReturnType<typeof setTimeout>[] = []
 
   onMounted(() => {
     const items = [...(root.value?.children ?? [])]
+    if (reduced.value) {
+      root.value?.setAttribute('data-reduced', '')
+      return items.forEach((item) => item.classList.add('animated'))
+    }
     items.forEach((item, index) => {
       timers.push(
         setTimeout(
@@ -55,5 +60,9 @@
   .motion-staggered > :deep(.animated) {
     transform: translateY(0);
     opacity: 1;
+  }
+
+  .motion-staggered[data-reduced] > :deep(*) {
+    transition: none;
   }
 </style>
