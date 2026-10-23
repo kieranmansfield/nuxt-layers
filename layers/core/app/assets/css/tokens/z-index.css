@@ -9,6 +9,7 @@
   --z-overlay: 300;
   --z-modal: 400;
   --z-toast: 500;
+
   /* Above everything interactive — not in layout's scale, only these consumers need them */
   --z-cursor: 600;
   --z-debug: 700;
