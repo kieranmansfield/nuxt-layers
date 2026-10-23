@@ -66,6 +66,7 @@
               </div>
             </NuxtLink>
             <button
+              :aria-label="`View ${img.alt || 'image'} larger`"
               class="absolute top-2 right-2 z-10 cursor-pointer rounded-full bg-black/50 p-1.5 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 hover:bg-black/70"
               @click.stop="() => openLightbox(asGallery(item).images!, idx)"
             >

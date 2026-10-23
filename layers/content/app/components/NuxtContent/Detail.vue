@@ -32,13 +32,6 @@
     const links = item.value?.body?.toc?.links
     return links ? { links } : {}
   })
-  const itemImage = computed(() => (item.value as { image?: string } | null)?.image)
-
-  useSeoMeta({
-    title: item.value?.title,
-    description: item.value?.description,
-    ogImage: itemImage,
-  })
 </script>
 
 <template>
