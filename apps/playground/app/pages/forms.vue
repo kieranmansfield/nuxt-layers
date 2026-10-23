@@ -457,36 +457,32 @@ type FormState = z.infer<typeof schema>`
               </div>
 
               <div class="grid gap-4 md:grid-cols-2">
-                <div
-                  class="rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20"
-                >
+                <div class="border-success/30 bg-success/10 rounded-lg border p-4">
                   <div class="mb-2 flex items-center gap-2">
-                    <UIcon name="i-lucide-check-circle" class="text-green-600" />
-                    <h4 class="font-semibold text-green-800 dark:text-green-200">Benefits</h4>
+                    <UIcon name="i-lucide-check-circle" class="text-success" />
+                    <h4 class="text-success font-semibold">Benefits</h4>
                   </div>
-                  <ul class="space-y-1 text-sm text-green-700 dark:text-green-300">
+                  <ul class="text-success space-y-1 text-sm">
                     <li>• Autocomplete for form state properties</li>
                     <li>• Compile-time error detection</li>
                     <li>• Refactoring safety</li>
                     <li>• Single source of truth</li>
                   </ul>
                 </div>
-                <div
-                  class="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20"
-                >
+                <div class="border-info/30 bg-info/10 rounded-lg border p-4">
                   <div class="mb-2 flex items-center gap-2">
-                    <UIcon name="i-lucide-lightbulb" class="text-blue-600" />
-                    <h4 class="font-semibold text-blue-800 dark:text-blue-200">Usage Tips</h4>
+                    <UIcon name="i-lucide-lightbulb" class="text-info" />
+                    <h4 class="text-info font-semibold">Usage Tips</h4>
                   </div>
-                  <ul class="space-y-1 text-sm text-blue-700 dark:text-blue-300">
+                  <ul class="text-info space-y-1 text-sm">
                     <li>
                       • Use
-                      <code class="rounded bg-blue-100 px-1 dark:bg-blue-800">.pipe()</code>
+                      <code class="bg-info/10 rounded px-1">.pipe()</code>
                       to extend base validation
                     </li>
                     <li>
                       • Compose schemas with
-                      <code class="rounded bg-blue-100 px-1 dark:bg-blue-800">z.object()</code>
+                      <code class="bg-info/10 rounded px-1">z.object()</code>
                     </li>
                     <li>• Add custom refinements as needed</li>
                   </ul>
@@ -527,13 +523,11 @@ type FormState = z.infer<typeof schema>`
                 >
                   <div
                     v-if="contactSubmitted"
-                    class="mt-4 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20"
+                    class="border-success/30 bg-success/10 mt-4 rounded-lg border p-4"
                   >
                     <div class="flex items-center gap-2">
-                      <UIcon name="i-lucide-check-circle" class="text-green-600" />
-                      <span class="font-medium text-green-800 dark:text-green-200">
-                        Email sent via Resend!
-                      </span>
+                      <UIcon name="i-lucide-check-circle" class="text-success" />
+                      <span class="text-success font-medium"> Email sent via Resend! </span>
                     </div>
                   </div>
                 </Transition>
@@ -546,35 +540,35 @@ type FormState = z.infer<typeof schema>`
                 </h4>
                 <div class="space-y-3">
                   <div class="flex items-start gap-3">
-                    <UIcon name="i-lucide-check" class="mt-0.5 text-green-500" />
+                    <UIcon name="i-lucide-check" class="text-success mt-0.5" />
                     <div>
                       <span class="font-medium">3 field types</span>
                       <p class="text-muted text-sm">name, email, textarea</p>
                     </div>
                   </div>
                   <div class="flex items-start gap-3">
-                    <UIcon name="i-lucide-check" class="mt-0.5 text-green-500" />
+                    <UIcon name="i-lucide-check" class="text-success mt-0.5" />
                     <div>
                       <span class="font-medium">Zod validation</span>
                       <p class="text-muted text-sm">Name ≥3 chars, valid email, message ≥8 chars</p>
                     </div>
                   </div>
                   <div class="flex items-start gap-3">
-                    <UIcon name="i-lucide-check" class="mt-0.5 text-green-500" />
+                    <UIcon name="i-lucide-check" class="text-success mt-0.5" />
                     <div>
                       <span class="font-medium">Toast notifications</span>
                       <p class="text-muted text-sm">Success/error feedback on submit</p>
                     </div>
                   </div>
                   <div class="flex items-start gap-3">
-                    <UIcon name="i-lucide-check" class="mt-0.5 text-green-500" />
+                    <UIcon name="i-lucide-check" class="text-success mt-0.5" />
                     <div>
                       <span class="font-medium">Sends real email</span>
                       <p class="text-muted text-sm">Resend API via <code>/api/contact</code></p>
                     </div>
                   </div>
                   <div class="flex items-start gap-3">
-                    <UIcon name="i-lucide-check" class="mt-0.5 text-green-500" />
+                    <UIcon name="i-lucide-check" class="text-success mt-0.5" />
                     <div>
                       <span class="font-medium">Type-safe state</span>
                       <p class="text-muted text-sm">Full TypeScript inference</p>
@@ -613,8 +607,8 @@ type FormState = z.infer<typeof schema>`
                   class="rounded-lg border p-4"
                   :class="
                     emailStatus?.configured
-                      ? 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20'
-                      : 'border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20'
+                      ? 'border-success/30 bg-success/10'
+                      : 'border-error/30 bg-error/10'
                   "
                 >
                   <div class="mb-2 flex items-center gap-2">
@@ -622,7 +616,7 @@ type FormState = z.infer<typeof schema>`
                       :name="
                         emailStatus?.configured ? 'i-lucide-check-circle' : 'i-lucide-x-circle'
                       "
-                      :class="emailStatus?.configured ? 'text-green-600' : 'text-red-500'"
+                      :class="emailStatus?.configured ? 'text-success' : 'text-error'"
                     />
                     <span class="font-mono text-xs font-medium">RESEND_API_KEY</span>
                   </div>
@@ -681,15 +675,11 @@ type FormState = z.infer<typeof schema>`
                       :name="
                         testEmailResult.success ? 'i-lucide-check-circle' : 'i-lucide-x-circle'
                       "
-                      :class="testEmailResult.success ? 'text-green-600' : 'text-red-500'"
+                      :class="testEmailResult.success ? 'text-success' : 'text-error'"
                     />
                     <span
                       class="text-sm font-medium"
-                      :class="
-                        testEmailResult.success
-                          ? 'text-green-700 dark:text-green-300'
-                          : 'text-red-600 dark:text-red-400'
-                      "
+                      :class="testEmailResult.success ? 'text-success' : 'text-error'"
                     >
                       {{
                         testEmailResult.success
@@ -802,7 +792,9 @@ NUXT_FORMS_LAYER_EMAIL_TO=you@example.com
 
         <!-- Navigation -->
         <div class="flex justify-center gap-4 pt-4">
-          <UButton to="/ui" variant="outline" icon="i-lucide-arrow-left"> UI Layer Demo </UButton>
+          <UButton to="/visual" variant="outline" icon="i-lucide-arrow-left">
+            Visual Layer Demo
+          </UButton>
           <UButton to="/" icon="i-lucide-home"> Back to Home </UButton>
         </div>
       </UContainer>
@@ -811,7 +803,7 @@ NUXT_FORMS_LAYER_EMAIL_TO=you@example.com
         description="Config-driven forms with Zod validation"
         :links="[
           { label: 'Mailer', to: '/mailer', icon: 'i-lucide-mail' },
-          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
         ]"
       />
     </div>

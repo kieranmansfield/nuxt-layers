@@ -31,7 +31,7 @@
         <div class="space-y-8">
           <div class="text-center">
             <h1 class="mb-2 text-4xl font-bold">Core Layer Diagnostics</h1>
-            <p class="text-gray-500 dark:text-gray-400">Feature detection and system information</p>
+            <p class="text-muted">Feature detection and system information</p>
           </div>
 
           <UCard>
@@ -40,33 +40,33 @@
             </template>
             <div class="diag-grid-9 gap-3">
               <div class="flex items-center gap-2">
-                <span v-if="grid" class="text-green-500">✓</span>
-                <span v-else class="text-red-500">✗</span>
+                <span v-if="grid" class="text-success">✓</span>
+                <span v-else class="text-error">✗</span>
                 <span>CSS Grid</span>
               </div>
               <div class="flex items-center gap-2">
-                <span v-if="subgrid" class="text-green-500">✓</span>
-                <span v-else class="text-red-500">✗</span>
+                <span v-if="subgrid" class="text-success">✓</span>
+                <span v-else class="text-error">✗</span>
                 <span>Subgrid</span>
               </div>
               <div class="flex items-center gap-2">
-                <span v-if="containerQueries" class="text-green-500">✓</span>
-                <span v-else class="text-red-500">✗</span>
+                <span v-if="containerQueries" class="text-success">✓</span>
+                <span v-else class="text-error">✗</span>
                 <span>Container Queries</span>
               </div>
               <div class="flex items-center gap-2">
-                <span v-if="has" class="text-green-500">✓</span>
-                <span v-else class="text-red-500">✗</span>
+                <span v-if="has" class="text-success">✓</span>
+                <span v-else class="text-error">✗</span>
                 <span>:has() Selector</span>
               </div>
               <div class="flex items-center gap-2">
-                <span v-if="aspectRatio" class="text-green-500">✓</span>
-                <span v-else class="text-red-500">✗</span>
+                <span v-if="aspectRatio" class="text-success">✓</span>
+                <span v-else class="text-error">✗</span>
                 <span>Aspect Ratio</span>
               </div>
               <div class="flex items-center gap-2">
-                <span v-if="backdropFilter" class="text-green-500">✓</span>
-                <span v-else class="text-red-500">✗</span>
+                <span v-if="backdropFilter" class="text-success">✓</span>
+                <span v-else class="text-error">✗</span>
                 <span>Backdrop Filter</span>
               </div>
             </div>
@@ -78,13 +78,13 @@
             </template>
             <div class="diag-grid-8 gap-3">
               <div class="flex items-center gap-2">
-                <span v-if="webp" class="text-green-500">✓</span>
-                <span v-else class="text-red-500">✗</span>
+                <span v-if="webp" class="text-success">✓</span>
+                <span v-else class="text-error">✗</span>
                 <span>WebP</span>
               </div>
               <div class="flex items-center gap-2">
-                <span v-if="avif" class="text-green-500">✓</span>
-                <span v-else class="text-red-500">✗</span>
+                <span v-if="avif" class="text-success">✓</span>
+                <span v-else class="text-error">✗</span>
                 <span>AVIF</span>
               </div>
             </div>
@@ -96,23 +96,23 @@
             </template>
             <div class="diag-grid-9 gap-3">
               <div class="flex items-center gap-2">
-                <span v-if="intersectionObserver" class="text-green-500">✓</span>
-                <span v-else class="text-red-500">✗</span>
+                <span v-if="intersectionObserver" class="text-success">✓</span>
+                <span v-else class="text-error">✗</span>
                 <span>IntersectionObserver</span>
               </div>
               <div class="flex items-center gap-2">
-                <span v-if="resizeObserver" class="text-green-500">✓</span>
-                <span v-else class="text-red-500">✗</span>
+                <span v-if="resizeObserver" class="text-success">✓</span>
+                <span v-else class="text-error">✗</span>
                 <span>ResizeObserver</span>
               </div>
               <div class="flex items-center gap-2">
-                <span v-if="serviceWorker" class="text-green-500">✓</span>
-                <span v-else class="text-red-500">✗</span>
+                <span v-if="serviceWorker" class="text-success">✓</span>
+                <span v-else class="text-error">✗</span>
                 <span>Service Worker</span>
               </div>
               <div class="flex items-center gap-2">
-                <span v-if="webGL" class="text-green-500">✓</span>
-                <span v-else class="text-red-500">✗</span>
+                <span v-if="webGL" class="text-success">✓</span>
+                <span v-else class="text-error">✗</span>
                 <span>WebGL</span>
               </div>
             </div>
@@ -139,8 +139,8 @@
             <div class="space-y-2">
               <div class="flex items-center gap-2">
                 <span class="w-24 font-medium">Status:</span>
-                <span v-if="isOnline" class="text-green-500">Online</span>
-                <span v-else class="text-red-500">Offline</span>
+                <span v-if="isOnline" class="text-success">Online</span>
+                <span v-else class="text-error">Offline</span>
               </div>
               <div class="flex items-center gap-2">
                 <span class="w-24 font-medium">Type:</span>
@@ -150,10 +150,10 @@
                 <span class="w-24 font-medium">Quality:</span>
                 <span
                   :class="{
-                    'text-green-500': connectionQuality === 'excellent',
-                    'text-yellow-500': connectionQuality === 'good',
-                    'text-red-500': connectionQuality === 'poor',
-                    'text-gray-500': connectionQuality === 'offline',
+                    'text-success': connectionQuality === 'excellent',
+                    'text-warning': connectionQuality === 'good',
+                    'text-error': connectionQuality === 'poor',
+                    'text-muted': connectionQuality === 'offline',
                   }"
                 >
                   {{ connectionQuality }}
@@ -161,13 +161,13 @@
               </div>
               <div class="flex items-center gap-2">
                 <span class="w-24 font-medium">Speed:</span>
-                <span v-if="isFast" class="text-green-500">Fast</span>
-                <span v-else-if="isSlow" class="text-red-500">Slow</span>
+                <span v-if="isFast" class="text-success">Fast</span>
+                <span v-else-if="isSlow" class="text-error">Slow</span>
                 <span v-else>Normal</span>
               </div>
               <div v-if="saveData" class="flex items-center gap-2">
                 <span class="w-24 font-medium">Data Saver:</span>
-                <span class="text-yellow-500">Enabled</span>
+                <span class="text-warning">Enabled</span>
               </div>
             </div>
           </UCard>
@@ -188,8 +188,8 @@
               </div>
               <div class="flex items-center gap-2">
                 <span class="w-24 font-medium">Hydrated:</span>
-                <span v-if="isHydrated" class="text-green-500">Yes</span>
-                <span v-else class="text-yellow-500">No</span>
+                <span v-if="isHydrated" class="text-success">Yes</span>
+                <span v-else class="text-warning">No</span>
               </div>
             </div>
           </UCard>
@@ -201,17 +201,17 @@
             <div class="space-y-2">
               <div class="flex items-center gap-2">
                 <span class="w-24 font-medium">Installed:</span>
-                <span v-if="isInstalled" class="text-green-500">Yes</span>
-                <span v-else class="text-gray-500">No</span>
+                <span v-if="isInstalled" class="text-success">Yes</span>
+                <span v-else class="text-muted">No</span>
               </div>
               <div class="flex items-center gap-2">
                 <span class="w-24 font-medium">Installable:</span>
-                <span v-if="canInstall" class="text-green-500">Yes</span>
-                <span v-else class="text-gray-500">No</span>
+                <span v-if="canInstall" class="text-success">Yes</span>
+                <span v-else class="text-muted">No</span>
               </div>
               <div v-if="needRefresh" class="flex items-center gap-2">
                 <span class="w-24 font-medium">Update:</span>
-                <span class="text-yellow-500">Available</span>
+                <span class="text-warning">Available</span>
               </div>
             </div>
           </UCard>

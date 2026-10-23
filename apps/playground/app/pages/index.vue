@@ -449,7 +449,6 @@
       icon: 'i-lucide-library',
       layer: 'Metadata',
     },
-    { label: 'UI Overview', to: '/ui', icon: 'i-lucide-palette', layer: 'UI' },
     {
       label: 'Baseline Status',
       to: '/baseline',

@@ -264,7 +264,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
               <div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
                 <div
-                  class="border-default/80 dark:border-default dark:bg-muted/45 rounded-2xl border bg-white/75 p-4 shadow-sm backdrop-blur"
+                  class="border-default bg-default/75 rounded-2xl border p-4 shadow-sm backdrop-blur"
                 >
                   <p
                     class="text-highlighted0 dark:text-muted text-[0.68rem] font-semibold tracking-[0.3em] uppercase"
@@ -276,7 +276,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                   </p>
                 </div>
                 <div
-                  class="border-default/80 dark:border-default dark:bg-muted/45 rounded-2xl border bg-white/75 p-4 shadow-sm backdrop-blur"
+                  class="border-default bg-default/75 rounded-2xl border p-4 shadow-sm backdrop-blur"
                 >
                   <p
                     class="text-highlighted0 dark:text-muted text-[0.68rem] font-semibold tracking-[0.3em] uppercase"
@@ -288,7 +288,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                   </p>
                 </div>
                 <div
-                  class="border-default/80 dark:border-default dark:bg-muted/45 rounded-2xl border bg-white/75 p-4 shadow-sm backdrop-blur"
+                  class="border-default bg-default/75 rounded-2xl border p-4 shadow-sm backdrop-blur"
                 >
                   <p
                     class="text-highlighted0 dark:text-muted text-[0.68rem] font-semibold tracking-[0.3em] uppercase"
@@ -317,7 +317,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                 <div
                   v-for="route in routePatterns"
                   :key="route.path"
-                  class="border-default/80 dark:border-default dark:bg-muted/45 flex items-center justify-between gap-4 rounded-2xl border bg-white/70 px-4 py-3 text-sm"
+                  class="border-default bg-default/70 flex items-center justify-between gap-4 rounded-2xl border px-4 py-3 text-sm"
                 >
                   <div class="min-w-0">
                     <p class="text-highlighted dark:text-highlighted font-medium">
@@ -491,20 +491,17 @@ Cache-Control: public, max-age=300, s-maxage=3600`
               </p>
             </template>
 
-            <div
-              v-if="feedIndexError"
-              class="rounded-2xl border border-red-500/30 bg-red-500/10 p-4"
-            >
+            <div v-if="feedIndexError" class="border-error/30 bg-error/10 rounded-2xl border p-4">
               <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-alert-circle" class="text-red-300" />
-                <span class="text-sm text-red-100">
+                <UIcon name="i-lucide-alert-circle" class="text-error" />
+                <span class="text-error text-sm">
                   Could not reach <code>/feed/discovery</code> - run with
                   <code>PLAYGROUND_LAYERS=core,content,feeds</code>
                 </span>
               </div>
             </div>
 
-            <div v-else class="divide-y divide-slate-200/10">
+            <div v-else class="divide-default divide-y">
               <div
                 v-for="endpoint in endpoints"
                 :key="endpoint.url"
@@ -675,11 +672,11 @@ Cache-Control: public, max-age=300, s-maxage=3600`
 
                 <div
                   v-else-if="previewFetchError"
-                  class="rounded-2xl border border-red-500/30 bg-red-500/10 p-4"
+                  class="border-error/30 bg-error/10 rounded-2xl border p-4"
                 >
                   <div class="flex items-center gap-2">
-                    <UIcon name="i-lucide-alert-circle" class="text-red-300" />
-                    <span class="text-sm text-red-100">{{ previewFetchError }}</span>
+                    <UIcon name="i-lucide-alert-circle" class="text-error" />
+                    <span class="text-error text-sm">{{ previewFetchError }}</span>
                   </div>
                 </div>
 
@@ -789,7 +786,7 @@ Cache-Control: public, max-age=300, s-maxage=3600`
                         <th class="px-3 py-2 text-left">Description</th>
                       </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-800">
+                    <tbody class="divide-default divide-y">
                       <tr>
                         <td class="px-3 py-2 font-mono text-xs">site.title</td>
                         <td class="px-3 py-2 font-mono text-xs">string</td>

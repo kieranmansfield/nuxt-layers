@@ -561,7 +561,7 @@
             <UButton to="/element" variant="outline" icon="i-lucide-component">
               Element Demo
             </UButton>
-            <UButton to="/ui" icon="i-lucide-arrow-right"> UI Layer Demo </UButton>
+            <UButton to="/typography" icon="i-lucide-arrow-right"> Typography Layer Demo </UButton>
           </div>
 
           <template #fallback>
@@ -575,7 +575,7 @@
           description="Foundation utilities and composables"
           :links="[
             { label: 'Element', to: '/element', icon: 'i-lucide-component' },
-            { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+            { label: 'Typography', to: '/typography', icon: 'i-lucide-type' },
             { label: 'Layout', to: '/layout', icon: 'i-lucide-layout' },
           ]"
         />

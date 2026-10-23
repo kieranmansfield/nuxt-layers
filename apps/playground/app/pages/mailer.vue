@@ -93,110 +93,91 @@
       </DemoPageHero>
 
       <!-- Status -->
-      <section class="bg-default py-24">
-        <UContainer>
-          <div class="mb-16 text-center">
-            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">
-              Runtime Configuration
-            </h2>
-            <p class="text-muted text-lg">
-              <code class="text-primary">useMailerConfig()</code> — read live via
-              <code class="text-primary">/api/forms/status</code>
+      <DemoSection title="Runtime Configuration">
+        <template #description>
+          <code class="text-primary">useMailerConfig()</code> — read live via
+          <code class="text-primary">/api/forms/status</code>
+        </template>
+
+        <div class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-3">
+          <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
+            <p class="text-muted mb-2 text-xs tracking-widest uppercase">Configured</p>
+            <UBadge :color="status?.configured ? 'success' : 'warning'" variant="subtle" size="lg">
+              {{ status?.configured ? 'Resend API key set' : 'No API key' }}
+            </UBadge>
+          </div>
+          <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
+            <p class="text-muted mb-2 text-xs tracking-widest uppercase">From</p>
+            <p class="text-highlighted font-mono text-sm break-all">
+              {{ status?.emailFrom ?? '—' }}
             </p>
           </div>
-          <div class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-3">
-            <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
-              <p class="text-muted mb-2 text-xs tracking-widest uppercase">Configured</p>
-              <UBadge
-                :color="status?.configured ? 'success' : 'warning'"
-                variant="subtle"
-                size="lg"
-              >
-                {{ status?.configured ? 'Resend API key set' : 'No API key' }}
-              </UBadge>
-            </div>
-            <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
-              <p class="text-muted mb-2 text-xs tracking-widest uppercase">From</p>
-              <p class="text-highlighted font-mono text-sm break-all">
-                {{ status?.emailFrom ?? '—' }}
-              </p>
-            </div>
-            <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
-              <p class="text-muted mb-2 text-xs tracking-widest uppercase">To</p>
-              <p class="text-highlighted font-mono text-sm break-all">
-                {{ status?.emailTo ?? '—' }}
-              </p>
-            </div>
+          <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
+            <p class="text-muted mb-2 text-xs tracking-widest uppercase">To</p>
+            <p class="text-highlighted font-mono text-sm break-all">
+              {{ status?.emailTo ?? '—' }}
+            </p>
           </div>
-        </UContainer>
-      </section>
+        </div>
+      </DemoSection>
 
       <!-- Pipeline -->
-      <section id="pipeline" class="bg-default py-24">
-        <UContainer>
-          <div class="mb-16 text-center">
-            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">Send Pipeline</h2>
-            <p class="text-muted text-lg">What happens between submit and inbox</p>
-          </div>
-          <div class="mx-auto mb-16 grid max-w-4xl gap-6 md:grid-cols-3">
+      <DemoSection
+        id="pipeline"
+        title="Send Pipeline"
+        description="What happens between submit and inbox"
+      >
+        <div class="mx-auto mb-16 grid max-w-4xl gap-6 md:grid-cols-3">
+          <div
+            v-for="item in pipeline"
+            :key="item.step"
+            class="bg-muted border-default relative rounded-2xl border p-6"
+          >
             <div
-              v-for="item in pipeline"
-              :key="item.step"
-              class="bg-muted border-default relative rounded-2xl border p-6"
+              class="bg-primary text-highlighted absolute -top-4 -left-4 flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold"
             >
-              <div
-                class="bg-primary text-highlighted absolute -top-4 -left-4 flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold"
-              >
-                {{ item.step }}
-              </div>
-              <UIcon :name="item.icon" class="text-primary mb-3 text-3xl" />
-              <code class="text-highlighted mb-2 block font-mono text-sm">{{ item.label }}</code>
-              <p class="text-muted text-sm">{{ item.description }}</p>
+              {{ item.step }}
             </div>
+            <UIcon :name="item.icon" class="text-primary mb-3 text-3xl" />
+            <code class="text-highlighted mb-2 block font-mono text-sm">{{ item.label }}</code>
+            <p class="text-muted text-sm">{{ item.description }}</p>
           </div>
+        </div>
 
-          <div class="mx-auto max-w-md text-center">
-            <UButton size="lg" :loading="sending" @click="sendTestMessage">
-              <UIcon name="i-lucide-send" class="mr-2" />
-              Run pipeline (send test message)
-            </UButton>
-            <p v-if="result === 'success'" class="mt-4 text-sm text-green-400">
-              <UIcon name="i-lucide-circle-check" class="mr-1" />
-              contact:sent fired — message accepted by Resend
-            </p>
-            <p v-else-if="result === 'error'" class="mt-4 text-sm text-red-400">
-              <UIcon name="i-lucide-circle-x" class="mr-1" />
-              contact:failed fired — see server logs (likely missing API key in this environment)
-            </p>
-          </div>
-        </UContainer>
-      </section>
+        <div class="mx-auto max-w-md text-center">
+          <UButton size="lg" :loading="sending" @click="sendTestMessage">
+            <UIcon name="i-lucide-send" class="mr-2" />
+            Run pipeline (send test message)
+          </UButton>
+          <p v-if="result === 'success'" class="mt-4 text-sm text-green-400">
+            <UIcon name="i-lucide-circle-check" class="mr-1" />
+            contact:sent fired — message accepted by Resend
+          </p>
+          <p v-else-if="result === 'error'" class="mt-4 text-sm text-red-400">
+            <UIcon name="i-lucide-circle-x" class="mr-1" />
+            contact:failed fired — see server logs (likely missing API key in this environment)
+          </p>
+        </div>
+      </DemoSection>
 
       <!-- Surface -->
-      <section class="bg-default py-24">
-        <UContainer>
-          <div class="mb-16 text-center">
-            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">Server Surface</h2>
-            <p class="text-muted text-lg">
-              Mailer is server-only — no client components or composables
-            </p>
+      <DemoSection
+        title="Server Surface"
+        description="Mailer is server-only — no client components or composables"
+      >
+        <div class="mx-auto grid max-w-4xl gap-6 md:grid-cols-3">
+          <div
+            v-for="item in surface"
+            :key="item.name"
+            class="bg-accented border-accented rounded-2xl border p-6"
+          >
+            <UIcon :name="item.icon" class="text-primary mb-3 text-2xl" />
+            <code class="text-highlighted mb-1 block font-mono text-sm">{{ item.name }}</code>
+            <UBadge variant="subtle" color="neutral" size="xs" class="mb-3">{{ item.kind }}</UBadge>
+            <p class="text-muted text-sm">{{ item.description }}</p>
           </div>
-          <div class="mx-auto grid max-w-4xl gap-6 md:grid-cols-3">
-            <div
-              v-for="item in surface"
-              :key="item.name"
-              class="bg-accented border-accented rounded-2xl border p-6"
-            >
-              <UIcon :name="item.icon" class="text-primary mb-3 text-2xl" />
-              <code class="text-highlighted mb-1 block font-mono text-sm">{{ item.name }}</code>
-              <UBadge variant="subtle" color="neutral" size="xs" class="mb-3">{{
-                item.kind
-              }}</UBadge>
-              <p class="text-muted text-sm">{{ item.description }}</p>
-            </div>
-          </div>
-        </UContainer>
-      </section>
+        </div>
+      </DemoSection>
 
       <DemoPageFooter
         name="Mailer Layer"

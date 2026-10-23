@@ -222,7 +222,7 @@ const activeSection = useState('activeSection', () => '')
         name="Navigation Layer"
         description="Navigation components and composables"
         :links="[
-          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Typography', to: '/typography', icon: 'i-lucide-type' },
           { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
           { label: 'Overlays', to: '/overlays', icon: 'i-lucide-layers' },
         ]"

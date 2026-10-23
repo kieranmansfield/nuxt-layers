@@ -1014,7 +1014,7 @@
         name="Typography Layer"
         description="Typography components and composables"
         :links="[
-          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Theming', to: '/theming', icon: 'i-lucide-palette' },
           { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
         ]"
       />

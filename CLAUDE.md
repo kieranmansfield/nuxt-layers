@@ -177,6 +177,9 @@ feeds → core, content
 - `tests/vitest/layer-extends.test.ts` fails if a layer imports `#layers/<name>` or renders an
   auto-imported component from a layer it doesn't extend (auto-imported composables are not covered)
 - Nuxt deduplicates layers, so declaring a dep that's already loaded is safe and free
+- Every UI component's atomic level (atom / behaviour / molecule / organism / template / page) is
+  recorded in `docs/component-levels.md`; `tests/vitest/component-levels.test.ts` fails when a new
+  component has no row
 
 ## Tech Stack
 

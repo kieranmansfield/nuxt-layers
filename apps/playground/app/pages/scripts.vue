@@ -93,109 +93,95 @@
       </section>
 
       <!-- Composables grid -->
-      <section class="bg-default py-24">
-        <UContainer>
-          <div class="mb-16 text-center">
-            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">Composables</h2>
-            <p class="text-muted text-lg">The public surface of the scripts layer</p>
-          </div>
-          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <div
-              v-for="item in integrations"
-              :key="item.name"
-              class="bg-accented border-accented hover:border-primary/50 rounded-2xl border p-6 transition-colors"
-            >
-              <div class="bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-xl">
-                <UIcon :name="item.icon" class="text-primary text-2xl" />
-              </div>
-              <h3 class="text-highlighted mb-2 text-lg font-bold">{{ item.name }}</h3>
-              <p class="text-muted mb-3 text-sm">{{ item.description }}</p>
-              <code class="text-muted bg-muted block overflow-x-auto rounded px-2 py-1 text-xs">
-                {{ item.snippet }}
-              </code>
+      <DemoSection title="Composables" description="The public surface of the scripts layer">
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div
+            v-for="item in integrations"
+            :key="item.name"
+            class="bg-accented border-accented hover:border-primary/50 rounded-2xl border p-6 transition-colors"
+          >
+            <div class="bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-xl">
+              <UIcon :name="item.icon" class="text-primary text-2xl" />
             </div>
+            <h3 class="text-highlighted mb-2 text-lg font-bold">{{ item.name }}</h3>
+            <p class="text-muted mb-3 text-sm">{{ item.description }}</p>
+            <code class="text-muted bg-muted block overflow-x-auto rounded px-2 py-1 text-xs">
+              {{ item.snippet }}
+            </code>
           </div>
-        </UContainer>
-      </section>
+        </div>
+      </DemoSection>
 
       <!-- Consent -->
-      <section id="consent" class="bg-default py-24">
-        <UContainer>
-          <div class="mb-16 text-center">
-            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">Consent Management</h2>
-            <p class="text-muted text-lg">
-              <code class="text-primary">useScriptsConsent()</code> — gate script loading on user
-              consent
-            </p>
-          </div>
-          <div class="bg-default border-default mx-auto max-w-2xl rounded-2xl border p-8">
-            <div class="mb-8 grid gap-4 sm:grid-cols-3">
-              <div
-                v-for="row in consentRows"
-                :key="row.label"
-                class="bg-accented rounded-xl p-4 text-center"
-              >
-                <p class="text-muted mb-1 text-xs tracking-widest uppercase">{{ row.label }}</p>
-                <p class="text-highlighted text-lg font-bold">{{ row.value }}</p>
-              </div>
-            </div>
-            <div class="flex flex-wrap justify-center gap-4">
-              <UButton :disabled="hasConsent" @click="grantConsent">
-                <UIcon name="i-lucide-check" class="mr-2" />
-                Grant Consent
-              </UButton>
-              <UButton variant="outline" :disabled="!hasConsent" @click="revokeConsent">
-                <UIcon name="i-lucide-x" class="mr-2" />
-                Revoke Consent
-              </UButton>
+      <DemoSection id="consent" title="Consent Management">
+        <template #description>
+          <code class="text-primary">useScriptsConsent()</code> — gate script loading on user
+          consent
+        </template>
+
+        <div class="bg-default border-default mx-auto max-w-2xl rounded-2xl border p-8">
+          <div class="mb-8 grid gap-4 sm:grid-cols-3">
+            <div
+              v-for="row in consentRows"
+              :key="row.label"
+              class="bg-accented rounded-xl p-4 text-center"
+            >
+              <p class="text-muted mb-1 text-xs tracking-widest uppercase">{{ row.label }}</p>
+              <p class="text-highlighted text-lg font-bold">{{ row.value }}</p>
             </div>
           </div>
-        </UContainer>
-      </section>
+          <div class="flex flex-wrap justify-center gap-4">
+            <UButton :disabled="hasConsent" @click="grantConsent">
+              <UIcon name="i-lucide-check" class="mr-2" />
+              Grant Consent
+            </UButton>
+            <UButton variant="outline" :disabled="!hasConsent" @click="revokeConsent">
+              <UIcon name="i-lucide-x" class="mr-2" />
+              Revoke Consent
+            </UButton>
+          </div>
+        </div>
+      </DemoSection>
 
       <!-- YouTube Embed -->
-      <section id="embed" class="bg-default py-24">
-        <UContainer>
-          <div class="mb-16 text-center">
-            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">YouTube Facade</h2>
-            <p class="text-muted text-lg">
-              <code class="text-primary">useYoutubeEmbed()</code> — shows a thumbnail until the
-              viewer opts in to load the IFrame API
-            </p>
-          </div>
-          <div class="mx-auto max-w-2xl">
-            <div
-              class="bg-default border-default group relative flex aspect-video cursor-pointer items-center justify-center overflow-hidden rounded-2xl border"
-              @click="loadVideo"
-            >
-              <template v-if="!ytLoaded">
-                <img
-                  :src="thumbnailUrl"
-                  alt="Video thumbnail"
-                  class="absolute inset-0 h-full w-full object-cover opacity-60 transition-opacity group-hover:opacity-80"
-                />
-                <div
-                  class="bg-primary/90 relative z-10 flex h-16 w-16 items-center justify-center rounded-full"
-                >
-                  <UIcon name="i-lucide-play" class="text-highlighted text-2xl" />
-                </div>
-              </template>
-              <iframe
-                v-else
-                :src="embedUrl"
-                class="h-full w-full"
-                title="YouTube embed"
-                allow="autoplay; encrypted-media"
-                allowfullscreen
+      <DemoSection id="embed" title="YouTube Facade">
+        <template #description>
+          <code class="text-primary">useYoutubeEmbed()</code> — shows a thumbnail until the viewer
+          opts in to load the IFrame API
+        </template>
+
+        <div class="mx-auto max-w-2xl">
+          <div
+            class="bg-default border-default group relative flex aspect-video cursor-pointer items-center justify-center overflow-hidden rounded-2xl border"
+            @click="loadVideo"
+          >
+            <template v-if="!ytLoaded">
+              <img
+                :src="thumbnailUrl"
+                alt="Video thumbnail"
+                class="absolute inset-0 h-full w-full object-cover opacity-60 transition-opacity group-hover:opacity-80"
               />
-            </div>
-            <p class="text-muted mt-4 text-center text-sm">
-              proxy status: <code class="text-primary">{{ ytProxy ? 'ready' : 'idle' }}</code> ·
-              click the thumbnail to load the iframe on demand
-            </p>
+              <div
+                class="bg-primary/90 relative z-10 flex h-16 w-16 items-center justify-center rounded-full"
+              >
+                <UIcon name="i-lucide-play" class="text-highlighted text-2xl" />
+              </div>
+            </template>
+            <iframe
+              v-else
+              :src="embedUrl"
+              class="h-full w-full"
+              title="YouTube embed"
+              allow="autoplay; encrypted-media"
+              allowfullscreen
+            />
           </div>
-        </UContainer>
-      </section>
+          <p class="text-muted mt-4 text-center text-sm">
+            proxy status: <code class="text-primary">{{ ytProxy ? 'ready' : 'idle' }}</code> · click
+            the thumbnail to load the iframe on demand
+          </p>
+        </div>
+      </DemoSection>
 
       <!-- Footer Nav -->
       <section class="bg-default py-16">

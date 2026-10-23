@@ -43,61 +43,54 @@
       </DemoPageHero>
 
       <!-- Live state -->
-      <section id="demo" class="bg-default py-24">
-        <UContainer>
-          <div class="mb-16 text-center">
-            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">
-              Live Transition State
-            </h2>
-            <p class="text-muted text-lg">
-              Reactive values returned from <code class="text-primary">usePageTransition()</code>
-            </p>
-          </div>
+      <DemoSection id="demo" title="Live Transition State">
+        <template #description>
+          Reactive values returned from <code class="text-primary">usePageTransition()</code>
+        </template>
 
-          <div class="mx-auto mb-16 grid max-w-3xl gap-6 sm:grid-cols-3">
-            <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
-              <p class="text-muted mb-2 text-xs tracking-widest uppercase">transitionName</p>
-              <p class="text-primary font-mono text-3xl font-bold">{{ transitionName }}</p>
-            </div>
-            <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
-              <p class="text-muted mb-2 text-xs tracking-widest uppercase">duration</p>
-              <p class="text-primary font-mono text-3xl font-bold">{{ duration }}ms</p>
-            </div>
-            <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
-              <p class="text-muted mb-2 text-xs tracking-widest uppercase">route.path</p>
-              <p class="text-highlighted truncate font-mono text-lg font-bold">{{ route.path }}</p>
-            </div>
+        <div class="mx-auto mb-16 grid max-w-3xl gap-6 sm:grid-cols-3">
+          <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
+            <p class="text-muted mb-2 text-xs tracking-widest uppercase">transitionName</p>
+            <p class="text-primary font-mono text-3xl font-bold">{{ transitionName }}</p>
           </div>
+          <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
+            <p class="text-muted mb-2 text-xs tracking-widest uppercase">duration</p>
+            <p class="text-primary font-mono text-3xl font-bold">{{ duration }}ms</p>
+          </div>
+          <div class="bg-accented border-accented rounded-2xl border p-6 text-center">
+            <p class="text-muted mb-2 text-xs tracking-widest uppercase">route.path</p>
+            <p class="text-highlighted truncate font-mono text-lg font-bold">{{ route.path }}</p>
+          </div>
+        </div>
 
-          <div class="mb-8 text-center">
-            <h3 class="text-highlighted mb-2 text-2xl font-bold">Try setTransition()</h3>
-            <p class="text-muted">
-              Calls update the shared
-              <code class="text-primary">page-transition:current</code> state that the navigation
-              plugin reads on <code class="text-primary">page:start</code>
-            </p>
-          </div>
-          <div class="flex flex-wrap justify-center gap-4">
-            <UButton
-              v-for="preset in presets"
-              :key="preset.name"
-              :variant="transitionName === preset.name ? 'solid' : 'outline'"
-              @click="() => preview(preset.name, preset.duration)"
+        <div class="mb-8 text-center">
+          <h3 class="text-highlighted mb-2 text-2xl font-bold">Try setTransition()</h3>
+          <p class="text-muted">
+            Calls update the shared
+            <code class="text-primary">page-transition:current</code> state that the navigation
+            plugin reads on <code class="text-primary">page:start</code>
+          </p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4">
+          <UButton
+            v-for="preset in presets"
+            :key="preset.name"
+            :variant="transitionName === preset.name ? 'solid' : 'outline'"
+            @click="() => preview(preset.name, preset.duration)"
+          >
+            {{ preset.name }} · {{ preset.duration }}ms
+          </UButton>
+        </div>
+        <div class="mt-12 flex justify-center">
+          <MotionTransition :key="replayKey" :name="transitionName" :duration>
+            <div
+              class="from-primary shadow-primary/30 flex h-48 w-48 items-center justify-center rounded-3xl bg-linear-to-br to-purple-600 shadow-2xl"
             >
-              {{ preset.name }} · {{ preset.duration }}ms
-            </UButton>
-          </div>
-          <div class="mt-12 flex justify-center">
-            <MotionTransition :key="replayKey" :name="transitionName" :duration>
-              <div
-                class="from-primary shadow-primary/30 flex h-48 w-48 items-center justify-center rounded-3xl bg-linear-to-br to-purple-600 shadow-2xl"
-              >
-                <UIcon name="i-lucide-arrow-right-left" class="text-highlighted text-5xl" />
-              </div>
-            </MotionTransition>
-          </div>
-        </UContainer>
-      </section>
+              <UIcon name="i-lucide-arrow-right-left" class="text-highlighted text-5xl" />
+            </div>
+          </MotionTransition>
+        </div>
+      </DemoSection>
 
       <!-- How it works -->
       <section class="bg-default py-24">
