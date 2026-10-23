@@ -20,6 +20,18 @@
   const surroundLinks = computed<ContentSurroundLink[] | undefined>(
     () => surround.value ?? undefined
   )
+
+  // Optional props only bound when present (exactOptionalPropertyTypes rejects `undefined`)
+  const headerProps = computed(() =>
+    item.value?.description ? { description: item.value.description } : {}
+  )
+  const surroundProps = computed(() =>
+    surroundLinks.value?.length ? { surround: surroundLinks.value } : {}
+  )
+  const tocProps = computed(() => {
+    const links = item.value?.body?.toc?.links
+    return links ? { links } : {}
+  })
   const itemImage = computed(() => (item.value as { image?: string } | null)?.image)
 
   useSeoMeta({
@@ -32,11 +44,15 @@
 <template>
   <div>
     <USkeleton v-if="status === 'pending'" class="h-96 w-full" />
+    <UAlert
+      v-else-if="status === 'error'"
+      color="error"
+      variant="subtle"
+      icon="lucide:circle-alert"
+      title="This page couldn't be loaded. Try again shortly."
+    />
     <UPage v-else-if="item">
-      <UPageHeader
-        :title="item.title"
-        v-bind="item.description ? { description: item.description } : {}"
-      >
+      <UPageHeader :title="item.title" v-bind="headerProps">
         <template v-if="$slots.headline" #headline>
           <slot name="headline" :item />
         </template>
@@ -51,11 +67,11 @@
         <slot name="after-content" :item />
 
         <USeparator class="my-8" />
-        <NuxtContentSurround v-bind="surroundLinks?.length ? { surround: surroundLinks } : {}" />
+        <NuxtContentSurround v-bind="surroundProps" />
       </UPageBody>
 
       <template v-if="!hideToc" #right>
-        <NuxtContentToc v-bind="item.body?.toc?.links ? { links: item.body.toc.links } : {}" />
+        <NuxtContentToc v-bind="tocProps" />
       </template>
     </UPage>
     <div v-else class="text-muted py-12 text-center">{{ notFoundMessage }}</div>

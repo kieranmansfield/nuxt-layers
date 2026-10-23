@@ -1,11 +1,18 @@
 <script setup lang="ts">
+  import type { BlogCollectionItem } from '@nuxt/content'
+
   import type { BlogQueryOptions } from '../../types/content'
 
-  const { options = {} } = defineProps<{
+  const { items = undefined, options = {} } = defineProps<{
+    items?: BlogCollectionItem[]
     options?: BlogQueryOptions
   }>()
 
-  const { data: posts, status } = await useBlogPosts(options)
+  // Fetch only when the parent didn't pass items (e.g. a related-items list it already has).
+  // ponytail: decided once at setup — toggling `items` after mount won't start or stop the fetch
+  const fetched = items ? undefined : await useBlogPosts(options)
+  const posts = computed(() => items ?? fetched?.data.value)
+  const status = computed(() => (items ? 'success' : (fetched?.status.value ?? 'idle')))
 </script>
 
 <template>
