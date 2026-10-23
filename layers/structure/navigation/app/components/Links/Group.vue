@@ -12,6 +12,7 @@
     inheritAttrs: false,
     setup(_, { attrs, slots }) {
       if (import.meta.dev)
+        // eslint-disable-next-line no-console -- one-time deprecation notice, dev only
         console.warn('[navigation] <LinksGroup> is deprecated — use <HoverDimGroup>.')
       return () => h(HoverDimGroup, attrs, slots)
     },
