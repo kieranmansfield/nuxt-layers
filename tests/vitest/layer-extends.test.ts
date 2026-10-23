@@ -92,10 +92,10 @@ describe('layer extends', () => {
     const base = join(layer.dir, 'app')
     if (!existsSync(base)) return
     for (const file of walk(base).filter((f) => f.endsWith('.vue'))) {
-      const template = readFileSync(file, 'utf8').replace(
-        /<(script|style)[^>]*>[\s\S]*?<\/\1>/g,
-        ''
-      )
+      // Only the <template> block: script and style text can look like tags
+      const src = readFileSync(file, 'utf8')
+      const start = src.indexOf('<template')
+      const template = start === -1 ? '' : src.slice(start, src.lastIndexOf('</template>'))
       for (const [, tag] of template.matchAll(
         /<([A-Z][A-Za-z0-9]*|[a-z]+(?:-[a-z0-9]+)+)[\s/>]/g
       )) {
