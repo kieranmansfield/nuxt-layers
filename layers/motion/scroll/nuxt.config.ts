@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   $meta: { name: 'scroll' },
 
-  extends: ['../../core'],
+  extends: ['../../core', '../../design-system/visual'],
 
   alias: {
     '#layers/scroll': import.meta.dirname,

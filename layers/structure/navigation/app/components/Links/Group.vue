@@ -1,46 +1,19 @@
 <script lang="ts">
-  import { cloneVNode, defineComponent, Fragment, h, ref, type VNode } from 'vue'
+  import { defineComponent, h } from 'vue'
 
+  import HoverDimGroup from '#layers/visual/app/components/HoverDimGroup.vue'
+
+  /**
+   * @deprecated Renamed to `HoverDimGroup` (visual layer) — it dims any children, not just
+   * links. Kept for one release so consumers can migrate; remove after that.
+   */
   export default defineComponent({
     name: 'LinksGroup',
     inheritAttrs: false,
-    props: {
-      tag: { type: String, default: 'div' },
-      dimOpacity: { type: Number, default: 0.3 },
-      duration: { type: Number, default: 200 },
-    },
-    setup(props, { slots, attrs }) {
-      const hoveredIndex = ref<number | null>(null)
-
-      return () => {
-        const children = (slots.default?.() ?? [])
-          .flatMap((node) => (node.type === Fragment ? (node.children as VNode[]) : [node]))
-          .filter((node) => typeof node.type === 'string' || typeof node.type === 'object')
-
-        const styledChildren = children.map((vnode, index) =>
-          cloneVNode(vnode, {
-            onMouseenter: () => {
-              hoveredIndex.value = index
-            },
-            style: {
-              opacity:
-                hoveredIndex.value !== null && hoveredIndex.value !== index ? props.dimOpacity : 1,
-              transition: `opacity ${props.duration}ms ease-out`,
-            },
-          })
-        )
-
-        return h(
-          props.tag,
-          {
-            ...attrs,
-            onMouseleave: () => {
-              hoveredIndex.value = null
-            },
-          },
-          styledChildren
-        )
-      }
+    setup(_, { attrs, slots }) {
+      if (import.meta.dev)
+        console.warn('[navigation] <LinksGroup> is deprecated — use <HoverDimGroup>.')
+      return () => h(HoverDimGroup, attrs, slots)
     },
   })
 </script>

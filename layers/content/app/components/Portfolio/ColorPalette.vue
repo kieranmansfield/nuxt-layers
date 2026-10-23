@@ -17,7 +17,7 @@
 <template>
   <div v-if="colors.length" class="space-y-6">
     <h3 class="text-highlighted text-2xl font-semibold tracking-tight">Palette</h3>
-    <LinksGroup class="palette-grid gap-3">
+    <HoverDimGroup class="palette-grid gap-3">
       <div v-for="color in colors" :key="color.value">
         <div
           class="border-default/20 flex aspect-2/3 cursor-default flex-col justify-between rounded-lg border p-4 shadow-lg"
@@ -30,7 +30,7 @@
           <p class="font-mono text-xs uppercase opacity-50">{{ color.value }}</p>
         </div>
       </div>
-    </LinksGroup>
+    </HoverDimGroup>
   </div>
 </template>
 

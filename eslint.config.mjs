@@ -423,6 +423,7 @@ export default defineConfigWithVueTs(
   // which Nuxt does not auto-import.
   {
     files: [
+      'layers/design-system/visual/app/components/HoverDimGroup.vue',
       'layers/structure/navigation/app/components/Links/Group.vue',
       'layers/delivery/scripts/app/components/BaselineStatus.vue',
     ],
@@ -438,6 +439,7 @@ export default defineConfigWithVueTs(
       'layers/core/app/components/ElementTw.vue',
       'layers/delivery/feeds/app/components/Feeds/RouteCard.vue',
       'layers/design-system/typography/app/components/Typography/Headline.vue',
+      'layers/motion/animations/app/components/Motion/Staggered.vue',
     ],
     rules: {
       '@typescript-eslint/no-restricted-imports': 'off',

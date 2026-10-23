@@ -49,7 +49,7 @@
         <UIcon name="lucide:x" class="size-7" />
       </button>
 
-      <LinksGroup tag="nav" class="flex flex-col items-center gap-2">
+      <HoverDimGroup tag="nav" class="flex flex-col items-center gap-2">
         <button
           v-for="link in links"
           :key="link.id"
@@ -59,7 +59,7 @@
         >
           {{ link.label }}
         </button>
-      </LinksGroup>
+      </HoverDimGroup>
     </div>
   </Transition>
 </template>

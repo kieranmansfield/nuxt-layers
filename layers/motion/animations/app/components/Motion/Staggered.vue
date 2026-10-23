@@ -1,5 +1,8 @@
 <script setup lang="ts">
-  // Props
+  // Explicit import so Staggered mounts under vitest's 'vue' project (no Nuxt auto-imports)
+  // — same exemption as ElementTw.vue (eslint.config.mjs).
+  import { onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
+
   const {
     staggerDelay = 100,
     initialDelay = 0,
@@ -13,61 +16,44 @@
     animation?: string
   }>()
 
-  // State
-  const items = ref<HTMLElement[]>([])
-  const animatedItems = ref<boolean[]>([])
+  // Stagger the rendered DOM children, not slot vnodes: a `ref`/`class` on `<slot>` becomes a
+  // slot prop and never reaches an element, which left every item hidden for good.
+  const root = useTemplateRef<HTMLElement>('root')
+  const timers: ReturnType<typeof setTimeout>[] = []
 
-  // Slots
-  const slots = useSlots()
-
-  // Methods
-  const setItemRef = (el: HTMLElement | null, index: number) => {
-    if (el) {
-      items.value[index] = el
-      animatedItems.value[index] = false
-    }
-  }
-
-  // Lifecycle
   onMounted(() => {
-    // Animate items with staggered delay
-    setTimeout(() => {
-      items.value.forEach((item, index) => {
-        if (item) {
-          setTimeout(
-            () => {
-              animatedItems.value[index] = true
-              item.classList.add(`animate-${animation}`, 'animated')
-            },
-            initialDelay + index * staggerDelay
-          )
-        }
-      })
-    }, 100)
+    const items = [...(root.value?.children ?? [])]
+    items.forEach((item, index) => {
+      timers.push(
+        setTimeout(
+          () => item.classList.add(`animate-${animation}`, 'animated'),
+          initialDelay + index * staggerDelay
+        )
+      )
+    })
   })
+
+  onBeforeUnmount(() => timers.forEach(clearTimeout))
 </script>
 
 <template>
-  <div class="motion-staggered">
-    <slot
-      v-for="(_, index) in slots.default?.()"
-      :key="index"
-      :ref="(el: HTMLElement | null) => setItemRef(el, index)"
-      :class="{ animated: animatedItems[index] }"
-    />
+  <div ref="root" class="motion-staggered">
+    <slot />
   </div>
 </template>
 
 <style scoped>
   /* stylelint-disable selector-pseudo-class-no-unknown */
-  .motion-staggered :deep(.animated) {
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  .motion-staggered :deep(*) {
+  .motion-staggered > :deep(*) {
     transform: translateY(20px);
     opacity: 0;
-    transition: all 0.3s ease-out;
+    transition:
+      opacity 0.3s ease-out,
+      transform 0.3s ease-out;
+  }
+
+  .motion-staggered > :deep(.animated) {
+    transform: translateY(0);
+    opacity: 1;
   }
 </style>
