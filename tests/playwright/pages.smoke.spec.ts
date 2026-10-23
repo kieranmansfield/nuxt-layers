@@ -11,7 +11,6 @@ const pages = [
   { path: '/forms', name: 'FORMS' },
   { path: '/content', name: 'CONTENT' },
   { path: '/theming', name: 'THEMING' },
-  { path: '/ui', name: 'UI' },
   { path: '/seo', name: 'SEO' },
   { path: '/nav', name: 'NAVIGATION' },
   { path: '/motion', name: /MOTION/i },

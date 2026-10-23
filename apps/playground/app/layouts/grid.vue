@@ -10,7 +10,7 @@
 <template>
   <div class="flex min-h-dvh flex-col">
     <MastHeader v-if="showHeader" />
-    <MastNav v-if="showNav" />
+    <MastNav v-if="showNav" class="fixed top-0 right-0" />
     <LayoutMain class="grow">
       <slot />
     </LayoutMain>

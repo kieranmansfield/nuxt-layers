@@ -1,7 +1,13 @@
 export default defineNuxtConfig({
   $meta: { name: 'navigation' },
 
-  extends: ['../../core', '../../motion/scroll', '../layout', '../../design-system/typography'],
+  extends: [
+    '../../core',
+    '../../motion/scroll',
+    '../layout',
+    '../../design-system/typography',
+    '../../design-system/visual',
+  ],
 
   alias: {
     '#layers/navigation': import.meta.dirname,

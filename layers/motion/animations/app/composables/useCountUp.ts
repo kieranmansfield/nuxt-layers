@@ -15,6 +15,7 @@ export function useCountUp(
   opts: UseCountUpOptions
 ) {
   const { gsap, ScrollTrigger } = useGsap()
+  const reduced = useReducedMotion()
 
   const displayValue = ref(String(opts.from ?? 0))
   const isComplete = ref(false)
@@ -26,6 +27,11 @@ export function useCountUp(
   let tween: gsap.core.Tween | null = null
 
   function startCount() {
+    if (reduced.value) {
+      displayValue.value = format(opts.to)
+      isComplete.value = true
+      return
+    }
     tween = gsap.to(counter, {
       value: opts.to,
       duration: opts.duration ?? 2,

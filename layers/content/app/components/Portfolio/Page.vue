@@ -1,25 +1,15 @@
 <script setup lang="ts">
-  import type { ContentLayerConfig } from '#layers/content/app/types/content'
+  const { title = 'Portfolio', description = 'Featured projects and work' } = defineProps<{
+    title?: string
+    description?: string
+  }>()
 
-  const appConfig = useAppConfig()
-  const contentLayer = appConfig.contentLayer as ContentLayerConfig | undefined
-  if (contentLayer?.sections?.portfolio === false) {
-    throw createError({ statusCode: 404, statusMessage: 'Not Found' })
-  }
-
-  useSeoMeta({
-    title: 'Portfolio',
-    description: 'Featured projects and work',
-  })
+  useContentSection('portfolio')
+  useSeoMeta({ title: () => title, description: () => description })
 </script>
 
 <template>
-  <LayoutSection>
-    <LayoutGridItem>
-      <UPageHeader title="Portfolio" description="Featured projects and work" />
-      <UPageBody>
-        <PortfolioList />
-      </UPageBody>
-    </LayoutGridItem>
-  </LayoutSection>
+  <NuxtContentIndexTemplate :title :description>
+    <PortfolioList />
+  </NuxtContentIndexTemplate>
 </template>

@@ -33,6 +33,7 @@
   }>()
 
   const { gsap, ScrollTrigger } = useGsap()
+  const reduced = useReducedMotion()
   const { velocityFactor } = useMarqueeVelocity({ damping, stiffness, velocityMapping })
 
   const containerRef = useTemplateRef<HTMLElement[]>('containerRef')
@@ -71,7 +72,7 @@
   }
 
   function animate() {
-    if (isPaused.value) return
+    if (isPaused.value || reduced.value) return
 
     const now = performance.now()
     const delta = animLastTime ? now - animLastTime : 16

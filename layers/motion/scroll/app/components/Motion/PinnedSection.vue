@@ -11,21 +11,31 @@
   }>()
 
   const { gsap, ScrollTrigger } = useGsap()
+  const reduced = useReducedMotion()
 
   const sectionRef = useTemplateRef<HTMLElement>('sectionRef')
   const contentRef = useTemplateRef<HTMLElement>('contentRef')
 
   const cleanups: Array<() => void> = []
 
+  // Reduced motion: no pin, no reveal — show every child at rest (inline style beats the
+  // first-paint hide rule below).
+  // ponytail: checked once at mount — a later reduced-motion toggle applies on next mount/reload
   onMounted(() => {
-    if (!sectionRef.value || !contentRef.value) return
+    const section = sectionRef.value
+    const content = contentRef.value
+    if (!section || !content) return
+    const items = Array.from(content.querySelectorAll(':scope > *'))
+    if (reduced.value) return void gsap.set(items, { opacity: 1, y: 0, scale: 1 })
+    pinAndReveal(section, items)
+  })
 
-    const endOffset = (duration * window.innerHeight) / 100
-    const endValue = `+=${endOffset}`
+  function pinAndReveal(section: HTMLElement, items: Element[]) {
+    const endValue = `+=${(duration * window.innerHeight) / 100}`
 
     // Pin the section
     const pinSt = ScrollTrigger.create({
-      trigger: sectionRef.value,
+      trigger: section,
       start: 'top top',
       end: endValue,
       pin: true,
@@ -34,10 +44,7 @@
     cleanups.push(() => pinSt.kill())
 
     // Animate each direct child
-    const items = Array.from(contentRef.value.querySelectorAll(':scope > *'))
     const total = items.length
-    if (total === 0) return
-
     items.forEach((item, i) => {
       gsap.set(item, { opacity: 0, y: 60, scale: 0.9 })
 
@@ -46,7 +53,7 @@
 
       const tween = gsap.to(item, {
         scrollTrigger: {
-          trigger: sectionRef.value,
+          trigger: section,
           start: 'top top',
           end: endValue,
           scrub,
@@ -63,7 +70,7 @@
         tween.kill()
       })
     })
-  })
+  }
 
   onUnmounted(() => {
     cleanups.forEach((fn) => fn())

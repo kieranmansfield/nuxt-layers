@@ -375,8 +375,8 @@
       mod: 'entrance.fade',
       label: 'entrance.fade',
       snip: 'entranceFade',
-      bgClass: 'bg-violet-100 dark:bg-violet-900/30',
-      textClass: 'text-violet-800 dark:text-violet-200',
+      bgClass: 'bg-primary/10',
+      textClass: 'text-primary',
       text: 'Fades in',
     },
     {
@@ -384,8 +384,8 @@
       mod: 'entrance.slide-left',
       label: 'entrance.slide-left',
       snip: 'entranceSlideLeft',
-      bgClass: 'bg-blue-100 dark:bg-blue-900/30',
-      textClass: 'text-blue-800 dark:text-blue-200',
+      bgClass: 'bg-info/10',
+      textClass: 'text-info',
       text: 'From left',
     },
     {
@@ -393,8 +393,8 @@
       mod: 'entrance.slide-right',
       label: 'entrance.slide-right',
       snip: 'entranceSlideRight',
-      bgClass: 'bg-green-100 dark:bg-green-900/30',
-      textClass: 'text-green-800 dark:text-green-200',
+      bgClass: 'bg-success/10',
+      textClass: 'text-success',
       text: 'From right',
     },
     {
@@ -402,8 +402,8 @@
       mod: 'entrance.slide-bottom',
       label: 'entrance.slide-bottom',
       snip: 'entranceSlideBottom',
-      bgClass: 'bg-orange-100 dark:bg-orange-900/30',
-      textClass: 'text-orange-800 dark:text-orange-200',
+      bgClass: 'bg-warning/10',
+      textClass: 'text-warning',
       text: 'From below',
     },
     {
@@ -411,8 +411,8 @@
       mod: 'entrance.scale',
       label: 'entrance.scale',
       snip: 'entranceScale',
-      bgClass: 'bg-pink-100 dark:bg-pink-900/30',
-      textClass: 'text-pink-800 dark:text-pink-200',
+      bgClass: 'bg-secondary/10',
+      textClass: 'text-secondary',
       text: 'Scale 75% → 100%',
     },
     {
@@ -420,8 +420,8 @@
       mod: 'entrance.scale-full',
       label: 'entrance.scale-full',
       snip: 'entranceScaleFull',
-      bgClass: 'bg-red-100 dark:bg-red-900/30',
-      textClass: 'text-red-800 dark:text-red-200',
+      bgClass: 'bg-error/10',
+      textClass: 'text-error',
       text: 'Scale 0% → 100%',
     },
   ]
@@ -435,11 +435,11 @@
     <div class="bg-default text-highlighted min-h-screen">
       <!-- Hero -->
       <section
-        class="text-highlighted relative overflow-hidden bg-linear-to-br from-violet-950 via-gray-900 to-[var(--ui-bg)] px-6 py-24"
+        class="text-highlighted from-primary relative overflow-hidden bg-linear-to-br via-(--ui-color-neutral-900) to-[var(--ui-bg)] px-6 py-24"
       >
         <div class="absolute inset-0 opacity-20">
-          <div class="absolute top-20 left-20 h-64 w-64 rounded-full bg-violet-500 blur-3xl" />
-          <div class="absolute right-20 bottom-10 h-96 w-96 rounded-full bg-purple-600 blur-3xl" />
+          <div class="bg-primary absolute top-20 left-20 h-64 w-64 rounded-full blur-3xl" />
+          <div class="bg-secondary absolute right-20 bottom-10 h-96 w-96 rounded-full blur-3xl" />
         </div>
         <UContainer class="relative">
           <div class="max-w-3xl">
@@ -484,13 +484,13 @@
                   <th class="text-toned min-w-44 px-4 py-3 font-semibold">Usage / Options</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody class="divide-default divide-y">
                 <tr
                   v-for="row in quickRef"
                   :key="row.modifier"
                   class="bg-default hover:bg-muted transition-colors"
                 >
-                  <td class="px-4 py-3 font-mono font-medium text-violet-600 dark:text-violet-400">
+                  <td class="text-primary px-4 py-3 font-mono font-medium">
                     {{ row.modifier }}
                   </td>
                   <td class="text-toned px-4 py-3">{{ row.desc }}</td>
@@ -540,7 +540,7 @@
               >
                 <div
                   v-gsap.from="{ opacity: 0, y: 40, duration: 0.8 }"
-                  class="rounded-xl bg-violet-100 px-8 py-5 text-center font-semibold text-violet-800 dark:bg-violet-900/30 dark:text-violet-200"
+                  class="bg-primary/10 text-primary rounded-xl px-8 py-5 text-center font-semibold"
                 >
                   Animates from opacity:0, y:40
                 </div>
@@ -591,7 +591,7 @@
                     { scale: 0, rotation: -180 },
                     { scale: 1, rotation: 0, duration: 0.8, ease: 'back.out(1.7)' },
                   ]"
-                  class="flex h-20 w-20 items-center justify-center rounded-xl bg-purple-200 text-center text-xs font-bold text-purple-700 dark:bg-purple-900/40 dark:text-purple-300"
+                  class="bg-secondary/20 text-secondary flex h-20 w-20 items-center justify-center rounded-xl text-center text-xs font-bold"
                 >
                   Scale + Rotate
                 </div>
@@ -639,7 +639,7 @@
               >
                 <div
                   v-gsap.infinitely.to="{ rotation: 360, duration: 2, ease: 'linear' }"
-                  class="flex h-16 w-16 items-center justify-center rounded-xl bg-blue-200 text-xs font-bold text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
+                  class="bg-info/20 text-info flex h-16 w-16 items-center justify-center rounded-xl text-xs font-bold"
                 >
                   Spin
                 </div>
@@ -648,7 +648,7 @@
                     { y: -8 },
                     { y: 8, duration: 0.8, ease: 'sine.inOut', yoyo: true, repeat: -1 },
                   ]"
-                  class="flex h-16 w-16 items-center justify-center rounded-xl bg-emerald-200 text-xs font-bold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
+                  class="bg-success/20 text-success flex h-16 w-16 items-center justify-center rounded-xl text-xs font-bold"
                 >
                   Float
                 </div>
@@ -714,7 +714,7 @@
               >
                 <div
                   v-gsap.whenVisible.once.from="{ opacity: 0, y: 60, duration: 0.8 }"
-                  class="rounded-xl bg-violet-100 px-8 py-5 text-center font-semibold text-violet-800 dark:bg-violet-900/30 dark:text-violet-200"
+                  class="bg-primary/10 text-primary rounded-xl px-8 py-5 text-center font-semibold"
                 >
                   Slides up once when visible
                 </div>
@@ -763,7 +763,7 @@
               >
                 <div
                   v-gsap.whenVisible.once.reversible.from="{ opacity: 0, x: -60, duration: 0.6 }"
-                  class="rounded-xl bg-blue-100 px-8 py-5 text-center font-semibold text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
+                  class="bg-info/10 text-info rounded-xl px-8 py-5 text-center font-semibold"
                 >
                   Slides in from left — reverses on scroll up
                 </div>
@@ -815,7 +815,7 @@
                     { opacity: 0, scale: 0.8 },
                     { opacity: 1, scale: 1 },
                   ]"
-                  class="rounded-xl bg-emerald-100 px-8 py-5 text-center font-semibold text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200"
+                  class="bg-success/10 text-success rounded-xl px-8 py-5 text-center font-semibold"
                 >
                   Scrubs with scroll position
                 </div>
@@ -862,19 +862,19 @@
               >
                 <div
                   v-gsap.whenVisible.once.from="{ opacity: 0, y: 30, duration: 0.6 }"
-                  class="rounded-lg bg-orange-100 px-4 py-3 text-center text-sm font-semibold text-orange-800 dark:bg-orange-900/30 dark:text-orange-200"
+                  class="bg-warning/10 text-warning rounded-lg px-4 py-3 text-center text-sm font-semibold"
                 >
                   Immediate
                 </div>
                 <div
                   v-gsap.whenVisible.once.from.delay-300="{ opacity: 0, y: 30, duration: 0.6 }"
-                  class="rounded-lg bg-orange-100 px-4 py-3 text-center text-sm font-semibold text-orange-800 dark:bg-orange-900/30 dark:text-orange-200"
+                  class="bg-warning/10 text-warning rounded-lg px-4 py-3 text-center text-sm font-semibold"
                 >
                   300ms delay
                 </div>
                 <div
                   v-gsap.whenVisible.once.from.delay-600="{ opacity: 0, y: 30, duration: 0.6 }"
-                  class="rounded-lg bg-orange-100 px-4 py-3 text-center text-sm font-semibold text-orange-800 dark:bg-orange-900/30 dark:text-orange-200"
+                  class="bg-warning/10 text-warning rounded-lg px-4 py-3 text-center text-sm font-semibold"
                 >
                   600ms delay
                 </div>
@@ -927,9 +927,7 @@
               <div
                 class="border-default bg-muted dark:bg-accented flex items-center justify-between border-b px-4 py-2"
               >
-                <code class="text-sm font-medium text-violet-600 dark:text-violet-400">{{
-                  demo.label
-                }}</code>
+                <code class="text-primary text-sm font-medium">{{ demo.label }}</code>
                 <UButton
                   size="xs"
                   variant="ghost"
@@ -1259,7 +1257,7 @@
               <div class="bg-muted flex min-h-32 items-center justify-center p-8">
                 <div
                   v-gsap.whileHover.to="{ scale: 1.08, duration: 0.3, ease: 'power2.out' }"
-                  class="cursor-pointer rounded-xl bg-violet-100 px-8 py-5 font-semibold text-violet-800 dark:bg-violet-900/30 dark:text-violet-200"
+                  class="bg-primary/10 text-primary cursor-pointer rounded-xl px-8 py-5 font-semibold"
                 >
                   Hover me
                 </div>
@@ -1290,7 +1288,7 @@
               <div class="bg-muted flex min-h-32 items-center justify-center p-8">
                 <div
                   v-gsap.whileHover.to="{ rotation: 6, scale: 1.05, duration: 0.25 }"
-                  class="cursor-pointer rounded-xl bg-blue-100 px-8 py-5 font-semibold text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
+                  class="bg-info/10 text-info cursor-pointer rounded-xl px-8 py-5 font-semibold"
                 >
                   Hover me
                 </div>
@@ -1321,7 +1319,7 @@
               <div class="bg-muted flex min-h-32 items-center justify-center p-8">
                 <div
                   v-gsap.whileHover.noReverse.to="{ y: -8, duration: 0.3 }"
-                  class="cursor-pointer rounded-xl bg-emerald-100 px-8 py-5 font-semibold text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200"
+                  class="bg-success/10 text-success cursor-pointer rounded-xl px-8 py-5 font-semibold"
                 >
                   Lifts — stays lifted on leave
                 </div>
@@ -1355,7 +1353,7 @@
                     { boxShadow: '0 0 0 0 rgba(139,92,246,0)' },
                     { boxShadow: '0 8px 32px 0 rgba(139,92,246,0.45)', duration: 0.3 },
                   ]"
-                  class="cursor-pointer rounded-xl bg-purple-100 px-8 py-5 font-semibold text-purple-800 dark:bg-purple-900/30 dark:text-purple-200"
+                  class="bg-secondary/10 text-secondary cursor-pointer rounded-xl px-8 py-5 font-semibold"
                 >
                   Hover for glow
                 </div>
@@ -1407,7 +1405,7 @@
               <div class="bg-accented relative h-48 overflow-hidden">
                 <div
                   v-gsap.parallax.slower-3
-                  class="text-highlighted absolute inset-0 flex items-center justify-center bg-linear-to-br from-violet-400 to-purple-600 text-lg font-bold"
+                  class="text-highlighted from-primary to-secondary absolute inset-0 flex items-center justify-center bg-linear-to-br text-lg font-bold"
                 >
                   Moves slower than scroll
                 </div>
@@ -1438,7 +1436,7 @@
               <div class="bg-accented relative h-48 overflow-hidden">
                 <div
                   v-gsap.parallax.faster-2
-                  class="text-highlighted absolute inset-0 flex items-center justify-center bg-linear-to-br from-blue-400 to-cyan-500 text-lg font-bold"
+                  class="text-highlighted from-info/60 to-info absolute inset-0 flex items-center justify-center bg-linear-to-br text-lg font-bold"
                 >
                   Moves faster than scroll
                 </div>
@@ -1501,32 +1499,32 @@
                   class="grid grid-cols-3 gap-3"
                 >
                   <div
-                    class="rounded-lg bg-violet-100 p-4 text-center text-sm font-semibold text-violet-800 dark:bg-violet-900/30 dark:text-violet-200"
+                    class="bg-primary/10 text-primary rounded-lg p-4 text-center text-sm font-semibold"
                   >
                     Card 1
                   </div>
                   <div
-                    class="rounded-lg bg-violet-100 p-4 text-center text-sm font-semibold text-violet-800 dark:bg-violet-900/30 dark:text-violet-200"
+                    class="bg-primary/10 text-primary rounded-lg p-4 text-center text-sm font-semibold"
                   >
                     Card 2
                   </div>
                   <div
-                    class="rounded-lg bg-violet-100 p-4 text-center text-sm font-semibold text-violet-800 dark:bg-violet-900/30 dark:text-violet-200"
+                    class="bg-primary/10 text-primary rounded-lg p-4 text-center text-sm font-semibold"
                   >
                     Card 3
                   </div>
                   <div
-                    class="rounded-lg bg-violet-100 p-4 text-center text-sm font-semibold text-violet-800 dark:bg-violet-900/30 dark:text-violet-200"
+                    class="bg-primary/10 text-primary rounded-lg p-4 text-center text-sm font-semibold"
                   >
                     Card 4
                   </div>
                   <div
-                    class="rounded-lg bg-violet-100 p-4 text-center text-sm font-semibold text-violet-800 dark:bg-violet-900/30 dark:text-violet-200"
+                    class="bg-primary/10 text-primary rounded-lg p-4 text-center text-sm font-semibold"
                   >
                     Card 5
                   </div>
                   <div
-                    class="rounded-lg bg-violet-100 p-4 text-center text-sm font-semibold text-violet-800 dark:bg-violet-900/30 dark:text-violet-200"
+                    class="bg-primary/10 text-primary rounded-lg p-4 text-center text-sm font-semibold"
                   >
                     Card 6
                   </div>
@@ -1589,25 +1587,25 @@
                 <div v-gsap.timeline="{ scrub: false }" class="space-y-3">
                   <div
                     v-gsap.add.from="{ opacity: 0, x: -60, duration: 0.45 }"
-                    class="rounded-lg bg-blue-100 p-4 font-semibold text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
+                    class="bg-info/10 text-info rounded-lg p-4 font-semibold"
                   >
                     1 — First (plays immediately)
                   </div>
                   <div
                     v-gsap.add.from="{ opacity: 0, x: -60, duration: 0.45 }"
-                    class="rounded-lg bg-blue-100 p-4 font-semibold text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
+                    class="bg-info/10 text-info rounded-lg p-4 font-semibold"
                   >
                     2 — Second (plays after first)
                   </div>
                   <div
                     v-gsap.add.from="{ opacity: 0, x: -60, duration: 0.45 }"
-                    class="rounded-lg bg-blue-100 p-4 font-semibold text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
+                    class="bg-info/10 text-info rounded-lg p-4 font-semibold"
                   >
                     3 — Third (plays after second)
                   </div>
                   <div
                     v-gsap.add.withPrevious.from="{ opacity: 0, x: -60, duration: 0.45 }"
-                    class="rounded-lg bg-indigo-100 p-4 font-semibold text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-200"
+                    class="bg-info/10 text-info rounded-lg p-4 font-semibold"
                   >
                     4 — Plays with third (.withPrevious)
                   </div>
@@ -1667,13 +1665,13 @@
                 </button>
                 <button
                   v-gsap.magnetic
-                  class="cursor-pointer rounded-full bg-violet-100 px-5 py-2.5 text-sm font-semibold text-violet-800 transition-colors hover:bg-violet-200 dark:bg-violet-900/40 dark:text-violet-200 dark:hover:bg-violet-800/40"
+                  class="bg-primary/10 text-primary hover:bg-primary/20 cursor-pointer rounded-full px-5 py-2.5 text-sm font-semibold transition-colors"
                 >
                   Default
                 </button>
                 <button
                   v-gsap.magnetic.strong
-                  class="text-highlighted cursor-pointer rounded-full bg-purple-500 px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-purple-600"
+                  class="text-highlighted bg-secondary hover:bg-secondary cursor-pointer rounded-full px-5 py-2.5 text-sm font-semibold transition-colors"
                 >
                   Strong
                 </button>
@@ -1728,19 +1726,19 @@
               <div class="bg-muted relative flex min-h-48 items-center justify-center gap-6 p-6">
                 <div
                   v-gsap.draggable.x
-                  class="flex h-20 w-20 cursor-grab items-center justify-center rounded-xl bg-blue-200 text-xs font-bold text-blue-700 select-none active:cursor-grabbing dark:bg-blue-900/50 dark:text-blue-300"
+                  class="bg-info/20 text-info flex h-20 w-20 cursor-grab items-center justify-center rounded-xl text-xs font-bold select-none active:cursor-grabbing"
                 >
                   ↔ X only
                 </div>
                 <div
                   v-gsap.draggable
-                  class="flex h-20 w-20 cursor-grab items-center justify-center rounded-full bg-violet-200 text-xs font-bold text-violet-700 select-none active:cursor-grabbing dark:bg-violet-900/50 dark:text-violet-300"
+                  class="bg-primary/20 text-primary flex h-20 w-20 cursor-grab items-center justify-center rounded-full text-xs font-bold select-none active:cursor-grabbing"
                 >
                   Free
                 </div>
                 <div
                   v-gsap.draggable.rotation
-                  class="flex h-20 w-20 cursor-grab items-center justify-center rounded-xl bg-orange-200 text-xs font-bold text-orange-700 select-none active:cursor-grabbing dark:bg-orange-900/50 dark:text-orange-300"
+                  class="bg-warning/20 text-warning flex h-20 w-20 cursor-grab items-center justify-center rounded-xl text-xs font-bold select-none active:cursor-grabbing"
                 >
                   ↻ Spin
                 </div>
@@ -1807,16 +1805,10 @@
                 >
                   Default speed typewriter effect...
                 </p>
-                <p
-                  v-gsap.whenVisible.once.animateText.slow
-                  class="font-mono text-lg text-violet-700 dark:text-violet-300"
-                >
+                <p v-gsap.whenVisible.once.animateText.slow class="text-primary font-mono text-lg">
                   Slow typewriter, one char at a time.
                 </p>
-                <p
-                  v-gsap.whenVisible.once.animateText.fast
-                  class="font-mono text-lg text-emerald-700 dark:text-emerald-300"
-                >
+                <p v-gsap.whenVisible.once.animateText.fast class="text-success font-mono text-lg">
                   Fast typewriter blazes through!
                 </p>
               </div>
@@ -1873,13 +1865,13 @@
               <div :key="replayKeys['responsive']" class="bg-muted space-y-3 p-6">
                 <div
                   v-gsap.desktop.whenVisible.once.from="{ opacity: 0, y: 40, duration: 0.8 }"
-                  class="rounded-lg bg-blue-100 p-4 text-sm font-semibold text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
+                  class="bg-info/10 text-info rounded-lg p-4 text-sm font-semibold"
                 >
                   Desktop only (≥768px)
                 </div>
                 <div
                   v-gsap.mobile.whenVisible.once.from="{ opacity: 0, y: 40, duration: 0.8 }"
-                  class="rounded-lg bg-emerald-100 p-4 text-sm font-semibold text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200"
+                  class="bg-success/10 text-success rounded-lg p-4 text-sm font-semibold"
                 >
                   Mobile only (&lt;768px)
                 </div>
@@ -1919,7 +1911,7 @@
               <div :key="replayKeys['fromInvisible']" class="bg-muted p-6">
                 <div
                   v-gsap.whenVisible.once.fromInvisible.from="{ y: 40, duration: 0.8 }"
-                  class="rounded-lg bg-yellow-100 p-4 text-sm font-semibold text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200"
+                  class="bg-warning/10 text-warning rounded-lg p-4 text-sm font-semibold"
                 >
                   Starts invisible on SSR — no flash before JS
                 </div>
@@ -2001,7 +1993,7 @@
                   <th class="text-toned px-4 py-3 font-semibold">Description</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody class="divide-default divide-y">
                 <tr
                   v-for="{ key, type, def, desc } in [
                     {
@@ -2065,7 +2057,7 @@
                   :key
                   class="bg-default hover:bg-muted transition-colors"
                 >
-                  <td class="px-4 py-3 font-mono font-medium text-violet-600 dark:text-violet-400">
+                  <td class="text-primary px-4 py-3 font-mono font-medium">
                     {{ key }}
                   </td>
                   <td class="text-muted px-4 py-3 font-mono text-xs">

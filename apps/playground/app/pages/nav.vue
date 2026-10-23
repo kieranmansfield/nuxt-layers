@@ -22,7 +22,7 @@ export default defineAppConfig({
   const layoutSnippet = `<!-- app/layouts/default.vue -->
 <template>
   <LayoutMain>
-    <MastNav />
+    <MastNav class="fixed top-0 right-0" />
     <slot />
   </LayoutMain>
 </template>`
@@ -76,6 +76,7 @@ const activeSection = useState('activeSection', () => '')
 
 <template>
   <LayoutPage title="MastNav Demo" description="Hamburger nav + full-screen overlay modal">
+    <MastNav class="fixed right-0 bottom-0" />
     <div class="bg-default min-h-screen">
       <DemoPageHero
         name="NAVIGATION"
@@ -88,7 +89,7 @@ const activeSection = useState('activeSection', () => '')
           color="info"
           variant="subtle"
           title="Live demo active"
-          description="The hamburger button is live in the top-right corner of this page. Click it to open the nav modal."
+          description="The hamburger button is live in the bottom-right corner of this page — this page positions it there. Click it to open the nav modal."
         >
           <template #actions>
             <UButton size="sm" variant="subtle" color="info" @click="() => open()">
@@ -138,8 +139,8 @@ const activeSection = useState('activeSection', () => '')
               <h3 class="text-xl font-semibold">Layout wiring</h3>
             </div>
             <p class="text-muted mt-1 text-sm">
-              Drop <code class="text-primary">&lt;MastNav /&gt;</code> anywhere in your layout — no
-              further config needed
+              Drop <code class="text-primary">&lt;MastNav /&gt;</code> into your layout and position
+              it there — the trigger doesn't place itself
             </p>
           </template>
           <TypographyCodeBlock language="vue" class="text-sm">{{
@@ -221,7 +222,7 @@ const activeSection = useState('activeSection', () => '')
         name="Navigation Layer"
         description="Navigation components and composables"
         :links="[
-          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Typography', to: '/typography', icon: 'i-lucide-type' },
           { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
           { label: 'Overlays', to: '/overlays', icon: 'i-lucide-layers' },
         ]"

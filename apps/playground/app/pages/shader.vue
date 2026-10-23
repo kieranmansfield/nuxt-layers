@@ -444,12 +444,10 @@
     <div class="bg-default text-highlighted min-h-screen">
       <!-- Hero Section -->
       <section class="relative overflow-hidden">
-        <div
-          class="absolute inset-0 bg-linear-to-br from-violet-900/30 via-transparent to-cyan-900/20"
-        />
+        <div class="from-primary/30 to-info/20 absolute inset-0 bg-linear-to-br via-transparent" />
         <div class="absolute inset-0">
-          <div class="absolute top-20 left-10 h-72 w-72 rounded-full bg-violet-500/20 blur-3xl" />
-          <div class="absolute right-10 bottom-20 h-96 w-96 rounded-full bg-cyan-500/15 blur-3xl" />
+          <div class="bg-primary/20 absolute top-20 left-10 h-72 w-72 rounded-full blur-3xl" />
+          <div class="bg-info/15 absolute right-10 bottom-20 h-96 w-96 rounded-full blur-3xl" />
         </div>
 
         <UContainer class="relative py-20">
@@ -459,7 +457,7 @@
           </div>
 
           <h1 class="mb-6 text-5xl font-black md:text-7xl">
-            <span class="bg-linear-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+            <span class="from-primary to-info bg-linear-to-r bg-clip-text text-transparent">
               TSL Shader
             </span>
             <br />
@@ -473,23 +471,23 @@
 
           <div class="mb-12 flex flex-wrap gap-4">
             <div class="bg-accented/50 border-accented rounded-xl border px-6 py-4 backdrop-blur">
-              <div class="text-3xl font-bold text-violet-400">{{ totalNewFunctions }}+</div>
+              <div class="text-primary text-3xl font-bold">{{ totalNewFunctions }}+</div>
               <div class="text-muted text-sm">New Functions</div>
             </div>
             <div class="bg-accented/50 border-accented rounded-xl border px-6 py-4 backdrop-blur">
-              <div class="text-3xl font-bold text-cyan-400">9</div>
+              <div class="text-info text-3xl font-bold">9</div>
               <div class="text-muted text-sm">Categories</div>
             </div>
             <div class="bg-accented/50 border-accented rounded-xl border px-6 py-4 backdrop-blur">
-              <div class="text-3xl font-bold text-pink-400">100%</div>
+              <div class="text-secondary text-3xl font-bold">100%</div>
               <div class="text-muted text-sm">TypeScript</div>
             </div>
             <NuxtLink
               to="/shader-pipeline"
-              class="group rounded-xl border border-violet-500/50 bg-linear-to-r from-violet-600/20 to-purple-600/20 px-6 py-4 backdrop-blur transition-colors hover:border-violet-500"
+              class="group border-primary/50 from-primary/20 to-secondary/20 hover:border-primary rounded-xl border bg-linear-to-r px-6 py-4 backdrop-blur transition-colors"
             >
               <div
-                class="text-highlighted text-lg font-bold transition-colors group-hover:text-violet-300"
+                class="text-highlighted group-hover:text-primary text-lg font-bold transition-colors"
               >
                 Shader Pipeline
               </div>
@@ -497,10 +495,10 @@
             </NuxtLink>
             <NuxtLink
               to="/shader-background"
-              class="group rounded-xl border border-violet-500/50 bg-linear-to-r from-violet-600/20 to-indigo-600/20 px-6 py-4 backdrop-blur transition-colors hover:border-violet-500"
+              class="group border-primary/50 from-primary/20 to-info/20 hover:border-primary rounded-xl border bg-linear-to-r px-6 py-4 backdrop-blur transition-colors"
             >
               <div
-                class="text-highlighted text-lg font-bold transition-colors group-hover:text-violet-300"
+                class="text-highlighted group-hover:text-primary text-lg font-bold transition-colors"
               >
                 Shader Backgrounds
               </div>
@@ -508,10 +506,10 @@
             </NuxtLink>
             <NuxtLink
               to="/ambient"
-              class="group rounded-xl border border-violet-500/50 bg-linear-to-r from-violet-600/20 to-cyan-600/20 px-6 py-4 backdrop-blur transition-colors hover:border-violet-500"
+              class="group border-primary/50 from-primary/20 to-info/20 hover:border-primary rounded-xl border bg-linear-to-r px-6 py-4 backdrop-blur transition-colors"
             >
               <div
-                class="text-highlighted text-lg font-bold transition-colors group-hover:text-violet-300"
+                class="text-highlighted group-hover:text-primary text-lg font-bold transition-colors"
               >
                 Ambient Backgrounds
               </div>
@@ -527,7 +525,7 @@
               class="flex items-center gap-2 rounded-lg border px-4 py-2 transition-all"
               :class="[
                 activeCategory === cat.id
-                  ? 'text-highlighted border-violet-500 bg-violet-600'
+                  ? 'text-highlighted border-primary bg-primary'
                   : 'bg-accented/50 border-accented text-muted hover:border-accented hover:text-highlighted',
               ]"
               @click="() => (activeCategory = cat.id)"
@@ -556,13 +554,13 @@
               <div
                 v-for="cat in categories.filter((c) => c.id !== 'overview')"
                 :key="cat.id"
-                class="bg-accented/50 border-accented group cursor-pointer rounded-2xl border p-6 transition-colors hover:border-violet-500/50"
+                class="bg-accented/50 border-accented group hover:border-primary/50 cursor-pointer rounded-2xl border p-6 transition-colors"
                 @click="() => (activeCategory = cat.id)"
               >
                 <div
-                  class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/10 transition-colors group-hover:bg-violet-500/20"
+                  class="bg-primary/10 group-hover:bg-primary/20 mb-4 flex h-12 w-12 items-center justify-center rounded-xl transition-colors"
                 >
-                  <UIcon :name="cat.icon" class="text-2xl text-violet-400" />
+                  <UIcon :name="cat.icon" class="text-primary text-2xl" />
                 </div>
                 <h3 class="mb-2 text-xl font-bold">{{ cat.label }}</h3>
                 <p class="text-muted text-sm">
@@ -592,7 +590,7 @@
                   </template>
                 </p>
                 <div
-                  class="mt-4 flex items-center gap-1 text-sm text-violet-400 opacity-0 transition-opacity group-hover:opacity-100"
+                  class="text-primary mt-4 flex items-center gap-1 text-sm opacity-0 transition-opacity group-hover:opacity-100"
                 >
                   View demos <UIcon name="i-lucide-arrow-right" />
                 </div>
@@ -672,7 +670,7 @@
                   class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activeNoiseDemo === option.id
-                      ? 'border-violet-500 bg-violet-600/20'
+                      ? 'border-primary bg-primary/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activeNoiseDemo = option.id as DemoType)"
@@ -681,7 +679,7 @@
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activeNoiseDemo === option.id"
-                      class="h-2 w-2 rounded-full bg-violet-400"
+                      class="bg-primary h-2 w-2 rounded-full"
                     />
                   </div>
                   <p class="text-muted text-sm">{{ option.description }}</p>
@@ -689,7 +687,7 @@
 
                 <!-- Controls Panel -->
                 <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4">
-                  <h5 class="text-sm font-semibold text-violet-400">Controls</h5>
+                  <h5 class="text-primary text-sm font-semibold">Controls</h5>
 
                   <div class="space-y-3">
                     <div>
@@ -703,7 +701,7 @@
                         min="0"
                         max="3"
                         step="0.1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
+                        class="bg-accented accent-primary h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -718,7 +716,7 @@
                         min="0"
                         max="2"
                         step="0.1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
+                        class="bg-accented accent-primary h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -738,13 +736,11 @@
                 <div class="bg-accented/30 rounded-xl p-4">
                   <h5 class="text-muted mb-2 text-xs font-semibold uppercase">Active Functions</h5>
                   <div class="flex flex-wrap gap-2">
-                    <code class="bg-accented rounded px-2 py-1 text-xs text-violet-300">
+                    <code class="bg-accented text-primary rounded px-2 py-1 text-xs">
                       simplexNoise2D
                     </code>
-                    <code class="bg-accented rounded px-2 py-1 text-xs text-violet-300">fbm</code>
-                    <code class="bg-accented rounded px-2 py-1 text-xs text-violet-300">
-                      hash21
-                    </code>
+                    <code class="bg-accented text-primary rounded px-2 py-1 text-xs">fbm</code>
+                    <code class="bg-accented text-primary rounded px-2 py-1 text-xs"> hash21 </code>
                   </div>
                 </div>
               </div>
@@ -752,7 +748,7 @@
 
             <!-- Function List -->
             <div v-for="category in ['Basic', 'FBM', 'Advanced']" :key="category" class="space-y-4">
-              <h3 class="text-xl font-semibold text-violet-400">{{ category }} Noise</h3>
+              <h3 class="text-primary text-xl font-semibold">{{ category }} Noise</h3>
               <div class="grid gap-4 md:grid-cols-2">
                 <div
                   v-for="fn in noiseFunctions.filter((f) => f.category === category)"
@@ -760,7 +756,7 @@
                   class="bg-accented/50 border-accented rounded-xl border p-4"
                 >
                   <div class="mb-1 flex items-center gap-2">
-                    <code class="font-mono text-sm text-violet-300">{{ fn.name }}</code>
+                    <code class="text-primary font-mono text-sm">{{ fn.name }}</code>
                     <UBadge v-if="fn.isNew" color="success" size="xs">NEW</UBadge>
                   </div>
                   <p class="text-muted text-sm">{{ fn.description }}</p>
@@ -815,7 +811,7 @@
                   class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activeSdfDemo === option.id
-                      ? 'border-violet-500 bg-violet-600/20'
+                      ? 'border-primary bg-primary/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activeSdfDemo = option.id as DemoType)"
@@ -824,7 +820,7 @@
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activeSdfDemo === option.id"
-                      class="h-2 w-2 rounded-full bg-violet-400"
+                      class="bg-primary h-2 w-2 rounded-full"
                     />
                   </div>
                   <p class="text-muted text-sm">{{ option.description }}</p>
@@ -832,7 +828,7 @@
 
                 <!-- Controls Panel -->
                 <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4">
-                  <h5 class="text-sm font-semibold text-cyan-400">Controls</h5>
+                  <h5 class="text-info text-sm font-semibold">Controls</h5>
 
                   <div class="space-y-3">
                     <div>
@@ -846,7 +842,7 @@
                         min="0"
                         max="3"
                         step="0.1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-cyan-500"
+                        class="bg-accented accent-info h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -861,7 +857,7 @@
                         min="0"
                         max="1"
                         step="0.1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-cyan-500"
+                        class="bg-accented accent-info h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -881,11 +877,9 @@
                 <div class="bg-accented/30 rounded-xl p-4">
                   <h5 class="text-muted mb-2 text-xs font-semibold uppercase">Active Functions</h5>
                   <div class="flex flex-wrap gap-2">
-                    <code class="bg-accented rounded px-2 py-1 text-xs text-cyan-300">
-                      sdSphere
-                    </code>
-                    <code class="bg-accented rounded px-2 py-1 text-xs text-cyan-300">smin</code>
-                    <code class="bg-accented rounded px-2 py-1 text-xs text-cyan-300">
+                    <code class="bg-accented text-info rounded px-2 py-1 text-xs"> sdSphere </code>
+                    <code class="bg-accented text-info rounded px-2 py-1 text-xs">smin</code>
+                    <code class="bg-accented text-info rounded px-2 py-1 text-xs">
                       smoothstep
                     </code>
                   </div>
@@ -900,7 +894,7 @@
                 :key="shape.name"
                 class="bg-accented/50 border-accented rounded-lg border p-4"
               >
-                <code class="font-mono text-sm text-violet-300">{{ shape.name }}</code>
+                <code class="text-primary font-mono text-sm">{{ shape.name }}</code>
                 <code class="text-muted ml-2 font-mono text-xs">({{ shape.params }})</code>
                 <p class="text-muted mt-1 text-sm">{{ shape.description }}</p>
               </div>
@@ -953,7 +947,7 @@
                   class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activeLightingDemo === option.id
-                      ? 'border-violet-500 bg-violet-600/20'
+                      ? 'border-primary bg-primary/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activeLightingDemo = option.id as DemoType)"
@@ -962,7 +956,7 @@
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activeLightingDemo === option.id"
-                      class="h-2 w-2 rounded-full bg-violet-400"
+                      class="bg-primary h-2 w-2 rounded-full"
                     />
                   </div>
                   <p class="text-muted text-sm">{{ option.description }}</p>
@@ -970,7 +964,7 @@
 
                 <!-- Controls Panel -->
                 <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4">
-                  <h5 class="text-sm font-semibold text-pink-400">Controls</h5>
+                  <h5 class="text-secondary text-sm font-semibold">Controls</h5>
 
                   <div class="space-y-3">
                     <div>
@@ -984,7 +978,7 @@
                         min="0"
                         max="3"
                         step="0.1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-pink-500"
+                        class="bg-accented accent-secondary h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -1003,11 +997,13 @@
                 <div class="bg-accented/30 rounded-xl p-4">
                   <h5 class="text-muted mb-2 text-xs font-semibold uppercase">Active Functions</h5>
                   <div class="flex flex-wrap gap-2">
-                    <code class="bg-accented rounded px-2 py-1 text-xs text-pink-300">fresnel</code>
-                    <code class="bg-accented rounded px-2 py-1 text-xs text-pink-300">
+                    <code class="bg-accented text-secondary rounded px-2 py-1 text-xs"
+                      >fresnel</code
+                    >
+                    <code class="bg-accented text-secondary rounded px-2 py-1 text-xs">
                       normalize
                     </code>
-                    <code class="bg-accented rounded px-2 py-1 text-xs text-pink-300">dot</code>
+                    <code class="bg-accented text-secondary rounded px-2 py-1 text-xs">dot</code>
                   </div>
                 </div>
               </div>
@@ -1019,7 +1015,7 @@
                 :key="fn.name"
                 class="bg-accented/50 border-accented rounded-xl border p-5"
               >
-                <code class="font-mono text-violet-300">{{ fn.name }}</code>
+                <code class="text-primary font-mono">{{ fn.name }}</code>
                 <p class="text-muted mt-2 text-sm">{{ fn.description }}</p>
                 <code class="text-muted mt-2 block font-mono text-xs">{{ fn.params }}</code>
               </div>
@@ -1066,7 +1062,7 @@
                   class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activeTonemappingDemo === option.id
-                      ? 'border-violet-500 bg-violet-600/20'
+                      ? 'border-primary bg-primary/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activeTonemappingDemo = option.id as DemoType)"
@@ -1075,7 +1071,7 @@
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activeTonemappingDemo === option.id"
-                      class="h-2 w-2 rounded-full bg-violet-400"
+                      class="bg-primary h-2 w-2 rounded-full"
                     />
                   </div>
                   <p class="text-muted text-sm">{{ option.description }}</p>
@@ -1083,7 +1079,7 @@
 
                 <!-- Controls Panel -->
                 <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4">
-                  <h5 class="text-sm font-semibold text-amber-400">Controls</h5>
+                  <h5 class="text-warning text-sm font-semibold">Controls</h5>
 
                   <div class="space-y-3">
                     <div>
@@ -1097,7 +1093,7 @@
                         min="0"
                         max="3"
                         step="0.1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-amber-500"
+                        class="bg-accented accent-warning h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -1112,7 +1108,7 @@
                         min="0"
                         max="1"
                         step="0.1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-amber-500"
+                        class="bg-accented accent-warning h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -1134,7 +1130,7 @@
             <div v-for="style in ['Standard', 'Stylized']" :key="style" class="space-y-4">
               <h3
                 class="text-xl font-semibold"
-                :class="style === 'Standard' ? 'text-violet-400' : 'text-pink-400'"
+                :class="style === 'Standard' ? 'text-primary' : 'text-secondary'"
               >
                 {{ style }} Tonemapping
               </h3>
@@ -1189,7 +1185,7 @@
                   class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activePatternDemo === option.id
-                      ? 'border-violet-500 bg-violet-600/20'
+                      ? 'border-primary bg-primary/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activePatternDemo = option.id as DemoType)"
@@ -1198,7 +1194,7 @@
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activePatternDemo === option.id"
-                      class="h-2 w-2 rounded-full bg-violet-400"
+                      class="bg-primary h-2 w-2 rounded-full"
                     />
                   </div>
                   <p class="text-muted text-sm">{{ option.description }}</p>
@@ -1206,7 +1202,7 @@
 
                 <!-- Controls Panel -->
                 <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4">
-                  <h5 class="text-sm font-semibold text-emerald-400">Controls</h5>
+                  <h5 class="text-success text-sm font-semibold">Controls</h5>
 
                   <div class="space-y-3">
                     <div>
@@ -1220,7 +1216,7 @@
                         min="0"
                         max="3"
                         step="0.1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-emerald-500"
+                        class="bg-accented accent-success h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -1235,7 +1231,7 @@
                         min="0"
                         max="1"
                         step="0.1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-emerald-500"
+                        class="bg-accented accent-success h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -1261,7 +1257,7 @@
                 class="bg-accented/50 border-accented rounded-xl border p-5"
               >
                 <div class="mb-2 flex items-center gap-2">
-                  <code class="font-mono text-violet-300">{{ fn.name }}</code>
+                  <code class="text-primary font-mono">{{ fn.name }}</code>
                   <UBadge v-if="fn.isNew" color="success" size="xs">NEW</UBadge>
                 </div>
                 <p class="text-muted text-sm">{{ fn.description }}</p>
@@ -1321,7 +1317,7 @@
                   class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activeEffectDemo === option.id
-                      ? 'border-violet-500 bg-violet-600/20'
+                      ? 'border-primary bg-primary/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activeEffectDemo = option.id as DemoType)"
@@ -1330,7 +1326,7 @@
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activeEffectDemo === option.id"
-                      class="h-2 w-2 rounded-full bg-violet-400"
+                      class="bg-primary h-2 w-2 rounded-full"
                     />
                   </div>
                   <p class="text-muted text-sm">{{ option.description }}</p>
@@ -1341,7 +1337,7 @@
                   v-if="activeEffectDemo === 'image'"
                   class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4"
                 >
-                  <h5 class="text-sm font-semibold text-pink-400">Effect Controls</h5>
+                  <h5 class="text-secondary text-sm font-semibold">Effect Controls</h5>
 
                   <div class="space-y-3">
                     <div>
@@ -1355,7 +1351,7 @@
                         min="0"
                         max="0.1"
                         step="0.01"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-pink-500"
+                        class="bg-accented accent-secondary h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -1370,7 +1366,7 @@
                         min="0"
                         max="10"
                         step="1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-pink-500"
+                        class="bg-accented accent-secondary h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -1385,7 +1381,7 @@
                         min="0"
                         max="1"
                         step="0.1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-pink-500"
+                        class="bg-accented accent-secondary h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -1415,7 +1411,7 @@
                 :key="fn.name"
                 class="bg-accented/50 border-accented rounded-xl border p-5"
               >
-                <code class="font-mono text-violet-300">{{ fn.name }}</code>
+                <code class="text-primary font-mono">{{ fn.name }}</code>
                 <p class="text-muted mt-2 text-sm">{{ fn.description }}</p>
                 <code class="text-muted mt-2 block font-mono text-xs">{{ fn.params }}</code>
               </div>
@@ -1455,7 +1451,7 @@
               <div class="space-y-4 lg:col-span-2">
                 <!-- Controls Panel -->
                 <div class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4">
-                  <h5 class="text-sm font-semibold text-violet-400">Controls</h5>
+                  <h5 class="text-primary text-sm font-semibold">Controls</h5>
 
                   <div class="space-y-3">
                     <div>
@@ -1469,7 +1465,7 @@
                         min="0"
                         max="3"
                         step="0.1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
+                        class="bg-accented accent-primary h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -1484,7 +1480,7 @@
                         min="0"
                         max="1"
                         step="0.1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
+                        class="bg-accented accent-primary h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -1509,9 +1505,9 @@
                   <h5
                     class="text-sm font-semibold"
                     :class="{
-                      'text-violet-400': category === 'Hyperbolic',
-                      'text-cyan-400': category === 'Complex',
-                      'text-pink-400': category === 'Coordinates',
+                      'text-primary': category === 'Hyperbolic',
+                      'text-info': category === 'Complex',
+                      'text-secondary': category === 'Coordinates',
                     }"
                   >
                     {{ category }}
@@ -1537,9 +1533,9 @@
               <h3
                 class="text-xl font-semibold"
                 :class="{
-                  'text-violet-400': category === 'Hyperbolic',
-                  'text-cyan-400': category === 'Complex',
-                  'text-pink-400': category === 'Coordinates',
+                  'text-primary': category === 'Hyperbolic',
+                  'text-info': category === 'Complex',
+                  'text-secondary': category === 'Coordinates',
                 }"
               >
                 {{ category }} Functions
@@ -1607,7 +1603,7 @@
                   class="cursor-pointer rounded-xl border p-4 transition-all"
                   :class="[
                     activeUvDemo === option.id
-                      ? 'border-violet-500 bg-violet-600/20'
+                      ? 'border-primary bg-primary/20'
                       : 'bg-accented/50 border-accented hover:border-accented',
                   ]"
                   @click="() => (activeUvDemo = option.id as DemoType)"
@@ -1616,7 +1612,7 @@
                     <span class="font-semibold">{{ option.name }}</span>
                     <div
                       v-if="activeUvDemo === option.id"
-                      class="h-2 w-2 rounded-full bg-violet-400"
+                      class="bg-primary h-2 w-2 rounded-full"
                     />
                   </div>
                   <p class="text-muted text-sm">{{ option.description }}</p>
@@ -1627,7 +1623,7 @@
                   v-if="activeUvDemo === 'image'"
                   class="bg-accented/50 border-accented space-y-4 rounded-xl border p-4"
                 >
-                  <h5 class="text-sm font-semibold text-violet-400">UV Controls</h5>
+                  <h5 class="text-primary text-sm font-semibold">UV Controls</h5>
 
                   <div class="space-y-3">
                     <div>
@@ -1641,7 +1637,7 @@
                         min="0"
                         max="0.15"
                         step="0.01"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
+                        class="bg-accented accent-primary h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -1656,7 +1652,7 @@
                         min="0"
                         max="15"
                         step="1"
-                        class="bg-accented h-2 w-full cursor-pointer appearance-none rounded-lg accent-violet-500"
+                        class="bg-accented accent-primary h-2 w-full cursor-pointer appearance-none rounded-lg"
                       />
                     </div>
 
@@ -1682,7 +1678,7 @@
 
             <div class="grid gap-8 lg:grid-cols-2">
               <div>
-                <h3 class="mb-4 text-xl font-semibold text-violet-400">UV Functions</h3>
+                <h3 class="text-primary mb-4 text-xl font-semibold">UV Functions</h3>
                 <div class="max-h-100 space-y-2 overflow-y-auto pr-2">
                   <div
                     v-for="fn in uvFunctions"
@@ -1690,7 +1686,7 @@
                     class="bg-accented/50 border-accented flex items-center justify-between rounded-lg border p-3"
                   >
                     <div>
-                      <code class="font-mono text-sm text-violet-300">{{ fn.name }}</code>
+                      <code class="text-primary font-mono text-sm">{{ fn.name }}</code>
                       <p class="text-muted mt-0.5 text-xs">{{ fn.description }}</p>
                     </div>
                     <UBadge v-if="fn.isNew" color="success" size="xs">NEW</UBadge>
@@ -1699,7 +1695,7 @@
               </div>
 
               <div>
-                <h3 class="mb-4 text-xl font-semibold text-cyan-400">Grain & Dithering</h3>
+                <h3 class="text-info mb-4 text-xl font-semibold">Grain & Dithering</h3>
                 <div class="max-h-100 space-y-2 overflow-y-auto pr-2">
                   <div
                     v-for="fn in grainFunctions"
@@ -1707,7 +1703,7 @@
                     class="bg-accented/50 border-accented flex items-center justify-between rounded-lg border p-3"
                   >
                     <div>
-                      <code class="font-mono text-sm text-cyan-300">{{ fn.name }}</code>
+                      <code class="text-info font-mono text-sm">{{ fn.name }}</code>
                       <p class="text-muted mt-0.5 text-xs">{{ fn.description }}</p>
                     </div>
                     <UBadge v-if="fn.isNew" color="success" size="xs">NEW</UBadge>
@@ -1731,7 +1727,7 @@
               <UButton
                 to="/shader-pipeline"
                 variant="outline"
-                class="border-violet-500/50 text-violet-400 hover:bg-violet-500/10"
+                class="border-primary/50 text-primary hover:bg-primary/10"
               >
                 <UIcon name="i-lucide-layers-3" class="mr-2" />
                 Shader Pipeline
@@ -1739,7 +1735,7 @@
               <UButton
                 to="/shader-background"
                 variant="outline"
-                class="border-violet-500/50 text-violet-400 hover:bg-violet-500/10"
+                class="border-primary/50 text-primary hover:bg-primary/10"
               >
                 <UIcon name="i-lucide-wand-sparkles" class="mr-2" />
                 Backgrounds
@@ -1747,7 +1743,7 @@
               <UButton
                 to="/ambient"
                 variant="outline"
-                class="border-violet-500/50 text-violet-400 hover:bg-violet-500/10"
+                class="border-primary/50 text-primary hover:bg-primary/10"
               >
                 <UIcon name="i-lucide-sparkles" class="mr-2" />
                 Ambient

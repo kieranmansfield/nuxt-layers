@@ -10,7 +10,7 @@
    * <Transition> and Nuxt's page-root check (NUXT_E4004) require.
    *
    * Responsibilities:
-   *   - SEO via useHead()
+   *   - title/description meta via useSeoMeta() (pages may override)
    *   - provides 'pageTitle' to child components
    *   - optional visible header (LayoutSection + LayoutPageHeader)
    *
@@ -45,15 +45,14 @@
 
   const { title, description = undefined, showHeader = false } = defineProps<Props>()
 
-  useHead({
-    title,
-    meta: description
-      ? [
-          { name: 'description', content: description },
-          { property: 'og:title', content: title },
-          { property: 'og:description', content: description },
-        ]
-      : undefined,
+  // Deliberately a "connected" template: pages (and consumers such as KMCOMv5) set their title
+  // and description through these props. useSeoMeta rather than hand-written useHead tags, so a
+  // page that also calls useSeoMeta overrides these keys instead of adding duplicates.
+  useSeoMeta({
+    title: () => title,
+    ogTitle: () => title,
+    description: () => description,
+    ogDescription: () => description,
   })
 
   provide('pageTitle', title)

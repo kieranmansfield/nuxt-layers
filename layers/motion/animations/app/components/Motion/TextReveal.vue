@@ -27,6 +27,12 @@
     start?: string
   }>()
 
+  // Swapped to a plain span after mount: the server can't know the preference, so deciding in
+  // render would mismatch on hydration.
+  const reduced = useReducedMotion()
+  const isStatic = ref(false)
+  onMounted(() => (isStatic.value = reduced.value))
+
   const animBinding = computed(() => ({
     y: 40,
     opacity: 0,
@@ -39,8 +45,9 @@
 </script>
 
 <template>
+  <span v-if="isStatic" class="motion-text-reveal">{{ text }}</span>
   <span
-    v-if="type === 'chars'"
+    v-else-if="type === 'chars'"
     v-gsap.whenVisible.once.splitText.chars.from="animBinding"
     class="motion-text-reveal"
     >{{ text }}</span

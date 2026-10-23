@@ -14,7 +14,6 @@
   const activeSection = useState<string>('activeSection', () => '')
   const route = useRoute()
   const { close: closeNav } = useMastNav()
-  const { useZIndex } = useGridConfig()
 
   function dismiss() {
     emit('update:open', false)
@@ -35,43 +34,39 @@
 </script>
 
 <template>
-  <Transition name="nav-modal">
-    <div
-      v-if="open"
-      class="bg-default text-default fixed inset-0 flex flex-col items-center justify-center"
-      :style="{ zIndex: useZIndex('modal') }"
-    >
-      <button
-        class="absolute top-[3vh] right-[5vw] cursor-pointer border-0 bg-transparent p-2"
-        aria-label="Close navigation"
-        @click="dismiss"
-      >
-        <UIcon name="lucide:x" class="size-7" />
-      </button>
+  <!-- UModal supplies the dialog role, focus trap, Escape and portal; the title stays
+       visually hidden because the content slot replaces the header. -->
+  <UModal
+    :open
+    fullscreen
+    title="Site navigation"
+    :ui="{ overlay: 'z-(--z-modal)', content: 'bg-default text-default z-(--z-modal)' }"
+    @update:open="(value) => !value && dismiss()"
+  >
+    <template #content>
+      <div class="relative flex h-full flex-col items-center justify-center">
+        <UButton
+          icon="lucide:x"
+          color="neutral"
+          variant="ghost"
+          size="xl"
+          aria-label="Close navigation"
+          class="absolute top-4 right-4"
+          @click="dismiss"
+        />
 
-      <LinksGroup tag="nav" class="flex flex-col items-center gap-2">
-        <button
-          v-for="link in links"
-          :key="link.id"
-          class="cursor-pointer border-0 bg-transparent px-4 py-3 text-3xl tracking-widest uppercase transition-all"
-          :class="activeSection === link.id ? 'font-normal' : 'font-light'"
-          @click="() => handleNav(link)"
-        >
-          {{ link.label }}
-        </button>
-      </LinksGroup>
-    </div>
-  </Transition>
+        <HoverDimGroup tag="nav" class="flex flex-col items-center gap-2">
+          <button
+            v-for="link in links"
+            :key="link.id"
+            class="cursor-pointer border-0 bg-transparent px-4 py-3 text-3xl tracking-widest uppercase transition-all"
+            :class="activeSection === link.id ? 'font-normal' : 'font-light'"
+            @click="() => handleNav(link)"
+          >
+            {{ link.label }}
+          </button>
+        </HoverDimGroup>
+      </div>
+    </template>
+  </UModal>
 </template>
-
-<style scoped>
-  .nav-modal-enter-active,
-  .nav-modal-leave-active {
-    transition: opacity 300ms ease;
-  }
-
-  .nav-modal-enter-from,
-  .nav-modal-leave-to {
-    opacity: 0;
-  }
-</style>

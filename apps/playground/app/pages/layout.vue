@@ -989,7 +989,9 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
 
         <!-- Navigation -->
         <div class="flex justify-center gap-4 pt-4">
-          <UButton to="/ui" variant="outline" icon="i-lucide-arrow-left">UI Layer Demo</UButton>
+          <UButton to="/visual" variant="outline" icon="i-lucide-arrow-left"
+            >Visual Layer Demo</UButton
+          >
           <UButton to="/" icon="i-lucide-home">Back to Home</UButton>
           <UButton to="/core" variant="outline" trailing-icon="i-lucide-arrow-right">
             Core Layer Demo
@@ -1001,7 +1003,7 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
         description="Swiss Grid system and page composition"
         :links="[
           { label: 'Core', to: '/core', icon: 'i-lucide-box' },
-          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
           { label: 'Blind Reveal', to: '/layout-blind-reveal', icon: 'i-lucide-eye' },
           { label: 'Stacking', to: '/layout-stacking', icon: 'i-lucide-stack' },
         ]"

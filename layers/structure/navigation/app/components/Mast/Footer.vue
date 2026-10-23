@@ -6,7 +6,7 @@
   <UFooter>
     <template #bottom>
       <div class="pt-10">
-        <p class="text-center text-sm text-neutral-300">Copyright © {{ year }}</p>
+        <p class="text-muted text-center text-sm">Copyright © {{ year }}</p>
       </div>
     </template>
   </UFooter>

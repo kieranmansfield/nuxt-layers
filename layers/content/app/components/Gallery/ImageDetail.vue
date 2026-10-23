@@ -13,12 +13,6 @@
   const totalImages = computed(() => item.value?.images?.length ?? 0)
   const hasPrevious = computed(() => index > 0)
   const hasNext = computed(() => index < totalImages.value - 1)
-
-  useSeoMeta({
-    title: () => image.value?.title || image.value?.alt || `Image ${index + 1}`,
-    description: () => image.value?.caption || item.value?.title,
-    ogImage: () => image.value?.src,
-  })
 </script>
 
 <template>

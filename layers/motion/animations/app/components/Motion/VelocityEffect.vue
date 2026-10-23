@@ -25,11 +25,17 @@
 
   const { gsap } = useGsap()
   const { velocity } = useSmoothScroll()
+  const reduced = useReducedMotion()
 
   const smoothVelocity = ref(0)
   const smoothAbsVelocity = ref(0)
 
   function tick() {
+    if (reduced.value) {
+      smoothVelocity.value = 0
+      smoothAbsVelocity.value = 0
+      return
+    }
     const d = damping / 1000
     const s = stiffness / 1000
 

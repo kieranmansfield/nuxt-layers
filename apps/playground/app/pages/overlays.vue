@@ -348,7 +348,7 @@ open({ confirmLabel: 'Yes, delete it', onConfirm: () => toast.success('Deleted!'
         name="Overlays"
         description="Modals, drawers, and notification toasts"
         :links="[
-          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
           { label: 'Navigation', to: '/nav', icon: 'i-lucide-menu' },
         ]"
       />

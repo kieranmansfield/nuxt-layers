@@ -1,3 +1,5 @@
+> **Upgrading to v6.3.0?** See [`MIGRATION-v6.3.0.md`](./MIGRATION-v6.3.0.md). The guides below cover older versions.
+
 # Agent Migration Guide — Update an app to nuxt-layers v2.2.x
 
 **Audience:** an AI coding agent (or developer) updating a downstream Nuxt app that consumes these layers.

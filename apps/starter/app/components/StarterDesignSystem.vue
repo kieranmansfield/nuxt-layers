@@ -106,7 +106,7 @@
     },
     {
       id: 'links-group',
-      label: 'LinksGroup',
+      label: 'HoverDimGroup',
       icon: 'i-lucide-mouse-pointer-click',
     },
     {
@@ -1631,10 +1631,10 @@
           </UCard>
         </section>
 
-        <!-- 12. LinksGroup -->
+        <!-- 12. HoverDimGroup -->
         <section id="links-group" class="space-y-8">
           <div>
-            <h2 class="mb-1 text-2xl font-bold">LinksGroup</h2>
+            <h2 class="mb-1 text-2xl font-bold">HoverDimGroup</h2>
             <p class="text-muted">
               Hover one item to dim the rest — works with any direct children
             </p>
@@ -1644,7 +1644,7 @@
             <template #header>
               <div class="flex items-center gap-2">
                 <UIcon name="i-lucide-mouse-pointer-click" class="text-primary" />
-                <h3 class="text-xl font-semibold">LinksGroup</h3>
+                <h3 class="text-xl font-semibold">HoverDimGroup</h3>
               </div>
               <p class="text-muted mt-1 text-sm">
                 Wraps children in a hover-to-focus group with configurable dim opacity and
@@ -1658,24 +1658,24 @@
                 <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Navigation Links
                 </h4>
-                <LinksGroup class="flex gap-6">
+                <HoverDimGroup class="flex gap-6">
                   <a href="#" class="text-highlighted text-lg font-medium">Home</a>
                   <a href="#" class="text-highlighted text-lg font-medium">About</a>
                   <a href="#" class="text-highlighted text-lg font-medium">Work</a>
                   <a href="#" class="text-highlighted text-lg font-medium">Blog</a>
                   <a href="#" class="text-highlighted text-lg font-medium">Contact</a>
-                </LinksGroup>
+                </HoverDimGroup>
               </div>
 
               <!-- Buttons -->
               <div>
                 <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Buttons</h4>
-                <LinksGroup class="flex gap-3">
+                <HoverDimGroup class="flex gap-3">
                   <UButton variant="solid">Primary</UButton>
                   <UButton variant="outline">Outline</UButton>
                   <UButton variant="soft">Soft</UButton>
                   <UButton variant="ghost">Ghost</UButton>
-                </LinksGroup>
+                </HoverDimGroup>
               </div>
 
               <!-- Cards Grid -->
@@ -1683,7 +1683,7 @@
                 <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Card Grid
                 </h4>
-                <LinksGroup class="grid grid-cols-3 gap-4" :duration="300">
+                <HoverDimGroup class="grid grid-cols-3 gap-4" :duration="300">
                   <div class="border-default bg-elevated rounded-lg border p-6 text-center">
                     <UIcon name="i-lucide-code" class="text-primary mb-2 text-2xl" />
                     <p class="font-medium">Development</p>
@@ -1696,7 +1696,7 @@
                     <UIcon name="i-lucide-rocket" class="text-primary mb-2 text-2xl" />
                     <p class="font-medium">Deploy</p>
                   </div>
-                </LinksGroup>
+                </HoverDimGroup>
               </div>
 
               <!-- Custom Opacity -->
@@ -1704,22 +1704,22 @@
                 <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Custom Dim (0.1)
                 </h4>
-                <LinksGroup class="flex gap-4" :dim-opacity="0.1">
+                <HoverDimGroup class="flex gap-4" :dim-opacity="0.1">
                   <span class="text-3xl">🚀</span>
                   <span class="text-3xl">💡</span>
                   <span class="text-3xl">⭐</span>
                   <span class="text-3xl">🔥</span>
                   <span class="text-3xl">🌈</span>
-                </LinksGroup>
+                </HoverDimGroup>
               </div>
             </div>
 
             <template #footer>
               <TypographyCodeBlock language="vue" class="text-sm">
-                {{ `<LinksGroup class="flex gap-6">
+                {{ `<HoverDimGroup class="flex gap-6">
                   <a href="/home">Home</a>
                   <a href="/about">About</a>
-                  <a href="/contact">Contact</a> </LinksGroup
+                  <a href="/contact">Contact</a> </HoverDimGroup
                 >` }}
               </TypographyCodeBlock>
             </template>

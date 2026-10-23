@@ -281,7 +281,7 @@
         name="Theming Layer"
         description="Design tokens and theming utilities"
         :links="[
-          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
           { label: 'Typography', to: '/typography', icon: 'i-lucide-type' },
         ]"
       />

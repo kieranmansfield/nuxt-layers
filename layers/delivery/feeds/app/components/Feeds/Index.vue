@@ -20,18 +20,13 @@
 
 <template>
   <div
-    class="feeds-shell relative overflow-hidden rounded-4xl border border-amber-200/70 bg-[linear-gradient(180deg,rgba(255,251,244,0.96),rgba(243,236,223,0.95))] shadow-[0_30px_100px_rgba(15,23,42,0.12)] dark:border-slate-800/80 dark:bg-[linear-gradient(180deg,rgba(2,6,23,0.96),rgba(3,7,18,0.98))]"
-    style="container-type: inline-size"
+    class="feeds-shell border-default bg-muted @container relative overflow-hidden rounded-4xl border shadow-xl"
   >
     <div class="pointer-events-none absolute inset-0">
+      <div class="bg-primary/20 absolute top-0 -right-20 h-72 w-72 rounded-full blur-3xl" />
+      <div class="bg-secondary/10 absolute bottom-0 -left-20 h-80 w-80 rounded-full blur-3xl" />
       <div
-        class="absolute top-0 -right-20 h-72 w-72 rounded-full bg-orange-400/20 blur-3xl dark:bg-orange-500/15"
-      />
-      <div
-        class="absolute bottom-0 -left-20 h-80 w-80 rounded-full bg-sky-400/12 blur-3xl dark:bg-sky-500/10"
-      />
-      <div
-        class="absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-orange-400/35 to-transparent"
+        class="via-primary/35 absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent to-transparent"
       />
     </div>
 
@@ -39,19 +34,17 @@
       <div class="feeds-split grid gap-6">
         <div class="space-y-6">
           <div
-            class="inline-flex items-center gap-2 rounded-full border border-amber-200/80 bg-white/80 px-3 py-1 text-[0.68rem] font-semibold tracking-[0.35em] text-amber-700 uppercase shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/60 dark:text-amber-200"
+            class="border-default bg-default/80 text-primary inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold tracking-[0.35em] uppercase shadow-sm backdrop-blur"
           >
             <UIcon name="i-lucide-rss" class="text-sm" />
             Feeds layer
           </div>
 
           <div class="space-y-3">
-            <h1
-              class="feeds-h1 max-w-3xl font-semibold tracking-tight text-slate-950 dark:text-slate-50"
-            >
+            <h1 class="feeds-h1 text-highlighted max-w-3xl font-semibold tracking-tight">
               Feed catalog for {{ catalog.site.title }}
             </h1>
-            <p class="feeds-body max-w-2xl leading-7 text-slate-700 dark:text-slate-300">
+            <p class="feeds-body text-toned max-w-2xl leading-7">
               Configured in <code class="font-mono text-[0.9em]">app.config.ts</code>, validated
               against <code class="font-mono text-[0.9em]">content.config.ts</code>, and rendered as
               a human-readable index for readers and site owners.
@@ -60,82 +53,56 @@
 
           <div class="feeds-cards-grid gap-3">
             <div
-              class="rounded-2xl border border-slate-200/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
+              class="border-default bg-default/75 rounded-2xl border p-4 shadow-sm backdrop-blur"
             >
-              <p
-                class="text-[0.68rem] font-semibold tracking-[0.3em] text-slate-500 uppercase dark:text-slate-400"
-              >
-                Default
-              </p>
-              <p class="mt-2 text-lg font-semibold text-slate-950 dark:text-slate-100">
+              <p class="text-muted text-xs font-semibold tracking-[0.3em] uppercase">Default</p>
+              <p class="text-highlighted mt-2 text-lg font-semibold">
                 {{ catalog.feed.defaultCollection }}
               </p>
-              <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                Shorthand routes point here.
-              </p>
+              <p class="text-muted mt-1 text-xs">Shorthand routes point here.</p>
             </div>
 
             <div
-              class="rounded-2xl border border-slate-200/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
+              class="border-default bg-default/75 rounded-2xl border p-4 shadow-sm backdrop-blur"
             >
-              <p
-                class="text-[0.68rem] font-semibold tracking-[0.3em] text-slate-500 uppercase dark:text-slate-400"
-              >
-                Exposed
-              </p>
-              <p class="mt-2 text-lg font-semibold text-slate-950 dark:text-slate-100">
+              <p class="text-muted text-xs font-semibold tracking-[0.3em] uppercase">Exposed</p>
+              <p class="text-highlighted mt-2 text-lg font-semibold">
                 {{ catalog.collectionGroups.length }} collections
               </p>
-              <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                Published in the feed catalog.
-              </p>
+              <p class="text-muted mt-1 text-xs">Published in the feed catalog.</p>
             </div>
 
             <div
-              class="rounded-2xl border border-slate-200/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
+              class="border-default bg-default/75 rounded-2xl border p-4 shadow-sm backdrop-blur"
             >
-              <p
-                class="text-[0.68rem] font-semibold tracking-[0.3em] text-slate-500 uppercase dark:text-slate-400"
-              >
-                Limit
-              </p>
-              <p class="mt-2 text-lg font-semibold text-slate-950 dark:text-slate-100">
+              <p class="text-muted text-xs font-semibold tracking-[0.3em] uppercase">Limit</p>
+              <p class="text-highlighted mt-2 text-lg font-semibold">
                 {{ catalog.feed.limit }} items
               </p>
-              <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                Applied to each feed response.
-              </p>
+              <p class="text-muted mt-1 text-xs">Applied to each feed response.</p>
             </div>
           </div>
 
           <div
             v-if="catalog.site.url || catalog.site.description"
-            class="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/70 px-4 py-3 text-sm shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
+            class="border-default bg-default/70 flex flex-wrap items-center gap-3 rounded-2xl border px-4 py-3 text-sm shadow-sm backdrop-blur"
           >
-            <span
-              class="text-xs font-semibold tracking-[0.3em] text-slate-500 uppercase dark:text-slate-400"
-            >
-              Site
-            </span>
-            <span v-if="catalog.site.description" class="text-slate-700 dark:text-slate-300">
+            <span class="text-muted text-xs font-semibold tracking-[0.3em] uppercase"> Site </span>
+            <span v-if="catalog.site.description" class="text-toned">
               {{ catalog.site.description }}
             </span>
             <code
               v-if="catalog.site.url"
-              class="rounded-full bg-slate-100 px-2 py-1 font-mono text-[0.72rem] text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+              class="bg-elevated text-muted rounded-full px-2 py-1 font-mono text-xs"
             >
               {{ catalog.site.url }}
             </code>
           </div>
         </div>
 
-        <aside
-          class="rounded-[1.5rem] border border-slate-200/80 bg-white/75 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/45"
-        >
+        <aside class="border-default bg-default/75 rounded-3xl border p-4 shadow-sm backdrop-blur">
           <div class="flex items-center justify-between gap-3">
-            <p
-              class="text-[0.68rem] font-semibold tracking-[0.35em] text-slate-500 uppercase dark:text-slate-400"
-            >
+            <p class="text-muted text-xs font-semibold tracking-[0.35em] uppercase">
               Global routes
             </p>
             <UBadge color="neutral" variant="subtle" size="xs">
@@ -161,18 +128,14 @@
       <div class="space-y-4">
         <div class="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p
-              class="text-[0.68rem] font-semibold tracking-[0.35em] text-slate-500 uppercase dark:text-slate-400"
-            >
+            <p class="text-muted text-xs font-semibold tracking-[0.35em] uppercase">
               Collection routes
             </p>
-            <h2
-              class="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-slate-100"
-            >
+            <h2 class="text-highlighted mt-2 text-2xl font-semibold tracking-tight">
               Each exposed collection gets RSS, Atom, and JSON.
             </h2>
           </div>
-          <p class="max-w-lg text-sm text-slate-600 dark:text-slate-400">
+          <p class="text-muted max-w-lg text-sm">
             Add or remove collections in <code class="font-mono text-[0.9em]">app.config.ts</code>
             and the catalog updates automatically.
           </p>
@@ -183,21 +146,19 @@
             v-for="group in catalog.collectionGroups"
             :key="group.collection"
             :ui="{ body: 'p-0' }"
-            class="overflow-hidden border-slate-200/80 bg-white/80 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/45"
+            class="border-default bg-default/80 overflow-hidden shadow-sm backdrop-blur"
           >
             <div
-              class="flex flex-wrap items-start justify-between gap-4 border-b border-slate-200/80 px-5 py-4 dark:border-slate-800"
+              class="border-default flex flex-wrap items-start justify-between gap-4 border-b px-5 py-4"
             >
               <div>
-                <p
-                  class="text-[0.68rem] font-semibold tracking-[0.35em] text-slate-500 uppercase dark:text-slate-400"
-                >
+                <p class="text-muted text-xs font-semibold tracking-[0.35em] uppercase">
                   Collection
                 </p>
-                <h3 class="mt-2 text-xl font-semibold text-slate-950 dark:text-slate-100">
+                <h3 class="text-highlighted mt-2 text-xl font-semibold">
                   {{ group.label }}
                 </h3>
-                <p class="mt-1 font-mono text-sm text-slate-500 dark:text-slate-400">
+                <p class="text-muted mt-1 font-mono text-sm">
                   {{ group.collection }}
                 </p>
               </div>
@@ -215,13 +176,13 @@
         <UCard
           v-else
           :ui="{ body: 'p-0' }"
-          class="border-dashed border-slate-300 bg-white/70 shadow-none dark:border-slate-700 dark:bg-slate-950/40"
+          class="border-accented bg-default/70 border-dashed shadow-none"
         >
           <div class="space-y-2 p-5">
-            <p class="text-sm font-medium text-slate-950 dark:text-slate-100">
+            <p class="text-highlighted text-sm font-medium">
               No collection feeds are currently exposed.
             </p>
-            <p class="text-sm text-slate-600 dark:text-slate-400">
+            <p class="text-muted text-sm">
               Add page collections to
               <code class="font-mono text-[0.9em]">feedsLayer.feed.collections</code>
               in <code class="font-mono text-[0.9em]">app.config.ts</code>.

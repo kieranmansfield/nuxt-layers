@@ -35,7 +35,7 @@ export default {
       rules: { 'declaration-no-important': null },
     },
     {
-      files: ['**/tokens.css', '**/design-tokens.css', '**/_tokens.css'],
+      files: ['**/tokens.css', '**/tokens/*.css', '**/design-tokens.css', '**/_tokens.css'],
       rules: {
         'color-no-hex': null,
         'function-disallowed-list': [],

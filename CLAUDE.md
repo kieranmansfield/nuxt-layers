@@ -134,11 +134,11 @@ visual → core
 # Tier 2 — Structure
 layout → core
 grid → core
-navigation → core, scroll, layout, typography
+navigation → core, scroll, layout, typography, visual
 routing → core
 
 # Tier 3 — Content
-content → core
+content → core, layout, visual
 
 # Tier 4 — Data
 database → core
@@ -152,7 +152,7 @@ mailer → core
 forms → mailer
 
 # Tier 5 — Motion
-scroll → core
+scroll → core, visual
 animations → scroll
 transitions → core
 page-transitions → core
@@ -174,9 +174,12 @@ feeds → core, content
 - Every non-core layer MUST declare its full `extends` list explicitly in `nuxt.config.ts`
 - Do not rely on playground load order to provide dependencies — the playground lists no
   dependencies; Nuxt resolves each layer's `extends` transitively
-- `tests/vitest/layer-extends.test.ts` fails if a layer imports `#layers/<name>` without extending
-  it (auto-imported composables are not covered)
+- `tests/vitest/layer-extends.test.ts` fails if a layer imports `#layers/<name>` or renders an
+  auto-imported component from a layer it doesn't extend (auto-imported composables are not covered)
 - Nuxt deduplicates layers, so declaring a dep that's already loaded is safe and free
+- Every UI component's atomic level (atom / behaviour / molecule / organism / template / page) is
+  recorded in `docs/component-levels.md`; `tests/vitest/component-levels.test.ts` fails when a new
+  component has no row
 
 ## Tech Stack
 

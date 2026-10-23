@@ -1,11 +1,8 @@
 <script setup lang="ts">
   /**
-   * BaseModal — overlay-compatible modal shell.
-   *
-   * Use this as a starting point for new modals:
-   *   1. Copy or extend this component
-   *   2. Add your props and content in the slots
-   *   3. Register with createModal() in a composable
+   * BaseModal — overlay-compatible modal preset on UModal, which supplies the dialog role,
+   * focus trap, Escape, portal and transitions. This adds a size scale and a footer slot that
+   * receives `dismiss`.
    *
    * Example:
    *   // components/ConfirmModal.vue
@@ -31,13 +28,13 @@
     close: []
   }>()
 
-  const sizeClass: Record<string, string> = {
-    sm: 'max-w-sm',
-    md: 'max-w-md',
-    lg: 'max-w-lg',
-    xl: 'max-w-xl',
-    full: 'max-w-full',
-  }
+  const sizeClass = {
+    sm: 'sm:max-w-sm',
+    md: 'sm:max-w-md',
+    lg: 'sm:max-w-lg',
+    xl: 'sm:max-w-xl',
+    full: '',
+  } as const
 
   function dismiss() {
     emit('update:open', false)
@@ -46,77 +43,28 @@
 </script>
 
 <template>
-  <Transition name="base-modal">
-    <div
-      v-if="open"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4"
-      @click.self="dismiss"
-    >
-      <!-- Backdrop -->
-      <div class="bg-muted absolute inset-0 opacity-60" @click="dismiss" />
-
-      <!-- Panel -->
-      <div
-        class="bg-default ring-default relative w-full rounded-2xl shadow-xl ring-1"
-        :class="sizeClass[size]"
-      >
-        <!-- Header -->
-        <div
-          v-if="title || $slots.header"
-          class="border-default flex items-start justify-between border-b px-6 py-4"
-        >
-          <slot name="header">
-            <div>
-              <p class="text-default text-base font-semibold">
-                {{ title }}
-              </p>
-              <p v-if="description" class="text-muted mt-0.5 text-sm">
-                {{ description }}
-              </p>
-            </div>
-          </slot>
-          <button
-            class="text-muted hover:text-default ml-4 cursor-pointer border-0 bg-transparent p-1 transition-colors"
-            aria-label="Close"
-            @click="dismiss"
-          >
-            <UIcon name="lucide:x" class="size-5" />
-          </button>
-        </div>
-
-        <!-- Body -->
-        <div class="px-6 py-5">
-          <slot />
-        </div>
-
-        <!-- Footer -->
-        <div v-if="$slots.footer" class="border-default flex justify-end gap-3 border-t px-6 py-4">
-          <slot name="footer" :dismiss />
-        </div>
-      </div>
-    </div>
-  </Transition>
+  <UModal
+    :open
+    v-bind="{
+      ...(title !== undefined && { title }),
+      ...(description !== undefined && { description }),
+    }"
+    :fullscreen="size === 'full'"
+    :ui="{
+      overlay: 'z-(--z-modal)',
+      content: `z-(--z-modal) ${sizeClass[size]}`,
+      footer: 'justify-end gap-3',
+    }"
+    @update:open="(value) => !value && dismiss()"
+  >
+    <template v-if="$slots.header" #header>
+      <slot name="header" />
+    </template>
+    <template v-if="$slots.default" #body>
+      <slot />
+    </template>
+    <template v-if="$slots.footer" #footer>
+      <slot name="footer" :dismiss />
+    </template>
+  </UModal>
 </template>
-
-<style scoped>
-  .base-modal-enter-active,
-  .base-modal-leave-active {
-    transition: opacity 200ms ease;
-  }
-
-  .base-modal-enter-from,
-  .base-modal-leave-to {
-    opacity: 0;
-  }
-  .base-modal-enter-active .bg-\(--ui-bg\),
-  .base-modal-leave-active .bg-\(--ui-bg\) {
-    transition:
-      opacity 200ms ease,
-      transform 200ms ease;
-  }
-  .base-modal-enter-from .bg-\(--ui-bg\),
-  .base-modal-leave-to .bg-\(--ui-bg\) {
-    transform: scale(0.96) translateY(4px);
-    opacity: 0;
-  }
-</style>

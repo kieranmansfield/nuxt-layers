@@ -92,6 +92,7 @@
       'Helvetica Neue',
       Arial,
       sans-serif;
+
     /* `backwards`, not `both` - a held end state would block the exit transition below */
     animation: loading-enter 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
   }
@@ -110,6 +111,7 @@
     font-stretch: ultra-expanded;
     font-size: clamp(3rem, 35cqw + 1rem, 18rem);
     line-height: 0.8;
+
     /* Equal-width digits - the counter doesn't jitter as it ticks */
     font-variant-numeric: tabular-nums;
   }

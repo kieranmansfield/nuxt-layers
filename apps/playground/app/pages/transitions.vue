@@ -49,71 +49,68 @@
       </DemoPageHero>
 
       <!-- Demo -->
-      <section id="demo" class="bg-default py-24">
-        <UContainer>
-          <div class="mb-16 text-center">
-            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">MotionTransition</h2>
-            <p class="text-muted text-lg">Pick a variant, then replay to see the enter animation</p>
+      <DemoSection
+        id="demo"
+        title="MotionTransition"
+        description="Pick a variant, then replay to see the enter animation"
+      >
+        <div class="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[280px_1fr]">
+          <!-- Controls -->
+          <div class="space-y-4">
+            <button
+              v-for="variant in variants"
+              :key="variant.name"
+              type="button"
+              class="w-full cursor-pointer rounded-xl border p-4 text-left transition-colors"
+              :class="
+                activeVariant === variant.name
+                  ? 'border-primary bg-primary/10'
+                  : 'border-default bg-accented/50 hover:border-accented'
+              "
+              @click="activeVariant = variant.name"
+            >
+              <div class="text-highlighted font-semibold">{{ variant.label }}</div>
+              <p class="text-muted text-sm">{{ variant.description }}</p>
+              <code class="text-primary text-xs">name="{{ variant.name }}"</code>
+            </button>
+
+            <div class="border-default bg-accented/50 rounded-xl border p-4">
+              <label for="transition-duration" class="text-muted mb-2 block text-sm">
+                Duration: {{ duration }}ms
+              </label>
+              <input
+                id="transition-duration"
+                v-model.number="duration"
+                type="range"
+                min="100"
+                max="1200"
+                step="50"
+                class="w-full"
+              />
+            </div>
+
+            <UButton block size="lg" @click="replay">
+              <UIcon name="i-lucide-rotate-ccw" class="mr-2" />
+              Replay
+            </UButton>
           </div>
 
-          <div class="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[280px_1fr]">
-            <!-- Controls -->
-            <div class="space-y-4">
-              <button
-                v-for="variant in variants"
-                :key="variant.name"
-                type="button"
-                class="w-full cursor-pointer rounded-xl border p-4 text-left transition-colors"
-                :class="
-                  activeVariant === variant.name
-                    ? 'border-primary bg-primary/10'
-                    : 'border-default bg-accented/50 hover:border-accented'
-                "
-                @click="activeVariant = variant.name"
+          <!-- Preview -->
+          <div class="bg-default flex min-h-90 items-center justify-center rounded-3xl p-12">
+            <MotionTransition :key="replayKey" :name="activeVariant" :duration>
+              <div
+                class="from-primary shadow-primary/30 flex h-64 w-64 items-center justify-center rounded-3xl bg-linear-to-br to-purple-600 shadow-2xl"
               >
-                <div class="text-highlighted font-semibold">{{ variant.label }}</div>
-                <p class="text-muted text-sm">{{ variant.description }}</p>
-                <code class="text-primary text-xs">name="{{ variant.name }}"</code>
-              </button>
-
-              <div class="border-default bg-accented/50 rounded-xl border p-4">
-                <label for="transition-duration" class="text-muted mb-2 block text-sm">
-                  Duration: {{ duration }}ms
-                </label>
-                <input
-                  id="transition-duration"
-                  v-model.number="duration"
-                  type="range"
-                  min="100"
-                  max="1200"
-                  step="50"
-                  class="w-full"
-                />
-              </div>
-
-              <UButton block size="lg" @click="replay">
-                <UIcon name="i-lucide-rotate-ccw" class="mr-2" />
-                Replay
-              </UButton>
-            </div>
-
-            <!-- Preview -->
-            <div class="bg-default flex min-h-90 items-center justify-center rounded-3xl p-12">
-              <MotionTransition :key="replayKey" :name="activeVariant" :duration>
-                <div
-                  class="from-primary shadow-primary/30 flex h-64 w-64 items-center justify-center rounded-3xl bg-linear-to-br to-purple-600 shadow-2xl"
-                >
-                  <div class="text-highlighted p-6 text-center">
-                    <UIcon name="i-lucide-square-asterisk" class="mb-3 text-5xl" />
-                    <p class="text-lg font-bold">{{ activeVariant }}</p>
-                    <p class="text-highlighted/70 text-sm">{{ duration }}ms</p>
-                  </div>
+                <div class="text-highlighted p-6 text-center">
+                  <UIcon name="i-lucide-square-asterisk" class="mb-3 text-5xl" />
+                  <p class="text-lg font-bold">{{ activeVariant }}</p>
+                  <p class="text-highlighted/70 text-sm">{{ duration }}ms</p>
                 </div>
-              </MotionTransition>
-            </div>
+              </div>
+            </MotionTransition>
           </div>
-        </UContainer>
-      </section>
+        </div>
+      </DemoSection>
 
       <!-- CSS Reference -->
       <section class="bg-default py-24">

@@ -228,63 +228,56 @@
       </div>
 
       <!-- Demos Section -->
-      <section id="demos" class="bg-default py-24">
-        <UContainer>
-          <div class="mb-16 text-center">
-            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">Animation Demos</h2>
-            <p class="text-muted text-lg">Scroll down to trigger each animation</p>
-          </div>
-
-          <!-- Large Scroll Trigger Box -->
-          <div class="mb-32">
-            <h3 class="text-highlighted mb-8 text-center text-2xl font-bold">Scroll Trigger</h3>
-            <div
-              v-gsap.whenVisible.once.from="{
-                y: 100,
-                opacity: 0,
-                scale: 0.8,
-                duration: 1,
-                ease: 'power3.out',
-              }"
-              class="flex h-[50vh] min-h-100 items-center justify-center rounded-3xl bg-linear-to-br from-blue-600 via-purple-600 to-pink-600 shadow-2xl shadow-purple-500/25"
-            >
-              <div class="text-highlighted p-8 text-center">
-                <UIcon name="i-lucide-sparkles" class="mb-4 text-6xl" />
-                <h3 class="mb-4 text-4xl font-bold md:text-5xl">Scroll Triggered</h3>
-                <p class="text-highlighted/80 text-xl">
-                  This box animates in when you scroll to it
-                </p>
-              </div>
+      <DemoSection
+        id="demos"
+        title="Animation Demos"
+        description="Scroll down to trigger each animation"
+      >
+        <!-- Large Scroll Trigger Box -->
+        <div class="mb-32">
+          <h3 class="text-highlighted mb-8 text-center text-2xl font-bold">Scroll Trigger</h3>
+          <div
+            v-gsap.whenVisible.once.from="{
+              y: 100,
+              opacity: 0,
+              scale: 0.8,
+              duration: 1,
+              ease: 'power3.out',
+            }"
+            class="flex h-[50vh] min-h-100 items-center justify-center rounded-3xl bg-linear-to-br from-blue-600 via-purple-600 to-pink-600 shadow-2xl shadow-purple-500/25"
+          >
+            <div class="text-highlighted p-8 text-center">
+              <UIcon name="i-lucide-sparkles" class="mb-4 text-6xl" />
+              <h3 class="mb-4 text-4xl font-bold md:text-5xl">Scroll Triggered</h3>
+              <p class="text-highlighted/80 text-xl">This box animates in when you scroll to it</p>
             </div>
           </div>
+        </div>
 
-          <!-- Staggered Cards -->
-          <div class="mb-32">
-            <h3 class="text-highlighted mb-8 text-center text-2xl font-bold">
-              Staggered Animation
-            </h3>
+        <!-- Staggered Cards -->
+        <div class="mb-32">
+          <h3 class="text-highlighted mb-8 text-center text-2xl font-bold">Staggered Animation</h3>
+          <div
+            v-gsap.whenVisible.once.stagger.from="{
+              y: 50,
+              opacity: 0,
+              scale: 0.9,
+              duration: 0.6,
+              stagger: 0.1,
+              ease: 'power3.out',
+            }"
+            class="grid grid-cols-2 gap-4 md:grid-cols-4"
+          >
             <div
-              v-gsap.whenVisible.once.stagger.from="{
-                y: 50,
-                opacity: 0,
-                scale: 0.9,
-                duration: 0.6,
-                stagger: 0.1,
-                ease: 'power3.out',
-              }"
-              class="grid grid-cols-2 gap-4 md:grid-cols-4"
+              v-for="i in 8"
+              :key="i"
+              class="stagger-card text-highlighted border-accented flex aspect-square items-center justify-center rounded-2xl border bg-linear-to-br from-[var(--ui-bg-accented)] to-[var(--ui-bg-muted)] text-4xl font-bold"
             >
-              <div
-                v-for="i in 8"
-                :key="i"
-                class="stagger-card text-highlighted border-accented flex aspect-square items-center justify-center rounded-2xl border bg-linear-to-br from-[var(--ui-bg-accented)] to-[var(--ui-bg-muted)] text-4xl font-bold"
-              >
-                {{ i }}
-              </div>
+              {{ i }}
             </div>
           </div>
-        </UContainer>
-      </section>
+        </div>
+      </DemoSection>
 
       <!-- Parallax Section -->
       <section ref="parallaxSection" class="bg-default relative h-[200vh] overflow-hidden">

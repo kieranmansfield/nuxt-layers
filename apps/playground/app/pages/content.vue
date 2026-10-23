@@ -218,7 +218,7 @@
             <!-- Navigation -->
             <div class="flex justify-center gap-4 pt-4">
               <UButton to="/" variant="outline" icon="i-lucide-arrow-left"> Back to Home </UButton>
-              <UButton to="/ui" icon="i-lucide-arrow-right"> UI Layer Demo </UButton>
+              <UButton to="/visual" icon="i-lucide-arrow-right"> Visual Layer Demo </UButton>
             </div>
           </div>
         </div>
