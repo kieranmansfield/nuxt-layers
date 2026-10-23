@@ -25,9 +25,7 @@ export default defineNuxtConfig({
     '#layers/theming/types': `${import.meta.dirname}/app/types`,
   },
 
-  // tokens.css is NOT listed here — it defines a Tailwind `@theme static` block, so per the
-  // CSS single-build-root rule (see .claude/rules/nuxt-layers.md) it must fold into core.css's
-  // @import chain via relative path instead, or its @theme block is silently inert.
+  // Shadow/duration tokens live in core (core/app/assets/css/tokens/elevation-motion.css).
   css: ['#layers/theming/app/assets/css/theme.css'],
 
   plugins: ['#layers/theming/app/plugins/theme.client.ts'],
