@@ -1,5 +1,7 @@
 # Fix: Loading Screen Delays Every First Visit on a Timer
 
+**Status:** fixed in 6.5.0.
+
 ## Problem
 
 The `enabled` toggle works: with `coreLayer.loading.enabled: false`, nothing renders and the

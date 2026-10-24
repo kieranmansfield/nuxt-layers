@@ -5,16 +5,18 @@
   // Beat on "100" so the finished count registers before the exit starts
   const HOLD_MS = 350
 
-  const { enabled, label, background, textColor, zIndex } = resolveLoadingConfig(
+  const { enabled, label, background, textColor, zIndex, showAfter } = resolveLoadingConfig(
     useAppConfig().coreLayer
   )
 
-  const { isLoading, progress } = useLoading()
+  const { isLoading, progress, skipped } = useLoading()
   // Written only here; everything else reads it through useLoading().screen
   const screen = useState<LoadingScreenState>('core:loading:screen', () => 'hidden')
 
   const visible = ref(enabled)
   if (enabled) screen.value = 'visible'
+  // Leave without the beat or the exit animation: skipped, or done before it ever faded in
+  const instant = ref(false)
 
   const displayProgress = computed(() => Math.floor(progress.value))
 
@@ -35,22 +37,31 @@
     isLoading,
     (loading) => {
       if (loading || !visible.value) return
-      setTimeout(() => {
-        visible.value = false
-        screen.value = 'leaving'
-      }, HOLD_MS)
+      instant.value = skipped.value || performance.now() < showAfter
+      setTimeout(
+        () => {
+          visible.value = false
+          screen.value = 'leaving'
+        },
+        instant.value ? 0 : HOLD_MS
+      )
     },
     { immediate: true }
   )
 </script>
 
 <template>
-  <Transition name="loading-screen" @after-leave="screen = 'hidden'">
+  <Transition name="loading-screen" :css="!instant" @after-leave="screen = 'hidden'">
     <div
       v-if="visible"
       id="loading-screen"
       class="loading-screen"
-      :style="{ backgroundColor: background, color: textColor, zIndex }"
+      :style="{
+        backgroundColor: background,
+        color: textColor,
+        zIndex,
+        '--loading-show-after': `${showAfter}ms`,
+      }"
     >
       <div
         class="loading-content"
@@ -76,6 +87,10 @@
     position: fixed;
     inset: 0;
     container-type: size;
+
+    /* Fast loads never see it: hidden and click-through until showAfter has passed.
+       `backwards`, not `both` - a held end state would block the exit transition below */
+    animation: loading-show 0.2s ease var(--loading-show-after, 0ms) backwards;
   }
 
   .loading-content {
@@ -94,7 +109,8 @@
       sans-serif;
 
     /* `backwards`, not `both` - a held end state would block the exit transition below */
-    animation: loading-enter 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+    animation: loading-enter 0.9s cubic-bezier(0.16, 1, 0.3, 1)
+      calc(var(--loading-show-after, 0ms) + 0.1s) backwards;
   }
 
   .loading-label {
@@ -141,6 +157,13 @@
     }
   }
 
+  @keyframes loading-show {
+    from {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
   @keyframes loading-enter {
     from {
       transform: translateY(0.75rem);
@@ -173,19 +196,10 @@
     opacity: 0;
   }
 
+  /* No screen under reduced motion - the plugin ends loading on mount (finishNow) */
   @media (prefers-reduced-motion: reduce) {
-    .loading-content {
-      animation-name: loading-fade-in;
-    }
-
-    .loading-screen-leave-to .loading-content {
-      transform: none;
-    }
-  }
-
-  @keyframes loading-fade-in {
-    from {
-      opacity: 0;
+    .loading-screen {
+      display: none;
     }
   }
 </style>

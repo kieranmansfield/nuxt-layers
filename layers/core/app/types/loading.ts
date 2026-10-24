@@ -6,10 +6,13 @@
 export type LoadingConfig = {
   /** Master toggle - set to false to disable completely */
   enabled: boolean
-  /** Minimum time (ms, from navigation start) the count runs before it may reach 100 */
+  /** Minimum time (ms, from navigation start) before the count may reach 100 - 0 finishes
+   * as soon as the work does */
   minDuration: number
   /** Longest wait (ms, after the app mounts) for fonts and images before finishing anyway */
   maxDuration: number
+  /** Delay (ms, from first paint) before the screen fades in - faster loads never see it */
+  showAfter: number
   /** Small caption above the counter - empty string hides it */
   label: string
   /** Background color */
@@ -46,12 +49,16 @@ export type UseLoadingReturn = {
   progress: Readonly<Ref<number>>
   /** Boot loading screen lifecycle (readonly) */
   screen: Readonly<Ref<LoadingScreenState>>
-  /** Start simulated progress, timed from `since` (a `performance.now()` value; default now) */
+  /** True once `finishNow` has skipped the boot screen (readonly) */
+  skipped: Readonly<Ref<boolean>>
+  /** Start counting from 0, timed from `since` (a `performance.now()` value; default now) */
   startLoading: (since?: number) => void
   /** Mark work done - the count finishes to 100 once `minDuration` has passed */
   stopLoading: () => void
-  /** Raise the progress floor (0-99) - only `stopLoading` completes */
+  /** Raise the target to a real milestone (0-99) - only `stopLoading` completes */
   updateProgress: (value: number) => void
+  /** End the boot screen now, without its beat or exit animation. Call after hydration */
+  finishNow: () => void
   /** Execute async function with loading state */
   withLoading: (fn: () => Promise<void>) => Promise<void>
 }

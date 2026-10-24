@@ -3,16 +3,15 @@ import { describe, expect, it } from 'vite-plus/test'
 import { contactSchema } from './contact-schema'
 
 describe('contactSchema', () => {
-  it('fails when name is too short', () => {
-    const result = contactSchema.safeParse({
-      name: 'ab',
-      email: 'valid@example.com',
-      message: 'a long enough message',
-    })
+  it('accepts short names and rejects a blank one', () => {
+    const base = { email: 'valid@example.com', message: 'a long enough message' }
 
+    expect(contactSchema.safeParse({ ...base, name: 'Li' }).success).toBe(true)
+
+    const result = contactSchema.safeParse({ ...base, name: '   ' })
     expect(result.success).toBe(false)
     if (!result.success) {
-      expect(result.error.issues[0]?.message).toBe('Name must be at least 3 characters')
+      expect(result.error.issues[0]?.message).toBe('Please enter your name')
     }
   })
 
