@@ -50,6 +50,13 @@ export default defineNuxtPlugin({
       { immediate: true }
     )
 
+    // The Reduce Motion switch (restored on mount) also ends core's boot loading screen. Core
+    // handles the OS setting itself, so this only reacts to changes, never before hydration
+    const loading = useLoading()
+    watch(effectiveReducedMotion, (reduced) => {
+      if (reduced && loading.isLoading.value) loading.finishNow()
+    })
+
     watch(
       effectiveReducedTransparency,
       (reduced) => {

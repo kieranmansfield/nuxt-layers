@@ -78,14 +78,18 @@
   const { canInstall, isInstalled, needRefresh, install, updateServiceWorker } = usePWAInfo()
 
   // Loading demo
-  const { progress: demoProgress, startLoading, stopLoading } = useLoading()
+  const { progress: demoProgress, startLoading, stopLoading, updateProgress } = useLoading()
 
   const showLoadingDemo = ref(false)
 
   async function runLoadingDemo() {
     showLoadingDemo.value = true
     startLoading()
-    await new Promise((resolve) => setTimeout(resolve, 3000))
+    // Progress only moves at milestones, so step through three
+    for (const step of [25, 50, 75]) {
+      await new Promise((resolve) => setTimeout(resolve, 750))
+      updateProgress(step)
+    }
     stopLoading()
     await new Promise((resolve) => setTimeout(resolve, 500))
     showLoadingDemo.value = false

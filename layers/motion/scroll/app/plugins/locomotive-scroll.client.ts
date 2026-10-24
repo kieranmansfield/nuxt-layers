@@ -61,10 +61,11 @@ export default defineNuxtPlugin({
     // Without a mounted screen the state stays 'hidden' and GSAP is never touched.
     watch(
       screen,
-      (state) => {
+      (state, previous) => {
         gsap.globalTimeline.paused(state !== 'hidden')
 
-        if (state !== 'leaving') return
+        // Start as the screen leaves, or once it's gone if it skipped 'leaving' (finishNow)
+        if (state === 'visible' || previous === 'leaving') return
         instance.value?.start()
         // Remeasure once the screen's scroll lock is off the page
         requestAnimationFrame(() => {

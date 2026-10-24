@@ -1,7 +1,7 @@
 // composables/useLoading.ts
 
 import type { LoadingScreenState } from '../types/loading'
-import { approachProgress, resolveLoadingConfig, trickleProgress } from '../utils/loading'
+import { approachProgress, resolveLoadingConfig } from '../utils/loading'
 
 // Frame-loop state is non-reactive and intentionally module-scope (singleton)
 const _loop = {
@@ -16,9 +16,10 @@ const _loop = {
  * Loading state composable for app initialization and async operations
  *
  * Features:
- * - Smooth progress: a per-frame loop eases the displayed value toward a simulated target that
- *   slows as it nears 90%, then counts up to 100 once work is done
- * - Holds below 100 until `minDuration` has passed, so fast loads don't flash
+ * - Real progress: callers raise the target at real milestones (`updateProgress`) and a per-frame
+ *   loop eases the displayed value toward it, then counts up to 100 once work is done
+ * - Optional `minDuration` hold before 100 (default 0: finish as soon as the work does)
+ * - `finishNow()` ends the boot screen at once, e.g. for reduced motion
  * - Shared state across all component instances
  * - Can be disabled via app.config
  * - Works without UI component (headless)
@@ -30,9 +31,8 @@ export function useLoading() {
   const isLoading = useState('core:loading', () => enabled)
   const progress = useState('core:loading:progress', () => 0)
   const screen = useState<LoadingScreenState>('core:loading:screen', () => 'hidden')
-
-  // Trickle pace follows minDuration: a typical load sits around 60% when it may finish
-  const trickleTau = Math.max(minDuration, 500) * 0.8
+  // Set by finishNow: the boot screen leaves at once, without its beat or exit animation
+  const skipped = useState('core:loading:skipped', () => false)
 
   function tick(now: number): void {
     // Cap at one 30fps frame so a main-thread hitch (hydration, a backgrounded tab) is followed
@@ -40,9 +40,7 @@ export function useLoading() {
     const dt = Math.min((now - _loop.lastTime) / 1000, 1 / 30)
     _loop.lastTime = now
 
-    const elapsed = now - _loop.startedAt
-    _loop.target = Math.max(_loop.target, trickleProgress(elapsed, trickleTau))
-    if (_loop.done && elapsed >= minDuration) _loop.target = 100
+    if (_loop.done && now - _loop.startedAt >= minDuration) _loop.target = 100
 
     progress.value = approachProgress(progress.value, _loop.target, dt)
 
@@ -82,6 +80,15 @@ export function useLoading() {
     _loop.target = Math.max(_loop.target, Math.min(Math.max(value, 0), 99))
   }
 
+  function finishNow(): void {
+    skipped.value = true
+    if (import.meta.client) cancelAnimationFrame(_loop.frame)
+    _loop.frame = 0
+    _loop.done = true
+    progress.value = 100
+    isLoading.value = false
+  }
+
   async function withLoading(fn: () => Promise<void>): Promise<void> {
     startLoading()
     try {
@@ -95,9 +102,11 @@ export function useLoading() {
     isLoading: readonly(isLoading),
     progress: readonly(progress),
     screen: readonly(screen),
+    skipped: readonly(skipped),
     startLoading,
     stopLoading,
     updateProgress,
+    finishNow,
     withLoading,
   }
 }

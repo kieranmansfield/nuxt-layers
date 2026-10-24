@@ -1,26 +1,22 @@
 import { describe, expect, it } from 'vite-plus/test'
 
-import { approachProgress, resolveLoadingConfig, trickleProgress } from './loading'
+import { approachProgress, resolveLoadingConfig } from './loading'
 
 const FRAME = 1 / 60
 
 describe('resolveLoadingConfig', () => {
   it('fills unset keys with defaults but keeps falsy values that were set', () => {
-    expect(resolveLoadingConfig(undefined)).toMatchObject({ enabled: false, minDuration: 1500 })
+    expect(resolveLoadingConfig(undefined)).toMatchObject({
+      enabled: false,
+      minDuration: 0,
+      maxDuration: 1500,
+      showAfter: 400,
+    })
     expect(resolveLoadingConfig({ loading: { minDuration: 0, label: '' } })).toMatchObject({
       enabled: false,
       minDuration: 0,
       label: '',
     })
-  })
-})
-
-describe('trickleProgress', () => {
-  it('starts at 0, rises with time, and stays below the cap', () => {
-    expect(trickleProgress(0, 1200)).toBe(0)
-    expect(trickleProgress(-500, 1200)).toBe(0)
-    expect(trickleProgress(1200, 1200)).toBeGreaterThan(trickleProgress(600, 1200))
-    expect(trickleProgress(60_000, 1200)).toBeLessThanOrEqual(90)
   })
 })
 

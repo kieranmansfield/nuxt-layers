@@ -33,10 +33,13 @@ export default defineAppConfig({
     loading: {
       // Opt in: app.vue renders LoadingScreen for every app, so it stays off unless enabled
       enabled: false,
-      // Minimum time (ms, from navigation start) the count runs before reaching 100 (prevents flash)
-      minDuration: 1500,
+      // Minimum time (ms, from navigation start) before the count may reach 100 - 0 finishes
+      // as soon as the work does; raise it only for a deliberate brand moment
+      minDuration: 0,
       // Longest wait (ms, after mount) for fonts and images before finishing anyway
-      maxDuration: 3000,
+      maxDuration: 1500,
+      // Delay (ms, from first paint) before the screen fades in - faster loads never see it
+      showAfter: 400,
       // Small caption above the counter - empty string hides it
       label: 'Loading',
       // Background color
@@ -76,6 +79,7 @@ declare module '@nuxt/schema' {
         enabled?: boolean
         minDuration?: number
         maxDuration?: number
+        showAfter?: number
         label?: string
         background?: string
         textColor?: string
