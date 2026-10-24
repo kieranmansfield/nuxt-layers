@@ -1,5 +1,7 @@
 # Fix: Feeds (and Feature Flags) Read an Empty App Config on the Server
 
+**Status:** fixed in 6.5.0.
+
 ## Problem
 
 Every site that extends the `feeds` layer publishes feeds that ignore its `app.config.ts`.
@@ -88,8 +90,8 @@ Add an ESLint `no-restricted-imports` rule for server code:
 
 Nuxt's merged config gives `feedsLayer.feed.collections` as `['blog', 'blog']`: app config arrays
 concatenate across layers, so the consumer's `['blog']` is added to the layer default `['blog']`.
-The server never saw this before. Check that `feed-catalog.ts` and `feed-service.ts` handle
-repeats (for example with `[...new Set(collections)]`), or make the layer default an empty array.
+The server never saw this before. No change needed: `feed-catalog.ts` already removes repeats
+with `unique()`, and the server only reads `defaultCollection`.
 
 ## Verification
 

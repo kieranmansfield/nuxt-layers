@@ -1,5 +1,5 @@
 import { defineEventHandler } from 'h3'
-import { useAppConfig } from 'nitropack/runtime'
+import { useAppConfig } from 'nuxt/server'
 import type { FeatureValue } from '../../app/types/routing'
 
 export default defineEventHandler(() => {

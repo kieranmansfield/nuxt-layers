@@ -409,6 +409,26 @@ export default defineConfigWithVueTs(
     ...typescript.configs['flat/disable-type-checked'],
   },
 
+  // nitropack's useAppConfig reads Nitro's own app config, which Nuxt never fills from
+  // app.config.ts, so server code reading it got {} (feeds said "My Site", feature flags {}).
+  {
+    files: ['layers/**/server/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'nitropack/runtime',
+              importNames: ['useAppConfig'],
+              message: "It never sees app.config.ts. Import useAppConfig from 'nuxt/server'.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+
   // Demo/showcase pages legitimately nest deep and run long — the structural
   // budgets are meant for the reusable layer components, not kitchen-sink demos.
   {
