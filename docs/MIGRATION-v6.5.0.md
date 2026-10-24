@@ -68,3 +68,17 @@ runtime; previously the app only worked if something else happened to install th
   `#layers/forms/shared/utils/contact-schema` if you imported it by path.
 - **`@nuxt/eslint`** loads only when installed, so apps without it no longer fail outside
   production.
+- **`feeds`** and **`routing`** server routes now read your `app.config.ts`. They imported
+  `useAppConfig` from `nitropack/runtime`, which never sees it, so feeds were titled "My Site",
+  linked to the request origin (localhost when prerendered) and ignored `feedsLayer`, and
+  `/api/feature-flags` returned `{}`. They now use `site`, `feedsLayer` and
+  `routingLayer.features`.
+- **`core` loading screen** stops being a timer. `minDuration` defaults to `0` (was `1500`) and
+  `maxDuration` to `1500` (was `3000`). A new `showAfter` (default `400` ms) keeps the screen
+  hidden on fast loads. The percentage moves at real milestones (hydrated, fonts ready, page
+  loaded) instead of a simulated trickle; `trickleProgress` is gone. Under
+  `prefers-reduced-motion` the screen is hidden and loading ends on mount. `useLoading()` adds
+  `finishNow()` and `skipped`. Set `minDuration: 1500` to keep the old pacing.
+- **`theming`**: the Reduce Motion switch also ends the boot loading screen.
+- **`forms`**: `contactSchema` accepts any non-blank name (was 3+ characters), so short names
+  like Li or Ng get through.
