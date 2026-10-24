@@ -86,9 +86,27 @@ Catalogue of layout shift (CLS) issues found and fixed in this monorepo, with ro
 
 ---
 
+## 11. Duplicate `UOverlayProvider` — `core/app.vue`
+
+**Cause:** `core`'s `app.vue` rendered `<UOverlayProvider />` inside `<UApp>`, which already renders one. Both read the same `useOverlay()` state, so every `useOverlay().create()` overlay (including the old `createModal`-based nav) rendered twice: a doubled modal and a layout shift on open.
+
+**Fix:** Delete the extra provider (v6.4.0). `UApp` owns overlays and toasts.
+
+---
+
+## 12. Nav modal hid the scrollbar before Reka measured it — `useMastNav`
+
+**Cause:** `useMastNav().open()` called `lockScrolling()` (`html { overflow: hidden }`) before the modal opened. Reka's body scroll lock then measured a 0px scrollbar and added no padding, so with classic (non-overlay) scrollbars the page widened by the scrollbar width on open.
+
+**Fix:** Let UModal/Reka own the overflow lock (it pads `body` for the scrollbar) and stop Lenis on the next tick, after Reka has measured (v6.4.0). A stopped Lenis sets `overflow: clip` on `html`, so the order matters.
+
+---
+
 ## Key Rules Going Forward
 
 - Never use `@layer` / `@utility` in CSS files loaded via `css: []` — use plain selectors instead.
 - Never use runtime `resolveComponent` to conditionally render components in Nuxt 4 — components are compile-time, not runtime-registered.
 - Use `useState` (not `useLocalStorage`) for any value rendered during SSR that might differ between server and client.
 - Keep accessibility-only elements (`aria-live` regions, announcers) outside CSS grid containers to prevent them participating in grid flow.
+- Never add a `<UOverlayProvider />` next to `<UApp>` — `UApp` renders one.
+- When a dialog locks scroll, don't hide `html` overflow first: the lock has to measure the scrollbar to compensate for it.

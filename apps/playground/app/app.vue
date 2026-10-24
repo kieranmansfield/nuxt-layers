@@ -18,7 +18,5 @@
         </div>
       </template>
     </ClientOnly>
-
-    <UOverlayProvider />
   </UApp>
 </template>

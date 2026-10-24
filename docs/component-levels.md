@@ -112,5 +112,6 @@ left out.
 | `layers/structure/navigation/app/components/Mast/Header.vue`               | organism  |
 | `layers/structure/navigation/app/components/Mast/Nav.vue`                  | organism  |
 | `layers/structure/navigation/app/components/Mast/NavModal.vue`             | organism  |
+| `layers/structure/navigation/app/components/Site/Logo.vue`                 | atom      |
 | `layers/structure/navigation/app/components/Site/Subtitle.vue`             | atom      |
 | `layers/structure/navigation/app/components/Site/Title.vue`                | atom      |

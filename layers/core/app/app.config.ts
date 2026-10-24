@@ -31,8 +31,8 @@ export default defineAppConfig({
 
     // Loading screen configuration (initial app load only)
     loading: {
-      // Master toggle - set to false to disable completely
-      enabled: true,
+      // Opt in: app.vue renders LoadingScreen for every app, so it stays off unless enabled
+      enabled: false,
       // Minimum time (ms, from navigation start) the count runs before reaching 100 (prevents flash)
       minDuration: 1500,
       // Longest wait (ms, after mount) for fonts and images before finishing anyway

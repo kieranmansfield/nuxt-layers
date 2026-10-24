@@ -2,7 +2,7 @@ import type { LoadingConfig } from '../types/loading'
 
 /** Fallbacks for keys app.config leaves unset - core's app.config ships the same values. */
 const LOADING_DEFAULTS: LoadingConfig = {
-  enabled: true,
+  enabled: false,
   minDuration: 1500,
   maxDuration: 3000,
   label: 'Loading',
