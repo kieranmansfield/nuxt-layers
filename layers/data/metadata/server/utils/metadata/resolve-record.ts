@@ -20,12 +20,12 @@ export async function resolveRecord(
 ): Promise<{ record: MetadataRecord; synced: boolean }> {
   const { provider: providerName, providerId, resourceType, force } = input
   if (!providerName || !providerId) {
-    throw createError({ statusCode: 400, message: 'provider and providerId are required' })
+    throw createError({ status: 400, message: 'provider and providerId are required' })
   }
 
   const provider = getProvider(providerName)
   if (!provider) {
-    throw createError({ statusCode: 404, message: `Provider '${providerName}' not registered` })
+    throw createError({ status: 404, message: `Provider '${providerName}' not registered` })
   }
 
   const cacheKey = makeCacheKey('metadata', providerName, resourceType ?? 'item', providerId)
@@ -40,7 +40,7 @@ export async function resolveRecord(
     providerId,
     ...(resourceType && { resourceType }),
   })
-  if (!record) throw createError({ statusCode: 404, message: 'Not found' })
+  if (!record) throw createError({ status: 404, message: 'Not found' })
 
   const now = new Date().toISOString()
   await setCacheRecord(cacheKey, {

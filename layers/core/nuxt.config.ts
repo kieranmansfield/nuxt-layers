@@ -1,3 +1,15 @@
+import { createRequire } from 'node:module'
+
+// @nuxt/eslint is an optional peer: load it outside production only when the app has it
+// installed, otherwise a consumer without it fails module resolution in dev/test builds.
+const lintModules: string[] = []
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    createRequire(import.meta.url).resolve('@nuxt/eslint')
+    lintModules.push('@nuxt/eslint')
+  } catch {}
+}
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   $meta: {
@@ -15,7 +27,7 @@ export default defineNuxtConfig({
 
   // Base modules (always loaded)
   modules: [
-    ...(process.env.NODE_ENV !== 'production' ? ['@nuxt/eslint'] : []),
+    ...lintModules,
     '@nuxt/ui',
     // '@nuxt/image'
     '@vueuse/nuxt',
@@ -27,22 +39,10 @@ export default defineNuxtConfig({
 
   css: ['#layers/core/app/assets/css/core.css'],
 
-  devtools: {
-    enabled: true,
-
-    vscode: {
-      enabled: true,
-    },
-  },
-
-  // Force light mode for consistent appearance
+  // Follow the OS colour scheme; light when it can't be detected
   colorMode: {
     preference: 'system',
     fallback: 'light',
-  },
-
-  future: {
-    compatibilityVersion: 5,
   },
 
   compatibilityDate: '2026-01-24',

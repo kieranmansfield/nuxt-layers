@@ -57,7 +57,12 @@
     "layers/*/*/providers/*/tsconfig.json",
     "layers/*/*/providers/*/server/**",
     "types/**",
-    "docs/"
+    "docs/",
+    "!**/*.test.ts",
+    "!**/*.spec.ts",
+    "!docs/superpowers/**",
+    "!docs/fallow-refactor/**",
+    "!docs/*AUDIT*"
   ],
   "scripts": {
     "dev": "pnpm -F playground dev",
@@ -151,6 +156,7 @@
     "packages/*"
   ],
   "peerDependencies": {
+    "@neondatabase/serverless": "^0.10.0",
     "@nuxt/content": "^3.14.0",
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/image": "^2.0.0",
@@ -166,10 +172,15 @@
     "@vueuse/nuxt": "^14.3.0 || ^15.0.0",
     "baseline-status": "^1.1.1",
     "better-sqlite3": "^12.10.0 || ^13.0.0",
+    "drizzle-orm": "^0.45.4",
+    "feed": "^5.2.1",
     "gsap": "^3.15.0",
+    "hookable": "^5.5.3 || ^6.0.0",
     "locomotive-scroll": "^5.0.1",
     "nuxt": "^4.6.1",
+    "nuxt-auth-utils": "^0.5.0",
     "pinia": "^3.0.4 || ^4.1.0",
+    "resend": "^4.0.0",
     "tailwindcss": "^4.3.0",
     "three": ">=0.184.0",
     "v-gsap-nuxt": ">=1.5.12",
@@ -228,6 +239,24 @@
       "optional": true
     },
     "baseline-status": {
+      "optional": true
+    },
+    "@neondatabase/serverless": {
+      "optional": true
+    },
+    "drizzle-orm": {
+      "optional": true
+    },
+    "feed": {
+      "optional": true
+    },
+    "hookable": {
+      "optional": true
+    },
+    "nuxt-auth-utils": {
+      "optional": true
+    },
+    "resend": {
       "optional": true
     }
   },
@@ -290,7 +319,9 @@
     "vue-tsc": "catalog:",
     "zod": "catalog:",
     "zod-to-json-schema": "catalog:",
-    "vite-plus": "catalog:"
+    "vite-plus": "catalog:",
+    "node-gyp": "catalog:",
+    "skills": "catalog:"
   },
   "browserslist": [
     "last 2 Chrome major versions",
@@ -300,8 +331,7 @@
     "extends browserslist-config-baseline"
   ],
   "dependencies": {
-    "node-gyp": "catalog:",
-    "skills": "catalog:"
+    "@iconify/vue": "catalog:"
   },
   "engines": {
     "node": ">=24 <25"

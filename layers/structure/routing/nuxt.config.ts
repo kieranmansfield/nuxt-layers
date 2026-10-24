@@ -1,3 +1,5 @@
+import { resolve } from 'node:path'
+
 type RoutePage = {
   file?: string
   meta?: Record<string, unknown>
@@ -21,19 +23,24 @@ export default defineNuxtConfig({
     strict: true,
   },
 
-  hooks: {
-    'pages:extend'(pages: unknown[]) {
-      const cwd = process.cwd()
-      const tag = (list: RoutePage[]) => {
-        for (const page of list) {
-          if (page.file && !page.file.startsWith(cwd)) {
-            page.meta ??= {}
-            page.meta.__fromLayer = true
+  modules: [
+    // Tag pages that don't live in the app's own pages dir. Compared against the app's pages
+    // dir, not process.cwd(): an npm consumer's layer pages sit under <app>/node_modules, which
+    // is inside cwd, so a cwd prefix check never tagged anything.
+    (_options, nuxt) => {
+      const appPagesDir = `${resolve(nuxt.options.srcDir, nuxt.options.dir.pages)}/`
+      nuxt.hook('pages:extend', (pages) => {
+        const tag = (list: RoutePage[]) => {
+          for (const page of list) {
+            if (page.file && !page.file.startsWith(appPagesDir)) {
+              page.meta ??= {}
+              page.meta.__fromLayer = true
+            }
+            if (page.children) tag(page.children)
           }
-          if (page.children) tag(page.children)
         }
-      }
-      tag(pages as unknown as RoutePage[])
+        tag(pages as RoutePage[])
+      })
     },
-  },
+  ],
 })

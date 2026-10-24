@@ -78,11 +78,11 @@ export function useCache() {
     try {
       const cacheNames = await caches.keys()
       await Promise.all(cacheNames.map((name) => caches.delete(name)))
-      if (process.env.NODE_ENV === 'development') {
+      if (import.meta.dev) {
         console.log('[useCache] All caches cleared')
       }
     } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
+      if (import.meta.dev) {
         console.error('[useCache] Failed to clear cache:', error)
       }
     }

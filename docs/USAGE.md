@@ -93,11 +93,20 @@ npm install gsap locomotive-scroll
 # canvas / shader
 npm install three @tresjs/nuxt @tresjs/core @tresjs/cientos @tresjs/post-processing
 
-# forms
-npm install zod
+# forms / mailer
+npm install zod resend hookable
+
+# database
+npm install drizzle-orm @neondatabase/serverless
+
+# auth
+npm install nuxt-auth-utils
 
 # content
 npm install @nuxt/content better-sqlite3
+
+# feeds
+npm install feed
 
 # scripts (baseline-status badge)
 npm install @nuxt/scripts baseline-status
@@ -196,6 +205,22 @@ export default defineAppConfig({
 | `coreLayer.notFound`    | core    | `icon`, `title`, `description`, `showHomeButton`, `actions`, `suggestions`  |
 | `motion`                | motion  | `gsapScrollTrigger`, `lenis.*` (duration, smoothWheel, smoothTouch, etc.)   |
 | `themeLayer`            | theming | `accents`, `defaultAccent`                                                  |
+
+### Overriding Layer Components
+
+Layer components are auto-imported by file name, and the app always wins: a component in your
+app with the same name replaces the layer's copy everywhere, including where other layers render
+it. These unprefixed names are the ones most likely to collide by accident:
+
+| Component                              | Layer  | Notes                                                          |
+| -------------------------------------- | ------ | -------------------------------------------------------------- |
+| `LoadingScreen`                        | core   | Meant to be overridable (custom boot screen)                   |
+| `ElementTw`                            | core   | Rendered by typography and visual — shadowing changes them too |
+| `Element`, `AppContainer`              | core   | Primitives; pick another name for app components               |
+| `ErrorBoundary`                        | core   | Pick another name for app boundaries                           |
+| `HStack`, `VStack`, `ZStack`, `Spacer` | layout | Primitives; pick another name for app components               |
+
+Override one on purpose by creating the same-named file in your `app/components/`.
 
 ## Optional Modules
 

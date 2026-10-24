@@ -39,7 +39,7 @@ export async function getContentFeedItems(
   limit: number = 30
 ): Promise<FeedItem[]> {
   if (!COLLECTION_NAME_RE.test(collection)) {
-    throw createError({ statusCode: 400, statusMessage: 'Invalid collection name' })
+    throw createError({ status: 400, statusText: 'Invalid collection name' })
   }
 
   // queryCollection is keyed by literal collection names, but feed routes accept

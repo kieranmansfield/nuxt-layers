@@ -11,6 +11,6 @@ export default defineNuxtRouteMiddleware((to) => {
 
   if (config.debug) console.log('[routing] resolution', resolution)
 
-  if (resolution.outcome === 'deny') throw createError({ statusCode: 404 })
+  if (resolution.outcome === 'deny') return abortNavigation(createError({ status: 404 }))
   if (resolution.outcome === 'redirect') return navigateTo(resolution.to)
 })

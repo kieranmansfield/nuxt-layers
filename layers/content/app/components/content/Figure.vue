@@ -16,7 +16,7 @@
 
 <template>
   <figure class="my-6">
-    <img :src :alt :width :height class="w-full rounded-lg" />
+    <img :src :alt :width :height loading="lazy" decoding="async" class="w-full rounded-lg" />
     <figcaption v-if="caption" class="text-muted mt-2 text-center text-sm italic">
       {{ caption }}
     </figcaption>

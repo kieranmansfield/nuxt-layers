@@ -18,8 +18,4 @@ export default defineNuxtConfig({
     '#layers/shader': import.meta.dirname,
     '#layers/shader/types': `${import.meta.dirname}/app/types`,
   },
-
-  imports: {
-    dirs: [`${import.meta.dirname}/app/composables`],
-  },
 })

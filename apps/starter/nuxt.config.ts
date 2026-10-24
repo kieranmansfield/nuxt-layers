@@ -15,6 +15,18 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2026-06-20',
 
+  // App-level choices (previously forced on every consumer by the core layer)
+  future: {
+    compatibilityVersion: 5,
+  },
+
+  devtools: {
+    enabled: true,
+    vscode: {
+      enabled: true,
+    },
+  },
+
   typescript: {
     typeCheck: false,
     strict: true,

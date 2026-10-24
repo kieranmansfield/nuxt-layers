@@ -153,7 +153,7 @@ forms → mailer
 
 # Tier 5 — Motion
 scroll → core, visual
-animations → scroll
+animations → scroll, transitions
 transitions → core
 page-transitions → core
 motion → scroll, animations, transitions, page-transitions

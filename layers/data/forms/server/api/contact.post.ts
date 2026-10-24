@@ -1,16 +1,20 @@
-import { createError, defineEventHandler, readBody } from 'h3'
+import { createError, defineEventHandler, getRequestHeader, getRequestIP, readBody } from 'h3'
 import { sendContactEmail } from '#layers/mailer/server/utils/email'
 import { mailerLayerHooks } from '#layers/mailer/server/utils/hooks'
 
-import { contactSchema } from '../../app/utils/contact-schema'
+import { contactSchema } from '../../shared/utils/contact-schema'
 
 type RateLimitRecord = { count: number; resetAt: number }
+// Per-instance memory: serverless instances each keep their own count. Move to useStorage()
+// or the host's rate limiting if the limit must hold across instances.
 const rateLimitStore = new Map<string, RateLimitRecord>()
 const RATE_LIMIT_MAX = 5
 const RATE_LIMIT_WINDOW_MS = 60_000
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now()
+  // Drop expired windows so the map doesn't grow with every IP ever seen
+  for (const [key, entry] of rateLimitStore) if (now > entry.resetAt) rateLimitStore.delete(key)
   const record = rateLimitStore.get(ip)
   if (!record || now > record.resetAt) {
     rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS })
@@ -22,11 +26,15 @@ function checkRateLimit(ip: string): boolean {
 }
 
 export default defineEventHandler(async (event) => {
-  const ip = getRequestIP(event, { xForwardedFor: true }) ?? 'unknown'
+  // Netlify's client IP header can't be set by the client; X-Forwarded-For's first entry can
+  const ip =
+    getRequestHeader(event, 'x-nf-client-connection-ip') ??
+    getRequestIP(event, { xForwardedFor: true }) ??
+    'unknown'
   if (!checkRateLimit(ip)) {
     throw createError({
-      statusCode: 429,
-      statusMessage: 'Too many requests. Please try again later.',
+      status: 429,
+      statusText: 'Too many requests. Please try again later.',
     })
   }
 
@@ -34,7 +42,7 @@ export default defineEventHandler(async (event) => {
   const result = contactSchema.safeParse(body)
 
   if (!result.success) {
-    throw createError({ statusCode: 400, data: result.error.flatten().fieldErrors })
+    throw createError({ status: 400, data: result.error.flatten().fieldErrors })
   }
 
   const data = result.data
@@ -49,7 +57,7 @@ export default defineEventHandler(async (event) => {
 
   await mailerLayerHooks.callHook('contact:failed', { ...data, error: emailResult.error })
   throw createError({
-    statusCode: 500,
-    statusMessage: 'Failed to send message. Please try again later.',
+    status: 500,
+    statusText: 'Failed to send message. Please try again later.',
   })
 })

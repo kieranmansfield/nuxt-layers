@@ -63,10 +63,6 @@ const LAYER_PATHS: Record<LayerName, string> = {
 }
 
 // Nuxt resolves each layer's own `extends` transitively, so dependencies are NOT listed here.
-// Exception: feeds only extends core/content when FEEDS_STANDALONE is set, so name them here.
-const IMPLICIT_DEPENDENCIES: Partial<Record<LayerName, LayerName[]>> = {
-  feeds: ['core', 'content'],
-}
 
 /**
  * Resolves which layers to extend based on environment configuration.
@@ -87,16 +83,17 @@ function resolveExtendedLayers(): string[] {
     .map((s) => s.trim().toLowerCase() as LayerName)
     .filter((name) => AVAILABLE_LAYERS.includes(name))
 
-  const resolved = new Set<LayerName>(requested)
-  requested.forEach((name) => IMPLICIT_DEPENDENCIES[name]?.forEach((dep) => resolved.add(dep)))
-
-  return AVAILABLE_LAYERS.filter((name) => resolved.has(name)).map((name) => LAYER_PATHS[name])
+  return AVAILABLE_LAYERS.filter((name) => requested.includes(name)).map(
+    (name) => LAYER_PATHS[name]
+  )
 }
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   extends: resolveExtendedLayers(),
-  devtools: { enabled: true },
+  // App-level choices (previously forced on every consumer by the core layer)
+  future: { compatibilityVersion: 5 },
+  devtools: { enabled: true, vscode: { enabled: true } },
   css: ['~/assets/css/playground.css'],
 
   routeRules: {

@@ -28,7 +28,6 @@ for (const file of configs) {
   const src = readFileSync(file, 'utf8')
   const dir = dirname(file)
   const alias = src.match(/'#layers\/([a-z-]+)':\s*import\.meta\.dirname/)?.[1] ?? ''
-  // feeds gates its extends behind FEEDS_STANDALONE; the quoted paths are still its real deps
   const ext = src.match(/extends:\s*([^\]]*\])/)?.[1] ?? ''
   const paths = [...ext.matchAll(/'([^']+)'/g)].map((m) => resolve(dir, m[1]!))
   layers.set(dir, { dir, alias, extends: paths })

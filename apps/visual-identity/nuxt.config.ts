@@ -16,4 +16,16 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   compatibilityDate: '2026-01-24',
+
+  // App-level choices (previously forced on every consumer by the core layer)
+  future: {
+    compatibilityVersion: 5,
+  },
+
+  devtools: {
+    enabled: true,
+    vscode: {
+      enabled: true,
+    },
+  },
 })

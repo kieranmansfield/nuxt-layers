@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     name: 'feeds',
   },
 
-  extends: process.env.FEEDS_STANDALONE ? ['../../core', '../../content'] : [],
+  extends: ['../../core', '../../content'],
 
   alias: {
     '#layers/feeds': import.meta.dirname,
@@ -29,4 +29,9 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-07-15',
+
+  typescript: {
+    typeCheck: false,
+    strict: true,
+  },
 })

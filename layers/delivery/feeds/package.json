@@ -8,8 +8,8 @@
     "typecheck": "vue-tsc --noEmit -p ../../../tsconfig.typecheck.json",
     "dev": "nuxi dev .playground",
     "dev:prepare": "nuxt prepare .playground",
-    "build": "FEEDS_STANDALONE=true nuxi build",
-    "generate": "FEEDS_STANDALONE=true nuxi generate",
+    "build": "nuxi build",
+    "generate": "nuxi generate",
     "preview": "nuxt preview .playground",
     "lint": "eslint ."
   },

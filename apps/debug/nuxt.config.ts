@@ -16,6 +16,18 @@
 export default defineNuxtConfig({
   compatibilityDate: '2026-01-24',
 
+  // App-level choices (previously forced on every consumer by the core layer)
+  future: {
+    compatibilityVersion: 5,
+  },
+
+  devtools: {
+    enabled: true,
+    vscode: {
+      enabled: true,
+    },
+  },
+
   extends: [
     '../../layers/core',
     '../../layers/design-system/typography',

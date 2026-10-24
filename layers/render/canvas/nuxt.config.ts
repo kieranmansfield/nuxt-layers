@@ -167,10 +167,6 @@ export default defineNuxtConfig({
     '#layers/canvas': import.meta.dirname,
   },
 
-  imports: {
-    dirs: [`${import.meta.dirname}/app/composables`],
-  },
-
   vite: {
     plugins: [threeWebGPUSSRStub()],
     optimizeDeps: {

@@ -28,8 +28,6 @@ export default defineNuxtConfig({
   // Shadow/duration tokens live in core (core/app/assets/css/tokens/elevation-motion.css).
   css: ['#layers/theming/app/assets/css/theme.css'],
 
-  plugins: ['#layers/theming/app/plugins/theme.client.ts'],
-
   colorMode: {
     dataValue: 'theme-mode',
     storageKey: 'theme-mode',

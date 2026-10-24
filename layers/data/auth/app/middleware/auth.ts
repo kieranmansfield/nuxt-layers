@@ -1,4 +1,4 @@
 export default defineNuxtRouteMiddleware(() => {
   const { loggedIn } = useUserSession()
-  if (!loggedIn.value) return navigateTo('/auth/github')
+  if (!loggedIn.value) return navigateTo('/auth/github', { external: true })
 })

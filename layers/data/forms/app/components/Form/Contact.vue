@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import type { FormSubmitEvent } from '@nuxt/ui'
 
-  import { contactSchema, type ContactData } from '../../utils/contact-schema'
+  import { contactSchema, type ContactData } from '../../../shared/utils/contact-schema'
 
   const emit = defineEmits<{
     submit: [data: ContactData]

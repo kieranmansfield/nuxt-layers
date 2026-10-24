@@ -1,7 +1,10 @@
 import { getProviders } from '../../utils/metadata/provider-registry'
-import { defineEventHandler } from 'h3'
+import { createError, defineEventHandler } from 'h3'
 
 export default defineEventHandler(async () => {
+  // Dev-only: each call runs a live search on every provider, spending real API quota
+  if (!import.meta.dev) throw createError({ status: 404 })
+
   const providers = getProviders()
 
   return Promise.all(
