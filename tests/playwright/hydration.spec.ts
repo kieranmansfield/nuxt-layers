@@ -47,3 +47,19 @@ test('/theming hydrates cleanly with a non-default saved accent', async ({ page 
   expect(await collectHydrationIssues(page, '/theming')).toEqual([])
   await expect(page.locator('html')).toHaveAttribute('data-theme-colour', 'indigo')
 })
+
+// Regression: core's app.vue rendered a second <UOverlayProvider> beside UApp's own, so every
+// overlay rendered twice. The nav is plain shared state now, but createModal still uses overlays.
+test('each overlay renders exactly one dialog', async ({ page }) => {
+  await collectHydrationIssues(page, '/overlays')
+  await page.getByRole('button', { name: 'Confirm modal' }).click()
+  await expect(page.getByRole('dialog')).toHaveCount(1)
+  await page.keyboard.press('Escape')
+  await expect(page.getByRole('dialog')).toHaveCount(0)
+
+  await collectHydrationIssues(page, '/nav')
+  await page.getByRole('button', { name: 'Open navigation menu' }).click()
+  await expect(page.getByRole('dialog', { name: 'Site navigation' })).toHaveCount(1)
+  await page.keyboard.press('Escape')
+  await expect(page.getByRole('dialog')).toHaveCount(0)
+})

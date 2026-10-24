@@ -31,12 +31,25 @@
   --type-scale: 1.26;
   --type-snap: 0.0625rem; /* rounding interval: rem so it scales with the root; never px, never 0 */
 
-  /* Fluid display step, 5 → 7 across 360 → 1280px. tan(atan2(length, 1rem)) casts the
-     length to the unitless exponent pow() needs; normalised by 1rem (not 1px) so the
-     exponent stays 5 → 7 whatever the user's root font size; the vw term is scaled by root / 16px so a
-     larger root doesn't lower the exponent at a given width (h1 stays visibly larger). */
+  /* Fluid display step: --display-from at ≤360px → --display-to at ≥1280px (57.5 = 920px / 16).
+     tan(atan2(length, 1rem)) casts the length to the unitless exponent pow() needs; normalised
+     by 1rem (not 1px) so the exponent doesn't move with the user's root font size; the vw term
+     is scaled by root / 16px so a larger root doesn't lower it at a given width (h1 stays
+     visibly larger). Defaults reduce to clamp(5rem, 4.2176rem + 3.4784vw·k, 7rem).
+     --step-display resolves var() here at :root, so overriding --display-from/to on a subtree
+     only reaches elements that recompute it: text-step-display and h1 do. */
+  --display-from: 5;
+  --display-to: 7;
   --step-display: tan(
-    atan2(clamp(5rem, 4.2176rem + 3.4784vw * tan(atan2(1rem, 16px)), 7rem), 1rem)
+    atan2(
+      clamp(
+        var(--display-from) * 1rem,
+        var(--display-from) * 1rem + (var(--display-to) - var(--display-from)) * (100vw - 360px) *
+          tan(atan2(1rem, 16px)) / 57.5,
+        var(--display-to) * 1rem
+      ),
+      1rem
+    )
   );
 }
 
@@ -252,6 +265,18 @@
 }
 
 @utility text-step-display {
+  /* Recomputed here so [--display-from:4] [--display-to:9] on the element takes effect */
+  --step-display: tan(
+    atan2(
+      clamp(
+        var(--display-from) * 1rem,
+        var(--display-from) * 1rem + (var(--display-to) - var(--display-from)) * (100vw - 360px) *
+          tan(atan2(1rem, 16px)) / 57.5,
+        var(--display-to) * 1rem
+      ),
+      1rem
+    )
+  );
   --step: var(--step-display);
 
   font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));
@@ -283,6 +308,17 @@
 
   /* Same expressions as the text-step-* utilities. h1 uses the display step. */
   h1:where(:not([data-slot])) {
+    --step-display: tan(
+      atan2(
+        clamp(
+          var(--display-from) * 1rem,
+          var(--display-from) * 1rem + (var(--display-to) - var(--display-from)) * (100vw - 360px) *
+            tan(atan2(1rem, 16px)) / 57.5,
+          var(--display-to) * 1rem
+        ),
+        1rem
+      )
+    );
     --step: var(--step-display);
 
     font-size: calc(var(--type-base) * pow(var(--type-scale), var(--step)));

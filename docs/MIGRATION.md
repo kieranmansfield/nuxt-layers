@@ -1,4 +1,5 @@
-> **Upgrading to v6.3.0?** See [`MIGRATION-v6.3.0.md`](./MIGRATION-v6.3.0.md). The guides below cover older versions.
+> **Upgrading?** v6.3 → v6.4: [`MIGRATION-v6.4.0.md`](./MIGRATION-v6.4.0.md) · v6.2 → v6.3:
+> [`MIGRATION-v6.3.0.md`](./MIGRATION-v6.3.0.md). The guides below cover older versions.
 
 # Agent Migration Guide — Update an app to nuxt-layers v2.2.x
 

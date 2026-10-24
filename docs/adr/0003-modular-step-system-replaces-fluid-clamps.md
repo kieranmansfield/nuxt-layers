@@ -56,3 +56,19 @@ the element using it.
   steps (h1 4, h2 3, h3 2, h4 1) and `p`/`li` keep the body's 1.7 leading. Otherwise the
   24px copy sat at or above Nuxt UI's fixed `text-2xl`/`text-xl` prose headings. This needs
   `text-step-*` registered as a font-size group in tailwind-merge (`ui.tv.twMergeConfig`).
+
+## Amendment (v6.4.0): per-element display range
+
+The display step was computed once at `:root`, so retuning it for one element (a hero wordmark)
+meant restating the whole `tan(atan2(clamp(…)))` expression. Its two ends are now plain numbers,
+`--display-from: 5` and `--display-to: 7`, and `text-step-display` and the `h1` base rule
+recompute `--step-display` from them on the element. `class="[--display-from:4]
+[--display-to:9]"` retunes one element without touching the formula.
+
+- At the defaults the middle term reduces to the old `4.2176rem + 3.4784vw·k`; computed sizes
+  are identical (Chromium, Firefox and WebKit, 360–1600px).
+- The accessibility rules above are unchanged: the `tan(atan2(1rem, 16px))` factor keeps the
+  exponent independent of root font size, and the clamp keeps its rem terms.
+- `--step-display` still exists at `:root` (TypographyHeadline levels and theming read it). An
+  unlayered `--step-display` override on an element still beats the utility's, so existing
+  overrides keep working.

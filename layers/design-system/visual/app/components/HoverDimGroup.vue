@@ -12,10 +12,18 @@
     setup(props, { slots, attrs }) {
       const hoveredIndex = ref<number | null>(null)
 
+      // v-for over slots nests fragments (v-for → slot → element), so flatten all the way down
+      const flatten = (nodes: VNode[]): VNode[] =>
+        nodes.flatMap((node) =>
+          node.type === Fragment && Array.isArray(node.children)
+            ? flatten(node.children as VNode[])
+            : [node]
+        )
+
       return () => {
-        const children = (slots.default?.() ?? [])
-          .flatMap((node) => (node.type === Fragment ? (node.children as VNode[]) : [node]))
-          .filter((node) => typeof node.type === 'string' || typeof node.type === 'object')
+        const children = flatten(slots.default?.() ?? []).filter(
+          (node) => typeof node.type === 'string' || typeof node.type === 'object'
+        )
 
         const styledChildren = children.map((vnode, index) =>
           cloneVNode(vnode, {

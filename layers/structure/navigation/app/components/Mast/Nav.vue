@@ -1,19 +1,20 @@
 <script setup lang="ts">
-  // Positioning is the parent's call (e.g. `<MastNav class="fixed top-0 right-0" />`); the
-  // z-index stays here so the trigger always sits on the dropdown layer.
+  import type { ButtonProps } from '@nuxt/ui'
+
+  // A UButton styled by `mastNav.trigger` in app.config; attrs (class, label, icon…) win.
+  // Positioning is the parent's call, e.g. `<MastNav class="fixed top-0 right-0" />`.
+  defineOptions({ inheritAttrs: false })
+
   const { open } = useMastNav()
-  const z = useGridConfig().useZIndex('dropdown')
+  // app.config types the trigger loosely (see MastNavTrigger); UButton validates the values
+  const trigger = ((useAppConfig().mastNav as { trigger?: unknown } | undefined)?.trigger ??
+    {}) as ButtonProps
 </script>
 
 <template>
-  <button
-    aria-label="Open navigation menu"
-    class="flex cursor-pointer items-center justify-center border-0 bg-transparent p-4"
-    :style="{ zIndex: z }"
-    @click="() => open()"
-  >
-    <slot name="icon">
-      <UIcon name="lucide:menu" class="size-7" />
-    </slot>
-  </button>
+  <UButton aria-label="Open navigation menu" v-bind="{ ...trigger, ...$attrs }" @click="open">
+    <template v-if="$slots.default" #default>
+      <slot />
+    </template>
+  </UButton>
 </template>

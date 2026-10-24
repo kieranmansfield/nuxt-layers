@@ -18,7 +18,9 @@ font-size = round(--type-base × --type-scale ^ --step, --type-snap)
 | `--type-base`    | `var(--type-min)`, `var(--type-max)` ≥ 48rem | read per element                                               |
 | `--type-scale`   | `1.26`                                       | ≈ 2^(1/3) — three steps double a size                          |
 | `--type-snap`    | `0.0625rem`                                  | rounding interval; rem, never px, never 0                      |
-| `--step-display` | 5 → 7 across 360 → 1280px                    | `vw` term × root / 16px, so the exponent depends on width only |
+| `--display-from` | `5`                                          | display step at ≤ 360px; set per element                       |
+| `--display-to`   | `7`                                          | display step at ≥ 1280px; set per element                      |
+| `--step-display` | `--display-from` → `--display-to`            | `vw` term × root / 16px, so the exponent depends on width only |
 
 Utilities (`app/assets/css/typography.css`): `text-step-sm` (step −1), `text-step-0` …
 `text-step-12`, `text-step-display`. Everything is rem-based, so a larger user font size scales
@@ -54,6 +56,12 @@ Computed sizes (px, 16px root):
 | 7        | 81        | 97        |
 | 8 – 12   | 102 – 256 | 122 – 307 |
 | display  | 51 → 81   | 61 → 97   |
+
+**Per-element display range:** `text-step-display` and plain `h1` recompute `--step-display` from
+`--display-from`/`--display-to` on the element itself, so `class="text-step-display
+[--display-from:4] [--display-to:9]"` gives step 4 → 9 (≈42px at 390px, 154px at 1280px). The
+`:root` value (what `TypographyHeadline` levels and theming read) stays 5 → 7. Overriding
+`--step-display` itself on a subtree still works but means restating the whole expression.
 
 **Every step jumps ×1.2 at 48rem** — the base switches there (h1 ≈ 62 → 75px at 768px). This
 matches the reference system; it is not a bug.

@@ -79,9 +79,11 @@ open({ confirmLabel: 'Yes, delete it', onConfirm: () => toast.success('Deleted!'
   </template>
 </BaseModal>`
 
-  const overlayProviderSnippet = `<!-- Mounted once in the root layout (ui layer default.vue + playground app.vue) -->
-<UOverlayProvider />  <!-- renders all createModal / useModal overlays -->
-<UNotifications />    <!-- renders useToast / useAppToast notifications -->`
+  const overlayProviderSnippet = `<!-- UApp renders UOverlayProvider and the toaster itself -->
+<UApp>
+  <NuxtLayout><NuxtPage /></NuxtLayout>
+</UApp>
+<!-- Don't add another <UOverlayProvider />: every overlay would render twice -->`
 
   definePageMeta({
     layout: false,
@@ -332,10 +334,10 @@ open({ confirmLabel: 'Yes, delete it', onConfirm: () => toast.success('Deleted!'
             <template #header>
               <div class="flex items-center gap-2">
                 <UIcon name="lucide:cpu" class="text-primary" />
-                <h3 class="text-lg font-semibold">UOverlayProvider + UNotifications</h3>
+                <h3 class="text-lg font-semibold">UOverlayProvider comes with UApp</h3>
               </div>
               <p class="text-muted mt-1 text-sm">
-                Added to the ui layer's default layout and the playground's app.vue
+                One provider renders every createModal / useOverlay overlay
               </p>
             </template>
             <TypographyCodeBlock language="html" class="text-sm">{{
