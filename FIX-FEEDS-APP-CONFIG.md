@@ -57,41 +57,44 @@ Not affected: `useRuntimeConfig`, `useStorage` and `defineNitroPlugin` from `nit
 
 **Repository:** `/Users/kieranmansfield/Developer/layers/nuxt-layers`
 
-### Step 1 — Import `useAppConfig` from `nuxt/server`
+### Why not `nuxt/server`
 
-In each of the three files:
+The first fix imported `useAppConfig` from `nuxt/server`. That works when Nitro auto-imports are
+on (the KMCOM frontend), but not in Nuxt 5 mode (`experimental.nitroAutoImports: false`, the
+default under `compatibilityVersion: 5`, which the playground uses). Loading `nuxt/server`
+evaluates every `app.config.ts`, and their `defineAppConfig` only exists in Nitro as an
+auto-import. In the playground it threw `defineAppConfig is not defined` as an uncaught
+exception: the routes returned 500, and a `try`/`import()` fallback couldn't catch it because
+Nitro's dev build inlines dynamic imports.
 
-```diff
--import { useAppConfig } from 'nitropack/runtime'
-+import { useAppConfig } from 'nuxt/server'
-```
+### What shipped in 6.5.0
 
-`nuxt/server` exists from Nuxt 4.6.0. The catalog already pins `^4.6.1`; make sure the
-published peer range for `nuxt` doesn't allow anything older.
+`layers/core/server/utils/app-config.ts` exports `readServerAppConfig()`. It calls Nuxt's merged
+`useAppConfig`, which Nitro injects as an auto-import, and deliberately doesn't import it. When
+nothing is injected (`typeof useAppConfig !== 'function'`), it falls back to Nitro's own app
+config, empty as before. `feed-service.ts`, `routes/feed/demo.get.ts` and
+`routing/server/api/feature-flags.get.ts` call it through `#layers/core/server/utils/app-config`.
 
-`useAppConfig(event)` returns a per-request clone and `useAppConfig()` a frozen shared copy.
-These routes only read the config, so either works.
+Checked in the playground:
 
-### Step 2 — Stop it coming back
+| Nitro auto-imports | `/feed/rss`                                   | `/api/feature-flags`            |
+| ------------------ | --------------------------------------------- | ------------------------------- |
+| On                 | Titled from `site.title`, links to `site.url` | Returns `routingLayer.features` |
+| Off (Nuxt 5 mode)  | `My Site`, as before, no crash                | `{}`, as before, no crash       |
 
-Add an ESLint `no-restricted-imports` rule for server code:
+So sites in Nuxt 5 mode still get defaults until Nuxt can evaluate app.config.ts in Nitro
+without auto-imports. They can opt in with `experimental: { nitroAutoImports: true }`.
 
-```js
-'no-restricted-imports': ['error', {
-  paths: [{
-    name: 'nitropack/runtime',
-    importNames: ['useAppConfig'],
-    message: "nitropack's useAppConfig never sees app.config.ts. Import it from 'nuxt/server'.",
-  }],
-}],
-```
+### Stop it coming back
 
-### Step 3 — Check `collections` once the real config arrives
+An ESLint `no-restricted-imports` rule rejects `useAppConfig` from `nitropack/runtime` in layer
+server code. The helper's fallback is the one exception, with a disable comment saying why.
+
+### `collections`
 
 Nuxt's merged config gives `feedsLayer.feed.collections` as `['blog', 'blog']`: app config arrays
-concatenate across layers, so the consumer's `['blog']` is added to the layer default `['blog']`.
-The server never saw this before. No change needed: `feed-catalog.ts` already removes repeats
-with `unique()`, and the server only reads `defaultCollection`.
+concatenate across layers. No change needed: `feed-catalog.ts` already removes repeats with
+`unique()`, and the server only reads `defaultCollection`.
 
 ## Verification
 

@@ -410,7 +410,7 @@ export default defineConfigWithVueTs(
   },
 
   // nitropack's useAppConfig reads Nitro's own app config, which Nuxt never fills from
-  // app.config.ts, so server code reading it got {} (feeds said "My Site", feature flags {}).
+  // app.config.ts (feeds said "My Site", feature flags {}). Use core's readServerAppConfig().
   {
     files: ['layers/**/server/**/*.ts'],
     rules: {
@@ -421,7 +421,8 @@ export default defineConfigWithVueTs(
             {
               name: 'nitropack/runtime',
               importNames: ['useAppConfig'],
-              message: "It never sees app.config.ts. Import useAppConfig from 'nuxt/server'.",
+              message:
+                "It never sees app.config.ts. Use readServerAppConfig() from '#layers/core/server/utils/app-config'.",
             },
           ],
         },

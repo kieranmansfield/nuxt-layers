@@ -1,6 +1,6 @@
 import { buildFeed } from '../../utils/feed-service'
 import { defineEventHandler, getRequestURL, setHeader } from 'h3'
-import { useAppConfig } from 'nuxt/server'
+import { readServerAppConfig } from '#layers/core/server/utils/app-config'
 
 const RSS_ICON = `<svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M2.5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V3Z"/>
@@ -26,7 +26,7 @@ function formatDate(date: Date): string {
 }
 
 export default defineEventHandler(async (event) => {
-  const appConfig = useAppConfig()
+  const appConfig = readServerAppConfig()
   const feedConfig =
     (appConfig as { feedsLayer?: { feed?: { defaultCollection?: string } } }).feedsLayer?.feed ?? {}
   const defaultCollection = feedConfig.defaultCollection ?? 'blog'

@@ -1,6 +1,6 @@
 import { getContentFeedItems } from './content-adapter'
 import { getRequestURL, type H3Event } from 'h3'
-import { useAppConfig } from 'nuxt/server'
+import { readServerAppConfig } from '#layers/core/server/utils/app-config'
 
 import {
   createFeedConfig,
@@ -16,7 +16,7 @@ export async function buildFeed(
   collection?: string,
   options?: { unlimited?: boolean }
 ): Promise<{ items: FeedItem[]; config: FeedConfig }> {
-  const appConfig = useAppConfig() as unknown as AppFeedConfig
+  const appConfig = readServerAppConfig() as unknown as AppFeedConfig
   const feedConfig = appConfig.feedsLayer?.feed
   const requestUrl = getRequestURL(event)
   const { site, siteUrl } = resolveFeedSiteConfig(appConfig, requestUrl)
