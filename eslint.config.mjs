@@ -65,6 +65,10 @@ export default defineConfigWithVueTs(
       'layers/*/*/app/**/*.tsx',
       'layers/*/*/app/**/*.mts',
       'layers/*/*/app/**/*.vue',
+      'layers/*/*/*/*/app/**/*.ts',
+      'layers/*/*/*/*/app/**/*.tsx',
+      'layers/*/*/*/*/app/**/*.mts',
+      'layers/*/*/*/*/app/**/*.vue',
     ],
     languageOptions: {
       parserOptions: {
