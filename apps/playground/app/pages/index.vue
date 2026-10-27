@@ -341,6 +341,19 @@
       buttonClass: 'bg-teal-500/10 text-teal-500 hover:bg-teal-500/20',
     },
     {
+      name: 'Project Stats',
+      description: 'GitHub repo and Obsidian plugin stats cards, fetched server-side and cached',
+      loaded: true,
+      icon: 'i-lucide-chart-no-axes-column',
+      to: '/project-stats',
+      features: ['Stars & Forks', 'Release Downloads', 'Obsidian Listing', 'Portfolio Frontmatter'],
+      borderColor: 'border-teal-500/50',
+      bgColor: 'bg-teal-500/10',
+      iconBg: 'bg-teal-500/10',
+      iconColor: 'text-teal-500',
+      buttonClass: 'bg-teal-500/10 text-teal-500 hover:bg-teal-500/20',
+    },
+    {
       name: 'Metadata',
       description:
         'Unified metadata search and lookup across Open Library, Google Books, Comic Vine, and TMDB',
@@ -450,6 +463,12 @@
       layer: 'Metadata',
     },
     {
+      label: 'Project Stats',
+      to: '/project-stats',
+      icon: 'i-lucide-chart-no-axes-column',
+      layer: 'Project Stats',
+    },
+    {
       label: 'Baseline Status',
       to: '/baseline',
       icon: 'i-lucide-shield-check',
@@ -465,6 +484,7 @@
     Layout: { icon: 'text-amber-500', border: 'border-amber-500/50', bg: 'bg-amber-500/10' },
     Routing: { icon: 'text-orange-500', border: 'border-orange-500/50', bg: 'bg-orange-500/10' },
     Metadata: { icon: 'text-teal-500', border: 'border-teal-500/50', bg: 'bg-teal-500/10' },
+    'Project Stats': { icon: 'text-teal-500', border: 'border-teal-500/50', bg: 'bg-teal-500/10' },
     Typography: { icon: 'text-sky-500', border: 'border-sky-500/50', bg: 'bg-sky-500/10' },
     Scripts: { icon: 'text-lime-500', border: 'border-lime-500/50', bg: 'bg-lime-500/10' },
     Grid: { icon: 'text-green-500', border: 'border-green-500/50', bg: 'bg-green-500/10' },

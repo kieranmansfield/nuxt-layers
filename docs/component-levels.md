@@ -51,6 +51,9 @@ left out.
 | `layers/core/app/components/LoadingScreen.vue`                             | organism  |
 | `layers/data/forms/app/components/Form/Contact.vue`                        | organism  |
 | `layers/data/forms/app/components/Form/Field.vue`                          | molecule  |
+| `layers/data/project-stats/app/components/ProjectStats/GithubCard.vue`     | organism  |
+| `layers/data/project-stats/app/components/ProjectStats/ObsidianCard.vue`   | organism  |
+| `layers/data/project-stats/app/components/ProjectStats/Stat.vue`           | molecule  |
 | `layers/delivery/feeds/app/components/Feeds/Index.vue`                     | organism  |
 | `layers/delivery/feeds/app/components/Feeds/RouteCard.vue`                 | molecule  |
 | `layers/delivery/scripts/app/components/BaselineStatus.vue`                | atom      |

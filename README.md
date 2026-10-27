@@ -27,7 +27,7 @@ export default defineNuxtConfig({
 | **theming** / **typography** / **visual** | Design system — accents, type, gradients, modals |
 | **layout** / **navigation** / **routing** | Structure — grids, stacks, nav components, feature flags |
 | **content** | CMS — @nuxt/content, Nuxt Studio |
-| **database** / **auth** / **metadata** / **mailer** / **forms** | Data — Drizzle + Neon, GitHub OAuth, metadata providers, Resend, Zod forms |
+| **database** / **auth** / **metadata** / **project-stats** / **mailer** / **forms** | Data — Drizzle + Neon, GitHub OAuth, metadata providers, GitHub/Obsidian project stats, Resend, Zod forms |
 | **scroll** / **animations** / **transitions** / **page-transitions** / **motion** | Motion — GSAP, Locomotive Scroll |
 | **canvas** / **shader** | Render — TresJS, WebGPU/TSL |
 | **seo** / **scripts** / **feeds** | Delivery — @nuxtjs/seo, @nuxt/scripts, RSS/Atom/JSON feeds |

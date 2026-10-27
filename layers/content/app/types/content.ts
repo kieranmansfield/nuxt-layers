@@ -61,6 +61,10 @@ export type PortfolioItem = {
   year?: number
   /** External project URL */
   url?: string
+  /** GitHub repo (`owner/name` or URL) whose stats card shows on the item page */
+  github?: string
+  /** Obsidian community plugin id whose listing card shows on the item page */
+  obsidian?: string
   featured: boolean
   colors: PortfolioColor[]
   typography: PortfolioFont[]

@@ -31,7 +31,8 @@
     "./layers/metadata/providers/comicvine": "./layers/data/metadata/providers/comicvine/nuxt.config.ts",
     "./layers/metadata/providers/openlibrary": "./layers/data/metadata/providers/openlibrary/nuxt.config.ts",
     "./layers/metadata/providers/google-books": "./layers/data/metadata/providers/google-books/nuxt.config.ts",
-    "./layers/metadata/providers/themoviedb": "./layers/data/metadata/providers/themoviedb/nuxt.config.ts"
+    "./layers/metadata/providers/themoviedb": "./layers/data/metadata/providers/themoviedb/nuxt.config.ts",
+    "./layers/project-stats": "./layers/data/project-stats/nuxt.config.ts"
   },
   "files": [
     "layers/*/nuxt.config.ts",

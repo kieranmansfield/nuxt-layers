@@ -25,6 +25,13 @@ export default defineContentConfig({
 })
 ```
 
+## GitHub and Obsidian stats on portfolio items
+
+Portfolio frontmatter takes `github: owner/name` (or a github.com URL) and `obsidian: <plugin-id>`;
+`PortfolioDetail` renders a `ProjectStatsGithubCard` / `ProjectStatsObsidianCard` for each from
+the `project-stats` layer (which this layer extends). Set `NUXT_PROJECT_STATS_LAYER_GITHUB_TOKEN`
+in production — unauthenticated GitHub calls are capped at 60/hour per server IP.
+
 **Never pass `schema:` to `defineCollection`.** c12 loads each config through jiti with
 `moduleCache: false`, so zod validators are never initialized and the call throws. The schema
 objects exported from this layer's `content.config.ts` exist for type inference only;

@@ -55,10 +55,11 @@ This is expected and harmless. The layers ship `.ts` configs, Node refuses to st
 | **layout**           | `kmcom-nuxt-layers/layers/layout`           | core                                 |
 | **navigation**       | `kmcom-nuxt-layers/layers/navigation`       | core, scroll, layout, typography     |
 | **routing**          | `kmcom-nuxt-layers/layers/routing`          | core                                 |
-| **content**          | `kmcom-nuxt-layers/layers/content`          | core                                 |
+| **content**          | `kmcom-nuxt-layers/layers/content`          | core, project-stats                  |
 | **database**         | `kmcom-nuxt-layers/layers/database`         | core                                 |
 | **auth**             | `kmcom-nuxt-layers/layers/auth`             | core                                 |
 | **metadata**         | `kmcom-nuxt-layers/layers/metadata`         | core                                 |
+| **project-stats**    | `kmcom-nuxt-layers/layers/project-stats`    | core                                 |
 | **mailer**           | `kmcom-nuxt-layers/layers/mailer`           | core                                 |
 | **forms**            | `kmcom-nuxt-layers/layers/forms`            | mailer                               |
 | **scroll**           | `kmcom-nuxt-layers/layers/scroll`           | core                                 |
