@@ -179,6 +179,7 @@
     "locomotive-scroll": "^5.0.1",
     "nuxt": "^4.6.1",
     "nuxt-auth-utils": "^0.5.0",
+    "nuxt-studio": "^1.8.0",
     "pinia": "^3.0.4 || ^4.1.0",
     "resend": "^4.0.0",
     "tailwindcss": "^4.3.0",
