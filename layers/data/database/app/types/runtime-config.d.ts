@@ -1,5 +1,5 @@
-declare module "@nuxt/schema" {
+declare module '@nuxt/schema' {
   interface RuntimeConfig {
-    databaseLayer?: { url: string };
+    databaseLayer?: { url: string }
   }
 }

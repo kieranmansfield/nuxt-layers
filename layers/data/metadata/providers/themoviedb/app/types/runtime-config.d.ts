@@ -1,9 +1,9 @@
-declare module "@nuxt/schema" {
+declare module '@nuxt/schema' {
   interface RuntimeConfig {
     metadataTmdb: {
-      apiKey: string;
-      baseUrl: string;
-      imageBaseUrl: string;
-    };
+      apiKey: string
+      baseUrl: string
+      imageBaseUrl: string
+    }
   }
 }

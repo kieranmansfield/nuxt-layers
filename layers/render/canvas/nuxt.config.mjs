@@ -11,7 +11,7 @@
  * at module scope, crashing SSR startup. We return a lightweight stub instead.
  */
 function threeWebGPUSSRStub() {
-    const tslNoop = `
+  const tslNoop = `
 const n = new Proxy(function noop() { return n }, {
   get(_t, k) {
     if (k === 'then' || k === Symbol.toPrimitive || k === Symbol.iterator || k === Symbol.toStringTag) return undefined
@@ -20,95 +20,96 @@ const n = new Proxy(function noop() { return n }, {
   apply() { return n },
   construct() { return Object.create(n) },
 })
-`;
-    const tslNames = [
-        // Constructors
-        'float',
-        'vec2',
-        'vec3',
-        'vec4',
-        'color',
-        'mat2',
-        'mat3',
-        'mat4',
-        // Uniforms / attributes
-        'uniform',
-        'attribute',
-        'varying',
-        // Function definition
-        'Fn',
-        // Arithmetic
-        'add',
-        'sub',
-        'mul',
-        'div',
-        'mod',
-        'abs',
-        'sign',
-        'floor',
-        'ceil',
-        'fract',
-        'round',
-        'min',
-        'max',
-        'clamp',
-        'mix',
-        'smoothstep',
-        'pow',
-        'sqrt',
-        'exp',
-        'log',
-        // Trigonometry
-        'sin',
-        'cos',
-        'tan',
-        'asin',
-        'acos',
-        'atan',
-        'atan2',
-        // Vector operations
-        'dot',
-        'cross',
-        'normalize',
-        'length',
-        'distance',
-        'reflect',
-        'refract',
-        // Matrix operations
-        'transpose',
-        'inverse',
-        // Texture
-        'texture',
-        'sampler',
-        // Comparison / selection
-        'lessThan',
-        'lessThanEqual',
-        'greaterThan',
-        'greaterThanEqual',
-        'step',
-        'select',
-        'cond',
-        // Built-in inputs
-        'uv',
-        'time',
-        'EPSILON',
-        'Loop',
-        'positionLocal',
-        'positionWorld',
-        'positionView',
-        'normalLocal',
-        'normalWorld',
-        'normalView',
-        'positionViewDirection',
-        'cameraPosition',
-        // Timers
-        'timerGlobal',
-        'timerLocal',
-        'timerDelta',
-    ];
-    const stub = tslNoop +
-        tslNames.map((name) => `export const ${name} = n`).join('\n') +
-        `
+`
+  const tslNames = [
+    // Constructors
+    'float',
+    'vec2',
+    'vec3',
+    'vec4',
+    'color',
+    'mat2',
+    'mat3',
+    'mat4',
+    // Uniforms / attributes
+    'uniform',
+    'attribute',
+    'varying',
+    // Function definition
+    'Fn',
+    // Arithmetic
+    'add',
+    'sub',
+    'mul',
+    'div',
+    'mod',
+    'abs',
+    'sign',
+    'floor',
+    'ceil',
+    'fract',
+    'round',
+    'min',
+    'max',
+    'clamp',
+    'mix',
+    'smoothstep',
+    'pow',
+    'sqrt',
+    'exp',
+    'log',
+    // Trigonometry
+    'sin',
+    'cos',
+    'tan',
+    'asin',
+    'acos',
+    'atan',
+    'atan2',
+    // Vector operations
+    'dot',
+    'cross',
+    'normalize',
+    'length',
+    'distance',
+    'reflect',
+    'refract',
+    // Matrix operations
+    'transpose',
+    'inverse',
+    // Texture
+    'texture',
+    'sampler',
+    // Comparison / selection
+    'lessThan',
+    'lessThanEqual',
+    'greaterThan',
+    'greaterThanEqual',
+    'step',
+    'select',
+    'cond',
+    // Built-in inputs
+    'uv',
+    'time',
+    'EPSILON',
+    'Loop',
+    'positionLocal',
+    'positionWorld',
+    'positionView',
+    'normalLocal',
+    'normalWorld',
+    'normalView',
+    'positionViewDirection',
+    'cameraPosition',
+    // Timers
+    'timerGlobal',
+    'timerLocal',
+    'timerDelta',
+  ]
+  const stub =
+    tslNoop +
+    tslNames.map((name) => `export const ${name} = n`).join('\n') +
+    `
 // WebGPU class stubs (used by three/webgpu imports)
 export class MeshBasicNodeMaterial {
   constructor() { this.colorNode = null; this.side = null }
@@ -121,51 +122,49 @@ export class TextureLoader {
 }
 export class UniformNode {}
 export default {}
-`;
-    return {
-        name: 'three-webgpu-ssr-stub',
-        enforce: 'pre',
-        transform(_code, id, options) {
-            if (!options?.ssr)
-                return null;
-            if (!id.includes('three.webgpu.js') && !id.includes('three.tsl.js'))
-                return null;
-            return { code: stub, map: null };
-        },
-    };
+`
+  return {
+    name: 'three-webgpu-ssr-stub',
+    enforce: 'pre',
+    transform(_code, id, options) {
+      if (!options?.ssr) return null
+      if (!id.includes('three.webgpu.js') && !id.includes('three.tsl.js')) return null
+      return { code: stub, map: null }
+    },
+  }
 }
 export default defineNuxtConfig({
-    $meta: {
-        name: 'canvas',
+  $meta: {
+    name: 'canvas',
+  },
+  compatibilityDate: '2026-06-06',
+  extends: ['../../core'],
+  typescript: {
+    typeCheck: false,
+    strict: true,
+  },
+  modules: ['@tresjs/nuxt'],
+  tres: {
+    devtools: true,
+  },
+  alias: {
+    // More specific alias must be registered first — Vite/Rollup alias
+    // resolution is order-dependent (first prefix match wins), so
+    // '#layers/canvas' would otherwise shadow '#layers/canvas/types'
+    // and resolve it to '<root>/types/...' instead of '<root>/app/types/...'.
+    '#layers/canvas/types': `${import.meta.dirname}/app/types`,
+    '#layers/canvas': import.meta.dirname,
+  },
+  vite: {
+    plugins: [threeWebGPUSSRStub()],
+    optimizeDeps: {
+      include: ['three', 'three/webgpu', 'three/tsl'],
     },
-    compatibilityDate: '2026-06-06',
-    extends: ['../../core'],
-    typescript: {
-        typeCheck: false,
-        strict: true,
+    build: {
+      target: 'esnext',
     },
-    modules: ['@tresjs/nuxt'],
-    tres: {
-        devtools: true,
+    ssr: {
+      noExternal: ['three'],
     },
-    alias: {
-        // More specific alias must be registered first — Vite/Rollup alias
-        // resolution is order-dependent (first prefix match wins), so
-        // '#layers/canvas' would otherwise shadow '#layers/canvas/types'
-        // and resolve it to '<root>/types/...' instead of '<root>/app/types/...'.
-        '#layers/canvas/types': `${import.meta.dirname}/app/types`,
-        '#layers/canvas': import.meta.dirname,
-    },
-    vite: {
-        plugins: [threeWebGPUSSRStub()],
-        optimizeDeps: {
-            include: ['three', 'three/webgpu', 'three/tsl'],
-        },
-        build: {
-            target: 'esnext',
-        },
-        ssr: {
-            noExternal: ['three'],
-        },
-    },
-});
+  },
+})

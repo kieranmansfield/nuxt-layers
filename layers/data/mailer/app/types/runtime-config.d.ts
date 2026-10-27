@@ -1,9 +1,9 @@
-declare module "@nuxt/schema" {
+declare module '@nuxt/schema' {
   interface RuntimeConfig {
     mailerLayer?: {
-      resendApiKey: string;
-      emailFrom: string;
-      emailTo: string;
-    };
+      resendApiKey: string
+      emailFrom: string
+      emailTo: string
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { ACCENT_PALETTES } from '../../server/utils/accent-css.mjs';
+import { ACCENT_PALETTES } from '../../server/utils/accent-css.mjs'
 /**
  * Derives Nuxt UI's `ui.colors` shape from the same accent-relationship table
  * accent-css.ts uses for its per-accent CSS-var generation, so app.config
@@ -9,11 +9,11 @@ import { ACCENT_PALETTES } from '../../server/utils/accent-css.mjs';
  * project with no app path aliases registered.
  */
 export function resolveUiColors(accent) {
-    const { secondary, info } = ACCENT_PALETTES[accent];
-    return {
-        primary: accent,
-        secondary,
-        info,
-        neutral: 'neutral',
-    };
+  const { secondary, info } = ACCENT_PALETTES[accent]
+  return {
+    primary: accent,
+    secondary,
+    info,
+    neutral: 'neutral',
+  }
 }
