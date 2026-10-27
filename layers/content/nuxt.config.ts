@@ -1,11 +1,14 @@
-// Conditionally load nuxt-studio if installed (optional peer dependency) and in development
+import { createRequire } from 'node:module'
+
+// Load nuxt-studio whenever the app has it installed (optional peer dependency). In dev it edits
+// local files; in production the app supplies `studio.repository` + OAuth env vars, or opts out
+// with `$production: { studio: false }` (Nuxt skips a module whose config key is `false`).
+// Resolve rather than import: nuxt-studio 1.8's entry can't be imported outside Nuxt's loader.
 const studioModule: string[] = []
-if (process.env.NODE_ENV === 'development') {
-  try {
-    await import('nuxt-studio')
-    studioModule.push('nuxt-studio')
-  } catch {}
-}
+try {
+  createRequire(import.meta.url).resolve('nuxt-studio')
+  studioModule.push('nuxt-studio')
+} catch {}
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
