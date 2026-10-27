@@ -6,6 +6,7 @@ import { describe, expect, it } from 'vitest'
 import {
   DEFAULTS,
   frontMatter,
+  loadConfig,
   merge,
   resolveSite,
   sitesFromContent,
@@ -177,5 +178,22 @@ describe('capture naming', () => {
     header.writeUInt32BE(1206, 16)
     header.writeUInt32BE(2622, 20)
     expect(pngSize(header)).toEqual([1206, 2622])
+  })
+})
+
+describe('capture config loading', () => {
+  it('hands the helpers to a function config', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'capture-config-'))
+    writeFileSync(join(dir, 'site.md'), '---\nlink: https://x.dev\n---\n')
+    const file = join(dir, 'capture.config.mjs')
+    writeFileSync(
+      file,
+      `export default async ({ sitesFromContent }) => ({
+        themes: ['dark'],
+        sites: await sitesFromContent(${JSON.stringify(dir)}),
+      })`
+    )
+    const { config } = await loadConfig(file)
+    expect(config).toEqual({ themes: ['dark'], sites: [{ name: 'site', url: 'https://x.dev' }] })
   })
 })

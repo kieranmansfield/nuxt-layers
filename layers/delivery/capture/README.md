@@ -58,6 +58,15 @@ export default defineCaptureConfig({
 })
 ```
 
+The default export can also be a function, handed the same helpers, so the config needs no
+import from this package:
+
+```js
+export default async ({ sitesFromContent }) => ({
+  sites: await sitesFromContent('content/portfolio'),
+})
+```
+
 Every setting can be set globally or per site (`{ name, url, ...overrides }`), and command-line
 flags override both. Defaults, in `cli/lib/config.mjs`:
 

@@ -101,14 +101,21 @@ export async function sitesFromContent(dir, { field = 'link' } = {}) {
   return sites
 }
 
-/** Load capture.config.{mjs,js} from cwd (or `path`). Missing file = defaults, no sites. */
+/**
+ * Load capture.config.{mjs,js} from cwd (or `path`). Missing file = defaults, no sites.
+ * The default export is the config, or a function given the helpers that returns it — which
+ * keeps the config free of imports from this package.
+ */
 export async function loadConfig(path) {
   const candidates = path ? [path] : ['capture.config.mjs', 'capture.config.js']
   const file = candidates.map((p) => resolve(p)).find((p) => existsSync(p))
   if (path && !file) throw new Error(`Config not found: ${path}`)
   if (!file) return { file: null, config: {} }
   const mod = await import(pathToFileURL(file).href)
-  const config = typeof mod.default === 'function' ? await mod.default() : mod.default
+  const config =
+    typeof mod.default === 'function'
+      ? await mod.default({ DEFAULTS, sitesFromContent })
+      : mod.default
   return { file, config: { ...config, sites: await config?.sites } }
 }
 
