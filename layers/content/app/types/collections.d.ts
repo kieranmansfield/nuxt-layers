@@ -8,7 +8,13 @@
  * file adds the frontmatter fields so they stay typed. Keep in sync with the
  * schemas in `content.config.ts`.
  */
-import type { ContentAuthor, GalleryImage, PortfolioColor, PortfolioFont } from './content'
+import type {
+  ContentAuthor,
+  GalleryImage,
+  PortfolioColor,
+  PortfolioFont,
+  PortfolioStackEntry,
+} from './content'
 
 declare module '@nuxt/content' {
   interface ContentCollectionItem {
@@ -34,6 +40,7 @@ declare module '@nuxt/content' {
     featured?: boolean
     colors?: PortfolioColor[]
     typography?: PortfolioFont[]
+    stack?: PortfolioStackEntry[]
   }
 
   interface GalleryCollectionItem {

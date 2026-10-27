@@ -35,6 +35,21 @@ export type PortfolioFont = {
   usage?: string
 }
 
+/**
+ * One technology in a project's stack. `icon` (any Iconify name, e.g. `i-logos-vue`) and `color`
+ * (brand hex) fall back to the built-in table in `utils/portfolioStack.ts` when omitted.
+ */
+export type PortfolioStackItem = {
+  name: string
+  icon?: string
+  color?: string
+  /** Makes the card a link (docs, repo, …) */
+  url?: string
+}
+
+/** Frontmatter accepts a bare name (`- Vue`) or the full object */
+export type PortfolioStackEntry = string | PortfolioStackItem
+
 export type BaseContent = {
   title: string
   description?: string
@@ -64,6 +79,7 @@ export type PortfolioItem = {
   featured: boolean
   colors: PortfolioColor[]
   typography: PortfolioFont[]
+  stack: PortfolioStackEntry[]
 } & BaseContent
 
 export type GalleryItem = {

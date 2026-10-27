@@ -33,6 +33,23 @@ typography:
   - name: Geist Mono
     weights: 400
     usage: Prices, sizes, stock codes
+stack:
+  - Nuxt
+  - Vue
+  - TypeScript
+  - Tailwind CSS
+  - JavaScript
+  - Pinia
+  - Vite
+  - Vitest
+  - GSAP
+  - PostgreSQL
+  - Drizzle
+  - name: Netlify
+    url: https://www.netlify.com
+  - name: Shopify
+    icon: i-lucide-shopping-bag
+    color: '#95bf47'
 ---
 
 # Marché — E-Commerce Rebuild

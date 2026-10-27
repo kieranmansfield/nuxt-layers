@@ -54,7 +54,7 @@ and omits `grid`, `feeds` and the `metadata` providers.
 | `database`         | Drizzle ORM + Neon Postgres connection; useSql(), useDrizzle(schema) server utils              | `core`                                                    |
 | `auth`             | nuxt-auth-utils + GitHub OAuth handler; sealed-cookie sessions, opt-in `auth` route middleware | `core`                                                    |
 | `theming`          | Design tokens and theming utilities                                                            | `core`, `typography`                                      |
-| `content`          | Nuxt Content v3 collections and components                                                     | `core`, `layout`, `visual`                                |
+| `content`          | Nuxt Content v3 collections and components                                                     | `core`, `layout`, `visual`, `animations`                  |
 | `routing`          | Advanced routing, maintenance mode, feature flags                                              | `core`                                                    |
 
 ## Alias Pattern

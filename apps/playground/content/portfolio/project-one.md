@@ -36,6 +36,12 @@ typography:
   - name: IBM Plex Mono
     weights: 400
     usage: Labels & data
+stack:
+  - Figma
+  - HTML
+  - CSS
+  - JavaScript
+  - Astro
 ---
 
 # Nocturn — Brand Identity
