@@ -2,7 +2,7 @@
   "name": "kmcom-layer-layout",
   "type": "module",
   "version": "0.0.1",
-  "main": "./nuxt.config.ts",
+  "main": "./nuxt.config.mjs",
   "scripts": {
     "typecheck": "vue-tsc --noEmit -p ../../../tsconfig.typecheck.json",
     "dev": "nuxi dev .playground",
