@@ -175,6 +175,12 @@ export default defineConfig({
           // need happy-dom + the vue plugin, unlike the plain-function 'unit' project).
           include: ['tests/vue/**/*.{test,spec}.ts', 'layers/**/app/components/**/*.test.ts'],
           environment: 'happy-dom',
+          // Vitest 5 turns the on-disk module cache (node_modules/.vitest-cache) on
+          // by default and keys each entry on that file's own source only. A
+          // compiled SFC also depends on the files its `defineProps<T>()` type
+          // resolves from, so editing a `layers/**/types/*.ts` file served the
+          // stale props until the cache was deleted.
+          fsModuleCache: false,
         },
       },
       await withStructuredCloneFallback(() =>
@@ -183,6 +189,13 @@ export default defineConfig({
             name: 'nuxt',
             include: ['tests/nuxt/**/*.{test,spec}.ts'],
             hookTimeout: 30000,
+            // Same reason as 'vue', plus: on a warm cache, Vitest's stale-import
+            // check re-resolves @nuxt/test-utils' virtual `nuxt-vitest-app-entry.js`
+            // by URL, which yields a module-graph node whose id isn't the real path,
+            // so its relative imports fail with "Failed to resolve import
+            // ./diagnostics/core.js". Nuxt's auto-import transforms also depend on
+            // state outside the file being cached.
+            fsModuleCache: false,
             environmentOptions: {
               nuxt: {
                 rootDir: nuxtRootDir,
