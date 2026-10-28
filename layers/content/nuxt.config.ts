@@ -34,7 +34,13 @@ export default defineNuxtConfig({
     name: 'content',
   },
 
-  extends: ['../core', '../structure/layout', '../design-system/visual', '../data/project-stats', '../motion/animations'],
+  extends: [
+    '../core',
+    '../structure/layout',
+    '../design-system/visual',
+    '../data/project-stats',
+    '../motion/animations',
+  ],
 
   alias: {
     '#layers/content': import.meta.dirname,

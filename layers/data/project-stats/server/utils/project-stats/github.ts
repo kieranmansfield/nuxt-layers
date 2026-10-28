@@ -1,6 +1,8 @@
 import { createError } from 'h3'
 import type { GithubRepoStats } from '#layers/project-stats/shared/types'
 
+import { externalFetch } from './external-fetch'
+
 // The subset of the GitHub REST responses the card reads
 export type GithubApiRepo = {
   full_name: string
@@ -92,7 +94,7 @@ export async function fetchGithubRepoStats(slug: string, token = ''): Promise<Gi
 
   let repo: GithubApiRepo
   try {
-    repo = await $fetch<GithubApiRepo>(`${API}/repos/${slug}`, { headers, timeout: 10000 })
+    repo = await externalFetch<GithubApiRepo>(`${API}/repos/${slug}`, { headers, timeout: 10000 })
   } catch (err) {
     const status = statusOf(err)
     if (status === 404) {
@@ -108,11 +110,14 @@ export async function fetchGithubRepoStats(slug: string, token = ''): Promise<Gi
   }
 
   // Releases only add the download count — a failure here shouldn't hide the rest of the card
-  const releases = await $fetch<GithubApiRelease[]>(`${API}/repos/${repo.full_name}/releases`, {
-    headers,
-    timeout: 10000,
-    query: { per_page: 100 },
-  }).catch(() => [])
+  const releases = await externalFetch<GithubApiRelease[]>(
+    `${API}/repos/${repo.full_name}/releases`,
+    {
+      headers,
+      timeout: 10000,
+      query: { per_page: 100 },
+    }
+  ).catch(() => [])
 
   return normaliseGithubRepo(repo, releases)
 }

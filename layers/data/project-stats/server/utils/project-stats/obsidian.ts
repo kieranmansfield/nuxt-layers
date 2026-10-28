@@ -1,6 +1,8 @@
 import { createError } from 'h3'
 import type { ObsidianPluginStats } from '#layers/project-stats/shared/types'
 
+import { externalFetch } from './external-fetch'
+
 // The community plugin directory that obsidian.md/plugins is built from
 const RELEASES = 'https://raw.githubusercontent.com/obsidianmd/obsidian-releases/HEAD'
 
@@ -85,7 +87,8 @@ export function normaliseObsidianPlugin(
 }
 
 // raw.githubusercontent.com serves JSON as text/plain, so parse explicitly
-const getJson = <T>(url: string) => $fetch<T>(url, { parseResponse: JSON.parse, timeout: 15000 })
+const getJson = <T>(url: string) =>
+  externalFetch<T>(url, { parseResponse: JSON.parse, timeout: 15000 })
 
 type Directory = {
   listing: ObsidianListingEntry[]
