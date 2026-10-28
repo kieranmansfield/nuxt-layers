@@ -18,8 +18,10 @@ dist
 # Local History
 .history
 
-# VSCode
-.vscode/
+# VSCode (shared formatter/extension settings are committed; everything else stays local)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 
 # JetBrains/WebStorm
 .idea/
