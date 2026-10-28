@@ -22,19 +22,19 @@ Nuxt layers provide a powerful way to organize and share code across projects.
 Each layer is an independent, composable package:
 
 ::card-group
-  :::card{title="Core" icon="i-lucide-box"}
+  :::card{icon="i-lucide-box" title="Core"}
   Foundation utilities and device detection.
   :::
 
-  :::card{title="UI" icon="i-lucide-palette"}
+  :::card{icon="i-lucide-palette" title="UI"}
   Typography, colors, and media components.
   :::
 
-  :::card{title="Content" icon="i-lucide-file-text"}
+  :::card{icon="i-lucide-file-text" title="Content"}
   Collections, composables, and rendering.
   :::
 
-  :::card{title="Layout" icon="i-lucide-layout"}
+  :::card{icon="i-lucide-layout" title="Layout"}
   Grid systems and page structure.
   :::
 ::

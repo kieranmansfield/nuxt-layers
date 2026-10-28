@@ -11,7 +11,9 @@
     "build": "CONTENT_STANDALONE=true nuxi build",
     "generate": "CONTENT_STANDALONE=true nuxi generate",
     "preview": "nuxt preview .playground",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "content:format": "node scripts/format-content.mjs",
+    "content:format:check": "node scripts/format-content.mjs --check"
   },
   "devDependencies": {
     "@nuxt/content": "catalog:"

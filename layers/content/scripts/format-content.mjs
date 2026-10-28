@@ -93,6 +93,16 @@ function padBlankLinesInComponents(markdown) {
   return lines.join('\n')
 }
 
+// Comark nodes are [tag, attrs, ...children]; text nodes are strings.
+function sortAttributes(node) {
+  if (!Array.isArray(node) || node[0] === null) return node
+  const [tag, attrs, ...children] = node
+  const sorted = Object.fromEntries(
+    Object.entries(attrs ?? {}).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+  )
+  return [tag, sorted, ...children.map(sortAttributes)]
+}
+
 async function* markdownFiles(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     const path = join(dir, entry.name)
@@ -112,8 +122,12 @@ async function format(source) {
     linkify: false,
     plugins: [emoji(), toc({ depth: 2, searchDepth: 2, title: '', links: [] })],
   })
-  // Same render options as Studio's contentFromMarkdownDocument.
-  const markdown = await renderMarkdown(tree, { blockAttributesStyle: 'frontmatter' })
+  // Same render options as Studio's contentFromMarkdownDocument. Studio renders from the stored
+  // Nuxt Content document, whose props come back key-sorted, so sort attributes to match.
+  const markdown = await renderMarkdown(
+    { ...tree, nodes: tree.nodes.map(sortAttributes) },
+    { blockAttributesStyle: 'frontmatter' }
+  )
   return padBlankLinesInComponents(markdown) + '\n'
 }
 

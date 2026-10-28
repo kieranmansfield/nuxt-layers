@@ -47,3 +47,39 @@ harmless: Nuxt installs a module once per name).
 
 Studio builds its frontmatter forms from each collection's schema; a collection without one is
 edited as raw YAML. That interacts with the `schema:` caveat above.
+
+## Comark formatting
+
+Studio (1.8+) reads and writes markdown through [Comark](https://comark.dev), the successor to
+MDC. Nuxt Content still renders through `@nuxtjs/mdc`; the syntax is the same, only the formatting
+differs. When a file isn't in Comark's canonical form, Studio shows "Comark formatting available"
+(production) or silently rewrites the file on open (dev), and the first edit reformats the whole
+file.
+
+- **`pnpm content:format`** (root: the playground's content; in an app:
+  `node <this layer>/scripts/format-content.mjs content`) rewrites files into exactly what Studio
+  emits; `content:format:check` fails on any that aren't. `pnpm check` and CI run the check.
+- The script loads comark through the installed `nuxt-studio`, so it always matches that Studio
+  version. Its parse/render options mirror Studio's `documentFromMarkdownContent` /
+  `contentFromMarkdownDocument`, plus a key sort on attributes (Studio renders from the stored
+  Content document, whose props come back sorted). Re-check it against Studio after a Studio bump:
+  open a file in dev and `git diff` — Studio writes its own output to disk.
+- **oxfmt must not touch content markdown** — `vite.config.ts` ignores `**/content/**/*.md`. oxfmt
+  doesn't know component syntax: it reads `::name` + `---` (a YAML props block) as a setext heading
+  and rewrites it as `## ::name` plus a horizontal rule, breaking the component.
+- Comark needs js-yaml 5. Don't widen the `js-yaml` override in `pnpm-workspace.yaml` back to all
+  versions — forcing 4.x breaks Studio's editor (`mergeTag` export missing).
+
+## `::` components
+
+Plain markdown by default. `::` components are for things markdown can't express, and Studio's
+slash menu offers only a curated set (`studioComponentGroups` in `nuxt.config.ts`): callouts
+(callout/note/tip/warning/caution), card/card-group, steps, tabs/tabs-item, code-group, and
+`Figure`. Everything else still renders and stays editable in existing content.
+
+- Component names are public API for content — renaming one breaks every file that uses it.
+- Components in `app/components/content/` are marked global (a `components:extend` hook), since
+  Studio only lists global components. To offer one in Studio, add its PascalCase name (as
+  nuxt-component-meta reports it, e.g. `ProseTip`, `Figure`) to a group; an app can override the
+  groups through its own `studio.editor.components`.
+- Add new rows to `docs/component-levels.md` as usual.

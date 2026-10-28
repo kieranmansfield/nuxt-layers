@@ -10,7 +10,7 @@ This page demonstrates the **content layer** built on top of `@nuxt/content` v3.
 ## Features
 
 ::tabs
-  :::tabs-item{label="Blog" icon="i-lucide-pen-line"}
+  :::tabs-item{icon="i-lucide-pen-line" label="Blog"}
   Full-featured blog with authors, tags, drafts, and surround navigation.
   
   ```ts
@@ -21,7 +21,7 @@ This page demonstrates the **content layer** built on top of `@nuxt/content` v3.
   ```
   :::
 
-  :::tabs-item{label="Portfolio" icon="i-lucide-briefcase"}
+  :::tabs-item{icon="i-lucide-briefcase" label="Portfolio"}
   Showcase projects with client info, tags, and featured filtering.
   
   ```ts
@@ -31,7 +31,7 @@ This page demonstrates the **content layer** built on top of `@nuxt/content` v3.
   ```
   :::
 
-  :::tabs-item{label="Gallery" icon="i-lucide-images"}
+  :::tabs-item{icon="i-lucide-images" label="Gallery"}
   Image collections with lightbox viewing and metadata.
   
   ```ts
@@ -43,22 +43,22 @@ This page demonstrates the **content layer** built on top of `@nuxt/content` v3.
 ## Content Types
 
 ::card-group
-  :::card{title="Blog" icon="i-lucide-pen-line" to="/blog"}
+  :::card{icon="i-lucide-pen-line" title="Blog" to="/blog"}
   Articles and posts with authors, tags, and draft support.
   :::
 
-  :::card{title="Portfolio" icon="i-lucide-briefcase" to="/portfolio"}
+  :::card{icon="i-lucide-briefcase" title="Portfolio" to="/portfolio"}
   Projects and work with client info and featured filtering.
   :::
 
-  :::card{title="Gallery" icon="i-lucide-images" to="/gallery"}
+  :::card{icon="i-lucide-images" title="Gallery" to="/gallery"}
   Photo collections with image metadata.
   :::
 ::
 
 ## Getting Started
 
-::callout{icon="i-lucide-rocket" color="primary"}
+::callout{color="primary" icon="i-lucide-rocket"}
 Navigate to the sections above to explore each content type rendered with Nuxt UI components.
 ::
 

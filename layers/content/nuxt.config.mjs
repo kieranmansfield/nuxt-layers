@@ -8,6 +8,22 @@ try {
   createRequire(import.meta.url).resolve('nuxt-studio')
   studioModule.push('nuxt-studio')
 } catch {}
+const contentComponentsDir = `${import.meta.dirname}/app/components/content`
+// Studio's slash menu offers only these `::` components (names are nuxt-component-meta
+// PascalCase). Everything else stays renderable and editable, just not insertable from the menu.
+// These names are public API for content: renaming one breaks every file that uses it.
+const studioComponentGroups = [
+  {
+    label: 'Callouts',
+    include: ['ProseCallout', 'ProseNote', 'ProseTip', 'ProseWarning', 'ProseCaution'],
+  },
+  {
+    label: 'Layout',
+    include: ['ProseCard', 'ProseCardGroup', 'ProseSteps', 'ProseTabs', 'ProseTabsItem'],
+  },
+  { label: 'Code', include: ['ProseCodeGroup'] },
+  { label: 'Media', include: ['Figure'] },
+]
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   $meta: {
@@ -27,12 +43,26 @@ export default defineNuxtConfig({
       nativeSqlite: true,
     },
   },
+  ...(studioModule.length && {
+    studio: {
+      editor: {
+        components: { groups: studioComponentGroups, ungrouped: 'omit' },
+      },
+    },
+  }),
   css: ['#layers/content/app/assets/css/content.css'],
   // Nuxt only references layer .d.ts files that live in generated .nuxt types, so register
   // the @nuxt/content frontmatter augmentation explicitly for consumers.
   hooks: {
     'prepare:types': ({ references }) => {
       references.push({ path: `${import.meta.dirname}/app/types/collections.d.ts` })
+    },
+    // @nuxt/content scans components/content without `global`, and Studio only lists global
+    // components, so Figure & co. would be renderable in markdown but missing from Studio.
+    'components:extend': (components) => {
+      for (const component of components) {
+        if (component.filePath.startsWith(contentComponentsDir)) component.global = true
+      }
     },
   },
   compatibilityDate: '2026-01-24',

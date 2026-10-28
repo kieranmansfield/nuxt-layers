@@ -19,6 +19,7 @@ PLAYGROUND_LAYERS=core,typography pnpm dev  # Load specific layers only
 pnpm build                  # Build all packages
 pnpm typecheck              # Type check all packages
 pnpm lint                   # Lint all packages
+pnpm content:format         # Comark-format content markdown (oxfmt skips it; see layers/content/CLAUDE.md)
 
 # Cleanup
 pnpm clean                  # Remove node_modules, .nuxt, dist from all packages

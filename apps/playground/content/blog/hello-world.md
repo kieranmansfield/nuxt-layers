@@ -101,11 +101,11 @@ Check out the other content types — portfolio and gallery — to see the full 
 ::
 
 ::card-group
-  :::card{title="Portfolio" icon="i-lucide-briefcase" to="/portfolio"}
+  :::card{icon="i-lucide-briefcase" title="Portfolio" to="/portfolio"}
   Showcase projects with client info, tags, and featured filtering.
   :::
 
-  :::card{title="Gallery" icon="i-lucide-images" to="/gallery"}
+  :::card{icon="i-lucide-images" title="Gallery" to="/gallery"}
   Image collections with metadata and tagging.
   :::
 ::
