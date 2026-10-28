@@ -537,11 +537,11 @@
                   <div class="mt-auto pt-4">
                     <NuxtLink
                       :to="layer.to"
-                      class="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 font-medium transition-colors"
+                      class="text-normal text-step-0 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 font-medium transition-colors"
                       :class="[layer.buttonClass]"
                     >
                       Explore {{ layer.name }}
-                      <UIcon name="i-lucide-arrow-right" class="text-sm" />
+                      <UIcon name="i-lucide-arrow-right" />
                     </NuxtLink>
                   </div>
                 </div>
