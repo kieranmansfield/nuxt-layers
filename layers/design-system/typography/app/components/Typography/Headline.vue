@@ -5,19 +5,7 @@
 
   import { useColor } from '../../composables/color'
   import { useTypography } from '../../composables/typography'
-  import type { UiColors } from '../../types/colors'
-  import type {
-    FontFamily,
-    FontLeading,
-    FontSize,
-    FontSlant,
-    FontTracking,
-    FontWeight,
-    FontWidth,
-    TextAlign,
-    TextTransform,
-    TypeStep,
-  } from '../../types/typography'
+  import type { TypographyStyleProps } from '../../types/typography'
 
   const {
     level = 1,
@@ -32,20 +20,11 @@
     size = undefined,
     step = undefined,
     font = undefined,
-  } = defineProps<{
-    level?: 1 | 2 | 3 | 4 | 5 | 6
-    weight?: FontWeight
-    width?: FontWidth
-    slant?: FontSlant
-    leading?: FontLeading
-    tracking?: FontTracking
-    align?: TextAlign
-    transform?: TextTransform
-    color?: UiColors
-    size?: FontSize
-    step?: TypeStep
-    font?: FontFamily
-  }>()
+  } = defineProps<
+    TypographyStyleProps & {
+      level?: 1 | 2 | 3 | 4 | 5 | 6
+    }
+  >()
   const tag = computed(() => `h${level}` as const)
 
   // Display hierarchy by default: each level sits one scale step below the previous, starting

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import { useColor } from '../../composables/color'
+  import { colorClass } from '../../composables/color'
   import { useRepeatFill } from '../../composables/repeatFill'
-  import { useTypography } from '../../composables/typography'
+  import { typographyClasses } from '../../composables/typography'
   import type { UiColors } from '../../types/colors'
   import type { FontWeight, TypeStep, TypographyTag } from '../../types/typography'
 
@@ -59,16 +59,16 @@
     Array.from({ length: rows }, (_, i) => {
       const weight = rowWeight(i)
       const step = rowStep(i)
-      return useTypography({
+      return typographyClasses({
         leading: 'leading-normal',
         ...(weight !== undefined && { weight }),
         ...(step !== undefined && { step }),
-      }).classes.value
+      })
     })
   )
 
   const rowColorClasses = computed(() =>
-    Array.from({ length: rows }, (_, i) => useColor(rowColor(i), 'text').value)
+    Array.from({ length: rows }, (_, i) => colorClass(rowColor(i), 'text'))
   )
 
   const rowStyle = (i: number) => ({

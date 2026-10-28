@@ -57,59 +57,62 @@ export const TYPE_STEP_CLASSES: Record<TypeStep, string> = {
   display: 'text-step-display',
 }
 
-export function useTypography(
-  props: MaybeRefOrGetter<{
-    weight?: FontWeight
-    slant?: FontSlant
-    width?: FontWidth
-    leading?: FontLeading
-    tracking?: FontTracking
-    align?: TextAlign
-    transform?: TextTransform
-    size?: FontSize
-    step?: TypeStep
-    font?: FontFamily
-  }>
-) {
-  const classes = computed(() => {
-    const p = toValue(props)
-    return [
-      p.font ? `font-${p.font}` : '',
+export type TypographyClassInput = {
+  weight?: FontWeight
+  slant?: FontSlant
+  width?: FontWidth
+  leading?: FontLeading
+  tracking?: FontTracking
+  align?: TextAlign
+  transform?: TextTransform
+  size?: FontSize
+  step?: TypeStep
+  font?: FontFamily
+}
 
-      normalizeAxis(p.weight, {
-        prefix: 'font',
-        fallback: 'font-normal',
-      }),
+/**
+ * Typography props → one class string. Pure, so callers that build classes for many items
+ * (TypographyRepeatText's rows) can call it directly instead of creating a computed per item.
+ */
+export function typographyClasses(p: TypographyClassInput): string {
+  return [
+    p.font ? `font-${p.font}` : '',
 
-      normalizeAxis(p.width, {
-        numericFormatter: (v) => `font-stretch-[${v}%]`,
-      }),
+    normalizeAxis(p.weight, {
+      prefix: 'font',
+      fallback: 'font-normal',
+    }),
 
-      normalizeAxis(p.slant, {
-        fallback: 'not-italic',
-      }),
+    normalizeAxis(p.width, {
+      numericFormatter: (v) => `font-stretch-[${v}%]`,
+    }),
 
-      // No fallback: a leading-* class sorts after text-step-* and would override the step's
-      // line height, so only emit one when asked.
-      normalizeAxis(p.leading, { prefix: 'leading' }),
+    normalizeAxis(p.slant, {
+      fallback: 'not-italic',
+    }),
 
-      normalizeAxis(p.tracking, {
-        prefix: 'tracking',
-        fallback: 'tracking-normal',
-      }),
+    // No fallback: a leading-* class sorts after text-step-* and would override the step's
+    // line height, so only emit one when asked.
+    normalizeAxis(p.leading, { prefix: 'leading' }),
 
-      // step is the parallel modular-scale namespace (see typography.css) — takes
-      // precedence over size when both are set, rather than emitting two
-      // conflicting font-size utilities. Checked against undefined: step 0 is valid.
-      p.step !== undefined ? TYPE_STEP_CLASSES[p.step] : getSizeClass(p.size),
+    normalizeAxis(p.tracking, {
+      prefix: 'tracking',
+      fallback: 'tracking-normal',
+    }),
 
-      p.align ? `text-${p.align}` : '',
+    // step is the parallel modular-scale namespace (see typography.css) — takes
+    // precedence over size when both are set, rather than emitting two
+    // conflicting font-size utilities. Checked against undefined: step 0 is valid.
+    p.step !== undefined ? TYPE_STEP_CLASSES[p.step] : getSizeClass(p.size),
 
-      p.transform && p.transform !== 'none' ? p.transform : '',
-    ]
-      .filter(Boolean)
-      .join(' ')
-  })
+    p.align ? `text-${p.align}` : '',
 
-  return { classes }
+    p.transform && p.transform !== 'none' ? p.transform : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
+}
+
+export function useTypography(props: MaybeRefOrGetter<TypographyClassInput>) {
+  return { classes: computed(() => typographyClasses(toValue(props))) }
 }

@@ -1,19 +1,7 @@
 <script lang="ts" setup>
   import { useColor } from '../../composables/color'
   import { useTypography } from '../../composables/typography'
-  import type { UiColors } from '../../types/colors'
-  import type {
-    FontFamily,
-    FontLeading,
-    FontSize,
-    FontSlant,
-    FontTracking,
-    FontWeight,
-    FontWidth,
-    TextAlign,
-    TextTransform,
-    TypeStep,
-  } from '../../types/typography'
+  import type { TypographyStyleProps } from '../../types/typography'
 
   const {
     language = undefined,
@@ -28,20 +16,11 @@
     size = undefined,
     step = undefined,
     font = 'mono',
-  } = defineProps<{
-    language?: string
-    weight?: FontWeight
-    width?: FontWidth
-    slant?: FontSlant
-    leading?: FontLeading
-    tracking?: FontTracking
-    align?: TextAlign
-    transform?: TextTransform
-    color?: UiColors
-    size?: FontSize
-    step?: TypeStep
-    font?: FontFamily
-  }>()
+  } = defineProps<
+    TypographyStyleProps & {
+      language?: string
+    }
+  >()
   const { classes } = useTypography(() => ({
     weight,
     width,
