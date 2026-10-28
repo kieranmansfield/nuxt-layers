@@ -56,6 +56,7 @@ and omits `grid`, `feeds` and the `metadata` providers.
 | `theming`          | Design tokens and theming utilities                                                            | `core`, `typography`                                      |
 | `content`          | Nuxt Content v3 collections and components                                                     | `core`, `layout`, `visual`, `animations`                  |
 | `routing`          | Advanced routing, maintenance mode, feature flags                                              | `core`                                                    |
+| `capture`          | `kmcom-capture` CLI (Monkr-framed screenshots/videos of any site) + capture-ready client plugin | `core`                                                    |
 
 ## Alias Pattern
 

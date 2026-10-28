@@ -1,0 +1,23 @@
+{
+  "name": "kmcom-layer-capture",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "main": "./nuxt.config.ts",
+  "bin": {
+    "kmcom-capture": "./cli/capture.mjs"
+  },
+  "scripts": {
+    "dev:playground": "PLAYGROUND_LAYERS=core,capture pnpm -F playground dev",
+    "typecheck": "vue-tsc --noEmit -p ../../../tsconfig.typecheck.json",
+    "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "@playwright/test": "^1.49.0"
+  },
+  "peerDependenciesMeta": {
+    "@playwright/test": {
+      "optional": true
+    }
+  }
+}
