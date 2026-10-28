@@ -22,47 +22,21 @@ Nuxt layers provide a powerful way to organize and share code across projects.
 Each layer is an independent, composable package:
 
 ::card-group
+  :::card{title="Core" icon="i-lucide-box"}
+  Foundation utilities and device detection.
+  :::
 
-## ::card
+  :::card{title="UI" icon="i-lucide-palette"}
+  Typography, colors, and media components.
+  :::
 
-title: Core
-icon: i-lucide-box
+  :::card{title="Content" icon="i-lucide-file-text"}
+  Collections, composables, and rendering.
+  :::
 
----
-
-Foundation utilities and device detection.
-::
-
-## ::card
-
-title: UI
-icon: i-lucide-palette
-
----
-
-Typography, colors, and media components.
-::
-
-## ::card
-
-title: Content
-icon: i-lucide-file-text
-
----
-
-Collections, composables, and rendering.
-::
-
-## ::card
-
-title: Layout
-icon: i-lucide-layout
-
----
-
-Grid systems and page structure.
-::
-
+  :::card{title="Layout" icon="i-lucide-layout"}
+  Grid systems and page structure.
+  :::
 ::
 
 ### Layer Dependencies
@@ -72,7 +46,6 @@ Layers can depend on each other. The content layer extends core for base utiliti
 ::
 
 ::code-group
-
 ```ts [Content Layer]
 // layers/content/nuxt.config.ts
 export default defineNuxtConfig({
@@ -87,7 +60,6 @@ export default defineNuxtConfig({
   extends: ['./layers/core', './layers/content'],
 })
 ```
-
 ::
 
 ## Composable Pattern

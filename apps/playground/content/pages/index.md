@@ -10,81 +10,50 @@ This page demonstrates the **content layer** built on top of `@nuxt/content` v3.
 ## Features
 
 ::tabs
+  :::tabs-item{label="Blog" icon="i-lucide-pen-line"}
+  Full-featured blog with authors, tags, drafts, and surround navigation.
+  
+  ```ts
+  const { data: posts } = await useBlogPosts({
+    excludeDrafts: true,
+    limit: 5,
+  })
+  ```
+  :::
 
-:::tabs-item{label="Blog" icon="i-lucide-pen-line"}
+  :::tabs-item{label="Portfolio" icon="i-lucide-briefcase"}
+  Showcase projects with client info, tags, and featured filtering.
+  
+  ```ts
+  const { data: projects } = await usePortfolioProjects({
+    featured: true,
+  })
+  ```
+  :::
 
-Full-featured blog with authors, tags, drafts, and surround navigation.
-
-```ts
-const { data: posts } = await useBlogPosts({
-  excludeDrafts: true,
-  limit: 5,
-})
-```
-
-:::
-
-:::tabs-item{label="Portfolio" icon="i-lucide-briefcase"}
-
-Showcase projects with client info, tags, and featured filtering.
-
-```ts
-const { data: projects } = await usePortfolioProjects({
-  featured: true,
-})
-```
-
-:::
-
-:::tabs-item{label="Gallery" icon="i-lucide-images"}
-
-Image collections with lightbox viewing and metadata.
-
-```ts
-const { data: galleries } = await useGalleries()
-```
-
-:::
-
+  :::tabs-item{label="Gallery" icon="i-lucide-images"}
+  Image collections with lightbox viewing and metadata.
+  
+  ```ts
+  const { data: galleries } = await useGalleries()
+  ```
+  :::
 ::
 
 ## Content Types
 
 ::card-group
+  :::card{title="Blog" icon="i-lucide-pen-line" to="/blog"}
+  Articles and posts with authors, tags, and draft support.
+  :::
 
-## ::card
+  :::card{title="Portfolio" icon="i-lucide-briefcase" to="/portfolio"}
+  Projects and work with client info and featured filtering.
+  :::
 
-title: Blog
-icon: i-lucide-pen-line
-to: /blog
-
----
-
-Articles and posts with authors, tags, and draft support.
-::
-
-## ::card
-
-title: Portfolio
-icon: i-lucide-briefcase
-to: /portfolio
-
----
-
-Projects and work with client info and featured filtering.
-::
-
-## ::card
-
-title: Gallery
-icon: i-lucide-images
-to: /gallery
-
----
-
-Photo collections with image metadata.
-::
-
+  :::card{title="Gallery" icon="i-lucide-images" to="/gallery"}
+  Photo collections with image metadata.
+  :::
 ::
 
 ## Getting Started
@@ -94,7 +63,6 @@ Navigate to the sections above to explore each content type rendered with Nuxt U
 ::
 
 ::steps
-
 ### Add the content layer
 
 Extend your Nuxt app with the content layer.
@@ -116,13 +84,11 @@ Fetch content with the provided composables in your Vue components.
 ```ts
 const { data: posts } = await useBlogPosts({ excludeDrafts: true })
 ```
-
 ::
 
 ## Installation
 
 ::code-group
-
 ```bash [pnpm]
 pnpm add content
 ```
@@ -134,5 +100,4 @@ npm install content
 ```bash [yarn]
 yarn add content
 ```
-
 ::

@@ -38,7 +38,6 @@ Make sure your frontmatter matches the collection schema — mismatched fields w
 ## Getting Started
 
 ::steps
-
 ### Install the content layer
 
 Add `content` to your layer extends array in `nuxt.config.ts`.
@@ -73,7 +72,6 @@ export default defineContentConfig({
 ### Start writing
 
 Drop markdown files in your `content/` directory and they'll be automatically picked up.
-
 ::
 
 ### Code Snippet
@@ -81,7 +79,6 @@ Drop markdown files in your `content/` directory and they'll be automatically pi
 Here's how to fetch blog posts:
 
 ::code-group
-
 ```ts [Composable]
 const { data: posts } = await useBlogPosts({
   excludeDrafts: true,
@@ -95,7 +92,6 @@ const { data: posts } = await useAsyncData('posts', () =>
   queryCollection('blog').order('date', 'DESC').all()
 )
 ```
-
 ::
 
 ## Next Steps
@@ -105,27 +101,11 @@ Check out the other content types — portfolio and gallery — to see the full 
 ::
 
 ::card-group
+  :::card{title="Portfolio" icon="i-lucide-briefcase" to="/portfolio"}
+  Showcase projects with client info, tags, and featured filtering.
+  :::
 
-## ::card
-
-title: Portfolio
-icon: i-lucide-briefcase
-to: /portfolio
-
----
-
-Showcase projects with client info, tags, and featured filtering.
-::
-
-## ::card
-
-title: Gallery
-icon: i-lucide-images
-to: /gallery
-
----
-
-Image collections with metadata and tagging.
-::
-
+  :::card{title="Gallery" icon="i-lucide-images" to="/gallery"}
+  Image collections with metadata and tagging.
+  :::
 ::
