@@ -2,7 +2,7 @@
   "name": "kmcom-layer-metadata-openlibrary",
   "version": "0.0.1",
   "type": "module",
-  "main": "./nuxt.config.ts",
+  "main": "./nuxt.config.mjs",
   "scripts": {
     "dev": "nuxi dev",
     "dev:playground": "PLAYGROUND_LAYERS=core,metadata,metadata-openlibrary pnpm -F playground dev",

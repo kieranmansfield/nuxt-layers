@@ -2,7 +2,7 @@
   "name": "kmcom-layer-page-transitions",
   "version": "0.0.1",
   "type": "module",
-  "main": "./nuxt.config.ts",
+  "main": "./nuxt.config.mjs",
   "scripts": {
     "lint": "eslint ."
   }

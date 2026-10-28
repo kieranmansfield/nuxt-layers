@@ -23,12 +23,16 @@ export function useMetadataSearch(query: MaybeRef<string>, options: UseMetadataS
     () => `metadata-search:${q.value}:${mt.value ?? ''}`,
     () => {
       if (!q.value) return Promise.resolve([])
+      const providerList = toValue(providers)
+      const limitValue = toValue(limit)
       return $fetch('/api/metadata/search', {
+        method: 'GET',
+        body: undefined,
         query: {
           q: q.value,
-          mediaType: mt.value,
-          providers: toValue(providers)?.join(','),
-          limit: toValue(limit),
+          ...(mt.value ? { mediaType: mt.value } : {}),
+          ...(providerList ? { providers: providerList.join(',') } : {}),
+          ...(limitValue !== undefined ? { limit: limitValue } : {}),
         },
       }) as Promise<MetadataSearchResult[]>
     },

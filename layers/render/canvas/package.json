@@ -2,7 +2,7 @@
   "name": "kmcom-layer-canvas",
   "version": "0.0.1",
   "type": "module",
-  "main": "./nuxt.config.ts",
+  "main": "./nuxt.config.mjs",
   "scripts": {
     "dev": "nuxi dev",
     "dev:playground": "PLAYGROUND_LAYERS=core,canvas pnpm -F playground dev",

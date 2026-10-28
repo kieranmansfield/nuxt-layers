@@ -197,12 +197,15 @@ catalogs:
     '@eslint/markdown':
       specifier: ^8.0.3
       version: 8.0.3
+    '@iconify-json/logos':
+      specifier: ^1.2.18
+      version: 1.2.18
     '@iconify-json/lucide':
       specifier: ^1.2.126
       version: 1.2.126
     '@iconify/vue':
       specifier: ^5.0.1
-      version: 5.0.1
+      version: 5.0.3
     '@neondatabase/serverless':
       specifier: ^0.10.0
       version: 0.10.4
@@ -437,7 +440,7 @@ overrides:
   undici: '>=6.27.0'
   form-data: '>=4.0.6'
   http-proxy-middleware: '>=3.0.7'
-  js-yaml: '>=4.1.2'
+  js-yaml@<4.1.2: ^4.1.2
   '@opentelemetry/core': '>=2.8.0'
   vite@*: npm:@voidzero-dev/vite-plus-core@1.3.0
   vitest@*: 5.0.5
@@ -497,6 +500,9 @@ importers:
       nuxt-auth-utils:
         specifier: ^0.5.0
         version: 0.5.29(@nuxt/schema@4.6.1)(confbox@0.3.1)(dotenv@17.4.2)(giget@3.2.0)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.6)(unplugin@3.3.0(@types/node@25.9.1)(@volar/typescript@2.4.28(typescript@6.0.3))(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(rolldown@1.2.6)(rollup@4.61.0)(terser@5.48.0)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.0))
+      nuxt-studio:
+        specifier: ^1.8.0
+        version: 1.8.0(@netlify/blobs@10.7.9(supports-color@10.2.2))(@oxc-project/types@0.147.0)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0)(drizzle-orm@0.45.4(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.1)(@types/pg@8.11.6)(better-sqlite3@12.10.0)(pg@8.21.0)))(ioredis@5.11.0(supports-color@10.2.2))(magicast@0.5.5)(rolldown@1.2.6)(srvx@0.11.22)(vue@3.5.42(typescript@6.0.3))
       resend:
         specifier: ^4.0.0
         version: 4.8.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -771,6 +777,9 @@ importers:
 
   layers/content:
     dependencies:
+      '@iconify-json/logos':
+        specifier: 'catalog:'
+        version: 1.2.18
       better-sqlite3:
         specifier: 'catalog:'
         version: 12.10.0
@@ -2241,6 +2250,9 @@ packages:
   '@iarna/toml@2.2.5':
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
 
+  '@iconify-json/logos@1.2.18':
+    resolution: {integrity: sha512-Qehd7RmUbYM4LSXNHFqulgvmdmqldOxQ3VDbCmzos5IGlo40+cChVdX7GnG9VODBU0H3+Bb8npYOkplooJZvtQ==}
+
   '@iconify-json/lucide@1.2.126':
     resolution: {integrity: sha512-Fl3OfR71yeWLrlTLp6C4W5W3rJJDWH9/e70mjtq9VAldYDxvHh149JMNPz7foTeLLTE2Paynnp2aYKVL9rgF5Q==}
 
@@ -3407,12 +3419,14 @@ packages:
   '@opentelemetry/sdk-trace-base@2.7.1':
     resolution: {integrity: sha512-NAYIlsF8MPUsKqJMiDQJTMPOmlbawC1Iz/omMLygZ1C9am8fTKYjTaI+OZM+WTY3t3Glo0wnOg/6/pac6RGPPw==}
     engines: {node: ^18.19.0 || >=20.6.0}
+    deprecated: Use @opentelemetry/sdk-trace package
     peerDependencies:
       '@opentelemetry/api': '>=1.3.0 <1.10.0'
 
   '@opentelemetry/sdk-trace-node@2.7.1':
     resolution: {integrity: sha512-pCpQxU68lV+I9s9svqMyVu5iHdDDUnqUpSxqwyCU8A9ejEsSnMPCbearwsUO4yk08ZJzAIUCFuReMdVQvHrdvg==}
     engines: {node: ^18.19.0 || >=20.6.0}
+    deprecated: Use @opentelemetry/sdk-trace package
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.10.0'
 
@@ -6337,6 +6351,9 @@ packages:
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
 
+  argparse@3.0.4:
+    resolution: {integrity: sha512-fwWK3Zq22l4XJJjx5mcBHGikIk+hJqO+32dPm0Jur7+rtG5x1scOjSfdT9ZKeWHPpsya/l0HHK4tDImBkTrtvA==}
+
   args-tokenizer@0.3.0:
     resolution: {integrity: sha512-xXAd7G2Mll5W8uo37GETpQ2VrE84M181Z7ugHFGQnJZ50M2mbOv0osSZ9VsSgPfJQ+LVG0prSi0th+ELMsno7Q==}
 
@@ -9074,8 +9091,12 @@ packages:
   js-tokens@9.0.1:
     resolution: {integrity: sha512-mxa9E9ITFOt0ban3j6L5MpjwegGz6lBQmM1IJkWeBZGcMxto50+eWdjC/52xDbS2vy0k7vIMK0Fe2wfL9OQSpQ==}
 
-  js-yaml@4.2.0:
-    resolution: {integrity: sha512-ePWsvanv0DWuDRsW8dnt+R4jQ31SCRCQ7hhNcPXZPsoBZiemuZNYGf7adZdqX2D86j6rvKp3RpCxVTSb8WQlOw==}
+  js-yaml@4.3.2:
+    resolution: {integrity: sha512-SFNOvSJ+Dgf/9An904Yx+CgSlIPCkIpao4qo51lpee25TIRejdH3rhR4EZMGoNx3/TP3O+wzWuiTFl4sqbltzA==}
+    hasBin: true
+
+  js-yaml@5.5.0:
+    resolution: {integrity: sha512-paNr4LFIFPjeeSmwNYdrb8FafLLG/Cr2Af3GjbsHJ5CxIjH4r0c2emlmRdAtpPAieP1gRVzk6buBbVP5gBMGAg==}
     hasBin: true
 
   jsdoc-type-pratt-parser@7.2.0:
@@ -13446,7 +13467,6 @@ snapshots:
       '@ai-sdk/provider-utils': 5.0.62(zod@4.6.7)
       '@vercel/oidc': 3.2.0
       zod: 4.6.7
-    optional: true
 
   '@ai-sdk/provider-utils@5.0.62(zod@4.4.3)':
     dependencies:
@@ -13466,12 +13486,10 @@ snapshots:
       eventsource-parser: 3.1.1
       undici: 8.5.0
       zod: 4.6.7
-    optional: true
 
   '@ai-sdk/provider@4.0.29':
     dependencies:
       json-schema: 0.4.0
-    optional: true
 
   '@ai-sdk/vue@4.0.143(vue@3.5.42(typescript@6.0.3))(zod@4.6.7)':
     dependencies:
@@ -13481,7 +13499,6 @@ snapshots:
       vue: 3.5.42(typescript@6.0.3)
     transitivePeerDependencies:
       - zod
-    optional: true
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -13499,7 +13516,7 @@ snapshots:
   '@apidevtools/json-schema-ref-parser@14.2.1(@types/json-schema@7.0.15)':
     dependencies:
       '@types/json-schema': 7.0.15
-      js-yaml: 4.2.0
+      js-yaml: 4.3.2
 
   '@babel/code-frame@7.29.7':
     dependencies:
@@ -14841,6 +14858,10 @@ snapshots:
 
   '@iarna/toml@2.2.5': {}
 
+  '@iconify-json/logos@1.2.18':
+    dependencies:
+      '@iconify/types': 2.0.0
+
   '@iconify-json/lucide@1.2.126':
     dependencies:
       '@iconify/types': 2.0.0
@@ -14848,7 +14869,6 @@ snapshots:
   '@iconify-json/lucide@1.2.145':
     dependencies:
       '@iconify/types': 2.0.0
-    optional: true
 
   '@iconify/collections@1.0.747':
     dependencies:
@@ -20185,7 +20205,6 @@ snapshots:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.5
       hast-util-to-html: 9.0.5
-    optional: true
 
   '@shikijs/engine-javascript@4.4.3':
     dependencies:
@@ -20198,7 +20217,6 @@ snapshots:
       '@shikijs/types': 4.5.0
       '@shikijs/vscode-textmate': 10.0.2
       oniguruma-to-es: 4.3.6
-    optional: true
 
   '@shikijs/engine-oniguruma@4.4.3':
     dependencies:
@@ -20209,7 +20227,6 @@ snapshots:
     dependencies:
       '@shikijs/types': 4.5.0
       '@shikijs/vscode-textmate': 10.0.2
-    optional: true
 
   '@shikijs/langs@4.4.3':
     dependencies:
@@ -20218,7 +20235,6 @@ snapshots:
   '@shikijs/langs@4.5.0':
     dependencies:
       '@shikijs/types': 4.5.0
-    optional: true
 
   '@shikijs/primitive@4.4.3':
     dependencies:
@@ -20231,7 +20247,6 @@ snapshots:
       '@shikijs/types': 4.5.0
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.5
-    optional: true
 
   '@shikijs/themes@4.4.3':
     dependencies:
@@ -20240,7 +20255,6 @@ snapshots:
   '@shikijs/themes@4.5.0':
     dependencies:
       '@shikijs/types': 4.5.0
-    optional: true
 
   '@shikijs/transformers@4.4.3':
     dependencies:
@@ -20256,7 +20270,6 @@ snapshots:
     dependencies:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.5
-    optional: true
 
   '@shikijs/vscode-textmate@10.0.2': {}
 
@@ -20999,15 +21012,13 @@ snapshots:
 
   '@types/katex@0.16.8': {}
 
-  '@types/linkify-it@5.0.0':
-    optional: true
+  '@types/linkify-it@5.0.0': {}
 
   '@types/mdast@4.0.4':
     dependencies:
       '@types/unist': 3.0.3
 
-  '@types/mdurl@2.0.0':
-    optional: true
+  '@types/mdurl@2.0.0': {}
 
   '@types/minimatch@3.0.5': {}
 
@@ -21500,8 +21511,7 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vercel/oidc@3.2.0':
-    optional: true
+  '@vercel/oidc@3.2.0': {}
 
   '@vite-pwa/nuxt@1.1.1(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.9.1)(@volar/typescript@2.4.28(typescript@6.0.3))(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.0))(magicast@0.5.5)(supports-color@10.2.2)(workbox-build@7.4.1(supports-color@10.2.2))(workbox-window@7.4.1)':
     dependencies:
@@ -21970,7 +21980,6 @@ snapshots:
       '@vueuse/metadata': 15.0.0
       '@vueuse/shared': 15.0.0(vue@3.5.42(typescript@6.0.3))
       vue: 3.5.42(typescript@6.0.3)
-    optional: true
 
   '@vueuse/integrations@14.4.0(change-case@5.4.4)(fuse.js@7.5.0)(jwt-decode@4.0.0)(vue@3.5.42(typescript@6.0.3))':
     dependencies:
@@ -21990,8 +21999,7 @@ snapshots:
 
   '@vueuse/metadata@14.4.0': {}
 
-  '@vueuse/metadata@15.0.0':
-    optional: true
+  '@vueuse/metadata@15.0.0': {}
 
   '@vueuse/nuxt@14.3.0(magicast@0.5.5)(nuxt@4.6.1(54ae9e47f5fa5288f3f16e8521b9c922))(vue@3.5.42(typescript@6.0.3))':
     dependencies:
@@ -22026,7 +22034,6 @@ snapshots:
   '@vueuse/shared@15.0.0(vue@3.5.42(typescript@6.0.3))':
     dependencies:
       vue: 3.5.42(typescript@6.0.3)
-    optional: true
 
   '@webcontainer/env@1.1.1': {}
 
@@ -22063,8 +22070,7 @@ snapshots:
       '@whatwg-node/promise-helpers': 1.3.2
       tslib: 2.8.1
 
-  '@workflow/serde@4.1.0':
-    optional: true
+  '@workflow/serde@4.1.0': {}
 
   '@yuku-core/binding-android-arm64@0.19.0':
     optional: true
@@ -22159,7 +22165,6 @@ snapshots:
       '@ai-sdk/provider': 4.0.29
       '@ai-sdk/provider-utils': 5.0.62(zod@4.6.7)
       zod: 4.6.7
-    optional: true
 
   ajv-errors@3.0.0(ajv@8.20.0):
     dependencies:
@@ -22253,6 +22258,8 @@ snapshots:
   arg@4.1.3: {}
 
   argparse@2.0.1: {}
+
+  argparse@3.0.4: {}
 
   args-tokenizer@0.3.0: {}
 
@@ -22772,11 +22779,10 @@ snapshots:
     dependencies:
       entities: 8.0.0
       htmlparser2: 12.0.0
-      js-yaml: 4.2.0
+      js-yaml: 5.5.0
       markdown-exit: 1.1.0-beta.2
     optionalDependencies:
       shiki: 4.5.0
-    optional: true
 
   comma-separated-tokens@2.0.3: {}
 
@@ -22876,7 +22882,7 @@ snapshots:
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.1
-      js-yaml: 4.2.0
+      js-yaml: 4.3.2
       parse-json: 5.2.0
     optionalDependencies:
       typescript: 6.0.3
@@ -23201,12 +23207,10 @@ snapshots:
       domelementtype: 3.0.0
       domhandler: 6.0.1
       entities: 8.0.0
-    optional: true
 
   domelementtype@2.3.0: {}
 
-  domelementtype@3.0.0:
-    optional: true
+  domelementtype@3.0.0: {}
 
   domhandler@5.0.3:
     dependencies:
@@ -23215,7 +23219,6 @@ snapshots:
   domhandler@6.0.1:
     dependencies:
       domelementtype: 3.0.0
-    optional: true
 
   domutils@3.2.2:
     dependencies:
@@ -23228,7 +23231,6 @@ snapshots:
       dom-serializer: 3.1.1
       domelementtype: 3.0.0
       domhandler: 6.0.1
-    optional: true
 
   dot-prop@10.1.0:
     dependencies:
@@ -23823,8 +23825,7 @@ snapshots:
 
   events@3.3.0: {}
 
-  eventsource-parser@3.1.1:
-    optional: true
+  eventsource-parser@3.1.1: {}
 
   execa@5.1.1:
     dependencies:
@@ -24716,7 +24717,6 @@ snapshots:
       domhandler: 6.0.1
       domutils: 4.0.2
       entities: 8.0.0
-    optional: true
 
   htmlparser2@8.0.2:
     dependencies:
@@ -25314,9 +25314,13 @@ snapshots:
 
   js-tokens@9.0.1: {}
 
-  js-yaml@4.2.0:
+  js-yaml@4.3.2:
     dependencies:
       argparse: 2.0.1
+
+  js-yaml@5.5.0:
+    dependencies:
+      argparse: 3.0.4
 
   jsdoc-type-pratt-parser@7.2.0: {}
 
@@ -25339,8 +25343,7 @@ snapshots:
 
   json-schema-traverse@1.0.0: {}
 
-  json-schema@0.4.0:
-    optional: true
+  json-schema@0.4.0: {}
 
   json-stable-stringify-without-jsonify@1.0.1: {}
 
@@ -25580,7 +25583,6 @@ snapshots:
   linkify-it@5.0.2:
     dependencies:
       uc.micro: 2.1.0
-    optional: true
 
   linkifyjs@4.3.3: {}
 
@@ -25798,7 +25800,6 @@ snapshots:
       mdurl: 2.1.0
       punycode.js: 2.3.1
       uc.micro: 2.1.0
-    optional: true
 
   markdown-table@3.0.4: {}
 
@@ -25960,8 +25961,7 @@ snapshots:
 
   mdn-data@2.27.1: {}
 
-  mdurl@2.1.0:
-    optional: true
+  mdurl@2.1.0: {}
 
   media-typer@1.1.0: {}
 
@@ -27861,6 +27861,54 @@ snapshots:
       - vue
       - zod
 
+  nuxt-studio@1.8.0(@netlify/blobs@10.7.9(supports-color@10.2.2))(@oxc-project/types@0.147.0)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0)(drizzle-orm@0.45.4(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.1)(@types/pg@8.11.6)(better-sqlite3@12.10.0)(pg@8.21.0)))(ioredis@5.11.0(supports-color@10.2.2))(magicast@0.5.5)(rolldown@1.2.6)(srvx@0.11.22)(vue@3.5.42(typescript@6.0.3)):
+    dependencies:
+      '@ai-sdk/gateway': 4.0.116(zod@4.6.7)
+      '@ai-sdk/vue': 4.0.143(vue@3.5.42(typescript@6.0.3))(zod@4.6.7)
+      '@iconify-json/lucide': 1.2.145
+      '@vueuse/core': 15.0.0(vue@3.5.42(typescript@6.0.3))
+      ai: 7.0.143(zod@4.6.7)
+      comark: 0.7.0(shiki@4.5.0)
+      defu: 6.1.7
+      destr: 2.0.5
+      js-yaml: 5.5.0
+      minimatch: 10.2.6
+      nuxt-component-meta: 0.18.0(@oxc-project/types@0.147.0)(magicast@0.5.5)(rolldown@1.2.6)
+      shiki: 4.5.0
+      unstorage: 1.17.5(@netlify/blobs@10.7.9(supports-color@10.2.2))(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0)(drizzle-orm@0.45.4(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.1)(@types/pg@8.11.6)(better-sqlite3@12.10.0)(pg@8.21.0)))(ioredis@5.11.0(supports-color@10.2.2))
+      zod: 4.6.7
+      zod-to-json-schema: 3.25.2(zod@4.6.7)
+    optionalDependencies:
+      ipx: 3.1.1(@netlify/blobs@10.7.9(supports-color@10.2.2))(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0)(drizzle-orm@0.45.4(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.1)(@types/pg@8.11.6)(better-sqlite3@12.10.0)(pg@8.21.0)))(ioredis@5.11.0(supports-color@10.2.2))(srvx@0.11.22)
+    transitivePeerDependencies:
+      - '@azure/app-configuration'
+      - '@azure/cosmos'
+      - '@azure/data-tables'
+      - '@azure/identity'
+      - '@azure/keyvault-secrets'
+      - '@azure/storage-blob'
+      - '@capacitor/preferences'
+      - '@deno/kv'
+      - '@netlify/blobs'
+      - '@oxc-project/types'
+      - '@planetscale/database'
+      - '@upstash/redis'
+      - '@vercel/blob'
+      - '@vercel/functions'
+      - '@vercel/kv'
+      - aws4fetch
+      - beautiful-mermaid
+      - db0
+      - idb-keyval
+      - ioredis
+      - katex
+      - magicast
+      - rangi
+      - rolldown
+      - srvx
+      - uploadthing
+      - vue
+
   nuxt-studio@1.8.0(@netlify/blobs@10.7.9(supports-color@10.2.2))(@oxc-project/types@0.147.0)(db0@0.3.4(@electric-sql/pglite@0.3.16)(better-sqlite3@12.10.0)(drizzle-orm@0.45.4(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.1)(@types/pg@8.11.6)(better-sqlite3@12.10.0)(pg@8.21.0)))(ioredis@5.11.0(supports-color@10.2.2))(magicast@0.5.5)(rolldown@1.2.6)(srvx@0.12.5)(vue@3.5.42(typescript@6.0.3)):
     dependencies:
       '@ai-sdk/gateway': 4.0.116(zod@4.6.7)
@@ -27871,7 +27919,7 @@ snapshots:
       comark: 0.7.0(shiki@4.5.0)
       defu: 6.1.7
       destr: 2.0.5
-      js-yaml: 4.2.0
+      js-yaml: 5.5.0
       minimatch: 10.2.6
       nuxt-component-meta: 0.18.0(@oxc-project/types@0.147.0)(magicast@0.5.5)(rolldown@1.2.6)
       shiki: 4.5.0
@@ -29997,8 +30045,7 @@ snapshots:
       end-of-stream: 1.4.5
       once: 1.4.0
 
-  punycode.js@2.3.1:
-    optional: true
+  punycode.js@2.3.1: {}
 
   punycode@2.3.1: {}
 
@@ -30741,7 +30788,6 @@ snapshots:
       '@shikijs/types': 4.5.0
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.5
-    optional: true
 
   side-channel-list@1.0.1:
     dependencies:
@@ -31278,7 +31324,6 @@ snapshots:
   swrv@1.2.0(vue@3.5.42(typescript@6.0.3)):
     dependencies:
       vue: 3.5.42(typescript@6.0.3)
-    optional: true
 
   table@6.9.0:
     dependencies:
@@ -31607,8 +31652,7 @@ snapshots:
 
   typescript@6.0.3: {}
 
-  uc.micro@2.1.0:
-    optional: true
+  uc.micro@2.1.0: {}
 
   ufo@1.6.4: {}
 
@@ -33207,13 +33251,11 @@ snapshots:
   zod-to-json-schema@3.25.2(zod@4.6.7):
     dependencies:
       zod: 4.6.7
-    optional: true
 
   zod@3.25.76: {}
 
   zod@4.4.3: {}
 
-  zod@4.6.7:
-    optional: true
+  zod@4.6.7: {}
 
   zwitch@2.0.4: {}

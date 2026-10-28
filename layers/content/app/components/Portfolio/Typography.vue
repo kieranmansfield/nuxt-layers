@@ -4,6 +4,16 @@
   const { typography = [] } = defineProps<{
     typography?: PortfolioFont[]
   }>()
+
+  // Nothing validates frontmatter (collections have no schema), so `weights: 400` or
+  // `weights: 400 700` arrive as a number or string — and `v-for` over 400 renders 400 spans
+  function weightList(weights: unknown): string[] {
+    if (Array.isArray(weights)) return weights.map(String)
+    if (weights === undefined || weights === null) return []
+    return String(weights)
+      .split(/[\s,]+/)
+      .filter(Boolean)
+  }
 </script>
 
 <template>
@@ -18,12 +28,12 @@
           <p v-if="font.usage" class="text-muted shrink-0 text-sm">{{ font.usage }}</p>
         </div>
         <p class="font-sample text-muted tracking-wide">ABCDEFGHabcdefgh 0123456789</p>
-        <div class="flex items-center gap-4">
+        <div class="flex flex-wrap items-center gap-4">
           <span class="text-muted font-mono text-xs tracking-widest uppercase opacity-50">
             Weights
           </span>
           <span
-            v-for="weight in font.weights"
+            v-for="weight in weightList(font.weights)"
             :key="weight"
             class="text-muted font-mono text-xs tracking-widest uppercase"
           >
