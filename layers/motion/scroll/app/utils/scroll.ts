@@ -1,5 +1,7 @@
 import type LocomotiveScroll from 'locomotive-scroll'
 
+import { resolveDurationMs } from '#layers/core/app/utils/motion'
+
 import type { ScrollToOptions } from '../types/scroll'
 
 export type ScrollTarget = string | number | HTMLElement
@@ -8,8 +10,10 @@ function resolveScrollOffset(options?: ScrollToOptions) {
   return options?.offset ?? 0
 }
 
-function resolveScrollDuration(options?: ScrollToOptions) {
-  return options?.duration ?? 1.2
+// Milliseconds in, as every motion duration is. v6 passed the same number to Locomotive as
+// seconds and to the native fallback's onComplete timer as milliseconds.
+function resolveScrollDurationMs(options?: ScrollToOptions) {
+  return resolveDurationMs(options?.duration ?? 1200)
 }
 
 function resolveScrollImmediate(options?: ScrollToOptions) {
@@ -24,10 +28,6 @@ function resolveScrollOnComplete(options?: ScrollToOptions) {
   return options?.onComplete
 }
 
-function resolveNativeScrollDelay(options?: ScrollToOptions) {
-  return options?.duration ?? 500
-}
-
 type LocomotiveScrollOptions = Parameters<LocomotiveScroll['scrollTo']>[1]
 
 export function normalizeScrollTarget(target: ScrollTarget): number | null {
@@ -40,7 +40,7 @@ export function normalizeScrollTarget(target: ScrollTarget): number | null {
 export function normalizeScrollOptions(options?: ScrollToOptions) {
   return {
     offset: resolveScrollOffset(options),
-    duration: resolveScrollDuration(options),
+    duration: resolveScrollDurationMs(options),
     immediate: resolveScrollImmediate(options),
     lock: resolveScrollLock(options),
     ...(resolveScrollOnComplete(options) ? { onComplete: resolveScrollOnComplete(options) } : {}),
@@ -62,7 +62,7 @@ function runSmoothScroll(targetPosition: number, duration: number, onComplete?: 
 function buildLocomotiveScrollOptions(options?: ScrollToOptions): LocomotiveScrollOptions {
   const scrollOptions: LocomotiveScrollOptions = {
     offset: resolveScrollOffset(options),
-    duration: resolveScrollDuration(options),
+    duration: resolveScrollDurationMs(options) / 1000,
     immediate: resolveScrollImmediate(options),
     lock: resolveScrollLock(options),
   }
@@ -87,7 +87,7 @@ export function runNativeScroll(target: ScrollTarget, options?: ScrollToOptions)
 
   runSmoothScroll(
     targetPosition,
-    resolveNativeScrollDelay(options),
+    resolveScrollDurationMs(options),
     resolveScrollOnComplete(options)
   )
 }

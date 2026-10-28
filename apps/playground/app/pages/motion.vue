@@ -120,7 +120,7 @@
   })
 
   function scrollToSection(selector: string) {
-    scrollTo(selector, { offset: -20, duration: 1.5 })
+    scrollTo(selector, { offset: -20, duration: 1500 })
   }
 
   const marqueeItems = ['GSAP', '✦', 'SCROLL', '✦', 'MOTION', '✦', 'ANIMATE', '✦', 'LAYERS', '✦']
@@ -352,7 +352,7 @@
       </section>
 
       <!-- Pinned Section -->
-      <MotionPinnedSection :duration="200" class="bg-default">
+      <MotionPinnedSection :distance="200" class="bg-default">
         <div class="grid max-w-6xl grid-cols-2 gap-8 px-8 md:grid-cols-4">
           <div
             v-for="(item, i) in ['Reveal', 'As You', 'Scroll', 'Down']"
@@ -453,7 +453,7 @@
         <UContainer>
           <div class="mx-auto max-w-4xl text-center">
             <h2 class="text-highlighted mb-8 text-4xl font-bold md:text-6xl">
-              <MotionTextReveal text="Text Reveal Animation" type="chars" :stagger="0.02" />
+              <MotionTextReveal text="Text Reveal Animation" type="chars" :stagger="20" />
             </h2>
             <p class="text-muted text-xl">
               <MotionTextReveal
@@ -644,18 +644,18 @@
             </div>
 
             <div class="flex flex-wrap justify-center gap-4">
-              <UButton variant="outline" @click="() => scrollTo('#demos', { duration: 1.5 })">
+              <UButton variant="outline" @click="() => scrollTo('#demos', { duration: 1500 })">
                 <UIcon name="i-lucide-arrow-up" class="mr-2" />
                 Scroll to Demos
               </UButton>
               <UButton
                 variant="outline"
-                @click="() => scrollTo('#horizontal-section', { duration: 2 })"
+                @click="() => scrollTo('#horizontal-section', { duration: 2000 })"
               >
                 <UIcon name="i-lucide-move-horizontal" class="mr-2" />
                 Horizontal Section
               </UButton>
-              <UButton @click="() => scrollToTop({ duration: 2.5 })">
+              <UButton @click="() => scrollToTop({ duration: 2500 })">
                 <UIcon name="i-lucide-arrow-up-to-line" class="mr-2" />
                 Back to Top
               </UButton>
@@ -752,7 +752,7 @@
                 <UIcon name="i-lucide-text-cursor-input" class="mr-2" />
                 MarqueeText
               </UButton>
-              <UButton variant="outline" @click="() => scrollToTop({ duration: 2 })">
+              <UButton variant="outline" @click="() => scrollToTop({ duration: 2000 })">
                 Back to Top
               </UButton>
               <UButton to="/"> Home </UButton>

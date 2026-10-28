@@ -147,7 +147,7 @@
       >
         <div class="mx-auto mb-16 max-w-3xl text-center">
           <h3 class="text-highlighted mb-4 text-3xl font-bold md:text-5xl">
-            <MotionTextReveal text="Characters reveal in sequence" type="chars" :stagger="0.02" />
+            <MotionTextReveal text="Characters reveal in sequence" type="chars" :stagger="20" />
           </h3>
           <p class="text-muted text-lg">
             <MotionTextReveal
@@ -158,7 +158,11 @@
           </p>
         </div>
 
-        <MotionStaggered class="mb-16 grid grid-cols-2 gap-4 md:grid-cols-4" :stagger-delay="80">
+        <MotionStaggered
+          class="mb-16 grid grid-cols-2 gap-4 md:grid-cols-4"
+          preset="rise"
+          :stagger="80"
+        >
           <div
             v-for="i in 8"
             :key="i"

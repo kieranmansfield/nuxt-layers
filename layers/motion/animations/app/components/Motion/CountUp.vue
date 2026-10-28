@@ -1,8 +1,10 @@
 <script setup lang="ts">
+  import type { MotionDuration } from '#layers/core/app/types/tokens'
+
   const {
     to,
     from = 0,
-    duration = 2,
+    duration = 2000,
     ease = 'power2.out',
     format = undefined,
     once = true,
@@ -12,7 +14,8 @@
   } = defineProps<{
     to: number
     from?: number
-    duration?: number
+    /** Milliseconds, or a duration token */
+    duration?: MotionDuration | number
     ease?: string
     format?: (n: number) => string
     once?: boolean

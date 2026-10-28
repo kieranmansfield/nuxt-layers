@@ -27,3 +27,15 @@ export const BREAKPOINT_PX = {
 
 // fallow-ignore-next-line unused-type
 export type Breakpoint = keyof typeof BREAKPOINT_PX
+
+/** Duration tokens — mirrors elevation-motion.css's `--duration-token-*` (ms). */
+export const DURATION_MS = {
+  fast: 150,
+  base: 700,
+  slow: 1000,
+} as const
+
+export type MotionDuration = keyof typeof DURATION_MS
+
+/** Ease tokens — `--ease-*` in elevation-motion.css (out/in-out are Tailwind's own). */
+export type MotionEase = 'out' | 'in-out' | 'emphasized' | 'spring'

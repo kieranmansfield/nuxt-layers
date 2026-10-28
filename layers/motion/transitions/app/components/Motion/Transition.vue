@@ -1,69 +1,67 @@
 <script setup lang="ts">
-  // Props
+  import type { MotionPreset } from '#layers/core/app/types/motion'
+  import type { MotionDuration, MotionEase } from '#layers/core/app/types/tokens'
+
+  /**
+   * Plays one entrance preset on its content, on mount or when it scrolls into view.
+   * The from/to states live in transitions.css (shared with MotionStaggered); this only
+   * flips `data-state` and sets the timing. Server-rendered content is visible at rest,
+   * and reduced motion shows it without moving.
+   */
   const {
-    name = 'fade',
+    preset = 'fade',
     duration = 300,
     delay = 0,
-    easing = 'ease-out',
+    ease = 'out',
+    trigger = 'mount',
+    as = 'div',
   } = defineProps<{
-    name?: string
-    duration?: number
+    preset?: MotionPreset
+    /** Milliseconds, or a duration token */
+    duration?: MotionDuration | number
+    /** Milliseconds */
     delay?: number
-    easing?: string
+    /** An ease token, or any CSS easing */
+    ease?: MotionEase | (string & {})
+    /** `visible` waits until the element scrolls into view */
+    trigger?: 'mount' | 'visible'
+    as?: string
   }>()
 
-  // State
-  const isVisible = ref(false)
-  const isMounted = ref(false)
+  const el = useTemplateRef<HTMLElement>('el')
+  const state = ref<'from' | 'to'>('from')
+  const reduced = useReducedMotion()
 
-  // Computed classes
-  const transitionClass = computed(() => {
-    return `transition-${name}`
-  })
+  const style = computed(() => ({
+    transitionDuration: `${resolveDurationMs(duration)}ms`,
+    transitionDelay: `${delay}ms`,
+    transitionTimingFunction: resolveEaseCss(ease),
+  }))
 
-  const style = computed(() => {
-    return {
-      transitionDuration: `${duration}ms`,
-      transitionDelay: `${delay}ms`,
-      transitionTimingFunction: easing,
-    }
-  })
+  // Two frames, so the browser paints the "from" state before the transition starts
+  function play() {
+    requestAnimationFrame(() => requestAnimationFrame(() => (state.value = 'to')))
+  }
 
-  // Lifecycle
   onMounted(() => {
-    isMounted.value = true
-    // Trigger initial animation
-    setTimeout(() => {
-      isVisible.value = true
-    }, 50)
+    if (reduced.value || trigger === 'mount') return play()
+    const { stop } = useIntersectionObserver(el, ([entry]) => {
+      if (!entry?.isIntersecting) return
+      stop()
+      play()
+    })
   })
 </script>
 
 <template>
-  <div class="motion-transition" :class="[transitionClass, { 'is-visible': isVisible }]" :style>
+  <component
+    :is="as"
+    ref="el"
+    class="motion-transition"
+    :data-motion-preset="preset"
+    :data-state="state"
+    :style
+  >
     <slot />
-  </div>
+  </component>
 </template>
-
-<style scoped>
-  .motion-transition {
-    opacity: 0;
-    transition-property: all;
-  }
-
-  .motion-transition.is-visible {
-    opacity: 1;
-  }
-
-  .transition-fade {
-    transition-property: opacity;
-  }
-
-  .transition-slide {
-    transition-property: transform, opacity;
-  }
-
-  .transition-scale {
-    transition-property: transform, opacity;
-  }
-</style>

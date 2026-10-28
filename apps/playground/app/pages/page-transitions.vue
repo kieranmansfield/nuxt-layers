@@ -82,7 +82,11 @@
           </UButton>
         </div>
         <div class="mt-12 flex justify-center">
-          <MotionTransition :key="replayKey" :name="transitionName" :duration>
+          <MotionTransition
+            :key="replayKey"
+            :preset="transitionName === 'slide' ? 'slide-end' : 'fade'"
+            :duration
+          >
             <div
               class="from-primary shadow-primary/30 flex h-48 w-48 items-center justify-center rounded-3xl bg-linear-to-br to-purple-600 shadow-2xl"
             >

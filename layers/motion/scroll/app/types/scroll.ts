@@ -1,8 +1,11 @@
 import type { ComputedRef, Ref } from 'vue'
 
+import type { MotionDuration } from '#layers/core/app/types/tokens'
+
 export type ScrollToOptions = {
   offset?: number | undefined
-  duration?: number | undefined
+  /** Milliseconds, or a duration token. Locomotive takes seconds; converted at the call. */
+  duration?: MotionDuration | number | undefined
   immediate?: boolean | undefined
   lock?: boolean | undefined
   onComplete?: (() => void) | undefined

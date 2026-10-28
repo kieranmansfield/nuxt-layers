@@ -34,15 +34,15 @@ const {
 
     scrollTo: `// Programmatic scrolling
 scrollTo('#section', {
-  duration: 1.5,
+  duration: 1500, // ms
   offset: -100,
 })
 
 // Scroll to position
-scrollTo(500, { duration: 1 })
+scrollTo(500, { duration: 1000 })
 
 // Back to top
-scrollToTop({ duration: 2 })`,
+scrollToTop({ duration: 2000 })`,
 
     velocityEffect: `// Using MotionVelocityEffect component
 <MotionVelocityEffect effect="skew" :intensity="3">
@@ -128,7 +128,7 @@ const { progress } = useSmoothScroll()
           </p>
 
           <div class="flex flex-wrap justify-center gap-4">
-            <MotionScrollLink to="#playground" :duration="1.5" as="span">
+            <MotionScrollLink to="#playground" :duration="1500" as="span">
               <UButton size="xl"> Interactive Playground </UButton>
             </MotionScrollLink>
             <UButton size="xl" variant="outline" to="/motion"> Back to Motion Demo </UButton>
@@ -522,25 +522,25 @@ const { progress } = useSmoothScroll()
                 </p>
 
                 <div class="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-                  <MotionScrollLink :to="0" :duration="1.5" as="span" class="block">
+                  <MotionScrollLink :to="0" :duration="1500" as="span" class="block">
                     <UButton size="lg" block>
                       <UIcon name="i-lucide-arrow-up" class="mr-2" />
                       Top
                     </UButton>
                   </MotionScrollLink>
-                  <MotionScrollLink to="#features" :duration="1" as="span" class="block">
+                  <MotionScrollLink to="#features" :duration="1000" as="span" class="block">
                     <UButton size="lg" variant="outline" block>
                       <UIcon name="i-lucide-target" class="mr-2" />
                       Features
                     </UButton>
                   </MotionScrollLink>
-                  <MotionScrollLink to="#parallax-demo" :duration="1.5" as="span" class="block">
+                  <MotionScrollLink to="#parallax-demo" :duration="1500" as="span" class="block">
                     <UButton size="lg" variant="outline" block>
                       <UIcon name="i-lucide-layers" class="mr-2" />
                       Parallax
                     </UButton>
                   </MotionScrollLink>
-                  <MotionScrollLink :to="2000" :duration="2" as="span" class="block">
+                  <MotionScrollLink :to="2000" :duration="2000" as="span" class="block">
                     <UButton size="lg" variant="soft" block>
                       <UIcon name="i-lucide-arrow-down" class="mr-2" />
                       2000px
@@ -748,7 +748,7 @@ const { progress } = useSmoothScroll()
                 <UIcon name="i-lucide-arrow-left" class="mr-2" />
                 Motion Demo
               </UButton>
-              <MotionScrollLink :to="0" :duration="2" as="span">
+              <MotionScrollLink :to="0" :duration="2000" as="span">
                 <UButton size="lg">
                   <UIcon name="i-lucide-arrow-up" class="mr-2" />
                   Back to Top

@@ -1,8 +1,10 @@
 <script setup lang="ts">
+  import type { MotionDuration } from '#layers/core/app/types/tokens'
+
   const {
     type = 'chars',
-    stagger = 0.03,
-    duration = 0.8,
+    stagger = 30,
+    duration = 800,
     start = 'top 80%',
   } = defineProps<{
     /**
@@ -14,13 +16,13 @@
      */
     type?: 'chars' | 'words' | 'lines'
     /**
-     * Stagger delay between elements
+     * Milliseconds between each char, word or line
      */
     stagger?: number
     /**
-     * Animation duration
+     * Each piece's animation: milliseconds, or a duration token
      */
-    duration?: number
+    duration?: MotionDuration | number
     /**
      * Start position for scroll trigger
      */
@@ -37,8 +39,9 @@
     y: 40,
     opacity: 0,
     rotateX: -90,
-    stagger: stagger,
-    duration: duration,
+    // GSAP takes seconds; the props are milliseconds like every other motion prop
+    stagger: stagger / 1000,
+    duration: resolveDurationMs(duration) / 1000,
     ease: 'power3.out',
     start: start,
   }))
