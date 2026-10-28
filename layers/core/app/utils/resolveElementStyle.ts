@@ -1,7 +1,14 @@
 import type { CSSProperties } from 'vue'
 
 import { resolveLayoutAttrsStyle } from '../composables/useLayoutAttrs'
-import type { ElementProps } from '../types/element'
+import type {
+  DisplayProps,
+  ElementProps,
+  GridTrackProps,
+  InteractionProps,
+  SizingProps,
+  SurfaceProps,
+} from '../types/element'
 
 export type ElementStyleInput = Omit<ElementProps, 'as' | 'componentProps'>
 
@@ -16,6 +23,51 @@ function track(value: number | string | undefined): string | undefined {
   return typeof value === 'number' ? `repeat(${value}, 1fr)` : value
 }
 
+// One resolver per prop set (types/element.ts), so a component that takes only some of the
+// sets can resolve just those. resolveElementStyle composes all of them.
+
+export function resolveDisplayStyle(props: DisplayProps & GridTrackProps): CSSProperties {
+  // hidden > grid > flex > block
+  const mode = (['hidden', 'grid', 'flex', 'block'] as const).find((m) => props[m])
+  return {
+    display: mode && DISPLAY_FOR[mode],
+    ...(props.grid && {
+      gridTemplateColumns: track(props.cols),
+      gridTemplateRows: track(props.rows),
+    }),
+  }
+}
+
+export function resolveSizingStyle(props: SizingProps): CSSProperties {
+  return {
+    width: props.w,
+    height: props.h,
+    minWidth: props.minW,
+    maxWidth: props.maxW,
+    minHeight: props.minH,
+    maxHeight: props.maxH,
+    aspectRatio: props.aspect,
+  }
+}
+
+export function resolveSurfaceStyle(props: SurfaceProps): CSSProperties {
+  return {
+    background: props.bg,
+    color: props.fg,
+    border: props.border,
+    borderRadius: props.radius,
+    boxShadow: props.shadow,
+  }
+}
+
+export function resolveInteractionStyle(props: InteractionProps): CSSProperties {
+  return {
+    cursor: props.cursor,
+    userSelect: props.select,
+    pointerEvents: props.pointer,
+  }
+}
+
 /**
  * Element's whole prop vocabulary → one CSSProperties object. Pure: shared by Element
  * (inline :style) and ElementTw (Tailwind arbitrary-property classes).
@@ -24,29 +76,13 @@ function track(value: number | string | undefined): string | undefined {
  * (buildGridPlacementStyle); Element is in core and can't depend on layout.
  */
 export function resolveElementStyle(props: ElementStyleInput): CSSProperties {
-  // hidden > grid > flex > block
-  const mode = (['hidden', 'grid', 'flex', 'block'] as const).find((m) => props[m])
+  const { display, ...tracks } = resolveDisplayStyle(props)
   return {
-    display: mode && DISPLAY_FOR[mode],
+    display,
     ...resolveLayoutAttrsStyle(props),
-    ...(props.grid && {
-      gridTemplateColumns: track(props.cols),
-      gridTemplateRows: track(props.rows),
-    }),
-    width: props.w,
-    height: props.h,
-    minWidth: props.minW,
-    maxWidth: props.maxW,
-    minHeight: props.minH,
-    maxHeight: props.maxH,
-    aspectRatio: props.aspect,
-    background: props.bg,
-    color: props.color,
-    border: props.border,
-    borderRadius: props.radius,
-    boxShadow: props.shadow,
-    cursor: props.cursor,
-    userSelect: props.select,
-    pointerEvents: props.pointer,
+    ...tracks,
+    ...resolveSizingStyle(props),
+    ...resolveSurfaceStyle(props),
+    ...resolveInteractionStyle(props),
   }
 }

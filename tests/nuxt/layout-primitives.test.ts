@@ -2,10 +2,10 @@ import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it } from 'vite-plus/test'
 
 import AppContainer from '../../layers/core/app/components/AppContainer.vue'
-import HStack from '../../layers/structure/layout/app/components/HStack.vue'
-import Spacer from '../../layers/structure/layout/app/components/Spacer.vue'
-import VStack from '../../layers/structure/layout/app/components/VStack.vue'
-import ZStack from '../../layers/structure/layout/app/components/ZStack.vue'
+import HStack from '../../layers/core/app/components/HStack.vue'
+import Spacer from '../../layers/core/app/components/Spacer.vue'
+import VStack from '../../layers/core/app/components/VStack.vue'
+import ZStack from '../../layers/core/app/components/ZStack.vue'
 
 describe('HStack', () => {
   it('renders a horizontal flex row with resolved gap', async () => {
@@ -20,12 +20,40 @@ describe('HStack', () => {
     expect(wrapper.attributes('style')).toContain('justify-content: space-between')
   })
 
-  it('adds the wrap class only when wrap is set', async () => {
+  it('marks wrap only when wrap is set', async () => {
     const wrapped = await mountSuspended(HStack, { props: { wrap: true } })
     const unwrapped = await mountSuspended(HStack)
 
-    expect(wrapped.classes()).toContain('h-stack-wrap')
-    expect(unwrapped.classes()).not.toContain('h-stack-wrap')
+    expect(wrapped.attributes('data-wrap')).toBeDefined()
+    expect(unwrapped.attributes('data-wrap')).toBeUndefined()
+  })
+
+  it('renders as the given element', async () => {
+    const wrapper = await mountSuspended(HStack, { props: { as: 'ul' } })
+    expect(wrapper.element.tagName).toBe('UL')
+  })
+
+  it('takes spacing tokens', async () => {
+    const wrapper = await mountSuspended(HStack, { props: { p: 'lg', m: 'sm' } })
+    expect(wrapper.attributes('style')).toContain('padding: var(--space-lg)')
+    expect(wrapper.attributes('style')).toContain('margin: var(--space-sm)')
+  })
+
+  it('exposes collapse-below as a data attribute for the stylesheet', async () => {
+    const wrapper = await mountSuspended(HStack, { props: { collapseBelow: 'md' } })
+    expect(wrapper.attributes('data-collapse-below')).toBe('md')
+  })
+
+  it('snaps to the parent grid: no column gap, row gap kept, spans as custom properties', async () => {
+    const wrapper = await mountSuspended(HStack, {
+      props: { snap: true, gap: 'md', snapSpan: { default: 12, md: 4 } },
+    })
+    const style = wrapper.attributes('style') ?? ''
+    expect(wrapper.attributes('data-snap')).toBeDefined()
+    expect(style).not.toMatch(/(^|;\s*)gap:/)
+    expect(style).toContain('row-gap: var(--space-md)')
+    expect(style).toContain('--snap-span: 12')
+    expect(style).toContain('--snap-span-md: 4')
   })
 })
 
@@ -34,6 +62,12 @@ describe('VStack', () => {
     const wrapper = await mountSuspended(VStack, { props: { gap: 'lg' } })
     expect(wrapper.classes()).toContain('v-stack')
     expect(wrapper.attributes('style')).toContain('gap: var(--space-lg)')
+  })
+
+  it('renders as the given element and can wrap', async () => {
+    const wrapper = await mountSuspended(VStack, { props: { as: 'ul', wrap: true } })
+    expect(wrapper.element.tagName).toBe('UL')
+    expect(wrapper.attributes('data-wrap')).toBeDefined()
   })
 
   it('nests inside an HStack without losing its own layout attrs', async () => {
@@ -78,6 +112,12 @@ describe('ZStack', () => {
 
     expect(wrapper.classes()).toContain('z-stack')
     expect(wrapper.findAll('div.a, div.b')).toHaveLength(2)
+  })
+
+  it('places its layers and renders as the given element', async () => {
+    const wrapper = await mountSuspended(ZStack, { props: { as: 'header', place: 'center' } })
+    expect(wrapper.element.tagName).toBe('HEADER')
+    expect(wrapper.attributes('data-place')).toBe('center')
   })
 })
 

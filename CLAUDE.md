@@ -45,7 +45,8 @@ nuxt-layers/
 │   ├── core/                       # Tier 0 — Foundation (single layer, no tier-parent folder)
 │   │                                 Base utilities, 404, loading, design tokens, Element/ElementTw
 │   │                                 polymorphic primitives (layout/spacing/sizing/surface/
-│   │                                 interaction vocabulary) — always the foundation
+│   │                                 interaction vocabulary), HStack/VStack/ZStack/Spacer
+│   │                                 stack primitives — always the foundation
 │   │
 │   ├── design-system/              # Tier 1
 │   │   ├── theming/                 # Accent/contrast/motion/transparency preferences, ThemePicker UI
@@ -53,7 +54,7 @@ nuxt-layers/
 │   │   └── visual/                  # Accent, Gradient, Tint, Progress, Modal, Picture
 │   │
 │   ├── structure/                  # Tier 2
-│   │   ├── layout/                  # Grid/spacing/breakpoints + HStack/VStack/ZStack/Spacer primitives
+│   │   ├── layout/                  # Swiss grid, sections, page header (stacks moved to core in v7)
 │   │   ├── grid/                    # Data-driven column tracks + presets, rhythm CSS, named-line placement
 │   │   ├── navigation/              # Mast/Site/Links components + useMastNav, useSite
 │   │   └── routing/                 # Advanced routing, maintenance mode, feature flags
@@ -102,8 +103,8 @@ deliberately — motion has other real siblings (`scroll`, `animations`, `transi
 whole tier reshaped, in a future pass — not folded into this one.
 
 `ui` (formerly Tier 1) and `baseline` (formerly Tier 7) no longer exist as layers — `ui` was
-dissolved (its 4 stack primitives moved into `layout`, `Container` renamed `AppContainer` and
-moved into `core`), and `baseline` was merged into `scripts` (it wrapped a third-party embed, the
+dissolved (its 4 stack primitives moved into `layout`, then into `core` in v7 so every layer can
+use them; `Container` renamed `AppContainer` and moved into `core`), and `baseline` was merged into `scripts` (it wrapped a third-party embed, the
 same shape as `scripts`' other embed facades). `theme` was renamed `theming`. `starter` was
 relocated out of `layers/` into `apps/` — it's a demo app, not a layer. `element` (formerly Tier 1)
 was folded into `core` — it had no layer deps of its own beyond `core`, no other layer depended on

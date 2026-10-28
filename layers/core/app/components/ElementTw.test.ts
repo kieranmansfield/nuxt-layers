@@ -54,7 +54,7 @@ describe('ElementTw', () => {
     const wrapper = mount(ElementTw, {
       props: {
         as: ColorPropStub,
-        color: 'crimson',
+        fg: 'crimson',
         componentProps: { color: 'error' },
       },
     })

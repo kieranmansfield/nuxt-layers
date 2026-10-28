@@ -48,7 +48,11 @@ left out.
 | `layers/core/app/components/Element.vue`                                   | atom      |
 | `layers/core/app/components/ElementTw.vue`                                 | atom      |
 | `layers/core/app/components/ErrorBoundary.vue`                             | behaviour |
+| `layers/core/app/components/HStack.vue`                                    | atom      |
 | `layers/core/app/components/LoadingScreen.vue`                             | organism  |
+| `layers/core/app/components/Spacer.vue`                                    | atom      |
+| `layers/core/app/components/VStack.vue`                                    | atom      |
+| `layers/core/app/components/ZStack.vue`                                    | atom      |
 | `layers/data/forms/app/components/Form/Contact.vue`                        | organism  |
 | `layers/data/forms/app/components/Form/Field.vue`                          | molecule  |
 | `layers/delivery/feeds/app/components/Feeds/Index.vue`                     | organism  |
@@ -93,7 +97,6 @@ left out.
 | `layers/motion/scroll/app/components/Motion/ScrollStep.vue`                | behaviour |
 | `layers/motion/transitions/app/components/Motion/Transition.vue`           | behaviour |
 | `layers/render/canvas/app/components/ShaderCanvas.vue`                     | atom      |
-| `layers/structure/layout/app/components/HStack.vue`                        | atom      |
 | `layers/structure/layout/app/components/Layout/Grid/Debug.vue`             | atom      |
 | `layers/structure/layout/app/components/Layout/Grid/Item.vue`              | atom      |
 | `layers/structure/layout/app/components/Layout/Main.vue`                   | template  |
@@ -103,9 +106,6 @@ left out.
 | `layers/structure/layout/app/components/Layout/Section/Hero.vue`           | organism  |
 | `layers/structure/layout/app/components/Layout/Section/Split.vue`          | organism  |
 | `layers/structure/layout/app/components/Layout/Section/index.vue`          | organism  |
-| `layers/structure/layout/app/components/Spacer.vue`                        | atom      |
-| `layers/structure/layout/app/components/VStack.vue`                        | atom      |
-| `layers/structure/layout/app/components/ZStack.vue`                        | atom      |
 | `layers/structure/navigation/app/components/Links/Group.vue`               | behaviour |
 | `layers/structure/navigation/app/components/Links/Named.vue`               | atom      |
 | `layers/structure/navigation/app/components/Mast/Footer.vue`               | organism  |
