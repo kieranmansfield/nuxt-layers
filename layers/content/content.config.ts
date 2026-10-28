@@ -53,6 +53,19 @@ export const portfolioCollectionSchema = z.object({
       })
     )
     .default([]),
+  stack: z
+    .array(
+      z.union([
+        z.string(),
+        z.object({
+          name: z.string(),
+          icon: z.string().optional(),
+          color: z.string().optional(),
+          url: z.string().optional(),
+        }),
+      ])
+    )
+    .default([]),
 })
 
 export const galleryCollectionSchema = z.object({

@@ -55,7 +55,7 @@ This is expected and harmless. The layers ship `.ts` configs, Node refuses to st
 | **layout**           | `kmcom-nuxt-layers/layers/layout`           | core                                 |
 | **navigation**       | `kmcom-nuxt-layers/layers/navigation`       | core, scroll, layout, typography     |
 | **routing**          | `kmcom-nuxt-layers/layers/routing`          | core                                 |
-| **content**          | `kmcom-nuxt-layers/layers/content`          | core                                 |
+| **content**          | `kmcom-nuxt-layers/layers/content`          | core, layout, visual, animations     |
 | **database**         | `kmcom-nuxt-layers/layers/database`         | core                                 |
 | **auth**             | `kmcom-nuxt-layers/layers/auth`             | core                                 |
 | **metadata**         | `kmcom-nuxt-layers/layers/metadata`         | core                                 |

@@ -139,7 +139,7 @@ navigation → core, scroll, layout, typography, visual
 routing → core
 
 # Tier 3 — Content
-content → core, layout, visual
+content → core, layout, visual, animations
 
 # Tier 4 — Data
 database → core

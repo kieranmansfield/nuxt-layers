@@ -197,6 +197,9 @@ catalogs:
     '@eslint/markdown':
       specifier: ^8.0.3
       version: 8.0.3
+    '@iconify-json/logos':
+      specifier: ^1.2.18
+      version: 1.2.18
     '@iconify-json/lucide':
       specifier: ^1.2.126
       version: 1.2.126
@@ -774,6 +777,9 @@ importers:
 
   layers/content:
     dependencies:
+      '@iconify-json/logos':
+        specifier: 'catalog:'
+        version: 1.2.18
       better-sqlite3:
         specifier: 'catalog:'
         version: 12.10.0
@@ -2243,6 +2249,9 @@ packages:
 
   '@iarna/toml@2.2.5':
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
+
+  '@iconify-json/logos@1.2.18':
+    resolution: {integrity: sha512-Qehd7RmUbYM4LSXNHFqulgvmdmqldOxQ3VDbCmzos5IGlo40+cChVdX7GnG9VODBU0H3+Bb8npYOkplooJZvtQ==}
 
   '@iconify-json/lucide@1.2.126':
     resolution: {integrity: sha512-Fl3OfR71yeWLrlTLp6C4W5W3rJJDWH9/e70mjtq9VAldYDxvHh149JMNPz7foTeLLTE2Paynnp2aYKVL9rgF5Q==}
@@ -14848,6 +14857,10 @@ snapshots:
   '@humanwhocodes/retry@0.4.3': {}
 
   '@iarna/toml@2.2.5': {}
+
+  '@iconify-json/logos@1.2.18':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify-json/lucide@1.2.126':
     dependencies:
