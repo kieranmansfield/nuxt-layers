@@ -61,7 +61,7 @@ overrides:
   'undici': '>=6.27.0'
   'form-data': '>=4.0.6'
   'http-proxy-middleware': '>=3.0.7'
-  'js-yaml': '>=4.1.2'
+  'js-yaml@<4.1.2': '^4.1.2'
   '@opentelemetry/core': '>=2.8.0'
   vite@*: 'catalog:'
   vitest@*: 'catalog:'
@@ -74,6 +74,7 @@ catalog:
   '@floating-ui/core': 1.7.5
   '@floating-ui/dom': 1.7.6
   '@floating-ui/utils': 0.2.11
+  '@iconify-json/logos': ^1.2.18
   '@iconify-json/lucide': ^1.2.126
   '@iconify/utils': 3.1.7
   '@iconify/vue': ^5.0.1

@@ -41,6 +41,8 @@ left out.
 | `layers/content/app/components/Portfolio/ItemPage.vue`                     | page      |
 | `layers/content/app/components/Portfolio/List.vue`                         | organism  |
 | `layers/content/app/components/Portfolio/Page.vue`                         | page      |
+| `layers/content/app/components/Portfolio/StackCard.vue`                    | molecule  |
+| `layers/content/app/components/Portfolio/StackGrid.vue`                    | organism  |
 | `layers/content/app/components/Portfolio/Typography.vue`                   | organism  |
 | `layers/content/app/components/content/Figure.vue`                         | molecule  |
 | `layers/core/app/components/AppContainer.vue`                              | atom      |

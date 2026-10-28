@@ -55,7 +55,7 @@ This is expected and harmless. The layers ship `.ts` configs, Node refuses to st
 | **layout**           | `kmcom-nuxt-layers/layers/layout`           | core                                 |
 | **navigation**       | `kmcom-nuxt-layers/layers/navigation`       | core, scroll, layout, typography     |
 | **routing**          | `kmcom-nuxt-layers/layers/routing`          | core                                 |
-| **content**          | `kmcom-nuxt-layers/layers/content`          | core, project-stats                  |
+| **content**          | `kmcom-nuxt-layers/layers/content`          | core, layout, visual, animations, project-stats|
 | **database**         | `kmcom-nuxt-layers/layers/database`         | core                                 |
 | **auth**             | `kmcom-nuxt-layers/layers/auth`             | core                                 |
 | **metadata**         | `kmcom-nuxt-layers/layers/metadata`         | core                                 |
@@ -229,4 +229,4 @@ Some modules used in the layers are optional or dev-only:
 
 - **`@nuxt/eslint`** — Loaded only in development (`NODE_ENV !== 'production'`). Install if you want layer-provided ESLint config during dev.
 - **`@vite-pwa/nuxt`** — Currently disabled in the core layer (commented out). Add it to your own `modules` if you want PWA support; the layer does not type the `pwa` config key for you.
-- **`nuxt-studio`** — Optional peer dependency of the content layer. Install for Nuxt Studio CMS integration.
+- **`nuxt-studio`** — Optional peer dependency of the content layer. Install it in your app and the content layer loads it in dev (local file editing) and production (git-backed editing, needs `nuxt build` + a GitHub OAuth app). Set `$production: { studio: false }` to keep it dev-only. See `layers/content/CLAUDE.md`.

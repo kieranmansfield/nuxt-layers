@@ -34,7 +34,9 @@ export function useCollectionItems<K extends keyof Collections>(
 
   // fallow-ignore-next-line complexity
   return useContentData(cacheKey, async () => {
-    let items = (await queryCollection(collectionName).all()) as AnyCollectionItem[]
+    let items = (await queryCollection(collectionName).all()).map(
+      hoistFrontmatter
+    ) as AnyCollectionItem[]
 
     if (sortKey) {
       // fallow-ignore-next-line complexity

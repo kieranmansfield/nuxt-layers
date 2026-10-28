@@ -2,7 +2,7 @@
   "name": "kmcom-layer-content",
   "type": "module",
   "version": "0.0.1",
-  "main": "./nuxt.config.ts",
+  "main": "./nuxt.config.mjs",
   "scripts": {
     "typecheck": "vue-tsc --noEmit -p ../../tsconfig.typecheck.json",
     "dev": "nuxi dev .playground",
@@ -11,12 +11,15 @@
     "build": "CONTENT_STANDALONE=true nuxi build",
     "generate": "CONTENT_STANDALONE=true nuxi generate",
     "preview": "nuxt preview .playground",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "content:format": "node scripts/format-content.mjs",
+    "content:format:check": "node scripts/format-content.mjs --check"
   },
   "devDependencies": {
     "@nuxt/content": "catalog:"
   },
   "dependencies": {
+    "@iconify-json/logos": "catalog:",
     "better-sqlite3": "catalog:",
     "zod": "catalog:conflicts_zod_h4_3_6",
     "zod-to-json-schema": "catalog:conflicts_zod-to-json-schema_h3_25_1"

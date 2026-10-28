@@ -1,4 +1,5 @@
 import { MetadataProviderError } from '#layers/metadata/server/utils/metadata/errors'
+import { providerFetch } from '#layers/metadata/server/utils/metadata/provider-fetch'
 import { useRuntimeConfig } from 'nitropack/runtime'
 import type { ComicVineApiResponse, ComicVineIssue, ComicVineVolume } from './types'
 
@@ -23,7 +24,7 @@ async function comicVineFetch<T>(
   url.searchParams.set('format', 'json')
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v)
 
-  const res = await $fetch<ComicVineApiResponse<T>>(url.toString(), {
+  const res = await providerFetch<ComicVineApiResponse<T>>('comicvine', url.toString(), {
     headers: { 'User-Agent': 'Mozilla/5.0 (compatible; nuxt-metadata/1.0)' },
   })
   if (res.status_code !== 1) throw new MetadataProviderError('comicvine', `API error: ${res.error}`)

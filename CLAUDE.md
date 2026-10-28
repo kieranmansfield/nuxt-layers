@@ -19,6 +19,7 @@ PLAYGROUND_LAYERS=core,typography pnpm dev  # Load specific layers only
 pnpm build                  # Build all packages
 pnpm typecheck              # Type check all packages
 pnpm lint                   # Lint all packages
+pnpm content:format         # Comark-format content markdown (oxfmt skips it; see layers/content/CLAUDE.md)
 
 # Cleanup
 pnpm clean                  # Remove node_modules, .nuxt, dist from all packages
@@ -87,7 +88,9 @@ nuxt-layers/
 │   └── delivery/                   # Tier 7
 │       ├── seo/                      # @nuxtjs/seo wrapper (robots, sitemap, og-image, schema-org)
 │       ├── scripts/                  # @nuxt/scripts wrapper (analytics, GTM, embeds, baseline-status badge)
-│       └── feeds/                    # RSS/Atom/JSON feed generation from content collections
+│       ├── feeds/                    # RSS/Atom/JSON feed generation from content collections
+│       └── capture/                  # kmcom-capture CLI: Monkr-framed screenshots + scroll videos
+│                                       of any site; client plugin signals capture-readiness
 └── packages/               # Shared utilities (placeholder)
 ```
 
@@ -139,7 +142,7 @@ navigation → core, scroll, layout, typography, visual
 routing → core
 
 # Tier 3 — Content
-content → core, layout, visual, project-stats
+content → core, layout, visual, project-stats, animations
 
 # Tier 4 — Data
 database → core
@@ -168,6 +171,7 @@ shader → canvas, theming
 seo → core
 scripts → core
 feeds → core, content
+capture → core
 ```
 
 **Rules:**

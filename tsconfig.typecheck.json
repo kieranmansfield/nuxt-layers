@@ -24,6 +24,7 @@
     "./apps/playground/.nuxt/content/types.d.ts",
     "./layers/*/app/**/*",
     "./layers/*/*/app/**/*",
+    "./layers/*/*/*/*/app/**/*",
     "./tests/**/*",
     "./types/**/*"
   ]

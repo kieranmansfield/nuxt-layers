@@ -21,6 +21,7 @@ const AVAILABLE_LAYERS = [
   'content',
   'routing',
   'feeds',
+  'capture',
   'database',
   'auth',
   'metadata',
@@ -54,6 +55,7 @@ const LAYER_PATHS: Record<LayerName, string> = {
   content: '../../layers/content',
   routing: '../../layers/structure/routing',
   feeds: '../../layers/delivery/feeds',
+  capture: '../../layers/delivery/capture',
   database: '../../layers/data/database',
   auth: '../../layers/data/auth',
   metadata: '../../layers/data/metadata',
@@ -100,6 +102,12 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/_studio/**': { redirect: '/' },
+  },
+
+  // The content layer loads nuxt-studio whenever it's installed. The playground deploy has no
+  // Studio OAuth app, so keep Studio to `pnpm dev` (local file editing) only.
+  $production: {
+    studio: false,
   },
 
   // TresJS components (Tres*, primitive) must be excluded from Vue component

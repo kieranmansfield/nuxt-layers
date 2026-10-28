@@ -15,6 +15,11 @@
     const value = record[key] ?? record.meta?.[key]
     return typeof value === 'string' && value.trim() ? value : undefined
   }
+  // Without a collection schema, Nuxt Content files extra frontmatter under `meta`
+  const stackOf = (item: unknown) =>
+    asPortfolio(item).stack ??
+    (asPortfolio(item).meta as Pick<PortfolioCollectionItem, 'stack'> | undefined)?.stack ??
+    []
 </script>
 
 <template>
@@ -77,6 +82,7 @@
       <template v-if="asPortfolio(item).colors?.length || asPortfolio(item).typography?.length">
         <USeparator class="my-8" />
         <div class="space-y-8">
+          <PortfolioStackGrid v-if="stackOf(item).length" :items="stackOf(item)" />
           <PortfolioColorPalette
             v-if="asPortfolio(item).colors?.length"
             :colors="asPortfolio(item).colors!"

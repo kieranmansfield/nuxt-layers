@@ -20,6 +20,7 @@ type FeedSourceItem = {
   author?: FeedSourceAuthor | string | undefined
   authors?: FeedSourceAuthor[] | undefined
   tags?: string[] | undefined
+  meta?: Record<string, unknown> | undefined
 }
 
 type FeedCollectionQuery = {
@@ -44,7 +45,12 @@ export async function getContentFeedItems(
 
   // queryCollection is keyed by literal collection names, but feed routes accept
   // a runtime collection string; keep the unsafe bridge local here.
-  const raw = await getFeedCollection(event, collection).all()
+  // Collections are declared without a schema, so Nuxt Content files custom frontmatter
+  // (`date`, `draft`, `tags`, `authors`) under `meta` — lift it back; top-level fields win.
+  const raw = (await getFeedCollection(event, collection).all()).map((item): FeedSourceItem => ({
+    ...item.meta,
+    ...item,
+  }))
 
   return raw
     .filter((item) => !item.draft)

@@ -91,6 +91,9 @@ export default defineConfig({
       'robots.txt',
       'README.md',
       'CHANGELOG.md',
+      // Nuxt Content markdown is owned by Comark (`pnpm content:format`): oxfmt rewrites
+      // `::component` + `---` props blocks into setext headings and swaps `*em*` for `_em_`.
+      '**/content/**/*.md',
       '.agents/',
       '.fallow-baseline/',
       '.claude/',

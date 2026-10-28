@@ -11,8 +11,14 @@ export function useMetadataItem(
   resourceType?: string
 ) {
   return useAsyncData(`metadata-item:${provider}:${providerId}`, () =>
-    $fetch<MetadataRecord>(LOOKUP_URL, {
-      query: { provider, providerId, resourceType },
+    $fetch<MetadataRecord>(LOOKUP_URL as '/api/metadata/lookup', {
+      method: 'GET',
+      body: undefined,
+      query: {
+        provider,
+        providerId,
+        ...(resourceType ? { resourceType } : {}),
+      },
     })
   )
 }

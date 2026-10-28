@@ -36,3 +36,22 @@ in production — unauthenticated GitHub calls are capped at 60/hour per server 
 `moduleCache: false`, so zod validators are never initialized and the call throws. The schema
 objects exported from this layer's `content.config.ts` exist for type inference only;
 `app/types/collections.d.ts` types the frontmatter and must be kept in sync with them.
+
+Without a schema, Nuxt Content files every non-standard frontmatter field (`date`, `tags`, `image`,
+`colors`, `stack`, …) under `item.meta`. The fetching composables (`useCollectionItem`,
+`useCollectionItems`, `useContentPage`) lift it back onto the item with `hoistFrontmatter`, which
+is what makes the top-level types true — query through them, not `queryCollection` directly.
+Nothing validates frontmatter either, so components should tolerate loose shapes (e.g.
+`weights: 400` instead of a list).
+
+## Portfolio stack cards
+
+`stack` frontmatter on a portfolio item renders `PortfolioStackGrid` in `PortfolioDetail`. Entries
+are a bare name or `{ name, icon?, color?, url? }`; `resolveStackItem` (`app/utils/portfolioStack.ts`)
+fills `icon`/`color` for common tech from its built-in table (Iconify `logos` set, shipped as
+`@iconify-json/logos` so icons resolve without the Iconify API) and falls back to a generic icon.
+
+The grid places cards with `LayoutGridItem` on the same 6/12/18-column tracks as layout's Swiss
+grid; `fanPlacement` decides each card's columns, row, rotation and drop per breakpoint. Motion is
+the reason this layer extends `animations`: `useMagneticElement` and `useTiltEffect` drive each
+card, and `useGsap` deals the deck in on scroll. All of it is skipped under reduced motion.

@@ -33,6 +33,23 @@ typography:
   - name: Geist Mono
     weights: 400
     usage: Prices, sizes, stock codes
+stack:
+  - Nuxt
+  - Vue
+  - TypeScript
+  - Tailwind CSS
+  - JavaScript
+  - Pinia
+  - Vite
+  - Vitest
+  - GSAP
+  - PostgreSQL
+  - Drizzle
+  - name: Netlify
+    url: https://www.netlify.com
+  - name: Shopify
+    icon: i-lucide-shopping-bag
+    color: '#95bf47'
 ---
 
 # Marché — E-Commerce Rebuild
@@ -41,7 +58,7 @@ Marché is a mid-size fashion retailer with a loyal customer base and a website 
 
 They didn't want a redesign for the sake of it. They wanted their online shop to feel as considered as their physical stores.
 
-::figure{src="https://picsum.photos/seed/ecom-hero/1200/600" alt="Marché homepage on desktop and mobile showing clean product grid and editorial hero" caption="The new homepage — editorial at the top, product-forward everywhere else"}
+::figure{alt="Marché homepage on desktop and mobile showing clean product grid and editorial hero" caption="The new homepage — editorial at the top, product-forward everywhere else" src="https://picsum.photos/seed/ecom-hero/1200/600"}
 ::
 
 ## The old site
@@ -59,7 +76,7 @@ It was doing about 1.4% conversion. The physical stores were running closer to 3
 
 Nuxt 4 with SSR, a headless CMS for editorial content, and Stripe for payments. Nothing exotic — the magic was in the details.
 
-::figure{src="https://picsum.photos/seed/ecom-arch/1000/500" alt="Simplified architecture diagram showing the stack" caption="The stack — deliberately boring choices that let us focus on the experience layer"}
+::figure{alt="Simplified architecture diagram showing the stack" caption="The stack — deliberately boring choices that let us focus on the experience layer" src="https://picsum.photos/seed/ecom-arch/1000/500"}
 ::
 
 A few decisions that mattered:
@@ -69,17 +86,17 @@ A few decisions that mattered:
 - **Guest checkout by default.** Account creation happens post-purchase, with a single click. Friction kills conversion; we killed friction.
 - **Images are uniform.** We wrote a Nuxt server route that normalises product images to consistent aspect ratios on upload. No more visual chaos in the grid.
 
-::figure{src="https://picsum.photos/seed/ecom-pdp/800/500" alt="Product detail page with size picker, stock indicator, and editorial photography" caption="Product page — size picker shows real-time stock, no 'add to cart then find out' nonsense"}
+::figure{alt="Product detail page with size picker, stock indicator, and editorial photography" caption="Product page — size picker shows real-time stock, no 'add to cart then find out' nonsense" src="https://picsum.photos/seed/ecom-pdp/800/500"}
 ::
 
-::figure{src="https://picsum.photos/seed/ecom-search/800/400" alt="Search results appearing as user types, with category facets on the left" caption="Search results update as you type — weighted by what people actually buy, not alphabetical order"}
+::figure{alt="Search results appearing as user types, with category facets on the left" caption="Search results update as you type — weighted by what people actually buy, not alphabetical order" src="https://picsum.photos/seed/ecom-search/800/400"}
 ::
 
 ## Checkout
 
 The old checkout was a five-page obstacle course. The new one is a single page with three collapsible sections. Address autocomplete, saved cards for returning customers, and real-time shipping estimates that don't require you to fill in your postcode first (we geolocate from IP for the initial estimate).
 
-::figure{src="https://picsum.photos/seed/ecom-checkout/800/500" alt="Single-page checkout with address, payment, and order summary visible at once" caption="The whole checkout on one screen — no page loads, no surprises, no 'where did my cart go?'"}
+::figure{alt="Single-page checkout with address, payment, and order summary visible at once" caption="The whole checkout on one screen — no page loads, no surprises, no 'where did my cart go?'" src="https://picsum.photos/seed/ecom-checkout/800/500"}
 ::
 
 ## Results
@@ -93,5 +110,5 @@ After 8 weeks live:
 
 The numbers are good, but honestly the best feedback was a customer email that said "I actually enjoy browsing your site now." That's the bar.
 
-::figure{src="https://picsum.photos/seed/ecom-metrics/1000/400" alt="Before and after Core Web Vitals comparison" caption="Core Web Vitals — green across the board, for the first time in the site's history"}
+::figure{alt="Before and after Core Web Vitals comparison" caption="Core Web Vitals — green across the board, for the first time in the site's history" src="https://picsum.photos/seed/ecom-metrics/1000/400"}
 ::

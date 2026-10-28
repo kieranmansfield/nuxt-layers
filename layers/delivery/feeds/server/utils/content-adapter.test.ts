@@ -64,4 +64,22 @@ describe('getContentFeedItems', () => {
       },
     ])
   })
+
+  it('reads frontmatter Nuxt Content filed under meta', async () => {
+    queryCollectionMock.mockReturnValue({
+      all: vi.fn().mockResolvedValue([
+        { title: 'Hidden', path: '/hidden', meta: { draft: true, date: '2026-02-01' } },
+        { title: 'Shown', path: '/shown', meta: { date: '2026-01-01', tags: ['vue'] } },
+      ]),
+    })
+
+    const items = await getContentFeedItems({} as H3Event, 'blog')
+
+    expect(items).toHaveLength(1)
+    expect(items[0]).toMatchObject({
+      title: 'Shown',
+      date: new Date('2026-01-01'),
+      tags: ['vue'],
+    })
+  })
 })
