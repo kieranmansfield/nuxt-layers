@@ -4,11 +4,11 @@
   const {
     preset = undefined,
     blobs = undefined,
-    tag = 'div',
+    as = 'div',
   } = defineProps<{
     preset?: string
     blobs?: BlobConfig[]
-    tag?: string
+    as?: string
   }>()
 
   const appConfig = useAppConfig()
@@ -25,7 +25,7 @@
 </script>
 
 <template>
-  <component :is="tag" class="relative isolate overflow-clip">
+  <component :is="as" class="relative isolate overflow-clip">
     <div class="pointer-events-none absolute inset-0" aria-hidden="true">
       <AccentBlob
         v-for="(blob, i) in resolvedBlobs"

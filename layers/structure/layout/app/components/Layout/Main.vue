@@ -9,7 +9,7 @@
    * When `mode` is `'disabled'`, falls back to a plain semantic `<main>` so the
    * page renders correctly without grid dependencies.
    *
-   * @prop {string} tag — HTML element to render (default: 'main')
+   * @prop {string} as — element to render (default: 'main')
    *
    * @example
    * <LayoutMain>
@@ -18,17 +18,17 @@
    */
 
   interface Props {
-    tag?: string
+    as?: string
   }
 
-  const { tag = 'main' } = defineProps<Props>()
+  const { as = 'main' } = defineProps<Props>()
 
   const { mode } = useGridConfig()
 </script>
 
 <template>
   <component
-    :is="tag"
+    :is="as"
     :class="mode !== 'disabled' ? 'grid-root' : undefined"
     :style="
       mode !== 'disabled'

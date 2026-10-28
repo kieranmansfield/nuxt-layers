@@ -104,7 +104,7 @@ Renders `<main class="grid-root">`. When `mode === 'disabled'` it renders a plai
 
 ```vue
 <LayoutMain>           <!-- default: <main> -->
-<LayoutMain tag="div"> <!-- custom tag -->
+<LayoutMain as="div"> <!-- custom element -->
 ```
 
 **Props:**

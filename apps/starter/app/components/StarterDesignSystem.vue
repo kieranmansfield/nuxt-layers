@@ -389,7 +389,7 @@
                   Inside Headline
                 </h4>
                 <TypographyHeadline :level="1">
-                  <TypographyTextStroke text="Headline Stroke" tag="span" :stroke-width="2" />
+                  <TypographyTextStroke text="Headline Stroke" as="span" :stroke-width="2" />
                 </TypographyHeadline>
               </div>
             </div>
@@ -440,7 +440,7 @@
               </template>
               <TypographyQuoteBlock class="border-primary border-l-4 pl-4 italic">
                 "The best way to predict the future is to create it."
-                <Typography tag="span" class="text-muted mt-2 block text-sm not-italic">
+                <Typography as="span" class="text-muted mt-2 block text-sm not-italic">
                   — Peter Drucker
                 </Typography>
               </TypographyQuoteBlock>

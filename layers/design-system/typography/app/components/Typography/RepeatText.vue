@@ -18,7 +18,7 @@
     letterSpacing = undefined,
     wordSpacing = undefined,
     rowGap = '0',
-    tag = 'div',
+    as = 'div',
     stroke = false,
     strokeWidth = 1.5,
   } = defineProps<{
@@ -34,7 +34,7 @@
     letterSpacing?: string | string[]
     wordSpacing?: string | string[]
     rowGap?: string
-    tag?: TypographyTag
+    as?: TypographyTag
     // Renders copies as outline-only (no fill) — the classic poster trick of
     // mixing solid/hollow repeats down a column. 'even'/'odd' alternate;
     // 'center' fills only the middle copy and strokes the rest.
@@ -108,7 +108,7 @@
 
 <template>
   <ElementTw
-    :as="tag"
+    :as
     :component-props="{
       class: ['flex', direction === 'vertical' ? 'flex-row h-full' : 'flex-col'],
       style: { gap: rowGap },

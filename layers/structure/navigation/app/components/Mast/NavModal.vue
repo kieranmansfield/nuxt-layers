@@ -101,7 +101,7 @@
 
         <slot name="header" />
 
-        <HoverDimGroup tag="nav" :class="classes.nav">
+        <HoverDimGroup as="nav" :class="classes.nav">
           <template v-for="link in visibleLinks" :key="link.id">
             <slot
               name="link"

@@ -17,7 +17,7 @@
   } from '../../types/typography'
 
   const {
-    tag = 'p',
+    as = 'p',
     weight = 'font-normal',
     width = 'font-stretch-normal',
     slant = 'normal',
@@ -32,7 +32,7 @@
     step = undefined,
     font = undefined,
   } = defineProps<{
-    tag?: TypographyTag
+    as?: TypographyTag
     weight?: FontWeight
     width?: FontWidth
     slant?: FontSlant
@@ -61,7 +61,7 @@
 </script>
 
 <template>
-  <ElementTw :as="tag" :component-props="{ class: [classes, colorClass] }">
+  <ElementTw :as :component-props="{ class: [classes, colorClass] }">
     <slot />
   </ElementTw>
 </template>

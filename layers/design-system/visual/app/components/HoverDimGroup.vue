@@ -5,7 +5,7 @@
     name: 'HoverDimGroup',
     inheritAttrs: false,
     props: {
-      tag: { type: String, default: 'div' },
+      as: { type: String, default: 'div' },
       dimOpacity: { type: Number, default: 0.3 },
       duration: { type: Number, default: 200 },
     },
@@ -39,7 +39,7 @@
         )
 
         return h(
-          props.tag,
+          props.as,
           {
             ...attrs,
             onMouseleave: () => {

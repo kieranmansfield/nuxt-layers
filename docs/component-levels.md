@@ -71,8 +71,7 @@ left out.
 | `layers/design-system/visual/app/components/Accent/Blob.vue`               | atom      |
 | `layers/design-system/visual/app/components/Accent/Scene.vue`              | molecule  |
 | `layers/design-system/visual/app/components/Base/Modal.vue`                | molecule  |
-| `layers/design-system/visual/app/components/Gradient/Background.vue`       | atom      |
-| `layers/design-system/visual/app/components/Gradient/Text.vue`             | atom      |
+| `layers/design-system/visual/app/components/Gradient/index.vue`            | atom      |
 | `layers/design-system/visual/app/components/HoverDimGroup.vue`             | behaviour |
 | `layers/design-system/visual/app/components/Media/Picture.vue`             | atom      |
 | `layers/design-system/visual/app/components/Progress/Bar.vue`              | atom      |
@@ -107,11 +106,8 @@ left out.
 | `layers/structure/layout/app/components/Layout/Section/Split.vue`          | organism  |
 | `layers/structure/layout/app/components/Layout/Section/index.vue`          | organism  |
 | `layers/structure/navigation/app/components/Links/Group.vue`               | behaviour |
-| `layers/structure/navigation/app/components/Links/Named.vue`               | atom      |
 | `layers/structure/navigation/app/components/Mast/Footer.vue`               | organism  |
 | `layers/structure/navigation/app/components/Mast/Header.vue`               | organism  |
 | `layers/structure/navigation/app/components/Mast/Nav.vue`                  | organism  |
 | `layers/structure/navigation/app/components/Mast/NavModal.vue`             | organism  |
 | `layers/structure/navigation/app/components/Site/Logo.vue`                 | atom      |
-| `layers/structure/navigation/app/components/Site/Subtitle.vue`             | atom      |
-| `layers/structure/navigation/app/components/Site/Title.vue`                | atom      |

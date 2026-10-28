@@ -10,7 +10,7 @@ const Parent = defineComponent({
   components: { HoverDimGroup },
   data: () => ({ ids: ['a', 'b', 'c'] }),
   template: `
-    <HoverDimGroup tag="nav">
+    <HoverDimGroup as="nav">
       <template v-for="id in ids" :key="id">
         <slot name="link" :id="id"><button>{{ id }}</button></slot>
       </template>

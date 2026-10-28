@@ -47,7 +47,7 @@
 
   const snippetTypeStep = `<!-- via useTypography / Typography component -->
 <Typography :step="1">Body copy, step 1</Typography>
-<Typography tag="h2" :step="3">Three steps up from 0 — twice its size</Typography>
+<Typography as="h2" :step="3">Three steps up from 0 — twice its size</Typography>
 
 <!-- or the utility class directly -->
 <p class="text-step-1">Body copy, step 1</p>
@@ -83,12 +83,12 @@
   const snippetProgressBar = `<ProgressBar :progress="0.6" color="success" />
 <ProgressBar :progress="null" animation="carousel" />`
 
-  const snippetGradientBackground = `<GradientBackground preset="brand" class="p-8 rounded-xl">
+  const snippetGradientBackground = `<Gradient preset="brand" class="p-8 rounded-xl">
   Slot content
-</GradientBackground>`
+</Gradient>`
 
   const snippetGradientText =
-    '<GradientText preset="brand" class="text-5xl font-black">Hello</GradientText>'
+    '<Gradient target="text" preset="brand" class="text-5xl font-black">Hello</Gradient>'
 
   const snippetTintOverlay = `<TintOverlay color="primary" level="medium">
   Your content
@@ -251,7 +251,7 @@
 
             <TypographyQuoteBlock class="border-primary border-l-4 pl-4 italic">
               "The best way to predict the future is to create it."
-              <Typography tag="span" class="text-muted mt-2 block text-sm not-italic">
+              <Typography as="span" class="text-muted mt-2 block text-sm not-italic">
                 - Peter Drucker
               </Typography>
             </TypographyQuoteBlock>
@@ -334,7 +334,7 @@
                   Inside Headline
                 </h4>
                 <TypographyHeadline :level="1">
-                  <TypographyTextStroke text="Headline Stroke" tag="span" :stroke-width="2" />
+                  <TypographyTextStroke text="Headline Stroke" as="span" :stroke-width="2" />
                 </TypographyHeadline>
               </div>
             </div>
@@ -884,7 +884,7 @@
             <template #header>
               <div class="flex items-center gap-2">
                 <UIcon name="i-lucide-layers" class="text-primary" />
-                <h3 class="text-xl font-semibold">GradientBackground</h3>
+                <h3 class="text-xl font-semibold">Gradient</h3>
               </div>
               <p class="text-muted mt-1 text-sm">
                 Wraps any tag with a CSS-var gradient that reacts to the active accent
@@ -892,7 +892,7 @@
             </template>
 
             <div class="grid gap-4 md:grid-cols-3">
-              <GradientBackground
+              <Gradient
                 v-for="preset in ['brand', 'subtle', 'hero']"
                 :key="preset"
                 :preset
@@ -901,7 +901,7 @@
                 <span class="text-highlighted font-semibold capitalize mix-blend-overlay">{{
                   preset
                 }}</span>
-              </GradientBackground>
+              </Gradient>
             </div>
 
             <template #footer>
@@ -915,7 +915,7 @@
             <template #header>
               <div class="flex items-center gap-2">
                 <UIcon name="i-lucide-type" class="text-primary" />
-                <h3 class="text-xl font-semibold">GradientText</h3>
+                <h3 class="text-xl font-semibold">Gradient target="text"</h3>
               </div>
               <p class="text-muted mt-1 text-sm">
                 Gradient-clipped text that reacts live to accent changes
@@ -924,13 +924,13 @@
 
             <div class="space-y-4">
               <div class="text-5xl font-black">
-                <GradientText preset="brand">Nuxt Layers</GradientText>
+                <Gradient target="text" preset="brand">Nuxt Layers</Gradient>
               </div>
               <div class="text-3xl font-bold">
-                <GradientText preset="hero">Design system</GradientText>
+                <Gradient target="text" preset="hero">Design system</Gradient>
               </div>
               <div class="text-3xl font-bold">
-                <GradientText preset="subtle">Subtle fade</GradientText>
+                <Gradient target="text" preset="subtle">Subtle fade</Gradient>
               </div>
             </div>
 

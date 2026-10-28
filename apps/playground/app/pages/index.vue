@@ -253,7 +253,7 @@
       loaded: true,
       icon: 'i-lucide-eye',
       to: '/visual',
-      features: ['GradientBackground', 'AccentBlob', 'TintOverlay', 'GradientText', 'Progress'],
+      features: ['Gradient', 'AccentBlob', 'TintOverlay', 'Progress'],
       borderColor: 'border-rose-500/50',
       bgColor: 'bg-rose-500/10',
       iconBg: 'bg-rose-500/10',

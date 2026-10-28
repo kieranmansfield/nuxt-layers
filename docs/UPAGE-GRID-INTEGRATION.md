@@ -138,14 +138,14 @@ Usage:
 
 ---
 
-### Option D — Per-page `<LayoutMain tag="div">` opt-in
+### Option D — Per-page `<LayoutMain as="div">` opt-in
 
 Don't apply `<LayoutMain>` in the layouts at all. Let pages that want the Swiss Grid add it themselves inside their template:
 
 ```vue
 <!-- A Swiss Grid page — no UPage -->
 <template>
-  <LayoutMain tag="div">
+  <LayoutMain as="div">
     <LayoutSection full-height>
       <LayoutGridItem preset="hero">
         <h1>Home</h1>
@@ -162,7 +162,7 @@ Don't apply `<LayoutMain>` in the layouts at all. Let pages that want the Swiss 
 </template>
 ```
 
-**This is the current approach after the revert.** The layout layer is available everywhere but not globally applied. The `grid-root` CSS class exists — any element can opt in via `class="grid-root"` or `<LayoutMain tag="div">`.
+**This is the current approach after the revert.** The layout layer is available everywhere but not globally applied. The `grid-root` CSS class exists — any element can opt in via `class="grid-root"` or `<LayoutMain as="div">`.
 
 **Trade-off:** No automatic column alignment across pages. Pages must explicitly adopt the grid.
 

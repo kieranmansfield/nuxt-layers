@@ -12,9 +12,9 @@
 
   import type { ContainerSize } from '#layers/core/types/tokens'
 
-  const { size = 'wide', tag = 'div' } = defineProps<{
+  const { size = 'wide', as = 'div' } = defineProps<{
     size?: ContainerSize
-    tag?: string
+    as?: string
   }>()
 
   const sizeClass: Record<ContainerSize, string> = {
@@ -26,7 +26,7 @@
 </script>
 
 <template>
-  <component :is="tag" :class="sizeClass[size]">
+  <component :is="as" :class="sizeClass[size]">
     <slot />
   </component>
 </template>

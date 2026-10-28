@@ -137,8 +137,8 @@ describe('AppContainer', () => {
     expect(wrapper.classes()).toContain('container-wide')
   })
 
-  it('renders as the given tag', async () => {
-    const wrapper = await mountSuspended(AppContainer, { props: { tag: 'section' } })
+  it('renders as the given element', async () => {
+    const wrapper = await mountSuspended(AppContainer, { props: { as: 'section' } })
     expect(wrapper.element.tagName).toBe('SECTION')
   })
 })
