@@ -2,7 +2,7 @@ import { usePreferredReducedMotion } from '@vueuse/core'
 
 /**
  * True when motion should be reduced. Honours the ThemePicker override when the theming layer
- * is loaded — it keeps it in `useState('theme-motion')`, read here by key so scroll doesn't
+ * is loaded — it keeps it in `useState('theme-motion')`, read here by key so core doesn't
  * depend on theming — and falls back to the OS `prefers-reduced-motion` setting.
  */
 export function useReducedMotion() {

@@ -78,7 +78,7 @@
   const NATIVE_SURFACE_DEFAULTS = {
     h: '120px',
     bg: 'light-dark(#eef1fb, #16233d)',
-    color: 'light-dark(#1e2a4a, #dbe4f7)',
+    fg: 'light-dark(#1e2a4a, #dbe4f7)',
     radius: '0.5rem',
   }
   // Layout/spacing defaults have the same problem as surface ones — flex + p="lg"
@@ -113,7 +113,7 @@
   const w = ref('')
   const h = ref(NATIVE_SURFACE_DEFAULTS.h)
   const bg = ref(NATIVE_SURFACE_DEFAULTS.bg)
-  const color = ref(NATIVE_SURFACE_DEFAULTS.color)
+  const fg = ref(NATIVE_SURFACE_DEFAULTS.fg)
   const border = ref('')
   const radius = ref(NATIVE_SURFACE_DEFAULTS.radius)
   const shadow = ref('')
@@ -137,7 +137,7 @@
     if (NATIVE_TAGS.has(next)) {
       h.value = NATIVE_SURFACE_DEFAULTS.h
       bg.value = NATIVE_SURFACE_DEFAULTS.bg
-      color.value = NATIVE_SURFACE_DEFAULTS.color
+      fg.value = NATIVE_SURFACE_DEFAULTS.fg
       radius.value = NATIVE_SURFACE_DEFAULTS.radius
       layoutMode.value = NATIVE_LAYOUT_DEFAULTS.layoutMode
       gap.value = NATIVE_LAYOUT_DEFAULTS.gap
@@ -145,7 +145,7 @@
     } else {
       h.value = ''
       bg.value = ''
-      color.value = ''
+      fg.value = ''
       radius.value = ''
       layoutMode.value = 'none'
       gap.value = UNSET
@@ -195,7 +195,7 @@
   const surfaceBindings = () =>
     pickTruthy([
       ['bg', bg],
-      ['color', color],
+      ['fg', fg],
       ['border', border],
       ['radius', radius],
       ['shadow', shadow],
@@ -295,10 +295,10 @@
       icon: 'i-lucide-palette',
       props: [
         {
-          name: 'bg / color / border / radius / shadow',
+          name: 'bg / fg / border / radius / shadow',
           type: 'string',
           description:
-            'Raw CSS passthrough — background/color/border/border-radius/box-shadow. No semantic colour tokens.',
+            'Raw CSS passthrough — background/color (fg)/border/border-radius/box-shadow. No semantic colour tokens.',
         },
       ],
     },
@@ -390,8 +390,8 @@
               <UFormField label="bg">
                 <UInput v-model="bg" placeholder="var(--ui-bg-elevated)" />
               </UFormField>
-              <UFormField label="color">
-                <UInput v-model="color" placeholder="white" />
+              <UFormField label="fg">
+                <UInput v-model="fg" placeholder="white" />
               </UFormField>
               <UFormField label="border">
                 <UInput v-model="border" placeholder="1px solid var(--ui-border)" />

@@ -11,7 +11,7 @@ import type { ScrollToOptions } from '../types/scroll'
  * const { scrollTo, velocity, progress } = useSmoothScroll()
  *
  * // Scroll to element
- * scrollTo('#section', { offset: -100, duration: 2 })
+ * scrollTo('#section', { offset: -100, duration: 2000 })
  */
 export function useSmoothScroll() {
   const nuxtApp = useNuxtApp()
@@ -66,9 +66,9 @@ export function useSmoothScroll() {
     runNativeScroll(target, options)
   }
 
-  function scrollToTop(options?: { duration?: number; immediate?: boolean }) {
+  function scrollToTop(options?: Pick<ScrollToOptions, 'duration' | 'immediate'>) {
     scrollTo(0, {
-      duration: options?.duration ?? 2,
+      duration: options?.duration ?? 2000,
       immediate: options?.immediate ?? false,
     })
   }

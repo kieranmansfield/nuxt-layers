@@ -1,24 +1,32 @@
 import { computed, toValue, type ComputedRef, type CSSProperties, type MaybeRefOrGetter } from 'vue'
 
-import type { ResponsiveValue } from '../types/responsive'
 import type { Spacing } from '../types/tokens'
 
 export type Align = 'start' | 'center' | 'end' | 'stretch' | 'baseline'
 export type Justify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
 
+// Token-only, not ResponsiveValue: gap and padding scale fluidly with the viewport, and
+// align/justify don't need a breakpoint jump in practice (spec §15). v6 accepted
+// `{ default, md }` objects here and silently dropped everything but `default`.
+// Breakpoint objects belong on structural props (HStack's `collapseBelow`, `snapSpan`).
 // `| undefined` on each is explicit (not just `?`) so component prop objects
 // — which have it too, under exactOptionalPropertyTypes — are assignable here.
-export type LayoutAttrsInput = {
-  gap?: ResponsiveValue<Spacing> | Spacing | undefined
-  align?: ResponsiveValue<Align> | Align | undefined
-  justify?: ResponsiveValue<Justify> | Justify | undefined
-  p?: ResponsiveValue<Spacing> | Spacing | undefined
-  px?: ResponsiveValue<Spacing> | Spacing | undefined
-  py?: ResponsiveValue<Spacing> | Spacing | undefined
-  m?: ResponsiveValue<Spacing> | Spacing | undefined
-  mx?: ResponsiveValue<Spacing> | Spacing | undefined
-  my?: ResponsiveValue<Spacing> | Spacing | undefined
+export type SpacingAttrsInput = {
+  p?: Spacing | undefined
+  px?: Spacing | undefined
+  py?: Spacing | undefined
+  m?: Spacing | undefined
+  mx?: Spacing | undefined
+  my?: Spacing | undefined
 }
+
+export type FlexAttrsInput = {
+  gap?: Spacing | undefined
+  align?: Align | undefined
+  justify?: Justify | undefined
+}
+
+export type LayoutAttrsInput = SpacingAttrsInput & FlexAttrsInput
 
 const ALIGN_MAP: Record<Align, string> = {
   start: 'flex-start',
@@ -37,16 +45,7 @@ const JUSTIFY_MAP: Record<Justify, string> = {
   evenly: 'space-evenly',
 }
 
-// ponytail: only `default` is resolved — gap/align/justify/p are continuous
-// or low-stakes enough that a breakpoint jump isn't a real need yet (see
-// spec §15). Add sm/md/lg/xl handling here (CSS custom properties + media
-// queries, since this returns inline style) if a primitive actually needs it.
-function resolveDefault<T>(value: ResponsiveValue<T> | T | undefined): T | undefined {
-  const isResponsiveObject = typeof value === 'object' && value !== null && 'default' in value
-  return isResponsiveObject ? (value as ResponsiveValue<T>).default : (value as T | undefined)
-}
-
-function spacingVar(token: Spacing): string {
+export function spacingVar(token: Spacing): string {
   return token === 'none' ? '0px' : `var(--space-${token})`
 }
 
@@ -60,10 +59,9 @@ function applySpacing(
     | 'margin'
     | 'marginInline'
     | 'marginBlock',
-  value: ResponsiveValue<Spacing> | Spacing | undefined
+  value: Spacing | undefined
 ): void {
-  const resolved = resolveDefault(value)
-  if (resolved) result[cssProp] = spacingVar(resolved)
+  if (value) result[cssProp] = spacingVar(value)
 }
 
 export function resolveLayoutAttrsStyle(input: LayoutAttrsInput): CSSProperties {
@@ -78,11 +76,8 @@ export function resolveLayoutAttrsStyle(input: LayoutAttrsInput): CSSProperties 
   applySpacing(result, 'marginInline', mx)
   applySpacing(result, 'marginBlock', my)
 
-  const resolvedAlign = resolveDefault(align)
-  if (resolvedAlign) result.alignItems = ALIGN_MAP[resolvedAlign]
-
-  const resolvedJustify = resolveDefault(justify)
-  if (resolvedJustify) result.justifyContent = JUSTIFY_MAP[resolvedJustify]
+  if (align) result.alignItems = ALIGN_MAP[align]
+  if (justify) result.justifyContent = JUSTIFY_MAP[justify]
 
   return result
 }

@@ -14,8 +14,8 @@ tier.
 
 ## Layout system
 
-Big refactor of the layout system (`layers/structure/layout/` — Grid/spacing/breakpoints,
-HStack/VStack/ZStack/Spacer/AppContainer primitives). No scope defined yet.
+Big refactor of the layout system (`layers/structure/layout/` — Grid/spacing/breakpoints). The
+stack primitives moved to `core` in v7. No scope defined yet.
 
 ## GSAP animations
 

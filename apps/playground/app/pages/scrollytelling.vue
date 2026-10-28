@@ -219,7 +219,7 @@
         </UContainer>
       </section>
 
-      <MotionPinnedSection :duration="300" class="bg-default">
+      <MotionPinnedSection :distance="300" class="bg-default">
         <div class="grid w-full max-w-6xl gap-8 px-8 md:grid-cols-3">
           <div
             v-for="card in cards"

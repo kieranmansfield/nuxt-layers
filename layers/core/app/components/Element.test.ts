@@ -5,8 +5,8 @@ import { describe, expect, it } from 'vite-plus/test'
 import Element from './Element.vue'
 
 // Stands in for a real component (e.g. UBadge) whose own `color` prop is
-// semantic, not a raw CSS value — the same name Element uses for its own
-// raw-CSS text colour passthrough.
+// semantic, not a raw CSS value — the name Element used for its raw-CSS text
+// colour before v7 renamed that to `fg`.
 const ColorPropStub = defineComponent({
   props: { color: { type: String, default: undefined } },
   setup(props) {
@@ -73,18 +73,25 @@ describe('Element', () => {
     expect(style).toContain('padding: var(--space-lg)')
   })
 
+  it('lets a semantic `color` prop fall through to the resolved component (v7: text colour is `fg`)', () => {
+    const wrapper = mount(Element, {
+      props: { as: ColorPropStub, fg: 'crimson' },
+      attrs: { color: 'error' },
+    })
+    // Element's `fg` resolves to raw CSS text colour...
+    expect(wrapper.attributes('style') ?? '').toContain('color: crimson')
+    // ...and `color` no longer collides, so it reaches the stub as its own prop.
+    expect(wrapper.attributes('data-received-color')).toBe('error')
+  })
+
   it('passes componentProps to the resolved component, past a colliding prop name', () => {
     const wrapper = mount(Element, {
       props: {
         as: ColorPropStub,
-        color: 'crimson',
+        fg: 'crimson',
         componentProps: { color: 'error' },
       },
     })
-    // Element's own `color` still resolves to raw CSS text colour...
-    expect(wrapper.attributes('style') ?? '').toContain('color: crimson')
-    // ...while the stub's semantic `color` prop comes from componentProps, not
-    // from Element's own `color`.
     expect(wrapper.attributes('data-received-color')).toBe('error')
   })
 })

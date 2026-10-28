@@ -212,13 +212,13 @@ Layer components are auto-imported by file name, and the app always wins: a comp
 app with the same name replaces the layer's copy everywhere, including where other layers render
 it. These unprefixed names are the ones most likely to collide by accident:
 
-| Component                              | Layer  | Notes                                                          |
-| -------------------------------------- | ------ | -------------------------------------------------------------- |
-| `LoadingScreen`                        | core   | Meant to be overridable (custom boot screen)                   |
-| `ElementTw`                            | core   | Rendered by typography and visual — shadowing changes them too |
-| `Element`, `AppContainer`              | core   | Primitives; pick another name for app components               |
-| `ErrorBoundary`                        | core   | Pick another name for app boundaries                           |
-| `HStack`, `VStack`, `ZStack`, `Spacer` | layout | Primitives; pick another name for app components               |
+| Component                              | Layer | Notes                                                          |
+| -------------------------------------- | ----- | -------------------------------------------------------------- |
+| `LoadingScreen`                        | core  | Meant to be overridable (custom boot screen)                   |
+| `ElementTw`                            | core  | Rendered by typography and visual — shadowing changes them too |
+| `Element`, `AppContainer`              | core  | Primitives; pick another name for app components               |
+| `ErrorBoundary`                        | core  | Pick another name for app boundaries                           |
+| `HStack`, `VStack`, `ZStack`, `Spacer` | core  | Primitives; pick another name for app components               |
 
 Override one on purpose by creating the same-named file in your `app/components/`.
 

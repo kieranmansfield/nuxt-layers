@@ -20,7 +20,7 @@
 
   const components = [
     {
-      name: 'GradientBackground / GradientText',
+      name: 'Gradient',
       icon: 'i-lucide-paintbrush',
       description: 'Render preset or custom-config CSS gradients as a background or text fill',
     },
@@ -87,7 +87,7 @@
 
         <div class="mx-auto grid max-w-4xl gap-8 lg:grid-cols-2">
           <div>
-            <h3 class="text-highlighted mb-4 text-lg font-bold">GradientBackground presets</h3>
+            <h3 class="text-highlighted mb-4 text-lg font-bold">Gradient presets</h3>
             <div class="mb-4 flex gap-2">
               <UButton
                 v-for="preset in gradientPresets"
@@ -99,7 +99,7 @@
                 {{ preset }}
               </UButton>
             </div>
-            <GradientBackground
+            <Gradient
               :preset="activeGradient"
               class="flex h-48 items-center justify-center rounded-2xl"
             >
@@ -108,7 +108,7 @@
               >
                 preset="{{ activeGradient }}"
               </code>
-            </GradientBackground>
+            </Gradient>
           </div>
 
           <div>

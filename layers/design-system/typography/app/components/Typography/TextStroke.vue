@@ -6,14 +6,14 @@
     strokeColor = 'currentColor',
     fill = 'none',
     linejoin = 'round',
-    tag = 'div',
+    as = 'div',
   } = defineProps<{
     text: string
     strokeWidth?: number
     strokeColor?: string
     fill?: string
     linejoin?: 'round' | 'miter' | 'bevel'
-    tag?: string
+    as?: string
   }>()
   const id = useId()
   const contrast = usePreferredContrast()
@@ -25,7 +25,7 @@
 
 <template>
   <component
-    :is="tag"
+    :is="as"
     class="text-stroke inline-grid leading-none *:[grid-area:1/1]"
     :aria-labelledby="`stroke-text-${id}`"
     v-bind="$attrs"

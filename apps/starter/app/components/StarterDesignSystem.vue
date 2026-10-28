@@ -389,7 +389,7 @@
                   Inside Headline
                 </h4>
                 <TypographyHeadline :level="1">
-                  <TypographyTextStroke text="Headline Stroke" tag="span" :stroke-width="2" />
+                  <TypographyTextStroke text="Headline Stroke" as="span" :stroke-width="2" />
                 </TypographyHeadline>
               </div>
             </div>
@@ -440,7 +440,7 @@
               </template>
               <TypographyQuoteBlock class="border-primary border-l-4 pl-4 italic">
                 "The best way to predict the future is to create it."
-                <Typography tag="span" class="text-muted mt-2 block text-sm not-italic">
+                <Typography as="span" class="text-muted mt-2 block text-sm not-italic">
                   — Peter Drucker
                 </Typography>
               </TypographyQuoteBlock>
@@ -1125,7 +1125,7 @@
                 unlockScrolling } = useSmoothScroll()
 
                 // Scroll to a section
-                scrollTo('#hero', { offset: -80, duration: 1.5 })
+                scrollTo('#hero', { offset: -80, duration: 1500 })
 
                 // Watch velocity for effects
                 watch(velocity, (v) => console.log('velocity:', v))`
@@ -1211,7 +1211,7 @@
 
             <template #footer>
               <TypographyCodeBlock language="vue" class="text-sm"
-                >{{ ` <MotionTextReveal text="Hello World" type="words" :stagger="0.05" />` }}
+                >{{ ` <MotionTextReveal text="Hello World" type="words" :stagger="50" />` }}
               </TypographyCodeBlock>
             </template>
           </UCard>
@@ -1452,7 +1452,7 @@
             </template>
 
             <div class="space-y-6">
-              <MotionStaggered class="grid grid-cols-4 gap-3" :stagger-delay="80">
+              <MotionStaggered class="grid grid-cols-4 gap-3" preset="rise" :stagger="80">
                 <div class="bg-elevated rounded-lg p-4 text-center text-sm font-medium">Item 1</div>
                 <div class="bg-elevated rounded-lg p-4 text-center text-sm font-medium">Item 2</div>
                 <div class="bg-elevated rounded-lg p-4 text-center text-sm font-medium">Item 3</div>
@@ -1463,16 +1463,18 @@
                 <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Props</h4>
                 <div class="flex flex-wrap gap-3">
                   <div class="bg-elevated rounded-lg px-3 py-2">
-                    <span class="font-mono text-sm">staggerDelay</span
+                    <span class="font-mono text-sm">stagger</span
                     ><span class="text-muted ml-2">ms between items (100)</span>
                   </div>
                   <div class="bg-elevated rounded-lg px-3 py-2">
-                    <span class="font-mono text-sm">initialDelay</span
+                    <span class="font-mono text-sm">delay</span
                     ><span class="text-muted ml-2">ms before first item (0)</span>
                   </div>
                   <div class="bg-elevated rounded-lg px-3 py-2">
-                    <span class="font-mono text-sm">animation</span
-                    ><span class="text-muted ml-2">CSS class name ('fadeIn')</span>
+                    <span class="font-mono text-sm">preset</span
+                    ><span class="text-muted ml-2"
+                      >fade · rise · drop · slide-start · slide-end · scale · blur ('fade')</span
+                    >
                   </div>
                 </div>
               </div>
@@ -1482,8 +1484,9 @@
               <TypographyCodeBlock language="vue" class="text-sm"
                 >{{ `<MotionStaggered
                   class="grid grid-cols-3 gap-4"
-                  :stagger-delay="100"
-                  :initial-delay="200"
+                  preset="rise"
+                  :stagger="100"
+                  :delay="200"
                 >
                   <ArticleCard
                     v-for="post in posts"

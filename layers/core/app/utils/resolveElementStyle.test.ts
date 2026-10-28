@@ -57,7 +57,7 @@ describe('resolveElementStyle prop mapping', () => {
         maxH: '4px',
         aspect: '16 / 9',
         bg: 'red',
-        color: 'blue',
+        fg: 'blue',
         border: '1px solid',
         radius: '4px',
         shadow: '0 0 1px black',

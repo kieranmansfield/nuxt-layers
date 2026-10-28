@@ -8,9 +8,10 @@ describe('useLayoutAttrs', () => {
     expect(style.value.gap).toBe('var(--space-md)')
   })
 
-  it('resolves a responsive object to its default value', () => {
+  it('rejects breakpoint objects on continuous props (fluid by design, spec §15)', () => {
+    // @ts-expect-error v6 accepted { default, lg } here and silently used only `default`
     const { style } = useLayoutAttrs(() => ({ gap: { default: 'sm', lg: 'md' } }))
-    expect(style.value.gap).toBe('var(--space-sm)')
+    expect(style.value.gap).toBeDefined()
   })
 
   it('omits a property when its value is missing', () => {
@@ -36,10 +37,5 @@ describe('useLayoutAttrs', () => {
     expect(style.value.padding).toBe('var(--space-lg)')
     expect(style.value.paddingInline).toBe('var(--space-sm)')
     expect(style.value.paddingBlock).toBe('var(--space-xl)')
-  })
-
-  it('prefers the responsive object default over treating it as a bare token', () => {
-    const { style } = useLayoutAttrs(() => ({ align: { default: 'center' } }))
-    expect(style.value.alignItems).toBe('center')
   })
 })

@@ -1,0 +1,115 @@
+/**
+ * Stack primitives (components/HStack, VStack, ZStack). Global rather than scoped so the
+ * child rules can use a plain `>` combinator: a scoped `:slotted(*)` also matches slotted
+ * descendants, not just the direct children each rule means.
+ *
+ * Structural responsive props arrive as data attributes (collapse-below) or as one custom
+ * property per breakpoint (snap-span, via utils/responsiveVars.ts), switched here because
+ * inline styles can't hold media queries. Breakpoints match tokens/breakpoints.css.
+ */
+@layer components {
+  .h-stack {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .v-stack {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .h-stack[data-wrap],
+  .v-stack[data-wrap] {
+    flex-wrap: wrap;
+  }
+
+  /* collapse-below: a row becomes a column under the named breakpoint */
+  @media (width < 40rem) {
+    .h-stack[data-collapse-below='sm'] {
+      flex-direction: column;
+    }
+  }
+
+  @media (width < 48rem) {
+    .h-stack[data-collapse-below='md'] {
+      flex-direction: column;
+    }
+  }
+
+  @media (width < 64rem) {
+    .h-stack[data-collapse-below='lg'] {
+      flex-direction: column;
+    }
+  }
+
+  @media (width < 80rem) {
+    .h-stack[data-collapse-below='xl'] {
+      flex-direction: column;
+    }
+  }
+
+  /* snap: items land on the parent grid's column tracks (subgrid) instead of flowing */
+  .h-stack[data-snap] {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+  }
+
+  .h-stack[data-snap] > * {
+    grid-column: span var(--snap-span, 1);
+  }
+
+  @media (width >= 40rem) {
+    .h-stack[data-snap] > * {
+      grid-column: span var(--snap-span-sm, var(--snap-span, 1));
+    }
+  }
+
+  @media (width >= 48rem) {
+    .h-stack[data-snap] > * {
+      grid-column: span var(--snap-span-md, var(--snap-span-sm, var(--snap-span, 1)));
+    }
+  }
+
+  @media (width >= 64rem) {
+    .h-stack[data-snap] > * {
+      grid-column: span
+        var(--snap-span-lg, var(--snap-span-md, var(--snap-span-sm, var(--snap-span, 1))));
+    }
+  }
+
+  @media (width >= 80rem) {
+    .h-stack[data-snap] > * {
+      grid-column: span
+        var(
+          --snap-span-xl,
+          var(--snap-span-lg, var(--snap-span-md, var(--snap-span-sm, var(--snap-span, 1))))
+        );
+    }
+  }
+
+  .z-stack {
+    display: grid;
+    grid-template-areas: 'stack';
+  }
+
+  .z-stack > * {
+    grid-area: stack;
+  }
+
+  .z-stack[data-place='start'] {
+    place-items: start;
+  }
+
+  .z-stack[data-place='center'] {
+    place-items: center;
+  }
+
+  .z-stack[data-place='end'] {
+    place-items: end;
+  }
+
+  .z-stack[data-place='stretch'] {
+    place-items: stretch;
+  }
+}

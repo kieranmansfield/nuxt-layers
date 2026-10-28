@@ -1,9 +1,11 @@
 <script setup lang="ts">
-  const { duration = 200, scrub = 0.5 } = defineProps<{
+  const { distance = 200, scrub = 0.5 } = defineProps<{
     /**
-     * Pin duration as a percentage of viewport height (200 = 2× viewport height)
+     * How far the section stays pinned, as a percentage of viewport height
+     * (200 = 2× viewport height). Called `duration` before v7; renamed because it's a
+     * scroll distance, not a time.
      */
-    duration?: number
+    distance?: number
     /**
      * Scrub smoothness for card reveals
      */
@@ -31,7 +33,7 @@
   })
 
   function pinAndReveal(section: HTMLElement, items: Element[]) {
-    const endValue = `+=${(duration * window.innerHeight) / 100}`
+    const endValue = `+=${(distance * window.innerHeight) / 100}`
 
     // Pin the section
     const pinSt = ScrollTrigger.create({

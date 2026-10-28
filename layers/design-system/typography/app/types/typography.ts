@@ -1,3 +1,5 @@
+import type { UiColors } from './colors'
+
 // ui/types/typography.ts
 
 /* ======================================================
@@ -138,18 +140,24 @@ export type FontFamily = 'sans' | 'mono' | 'display'
 
 /* ======================================================
    Base Typography Props
-   - Used by Text / Heading / Prose components
+   - Shared by Typography, TypographyHeadline, TypographyQuoteBlock and
+     TypographyCodeBlock; each sets its own defaults when destructuring
    ====================================================== */
 
-export type TypographyProps = {
-  as?: keyof HTMLElementTagNameMap
+export type TypographyStyleProps = {
   weight?: FontWeight
-  size?: FontSize
   width?: FontWidth
   slant?: FontSlant
   leading?: FontLeading
   tracking?: FontTracking
   align?: TextAlign
   transform?: TextTransform
+  color?: UiColors
+  size?: FontSize
+  step?: TypeStep
   font?: FontFamily
+}
+
+export type TypographyProps = TypographyStyleProps & {
+  as?: TypographyTag
 }

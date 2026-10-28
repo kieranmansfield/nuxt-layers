@@ -1,68 +1,58 @@
 <script setup lang="ts">
   // Explicit import so Staggered mounts under vitest's 'vue' project (no Nuxt auto-imports)
   // — same exemption as ElementTw.vue (eslint.config.mjs).
-  import { onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
+  import { onMounted, useTemplateRef } from 'vue'
 
+  import type { MotionPreset } from '#layers/core/app/types/motion'
+  import type { MotionDuration } from '#layers/core/app/types/tokens'
+  import { resolveDurationMs } from '#layers/core/app/utils/motion'
+
+  /**
+   * Reveals its direct children one after another with a shared entrance preset (the same
+   * presets as MotionTransition, from transitions.css). Children are visible at rest when
+   * rendered on the server; reduced motion shows them without moving.
+   */
   const {
-    staggerDelay = 100,
-    initialDelay = 0,
-    animation = 'fade-in',
+    preset = 'fade',
+    duration = 300,
+    stagger = 100,
+    delay = 0,
   } = defineProps<{
-    staggerDelay?: number
-    initialDelay?: number
-    /**
-     * Suffix of a `transitions` layer `animate-*` class (e.g. 'fade-in', 'slide-in-up').
-     */
-    animation?: string
+    preset?: MotionPreset
+    /** Each child's animation: milliseconds, or a duration token */
+    duration?: MotionDuration | number
+    /** Milliseconds between children */
+    stagger?: number
+    /** Milliseconds before the first child */
+    delay?: number
   }>()
 
   // Stagger the rendered DOM children, not slot vnodes: a `ref`/`class` on `<slot>` becomes a
   // slot prop and never reaches an element, which left every item hidden for good.
   const reduced = useReducedMotion()
   const root = useTemplateRef<HTMLElement>('root')
-  const timers: ReturnType<typeof setTimeout>[] = []
 
   onMounted(() => {
-    const items = [...(root.value?.children ?? [])]
-    if (reduced.value) {
-      root.value?.setAttribute('data-reduced', '')
-      return items.forEach((item) => item.classList.add('animated'))
+    const el = root.value
+    if (!el) return
+    if (!reduced.value) {
+      ;[...el.children].forEach((item, index) => {
+        const child = item as HTMLElement
+        child.style.animationDelay = `${delay + index * stagger}ms`
+        child.classList.add('motion-enter')
+      })
     }
-    items.forEach((item, index) => {
-      timers.push(
-        setTimeout(
-          () => item.classList.add(`animate-${animation}`, 'animated'),
-          initialDelay + index * staggerDelay
-        )
-      )
-    })
+    el.dataset.ready = ''
   })
-
-  onBeforeUnmount(() => timers.forEach(clearTimeout))
 </script>
 
 <template>
-  <div ref="root" class="motion-staggered">
+  <div
+    ref="root"
+    class="motion-staggered"
+    :data-motion-preset="preset"
+    :style="{ '--motion-duration': `${resolveDurationMs(duration)}ms` }"
+  >
     <slot />
   </div>
 </template>
-
-<style scoped>
-  /* stylelint-disable selector-pseudo-class-no-unknown */
-  .motion-staggered > :deep(*) {
-    transform: translateY(20px);
-    opacity: 0;
-    transition:
-      opacity 0.3s ease-out,
-      transform 0.3s ease-out;
-  }
-
-  .motion-staggered > :deep(.animated) {
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  .motion-staggered[data-reduced] > :deep(*) {
-    transition: none;
-  }
-</style>

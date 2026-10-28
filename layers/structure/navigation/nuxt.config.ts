@@ -14,8 +14,6 @@ export default defineNuxtConfig({
     '#layers/navigation/types': `${import.meta.dirname}/app/types`,
   },
 
-  css: ['#layers/navigation/app/assets/css/navigation.css'],
-
   compatibilityDate: '2026-06-06',
 
   typescript: {

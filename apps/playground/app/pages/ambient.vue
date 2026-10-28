@@ -1,10 +1,5 @@
 <script setup lang="ts">
-  import type { Component } from 'vue'
-  import AuroraPreset from '#layers/shader/app/components/Preset/Aurora.client.vue'
-  import FlowPreset from '#layers/shader/app/components/Preset/Flow.client.vue'
-  import GradientMeshPreset from '#layers/shader/app/components/Preset/GradientMesh.client.vue'
-  import NebulaPreset from '#layers/shader/app/components/Preset/Nebula.client.vue'
-  import OceanPreset from '#layers/shader/app/components/Preset/Ocean.client.vue'
+  import PresetAmbient from '#layers/shader/app/components/Preset/Ambient.client.vue'
   import ShaderHost from '#layers/shader/app/components/Shader/Host.client.vue'
   import ShaderRuntime from '#layers/shader/app/components/Shader/Runtime.client.vue'
 
@@ -21,17 +16,15 @@
   const intensity = ref(1.0)
   const mouseInteraction = ref(true)
 
-  // Static imports ensure preset components mount and emit @node during setup,
-  // before ShaderBackground's onMounted fires — so compileAsync gets a live colorNode.
-  const presetComponents: Record<PresetType, Component> = {
-    aurora: AuroraPreset,
-    nebula: NebulaPreset,
-    flow: FlowPreset,
-    gradientMesh: GradientMeshPreset,
-    ocean: OceanPreset,
+  // The static import ensures the preset mounts and emits @node during setup, before
+  // ShaderBackground's onMounted fires — so compileAsync gets a live colorNode.
+  const VARIANT: Record<PresetType, string> = {
+    aurora: 'aurora',
+    nebula: 'nebula',
+    flow: 'flow',
+    gradientMesh: 'gradient-mesh',
+    ocean: 'ocean',
   }
-
-  const currentPresetComponent = computed(() => presetComponents[activePreset.value])
 
   const presets = [
     {
@@ -112,7 +105,8 @@
                 <ClientOnly>
                   <ShaderRuntime :speed :mouse-smoothing="0.1">
                     <ShaderHost
-                      :preset="currentPresetComponent"
+                      :preset="PresetAmbient"
+                      :variant="VARIANT[activePreset]"
                       :transition-duration="1.0"
                       :preset-props="{ speed, intensity, mouseInteraction }"
                       clear-color="#000000"

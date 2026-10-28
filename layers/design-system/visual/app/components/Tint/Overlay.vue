@@ -6,19 +6,19 @@
     color,
     level,
     shade = 500,
-    tag = 'div',
+    as = 'div',
   } = defineProps<{
     color: TintColorSlot
     level: TintLevel
     shade?: ColorShade
-    tag?: string
+    as?: string
   }>()
 
   const { style } = useTint(() => ({ color, level, shade }))
 </script>
 
 <template>
-  <component :is="tag" class="relative">
+  <component :is="as" class="relative">
     <slot />
     <span class="pointer-events-none absolute inset-0" :style aria-hidden="true" />
   </component>

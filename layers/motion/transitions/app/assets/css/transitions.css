@@ -112,3 +112,112 @@
     opacity: 1;
   }
 }
+
+/*
+ * Motion presets (MotionPreset in core/app/types/motion.ts). Each preset is only a "from"
+ * state, held in custom properties, so MotionTransition (CSS transitions) and
+ * MotionStaggered (one shared keyframe) render the same preset identically.
+ * Individual transform properties (translate/scale), not `transform`, so a preset composes
+ * with GSAP, which writes `transform`.
+ */
+:root {
+  --motion-distance: 1.25rem;
+}
+
+[data-motion-preset] {
+  --motion-from-opacity: 0;
+  --motion-from-translate: 0 0;
+  --motion-from-scale: 1;
+  --motion-from-filter: none;
+}
+
+[data-motion-preset='rise'] {
+  --motion-from-translate: 0 var(--motion-distance);
+}
+
+[data-motion-preset='drop'] {
+  --motion-from-translate: 0 calc(-1 * var(--motion-distance));
+}
+
+[data-motion-preset='slide-start'] {
+  --motion-from-translate: calc(-1 * var(--motion-distance)) 0;
+}
+
+[data-motion-preset='slide-end'] {
+  --motion-from-translate: var(--motion-distance) 0;
+}
+
+[data-motion-preset='slide-start']:dir(rtl) {
+  --motion-from-translate: var(--motion-distance) 0;
+}
+
+[data-motion-preset='slide-end']:dir(rtl) {
+  --motion-from-translate: calc(-1 * var(--motion-distance)) 0;
+}
+
+[data-motion-preset='scale'] {
+  --motion-from-scale: 0.96;
+}
+
+[data-motion-preset='blur'] {
+  --motion-from-filter: blur(8px);
+}
+
+@keyframes motion-enter {
+  from {
+    opacity: var(--motion-from-opacity);
+    filter: var(--motion-from-filter);
+    translate: var(--motion-from-translate);
+    scale: var(--motion-from-scale);
+  }
+}
+
+/* Last resort if hydration never runs the reveal: show the content anyway */
+@keyframes motion-failsafe {
+  to {
+    opacity: 1;
+    filter: none;
+    translate: none;
+    scale: none;
+  }
+}
+
+/*
+ * Resting state is visible. The hidden "from" state only applies once the inline head
+ * script has set data-motion-js, so content never stays hidden without JavaScript, and
+ * the failsafe reveals it if the app fails to hydrate.
+ */
+:root[data-motion-js] .motion-transition[data-state='from'],
+:root[data-motion-js] .motion-staggered:not([data-ready]) > * {
+  opacity: var(--motion-from-opacity);
+  filter: var(--motion-from-filter);
+  translate: var(--motion-from-translate);
+  scale: var(--motion-from-scale);
+  animation: motion-failsafe 0s 2.5s forwards;
+}
+
+.motion-transition {
+  transition-property: opacity, filter, translate, scale;
+}
+
+.motion-enter {
+  animation: motion-enter var(--motion-duration, 300ms) var(--motion-ease, ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-motion-js] .motion-transition[data-state='from'],
+  :root[data-motion-js] .motion-staggered:not([data-ready]) > * {
+    opacity: 1;
+    filter: none;
+    translate: none;
+    scale: none;
+  }
+
+  .motion-transition {
+    transition: none;
+  }
+
+  .motion-enter {
+    animation: none;
+  }
+}

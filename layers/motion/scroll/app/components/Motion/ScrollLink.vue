@@ -1,7 +1,9 @@
 <script setup lang="ts">
+  import type { MotionDuration } from '#layers/core/app/types/tokens'
+
   const {
     to,
-    duration = 1.5,
+    duration = 1500,
     offset = 0,
     as = 'button',
   } = defineProps<{
@@ -10,9 +12,9 @@
      */
     to: string | number
     /**
-     * Scroll duration in seconds
+     * Scroll duration: milliseconds, or a duration token
      */
-    duration?: number
+    duration?: MotionDuration | number
     /**
      * Offset from target (negative = above target)
      */

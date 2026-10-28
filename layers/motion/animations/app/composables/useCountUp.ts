@@ -1,10 +1,13 @@
 import type { MaybeRefOrGetter } from 'vue'
 import type { ScrollTrigger as GSAPScrollTrigger } from 'gsap/ScrollTrigger'
 
+import type { MotionDuration } from '#layers/core/app/types/tokens'
+
 type UseCountUpOptions = {
   to: number
   from?: number
-  duration?: number
+  /** Milliseconds, or a duration token */
+  duration?: MotionDuration | number
   ease?: string
   format?: (n: number) => string
   once?: boolean
@@ -34,7 +37,7 @@ export function useCountUp(
     }
     tween = gsap.to(counter, {
       value: opts.to,
-      duration: opts.duration ?? 2,
+      duration: resolveDurationMs(opts.duration ?? 2000) / 1000,
       ease: opts.ease ?? 'power2.out',
       onUpdate: () => {
         displayValue.value = format(Math.round(counter.value))

@@ -1,4 +1,5 @@
-> **Upgrading?** v6.4 → v6.5: [`MIGRATION-v6.5.0.md`](./MIGRATION-v6.5.0.md) · v6.3 → v6.4:
+> **Upgrading?** v6.7 → v7.0: [`MIGRATION-v7.0.0.md`](./MIGRATION-v7.0.0.md) · v6.4 → v6.5:
+> [`MIGRATION-v6.5.0.md`](./MIGRATION-v6.5.0.md) · v6.3 → v6.4:
 > [`MIGRATION-v6.4.0.md`](./MIGRATION-v6.4.0.md) · v6.2 → v6.3:
 > [`MIGRATION-v6.3.0.md`](./MIGRATION-v6.3.0.md). The guides below cover older versions.
 

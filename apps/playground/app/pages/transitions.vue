@@ -1,16 +1,22 @@
 <script setup lang="ts">
+  import type { MotionPreset } from '#layers/core/app/types/motion'
+
   definePageMeta({ layout: false })
   const { setPageAccent } = useAccentColor()
   setPageAccent('rose')
   onUnmounted(() => setPageAccent(null))
 
-  const variants = [
-    { name: 'default', label: 'Default', description: 'Fades and moves all properties together' },
-    { name: 'fade', label: 'Fade', description: 'Opacity-only crossfade' },
-    { name: 'slide', label: 'Slide', description: 'Transform + opacity slide-in' },
+  const variants: { name: MotionPreset; label: string; description: string }[] = [
+    { name: 'fade', label: 'Fade', description: 'Opacity only' },
+    { name: 'rise', label: 'Rise', description: 'Moves up into place' },
+    { name: 'drop', label: 'Drop', description: 'Moves down into place' },
+    { name: 'slide-start', label: 'Slide start', description: 'Enters from the start side' },
+    { name: 'slide-end', label: 'Slide end', description: 'Enters from the end side' },
+    { name: 'scale', label: 'Scale', description: 'Grows slightly into place' },
+    { name: 'blur', label: 'Blur', description: 'Comes into focus' },
   ]
 
-  const activeVariant = ref('fade')
+  const activeVariant = ref<MotionPreset>('fade')
   const duration = ref(400)
   const replayKey = ref(0)
 
@@ -71,7 +77,7 @@
             >
               <div class="text-highlighted font-semibold">{{ variant.label }}</div>
               <p class="text-muted text-sm">{{ variant.description }}</p>
-              <code class="text-primary text-xs">name="{{ variant.name }}"</code>
+              <code class="text-primary text-xs">preset="{{ variant.name }}"</code>
             </button>
 
             <div class="border-default bg-accented/50 rounded-xl border p-4">
@@ -97,7 +103,7 @@
 
           <!-- Preview -->
           <div class="bg-default flex min-h-90 items-center justify-center rounded-3xl p-12">
-            <MotionTransition :key="replayKey" :name="activeVariant" :duration>
+            <MotionTransition :key="replayKey" :preset="activeVariant" :duration>
               <div
                 class="from-primary shadow-primary/30 flex h-64 w-64 items-center justify-center rounded-3xl bg-linear-to-br to-purple-600 shadow-2xl"
               >
@@ -133,7 +139,7 @@
             </div>
             <p class="text-muted mt-6 text-center text-sm">
               Apply these classes directly to any element, or wrap content in
-              <code class="text-primary">&lt;MotionTransition name="fade" /&gt;</code>
+              <code class="text-primary">&lt;MotionTransition preset="rise" /&gt;</code>
               for a managed enter/leave lifecycle.
             </p>
           </div>

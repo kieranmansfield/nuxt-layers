@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import { useColor } from '../../composables/color'
+  import { colorClass } from '../../composables/color'
   import { useRepeatFill } from '../../composables/repeatFill'
-  import { useTypography } from '../../composables/typography'
+  import { typographyClasses } from '../../composables/typography'
   import type { UiColors } from '../../types/colors'
   import type { FontWeight, TypeStep, TypographyTag } from '../../types/typography'
 
@@ -18,7 +18,7 @@
     letterSpacing = undefined,
     wordSpacing = undefined,
     rowGap = '0',
-    tag = 'div',
+    as = 'div',
     stroke = false,
     strokeWidth = 1.5,
   } = defineProps<{
@@ -34,7 +34,7 @@
     letterSpacing?: string | string[]
     wordSpacing?: string | string[]
     rowGap?: string
-    tag?: TypographyTag
+    as?: TypographyTag
     // Renders copies as outline-only (no fill) — the classic poster trick of
     // mixing solid/hollow repeats down a column. 'even'/'odd' alternate;
     // 'center' fills only the middle copy and strokes the rest.
@@ -59,16 +59,16 @@
     Array.from({ length: rows }, (_, i) => {
       const weight = rowWeight(i)
       const step = rowStep(i)
-      return useTypography({
+      return typographyClasses({
         leading: 'leading-normal',
         ...(weight !== undefined && { weight }),
         ...(step !== undefined && { step }),
-      }).classes.value
+      })
     })
   )
 
   const rowColorClasses = computed(() =>
-    Array.from({ length: rows }, (_, i) => useColor(rowColor(i), 'text').value)
+    Array.from({ length: rows }, (_, i) => colorClass(rowColor(i), 'text'))
   )
 
   const rowStyle = (i: number) => ({
@@ -108,7 +108,7 @@
 
 <template>
   <ElementTw
-    :as="tag"
+    :as
     :component-props="{
       class: ['flex', direction === 'vertical' ? 'flex-row h-full' : 'flex-col'],
       style: { gap: rowGap },
