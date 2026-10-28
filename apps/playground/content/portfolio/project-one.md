@@ -48,9 +48,9 @@ stack:
 
 Sleep brands tend to fall into two camps: either hyper-clinical (white coats, graphs, blue light filters) or aggressively cozy (clouds, sheep, pastel everything). Nocturn wanted to be neither. They make evidence-backed sleep products, but they also understand that bedtime is intimate, personal, and a little bit ritualistic.
 
-The brief was simple: _make sleep feel like something you look forward to, not something you optimise._
+The brief was simple: *make sleep feel like something you look forward to, not something you optimise.*
 
-::figure{src="https://picsum.photos/seed/brand-hero/1200/600" alt="Nocturn brand identity spread showing logo, packaging, and editorial layout" caption="The final identity system — warm enough to feel human, structured enough to feel credible"}
+::figure{alt="Nocturn brand identity spread showing logo, packaging, and editorial layout" caption="The final identity system — warm enough to feel human, structured enough to feel credible" src="https://picsum.photos/seed/brand-hero/1200/600"}
 ::
 
 ## Starting point
@@ -59,7 +59,7 @@ When we first spoke, the founders had a name, a handful of formulations, and a p
 
 We spent two weeks in research — not just looking at sleep brands, but at hospitality, fragrance, and editorial design. The spaces where calm and craft overlap.
 
-::figure{src="https://picsum.photos/seed/brand-audit/800/500" alt="Moodboard showing references from hospitality, editorial, and product design" caption="Early moodboard pulling from Aesop, Kinfolk, and Ace Hotel — brands that balance restraint with warmth"}
+::figure{alt="Moodboard showing references from hospitality, editorial, and product design" caption="Early moodboard pulling from Aesop, Kinfolk, and Ace Hotel — brands that balance restraint with warmth" src="https://picsum.photos/seed/brand-audit/800/500"}
 ::
 
 ## The mark
@@ -68,10 +68,10 @@ The logomark is a crescent that doubles as a closing parenthesis. It came from a
 
 It works because it's simple enough to stamp on a tin lid, but distinctive enough to recognise at thumbnail size. No gradients, no tricks.
 
-::figure{src="https://picsum.photos/seed/brand-logo/800/400" alt="Nocturn logo in various applications — dark on light, light on dark, embossed on paper" caption="The mark across contexts — screen, print, and emboss"}
+::figure{alt="Nocturn logo in various applications — dark on light, light on dark, embossed on paper" caption="The mark across contexts — screen, print, and emboss" src="https://picsum.photos/seed/brand-logo/800/400"}
 ::
 
-::figure{src="https://picsum.photos/seed/brand-grid/800/500" alt="Logo construction showing geometric proportions and clear space" caption="Construction based on overlapping circles — the geometry that makes it feel 'right' even if you can't explain why"}
+::figure{alt="Logo construction showing geometric proportions and clear space" caption="Construction based on overlapping circles — the geometry that makes it feel 'right' even if you can't explain why" src="https://picsum.photos/seed/brand-grid/800/500"}
 ::
 
 ## Colour and type
@@ -82,10 +82,10 @@ Fraunces was chosen for headlines because it has character without being loud. T
 
 ## In the wild
 
-::figure{src="https://picsum.photos/seed/brand-stationery/1000/600" alt="Packaging and stationery suite including tins, boxes, and printed inserts" caption="Packaging suite — the unboxing experience was designed to slow you down, not rush you through it"}
+::figure{alt="Packaging and stationery suite including tins, boxes, and printed inserts" caption="Packaging suite — the unboxing experience was designed to slow you down, not rush you through it" src="https://picsum.photos/seed/brand-stationery/1000/600"}
 ::
 
-::figure{src="https://picsum.photos/seed/brand-digital/1000/500" alt="Website screenshots showing homepage and product detail page" caption="The site mirrors the packaging — generous whitespace, warm photography, and type that breathes"}
+::figure{alt="Website screenshots showing homepage and product detail page" caption="The site mirrors the packaging — generous whitespace, warm photography, and type that breathes" src="https://picsum.photos/seed/brand-digital/1000/500"}
 ::
 
 ## What landed
