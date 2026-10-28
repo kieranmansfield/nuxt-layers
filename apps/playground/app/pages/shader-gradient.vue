@@ -1,10 +1,5 @@
 <script setup lang="ts">
-  import type { Component } from 'vue'
-  import ThemeBubble from '#layers/shader/app/components/Preset/ThemeBubble.client.vue'
-  import ThemeGradient from '#layers/shader/app/components/Preset/ThemeGradient.client.vue'
-  import ThemeLavaLamp from '#layers/shader/app/components/Preset/ThemeLavaLamp.client.vue'
-  import ThemePlasma from '#layers/shader/app/components/Preset/ThemePlasma.client.vue'
-  import ThemeWave from '#layers/shader/app/components/Preset/ThemeWave.client.vue'
+  import PresetTheme from '#layers/shader/app/components/Preset/Theme.client.vue'
   import type { AccentColor } from '#layers/theming/app/types/theme'
 
   definePageMeta({ ssr: false, layout: false })
@@ -34,17 +29,15 @@
 
   // Pattern selector
   type PatternKey = 'mesh' | 'wave' | 'lavalamp' | 'bubble' | 'plasma'
-  const PATTERNS: { key: PatternKey; label: string; component: Component }[] = [
-    { key: 'mesh', label: 'Mesh', component: ThemeGradient },
-    { key: 'wave', label: 'Wave', component: ThemeWave },
-    { key: 'lavalamp', label: 'Lava', component: ThemeLavaLamp },
-    { key: 'bubble', label: 'Bubble', component: ThemeBubble },
-    { key: 'plasma', label: 'Plasma', component: ThemePlasma },
+  const PATTERNS: { key: PatternKey; label: string; variant: string }[] = [
+    { key: 'mesh', label: 'Mesh', variant: 'gradient' },
+    { key: 'wave', label: 'Wave', variant: 'wave' },
+    { key: 'lavalamp', label: 'Lava', variant: 'lava-lamp' },
+    { key: 'bubble', label: 'Bubble', variant: 'bubble' },
+    { key: 'plasma', label: 'Plasma', variant: 'plasma' },
   ]
   const activePattern = ref<PatternKey>('mesh')
-  const activePreset = computed(
-    () => PATTERNS.find((p) => p.key === activePattern.value)!.component
-  )
+  const activeVariant = computed(() => PATTERNS.find((p) => p.key === activePattern.value)!.variant)
 
   // Controls
   const speed = ref(1.0)
@@ -119,7 +112,8 @@
   <div class="contents">
     <ShaderRuntime>
       <ShaderHost
-        :preset="activePreset"
+        :preset="PresetTheme"
+        :variant="activeVariant"
         :preset-props
         fixed
         :z-index="0"

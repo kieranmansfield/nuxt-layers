@@ -8,6 +8,7 @@
 
   const {
     preset = null,
+    variant = undefined,
     transitionDuration = 1.0,
     presetProps = {} as Record<string, unknown>,
     clearColor = '#000000',
@@ -18,6 +19,11 @@
   } = defineProps<{
     /** The active preset component */
     preset?: Component | null
+    /**
+     * The preset's look, for presets that take one (PresetAmbient, PresetTheme). Changing it
+     * crossfades exactly like changing `preset`.
+     */
+    variant?: string
     /** Crossfade duration in seconds */
     transitionDuration?: number
     /** Props forwarded to the active preset component */
@@ -39,12 +45,15 @@
   const transitionProgress = uniform(0)
   const isTransitioning = ref(false)
 
-  // Current and next preset tracking
+  // Current and next preset tracking — a component plus the variant it renders with
   const currentPreset = shallowRef<Component | null>(preset)
   const nextPreset = shallowRef<Component | null>(null)
+  const currentVariant = ref(variant)
+  const nextVariant = ref<string | undefined>(undefined)
 
-  function setCurrentPreset(preset: Component | null) {
+  function setCurrentPreset(preset: Component | null, presetVariant: string | undefined) {
     currentPreset.value = preset
+    currentVariant.value = presetVariant
   }
 
   // Material created once, updated via colorNode
@@ -75,22 +84,23 @@
     }
   }
 
-  // Watch preset changes for crossfade
+  // Watch preset (or variant) changes for crossfade
   watch(
-    () => preset,
-    async (newPreset, oldPreset) => {
-      if (!newPreset || newPreset === oldPreset) return
+    () => [preset, variant] as const,
+    async ([newPreset, newVariant], [oldPreset, oldVariant]) => {
+      if (!newPreset || (newPreset === oldPreset && newVariant === oldVariant)) return
 
       if (!currentPreset.value) {
         // First preset — no transition (setter call sidesteps the null-narrowing
         // TS applies to `currentPreset.value` inside this branch)
-        setCurrentPreset(newPreset)
+        setCurrentPreset(newPreset, newVariant)
         return
       }
 
       // Start crossfade
       isTransitioning.value = true
       nextPreset.value = newPreset
+      nextVariant.value = newVariant
       transitionProgress.value = 0
       emit('transitionStart')
 
@@ -105,9 +115,10 @@
       await handle.promise
 
       // Swap: next becomes current
-      currentPreset.value = newPreset
+      setCurrentPreset(newPreset, newVariant)
       currentNode = nextNode
       nextPreset.value = null
+      nextVariant.value = undefined
       nextNode = null
       isTransitioning.value = false
       transitionProgress.value = 0
@@ -124,12 +135,14 @@
 <template>
   <ShaderBackground :material :clear-color :tone-mapping :fixed :z-index :pointer-events />
 
-  <!-- Render current preset (invisible — just registers its TSL node) -->
+  <!-- Render current preset (invisible — just registers its TSL node). Keyed by variant: a
+       preset builds its graph once, so a new variant needs a fresh instance, the same way a
+       new preset component got one. -->
   <component
     :is="currentPreset"
     v-if="currentPreset"
-    key="current"
-    v-bind="presetProps"
+    :key="`current:${currentVariant ?? ''}`"
+    v-bind="{ ...presetProps, ...(currentVariant !== undefined && { variant: currentVariant }) }"
     @node="setCurrentNode"
   />
 
@@ -138,7 +151,7 @@
     :is="nextPreset"
     v-if="nextPreset && isTransitioning"
     key="next"
-    v-bind="presetProps"
+    v-bind="{ ...presetProps, ...(nextVariant !== undefined && { variant: nextVariant }) }"
     @node="setNextNode"
   />
 </template>

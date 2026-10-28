@@ -178,12 +178,10 @@ Ray-based generators (SkyAtmosphere, RaymarchTunnel) consume a 3D ray direction 
 1. `FisheyeRay` -- applies fisheye lens distortion to a ray direction before normalisation. `ray.z -= dot(ray.xy, ray.xy) * 0.5`. Produces the characteristic wide-angle sky dome look.
 2. `RayTiltBasis` -- tilts the ray via an orthonormal basis (i, j, k) constructed from a target forward direction. `ray = ray.x*i + ray.y*j + ray.z*k`. Controls camera elevation. Used in SkyAtmosphere to angle the view upward.
 3. `RaySphereReflect` -- reflects the ray off a virtual sphere at a given centre and radius. Used in SkyAtmosphere's sphere mode. The reflection creates a mirrored panoramic ball effect.
-4. `RayRotateX` -- rotates ray around the X axis by a given angle
-5. `RayRotateY` -- rotates ray around the Y axis
-6. `RayRotateZ` -- rotates ray around the Z axis
-7. `RayMouseOrbit` -- orbits ray direction based on mouse position (horizontal = yaw, vertical = pitch)
-8. `RayAutoOrbit` -- continuously orbits ray direction over time at a given speed
-9. `RayFromStateBuffer` ★ NEW -- reads camera position and rotation from a StateBufferSampler texture rather than from uniforms. Constructs the view ray using `rotateZ(rot.x) * rotateX(rot.y) * screenCoord`. Used by HeightmapTerrain for the multi-pass camera state pattern where position is simulated separately and written to a texture each frame.
+4. `RayRotate` -- rotates ray around the X, Y or Z axis (`axis`) by a given angle
+5. `RayMouseOrbit` -- orbits ray direction based on mouse position (horizontal = yaw, vertical = pitch)
+6. `RayAutoOrbit` -- continuously orbits ray direction over time at a given speed
+7. `RayFromStateBuffer` ★ NEW -- reads camera position and rotation from a StateBufferSampler texture rather than from uniforms. Constructs the view ray using `rotateZ(rot.x) * rotateX(rot.y) * screenCoord`. Used by HeightmapTerrain for the multi-pass camera state pattern where position is simulated separately and written to a texture each frame.
 
 ---
 
@@ -315,87 +313,83 @@ Exposes: `heightTexture`, `gridScale`, `terrainAmplitude`, `terrainRadius`, `fac
 1. `UVScale` -- uniform or non-uniform scale around a pivot
 2. `UVTranslate` -- offset UV by a vec2
 3. `UVRotate` -- rotate around a pivot point
-4. `UVFlipX` -- mirror horizontally
-5. `UVFlipY` -- mirror vertically
-6. `UVFlipXY` -- mirror both axes
-7. `UVSwapAxes` -- transpose x and y
-8. `UVCentre` -- recentres UV to -0.5…0.5 space and back
-9. `UVAspectCorrect` ★ NEW -- multiplies UV x by (width/height) so downstream effects are circular rather than elliptical. Essential whenever working with length() or radial operations. Used in ColorBends, Grainient, and most noise-rotation patterns.
+4. `UVFlip` -- mirror horizontally, vertically or both (`axis="x|y|xy"`)
+5. `UVSwapAxes` -- transpose x and y
+6. `UVCentre` -- recentres UV to -0.5…0.5 space and back
+7. `UVAspectCorrect` ★ NEW -- multiplies UV x by (width/height) so downstream effects are circular rather than elliptical. Essential whenever working with length() or radial operations. Used in ColorBends, Grainient, and most noise-rotation patterns.
 
 ### Mouse / Pointer
 
-10. `UVParallax` ★ NEW -- offsets UV by pointer NDC position scaled by a parallax factor. Creates the illusion of depth as the mouse moves. Used in ColorBends. `p += uPointer * parallax * 0.1`
-11. `UVMousePull` ★ NEW -- additive UV pull toward the current pointer position, scaled by an influence factor. Different from Parallax -- this warps the UV toward the cursor rather than shifting the whole field. Used in ColorBends. `q += (pointer - rp) * mouseInfluence * 0.2`
+8. `UVParallax` ★ NEW -- offsets UV by pointer NDC position scaled by a parallax factor. Creates the illusion of depth as the mouse moves. Used in ColorBends. `p += uPointer * parallax * 0.1`
+9. `UVMousePull` ★ NEW -- additive UV pull toward the current pointer position, scaled by an influence factor. Different from Parallax -- this warps the UV toward the cursor rather than shifting the whole field. Used in ColorBends. `q += (pointer - rp) * mouseInfluence * 0.2`
 
 ### Noise-Driven Rotation
 
-12. `UVNoiseRotate` ★ NEW -- rotates UV by an angle derived from GradientNoise sampled at `(time * speed, uv.x * uv.y)`. The core of the Grainient and Shadertoy gradient looks. Exposes `noiseScale`, `rotationAmount` (degrees of max rotation), `speed`. The noise output remapped to `(degree - 0.5) * rotationAmount + 180` prevents the rotation from snapping back to zero.
+10. `UVNoiseRotate` ★ NEW -- rotates UV by an angle derived from GradientNoise sampled at `(time * speed, uv.x * uv.y)`. The core of the Grainient and Shadertoy gradient looks. Exposes `noiseScale`, `rotationAmount` (degrees of max rotation), `speed`. The noise output remapped to `(degree - 0.5) * rotationAmount + 180` prevents the rotation from snapping back to zero.
 
 ### Tiling & Repetition
 
-13. `UVTile` -- tile by integer repeat count
-14. `UVMirrorTile` -- alternating mirrored tiles
-15. `UVOffsetTile` -- brick-offset tiling
-16. `UVHexTile` -- hexagonal tiling coordinate system
-17. `UVClamp` -- clamps UV to 0--1 (no repeat)
-18. `UVCrop` -- maps a sub-region to full 0--1 space
+11. `UVTile` -- tile by integer repeat count
+12. `UVMirrorTile` -- alternating mirrored tiles
+13. `UVOffsetTile` -- brick-offset tiling
+14. `UVHexTile` -- hexagonal tiling coordinate system
+15. `UVClamp` -- clamps UV to 0--1 (no repeat)
+16. `UVCrop` -- maps a sub-region to full 0--1 space
 
 ### Distortion
 
-19. `UVWarp` -- sine-based two-axis warp
-20. `UVSineWarpXY` ★ NEW -- independent sine warp on both axes simultaneously with frequency multiplier on Y (the `frequency * 1.5` pattern). This is the specific warp used in Grainient and Shadertoy snippets 3 & 4: `tuv.x += sin(tuv.y * freq + speed) / amplitude` `tuv.y += sin(tuv.x * freq * 1.5 + speed) / (amplitude * 0.5)` Distinct from `UVWarp` (which is a single vec2 sine) -- this is asymmetric by design.
-21. `UVTwirl` -- spiral distortion from centre
-22. `UVFisheye` -- barrel/fisheye lens distortion
-23. `UVPinch` -- pinch toward or away from a point
-24. `UVBulge` -- radial bulge/push from centre
-25. `UVSinWave` -- single-axis sine wave displacement
-26. `UVRipple` -- radial ripple from a point
-27. `UVShear` -- shear/skew transform
-28. `UVPolar` -- converts Cartesian UV to polar coordinates
-29. `UVCartesian` -- converts polar back to Cartesian
+17. `UVWarp` -- sine-based two-axis warp
+18. `UVSineWarpXY` ★ NEW -- independent sine warp on both axes simultaneously with frequency multiplier on Y (the `frequency * 1.5` pattern). This is the specific warp used in Grainient and Shadertoy snippets 3 & 4: `tuv.x += sin(tuv.y * freq + speed) / amplitude` `tuv.y += sin(tuv.x * freq * 1.5 + speed) / (amplitude * 0.5)` Distinct from `UVWarp` (which is a single vec2 sine) -- this is asymmetric by design.
+19. `UVTwirl` -- spiral distortion from centre
+20. `UVFisheye` -- barrel/fisheye lens distortion
+21. `UVPinch` -- pinch toward or away from a point
+22. `UVBulge` -- radial bulge/push from centre
+23. `UVSinWave` -- single-axis sine wave displacement
+24. `UVRipple` -- radial ripple from a point
+25. `UVShear` -- shear/skew transform
+26. `UVPolar` -- converts Cartesian UV to polar coordinates
+27. `UVCartesian` -- converts polar back to Cartesian
 
 ### Noise-Driven
 
-30. `UVNoiseWarp` -- FBM-driven domain warp
-31. `UVTurbulence` -- high-frequency noise displacement
-32. `UVCurlWarp` -- curl noise UV advection
-33. `UVCrystal` -- Voronoi-warped UV
-34. `UVMelt` -- slow downward gravity-like noise drip
+28. `UVNoiseWarp` -- FBM-driven domain warp
+29. `UVTurbulence` -- high-frequency noise displacement
+30. `UVCurlWarp` -- curl noise UV advection
+31. `UVCrystal` -- Voronoi-warped UV
+32. `UVMelt` -- slow downward gravity-like noise drip
 
 ### Time-Driven
 
-35. `UVScroll` -- constant UV translation over time
-36. `UVScrollX` -- horizontal scroll only
-37. `UVScrollY` -- vertical scroll only
-38. `UVPulse` -- oscillating scale over time
-39. `UVOrbit` -- UV rotates around a centre point over time
-40. `UVBreath` -- gentle scale oscillation
+33. `UVScroll` -- constant UV translation over time (`speedX` / `speedY`; set one to 0 for a single axis)
+34. `UVPulse` -- oscillating scale over time
+35. `UVOrbit` -- UV rotates around a centre point over time
+36. `UVBreath` -- gentle scale oscillation
 
 ### Mapping
 
-41. `UVSpherical` -- spherical projection mapping
-42. `UVCylindrical` -- cylindrical projection
-43. `UVPlanar` -- planar world-space projection
-44. `UVTriplanar` -- world-normal-blended triplanar mapping
-45. `UVScreenSpace` -- projects to screen-space UV regardless of geometry
-46. `UVReflect` -- reflection vector-based UV
-47. `UVMatCap` -- MatCap/LitSphere normal-based UV
-48. `UVFlowMap` -- samples a flow map texture to drive UV offset
+37. `UVSpherical` -- spherical projection mapping
+38. `UVCylindrical` -- cylindrical projection
+39. `UVPlanar` -- planar world-space projection
+40. `UVTriplanar` -- world-normal-blended triplanar mapping
+41. `UVScreenSpace` -- projects to screen-space UV regardless of geometry
+42. `UVReflect` -- reflection vector-based UV
+43. `UVMatCap` -- MatCap/LitSphere normal-based UV
+44. `UVFlowMap` -- samples a flow map texture to drive UV offset
 
 ### Experimental
 
-49. `UVKaleidoscope` -- mirror-fold UV into kaleidoscope symmetry
-50. `UVFractalZoom` -- recursive self-similar UV zoom
-51. `UVPixelate` -- floor UV to a pixel grid
-52. `UVScan` -- animated scanline sweep
-53. `UVShatter` -- Voronoi-cell-based UV fragmentation
-54. `UVMosaic` -- large-block mosaic coordinate snapping
-55. `UVFeedback` -- previous frame UV offset (requires render target pass)
+45. `UVKaleidoscope` -- mirror-fold UV into kaleidoscope symmetry
+46. `UVFractalZoom` -- recursive self-similar UV zoom
+47. `UVPixelate` -- floor UV to a pixel grid
+48. `UVScan` -- animated scanline sweep
+49. `UVShatter` -- Voronoi-cell-based UV fragmentation
+50. `UVMosaic` -- large-block mosaic coordinate snapping
+51. `UVFeedback` -- previous frame UV offset (requires render target pass)
 
 ### Banding & Repetition ★ NEW
 
-56. `UVColumnOffset` ★ NEW -- offsets UV Y by a column-index-derived value, creating vertical bands that are each slightly offset. The dawn4/5 pattern: `floor(uv.x * repetitions) * repetitions * factor`. Combined with sine: `uv.y += columnOffset + sin(s * softness)`. Creates the vertical stripe morphing effect. Exposes: `repetitions`, `offsetFactor`, `sineSoftness`.
-57. `UVFractBand` ★ NEW -- applies `fract(uv.y * frequency) * scale` to create horizontal banding via the fractional part. Outputs a float that adds to colour via `pow(s, 2.0)`. The dawn2 shimmer band pattern. Exposes: `frequency`, `scale`, `power`. Note: this outputs a float additive term, not a UV -- it straddles the UV/Scalar boundary, best used as a `ScalarAddend` passed to `CosinePalette` or added to the final colour directly.
+52. `UVColumnOffset` ★ NEW -- offsets UV Y by a column-index-derived value, creating vertical bands that are each slightly offset. The dawn4/5 pattern: `floor(uv.x * repetitions) * repetitions * factor`. Combined with sine: `uv.y += columnOffset + sin(s * softness)`. Creates the vertical stripe morphing effect. Exposes: `repetitions`, `offsetFactor`, `sineSoftness`.
+53. `UVFractBand` ★ NEW -- applies `fract(uv.y * frequency) * scale` to create horizontal banding via the fractional part. Outputs a float that adds to colour via `pow(s, 2.0)`. The dawn2 shimmer band pattern. Exposes: `frequency`, `scale`, `power`. Note: this outputs a float additive term, not a UV -- it straddles the UV/Scalar boundary, best used as a `ScalarAddend` passed to `CosinePalette` or added to the final colour directly.
 
 ---
 
@@ -406,88 +400,78 @@ Exposes: `heightTexture`, `gridScale`, `terrainAmplitude`, `terrainRadius`, `fac
 ### Blending
 
 1. `MixBlend` -- linear interpolation between two colour inputs
-2. `MultiplyBlend` -- Multiply mode
-3. `ScreenBlend` -- Screen mode
-4. `OverlayBlend` -- Overlay mode
-5. `SoftLightBlend` -- Soft Light
-6. `HardLightBlend` -- Hard Light
-7. `DifferenceBlend` -- Difference (abs subtraction)
-8. `ExclusionBlend` -- softer Difference
-9. `DodgeBlend` -- colour dodge
-10. `BurnBlend` -- colour burn
-11. `AddBlend` -- additive blend
-12. `SubtractBlend` -- subtractive blend
-13. `DivideBlend` -- division blend
-14. `DarkenBlend` -- min() per channel
-15. `LightenBlend` -- max() per channel
+2. `Blend` -- a solid colour over the pipeline with a standard blend `mode`: `multiply`, `screen`, `overlay`, `soft-light`, `hard-light`, `difference`, `exclusion` (softer difference), `color-dodge`, `color-burn`, `darken` (min per channel), `lighten` (max per channel)
+3. `AddBlend` -- additive blend
+4. `SubtractBlend` -- subtractive blend
+5. `DivideBlend` -- division blend
 
 ### Gradient Blend Ops
 
-16. `RotatedGradientBlend` ★ NEW -- blends two colours along a rotated axis using smoothstep. The `(tuv * Rot(angle)).x` pattern from Grainient and Shadertoy snippets 3 & 4. Takes `colorA`, `colorB`, `angle`, `edge0`, `edge1`. Used as the base colour layer before the Y-axis layer mix.
+6. `RotatedGradientBlend` ★ NEW -- blends two colours along a rotated axis using smoothstep. The `(tuv * Rot(angle)).x` pattern from Grainient and Shadertoy snippets 3 & 4. Takes `colorA`, `colorB`, `angle`, `edge0`, `edge1`. Used as the base colour layer before the Y-axis layer mix.
 
 ### Grading
 
-17. `BrightnessContrast` -- lift and compress tonal range
-18. `Exposure` -- multiply-based exposure stop adjustment
-19. `Gamma` -- power-curve gamma correction. `pow(max(col, 0), 1/gamma)`
-20. `Levels` -- input/output range remapping
-21. `Curves` -- arbitrary tone curve via 1D LUT texture
-22. `WhiteBalance` -- colour temperature and tint adjustment
-23. `LiftGammaGain` -- cinematic three-way colour grade
-24. `Hue` -- hue rotation in HSL space
-25. `Saturation` -- HSL saturation adjustment. `mix(vec3(luma), col, saturation)`
-26. `Vibrance` -- saturation boost that protects already-saturated colours
-27. `Lightness` -- HSL lightness adjustment
+7. `BrightnessContrast` -- lift and compress tonal range
+8. `Exposure` -- multiply-based exposure stop adjustment
+9. `Gamma` -- power-curve gamma correction. `pow(max(col, 0), 1/gamma)`
+10. `Levels` -- input/output range remapping
+11. `Curves` -- arbitrary tone curve via 1D LUT texture
+12. `WhiteBalance` -- colour temperature and tint adjustment
+13. `LiftGammaGain` -- cinematic three-way colour grade
+14. `Hue` -- hue rotation in HSL space
+15. `Saturation` -- HSL saturation adjustment. `mix(vec3(luma), col, saturation)`
+16. `Vibrance` -- saturation boost that protects already-saturated colours
+17. `Lightness` -- HSL lightness adjustment
 
 ### Channel Operations
 
-28. `ChannelMixer` -- arbitrary RGB channel mixing matrix
-29. `SwapChannels` -- remap colour channels
-30. `Tint` -- multiply colour by a tint colour
-31. `ColourBalance` -- shadows/midtones/highlights colour push
-32. `SelectiveColour` -- adjust a specific hue range only
+18. `ChannelMixer` -- arbitrary RGB channel mixing matrix
+19. `SwapChannels` -- remap colour channels
+20. `Tint` -- multiply colour by a tint colour
+21. `ColourBalance` -- shadows/midtones/highlights colour push
+22. `SelectiveColour` -- adjust a specific hue range only
 
 ### Remapping
 
-33. `Invert` -- 1 - colour
-34. `Posterise` -- quantise to n colour steps
-35. `Threshold` -- binary black/white from luminance
-36. `ColourRamp` -- map luminance to a colour gradient
-37. `DuoTone` -- map shadows/highlights to two colours
-38. `Tritone` -- three-stop colour mapping
-39. `FalseColour` -- scientific false colour mapping
-40. `ThermalMap` -- cool-to-hot colour ramp
-41. `Solarise` -- Sabattier photographic effect
+23. `Invert` -- 1 - colour
+24. `Posterise` -- quantise to n colour steps
+25. `Threshold` -- binary black/white from luminance
+26. `ColourRamp` -- map luminance to a colour gradient
+27. `DuoTone` -- map shadows/highlights to two colours
+28. `Tritone` -- three-stop colour mapping
+29. `FalseColour` -- scientific false colour mapping
+30. `ThermalMap` -- cool-to-hot colour ramp
+31. `Solarise` -- Sabattier photographic effect
 
 ### Colour Space
 
-42. `LinearToSRGB` -- gamma encode for display
-43. `SRGBToLinear` -- gamma decode to linear light
-44. `RGBToHSL` -- colour space conversion
-45. `HSLToRGB` -- colour space conversion
-46. `RGBToOKLab` -- perceptually uniform colour space
-47. `OKLabToRGB` -- back to RGB from OKLab
-48. `Desaturate` -- perceptual luminance-preserving greyscale
-49. `MonochromeTint` -- desaturate then tint with a single colour
-50. `SplitTone` -- separate tint for shadows vs highlights
+32. `LinearToSRGB` -- gamma encode for display
+33. `SRGBToLinear` -- gamma decode to linear light
+34. `RGBToHSL` -- colour space conversion
+35. `HSLToRGB` -- colour space conversion
+36. `RGBToOKLab` -- perceptually uniform colour space
+37. `OKLabToRGB` -- back to RGB from OKLab
+38. `Desaturate` -- perceptual luminance-preserving greyscale
+39. `MonochromeTint` -- desaturate then tint with a single colour
+40. `SplitTone` -- separate tint for shadows vs highlights
 
 ### Time-Based Colour
 
-51. `DayNightCycle` ★ NEW -- sinusoidal interpolation between two sets of colours over time. `sin(time * speed)` remapped to 0--1 with a power curve for easing. Used in Shadertoy snippet 4 to cycle between light and dark palettes. `t = (sign(cycle) * pow(abs(cycle), 0.6) + 1.) / 2.` Takes `colorsLight[]`, `colorsDark[]`, `speed`. Returns the time-blended colour set.
+41. `DayNightCycle` ★ NEW -- sinusoidal interpolation between two sets of colours over time. `sin(time * speed)` remapped to 0--1 with a power curve for easing. Used in Shadertoy snippet 4 to cycle between light and dark palettes. `t = (sign(cycle) * pow(abs(cycle), 0.6) + 1.) / 2.` Takes `colorsLight[]`, `colorsDark[]`, `speed`. Returns the time-blended colour set.
 
-52. `ChromaticAberration` -- per-channel UV offset
+42. `ChromaticAberration` -- per-channel UV offset
 
 ### Tonemapping & Colour Science
 
-53. `ACESTonemap` ★ NEW -- ACES filmic tone mapping via two 3x3 matrix transforms. Industry-standard operator that compresses HDR values to display range with a characteristic S-curve and warm highlight rolloff. Essential companion to any HDR-range generator (SkyAtmosphere, RaymarchTunnel, Bloom). Input/output both vec3 RGB. No uniforms required -- the matrices are constant.
-54. `ReinhardTonemap` -- simple Reinhard `col / (col + 1)` tone compression
-55. `TanhTonemap` ★ NEW -- `tanh(col * exposure)` soft sigmoid compression. Gentler than ACES -- preserves saturation and has no warm rolloff. Used in dawn5. Particularly good for procedural colour fields that can briefly exceed 1.0. `exposure` prop controls how aggressively values are compressed (dawn5 uses 2.5).
-56. `ExponentialFog` ★ NEW -- depth/height based fog blend to a fog colour using `exp2(-depth * density)` falloff.
+43. `ACESTonemap` ★ NEW -- ACES filmic tone mapping via two 3x3 matrix transforms. Industry-standard operator that compresses HDR values to display range with a characteristic S-curve and warm highlight rolloff. Essential companion to any HDR-range generator (SkyAtmosphere, RaymarchTunnel, Bloom). Input/output both vec3 RGB. No uniforms required -- the matrices are constant.
+44. `ReinhardTonemap` -- simple Reinhard `col / (col + 1)` tone compression
+45. `TanhTonemap` ★ NEW -- `tanh(col * exposure)` soft sigmoid compression. Gentler than ACES -- preserves saturation and has no warm rolloff. Used in dawn5. Particularly good for procedural colour fields that can briefly exceed 1.0. `exposure` prop controls how aggressively values are compressed (dawn5 uses 2.5).
+46. `ExponentialFog` ★ NEW -- depth/height based fog blend to a fog colour using `exp2(-depth * density)` falloff.
 
 ### SDF-to-Colour ★ NEW
 
-57. `SDFColourMask` ★ NEW -- multiplies a colour by a float mask value. The `col.mul(t)` pattern that appears in every phobon shader -- applies a SDF or noise-derived float as a multiplicative mask to the colour. While technically equivalent to `MultiplyBlend` with a greyscale input, naming it explicitly makes the scalar-pipeline intent clear. Exposes: `maskInput` (float node), `clampMask` (bool, default true).
-58. `SDFRadialMask` ★ NEW -- `oneMinus(length(uv * scale))` -- simple radial falloff from centre without smoothstep. Softer than Vignette, additive rather than darkening. The `r.addAssign(oneMinus(length(_uv.mul(vignette))))` pattern in flare8/9. Exposes: `scale`, `offset`.
+47. `SDFColourMask` ★ NEW -- multiplies a colour by a float mask value. The `col.mul(t)` pattern that appears in every phobon shader -- applies a SDF or noise-derived float as a multiplicative mask to the colour. While technically equivalent to `Blend mode="multiply"` with a greyscale input, naming it explicitly makes the scalar-pipeline intent clear. Exposes: `maskInput` (float node), `clampMask` (bool, default true).
+48. `SDFRadialMask` ★ NEW -- `oneMinus(length(uv * scale))` -- simple radial falloff from centre without smoothstep. Softer than Vignette, additive rather than darkening. The `r.addAssign(oneMinus(length(_uv.mul(vignette))))` pattern in flare8/9. Exposes: `scale`, `offset`.
 
 ---
 
