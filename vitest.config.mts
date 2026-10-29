@@ -182,7 +182,9 @@ export default defineConfig({
           test: {
             name: 'nuxt',
             include: ['tests/nuxt/**/*.{test,spec}.ts'],
-            hookTimeout: 30000,
+            // The first files to start pay the cold Vite build of the whole playground in
+            // setupNuxt (~25s on CI runners and growing with each layer), so leave headroom.
+            hookTimeout: 60000,
             environmentOptions: {
               nuxt: {
                 rootDir: nuxtRootDir,
