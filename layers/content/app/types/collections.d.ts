@@ -37,6 +37,8 @@ declare module '@nuxt/content' {
     client?: string
     year?: number
     url?: string
+    github?: string
+    obsidian?: string
     featured?: boolean
     colors?: PortfolioColor[]
     typography?: PortfolioFont[]

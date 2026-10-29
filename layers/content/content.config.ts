@@ -34,6 +34,10 @@ export const portfolioCollectionSchema = z.object({
   client: z.string().optional(),
   year: z.number().optional(),
   url: z.string().optional(),
+  /** `owner/name` or github.com URL — renders a GitHub stats card */
+  github: z.string().optional(),
+  /** Obsidian community plugin id — renders a plugin listing card */
+  obsidian: z.string().optional(),
   featured: z.boolean().default(false),
   colors: z
     .array(

@@ -485,6 +485,7 @@ export default defineConfigWithVueTs(
       'layers/data/metadata/providers/comicvine/nuxt.config.ts',
       'layers/data/metadata/providers/google-books/nuxt.config.ts',
       'layers/data/metadata/providers/themoviedb/nuxt.config.ts',
+      'layers/data/project-stats/nuxt.config.ts',
       'layers/design-system/theming/nuxt.config.ts',
     ],
     rules: {

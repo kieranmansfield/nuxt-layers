@@ -29,6 +29,7 @@ const AVAILABLE_LAYERS = [
   'metadata-openlibrary',
   'metadata-google-books',
   'metadata-tmdb',
+  'project-stats',
 ] as const
 type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
@@ -62,6 +63,7 @@ const LAYER_PATHS: Record<LayerName, string> = {
   'metadata-openlibrary': '../../layers/data/metadata/providers/openlibrary',
   'metadata-google-books': '../../layers/data/metadata/providers/google-books',
   'metadata-tmdb': '../../layers/data/metadata/providers/themoviedb',
+  'project-stats': '../../layers/data/project-stats',
 }
 
 // Nuxt resolves each layer's own `extends` transitively, so dependencies are NOT listed here.

@@ -54,7 +54,8 @@ and omits `grid`, `feeds` and the `metadata` providers.
 | `database`         | Drizzle ORM + Neon Postgres connection; useSql(), useDrizzle(schema) server utils              | `core`                                                    |
 | `auth`             | nuxt-auth-utils + GitHub OAuth handler; sealed-cookie sessions, opt-in `auth` route middleware | `core`                                                    |
 | `theming`          | Design tokens and theming utilities                                                            | `core`, `typography`                                      |
-| `content`          | Nuxt Content v3 collections and components                                                     | `core`, `layout`, `visual`, `animations`                  |
+| `content`          | Nuxt Content v3 collections and components                                                     | `core`, `layout`, `visual`, `project-stats`               |
+| `project-stats`    | GitHub repo + Obsidian plugin stats (cached API routes, composables, cards)                    | `core`                                                    |
 | `routing`          | Advanced routing, maintenance mode, feature flags                                              | `core`                                                    |
 | `capture`          | `kmcom-capture` CLI (Monkr-framed screenshots/videos of any site) + capture-ready client plugin | `core`                                                    |
 

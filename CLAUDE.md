@@ -70,6 +70,7 @@ nuxt-layers/
 │   │   │       ├── openlibrary/         # Open Library provider (books, ISBNs)
 │   │   │       ├── google-books/        # Google Books provider (fallback/enrichment)
 │   │   │       └── themoviedb/          # TMDB provider (movies, TV shows; IMDB ID passthrough)
+│   │   ├── project-stats/            # GitHub repo + Obsidian plugin stats: cached API routes, cards
 │   │   ├── forms/                    # Form UI + Zod validation (depends on mailer)
 │   │   └── mailer/                   # Resend email sending + runtime config
 │   │
@@ -141,7 +142,7 @@ navigation → core, scroll, layout, typography, visual
 routing → core
 
 # Tier 3 — Content
-content → core, layout, visual, animations
+content → core, layout, visual, project-stats, animations
 
 # Tier 4 — Data
 database → core
@@ -151,6 +152,7 @@ data/metadata/providers/comicvine → metadata
 data/metadata/providers/openlibrary → metadata
 data/metadata/providers/google-books → metadata
 data/metadata/providers/themoviedb → metadata
+project-stats → core
 mailer → core
 forms → mailer
 

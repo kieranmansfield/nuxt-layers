@@ -46,31 +46,32 @@ This is expected and harmless. The layers ship `.ts` configs, Node refuses to st
 
 ## Available Layers
 
-| Layer                | Extends Path                                | Depends On                           |
-| -------------------- | ------------------------------------------- | ------------------------------------ |
-| **core**             | `kmcom-nuxt-layers/layers/core`             | —                                    |
-| **theming**          | `kmcom-nuxt-layers/layers/theming`          | core                                 |
-| **typography**       | `kmcom-nuxt-layers/layers/typography`       | core                                 |
-| **visual**           | `kmcom-nuxt-layers/layers/visual`           | core                                 |
-| **layout**           | `kmcom-nuxt-layers/layers/layout`           | core                                 |
-| **navigation**       | `kmcom-nuxt-layers/layers/navigation`       | core, scroll, layout, typography     |
-| **routing**          | `kmcom-nuxt-layers/layers/routing`          | core                                 |
-| **content**          | `kmcom-nuxt-layers/layers/content`          | core, layout, visual, animations     |
-| **database**         | `kmcom-nuxt-layers/layers/database`         | core                                 |
-| **auth**             | `kmcom-nuxt-layers/layers/auth`             | core                                 |
-| **metadata**         | `kmcom-nuxt-layers/layers/metadata`         | core                                 |
-| **mailer**           | `kmcom-nuxt-layers/layers/mailer`           | core                                 |
-| **forms**            | `kmcom-nuxt-layers/layers/forms`            | mailer                               |
-| **scroll**           | `kmcom-nuxt-layers/layers/scroll`           | core                                 |
-| **animations**       | `kmcom-nuxt-layers/layers/animations`       | scroll                               |
-| **transitions**      | `kmcom-nuxt-layers/layers/transitions`      | core                                 |
-| **page-transitions** | `kmcom-nuxt-layers/layers/page-transitions` | core                                 |
-| **motion**           | `kmcom-nuxt-layers/layers/motion`           | scroll, animations, transitions, ... |
-| **canvas**           | `kmcom-nuxt-layers/layers/canvas`           | core                                 |
-| **shader**           | `kmcom-nuxt-layers/layers/shader`           | canvas                               |
-| **seo**              | `kmcom-nuxt-layers/layers/seo`              | core                                 |
-| **scripts**          | `kmcom-nuxt-layers/layers/scripts`          | core                                 |
-| **feeds**            | `kmcom-nuxt-layers/layers/feeds`            | core, content                        |
+| Layer                | Extends Path                                | Depends On                                      |
+| -------------------- | ------------------------------------------- | ----------------------------------------------- |
+| **core**             | `kmcom-nuxt-layers/layers/core`             | —                                               |
+| **theming**          | `kmcom-nuxt-layers/layers/theming`          | core                                            |
+| **typography**       | `kmcom-nuxt-layers/layers/typography`       | core                                            |
+| **visual**           | `kmcom-nuxt-layers/layers/visual`           | core                                            |
+| **layout**           | `kmcom-nuxt-layers/layers/layout`           | core                                            |
+| **navigation**       | `kmcom-nuxt-layers/layers/navigation`       | core, scroll, layout, typography                |
+| **routing**          | `kmcom-nuxt-layers/layers/routing`          | core                                            |
+| **content**          | `kmcom-nuxt-layers/layers/content`          | core, layout, visual, animations, project-stats |
+| **database**         | `kmcom-nuxt-layers/layers/database`         | core                                            |
+| **auth**             | `kmcom-nuxt-layers/layers/auth`             | core                                            |
+| **metadata**         | `kmcom-nuxt-layers/layers/metadata`         | core                                            |
+| **project-stats**    | `kmcom-nuxt-layers/layers/project-stats`    | core                                            |
+| **mailer**           | `kmcom-nuxt-layers/layers/mailer`           | core                                            |
+| **forms**            | `kmcom-nuxt-layers/layers/forms`            | mailer                                          |
+| **scroll**           | `kmcom-nuxt-layers/layers/scroll`           | core                                            |
+| **animations**       | `kmcom-nuxt-layers/layers/animations`       | scroll                                          |
+| **transitions**      | `kmcom-nuxt-layers/layers/transitions`      | core                                            |
+| **page-transitions** | `kmcom-nuxt-layers/layers/page-transitions` | core                                            |
+| **motion**           | `kmcom-nuxt-layers/layers/motion`           | scroll, animations, transitions, ...            |
+| **canvas**           | `kmcom-nuxt-layers/layers/canvas`           | core                                            |
+| **shader**           | `kmcom-nuxt-layers/layers/shader`           | canvas                                          |
+| **seo**              | `kmcom-nuxt-layers/layers/seo`              | core                                            |
+| **scripts**          | `kmcom-nuxt-layers/layers/scripts`          | core                                            |
+| **feeds**            | `kmcom-nuxt-layers/layers/feeds`            | core, content                                   |
 
 Metadata providers: `kmcom-nuxt-layers/layers/metadata/providers/{comicvine,openlibrary,google-books,themoviedb}`.
 
