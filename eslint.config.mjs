@@ -1,8 +1,5 @@
 import { fileURLToPath } from 'node:url'
-import {
-  defineConfigWithVueTs,
-  vueTsConfigs,
-} from '@vue/eslint-config-typescript'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import json from '@eslint/json'
 import markdown from '@eslint/markdown'
 import typescript from '@typescript-eslint/eslint-plugin'
@@ -75,10 +72,10 @@ export default defineConfigWithVueTs(
   // layer `server/` files are not part of that project and would fail to parse.
   {
     files: [
-      'layers/*/app/**/*.ts',
-      'layers/*/app/**/*.tsx',
-      'layers/*/app/**/*.mts',
-      'layers/*/app/**/*.vue',
+      'layers/**/app/**/*.ts',
+      'layers/**/app/**/*.tsx',
+      'layers/**/app/**/*.mts',
+      'layers/**/app/**/*.vue',
     ],
     languageOptions: {
       parserOptions: {
@@ -114,10 +111,7 @@ export default defineConfigWithVueTs(
       'prefer-const': 'error',
       'no-var': 'error',
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        { argsIgnorePattern: '^_' },
-      ],
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
 
       // Disable formatting rules that conflict with Prettier
@@ -130,11 +124,7 @@ export default defineConfigWithVueTs(
 
       // Code quality
       'vue/block-spacing': ['error', 'always'],
-      'vue/v-bind-style': [
-        'error',
-        'shorthand',
-        { sameNameShorthand: 'always' },
-      ],
+      'vue/v-bind-style': ['error', 'shorthand', { sameNameShorthand: 'always' }],
       'vue/html-self-closing': [
         'error',
         {
@@ -165,13 +155,7 @@ export default defineConfigWithVueTs(
       'vue/define-macros-order': [
         'error',
         {
-          order: [
-            'defineOptions',
-            'defineProps',
-            'defineEmits',
-            'defineSlots',
-            'defineExpose',
-          ],
+          order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots', 'defineExpose'],
         },
       ],
       'vue/define-props-destructuring': ['error', { destructure: 'always' }],
@@ -206,10 +190,7 @@ export default defineConfigWithVueTs(
 
       // Reactivity safety
       'vue/no-ref-object-reactivity-loss': 'error',
-      'vue/max-lines-per-block': [
-        'error',
-        { template: 300, script: 300, style: 200 },
-      ],
+      'vue/max-lines-per-block': ['error', { template: 300, script: 300, style: 200 }],
       'vue/require-typed-ref': 'error',
       'vue/require-explicit-emits': 'error',
       'vue/no-ref-as-operand': 'error',
@@ -248,8 +229,7 @@ export default defineConfigWithVueTs(
           paths: [
             {
               name: 'vue',
-              message:
-                'Vue APIs are auto-imported by Nuxt. Remove this import.',
+              message: 'Vue APIs are auto-imported by Nuxt. Remove this import.',
               allowTypeImports: true,
             },
             { name: '#imports', message: 'Already auto-imported by Nuxt.' },
@@ -292,10 +272,7 @@ export default defineConfigWithVueTs(
 
       // 'never' is unworkable here: TSL node graphs, Nuxt app-config generics and
       // h3 utilities all need occasional `as` bridges. Ban only angle-bracket style.
-      '@typescript-eslint/consistent-type-assertions': [
-        'error',
-        { assertionStyle: 'as' },
-      ],
+      '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'as' }],
       '@typescript-eslint/consistent-type-imports': [
         'error',
         { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
@@ -311,10 +288,7 @@ export default defineConfigWithVueTs(
       '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
       '@typescript-eslint/method-signature-style': ['error', 'property'],
       '@typescript-eslint/consistent-indexed-object-style': ['error', 'record'],
-      '@typescript-eslint/consistent-generic-constructors': [
-        'error',
-        'constructor',
-      ],
+      '@typescript-eslint/consistent-generic-constructors': ['error', 'constructor'],
       '@typescript-eslint/prefer-string-starts-ends-with': 'error',
       '@typescript-eslint/prefer-includes': 'error',
       '@typescript-eslint/prefer-find': 'error',
@@ -338,8 +312,7 @@ export default defineConfigWithVueTs(
             'Avoid `const props = defineProps()`. Destructure: `const { foo } = defineProps<...>()`.',
         },
         {
-          selector:
-            "VariableDeclarator[init.callee.name='reactive'] > ObjectPattern",
+          selector: "VariableDeclarator[init.callee.name='reactive'] > ObjectPattern",
           message:
             'Do not destructure reactive() — it breaks reactivity. Use toRefs() or keep the object reference.',
         },
@@ -356,30 +329,23 @@ export default defineConfigWithVueTs(
             'watch(ref.value, …) captures the value once. Pass the ref itself or a getter: watch(ref, …).',
         },
         {
-          selector:
-            "MemberExpression[object.name='process'][property.name='client']",
-          message:
-            'Use import.meta.client (Nuxt 3) — process.client is deprecated.',
+          selector: "MemberExpression[object.name='process'][property.name='client']",
+          message: 'Use import.meta.client (Nuxt 3) — process.client is deprecated.',
         },
         {
-          selector:
-            "MemberExpression[object.name='process'][property.name='server']",
-          message:
-            'Use import.meta.server (Nuxt 3) — process.server is deprecated.',
+          selector: "MemberExpression[object.name='process'][property.name='server']",
+          message: 'Use import.meta.server (Nuxt 3) — process.server is deprecated.',
         },
         {
-          selector:
-            "CallExpression[callee.name='useState'][arguments.length=0]",
+          selector: "CallExpression[callee.name='useState'][arguments.length=0]",
           message: 'useState requires an explicit key for SSR-safe state.',
         },
         {
-          selector:
-            "CallExpression[callee.name='useFetch'][arguments.length=0]",
+          selector: "CallExpression[callee.name='useFetch'][arguments.length=0]",
           message: 'useFetch must be called with at least a URL.',
         },
         {
-          selector:
-            "CallExpression[callee.name='useAsyncData'][arguments.length=0]",
+          selector: "CallExpression[callee.name='useAsyncData'][arguments.length=0]",
           message: 'useAsyncData must be called with at least a key + handler.',
         },
         {
@@ -389,8 +355,7 @@ export default defineConfigWithVueTs(
             'Prefer the object syntax for defineNuxtPlugin({ name, hooks }) — Nuxt can statically analyse and parallelize it.',
         },
         {
-          selector:
-            'Program > VariableDeclaration[kind="let"][declarations.0.init]',
+          selector: 'Program > VariableDeclaration[kind="let"][declarations.0.init]',
           message:
             'Module-level `let` is a cross-request state-pollution risk under SSR. Use `useState(key, …)` or move into a composable.',
         },
@@ -451,7 +416,7 @@ export default defineConfigWithVueTs(
   // Layer server/ files are Nitro code outside tsconfig.typecheck.json's project,
   // so type-aware rules can't run on them either.
   {
-    files: ['layers/*/server/**/*.ts', 'layers/*/shared/**/*.ts'],
+    files: ['layers/**/server/**/*.ts', 'layers/**/shared/**/*.ts'],
     ...typescript.configs['flat/disable-type-checked'],
   },
 
@@ -480,10 +445,13 @@ export default defineConfigWithVueTs(
     rules: { 'vue/max-template-depth': 'off' },
   },
 
-  // Render-function component — needs real `cloneVNode`/`Fragment` imports,
-  // which Nuxt does not auto-import.
+  // Render-function components need explicit Vue runtime imports.
   {
-    files: ['layers/navigation/app/components/Links/Group.vue'],
+    files: [
+      'layers/structure/navigation/app/components/Links/Group.vue',
+      'layers/design-system/visual/app/components/HoverDimGroup.vue',
+      'layers/motion/animations/app/components/Motion/Staggered.vue',
+    ],
     rules: {
       '@typescript-eslint/no-restricted-imports': 'off',
     },
@@ -494,7 +462,7 @@ export default defineConfigWithVueTs(
   // Nuxt Content collection typing. Keep `interface` allowed in the files that
   // augment external modules.
   {
-    files: ['**/*.d.ts', '**/app.config.ts', '**/types/runtime-config.ts'],
+    files: ['**/*.d.ts', '**/app.config.ts', '**/nuxt.config.ts', '**/types/runtime-config.ts'],
     rules: {
       '@typescript-eslint/consistent-type-definitions': 'off',
     },
