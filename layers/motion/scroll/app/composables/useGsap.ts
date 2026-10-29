@@ -1,4 +1,5 @@
 import { gsap } from 'gsap'
+import { Flip } from 'gsap/Flip'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 /**
@@ -6,8 +7,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
  * Registration is handled by v-gsap-nuxt.
  *
  * @example
- * const { gsap, ScrollTrigger } = useGsap()
+ * const { gsap, ScrollTrigger, Flip } = useGsap()
  */
 export function useGsap() {
-  return { gsap, ScrollTrigger }
+  return { gsap, ScrollTrigger, Flip }
 }
