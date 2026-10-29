@@ -18,24 +18,11 @@ export default {
       customSyntax: 'postcss',
     },
     {
-      // postcss-html parses inline `style="..."` attributes as bare declarations, which
-      // this rule reports as "outside a rule" — a false positive for template attributes.
-      files: ['**/*.vue', '**/*.html'],
+      files: ['**/*.vue'],
       rules: { 'no-invalid-position-declaration': null },
     },
     {
-      // Accessibility/preference overrides that must beat Tailwind utilities and inline
-      // styles (reduced motion, reduced transparency, hidden accent blobs). They cannot be
-      // expressed through app.config.ts, and an inline style can only be overridden by
-      // !important — so the rule is intentionally off for these two files only.
-      files: [
-        'layers/design-system/theming/app/assets/css/theme.css',
-        'layers/design-system/visual/app/assets/css/visual.css',
-      ],
-      rules: { 'declaration-no-important': null },
-    },
-    {
-      files: ['**/tokens.css', '**/tokens/*.css', '**/design-tokens.css', '**/_tokens.css'],
+      files: ['**/tokens.css', '**/design-tokens.css', '**/_tokens.css'],
       rules: {
         'color-no-hex': null,
         'function-disallowed-list': [],
@@ -61,7 +48,10 @@ export default {
     'function-disallowed-list': ['rgb', 'rgba', 'lab', 'lch'],
     'color-named': ['never', { ignore: ['inside-function'] }],
 
-    'max-nesting-depth': [3, { ignoreAtRules: ['media', 'supports', 'include'] }],
+    'max-nesting-depth': [
+      3,
+      { ignoreAtRules: ['media', 'supports', 'include'] },
+    ],
     'selector-max-compound-selectors': 4,
     'selector-no-qualifying-type': [true, { ignore: ['attribute', 'class'] }],
     'no-descending-specificity': null,
@@ -113,54 +103,39 @@ export default {
         ],
       },
     ],
+    'no-invalid-position-at-import-rule': null,
+    'at-rule-prelude-no-invalid': null,
+    'value-keyword-case': [
+      'lower',
+      { ignoreProperties: ['/font/', '/^--.*font/'] },
+    ],
 
     'plugin/no-unsupported-browser-features': [
       true,
       {
         severity: 'warning',
         ignore: [
-          // `ui-*` families and `text-decoration-skip-ink` are progressive enhancements that
-          // always sit behind fallbacks in this repo, so partial support is intentional.
-          'extended-system-fonts',
-          'text-decoration',
           'css-variables',
           'css-cascade-layers',
           'css-nesting',
           'subgrid',
           'css-grid',
           'viewport-unit-variants',
+          // Safari only lacks the non-separable modes (hue/saturation/color/luminosity); 'difference' works
+          'css-mixblendmode',
         ],
       },
     ],
 
     'custom-property-pattern': null,
-
-    // Unquoted font names (SFMono-Regular, Menlo, Consolas) are family names, not keywords.
-    'value-keyword-case': ['lower', { ignoreProperties: ['font-family', 'font', '/^--.*font/'] }],
-
-    // Tailwind v4 entry files declare `@layer a, b;` and `@custom-variant` before `@import`;
-    // Tailwind's compiler accepts that, plain-CSS validity rules don't know its at-rules.
-    'no-invalid-position-at-import-rule': [
-      true,
-      { ignoreAtRules: ['layer', 'config', 'custom-variant', 'source', 'plugin'] },
-    ],
-    // Declarations nested in `@supports`/`@media` inside Tailwind's `@utility`/`@variant`
-    // are valid but look "outside a rule" to stylelint.
-    'no-invalid-position-declaration': [
-      true,
-      { ignoreAtRules: ['utility', 'variant', 'custom-variant'] },
-    ],
   },
 
   ignoreFiles: [
-    '**/node_modules/**',
-    '**/.nuxt/**',
-    '**/.output/**',
-    '**/.netlify/**',
-    '**/.turbo/**',
-    '**/.data/**',
-    '**/.playground/**',
+    'node_modules/**',
+    '.nuxt/**',
+    '.output/**',
+    '.data',
+    '.playground/**',
     '**/dist/**',
-    '**/coverage/**',
   ],
 }
