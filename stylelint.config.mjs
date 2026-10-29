@@ -48,10 +48,7 @@ export default {
     'function-disallowed-list': ['rgb', 'rgba', 'lab', 'lch'],
     'color-named': ['never', { ignore: ['inside-function'] }],
 
-    'max-nesting-depth': [
-      3,
-      { ignoreAtRules: ['media', 'supports', 'include'] },
-    ],
+    'max-nesting-depth': [3, { ignoreAtRules: ['media', 'supports', 'include'] }],
     'selector-max-compound-selectors': 4,
     'selector-no-qualifying-type': [true, { ignore: ['attribute', 'class'] }],
     'no-descending-specificity': null,
@@ -105,10 +102,7 @@ export default {
     ],
     'no-invalid-position-at-import-rule': null,
     'at-rule-prelude-no-invalid': null,
-    'value-keyword-case': [
-      'lower',
-      { ignoreProperties: ['/font/', '/^--.*font/'] },
-    ],
+    'value-keyword-case': ['lower', { ignoreProperties: ['/font/', '/^--.*font/'] }],
 
     'plugin/no-unsupported-browser-features': [
       true,

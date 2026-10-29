@@ -450,7 +450,10 @@ export default defineConfigWithVueTs(
     files: [
       'layers/structure/navigation/app/components/Links/Group.vue',
       'layers/design-system/visual/app/components/HoverDimGroup.vue',
+      'layers/core/app/components/ElementTw.vue',
       'layers/motion/animations/app/components/Motion/Staggered.vue',
+      'layers/delivery/scripts/app/components/BaselineStatus.vue',
+      'layers/design-system/typography/app/components/Typography/Headline.vue',
     ],
     rules: {
       '@typescript-eslint/no-restricted-imports': 'off',
