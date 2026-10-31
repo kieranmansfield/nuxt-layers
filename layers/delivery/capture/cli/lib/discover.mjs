@@ -104,6 +104,7 @@ export async function discoverPages(browser, site, { log = console.log } = {}) {
     const exclude = (site.exclude ?? []).map((e) => (e instanceof RegExp ? e : new RegExp(e)))
     return uniquePaths(['/', ...paths])
       .filter((p) => !exclude.some((re) => re.test(p)))
+      .filter((p) => p.split('/').filter(Boolean).length <= (site.pathDepth ?? Infinity))
       .slice(0, site.maxPages)
   } finally {
     await context.close()

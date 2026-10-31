@@ -12,6 +12,7 @@ export const DEFAULTS = {
   maxPages: 12,
   crawlDepth: 2,
   exclude: [],
+  pathDepth: Infinity, // 1 = home plus top-level pages (/about), no sub-pages (/blog/post)
   settleMs: 2500, // loading screen + entrance animations
   devices: {
     // 4320x2700 at 3x, in a browser window matching the theme

@@ -43,7 +43,7 @@ kmcom-capture --help
 ```
 
 `--pages auto` reads the site's `sitemap.xml` (or sitemap index), and if there isn't one, follows
-same-origin links from the home page (`crawlDepth`, `maxPages`, `exclude`).
+same-origin links from the home page (`crawlDepth`, `maxPages`, `exclude`, `pathDepth`).
 
 ## capture.config.mjs
 
@@ -75,6 +75,7 @@ flags override both. Defaults, in `cli/lib/config.mjs`:
 | `themes`         | `['light', 'dark']`                       | `['dark']` for a single-theme site             |
 | `pages`          | `['/']`                                   | paths, or `'auto'`                             |
 | `maxPages`       | `12`                                      | cap for `'auto'`                               |
+| `pathDepth`      | unlimited                                 | `1` = home and top-level pages only, no sub-pages |
 | `settleMs`       | `2500`                                    | extra wait for entrance animations             |
 | `devices`        | `desktop` 1440×900, `mobile` 402×874      | `frame`: `'browser'`, any Monkr device id, or `false`; `color`: per theme or a string |
 | `frame`          | `{ background: 'transparent', padding: 0, shadow: false }` | background: colour or CSS gradient |
