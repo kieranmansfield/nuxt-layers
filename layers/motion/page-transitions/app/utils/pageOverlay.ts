@@ -7,6 +7,7 @@ export function getPageOverlay(): PageOverlay {
   if (!el) {
     el = document.createElement('div')
     el.id = ID
+    el.className = 'page-transition-overlay'
     el.setAttribute('aria-hidden', 'true')
     document.body.append(el)
   }

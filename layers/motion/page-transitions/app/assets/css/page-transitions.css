@@ -30,7 +30,7 @@
 }
 
 /* Overlay used by the wipe / shutter / columns / pixelate / curved presets. */
-#page-transition-overlay {
+.page-transition-overlay {
   position: fixed;
   inset: 0;
   z-index: var(--z-overlay);
@@ -40,11 +40,11 @@
   pointer-events: none;
 }
 
-#page-transition-overlay > div {
-  background: var(--page-transition-color, var(--ui-bg-inverted, #000));
+.page-transition-overlay > div {
+  background: var(--page-transition-color, var(--ui-bg-inverted, black));
 }
 
-.is-page-transitioning #page-transition-overlay {
+.is-page-transitioning .page-transition-overlay {
   pointer-events: auto;
 }
 
