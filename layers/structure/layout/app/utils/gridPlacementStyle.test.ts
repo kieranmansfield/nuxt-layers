@@ -257,13 +257,17 @@ describe('buildGridPlacementStyle', () => {
 })
 
 describe('buildGridPlacementClasses', () => {
-  it('returns the base classes when no container is set', () => {
-    expect(buildGridPlacementClasses({})).toBe('gi-placed @container @container/item')
+  it('returns only the placement class by default (no containment)', () => {
+    expect(buildGridPlacementClasses({})).toBe('gi-placed')
+  })
+
+  it('adds container classes only when containment is requested', () => {
+    expect(buildGridPlacementClasses({ containment: true })).toBe(
+      'gi-placed @container @container/item'
+    )
   })
 
   it('appends the container class when container is set', () => {
-    expect(buildGridPlacementClasses({ container: 'wide' })).toBe(
-      'gi-placed @container @container/item layout-container-wide'
-    )
+    expect(buildGridPlacementClasses({ container: 'wide' })).toBe('gi-placed layout-container-wide')
   })
 })

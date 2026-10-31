@@ -17,6 +17,7 @@
    * @prop {string} density - Vertical rhythm: compact (2px), normal (4px), relaxed (8px)
    * @prop {LayerName} layer - Semantic layer: back, mid, front, top
    * @prop {BleedDirection} bleed - Edge bleed: left, right, both
+   * @prop {boolean} containment - Make the item a container (`@container/item`) for container-query utilities (default: false)
    *
    * @example
    * <BaseGridItem
@@ -63,6 +64,7 @@
     density?: Density
     layer?: LayerName
     bleed?: BleedDirection
+    containment?: boolean
   }
 
   const {
@@ -79,6 +81,7 @@
     density: densityProp = undefined,
     layer = undefined,
     bleed = undefined,
+    containment = false,
   } = defineProps<Props>()
 
   // Get preset configuration if preset prop is provided
@@ -117,6 +120,7 @@
   const classes = computed(() =>
     buildGridPlacementClasses({
       container: container.value,
+      containment,
     })
   )
 </script>

@@ -176,8 +176,13 @@ export function buildGridPlacementStyle(input: GridPlacementInput): PlacementSty
   return style
 }
 
-export function buildGridPlacementClasses(input: Pick<GridPlacementInput, 'container'>) {
-  const classList: string[] = ['gi-placed', '@container', '@container/item']
+export function buildGridPlacementClasses(
+  input: Pick<GridPlacementInput, 'container'> & { containment?: boolean | undefined }
+) {
+  // Containment is opt-in: an inline-size container can't size from its content, which
+  // collapsed percentage/auto-fit tracks to 0 width on iOS 18 WebKit.
+  const classList: string[] = ['gi-placed']
+  if (input.containment) classList.push('@container', '@container/item')
 
   if (input.container) classList.push(`layout-container-${input.container}`)
 

@@ -76,8 +76,6 @@
   grid-row: span var(--grid-rows-per-section, 12);
   grid-column: 1 / -1;
   box-sizing: border-box;
-  container-name: section;
-  container-type: inline-size;
   width: 100%;
   max-width: 100%;
   scroll-snap-align: start;
