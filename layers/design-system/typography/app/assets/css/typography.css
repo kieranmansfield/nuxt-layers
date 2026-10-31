@@ -1,3 +1,4 @@
+/* stylelint-disable no-invalid-position-declaration -- declarations inside @supports nested in Tailwind @utility are valid; stylelint does not know @utility */
 /*
  * @import-chained through core.css's single Tailwind build root (see
  * layers/core/app/assets/css/core.css) — must NOT open its own
