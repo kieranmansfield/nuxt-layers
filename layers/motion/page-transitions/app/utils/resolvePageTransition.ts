@@ -1,13 +1,13 @@
 import type { PageTransitionChoice, PageTransitionRule } from '../types'
 
-interface Input {
+type Input = {
   /** One-shot from `setTransition()`. */
   override?: PageTransitionChoice | null
   /** From the clicked `[data-transition]` link. */
   link?: PageTransitionChoice | null
   /** From `definePageMeta({ pageTransitionPreset })` on the target page. */
-  meta?: string | PageTransitionChoice
-  rules?: PageTransitionRule[]
+  meta?: string | PageTransitionChoice | undefined
+  rules?: PageTransitionRule[] | undefined
   from: string
   to: string
   fallback: PageTransitionChoice

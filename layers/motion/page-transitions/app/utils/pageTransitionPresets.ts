@@ -13,11 +13,11 @@ function cover(o: {
   axis: 'x' | 'y' | 'opacity'
   from?: 'start' | 'center' | 'edges' | 'random'
 }): PageTransitionPreset {
-  const prop = o.axis === 'x' ? 'scaleX' : o.axis === 'y' ? 'scaleY' : 'opacity'
+  const prop = { x: 'scaleX', y: 'scaleY', opacity: 'opacity' }[o.axis]
   const stagger = (ctx: PageTransitionContext) => ({
     amount: ctx.duration * 0.6,
     from: o.from ?? 'start',
-    grid: o.cols > 1 && o.rows > 1 ? [o.rows, o.cols] : undefined,
+    ...(o.cols > 1 && o.rows > 1 && { grid: [o.rows, o.cols] as [number, number] }),
   })
   return {
     duration: 450,
@@ -87,17 +87,17 @@ export const pageTransitionPresets: Record<string, PageTransitionPreset> = {
   curved: {
     duration: 650,
     leave(_el, ctx) {
-      const [cell] = ctx.overlay.fill(1, 1)
+      const cell = ctx.overlay.fill(1, 1)
       return ctx.gsap.fromTo(
-        cell!,
+        cell,
         { yPercent: 100, borderRadius: '50% 50% 0 0 / 100% 100% 0 0' },
         { yPercent: 0, borderRadius: '0%', duration: ctx.duration, ease: 'power3.inOut' }
       )
     },
     enter(_el, ctx) {
-      const [cell] = ctx.overlay.cells()
+      const cell = ctx.overlay.cells()
       return ctx.gsap.fromTo(
-        cell!,
+        cell,
         { yPercent: 0, borderRadius: '0%' },
         {
           yPercent: -100,

@@ -16,24 +16,21 @@ export default defineNuxtPlugin({
     const root = document.documentElement
 
     let direction: PageTransitionDirection = 'forward'
-    useRouter().options.history.listen((_to, _from, info) => {
-      direction = info.direction === 'back' ? 'back' : 'forward'
-    })
+    useRouter().options.history.listen(
+      (_to: unknown, _from: unknown, info: { direction: string }) => {
+        direction = info.direction === 'back' ? 'back' : 'forward'
+      }
+    )
 
     // Barba-style triggers: <a data-transition="wipe" data-transition-duration="800">
     let link: PageTransitionChoice | null = null
     document.addEventListener(
       'click',
       (e) => {
-        const a = (e.target as Element).closest<HTMLElement>('[data-transition]')
-        link = a
-          ? {
-              name: a.dataset.transition!,
-              duration: a.dataset.transitionDuration
-                ? Number(a.dataset.transitionDuration)
-                : undefined,
-            }
-          : null
+        const el = (e.target as Element).closest<HTMLElement>('[data-transition]')
+        const name = el?.dataset.transition
+        const ms = el?.dataset.transitionDuration
+        link = name ? { name, duration: ms ? Number(ms) : undefined } : null
         if (link) setTimeout(() => (link = null), 1000)
       },
       true
@@ -41,7 +38,7 @@ export default defineNuxtPlugin({
 
     // Vue/Suspense run the LEAVE hooks captured when the old page was mounted, so every page
     // gets the same delegating hooks and the per-navigation choice lives in `plan`.
-    interface Plan {
+    type Plan = {
       preset: PageTransitionPreset
       name: string
       ms: number
@@ -100,8 +97,8 @@ export default defineNuxtPlugin({
       try {
         if (p.preset.css) return void playClasses(el, p, phase).then(finish)
         const anim = p.preset[phase]?.(el as HTMLElement, p.ctx)
-        if (anim) anim.then(finish)
-        else finish()
+        if (anim) return void anim.then(finish)
+        finish()
       } catch (err) {
         console.error('[page-transitions]', err)
         finish()

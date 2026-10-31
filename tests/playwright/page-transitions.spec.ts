@@ -10,8 +10,9 @@ const go = (page: import('@playwright/test').Page, name: string) =>
     .locator('a[data-transition]')
     .first()
     .evaluate((a, n) => {
-      ;(a as HTMLElement).dataset.transition = n
-      a.click()
+      const el = a as HTMLElement
+      el.dataset.transition = n
+      el.click()
     }, name)
 
 test('wipe fills the overlay, swaps the page, then cleans up', async ({ page }) => {
