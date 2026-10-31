@@ -1,44 +1,34 @@
+import type { PageTransitionChoice } from '../types'
+
 /**
- * Set the page transition for the current page programmatically.
- * Call inside a page component's setup() to override the default transition.
+ * Reactive page-transition state. `transitionName`/`duration` are the preset in use for the
+ * current navigation; `setTransition()` queues a one-shot override for the NEXT navigation.
  *
  * @example
- * usePageTransition('slide')
+ * const { setTransition } = usePageTransition()
+ * setTransition('curved', 700)
+ * await navigateTo('/about')
  */
 export function usePageTransition(name?: string) {
-  const appConfig = useAppConfig()
+  const config = useAppConfig().pageTransitions
   const route = useRoute()
-  const pageTransitions = appConfig.pageTransitions as
-    | { default?: string; duration?: number }
-    | undefined
 
-  const currentTransition = useState('page-transition:current', () => ({
-    name: pageTransitions?.default ?? 'fade',
-    duration: pageTransitions?.duration ?? 300,
+  const current = useState('page-transition:current', () => ({
+    name: config?.default ?? 'fade',
+    duration: config?.duration ?? 300,
   }))
-
-  if (name) {
-    currentTransition.value.name = name
-  }
-
-  const transitionName = computed(() => currentTransition.value.name)
-  const duration = computed(() => currentTransition.value.duration)
-
-  if (import.meta.client) {
-    watchEffect(() => {
-      document.documentElement.style.setProperty(
-        '--page-transition-duration',
-        `${duration.value}ms`
-      )
-    })
-  }
+  const next = useState<PageTransitionChoice | null>('page-transition:next', () => null)
 
   function setTransition(transitionName: string, transitionDuration?: number) {
-    currentTransition.value.name = transitionName
-    if (transitionDuration !== undefined) {
-      currentTransition.value.duration = transitionDuration
-    }
+    next.value = { name: transitionName, duration: transitionDuration }
   }
 
-  return { transitionName, duration, setTransition, route }
+  if (name) setTransition(name)
+
+  return {
+    transitionName: computed(() => current.value.name),
+    duration: computed(() => current.value.duration),
+    setTransition,
+    route,
+  }
 }

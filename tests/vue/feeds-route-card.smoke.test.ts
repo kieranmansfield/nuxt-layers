@@ -1,7 +1,11 @@
 import { mount } from '@vue/test-utils'
-import { describe, expect, it } from 'vite-plus/test'
+import { computed } from 'vue'
+import { describe, expect, it, vi } from 'vite-plus/test'
 
 import RouteCard from '../../layers/delivery/feeds/app/components/Feeds/RouteCard.vue'
+
+// Nuxt auto-imports computed; the plain Vue test environment doesn't.
+vi.stubGlobal('computed', computed)
 
 const cardStub = {
   template: '<div><slot /></div>',

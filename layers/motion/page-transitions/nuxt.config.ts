@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   $meta: { name: 'page-transitions' },
 
-  extends: ['../../core'],
+  extends: ['../../core', '../scroll'],
 
   alias: {
     '#layers/page-transitions': import.meta.dirname,

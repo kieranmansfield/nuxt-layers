@@ -160,7 +160,7 @@ forms → mailer
 scroll → core, visual
 animations → scroll, transitions
 transitions → core
-page-transitions → core
+page-transitions → core, scroll
 motion → scroll, animations, transitions, page-transitions
 
 # Tier 6 — Render

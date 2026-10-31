@@ -28,3 +28,27 @@
   transform: translateX(-24px);
   opacity: 0;
 }
+
+/* Overlay used by the wipe / shutter / columns / pixelate / curved presets. */
+.page-transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: grid;
+  grid-template-columns: repeat(var(--po-cols, 1), 1fr);
+  grid-template-rows: repeat(var(--po-rows, 1), 1fr);
+  pointer-events: none;
+}
+
+.page-transition-overlay > div {
+  background: var(--page-transition-color, var(--ui-bg-inverted, black));
+}
+
+.is-page-transitioning .page-transition-overlay {
+  pointer-events: auto;
+}
+
+/* The sync presets stack the leaving page over the entering one. */
+.is-page-transitioning {
+  overflow-x: clip;
+}
