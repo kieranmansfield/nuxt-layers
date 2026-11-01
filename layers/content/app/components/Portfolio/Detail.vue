@@ -79,7 +79,11 @@
           />
         </div>
       </template>
-      <template v-if="asPortfolio(item).colors?.length || asPortfolio(item).typography?.length">
+      <template
+        v-if="
+          stackOf(item).length || asPortfolio(item).colors?.length || asPortfolio(item).typography?.length
+        "
+      >
         <USeparator class="my-8" />
         <div class="space-y-8">
           <PortfolioStackGrid v-if="stackOf(item).length" :items="stackOf(item)" />
