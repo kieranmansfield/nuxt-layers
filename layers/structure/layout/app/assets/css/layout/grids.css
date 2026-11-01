@@ -18,7 +18,9 @@
  * - Tablet: 12 columns (≥ 48rem / 768px — matches core's --breakpoint-md)
  * - Desktop: 18 columns (≥ 80rem / 1280px — matches core's --breakpoint-xl)
  *
- * Each row height is calculated to fit 12 rows per viewport.
+ * Each row is at least 1/12 of a viewport (so a 12-row section is at least one viewport tall)
+ * and grows with its content, so a section with more content than fits is taller rather than
+ * overflowing into the next one.
  *
  * The 48rem/80rem literals below can't reference core's --breakpoint-* vars
  * directly — CSS custom properties aren't valid inside @media conditions.
@@ -39,18 +41,13 @@
 
   display: grid;
   grid-template-columns: repeat(var(--grid-cols), 1fr);
-  grid-auto-rows: var(--grid-row-height);
+  grid-auto-rows: minmax(var(--grid-row-height), auto);
   gap: var(--grid-gap);
   box-sizing: border-box;
   padding-inline: var(--grid-padding); /* Outer gutters on left/right */
   width: 100%;
   max-width: 100%;
   overflow-x: clip; /* clip without creating a scroll container (overflow-x:hidden would force overflow-y:auto) */
-
-  /* On mobile, allow rows to grow with content */
-  @media (width < 48rem) {
-    grid-auto-rows: minmax(var(--grid-row-height), auto);
-  }
 
   /* Tablet: 12 columns */
   @media (width >= 48rem) {
@@ -88,7 +85,7 @@
     overflow-wrap: break-word;
   }
 
-  /* On mobile, allow sections to grow beyond 12 rows if needed */
+  /* On mobile, a single auto row instead of 12 stacked ones */
   @media (width < 48rem) {
     grid-row: auto;
     min-height: 100vh;
