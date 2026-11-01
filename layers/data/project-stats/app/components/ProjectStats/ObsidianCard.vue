@@ -1,8 +1,17 @@
 <script setup lang="ts">
-  const { plugin, showInstall = true } = defineProps<{
+  const {
+    plugin,
+    showInstall = true,
+    variant = 'default',
+    to = undefined,
+  } = defineProps<{
     /** Community plugin id, as in the obsidian.md/plugins?id= listing URL */
     plugin: string
     showInstall?: boolean
+    /** `compact` keeps the name, description and figures; drops the footer details and buttons */
+    variant?: 'default' | 'compact'
+    /** Where the title links (e.g. a project page); defaults to the plugin's Obsidian listing */
+    to?: string
   }>()
 
   const { data: stats, status } = useObsidianPluginStats(() => plugin)
@@ -31,8 +40,8 @@
     <template v-if="stats">
       <div class="min-w-0">
         <ULink
-          :to="stats.listingUrl"
-          target="_blank"
+          :to="to ?? stats.listingUrl"
+          :target="to ? null : '_blank'"
           class="text-highlighted flex items-center gap-2 font-semibold hover:underline"
         >
           <UIcon name="i-simple-icons-obsidian" class="size-5 shrink-0 text-violet-500" />
@@ -57,7 +66,10 @@
         <ProjectStatsStat v-for="stat in figures" :key="stat.label" v-bind="stat" />
       </dl>
 
-      <div class="text-muted flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+      <div
+        v-if="variant !== 'compact'"
+        class="text-muted flex flex-wrap items-center gap-x-4 gap-y-1 text-xs"
+      >
         <span v-if="stats.updatedAt" class="flex items-center gap-1">
           <UIcon name="i-lucide-clock" class="size-3.5" />
           Updated
@@ -71,7 +83,7 @@
         </UBadge>
       </div>
 
-      <div class="flex flex-wrap gap-2">
+      <div v-if="variant !== 'compact'" class="flex flex-wrap gap-2">
         <UButton
           v-if="showInstall"
           :to="stats.installUrl"

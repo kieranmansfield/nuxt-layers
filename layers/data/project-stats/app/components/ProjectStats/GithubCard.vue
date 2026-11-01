@@ -1,8 +1,17 @@
 <script setup lang="ts">
-  const { repo, showTopics = true } = defineProps<{
+  const {
+    repo,
+    showTopics = true,
+    variant = 'default',
+    to = undefined,
+  } = defineProps<{
     /** `owner/name` or a github.com URL */
     repo: string
     showTopics?: boolean
+    /** `compact` keeps the name, description and figures; drops the topics and footer details */
+    variant?: 'default' | 'compact'
+    /** Where the title links (e.g. a project page); defaults to the repository */
+    to?: string
   }>()
 
   const { data: stats, status } = useGithubRepoStats(() => repo)
@@ -33,8 +42,8 @@
       <div class="flex items-start justify-between gap-3">
         <div class="min-w-0">
           <ULink
-            :to="stats.url"
-            target="_blank"
+            :to="to ?? stats.url"
+            :target="to ? null : '_blank'"
             class="text-highlighted flex items-center gap-2 font-semibold hover:underline"
           >
             <UIcon name="i-lucide-github" class="size-5 shrink-0" />
@@ -51,7 +60,10 @@
         <ProjectStatsStat v-for="stat in figures" :key="stat.label" v-bind="stat" />
       </dl>
 
-      <div v-if="showTopics && stats.topics.length" class="flex flex-wrap gap-1.5">
+      <div
+        v-if="showTopics && variant !== 'compact' && stats.topics.length"
+        class="flex flex-wrap gap-1.5"
+      >
         <UBadge
           v-for="topic in stats.topics"
           :key="topic"
@@ -63,7 +75,10 @@
         </UBadge>
       </div>
 
-      <div class="text-muted flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+      <div
+        v-if="variant !== 'compact'"
+        class="text-muted flex flex-wrap items-center gap-x-4 gap-y-1 text-xs"
+      >
         <span v-if="stats.language" class="flex items-center gap-1">
           <UIcon name="i-lucide-code" class="size-3.5" />{{ stats.language }}
         </span>
