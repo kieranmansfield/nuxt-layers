@@ -60,6 +60,9 @@ function manifestFields(manifest: ObsidianManifest | null) {
   }
 }
 
+// Obsidian appends this boilerplate to every unreviewed plugin's description; it is noise on a card
+const UNREVIEWED = /\s*-?\s*This plugin has not been manually reviewed by Obsidian staff\.?/i
+
 export function normaliseObsidianPlugin(
   entry: ObsidianListingEntry,
   stats: ObsidianStatsEntry | undefined,
@@ -72,7 +75,7 @@ export function normaliseObsidianPlugin(
     id: entry.id,
     name: entry.name,
     author: entry.author,
-    description: entry.description,
+    description: entry.description.replace(UNREVIEWED, '').trim(),
     repo: entry.repo,
     repoUrl: `https://github.com/${entry.repo}`,
     listingUrl: `https://obsidian.md/plugins?id=${id}`,
