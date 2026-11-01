@@ -81,7 +81,9 @@
       </template>
       <template
         v-if="
-          stackOf(item).length || asPortfolio(item).colors?.length || asPortfolio(item).typography?.length
+          stackOf(item).length ||
+          asPortfolio(item).colors?.length ||
+          asPortfolio(item).typography?.length
         "
       >
         <USeparator class="my-8" />
