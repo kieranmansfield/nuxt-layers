@@ -35,7 +35,7 @@
           target="_blank"
           class="text-highlighted flex items-center gap-2 font-semibold hover:underline"
         >
-          <UIcon name="i-lucide-gem" class="size-5 shrink-0 text-violet-500" />
+          <UIcon name="i-simple-icons-obsidian" class="size-5 shrink-0 text-violet-500" />
           <span class="truncate">{{ stats.name }}</span>
         </ULink>
         <p class="text-muted mt-0.5 text-xs">
@@ -119,7 +119,7 @@
       target="_blank"
       class="text-muted flex items-center gap-2 text-sm hover:underline"
     >
-      <UIcon name="i-lucide-gem" class="size-5" />
+      <UIcon name="i-simple-icons-obsidian" class="size-5" />
       View {{ plugin }} on obsidian.md
     </ULink>
   </UCard>
