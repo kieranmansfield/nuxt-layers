@@ -125,7 +125,8 @@
   .loading-progress {
     font-weight: 900;
     font-stretch: ultra-expanded;
-    font-size: clamp(3rem, 35cqw + 1rem, 18rem);
+    /* "100%" is ~3.1em wide in the expanded face: size so it fits the screen with 2rem a side */
+    font-size: clamp(3rem, calc((100cqw - 4rem) / 3.1), 18rem);
     line-height: 0.8;
 
     /* Equal-width digits - the counter doesn't jitter as it ticks */
