@@ -22,8 +22,8 @@
 
 <template>
   <iframe
-    :src="src"
-    :height="height"
+    :src
+    :height
     :title="`Can I use: ${feature}`"
     width="100%"
     loading="lazy"
