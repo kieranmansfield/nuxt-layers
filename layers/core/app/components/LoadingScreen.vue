@@ -15,9 +15,10 @@
   const visible = ref(enabled)
   if (enabled) screen.value = 'visible'
 
-  // How the screen leaves: `flip` once the counter has shown, `fade` when the work finished
-  // before it did (only the backdrop was ever seen), `skip` for finishNow / reduced motion
-  let exit: 'flip' | 'fade' | 'skip' = 'flip'
+  // How the screen leaves: `count` once the counter has shown (a beat on 100, the count fades,
+  // then the backdrop drops), `drop` when the work finished before it did (only the backdrop was
+  // ever seen), `skip` for finishNow / reduced motion
+  let exit: 'count' | 'drop' | 'skip' = 'count'
 
   if (enabled) {
     useHead({
@@ -43,8 +44,8 @@
     if (visible.value) void loadGsap().catch(() => {})
   })
 
-  // Exit: the count Flips from its big spot into a small corner tag while the backdrop fades to
-  // reveal the page, then the tag dissolves. If GSAP fails to load the screen just leaves.
+  // Exit: the count fades, then the backdrop Flips down into a zero-height strip at the bottom,
+  // uncovering the page top-first. If GSAP fails to load the screen just leaves.
   async function onLeave(el: Element, done: () => void): Promise<void> {
     // Releases the scroll lock (see the style block)
     el.setAttribute('data-leaving', '')
@@ -52,20 +53,17 @@
     try {
       const [{ gsap }, { Flip }] = await loadGsap()
       gsap.registerPlugin(Flip)
-      const backdrop = el.querySelector('.loading-backdrop')
-      const tl = gsap.timeline({ paused: true }).set(el, { pointerEvents: 'none' })
-
-      if (exit === 'flip') {
-        const content = el.querySelector('.loading-content')
-        const state = Flip.getState(content)
-        el.classList.add('is-leaving')
-        tl.add(Flip.from(state, { duration: 0.9, ease: 'power3.inOut', scale: true }), 0)
-          .to(el.querySelector('.loading-bar'), { opacity: 0, duration: 0.3 }, 0)
-          .to(backdrop, { opacity: 0, duration: 0.7, ease: 'power2.inOut' }, 0.35)
-          .to(content, { opacity: 0, duration: 0.35, ease: 'power1.in' }, '>-0.1')
-      } else {
-        tl.to(backdrop, { opacity: 0, duration: 0.5, ease: 'power2.inOut' })
-      }
+      const state = Flip.getState(el.querySelector('.loading-backdrop'))
+      el.classList.add('is-leaving')
+      const tl = gsap
+        .timeline({ paused: true })
+        .set(el, { pointerEvents: 'none' })
+        .to(el.querySelectorAll('.loading-content, .loading-bar'), {
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power1.in',
+        })
+        .add(Flip.from(state, { duration: 0.9, ease: 'power3.inOut' }), exit === 'count' ? 0.2 : 0)
 
       // The scroll layer pauses GSAP's global timeline until the screen is gone, so the exit
       // can't play on it: advance it from the ticker instead
@@ -83,7 +81,7 @@
 
   function exitMode(): typeof exit {
     if (skipped.value) return 'skip'
-    return window.__coreLoading?.shown ? 'flip' : 'fade'
+    return window.__coreLoading?.shown ? 'count' : 'drop'
   }
 
   watch(
@@ -96,7 +94,7 @@
           visible.value = false
           screen.value = 'leaving'
         },
-        exit === 'flip' ? HOLD_MS : 0
+        exit === 'count' ? HOLD_MS : 0
       )
     },
     { immediate: true }
@@ -242,26 +240,17 @@
     }
   }
 
-  /* Exit end state: the corner tag the count Flips into (see onLeave). Layout only - the motion
-     is GSAP Flip */
   /* GSAP tweens opacity every frame from here - a CSS transition would lag behind it */
   .is-leaving .loading-content,
   .is-leaving .loading-bar {
     transition: none;
   }
 
-  .is-leaving .loading-content {
-    align-items: flex-start;
-    place-self: start start;
-    padding: 1.25rem 2rem;
-  }
-
-  .is-leaving .loading-progress {
-    font-size: 1.5rem;
-  }
-
-  .is-leaving .loading-label {
-    display: none;
+  /* Exit end state: the backdrop as a zero-height strip on the bottom edge. Layout only - GSAP Flip
+     animates the drop from full screen (see onLeave) */
+  .is-leaving .loading-backdrop {
+    top: auto;
+    height: 0;
   }
 
   /* No screen under reduced motion - the boot runtime ends the count at once */
