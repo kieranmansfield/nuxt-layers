@@ -14,18 +14,27 @@ colors:
   - name: Deep Night
     value: '#0F0E17'
     usage: Primary
+    theme: Night
   - name: Warm Blush
     value: '#E8836B'
     usage: Accent
-  - name: Cream
-    value: '#FFFBF0'
-    usage: Background
-  - name: Soft Slate
-    value: '#6B7280'
-    usage: Body text
+    theme: Night
   - name: Dusk Violet
     value: '#7C5DBA'
     usage: Secondary accent
+    theme: Night
+  - name: Cream
+    value: '#FFFBF0'
+    usage: Background
+    theme: Day
+  - name: Soft Slate
+    value: '#6B7280'
+    usage: Body text
+    theme: Day
+  - name: Warm Blush
+    value: '#E8836B'
+    usage: Accent
+    theme: Day
 typography:
   - name: Fraunces
     weights: 400 700

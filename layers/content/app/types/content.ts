@@ -27,6 +27,8 @@ export type PortfolioColor = {
   name: string
   value: string
   usage?: string
+  /** Colours sharing a `theme` render together as one swatch (on white and black) */
+  theme?: string
 }
 
 export type PortfolioFont = {

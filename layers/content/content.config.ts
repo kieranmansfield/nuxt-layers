@@ -45,6 +45,7 @@ export const portfolioCollectionSchema = z.object({
         name: z.string(),
         value: z.string(),
         usage: z.string().optional(),
+        theme: z.string().optional(),
       })
     )
     .default([]),

@@ -37,6 +37,7 @@ left out.
 | `layers/content/app/components/NuxtContent/Surround.vue`                   | molecule  |
 | `layers/content/app/components/NuxtContent/Toc.vue`                        | molecule  |
 | `layers/content/app/components/Portfolio/ColorPalette.vue`                 | organism  |
+| `layers/content/app/components/Portfolio/ColorSwatch.vue`                  | molecule  |
 | `layers/content/app/components/Portfolio/Detail.vue`                       | organism  |
 | `layers/content/app/components/Portfolio/ItemPage.vue`                     | page      |
 | `layers/content/app/components/Portfolio/List.vue`                         | organism  |

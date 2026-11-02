@@ -14,15 +14,18 @@ colors:
   - name: Ink
     value: '#1A1A1A'
     usage: Primary
+    theme: Brand
   - name: Paper
     value: '#FAFAF9'
     usage: Background
   - name: Signal Violet
     value: '#7C3AED'
     usage: Interactive elements
+    theme: Brand
   - name: Stone
     value: '#A8A29E'
     usage: Supporting text
+    theme: Brand
   - name: Confirmation
     value: '#16A34A'
     usage: Success states
