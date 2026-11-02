@@ -7,12 +7,12 @@ const FRAME = 1 / 60
 describe('resolveLoadingConfig', () => {
   it('fills unset keys with defaults but keeps falsy values that were set', () => {
     expect(resolveLoadingConfig(undefined)).toMatchObject({
-      enabled: false,
+      enabled: true,
       minDuration: 0,
-      maxDuration: 1500,
+      maxDuration: 10000,
       showAfter: 400,
     })
-    expect(resolveLoadingConfig({ loading: { minDuration: 0, label: '' } })).toMatchObject({
+    expect(resolveLoadingConfig({ loading: { enabled: false, label: '' } })).toMatchObject({
       enabled: false,
       minDuration: 0,
       label: '',

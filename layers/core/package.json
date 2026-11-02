@@ -20,7 +20,8 @@
     "nuxiupgrade": "npx nuxi upgrade"
   },
   "dependencies": {
-    "@iconify/vue": "catalog:"
+    "@iconify/vue": "catalog:",
+    "gsap": "catalog:"
   },
   "devDependencies": {
     "@vite-pwa/nuxt": "catalog:",

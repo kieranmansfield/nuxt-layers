@@ -82,7 +82,10 @@ export function useLoading() {
 
   function finishNow(): void {
     skipped.value = true
-    if (import.meta.client) cancelAnimationFrame(_loop.frame)
+    if (import.meta.client) {
+      cancelAnimationFrame(_loop.frame)
+      window.__coreLoading?.finish()
+    }
     _loop.frame = 0
     _loop.done = true
     progress.value = 100

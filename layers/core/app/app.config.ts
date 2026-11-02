@@ -31,14 +31,16 @@ export default defineAppConfig({
 
     // Loading screen configuration (initial app load only)
     loading: {
-      // Opt in: app.vue renders LoadingScreen for every app, so it stays off unless enabled
-      enabled: false,
+      // On by default: the backdrop covers the page from first paint, so nothing flashes in
+      // before its entrance animations are ready
+      enabled: true,
       // Minimum time (ms, from navigation start) before the count may reach 100 - 0 finishes
       // as soon as the work does; raise it only for a deliberate brand moment
       minDuration: 0,
-      // Longest wait (ms, after mount) for fonts and images before finishing anyway
-      maxDuration: 1500,
-      // Delay (ms, from first paint) before the screen fades in - faster loads never see it
+      // Longest wait (ms, from navigation start) for assets and fonts before finishing anyway
+      maxDuration: 10000,
+      // Delay (ms, from the screen's first paint) before the counter fades in - faster loads
+      // only see the backdrop fade away
       showAfter: 400,
       // Small caption above the counter - empty string hides it
       label: 'Loading',

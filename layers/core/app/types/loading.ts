@@ -9,9 +9,11 @@ export type LoadingConfig = {
   /** Minimum time (ms, from navigation start) before the count may reach 100 - 0 finishes
    * as soon as the work does */
   minDuration: number
-  /** Longest wait (ms, after the app mounts) for fonts and images before finishing anyway */
+  /** Longest wait (ms, from navigation start) for the page's assets and fonts before finishing
+   * anyway, once the app has mounted */
   maxDuration: number
-  /** Delay (ms, from first paint) before the screen fades in - faster loads never see it */
+  /** Delay (ms, from the screen's first paint) before the counter fades in over the backdrop -
+   * loads that finish sooner only see the backdrop fade away */
   showAfter: number
   /** Small caption above the counter - empty string hides it */
   label: string
@@ -28,6 +30,35 @@ export type LoadingConfig = {
  * page is revealed: covering the page → playing its exit → gone (or never mounted)
  */
 export type LoadingScreenState = 'visible' | 'leaving' | 'hidden'
+
+/**
+ * State the inline boot runtime (`bootLoading`) publishes on `window.__coreLoading`
+ */
+export type BootLoading = {
+  /** Displayed progress 0-100 */
+  progress: number
+  /** The counter faded in: `showAfter` passed before the work finished */
+  shown: boolean
+  /** Ended by `finish()` rather than by counting up */
+  skipped: boolean
+  /** The count has reached 100 */
+  done: boolean
+  /** Called every frame with the displayed progress, and with `done` once it reaches 100 -
+   * straight away if it already has */
+  listen: (fn: (progress: number, done: boolean) => void) => void
+  /** The app has mounted (hydration done) - its share of the count, and completion, wait on it */
+  mounted: () => void
+  /** End now, skipping the rest of the count */
+  finish: () => void
+}
+
+declare global {
+  // Augmenting a global needs declaration merging, which only an interface does
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface Window {
+    __coreLoading?: BootLoading
+  }
+}
 
 /**
  * Loading state interface

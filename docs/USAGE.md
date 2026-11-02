@@ -196,6 +196,9 @@ export default defineAppConfig({
 })
 ```
 
+The loading screen is on by default. Core's `app.vue` renders it; an app with its own `app.vue`
+must render `<LoadingScreen />` itself, or nothing covers the page on first load.
+
 ### Available Config Namespaces
 
 | Namespace               | Layer   | Key Options                                                                              |

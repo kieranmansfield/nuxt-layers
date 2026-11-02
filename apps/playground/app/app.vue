@@ -4,6 +4,7 @@
 
 <template>
   <UApp>
+    <LoadingScreen />
     <NuxtLayout>
       <NuxtPage :transition="{ name: transitionName, mode: 'out-in' }" />
     </NuxtLayout>

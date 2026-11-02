@@ -809,6 +809,9 @@ importers:
       '@iconify/vue':
         specifier: 'catalog:'
         version: 5.0.1(vue@3.5.42(typescript@6.0.3))
+      gsap:
+        specifier: 'catalog:'
+        version: 3.15.0
     devDependencies:
       '@vite-pwa/nuxt':
         specifier: 'catalog:'
