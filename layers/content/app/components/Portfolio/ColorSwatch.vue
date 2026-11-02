@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import type { PortfolioColor } from "../../types/content";
+  import type { PortfolioColor } from '../../types/content'
 
-defineProps<{
-  name?: string;
-  colors: PortfolioColor[];
-}>();
+  const { name, colors } = defineProps<{
+    name?: string
+    colors: PortfolioColor[]
+  }>()
 
-const grounds = [
-  { label: "On white", bg: "#ffffff" },
-  { label: "On black", bg: "#000000" },
-];
+  const grounds = [
+    { label: 'On white', bg: '#ffffff' },
+    { label: 'On black', bg: '#000000' },
+  ]
 </script>
 
 <template>

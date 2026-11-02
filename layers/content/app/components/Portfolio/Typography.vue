@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import type { PortfolioFont } from "../../types/content";
+  import type { PortfolioFont } from '../../types/content'
 
-const { typography = [] } = defineProps<{
-  typography?: PortfolioFont[];
-}>();
+  const { typography = [] } = defineProps<{
+    typography?: PortfolioFont[]
+  }>()
 
-// Nothing validates frontmatter (collections have no schema), so `weights: 400` or
-// `weights: 400 700` arrive as a number or string — and `v-for` over 400 renders 400 spans
-function weightList(weights: unknown): string[] {
-  if (Array.isArray(weights)) return weights.map(String);
-  if (weights === undefined || weights === null) return [];
-  return String(weights)
-    .split(/[\s,]+/)
-    .filter(Boolean);
-}
+  // Nothing validates frontmatter (collections have no schema), so `weights: 400` or
+  // `weights: 400 700` arrive as a number or string — and `v-for` over 400 renders 400 spans
+  function weightList(weights: unknown): string[] {
+    if (Array.isArray(weights)) return weights.map(String)
+    if (weights === undefined || weights === null) return []
+    return String(weights)
+      .split(/[\s,]+/)
+      .filter(Boolean)
+  }
 </script>
 
 <template>
@@ -54,7 +54,7 @@ function weightList(weights: unknown): string[] {
 </template>
 
 <style scoped>
-.font-aa {
-  font-size: clamp(5rem, 4rem + 5vw, 8rem);
-}
+  .font-aa {
+    font-size: clamp(5rem, 4rem + 5vw, 8rem);
+  }
 </style>
