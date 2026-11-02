@@ -36,6 +36,28 @@
     { key: 'neutral', label: 'Neutral' },
   ] as const
 
+  // Theme-color demo: an override wins over the page background until it's released
+  const themeColorOverride = useThemeColorOverride()
+  const themeColorSwatches = ['#e11d48', '#f59e0b', '#16a34a', '#2563eb', '#0a0a0a']
+  const themeColorTags = ref<{ media: string; content: string }[]>([])
+
+  // Reads the tags back from the DOM, so the section shows what the browser actually gets
+  function readThemeColorTags() {
+    themeColorTags.value = [
+      ...document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]'),
+    ].map((meta) => ({ media: meta.media, content: meta.content }))
+  }
+
+  onMounted(() => {
+    readThemeColorTags()
+    useMutationObserver(document.head, readThemeColorTags, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+    })
+  })
+  onUnmounted(() => (themeColorOverride.value = null))
+
   definePageMeta({ layout: false })
 
   const { setPageAccent } = useAccentColor()
@@ -58,6 +80,72 @@
         <section class="space-y-4">
           <h2 class="text-2xl font-bold">Color Mode</h2>
           <UColorModeSelect class="w-48" />
+        </section>
+
+        <!-- Browser Toolbar Colour -->
+        <section class="space-y-4">
+          <div>
+            <h2 class="text-2xl font-bold">Browser Toolbar Colour</h2>
+            <p class="text-muted mt-1 text-sm">
+              <code>useThemeColorOverride()</code> - theme-color meta tags kept on the page
+              background. Opt-in via <code>themeLayer.themeColor.enabled</code>; used by installed
+              web apps and Chrome on Android.
+            </p>
+          </div>
+
+          <div class="grid gap-6 md:grid-cols-2">
+            <!-- Live tags -->
+            <div class="space-y-3">
+              <h3 class="text-muted text-sm font-medium tracking-wide uppercase">Live Meta Tags</h3>
+              <!-- fallow-ignore-next-line complexity -->
+              <p v-if="!themeColorTags.length" class="text-muted text-sm">
+                No tags - <code>themeLayer.themeColor.enabled</code> is off.
+              </p>
+              <div
+                v-for="tag in themeColorTags"
+                :key="tag.media"
+                class="flex items-center justify-between gap-3"
+              >
+                <span class="text-toned dark:text-muted text-sm">{{ tag.media }}</span>
+                <span class="flex items-center gap-2 font-mono text-sm">
+                  <span
+                    class="border-default size-4 rounded border"
+                    :style="{ backgroundColor: tag.content }"
+                  />
+                  {{ tag.content }}
+                </span>
+              </div>
+              <p class="text-muted text-sm">Switch colour mode above: both tags follow it.</p>
+            </div>
+
+            <!-- Override -->
+            <div class="space-y-3">
+              <h3 class="text-muted text-sm font-medium tracking-wide uppercase">Override</h3>
+              <div class="flex flex-wrap gap-2">
+                <UButton
+                  v-for="color in themeColorSwatches"
+                  :key="color"
+                  size="xs"
+                  color="neutral"
+                  :variant="themeColorOverride === color ? 'solid' : 'outline'"
+                  @click="themeColorOverride = color"
+                >
+                  <span class="size-3 rounded-full" :style="{ backgroundColor: color }" />
+                  <span class="font-mono">{{ color }}</span>
+                </UButton>
+              </div>
+              <UButton
+                size="xs"
+                variant="soft"
+                icon="i-lucide-undo-2"
+                :disabled="!themeColorOverride"
+                @click="themeColorOverride = null"
+              >
+                Release
+              </UButton>
+              <p class="text-muted text-sm">Released when you leave this page.</p>
+            </div>
+          </div>
         </section>
 
         <!-- Accent Picker -->

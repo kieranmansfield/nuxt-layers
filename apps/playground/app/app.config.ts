@@ -16,6 +16,10 @@ export default defineAppConfig({
     url: 'https://nuxtlayers.netlify.app/',
     author: { name: 'Kieran Mansfield' },
   },
+  // Opt in, for the demo on /theming
+  themeLayer: {
+    themeColor: { enabled: true },
+  },
   feedsLayer: {
     feed: {
       limit: 30,
