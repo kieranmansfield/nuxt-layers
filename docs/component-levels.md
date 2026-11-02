@@ -59,6 +59,7 @@ left out.
 | `layers/delivery/feeds/app/components/Feeds/Index.vue`                     | organism  |
 | `layers/delivery/feeds/app/components/Feeds/RouteCard.vue`                 | molecule  |
 | `layers/delivery/scripts/app/components/BaselineStatus.vue`                | atom      |
+| `layers/delivery/scripts/app/components/CanIUseTable.vue`                  | atom      |
 | `layers/design-system/theming/app/components/ThemePicker/AccentButton.vue` | atom      |
 | `layers/design-system/theming/app/components/ThemePicker/Colors.vue`       | molecule  |
 | `layers/design-system/theming/app/components/ThemePicker/Menu.vue`         | organism  |

@@ -474,6 +474,12 @@
       icon: 'i-lucide-shield-check',
       layer: 'Scripts',
     },
+    {
+      label: 'Can I Use',
+      to: '/caniuse',
+      icon: 'i-lucide-table',
+      layer: 'Scripts',
+    },
   ]
 
   const layerDemoColors: Record<string, { icon: string; border: string; bg: string }> = {
