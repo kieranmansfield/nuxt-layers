@@ -38,8 +38,18 @@ export function useThemeColor(color: MaybeRefOrGetter<string>) {
 
   useHead({
     meta: [
-      { key: 'theme-color-light', name: 'theme-color', content: value, media: '(prefers-color-scheme: light)' },
-      { key: 'theme-color-dark', name: 'theme-color', content: value, media: '(prefers-color-scheme: dark)' },
+      {
+        key: 'theme-color-light',
+        name: 'theme-color',
+        content: value,
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        key: 'theme-color-dark',
+        name: 'theme-color',
+        content: value,
+        media: '(prefers-color-scheme: dark)',
+      },
     ],
   })
 }
@@ -64,7 +74,7 @@ function toRgb(cssColor: string): string {
   return `rgb(${r}, ${g}, ${b})`
 }
 
-export function useBgThemeColor(options: { cssVar?: string, fallback?: string } = {}) {
+export function useBgThemeColor(options: { cssVar?: string; fallback?: string } = {}) {
   const { cssVar = '--ui-bg', fallback = '#ffffff' } = options
 
   const color = useState('theme-color', () => fallback)
@@ -121,7 +131,9 @@ Temporary override (e.g. a nav overlay):
 
 ```ts
 const override = useThemeColorOverride()
-watch(isOpen, (open) => { override.value = open ? '#000000' : null })
+watch(isOpen, (open) => {
+  override.value = open ? '#000000' : null
+})
 ```
 
 Different token or element-specific colour:
