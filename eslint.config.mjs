@@ -24,7 +24,6 @@ export default defineConfigWithVueTs(
       '**/.nuxt/**',
       '**/.output/**',
       '**/.vscode/**',
-      '**/.turbo/**',
       '**/.playground/**',
       '**/.netlify/**',
       '**/dist/**',

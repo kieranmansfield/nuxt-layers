@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Nuxt 4 monorepo using pnpm workspaces and Turbo for task orchestration. The project
+This is a Nuxt 4 monorepo using pnpm workspaces and Vite+ (`vp run`) for task orchestration. The project
 implements a composable layers-based architecture for building scalable Vue applications. Each layer
 is an independent package that can be used standalone or composed with others.
 
@@ -94,7 +94,7 @@ nuxt-layers/
 └── packages/               # Shared utilities (placeholder)
 ```
 
-Each layer's package name (`kmcom-layer-*`, used in `pnpm --filter`/`turbo --filter`) is unchanged
+Each layer's package name (`kmcom-layer-*`, used in `pnpm --filter`/`vp run --filter`) is unchanged
 by any of this — only folder paths changed.
 
 **Open item, not yet decided:** Tier 5 (Motion) still nests its orchestrator layer as
@@ -197,7 +197,7 @@ capture → core
 - **Zod** for form validation
 - **@nuxtjs/seo** for robots, sitemap, og-image, schema-org
 - **@nuxt/scripts** for consent-aware third-party scripts
-- **Turbo** for monorepo task running
+- **Vite+** (`vp run`) for monorepo task running
 - **Vitest** for unit tests, **Playwright/Cypress** for E2E
 
 ## Path-Based Rules

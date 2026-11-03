@@ -156,8 +156,8 @@ export default defineConfig({
 
 ```jsonc
 // package.json
-"lint": "vp lint && turbo run lint",          // or just `vp lint && eslint .` without Turbo
-"lint:fix": "vp lint --fix && turbo run lint -- --fix"
+"lint": "vp lint && vp run --filter './layers/**' lint",
+"lint:fix": "vp lint --fix && vp run --filter './layers/**' lint --fix"
 ```
 
 `vp lint` is the built-in oxlint with rules from `vite.config.ts`; `pnpm lint` runs your
