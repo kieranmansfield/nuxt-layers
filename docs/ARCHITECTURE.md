@@ -21,11 +21,10 @@ nuxt-layers/
 │   └── content/             # @nuxt/content integration, Nuxt Studio
 ├── packages/                # Shared utilities (placeholder)
 ├── pnpm-workspace.yaml
-├── turbo.json
 └── package.json
 ```
 
-**Tooling:** pnpm workspaces for dependency management, Turbo for parallel task orchestration (`build`, `dev`, `lint`, `typecheck`).
+**Tooling:** pnpm workspaces for dependency management, Vite+ (`vp run`) for parallel task orchestration (`build`, `dev`, `lint`, `typecheck`).
 
 ## Layer Pattern
 
@@ -165,14 +164,11 @@ pnpm dev:ui            # core + ui
 pnpm dev:layout        # core + ui + layout
 pnpm dev:motion        # core + motion
 
-# Build / lint / typecheck (all packages via Turbo)
+# Build / lint / typecheck (all packages via vp run)
 pnpm build
 pnpm lint
 pnpm typecheck
 
-# Layer-specific tasks
-pnpm layer:core        # turbo dev for core
-pnpm build:core        # turbo build for core
 
 # Clean everything
 pnpm clean

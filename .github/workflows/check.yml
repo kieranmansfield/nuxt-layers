@@ -28,7 +28,7 @@ jobs:
       # Content markdown is excluded from oxfmt; Comark (the formatter Nuxt Studio uses) owns it.
       - name: Content markdown (Comark)
         run: vp run content:format:check
-      # Same as `pnpm lint`: per-package eslint via turbo. A root-level `eslint .` lints
+      # Same as `pnpm lint`: per-package eslint via `vp run`. A root-level `eslint .` lints
       # markdown docs and files outside any tsconfig, which the repo doesn't expect.
       - name: ESLint (Vue/Nuxt rules)
         run: vp run lint
