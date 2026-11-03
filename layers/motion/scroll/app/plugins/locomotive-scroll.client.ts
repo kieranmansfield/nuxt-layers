@@ -1,6 +1,6 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import LocomotiveScroll from 'locomotive-scroll'
+import LocomotiveScroll, { type ILocomotiveScrollOptions } from 'locomotive-scroll'
 
 import type { ScrollState } from '../types/scroll'
 
@@ -16,6 +16,10 @@ export default defineNuxtPlugin({
     })
 
     const instance = shallowRef<LocomotiveScroll | null>(null)
+    const appConfig = useAppConfig()
+    const scrollConfig = appConfig.scroll as
+      | { smoothScroll?: boolean | string[]; lenisOptions?: ILocomotiveScrollOptions['lenisOptions'] }
+      | undefined
     const { screen } = useLoading()
 
     // Under the loading screen Lenis must be stopped, not just left un-started: an unstopped
@@ -33,6 +37,7 @@ export default defineNuxtPlugin({
           lerp: 0.1,
           smoothWheel: true,
           wheelMultiplier: 1,
+          ...scrollConfig?.lenisOptions,
         },
         scrollCallback: ({ scroll, limit, velocity, direction, progress }) => {
           scrollState.scroll = scroll
@@ -77,8 +82,6 @@ export default defineNuxtPlugin({
     )
 
     const router = useRouter()
-    const appConfig = useAppConfig()
-    const scrollConfig = appConfig.scroll as { smoothScroll?: boolean | string[] } | undefined
     const smoothScroll: boolean | string[] = scrollConfig?.smoothScroll ?? true
 
     const nuxtApp = useNuxtApp()
