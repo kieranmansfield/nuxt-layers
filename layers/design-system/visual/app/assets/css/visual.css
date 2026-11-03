@@ -10,5 +10,5 @@
 }
 
 [data-theme-transparency='reduced'] .accent-blob {
-  opacity: 0 !important;
+  opacity: 0;
 }

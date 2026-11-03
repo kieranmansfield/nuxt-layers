@@ -151,10 +151,10 @@
 
   @media (width >= 80rem) {
     .gi-placed {
-      grid-row: var(--_lg-rs, var(--_md-rs, var(--_rs, auto))) / span
-        var(--_lg-re, var(--_md-re, var(--_re, 1)));
-      grid-column: var(--_lg-cs, var(--_md-cs, var(--_cs, auto))) / span
-        var(--_lg-ce, var(--_md-ce, var(--_ce, 1)));
+      grid-row: var(--_xl-rs, var(--_md-rs, var(--_rs, auto))) / span
+        var(--_xl-re, var(--_md-re, var(--_re, 1)));
+      grid-column: var(--_xl-cs, var(--_md-cs, var(--_cs, auto))) / span
+        var(--_xl-ce, var(--_md-ce, var(--_ce, 1)));
     }
   }
 </style>
