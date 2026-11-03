@@ -5,7 +5,7 @@
  * separate, structural concept and are not repointed here — see
  * nuxt-declarative-layout-system-spec.md §14/§20.
  */
-:root {
+@theme static {
   --breakpoint-sm: 40rem; /* 640px */
   --breakpoint-md: 48rem; /* 768px */
   --breakpoint-lg: 64rem; /* 1024px */

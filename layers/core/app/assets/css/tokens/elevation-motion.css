@@ -1,8 +1,6 @@
 /**
- * Shadow/duration — vanilla custom properties are the source of truth
- * (:root block below); the @theme static block bridges them into
- * Tailwind's namespace so `shadow-lg`, `duration-base`, etc. and any
- * future non-Tailwind consumer read the same values from one place.
+ * Shadow/duration tokens, declared once in @theme static so `shadow-lg`, `duration-base`, etc.
+ * resolve to one value and are also plain custom properties for non-Tailwind CSS.
  * `static` is required — Tailwind v4 tree-shakes @theme entries that no
  * utility in the scanned source actually uses; without it, an unused
  * shade here silently disappears from the theme namespace instead of
@@ -23,45 +21,22 @@
  * is out of scope here; until then, Nuxt UI stays the single source of
  * truth for radius.
  *
- * Shadow is bridged in the OPPOSITE direction from duration: @theme
- * static holds the literal shadow values, and :root's --shadow-token-*
- * point at them via var(). Tailwind v4's box-shadow utility parses each
- * shadow's resolved theme value at BUILD TIME to rewrite its color into
- * a `var(--tw-shadow-color, <original>)` slot — that's the mechanism
- * behind `shadow-primary/25` and other shadow-color opacity modifiers.
- * A var() indirection in @theme is opaque to that build-time parser, so
- * pointing --shadow-md etc. at --shadow-token-md (as duration does)
- * would silently drop the --tw-shadow-color slot and opacity modifiers
- * would render a plain black shadow. Duration doesn't have this
- * constraint — it resolves purely via var() at use time, with no
- * build-time parsing involved. Nuxt UI doesn't override shadow-*, so
- * this collision risk doesn't apply to it.
+ * Shadow literals live in @theme static (not var() aliases): Tailwind v4 parses each
+ * shadow's resolved value at build time to build the `shadow-primary/25` colour slot, and a
+ * var() indirection would hide it. Duration needs no such parsing.
  *
  * Colours are NOT here — they're already single-sourced dynamically via
  * accent-css.ts's per-accent --ui-color-* generation (runtime accent
  * switching), a different mechanism this file does not touch.
  */
-:root {
-  --shadow-token-none: var(--shadow-none);
-  --shadow-token-sm: var(--shadow-sm);
-  --shadow-token-md: var(--shadow-md);
-  --shadow-token-lg: var(--shadow-lg);
-  --shadow-token-xl: var(--shadow-xl);
-
-  /* --duration-token-base matches theme.css's .theme-transition value —
-     not a new default, just giving the real value in use a named token. */
-  --duration-token-fast: 150ms;
-  --duration-token-base: 700ms;
-  --duration-token-slow: 1000ms;
-}
-
 @theme static {
   --shadow-none: none;
   --shadow-sm: 0 1px 2px 0 oklch(0% 0 0deg / 0.05);
   --shadow-md: 0 4px 6px -1px oklch(0% 0 0deg / 0.1), 0 2px 4px -2px oklch(0% 0 0deg / 0.1);
   --shadow-lg: 0 10px 15px -3px oklch(0% 0 0deg / 0.1), 0 4px 6px -4px oklch(0% 0 0deg / 0.1);
   --shadow-xl: 0 20px 25px -5px oklch(0% 0 0deg / 0.1), 0 8px 10px -6px oklch(0% 0 0deg / 0.1);
-  --duration-fast: var(--duration-token-fast);
-  --duration-base: var(--duration-token-base);
-  --duration-slow: var(--duration-token-slow);
+  /* base matches theme.css's .theme-transition duration */
+  --duration-fast: 150ms;
+  --duration-base: 700ms;
+  --duration-slow: 1000ms;
 }

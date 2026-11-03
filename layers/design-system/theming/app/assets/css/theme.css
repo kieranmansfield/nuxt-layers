@@ -30,16 +30,14 @@
 /* --- Reduced Transparency --- */
 [data-theme-transparency='reduced'] {
   --ui-bg-elevated: var(--ui-bg);
-  --opacity-glass: 1;
-  --backdrop-blur: 0px;
 }
 
 [data-theme-transparency='reduced'] :where([class*='backdrop-blur']) {
-  backdrop-filter: none !important;
+  backdrop-filter: none;
 }
 
 [data-theme-transparency='reduced'] :where([class*='bg-default/'], [class*='bg-elevated/']) {
-  background-color: var(--ui-bg-elevated) !important;
+  background-color: var(--ui-bg-elevated);
 }
 
 /* --- High Contrast --- */
