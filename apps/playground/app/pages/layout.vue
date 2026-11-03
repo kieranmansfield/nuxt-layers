@@ -17,6 +17,18 @@
     { id: 6, title: 'Item 6', color: 'bg-cyan-500' },
   ]
 
+  const workItems = [
+    { id: 'a', name: 'Atlas', type: 'Identity', role: 'Design', year: 2026, link: 'https://example.com/a', color: 'bg-blue-500' },
+    { id: 'b', name: 'Beacon', type: 'Web app', role: 'Design + build', year: 2025, link: 'https://example.com/b', color: 'bg-green-500' },
+    { id: 'c', name: 'Cinder', type: 'iOS', role: 'Build', year: 2024, link: 'https://example.com/c', color: 'bg-purple-500' },
+  ]
+  const workColumns = [
+    { key: 'name', label: 'Project', class: 'flex-[2_1_200px]' },
+    { key: 'type', label: 'Category', class: 'text-muted flex-[1_1_120px]' },
+    { key: 'role', label: 'Role', class: 'text-muted flex-[1_1_120px]' },
+    { key: 'year', label: 'Year', class: 'flex-[0_0_56px]' },
+  ]
+
   // Preset gallery data — mini-bar diagrams show the lg (18-col) layout
   const presetGroups = [
     {
@@ -633,6 +645,77 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
     &lt;NuxtImg :src="item.src" class="size-full object-cover" /&gt;
   &lt;/template&gt;
 &lt;/LayoutSectionGallery&gt;</code></pre>
+            </div>
+          </UCard>
+
+          <!-- Item List -->
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-list" class="text-primary" />
+                <h3 class="text-xl font-semibold">LayoutItemList</h3>
+              </div>
+              <p class="text-muted mt-1 text-sm">
+                Generic table-style list — column config, per-cell slots, optional row links
+              </p>
+            </template>
+
+            <div class="space-y-6">
+              <LayoutItemList
+                :items="workItems"
+                :columns="workColumns"
+                item-key="id"
+                href="link"
+                external
+                numbered
+              >
+                <template #cell-name="{ item }">
+                  <span class="text-highlighted font-medium">{{ item.name }}</span>
+                </template>
+              </LayoutItemList>
+
+              <pre
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
+              ><code>&lt;LayoutItemList :items="items" :columns="columns" href="link" external numbered&gt;
+  &lt;template #cell-name="{ item }"&gt;&lt;strong&gt;&#123;&#123; item.name &#125;&#125;&lt;/strong&gt;&lt;/template&gt;
+&lt;/LayoutItemList&gt;</code></pre>
+            </div>
+          </UCard>
+
+          <!-- Item Cards -->
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-layout-grid" class="text-primary" />
+                <h3 class="text-xl font-semibold">LayoutItemCards</h3>
+              </div>
+              <p class="text-muted mt-1 text-sm">
+                Generic auto-fit card grid — media and caption slots
+              </p>
+            </template>
+
+            <div class="space-y-6">
+              <LayoutItemCards :items="workItems" item-key="id" min="200px">
+                <template #media="{ item }">
+                  <div
+                    :class="item.color"
+                    class="flex aspect-4/3 items-center justify-center rounded-lg"
+                  />
+                </template>
+                <template #caption="{ item }">
+                  <div class="flex justify-between gap-4 text-sm">
+                    <span class="text-highlighted">{{ item.name }}</span>
+                    <span class="text-muted">{{ item.year }}</span>
+                  </div>
+                </template>
+              </LayoutItemCards>
+
+              <pre
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
+              ><code>&lt;LayoutItemCards :items="items" min="200px"&gt;
+  &lt;template #media="{ item }"&gt;&lt;img :src="item.image" /&gt;&lt;/template&gt;
+  &lt;template #caption="{ item }"&gt;&#123;&#123; item.name &#125;&#125;&lt;/template&gt;
+&lt;/LayoutItemCards&gt;</code></pre>
             </div>
           </UCard>
         </section>
