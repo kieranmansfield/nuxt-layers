@@ -18,9 +18,33 @@
   ]
 
   const workItems = [
-    { id: 'a', name: 'Atlas', type: 'Identity', role: 'Design', year: 2026, link: 'https://example.com/a', color: 'bg-blue-500' },
-    { id: 'b', name: 'Beacon', type: 'Web app', role: 'Design + build', year: 2025, link: 'https://example.com/b', color: 'bg-green-500' },
-    { id: 'c', name: 'Cinder', type: 'iOS', role: 'Build', year: 2024, link: 'https://example.com/c', color: 'bg-purple-500' },
+    {
+      id: 'a',
+      name: 'Atlas',
+      type: 'Identity',
+      role: 'Design',
+      year: 2026,
+      link: 'https://example.com/a',
+      color: 'bg-blue-500',
+    },
+    {
+      id: 'b',
+      name: 'Beacon',
+      type: 'Web app',
+      role: 'Design + build',
+      year: 2025,
+      link: 'https://example.com/b',
+      color: 'bg-green-500',
+    },
+    {
+      id: 'c',
+      name: 'Cinder',
+      type: 'iOS',
+      role: 'Build',
+      year: 2024,
+      link: 'https://example.com/c',
+      color: 'bg-purple-500',
+    },
   ]
   const workColumns = [
     { key: 'name', label: 'Project', class: 'flex-[2_1_200px]' },

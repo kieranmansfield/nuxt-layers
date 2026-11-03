@@ -26,11 +26,7 @@
   }>()
 
   const keyOf = (item: T, index: number) =>
-    typeof itemKey === 'function'
-      ? itemKey(item)
-      : itemKey
-        ? String(item[itemKey])
-        : index
+    typeof itemKey === 'function' ? itemKey(item) : itemKey ? String(item[itemKey]) : index
 </script>
 
 <template>

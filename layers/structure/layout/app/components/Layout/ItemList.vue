@@ -40,11 +40,7 @@
   }>()
 
   const keyOf = (item: T, index: number) =>
-    typeof itemKey === 'function'
-      ? itemKey(item)
-      : itemKey
-        ? String(item[itemKey])
-        : index
+    typeof itemKey === 'function' ? itemKey(item) : itemKey ? String(item[itemKey]) : index
 
   const hrefOf = (item: T) =>
     typeof href === 'function' ? href(item) : href ? item[href] : undefined
@@ -55,10 +51,7 @@
 
 <template>
   <div>
-    <div
-      class="max-md:hidden border-b border-default pb-3" :class="[rowCls]"
-      aria-hidden="true"
-    >
+    <div class="border-default border-b pb-3 max-md:hidden" :class="[rowCls]" aria-hidden="true">
       <span v-if="numbered" class="flex-[0_0_48px]">No.</span>
       <span v-for="col in columns" :key="col.key" :class="col.class">
         {{ col.label }}
@@ -72,25 +65,19 @@
           :href="hrefOf(item)"
           :target="hrefOf(item) && external ? '_blank' : undefined"
           :rel="hrefOf(item) && external ? 'noreferrer' : undefined"
-          class="border-b border-default py-5" :class="[rowCls]"
+          class="border-default border-b py-5"
+          :class="[rowCls]"
         >
           <span v-if="numbered" class="flex-[0_0_48px]">
             <slot name="index" :index>{{ pad(index) }}</slot>
           </span>
           <span v-for="col in columns" :key="col.key" :class="col.class">
-            <slot
-              :name="`cell-${col.key}`"
-              :item
-              :index
-              :value="item[col.key]"
-            >
+            <slot :name="`cell-${col.key}`" :item :index :value="item[col.key]">
               {{ item[col.key] }}
             </slot>
           </span>
           <span v-if="href" aria-hidden="true" class="flex-[0_0_24px] text-right">
-            <slot name="trailing" :item :index>{{
-              external ? '↗' : '→'
-            }}</slot>
+            <slot name="trailing" :item :index>{{ external ? '↗' : '→' }}</slot>
           </span>
         </component>
       </li>
