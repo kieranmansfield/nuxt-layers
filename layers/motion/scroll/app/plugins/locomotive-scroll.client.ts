@@ -18,7 +18,10 @@ export default defineNuxtPlugin({
     const instance = shallowRef<LocomotiveScroll | null>(null)
     const appConfig = useAppConfig()
     const scrollConfig = appConfig.scroll as
-      | { smoothScroll?: boolean | string[]; lenisOptions?: ILocomotiveScrollOptions['lenisOptions'] }
+      | {
+          smoothScroll?: boolean | string[]
+          lenisOptions?: ILocomotiveScrollOptions['lenisOptions']
+        }
       | undefined
     const { screen } = useLoading()
 
