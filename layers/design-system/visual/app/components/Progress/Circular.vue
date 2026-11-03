@@ -4,8 +4,8 @@
     size = 120,
     strokeWidth = 8,
     showPercentage = true,
-    colors = ['var(--color-primary-500)', 'rgb(168, 85, 247)', 'rgb(236, 72, 153)'],
-    bgColor = 'rgb(31, 41, 55)',
+    colors = ['var(--ui-primary)', 'rgb(168, 85, 247)', 'rgb(236, 72, 153)'],
+    bgColor = 'var(--ui-bg-accented)',
   } = defineProps<{
     progress: number
     size?: number

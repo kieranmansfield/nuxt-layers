@@ -232,9 +232,7 @@
             <div class="space-y-6">
               <!-- Weight -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Font Weight
-                </h4>
+                <StarterLabel> Font Weight </StarterLabel>
                 <div class="space-y-2">
                   <Typography v-for="weight in fontWeights" :key="weight" :weight class="text-lg">
                     {{ weight.replace('font-', '') }} — The quick brown fox jumps over the lazy dog
@@ -244,9 +242,7 @@
 
               <!-- Slant -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Font Slant
-                </h4>
+                <StarterLabel> Font Slant </StarterLabel>
                 <div class="space-y-2">
                   <Typography slant="normal" class="text-lg"
                     >Normal — The quick brown fox</Typography
@@ -259,9 +255,7 @@
 
               <!-- Leading -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Line Height (Leading)
-                </h4>
+                <StarterLabel> Line Height (Leading) </StarterLabel>
                 <div class="grid gap-4 md:grid-cols-3">
                   <div class="bg-elevated rounded-lg p-3">
                     <Typography leading="leading-tight" class="text-sm">
@@ -286,9 +280,7 @@
 
               <!-- Transform -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Text Transform
-                </h4>
+                <StarterLabel> Text Transform </StarterLabel>
                 <div class="flex flex-wrap gap-4">
                   <Typography transform="none">Normal Text</Typography>
                   <Typography transform="uppercase">Uppercase</Typography>
@@ -321,9 +313,7 @@
             <div class="space-y-8">
               <!-- Outline only -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Outline Only
-                </h4>
+                <StarterLabel> Outline Only </StarterLabel>
                 <div class="text-7xl font-bold">
                   <TypographyTextStroke text="Outline" :stroke-width="2" />
                 </div>
@@ -331,9 +321,7 @@
 
               <!-- Fill + Stroke -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Fill + Stroke
-                </h4>
+                <StarterLabel> Fill + Stroke </StarterLabel>
                 <div class="text-primary text-7xl font-bold">
                   <TypographyTextStroke
                     text="Filled"
@@ -346,9 +334,7 @@
 
               <!-- Stroke widths -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Stroke Widths
-                </h4>
+                <StarterLabel> Stroke Widths </StarterLabel>
                 <div class="space-y-2">
                   <div class="text-5xl font-bold">
                     <TypographyTextStroke text="1px stroke" :stroke-width="1" />
@@ -364,7 +350,7 @@
 
               <!-- Colors -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Colors</h4>
+                <StarterLabel>Colors</StarterLabel>
                 <div class="flex flex-wrap gap-6">
                   <div class="text-5xl font-bold">
                     <TypographyTextStroke text="Red" :stroke-width="2" stroke-color="red" />
@@ -385,9 +371,7 @@
 
               <!-- Inside Headline -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Inside Headline
-                </h4>
+                <StarterLabel> Inside Headline </StarterLabel>
                 <TypographyHeadline :level="1">
                   <TypographyTextStroke text="Headline Stroke" tag="span" :stroke-width="2" />
                 </TypographyHeadline>
@@ -469,9 +453,7 @@
             <div class="space-y-6">
               <!-- Semantic Colors -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Semantic (dimmed → inverted)
-                </h4>
+                <StarterLabel> Semantic (dimmed → inverted) </StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <div
                     v-for="color in semanticColors"
@@ -485,7 +467,7 @@
 
               <!-- Status Colors -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Status</h4>
+                <StarterLabel>Status</StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <UBadge v-for="color in statusColors" :key="color" :color size="lg">
                     {{ color }}
@@ -495,7 +477,7 @@
 
               <!-- Brand Colors -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Brand</h4>
+                <StarterLabel>Brand</StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <UBadge v-for="color in brandColors" :key="color" :color size="lg">
                     {{ color }}
@@ -508,7 +490,7 @@
 
               <!-- Base Colors -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Base</h4>
+                <StarterLabel>Base</StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <div class="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white">
                     black
@@ -547,9 +529,7 @@
             <div class="space-y-6">
               <!-- Visual demo -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Responsive Column Spans
-                </h4>
+                <StarterLabel> Responsive Column Spans </StarterLabel>
                 <div class="bg-elevated space-y-2 rounded-lg p-4">
                   <div class="grid grid-cols-18 gap-1">
                     <div class="col-span-6 rounded bg-blue-500/20 p-2 text-center text-xs">
@@ -591,9 +571,7 @@
 
               <!-- Props Table -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Available Props
-                </h4>
+                <StarterLabel> Available Props </StarterLabel>
                 <div class="overflow-x-auto">
                   <table class="w-full text-sm">
                     <thead>
@@ -662,9 +640,7 @@
 
               <!-- Usage Example -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Usage Example
-                </h4>
+                <StarterLabel> Usage Example </StarterLabel>
                 <pre
                   class="overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100"
                 ><code>&lt;LayoutGridItem
@@ -724,7 +700,7 @@
 
             <div class="space-y-6">
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Props</h4>
+                <StarterLabel>Props</StarterLabel>
                 <div class="overflow-x-auto">
                   <table class="w-full text-sm">
                     <thead>
@@ -768,9 +744,7 @@
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  grid.vue layout props (v1.6.0+)
-                </h4>
+                <StarterLabel> grid.vue layout props (v1.6.0+) </StarterLabel>
                 <p class="text-muted mb-3 text-sm">
                   Header, nav, and footer are opt-in. Pass props via
                   <code class="font-mono text-xs">definePageMeta</code>:
@@ -870,9 +844,7 @@
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Available Slots
-                </h4>
+                <StarterLabel> Available Slots </StarterLabel>
                 <div class="grid gap-3 md:grid-cols-3">
                   <div class="bg-elevated rounded-lg p-3">
                     <div class="text-primary font-mono text-sm">#background</div>
@@ -933,7 +905,7 @@
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Props</h4>
+                <StarterLabel>Props</StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <div class="bg-elevated rounded-lg px-3 py-2">
                     <span class="font-mono text-sm">fullHeight</span>
@@ -986,7 +958,7 @@
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Props</h4>
+                <StarterLabel>Props</StarterLabel>
                 <div class="overflow-x-auto">
                   <table class="w-full text-sm">
                     <thead>
@@ -1057,7 +1029,7 @@
 
             <div class="space-y-6">
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Returns</h4>
+                <StarterLabel>Returns</StarterLabel>
                 <div class="overflow-x-auto">
                   <table class="w-full text-sm">
                     <thead>
@@ -1167,7 +1139,7 @@
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Props</h4>
+                <StarterLabel>Props</StarterLabel>
                 <div class="overflow-x-auto">
                   <table class="w-full text-sm">
                     <thead>
@@ -1231,20 +1203,16 @@
 
             <div class="space-y-6">
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Linear (default)
-                </h4>
+                <StarterLabel> Linear (default) </StarterLabel>
                 <MotionScrollProgress type="linear" :height="6" />
               </div>
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Circular
-                </h4>
+                <StarterLabel> Circular </StarterLabel>
                 <MotionScrollProgress type="circular" :size="80" :stroke-width="6" />
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Props</h4>
+                <StarterLabel>Props</StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <div class="bg-elevated rounded-lg px-3 py-2">
                     <span class="font-mono text-sm">type</span
@@ -1307,7 +1275,7 @@
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Props</h4>
+                <StarterLabel>Props</StarterLabel>
                 <div class="overflow-x-auto">
                   <table class="w-full text-sm">
                     <thead>
@@ -1405,9 +1373,7 @@
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Available Effects
-                </h4>
+                <StarterLabel> Available Effects </StarterLabel>
                 <div class="flex flex-wrap gap-2">
                   <UBadge
                     v-for="effect in [
@@ -1460,7 +1426,7 @@
               </MotionStaggered>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Props</h4>
+                <StarterLabel>Props</StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <div class="bg-elevated rounded-lg px-3 py-2">
                     <span class="font-mono text-sm">staggerDelay</span
@@ -1514,7 +1480,7 @@
                 on scroll.
               </p>
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Props</h4>
+                <StarterLabel>Props</StarterLabel>
                 <div class="overflow-x-auto">
                   <table class="w-full text-sm">
                     <thead>
@@ -1599,7 +1565,7 @@
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Props</h4>
+                <StarterLabel>Props</StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <div class="bg-elevated rounded-lg px-3 py-2">
                     <span class="font-mono text-sm">speed</span
@@ -1655,9 +1621,7 @@
             <div class="space-y-8">
               <!-- Nav Links -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Navigation Links
-                </h4>
+                <StarterLabel> Navigation Links </StarterLabel>
                 <HoverDimGroup class="flex gap-6">
                   <a href="#" class="text-highlighted text-lg font-medium">Home</a>
                   <a href="#" class="text-highlighted text-lg font-medium">About</a>
@@ -1669,7 +1633,7 @@
 
               <!-- Buttons -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Buttons</h4>
+                <StarterLabel>Buttons</StarterLabel>
                 <HoverDimGroup class="flex gap-3">
                   <UButton variant="solid">Primary</UButton>
                   <UButton variant="outline">Outline</UButton>
@@ -1680,9 +1644,7 @@
 
               <!-- Cards Grid -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Card Grid
-                </h4>
+                <StarterLabel> Card Grid </StarterLabel>
                 <HoverDimGroup class="grid grid-cols-3 gap-4" :duration="300">
                   <div class="border-default bg-elevated rounded-lg border p-6 text-center">
                     <UIcon name="i-lucide-code" class="text-primary mb-2 text-2xl" />
@@ -1701,9 +1663,7 @@
 
               <!-- Custom Opacity -->
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Custom Dim (0.1)
-                </h4>
+                <StarterLabel> Custom Dim (0.1) </StarterLabel>
                 <HoverDimGroup class="flex gap-4" :dim-opacity="0.1">
                   <span class="text-3xl">🚀</span>
                   <span class="text-3xl">💡</span>
@@ -1746,9 +1706,7 @@
 
             <div class="space-y-6">
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Variants
-                </h4>
+                <StarterLabel> Variants </StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <UButton variant="solid">Solid</UButton>
                   <UButton variant="outline">Outline</UButton>
@@ -1760,7 +1718,7 @@
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Sizes</h4>
+                <StarterLabel>Sizes</StarterLabel>
                 <div class="flex flex-wrap items-center gap-3">
                   <UButton size="xs">Extra Small</UButton>
                   <UButton size="sm">Small</UButton>
@@ -1771,7 +1729,7 @@
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Colors</h4>
+                <StarterLabel>Colors</StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <UButton color="primary">Primary</UButton>
                   <UButton color="secondary">Secondary</UButton>
@@ -1784,9 +1742,7 @@
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  With Icons
-                </h4>
+                <StarterLabel> With Icons </StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <UButton icon="i-lucide-rocket">Launch</UButton>
                   <UButton trailing-icon="i-lucide-arrow-right">Continue</UButton>
@@ -1813,9 +1769,7 @@
 
             <div class="space-y-6">
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
-                  Variants
-                </h4>
+                <StarterLabel> Variants </StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <UBadge variant="solid">Solid</UBadge>
                   <UBadge variant="outline">Outline</UBadge>
@@ -1825,7 +1779,7 @@
               </div>
 
               <div>
-                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Colors</h4>
+                <StarterLabel>Colors</StarterLabel>
                 <div class="flex flex-wrap gap-3">
                   <UBadge color="primary">Primary</UBadge>
                   <UBadge color="secondary">Secondary</UBadge>

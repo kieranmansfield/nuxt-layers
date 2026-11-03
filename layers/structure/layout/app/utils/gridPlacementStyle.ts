@@ -66,7 +66,7 @@ export function resolveResponsivePlacementVars<T>(
   const lgValue = resolveResponsivePlacementValue(value, 'lg')
 
   if (mdValue !== undefined) styles[`--_md-${prefix}`] = String(mdValue)
-  if (lgValue !== undefined) styles[`--_lg-${prefix}`] = String(lgValue)
+  if (lgValue !== undefined) styles[`--_xl-${prefix}`] = String(lgValue)
 
   return styles
 }

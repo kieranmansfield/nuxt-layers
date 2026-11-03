@@ -51,14 +51,14 @@ describe('resolveResponsivePlacementVars', () => {
 
   it('sets only the lg var when only lg is provided', () => {
     expect(resolveResponsivePlacementVars({ default: 1, lg: 5 }, 're')).toEqual({
-      '--_lg-re': '5',
+      '--_xl-re': '5',
     })
   })
 
   it('sets both md and lg vars when both are provided', () => {
     expect(resolveResponsivePlacementVars({ default: 1, md: 2, lg: 5 }, 'ce')).toEqual({
       '--_md-ce': '2',
-      '--_lg-ce': '5',
+      '--_xl-ce': '5',
     })
   })
 })
@@ -226,7 +226,7 @@ describe('buildGridPlacementStyle', () => {
     })
 
     expect(style['--_md-cs']).toBe('2')
-    expect(style['--_lg-ce']).toBe('6')
+    expect(style['--_xl-ce']).toBe('6')
   })
 
   it('applies bleed styles and skips the column/row var block entirely', () => {
