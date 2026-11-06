@@ -167,6 +167,9 @@ export default defineConfig({
         resolve: {
           alias: {
             '#layers/core': fileURLToPath(new URL('./layers/core', import.meta.url)),
+            '#components': fileURLToPath(
+              new URL('./tests/stubs/nuxt-components.ts', import.meta.url)
+            ),
           },
         },
         test: {

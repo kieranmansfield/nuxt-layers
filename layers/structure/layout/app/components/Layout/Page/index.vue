@@ -11,7 +11,7 @@
    *
    * Responsibilities:
    *   - title/description meta via useSeoMeta() (pages may override)
-   *   - provides 'pageTitle' to child components
+   *   - provides 'pageTitle' to child components, as a readonly ref
    *   - optional visible header (LayoutSection + LayoutPageHeader)
    *
    * LayoutGridDebug is owned by the default layout — do NOT add it here.
@@ -55,7 +55,10 @@
     ogDescription: () => description,
   })
 
-  provide('pageTitle', title)
+  provide(
+    'pageTitle',
+    toRef(() => title)
+  )
 </script>
 
 <template>

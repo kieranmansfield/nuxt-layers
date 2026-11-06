@@ -2,7 +2,7 @@
   import type { SiteLogoConfig, SiteLogoSize } from '../../types/nav'
 
   // The site wordmark from `site.title`, sized on the step scale. Look comes from `siteLogo` in
-  // app.config; `ui` overrides per instance. Replaces the deprecated SiteTitle/SiteSubtitle.
+  // app.config; `ui` overrides per instance.
   const {
     as = 'span',
     size = 'sm',
