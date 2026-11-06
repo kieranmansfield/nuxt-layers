@@ -83,6 +83,7 @@ left out.
 | `layers/design-system/visual/app/components/Tint/Overlay.vue`              | atom      |
 | `layers/motion/animations/app/components/Motion/CountUp.vue`               | atom      |
 | `layers/motion/animations/app/components/Motion/Cursor.vue`                | atom      |
+| `layers/motion/animations/app/components/Motion/FlipViews.vue`             | behaviour |
 | `layers/motion/animations/app/components/Motion/Magnetic.vue`              | behaviour |
 | `layers/motion/animations/app/components/Motion/Marquee.vue`               | behaviour |
 | `layers/motion/animations/app/components/Motion/MarqueeText.vue`           | molecule  |
@@ -103,6 +104,8 @@ left out.
 | `layers/structure/layout/app/components/HStack.vue`                        | atom      |
 | `layers/structure/layout/app/components/Layout/Grid/Debug.vue`             | atom      |
 | `layers/structure/layout/app/components/Layout/Grid/Item.vue`              | atom      |
+| `layers/structure/layout/app/components/Layout/ItemCards.vue`              | molecule  |
+| `layers/structure/layout/app/components/Layout/ItemList.vue`               | molecule  |
 | `layers/structure/layout/app/components/Layout/Main.vue`                   | template  |
 | `layers/structure/layout/app/components/Layout/Page/Header.vue`            | organism  |
 | `layers/structure/layout/app/components/Layout/Page/index.vue`             | template  |
