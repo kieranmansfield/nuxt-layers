@@ -16,6 +16,24 @@
       manifest: contentManifest,
     })
   )
+
+  const stats = computed(() => [
+    {
+      label: 'Default',
+      value: catalog.value.feed.defaultCollection,
+      hint: 'Shorthand routes point here.',
+    },
+    {
+      label: 'Exposed',
+      value: `${catalog.value.collectionGroups.length} collections`,
+      hint: 'Published in the feed catalog.',
+    },
+    {
+      label: 'Limit',
+      value: `${catalog.value.feed.limit} items`,
+      hint: 'Applied to each feed response.',
+    },
+  ])
 </script>
 
 <template>
@@ -53,33 +71,15 @@
 
           <div class="feeds-cards-grid gap-3">
             <div
+              v-for="stat in stats"
+              :key="stat.label"
               class="border-default bg-default/75 rounded-2xl border p-4 shadow-sm backdrop-blur"
             >
-              <p class="text-muted text-xs font-semibold tracking-[0.3em] uppercase">Default</p>
-              <p class="text-highlighted mt-2 text-lg font-semibold">
-                {{ catalog.feed.defaultCollection }}
+              <p class="text-muted text-xs font-semibold tracking-[0.3em] uppercase">
+                {{ stat.label }}
               </p>
-              <p class="text-muted mt-1 text-xs">Shorthand routes point here.</p>
-            </div>
-
-            <div
-              class="border-default bg-default/75 rounded-2xl border p-4 shadow-sm backdrop-blur"
-            >
-              <p class="text-muted text-xs font-semibold tracking-[0.3em] uppercase">Exposed</p>
-              <p class="text-highlighted mt-2 text-lg font-semibold">
-                {{ catalog.collectionGroups.length }} collections
-              </p>
-              <p class="text-muted mt-1 text-xs">Published in the feed catalog.</p>
-            </div>
-
-            <div
-              class="border-default bg-default/75 rounded-2xl border p-4 shadow-sm backdrop-blur"
-            >
-              <p class="text-muted text-xs font-semibold tracking-[0.3em] uppercase">Limit</p>
-              <p class="text-highlighted mt-2 text-lg font-semibold">
-                {{ catalog.feed.limit }} items
-              </p>
-              <p class="text-muted mt-1 text-xs">Applied to each feed response.</p>
+              <p class="text-highlighted mt-2 text-lg font-semibold">{{ stat.value }}</p>
+              <p class="text-muted mt-1 text-xs">{{ stat.hint }}</p>
             </div>
           </div>
 

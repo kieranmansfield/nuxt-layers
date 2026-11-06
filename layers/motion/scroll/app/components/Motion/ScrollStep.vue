@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import type { ScrollSceneContext } from '../../types/scroll'
-  import { SCROLL_SCENE_KEY } from '../../composables/useScrollSteps'
+  import { useScrollScene } from '../../composables/useScrollSteps'
 
   const { index } = defineProps<{
     /**
@@ -14,7 +13,7 @@
     leave: []
   }>()
 
-  const scene = inject<ScrollSceneContext>(SCROLL_SCENE_KEY)
+  const scene = useScrollScene('MotionScrollStep')
 
   onMounted(() => scene?.registerStep(index))
   onUnmounted(() => scene?.unregisterStep(index))
