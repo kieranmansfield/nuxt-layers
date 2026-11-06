@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { atan, float, uniform, vec3 } from 'three/tsl'
+  import { atan, float, vec3 } from 'three/tsl'
 
   const { fov = Math.PI, order = 0 } = defineProps<{
     /**
@@ -10,13 +10,7 @@
     order?: number
   }>()
 
-  const fovNode = uniform(fov)
-  watch(
-    () => fov,
-    (v) => {
-      fovNode.value = v
-    }
-  )
+  const fovNode = useUniformProp(() => fov)
 
   useShaderStage(
     (ray) => {

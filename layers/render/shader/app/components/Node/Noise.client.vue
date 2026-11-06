@@ -6,7 +6,7 @@
     simplexNoise2D,
     voronoi2D,
   } from '#layers/shader/app/shaders/common/noise'
-  import { add, mul, time, uniform, uv, vec2, vec3 } from 'three/tsl'
+  import { add, mul, time, uv, vec2, vec3 } from 'three/tsl'
 
   const {
     id = 'noise',
@@ -31,8 +31,8 @@
   const graph = useShaderGraphContext()
 
   // Create uniforms once
-  const uScale = uniform(scale)
-  const uSpeed = uniform(speed)
+  const uScale = useUniformProp(() => scale)
+  const uSpeed = useUniformProp(() => speed)
 
   // Build TSL node
   function buildNode() {
@@ -71,18 +71,6 @@
   graph.register(id, node, order, blend, opacity)
 
   // Watch uniform-driven props (no recompilation)
-  watch(
-    () => scale,
-    (v) => {
-      uScale.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      uSpeed.value = v
-    }
-  )
 
   // Watch topology-changing props (requires graph update)
   watch(

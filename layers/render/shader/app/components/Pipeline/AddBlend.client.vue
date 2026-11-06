@@ -16,17 +16,11 @@
   }>()
 
   const colorNode: TSLNode = uniform(new Color(color))
-  const opacityNode = uniform(opacity)
+  const opacityNode = useUniformProp(() => opacity)
   watch(
     () => color,
     (v) => {
       colorNode.value.set(v)
-    }
-  )
-  watch(
-    () => opacity,
-    (v) => {
-      opacityNode.value = v
     }
   )
 

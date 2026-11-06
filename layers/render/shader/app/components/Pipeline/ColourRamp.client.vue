@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { float, mix, smoothstep, uniform, vec4 } from 'three/tsl'
+  import { float, mix, smoothstep, vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
@@ -30,8 +30,8 @@
   const shadowNode = hexToVec3Uniform(shadowColor)
   const midNode = hexToVec3Uniform(midtoneColor)
   const highlightNode = hexToVec3Uniform(highlightColor)
-  const shadowPtNode = uniform(shadowPoint)
-  const highlightPtNode = uniform(highlightPoint)
+  const shadowPtNode = useUniformProp(() => shadowPoint)
+  const highlightPtNode = useUniformProp(() => highlightPoint)
   watch(
     () => shadowColor,
     (v) => {
@@ -51,18 +51,6 @@
     (v) => {
       const c = new Color(v)
       highlightNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => shadowPoint,
-    (v) => {
-      shadowPtNode.value = v
-    }
-  )
-  watch(
-    () => highlightPoint,
-    (v) => {
-      highlightPtNode.value = v
     }
   )
 

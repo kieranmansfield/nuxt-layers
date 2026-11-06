@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { uniform, vec4 } from 'three/tsl'
+  import { vec4 } from 'three/tsl'
 
   import { vibrance } from '../../shaders/common/palette'
 
@@ -12,13 +12,7 @@
     order?: number
   }>()
 
-  const amountNode = uniform(amount)
-  watch(
-    () => amount,
-    (v) => {
-      amountNode.value = v
-    }
-  )
+  const amountNode = useUniformProp(() => amount)
 
   useShaderStage((prev) => vec4(vibrance(prev.xyz, amountNode), prev.w), order)
 </script>

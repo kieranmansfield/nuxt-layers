@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { float, pow, uniform, vec4 } from 'three/tsl'
+  import { float, pow, vec4 } from 'three/tsl'
 
   /**
    * Decodes sRGB to linear light — the inverse of LinearToSRGB.
@@ -12,13 +12,7 @@
     order?: number
   }>()
 
-  const gammaNode = uniform(gamma)
-  watch(
-    () => gamma,
-    (v) => {
-      gammaNode.value = v
-    }
-  )
+  const gammaNode = useUniformProp(() => gamma)
 
   useShaderStage((prev) => vec4(pow(prev.xyz.max(float(0)), gammaNode), prev.w), order)
 </script>

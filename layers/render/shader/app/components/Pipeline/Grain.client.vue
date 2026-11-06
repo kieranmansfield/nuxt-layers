@@ -1,19 +1,5 @@
 <script setup lang="ts">
-  import {
-    clamp,
-    dot,
-    float,
-    floor,
-    fract,
-    mix,
-    pow,
-    sin,
-    step,
-    time,
-    uniform,
-    vec2,
-    vec4,
-  } from 'three/tsl'
+  import { clamp, dot, float, floor, fract, mix, pow, sin, step, time, vec2, vec4 } from 'three/tsl'
 
   import { blendOverlay, blendScreen, blendSoftLight } from '../../shaders/common/blend'
 
@@ -42,34 +28,10 @@
     order?: number
   }>()
 
-  const intensityNode = uniform(intensity)
-  const opacityNode = uniform(opacity)
-  const sizeNode = uniform(size)
-  const fpsNode = uniform(fps)
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
-    }
-  )
-  watch(
-    () => opacity,
-    (v) => {
-      opacityNode.value = v
-    }
-  )
-  watch(
-    () => size,
-    (v) => {
-      sizeNode.value = v
-    }
-  )
-  watch(
-    () => fps,
-    (v) => {
-      fpsNode.value = v
-    }
-  )
+  const intensityNode = useUniformProp(() => intensity)
+  const opacityNode = useUniformProp(() => opacity)
+  const sizeNode = useUniformProp(() => size)
+  const fpsNode = useUniformProp(() => fps)
 
   const { uvNode } = useShaderPipelineContext()
 

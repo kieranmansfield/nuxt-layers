@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { clamp, float, floor, time, uniform, vec3, vec4 } from 'three/tsl'
+  import { clamp, float, floor, time, vec3, vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
   import { grain, vignette } from '../../shaders/common/grain'
@@ -26,34 +26,10 @@
     order?: number
   }>()
 
-  const intensityNode = uniform(intensity)
-  const grainNode = uniform(grainStrength)
-  const vigNode = uniform(vignetteStrength)
-  const warmthNode = uniform(warmth)
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
-    }
-  )
-  watch(
-    () => grainStrength,
-    (v) => {
-      grainNode.value = v
-    }
-  )
-  watch(
-    () => vignetteStrength,
-    (v) => {
-      vigNode.value = v
-    }
-  )
-  watch(
-    () => warmth,
-    (v) => {
-      warmthNode.value = v
-    }
-  )
+  const intensityNode = useUniformProp(() => intensity)
+  const grainNode = useUniformProp(() => grainStrength)
+  const vigNode = useUniformProp(() => vignetteStrength)
+  const warmthNode = useUniformProp(() => warmth)
 
   const pipeline = useShaderPipelineContext()
 

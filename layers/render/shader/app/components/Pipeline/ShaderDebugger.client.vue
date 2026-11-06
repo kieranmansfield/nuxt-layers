@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { float, fract, uniform, vec3, vec4 } from 'three/tsl'
+  import { float, fract, vec3, vec4 } from 'three/tsl'
 
   /**
    * ShaderDebugger — dev-only visualization overlay for inspecting pipeline state.
@@ -31,27 +31,9 @@
     order?: number
   }>()
 
-  const gridLinesNode = uniform(gridLines)
-  const gridThickNode = uniform(gridThickness)
-  const blendNode = uniform(blend)
-  watch(
-    () => gridLines,
-    (v) => {
-      gridLinesNode.value = v
-    }
-  )
-  watch(
-    () => gridThickness,
-    (v) => {
-      gridThickNode.value = v
-    }
-  )
-  watch(
-    () => blend,
-    (v) => {
-      blendNode.value = v
-    }
-  )
+  const gridLinesNode = useUniformProp(() => gridLines)
+  const gridThickNode = useUniformProp(() => gridThickness)
+  const blendNode = useUniformProp(() => blend)
 
   const pipeline = useShaderPipelineContext()
 

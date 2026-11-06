@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { float, mix, uniform, vec4 } from 'three/tsl'
+  import { float, mix, vec4 } from 'three/tsl'
 
   import { dots } from '../../shaders/common/shapes'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
@@ -23,9 +23,9 @@
 
   const colorANode = hexToVec3Uniform(colorA)
   const colorBNode = hexToVec3Uniform(colorB)
-  const cellNode = uniform(cellSize)
-  const dotNode = uniform(dotRadius)
-  const softNode = uniform(softness)
+  const cellNode = useUniformProp(() => cellSize)
+  const dotNode = useUniformProp(() => dotRadius)
+  const softNode = useUniformProp(() => softness)
   watch(
     () => colorA,
     (v) => {
@@ -38,24 +38,6 @@
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => cellSize,
-    (v) => {
-      cellNode.value = v
-    }
-  )
-  watch(
-    () => dotRadius,
-    (v) => {
-      dotNode.value = v
-    }
-  )
-  watch(
-    () => softness,
-    (v) => {
-      softNode.value = v
     }
   )
 

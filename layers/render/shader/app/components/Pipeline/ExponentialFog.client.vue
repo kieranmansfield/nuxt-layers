@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { mix, uniform, vec4 } from 'three/tsl'
+  import { mix, vec4 } from 'three/tsl'
 
   import { hexToVec3Uniform } from '../../utils/tsl/color'
 
@@ -25,25 +25,13 @@
   }>()
 
   const fogColorNode = hexToVec3Uniform(fogColor)
-  const densityNode = uniform(density)
-  const horizonBiasNode = uniform(horizonBias)
+  const densityNode = useUniformProp(() => density)
+  const horizonBiasNode = useUniformProp(() => horizonBias)
   watch(
     () => fogColor,
     (v) => {
       const c = new Color(v)
       fogColorNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => density,
-    (v) => {
-      densityNode.value = v
-    }
-  )
-  watch(
-    () => horizonBias,
-    (v) => {
-      horizonBiasNode.value = v
     }
   )
 

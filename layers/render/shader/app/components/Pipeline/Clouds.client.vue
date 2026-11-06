@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { float, mix, smoothstep, time, uniform, vec4 } from 'three/tsl'
+  import { float, mix, smoothstep, time, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
@@ -31,10 +31,10 @@
 
   const colorSkyNode = hexToVec3Uniform(colorSky)
   const colorCloudNode = hexToVec3Uniform(colorCloud)
-  const scaleNode = uniform(scale)
-  const coverageNode = uniform(coverage)
-  const softnessNode = uniform(softness)
-  const speedNode = uniform(speed)
+  const scaleNode = useUniformProp(() => scale)
+  const coverageNode = useUniformProp(() => coverage)
+  const softnessNode = useUniformProp(() => softness)
+  const speedNode = useUniformProp(() => speed)
   watch(
     () => colorSky,
     (v) => {
@@ -47,30 +47,6 @@
     (v) => {
       const c = new Color(v)
       colorCloudNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => coverage,
-    (v) => {
-      coverageNode.value = v
-    }
-  )
-  watch(
-    () => softness,
-    (v) => {
-      softnessNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
     }
   )
 

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { uniform } from 'three/tsl'
-
   import { bulgeUV } from '../../shaders/common/uv'
 
   const {
@@ -15,20 +13,8 @@
     order?: number
   }>()
 
-  const strengthNode = uniform(strength)
-  const radiusNode = uniform(radius)
-  watch(
-    () => strength,
-    (v) => {
-      strengthNode.value = v
-    }
-  )
-  watch(
-    () => radius,
-    (v) => {
-      radiusNode.value = v
-    }
-  )
+  const strengthNode = useUniformProp(() => strength)
+  const radiusNode = useUniformProp(() => radius)
 
   useShaderStage(
     (uvIn) => bulgeUV(uvIn, { strength: strengthNode, radius: radiusNode }),

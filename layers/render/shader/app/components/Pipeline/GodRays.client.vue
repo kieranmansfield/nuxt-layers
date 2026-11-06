@@ -31,9 +31,9 @@
 
   const posNode = uniform(new Vector2(...position))
   const colorNode = hexToVec3Uniform(color)
-  const intensityNode = uniform(intensity)
-  const rayCountNode = uniform(rayCount)
-  const decayNode = uniform(decay)
+  const intensityNode = useUniformProp(() => intensity)
+  const rayCountNode = useUniformProp(() => rayCount)
+  const decayNode = useUniformProp(() => decay)
   watch(
     () => position,
     ([x, y]) => {
@@ -45,24 +45,6 @@
     (v) => {
       const c = new Color(v)
       colorNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
-    }
-  )
-  watch(
-    () => rayCount,
-    (v) => {
-      rayCountNode.value = v
-    }
-  )
-  watch(
-    () => decay,
-    (v) => {
-      decayNode.value = v
     }
   )
 

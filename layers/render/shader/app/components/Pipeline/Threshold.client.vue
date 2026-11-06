@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { float, step, uniform, vec4 } from 'three/tsl'
+  import { float, step, vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
 
@@ -9,13 +9,7 @@
     order?: number
   }>()
 
-  const thresholdNode = uniform(threshold)
-  watch(
-    () => threshold,
-    (v) => {
-      thresholdNode.value = v
-    }
-  )
+  const thresholdNode = useUniformProp(() => threshold)
 
   useShaderStage((prev) => {
     const lum = luminance(prev.xyz)

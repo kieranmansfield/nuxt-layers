@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { time, uniform } from 'three/tsl'
+  import { time } from 'three/tsl'
 
   import { rippleUV } from '../../shaders/common/uv'
 
@@ -21,34 +21,10 @@
     order?: number
   }>()
 
-  const freqNode = uniform(frequency)
-  const ampNode = uniform(amplitude)
-  const falloffNode = uniform(falloff)
-  const speedNode = uniform(speed)
-  watch(
-    () => frequency,
-    (v) => {
-      freqNode.value = v
-    }
-  )
-  watch(
-    () => amplitude,
-    (v) => {
-      ampNode.value = v
-    }
-  )
-  watch(
-    () => falloff,
-    (v) => {
-      falloffNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const freqNode = useUniformProp(() => frequency)
+  const ampNode = useUniformProp(() => amplitude)
+  const falloffNode = useUniformProp(() => falloff)
+  const speedNode = useUniformProp(() => speed)
 
   useShaderStage(
     (uvIn) => rippleUV(uvIn, [0.5, 0.5], freqNode, ampNode, time.mul(speedNode), falloffNode),

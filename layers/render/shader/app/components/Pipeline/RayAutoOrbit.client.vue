@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { cos, sin, time, uniform, vec3 } from 'three/tsl'
+  import { cos, sin, time, vec3 } from 'three/tsl'
 
   const {
     speed = 0.5,
@@ -13,20 +13,8 @@
     order?: number
   }>()
 
-  const speedNode = uniform(speed)
-  const pitchNode = uniform(pitch)
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
-  watch(
-    () => pitch,
-    (v) => {
-      pitchNode.value = v
-    }
-  )
+  const speedNode = useUniformProp(() => speed)
+  const pitchNode = useUniformProp(() => pitch)
 
   useShaderStage(
     (ray) => {

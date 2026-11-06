@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { float, sin, time, uniform, vec3, vec4 } from 'three/tsl'
+  import { float, sin, time, vec3, vec4 } from 'three/tsl'
 
   import type { TSLNode } from '../../shaders/types'
 
@@ -26,34 +26,10 @@
     order?: number
   }>()
 
-  const ampNode = uniform(amplitude)
-  const freqNode = uniform(frequency)
-  const speedNode = uniform(speed)
-  const phaseNode = uniform(phaseOffset)
-  watch(
-    () => amplitude,
-    (v) => {
-      ampNode.value = v
-    }
-  )
-  watch(
-    () => frequency,
-    (v) => {
-      freqNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
-  watch(
-    () => phaseOffset,
-    (v) => {
-      phaseNode.value = v
-    }
-  )
+  const ampNode = useUniformProp(() => amplitude)
+  const freqNode = useUniformProp(() => frequency)
+  const speedNode = useUniformProp(() => speed)
+  const phaseNode = useUniformProp(() => phaseOffset)
 
   const pipeline = useShaderPipelineContext()
 

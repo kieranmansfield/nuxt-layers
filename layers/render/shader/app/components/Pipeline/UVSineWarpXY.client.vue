@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { time, uniform, vec2 } from 'three/tsl'
+  import { time, vec2 } from 'three/tsl'
 
   /**
    * Asymmetric sine warp — the core Grainient/Shadertoy UV distortion.
@@ -20,28 +20,9 @@
     order?: number
   }>()
 
-  const freqNode = uniform(frequency)
-  const ampNode = uniform(amplitude)
-  const speedNode = uniform(speed)
-
-  watch(
-    () => frequency,
-    (v) => {
-      freqNode.value = v
-    }
-  )
-  watch(
-    () => amplitude,
-    (v) => {
-      ampNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const freqNode = useUniformProp(() => frequency)
+  const ampNode = useUniformProp(() => amplitude)
+  const speedNode = useUniformProp(() => speed)
 
   // Pure expression — no toVar/addAssign needed, so no Fn() stack required.
   // Sequential dependency preserved: warpedY uses warpedX (the already-warped X component).

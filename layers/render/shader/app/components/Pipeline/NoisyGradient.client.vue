@@ -31,9 +31,9 @@
   const colorANode = hexToVec3Uniform(colorA)
   const colorBNode = hexToVec3Uniform(colorB)
   const angleNode = uniform((angle * Math.PI) / 180)
-  const noiseStrNode = uniform(noiseStrength)
-  const noiseScaleNode = uniform(noiseScale)
-  const speedNode = uniform(speed)
+  const noiseStrNode = useUniformProp(() => noiseStrength)
+  const noiseScaleNode = useUniformProp(() => noiseScale)
+  const speedNode = useUniformProp(() => speed)
   watch(
     () => colorA,
     (v) => {
@@ -52,24 +52,6 @@
     () => angle,
     (v) => {
       angleNode.value = (v * Math.PI) / 180
-    }
-  )
-  watch(
-    () => noiseStrength,
-    (v) => {
-      noiseStrNode.value = v
-    }
-  )
-  watch(
-    () => noiseScale,
-    (v) => {
-      noiseScaleNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
     }
   )
 

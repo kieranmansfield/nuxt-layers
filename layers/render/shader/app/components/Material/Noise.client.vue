@@ -38,20 +38,15 @@
   }>()
 
   // Create reactive uniforms
-  const scaleUniform = uniform(scale)
-  const speedUniform = uniform(speed)
-  const mouseXUniform = uniform(mouseX)
-  const mouseYUniform = uniform(mouseY)
-  const mouseStrengthUniform = uniform(mouseStrength)
+  const scaleUniform = useUniformProp(() => scale)
+  const speedUniform = useUniformProp(() => speed)
+  const mouseXUniform = useUniformProp(() => mouseX)
+  const mouseYUniform = useUniformProp(() => mouseY)
+  const mouseStrengthUniform = useUniformProp(() => mouseStrength)
   const baseColorUniform: TSLNode = uniform(new Color(baseColor))
   const peakColorUniform: TSLNode = uniform(new Color(peakColor))
 
   // fallow-ignore-next-line code-duplication
-  watchUniformProp(() => scale, scaleUniform)
-  watchUniformProp(() => speed, speedUniform)
-  watchUniformProp(() => mouseX, mouseXUniform)
-  watchUniformProp(() => mouseY, mouseYUniform)
-  watchUniformProp(() => mouseStrength, mouseStrengthUniform)
   watchUniformProp(
     () => baseColor,
     baseColorUniform,

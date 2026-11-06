@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { uniform, vec2 } from 'three/tsl'
+  import { vec2 } from 'three/tsl'
 
   const {
     scale = 1,
@@ -13,13 +13,7 @@
     order?: number
   }>()
 
-  const scaleNode = uniform(scale)
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
+  const scaleNode = useUniformProp(() => scale)
 
   useShaderStage(
     (uvIn) => {

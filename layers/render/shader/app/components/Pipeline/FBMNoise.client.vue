@@ -26,8 +26,8 @@
   const colorBVal = new Color(colorB)
   const colorANode = uniform(colorAVal)
   const colorBNode = uniform(colorBVal)
-  const scaleNode = uniform(scale)
-  const speedNode = uniform(speed)
+  const scaleNode = useUniformProp(() => scale)
+  const speedNode = useUniformProp(() => speed)
 
   watch(
     () => colorA,
@@ -39,18 +39,6 @@
     () => colorB,
     (v) => {
       colorBNode.value.set(v)
-    }
-  )
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
     }
   )
 

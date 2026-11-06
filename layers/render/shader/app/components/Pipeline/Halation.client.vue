@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { float, smoothstep, uniform, vec4 } from 'three/tsl'
+  import { float, smoothstep, vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
@@ -25,25 +25,13 @@
   }>()
 
   const colorNode = hexToVec3Uniform(color)
-  const thresholdNode = uniform(threshold)
-  const intensityNode = uniform(intensity)
+  const thresholdNode = useUniformProp(() => threshold)
+  const intensityNode = useUniformProp(() => intensity)
   watch(
     () => color,
     (v) => {
       const c = new Color(v)
       colorNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => threshold,
-    (v) => {
-      thresholdNode.value = v
-    }
-  )
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
     }
   )
 

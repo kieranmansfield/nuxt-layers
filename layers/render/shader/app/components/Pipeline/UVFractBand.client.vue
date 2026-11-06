@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { clamp, uniform, vec4 } from 'three/tsl'
+  import { clamp, vec4 } from 'three/tsl'
 
   const {
     frequency = 8,
@@ -13,20 +13,8 @@
     order?: number
   }>()
 
-  const freqNode = uniform(frequency)
-  const scaleNode = uniform(scale)
-  watch(
-    () => frequency,
-    (v) => {
-      freqNode.value = v
-    }
-  )
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
+  const freqNode = useUniformProp(() => frequency)
+  const scaleNode = useUniformProp(() => scale)
 
   const pipeline = useShaderPipelineContext()
 

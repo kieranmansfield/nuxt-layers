@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { float, uniform, vec3, vec4 } from 'three/tsl'
+  import { float, vec3, vec4 } from 'three/tsl'
 
   const {
     temperature = 0,
@@ -19,20 +19,8 @@
     order?: number
   }>()
 
-  const tempNode = uniform(temperature)
-  const tintNode = uniform(tint)
-  watch(
-    () => temperature,
-    (v) => {
-      tempNode.value = v
-    }
-  )
-  watch(
-    () => tint,
-    (v) => {
-      tintNode.value = v
-    }
-  )
+  const tempNode = useUniformProp(() => temperature)
+  const tintNode = useUniformProp(() => tint)
 
   useShaderStage((prev) => {
     // Temperature: mix toward warm (orange) or cool (blue)

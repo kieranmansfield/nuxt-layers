@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { float, mix, uniform, vec4 } from 'three/tsl'
+  import { float, mix, vec2, vec4 } from 'three/tsl'
 
   import { roundedRect } from '../../shaders/common/shapes'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
@@ -25,10 +25,10 @@
 
   const colorANode = hexToVec3Uniform(colorA)
   const colorBNode = hexToVec3Uniform(colorB)
-  const widthNode = uniform(width)
-  const heightNode = uniform(height)
-  const cornerNode = uniform(cornerRadius)
-  const softnessNode = uniform(softness)
+  const widthNode = useUniformProp(() => width)
+  const heightNode = useUniformProp(() => height)
+  const cornerNode = useUniformProp(() => cornerRadius)
+  const softnessNode = useUniformProp(() => softness)
   watch(
     () => colorA,
     (v) => {
@@ -43,36 +43,12 @@
       colorBNode.value.set(c.r, c.g, c.b)
     }
   )
-  watch(
-    () => width,
-    (v) => {
-      widthNode.value = v
-    }
-  )
-  watch(
-    () => height,
-    (v) => {
-      heightNode.value = v
-    }
-  )
-  watch(
-    () => cornerRadius,
-    (v) => {
-      cornerNode.value = v
-    }
-  )
-  watch(
-    () => softness,
-    (v) => {
-      softnessNode.value = v
-    }
-  )
 
   const pipeline = useShaderPipelineContext()
 
   useShaderStage(() => {
     const uv = pipeline.uvNode.value
-    const mask = roundedRect(uv, [0.5, 0.5], widthNode, cornerNode, softnessNode)
+    const mask = roundedRect(uv, [0.5, 0.5], vec2(widthNode, heightNode), cornerNode, softnessNode)
     return vec4(mix(colorANode, colorBNode, mask), float(1))
   }, order)
 </script>

@@ -24,7 +24,7 @@
   const colorANode = hexToVec3Uniform(colorA)
   const colorBNode = hexToVec3Uniform(colorB)
   const focalNode = uniform(new Vector2(...focal))
-  const radiusNode = uniform(radius)
+  const radiusNode = useUniformProp(() => radius)
   watch(
     () => colorA,
     (v) => {
@@ -43,12 +43,6 @@
     () => focal,
     ([x, y]) => {
       focalNode.value.set(x, y)
-    }
-  )
-  watch(
-    () => radius,
-    (v) => {
-      radiusNode.value = v
     }
   )
 

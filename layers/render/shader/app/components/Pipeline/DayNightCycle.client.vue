@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { abs, float, mix, pow, sign, time, uniform, vec4 } from 'three/tsl'
+  import { abs, float, mix, pow, sign, time, vec4 } from 'three/tsl'
 
   import { hexToVec3Uniform } from '../../utils/tsl/color'
 
@@ -29,8 +29,8 @@
 
   const lightNode = hexToVec3Uniform(colorLight)
   const darkNode = hexToVec3Uniform(colorDark)
-  const speedNode = uniform(speed)
-  const opacityNode = uniform(opacity)
+  const speedNode = useUniformProp(() => speed)
+  const opacityNode = useUniformProp(() => opacity)
   watch(
     () => colorLight,
     (v) => {
@@ -43,18 +43,6 @@
     (v) => {
       const c = new Color(v)
       darkNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
-  watch(
-    () => opacity,
-    (v) => {
-      opacityNode.value = v
     }
   )
 

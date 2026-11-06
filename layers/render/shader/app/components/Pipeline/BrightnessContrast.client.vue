@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { uniform, vec4 } from 'three/tsl'
+  import { vec4 } from 'three/tsl'
 
   import {
     brightness as brightnessEffect,
@@ -18,20 +18,8 @@
     order?: number
   }>()
 
-  const brightnessNode = uniform(brightnessProp)
-  const contrastNode = uniform(contrastProp)
-  watch(
-    () => brightnessProp,
-    (v) => {
-      brightnessNode.value = v
-    }
-  )
-  watch(
-    () => contrastProp,
-    (v) => {
-      contrastNode.value = v
-    }
-  )
+  const brightnessNode = useUniformProp(() => brightnessProp)
+  const contrastNode = useUniformProp(() => contrastProp)
 
   useShaderStage(
     (prev) =>

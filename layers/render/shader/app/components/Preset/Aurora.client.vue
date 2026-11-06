@@ -41,18 +41,8 @@
   }
 
   // Watch props to update uniforms (no recompilation)
-  watch(
-    () => speed,
-    (v) => {
-      uniforms.speed.value = v
-    }
-  )
-  watch(
-    () => intensity,
-    (v) => {
-      uniforms.intensity.value = v
-    }
-  )
+  watchUniformProp(() => speed, uniforms.speed)
+  watchUniformProp(() => intensity, uniforms.intensity)
   watch(
     () => mouseInteraction,
     (v) => {

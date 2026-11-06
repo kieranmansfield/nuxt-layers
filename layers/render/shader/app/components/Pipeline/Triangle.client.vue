@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { float, mix, smoothstep, uniform, vec4 } from 'three/tsl'
+  import { float, mix, smoothstep, vec4 } from 'three/tsl'
 
   import { sdEquilateralTriangle } from '../../shaders/common/sdf'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
@@ -21,8 +21,8 @@
 
   const colorANode = hexToVec3Uniform(colorA)
   const colorBNode = hexToVec3Uniform(colorB)
-  const sizeNode = uniform(size)
-  const softnessNode = uniform(softness)
+  const sizeNode = useUniformProp(() => size)
+  const softnessNode = useUniformProp(() => softness)
   watch(
     () => colorA,
     (v) => {
@@ -35,18 +35,6 @@
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => size,
-    (v) => {
-      sizeNode.value = v
-    }
-  )
-  watch(
-    () => softness,
-    (v) => {
-      softnessNode.value = v
     }
   )
 

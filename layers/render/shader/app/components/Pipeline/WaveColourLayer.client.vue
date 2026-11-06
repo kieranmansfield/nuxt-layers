@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { mix, smoothstep, time, uniform, vec4 } from 'three/tsl'
+  import { mix, smoothstep, time, vec4 } from 'three/tsl'
 
   import { simplexNoise2D } from '../../shaders/common/noise'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
@@ -30,46 +30,16 @@
   }>()
 
   const colorNode = hexToVec3Uniform(color)
-  const opacityNode = uniform(opacity)
-  const scaleNode = uniform(scale)
-  const edge0Node = uniform(edge0)
-  const edge1Node = uniform(edge1)
-  const speedNode = uniform(speed)
+  const opacityNode = useUniformProp(() => opacity)
+  const scaleNode = useUniformProp(() => scale)
+  const edge0Node = useUniformProp(() => edge0)
+  const edge1Node = useUniformProp(() => edge1)
+  const speedNode = useUniformProp(() => speed)
   watch(
     () => color,
     (v) => {
       const c = new Color(v)
       colorNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => opacity,
-    (v) => {
-      opacityNode.value = v
-    }
-  )
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => edge0,
-    (v) => {
-      edge0Node.value = v
-    }
-  )
-  watch(
-    () => edge1,
-    (v) => {
-      edge1Node.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
     }
   )
 

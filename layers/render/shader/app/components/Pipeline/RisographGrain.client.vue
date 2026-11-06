@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { clamp, floor, mix, time, uniform, vec3, vec4 } from 'three/tsl'
+  import { clamp, floor, mix, time, vec3, vec4 } from 'three/tsl'
 
   import { blendOverlay, blendScreen, blendSoftLight } from '../../shaders/common/blend'
   import { grain } from '../../shaders/common/grain'
@@ -24,41 +24,11 @@
     order?: number
   }>()
 
-  const scaleNode = uniform(scale)
-  const strengthNode = uniform(strength)
-  const opacityNode = uniform(opacity)
-  const misregNode = uniform(misregistration)
-  const fpsNode = uniform(fps)
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => strength,
-    (v) => {
-      strengthNode.value = v
-    }
-  )
-  watch(
-    () => opacity,
-    (v) => {
-      opacityNode.value = v
-    }
-  )
-  watch(
-    () => misregistration,
-    (v) => {
-      misregNode.value = v
-    }
-  )
-  watch(
-    () => fps,
-    (v) => {
-      fpsNode.value = v
-    }
-  )
+  const scaleNode = useUniformProp(() => scale)
+  const strengthNode = useUniformProp(() => strength)
+  const opacityNode = useUniformProp(() => opacity)
+  const misregNode = useUniformProp(() => misregistration)
+  const fpsNode = useUniformProp(() => fps)
 
   const pipeline = useShaderPipelineContext()
 

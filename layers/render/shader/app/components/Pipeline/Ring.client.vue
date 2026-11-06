@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { float, mix, uniform, vec4 } from 'three/tsl'
+  import { float, mix, vec4 } from 'three/tsl'
 
   import { ring } from '../../shaders/common/shapes'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
@@ -23,9 +23,9 @@
 
   const colorANode = hexToVec3Uniform(colorA)
   const colorBNode = hexToVec3Uniform(colorB)
-  const innerNode = uniform(innerRadius)
-  const outerNode = uniform(outerRadius)
-  const softnessNode = uniform(softness)
+  const innerNode = useUniformProp(() => innerRadius)
+  const outerNode = useUniformProp(() => outerRadius)
+  const softnessNode = useUniformProp(() => softness)
   watch(
     () => colorA,
     (v) => {
@@ -38,24 +38,6 @@
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => innerRadius,
-    (v) => {
-      innerNode.value = v
-    }
-  )
-  watch(
-    () => outerRadius,
-    (v) => {
-      outerNode.value = v
-    }
-  )
-  watch(
-    () => softness,
-    (v) => {
-      softnessNode.value = v
     }
   )
 

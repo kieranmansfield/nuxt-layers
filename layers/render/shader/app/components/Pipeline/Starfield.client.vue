@@ -1,17 +1,5 @@
 <script setup lang="ts">
-  import {
-    dot,
-    float,
-    floor,
-    fract,
-    sin,
-    smoothstep,
-    time,
-    uniform,
-    vec2,
-    vec3,
-    vec4,
-  } from 'three/tsl'
+  import { dot, float, floor, fract, sin, smoothstep, time, vec2, vec3, vec4 } from 'three/tsl'
 
   import type { TSLNode } from '../../shaders/types'
 
@@ -37,34 +25,10 @@
     order?: number
   }>()
 
-  const densityNode = uniform(density)
-  const brightnessNode = uniform(brightness)
-  const twinkleNode = uniform(twinkleSpeed)
-  const sizeNode = uniform(size)
-  watch(
-    () => density,
-    (v) => {
-      densityNode.value = v
-    }
-  )
-  watch(
-    () => brightness,
-    (v) => {
-      brightnessNode.value = v
-    }
-  )
-  watch(
-    () => twinkleSpeed,
-    (v) => {
-      twinkleNode.value = v
-    }
-  )
-  watch(
-    () => size,
-    (v) => {
-      sizeNode.value = v
-    }
-  )
+  const densityNode = useUniformProp(() => density)
+  const brightnessNode = useUniformProp(() => brightness)
+  const twinkleNode = useUniformProp(() => twinkleSpeed)
+  const sizeNode = useUniformProp(() => size)
 
   const pipeline = useShaderPipelineContext()
 

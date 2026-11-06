@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { abs, float, uniform, vec4 } from 'three/tsl'
+  import { abs, float, vec4 } from 'three/tsl'
 
   import type { TSLNode } from '../../shaders/types'
 
@@ -36,34 +36,10 @@
     order?: number
   }>()
 
-  const ringRadiusNode = uniform(ringRadius)
-  const ringSpreadNode = uniform(ringSpread)
-  const ringScaleNode = uniform(ringScale)
-  const vignetteScaleNode = uniform(vignetteScale)
-  watch(
-    () => ringRadius,
-    (v) => {
-      ringRadiusNode.value = v
-    }
-  )
-  watch(
-    () => ringSpread,
-    (v) => {
-      ringSpreadNode.value = v
-    }
-  )
-  watch(
-    () => ringScale,
-    (v) => {
-      ringScaleNode.value = v
-    }
-  )
-  watch(
-    () => vignetteScale,
-    (v) => {
-      vignetteScaleNode.value = v
-    }
-  )
+  const ringRadiusNode = useUniformProp(() => ringRadius)
+  const ringSpreadNode = useUniformProp(() => ringSpread)
+  const ringScaleNode = useUniformProp(() => ringScale)
+  const vignetteScaleNode = useUniformProp(() => vignetteScale)
 
   const pipeline = useShaderPipelineContext()
 

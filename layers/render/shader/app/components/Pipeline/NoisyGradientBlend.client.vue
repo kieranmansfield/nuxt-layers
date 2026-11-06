@@ -51,14 +51,14 @@
 
   const colorANode = hexToVec3Uniform(colorA)
   const colorBNode = hexToVec3Uniform(colorB)
-  const noiseScaleNode = uniform(noiseScale)
+  const noiseScaleNode = useUniformProp(() => noiseScale)
   const rotAmountNode = uniform(rotationAmount * DEG2RAD)
-  const warpFreqNode = uniform(warpFrequency)
-  const warpAmpNode = uniform(warpAmplitude)
+  const warpFreqNode = useUniformProp(() => warpFrequency)
+  const warpAmpNode = useUniformProp(() => warpAmplitude)
   const blendAngleNode = uniform(blendAngle * DEG2RAD)
-  const edge0Node = uniform(edge0)
-  const edge1Node = uniform(edge1)
-  const speedNode = uniform(speed)
+  const edge0Node = useUniformProp(() => edge0)
+  const edge1Node = useUniformProp(() => edge1)
+  const speedNode = useUniformProp(() => speed)
 
   watch(
     () => colorA,
@@ -75,51 +75,15 @@
     }
   )
   watch(
-    () => noiseScale,
-    (v) => {
-      noiseScaleNode.value = v
-    }
-  )
-  watch(
     () => rotationAmount,
     (v) => {
       rotAmountNode.value = v * DEG2RAD
     }
   )
   watch(
-    () => warpFrequency,
-    (v) => {
-      warpFreqNode.value = v
-    }
-  )
-  watch(
-    () => warpAmplitude,
-    (v) => {
-      warpAmpNode.value = v
-    }
-  )
-  watch(
     () => blendAngle,
     (v) => {
       blendAngleNode.value = v * DEG2RAD
-    }
-  )
-  watch(
-    () => edge0,
-    (v) => {
-      edge0Node.value = v
-    }
-  )
-  watch(
-    () => edge1,
-    (v) => {
-      edge1Node.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
     }
   )
 

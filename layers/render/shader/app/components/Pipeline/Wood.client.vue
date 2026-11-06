@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { float, mix, sin, time, uniform, vec4 } from 'three/tsl'
+  import { float, mix, sin, time, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
@@ -29,10 +29,10 @@
 
   const colorANode = hexToVec3Uniform(colorA)
   const colorBNode = hexToVec3Uniform(colorB)
-  const ringFreqNode = uniform(ringFrequency)
-  const noiseScaleNode = uniform(noiseScale)
-  const noiseStrNode = uniform(noiseStrength)
-  const speedNode = uniform(speed)
+  const ringFreqNode = useUniformProp(() => ringFrequency)
+  const noiseScaleNode = useUniformProp(() => noiseScale)
+  const noiseStrNode = useUniformProp(() => noiseStrength)
+  const speedNode = useUniformProp(() => speed)
   watch(
     () => colorA,
     (v) => {
@@ -45,30 +45,6 @@
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => ringFrequency,
-    (v) => {
-      ringFreqNode.value = v
-    }
-  )
-  watch(
-    () => noiseScale,
-    (v) => {
-      noiseScaleNode.value = v
-    }
-  )
-  watch(
-    () => noiseStrength,
-    (v) => {
-      noiseStrNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
     }
   )
 

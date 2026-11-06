@@ -25,8 +25,8 @@
 
   const colorANode = hexToVec3Uniform(colorA)
   const colorBNode = hexToVec3Uniform(colorB)
-  const freqNode = uniform(frequency)
-  const thickNode = uniform(thickness)
+  const freqNode = useUniformProp(() => frequency)
+  const thickNode = useUniformProp(() => thickness)
   const angleNode = uniform((angle * Math.PI) / 180)
   watch(
     () => colorA,
@@ -40,18 +40,6 @@
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => frequency,
-    (v) => {
-      freqNode.value = v
-    }
-  )
-  watch(
-    () => thickness,
-    (v) => {
-      thickNode.value = v
     }
   )
   watch(

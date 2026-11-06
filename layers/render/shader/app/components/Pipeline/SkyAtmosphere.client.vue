@@ -32,7 +32,7 @@
   const horizonNode = hexToVec3Uniform(horizon)
   const groundNode = hexToVec3Uniform(ground)
   const sunColorNode = hexToVec3Uniform(sunColor)
-  const sunPowerNode = uniform(sunPower)
+  const sunPowerNode = useUniformProp(() => sunPower)
 
   const sunDir = new Vector3(...sunDirection).normalize()
   const sunDirNode = uniform(new Vector3(sunDir.x, sunDir.y, sunDir.z))
@@ -63,12 +63,6 @@
     (v) => {
       const c = new Color(v)
       sunColorNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => sunPower,
-    (v) => {
-      sunPowerNode.value = v
     }
   )
   watch(

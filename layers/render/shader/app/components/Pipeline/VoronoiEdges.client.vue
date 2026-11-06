@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { float, mix, smoothstep, time, uniform, vec4 } from 'three/tsl'
+  import { float, mix, smoothstep, time, vec4 } from 'three/tsl'
 
   import { voronoi2D } from '../../shaders/common/noise'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
@@ -27,9 +27,9 @@
 
   const colorANode = hexToVec3Uniform(colorA)
   const colorBNode = hexToVec3Uniform(colorB)
-  const scaleNode = uniform(scale)
-  const edgeNode = uniform(edgeWidth)
-  const speedNode = uniform(speed)
+  const scaleNode = useUniformProp(() => scale)
+  const edgeNode = useUniformProp(() => edgeWidth)
+  const speedNode = useUniformProp(() => speed)
   watch(
     () => colorA,
     (v) => {
@@ -42,24 +42,6 @@
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => edgeWidth,
-    (v) => {
-      edgeNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
     }
   )
 

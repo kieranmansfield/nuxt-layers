@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { float, uniform, vec4 } from 'three/tsl'
+  import { float, vec4 } from 'three/tsl'
 
   const {
     scale = 1.5,
@@ -13,20 +13,8 @@
     order?: number
   }>()
 
-  const scaleNode = uniform(scale)
-  const softnessNode = uniform(softness)
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => softness,
-    (v) => {
-      softnessNode.value = v
-    }
-  )
+  const scaleNode = useUniformProp(() => scale)
+  const softnessNode = useUniformProp(() => softness)
 
   const pipeline = useShaderPipelineContext()
 

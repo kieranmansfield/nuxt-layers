@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { cos, sin, uniform, vec3 } from 'three/tsl'
+  import { cos, sin, vec3 } from 'three/tsl'
 
   const {
     yaw = 0,
@@ -16,27 +16,9 @@
     order?: number
   }>()
 
-  const yawNode = uniform(yaw)
-  const pitchNode = uniform(pitch)
-  const rollNode = uniform(roll)
-  watch(
-    () => yaw,
-    (v) => {
-      yawNode.value = v
-    }
-  )
-  watch(
-    () => pitch,
-    (v) => {
-      pitchNode.value = v
-    }
-  )
-  watch(
-    () => roll,
-    (v) => {
-      rollNode.value = v
-    }
-  )
+  const yawNode = useUniformProp(() => yaw)
+  const pitchNode = useUniformProp(() => pitch)
+  const rollNode = useUniformProp(() => roll)
 
   useShaderStage(
     (ray) => {

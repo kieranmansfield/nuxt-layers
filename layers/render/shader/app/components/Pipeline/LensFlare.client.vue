@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { Color, Vector2 } from 'three'
-  import { float, smoothstep, uniform, vec2, vec4 } from 'three/tsl'
+  import { float, smoothstep, step, uniform, vec2, vec4 } from 'three/tsl'
 
+  import type { TSLNode } from '../../shaders/types'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
@@ -20,15 +21,29 @@
     color?: string
     /** Overall brightness */
     intensity?: number
-    /** How many ghost circles along the axis */
+    /** How many ghost circles along the axis (0-8) */
     ghostCount?: number
     order?: number
   }>()
 
+  // The first `ghostCount` of these are shown. `at` is the distance along the flare axis, where 1 is
+  // screen centre. ponytail: fixed table so the count can change without a shader recompile; a
+  // TSL Loop would allow any count if 8 ever falls short.
+  const GHOSTS = [
+    { at: 0.4, radius: 0.05, weight: 0.4 },
+    { at: 0.7, radius: 0.03, weight: 0.3 },
+    { at: 1.1, radius: 0.04, weight: 0.2 },
+    { at: 1.5, radius: 0.06, weight: 0.15 },
+    { at: 0.25, radius: 0.02, weight: 0.25 },
+    { at: 0.9, radius: 0.025, weight: 0.2 },
+    { at: 1.3, radius: 0.035, weight: 0.12 },
+    { at: 1.8, radius: 0.05, weight: 0.1 },
+  ]
+
   const posNode = uniform(new Vector2(...position))
   const colorNode = hexToVec3Uniform(color)
-  const intensityNode = uniform(intensity)
-  const ghostCountNode = uniform(ghostCount)
+  const intensityNode = useUniformProp(() => intensity)
+  const ghostCountNode = useUniformProp(() => ghostCount)
   watch(
     () => position,
     ([x, y]) => {
@@ -42,18 +57,6 @@
       colorNode.value.set(c.r, c.g, c.b)
     }
   )
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
-    }
-  )
-  watch(
-    () => ghostCount,
-    (v) => {
-      ghostCountNode.value = v
-    }
-  )
 
   const pipeline = useShaderPipelineContext()
 
@@ -65,19 +68,13 @@
     const distToSrc = uv.sub(src).length()
     const burst = smoothstep(float(0.08), float(0), distToSrc).mul(intensityNode)
 
-    // Ghost circles: evenly spaced along the axis toward screen centre
+    // Ghost circles along the axis toward and past screen centre
     const axis = vec2(0.5, 0.5).sub(src)
-    const ghost1 = uv.sub(src.add(axis.mul(0.4))).length()
-    const ghost2 = uv.sub(src.add(axis.mul(0.7))).length()
-    const ghost3 = uv.sub(src.add(axis.mul(1.1))).length()
-    const ghost4 = uv.sub(src.add(axis.mul(1.5))).length()
-
-    const g1 = smoothstep(float(0.05), float(0), ghost1).mul(0.4)
-    const g2 = smoothstep(float(0.03), float(0), ghost2).mul(0.3)
-    const g3 = smoothstep(float(0.04), float(0), ghost3).mul(0.2)
-    const g4 = smoothstep(float(0.06), float(0), ghost4).mul(0.15)
-
-    const ghosts = g1.add(g2).add(g3).add(g4).mul(intensityNode)
+    const ghosts = GHOSTS.reduce<TSLNode>((sum, { at, radius, weight }, index) => {
+      const dist = uv.sub(src.add(axis.mul(at))).length()
+      const shown = step(float(index + 0.5), ghostCountNode)
+      return sum.add(smoothstep(float(radius), float(0), dist).mul(weight).mul(shown))
+    }, float(0)).mul(intensityNode)
     const flare = colorNode.mul(burst.add(ghosts))
 
     return vec4(prev.xyz.add(flare), prev.w)

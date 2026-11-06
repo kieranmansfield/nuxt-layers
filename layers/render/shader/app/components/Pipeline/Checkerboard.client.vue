@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { mix, uniform, vec4 } from 'three/tsl'
+  import { mix, vec4 } from 'three/tsl'
 
   import { checker } from '../../shaders/common/shapes'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
@@ -22,7 +22,7 @@
 
   const colorANode = hexToVec3Uniform(colorA)
   const colorBNode = hexToVec3Uniform(colorB)
-  const scaleNode = uniform(scale)
+  const scaleNode = useUniformProp(() => scale)
   watch(
     () => colorA,
     (v) => {
@@ -35,12 +35,6 @@
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
     }
   )
 

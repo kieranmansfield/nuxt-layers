@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { floor, time, uniform, vec4 } from 'three/tsl'
+  import { floor, time, vec4 } from 'three/tsl'
 
   import { paperTexture } from '../../shaders/common/grain'
 
@@ -22,27 +22,9 @@
     order?: number
   }>()
 
-  const scaleNode = uniform(scale)
-  const intensityNode = uniform(intensity)
-  const speedNode = uniform(speed)
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const scaleNode = useUniformProp(() => scale)
+  const intensityNode = useUniformProp(() => intensity)
+  const speedNode = useUniformProp(() => speed)
 
   const pipeline = useShaderPipelineContext()
 

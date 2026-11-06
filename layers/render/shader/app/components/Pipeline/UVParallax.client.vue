@@ -14,13 +14,7 @@
   }>()
 
   const mouse = uniform(new Vector2(0, 0))
-  const parallaxNode = uniform(parallax)
-  watch(
-    () => parallax,
-    (v) => {
-      parallaxNode.value = v
-    }
-  )
+  const parallaxNode = useUniformProp(() => parallax)
 
   onMounted(() => {
     const onMove = (e: MouseEvent) => {

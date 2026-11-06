@@ -32,8 +32,8 @@
   // Create reactive uniforms
   const baseColorUniform: TSLNode = uniform(new Color(baseColor))
   const fresnelColorUniform: TSLNode = uniform(new Color(fresnelColor))
-  const powerUniform = uniform(power)
-  const intensityUniform = uniform(intensity)
+  const powerUniform = useUniformProp(() => power)
+  const intensityUniform = useUniformProp(() => intensity)
 
   // Watch prop changes
   watch(
@@ -46,18 +46,6 @@
     () => fresnelColor,
     (val) => {
       fresnelColorUniform.value = new Color(val)
-    }
-  )
-  watch(
-    () => power,
-    (val) => {
-      powerUniform.value = val
-    }
-  )
-  watch(
-    () => intensity,
-    (val) => {
-      intensityUniform.value = val
     }
   )
 

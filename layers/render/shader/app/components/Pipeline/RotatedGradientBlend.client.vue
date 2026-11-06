@@ -33,8 +33,8 @@
   const colorANode = uniform(colorAVal)
   const colorBNode = uniform(colorBVal)
   const angleNode = uniform(angle * (Math.PI / 180))
-  const edge0Node = uniform(edge0)
-  const edge1Node = uniform(edge1)
+  const edge0Node = useUniformProp(() => edge0)
+  const edge1Node = useUniformProp(() => edge1)
 
   watch(
     () => colorA,
@@ -52,18 +52,6 @@
     () => angle,
     (v) => {
       angleNode.value = v * (Math.PI / 180)
-    }
-  )
-  watch(
-    () => edge0,
-    (v) => {
-      edge0Node.value = v
-    }
-  )
-  watch(
-    () => edge1,
-    (v) => {
-      edge1Node.value = v
     }
   )
 

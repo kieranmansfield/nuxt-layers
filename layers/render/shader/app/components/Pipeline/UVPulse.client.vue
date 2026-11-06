@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { float, sin, time, uniform, vec2 } from 'three/tsl'
+  import { float, sin, time, vec2 } from 'three/tsl'
 
   /**
    * Oscillating UV scale over time — the UV breathes in and out.
@@ -17,20 +17,8 @@
     order?: number
   }>()
 
-  const amountNode = uniform(amount)
-  const speedNode = uniform(speed)
-  watch(
-    () => amount,
-    (v) => {
-      amountNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const amountNode = useUniformProp(() => amount)
+  const speedNode = useUniformProp(() => speed)
 
   useShaderStage(
     (uvIn) => {

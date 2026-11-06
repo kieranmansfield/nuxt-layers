@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { clamp, float, uniform, vec4 } from 'three/tsl'
+  import { clamp, float, vec4 } from 'three/tsl'
 
   /**
    * Multiplies RGB by prev.r (treating the previous stage as a grayscale scalar mask).
@@ -20,13 +20,7 @@
     order?: number
   }>()
 
-  const powerNode = uniform(power)
-  watch(
-    () => power,
-    (v) => {
-      powerNode.value = v
-    }
-  )
+  const powerNode = useUniformProp(() => power)
 
   useShaderStage((prev) => {
     let mask = prev.x.pow(powerNode)

@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Color } from 'three'
-  import { float, mix, time, uniform, vec4 } from 'three/tsl'
+  import { float, mix, time, vec4 } from 'three/tsl'
 
   import { turbulence2D } from '../../shaders/common/noise'
   import { hexToVec3Uniform } from '../../utils/tsl/color'
@@ -22,8 +22,8 @@
 
   const colorANode = hexToVec3Uniform(colorA)
   const colorBNode = hexToVec3Uniform(colorB)
-  const scaleNode = uniform(scale)
-  const speedNode = uniform(speed)
+  const scaleNode = useUniformProp(() => scale)
+  const speedNode = useUniformProp(() => speed)
   watch(
     () => colorA,
     (v) => {
@@ -36,18 +36,6 @@
     (v) => {
       const c = new Color(v)
       colorBNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
     }
   )
 

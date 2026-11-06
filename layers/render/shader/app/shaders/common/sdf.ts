@@ -76,6 +76,24 @@ export function sdBox2d(uv: TSLNode, size: TSLNode | number = 0): TSLNode {
 }
 
 /**
+ * Exact SDF of an axis-aligned box with optional rounded corners
+ * @param p - Position relative to the box centre
+ * @param halfSize - Half-width and half-height (vec2)
+ * @param radius - Corner radius, limited to what the shorter side can hold
+ */
+export function sdRoundedBox2d(
+  p: TSLNode,
+  halfSize: TSLNode,
+  radius: TSLNode | number = 0
+): TSLNode {
+  const r = min(typeof radius === 'number' ? float(radius) : radius, min(halfSize.x, halfSize.y))
+  const q: TSLNode = abs(p).sub(halfSize).add(r)
+  return length(max(q, 0))
+    .add(min(max(q.x, q.y), 0))
+    .sub(r)
+}
+
+/**
  * Diamond SDF (rotated square)
  * @param uv - UV coordinates (centered)
  * @param r - Radius

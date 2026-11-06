@@ -28,8 +28,8 @@
 
   const colorNode = hexToVec3Uniform(color)
   const originNode = uniform(new Vector2(...origin))
-  const radiusNode = uniform(radius)
-  const intensityNode = uniform(intensity)
+  const radiusNode = useUniformProp(() => radius)
+  const intensityNode = useUniformProp(() => intensity)
   watch(
     () => color,
     (v) => {
@@ -41,18 +41,6 @@
     () => origin,
     ([x, y]) => {
       originNode.value.set(x, y)
-    }
-  )
-  watch(
-    () => radius,
-    (v) => {
-      radiusNode.value = v
-    }
-  )
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
     }
   )
 

@@ -42,7 +42,7 @@
   const bNode = uniform(new Vector3(...b))
   const cNode = uniform(new Vector3(...c))
   const dNode = uniform(new Vector3(...d))
-  const timeScaleNode = uniform(timeScale)
+  const timeScaleNode = useUniformProp(() => timeScale)
 
   watch(
     () => a,
@@ -66,12 +66,6 @@
     () => d,
     (v) => {
       dNode.value.set(...v)
-    }
-  )
-  watch(
-    () => timeScale,
-    (v) => {
-      timeScaleNode.value = v
     }
   )
 

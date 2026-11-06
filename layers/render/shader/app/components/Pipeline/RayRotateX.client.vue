@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { cos, sin, uniform, vec3 } from 'three/tsl'
+  import { cos, sin, vec3 } from 'three/tsl'
 
   const { angle = 0, order = 0 } = defineProps<{
     /** Rotation angle in radians */
@@ -7,13 +7,7 @@
     order?: number
   }>()
 
-  const angleNode = uniform(angle)
-  watch(
-    () => angle,
-    (v) => {
-      angleNode.value = v
-    }
-  )
+  const angleNode = useUniformProp(() => angle)
 
   useShaderStage(
     (ray) => {

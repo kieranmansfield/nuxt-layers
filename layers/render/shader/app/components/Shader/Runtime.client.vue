@@ -19,19 +19,9 @@
     (val) => runtime.time.setSpeed(val)
   )
 
-  watch(
-    () => accentColor,
-    (val) => {
-      runtime.accentColor.value = val
-    }
-  )
+  watchUniformProp(() => accentColor, runtime.accentColor)
 
-  watch(
-    () => darkMode,
-    (val) => {
-      runtime.darkMode.value = val
-    }
-  )
+  watchUniformProp(() => darkMode, runtime.darkMode)
 </script>
 
 <template>

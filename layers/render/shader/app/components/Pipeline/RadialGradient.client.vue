@@ -18,7 +18,7 @@
   const colorEdgeVal = new Color(colorEdge)
   const colorCenterNode = uniform(colorCenterVal)
   const colorEdgeNode = uniform(colorEdgeVal)
-  const radiusNode = uniform(radius)
+  const radiusNode = useUniformProp(() => radius)
 
   watch(
     () => colorCenter,
@@ -30,12 +30,6 @@
     () => colorEdge,
     (v) => {
       colorEdgeNode.value.set(v)
-    }
-  )
-  watch(
-    () => radius,
-    (v) => {
-      radiusNode.value = v
     }
   )
 

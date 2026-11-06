@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { float, sin, smoothstep, time, uniform, vec2 } from 'three/tsl'
+  import { float, sin, smoothstep, time, vec2 } from 'three/tsl'
 
   /**
    * Gentle eased scale oscillation — softer than UVPulse.
@@ -18,20 +18,8 @@
     order?: number
   }>()
 
-  const amountNode = uniform(amount)
-  const speedNode = uniform(speed)
-  watch(
-    () => amount,
-    (v) => {
-      amountNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const amountNode = useUniformProp(() => amount)
+  const speedNode = useUniformProp(() => speed)
 
   useShaderStage(
     (uvIn) => {

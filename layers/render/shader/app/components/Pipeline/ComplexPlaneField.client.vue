@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { cos, float, sin, time, uniform, vec2, vec4 } from 'three/tsl'
+  import { cos, float, sin, time, vec2, vec4 } from 'three/tsl'
 
   import { complexDiv, complexLog } from '../../shaders/common/complex'
 
@@ -31,41 +31,11 @@
     order?: number
   }>()
 
-  const poleAngleNode = uniform(poleAngle)
-  const poleDistNode = uniform(poleDistance)
-  const imagWeightNode = uniform(imaginaryWeight)
-  const radWeightNode = uniform(radialWeight)
-  const speedNode = uniform(speed)
-  watch(
-    () => poleAngle,
-    (v) => {
-      poleAngleNode.value = v
-    }
-  )
-  watch(
-    () => poleDistance,
-    (v) => {
-      poleDistNode.value = v
-    }
-  )
-  watch(
-    () => imaginaryWeight,
-    (v) => {
-      imagWeightNode.value = v
-    }
-  )
-  watch(
-    () => radialWeight,
-    (v) => {
-      radWeightNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const poleAngleNode = useUniformProp(() => poleAngle)
+  const poleDistNode = useUniformProp(() => poleDistance)
+  const imagWeightNode = useUniformProp(() => imaginaryWeight)
+  const radWeightNode = useUniformProp(() => radialWeight)
+  const speedNode = useUniformProp(() => speed)
 
   const pipeline = useShaderPipelineContext()
 

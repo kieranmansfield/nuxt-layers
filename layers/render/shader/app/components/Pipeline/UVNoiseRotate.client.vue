@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { time, uniform, vec2 } from 'three/tsl'
+  import { time, vec2 } from 'three/tsl'
 
   import { simplexNoise2D } from '../../shaders/common/noise'
 
@@ -18,28 +18,9 @@
     order?: number
   }>()
 
-  const rotAmountNode = uniform(rotationAmount)
-  const speedNode = uniform(speed)
-  const noiseScaleNode = uniform(noiseScale)
-
-  watch(
-    () => rotationAmount,
-    (v) => {
-      rotAmountNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
-  watch(
-    () => noiseScale,
-    (v) => {
-      noiseScaleNode.value = v
-    }
-  )
+  const rotAmountNode = useUniformProp(() => rotationAmount)
+  const speedNode = useUniformProp(() => speed)
+  const noiseScaleNode = useUniformProp(() => noiseScale)
 
   const DEG_TO_RAD = Math.PI / 180
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { float, time, uniform, vec4 } from 'three/tsl'
+  import { float, time, vec4 } from 'three/tsl'
 
   import { simplexNoise2D } from '../../shaders/common/noise'
 
@@ -30,41 +30,11 @@
     order?: number
   }>()
 
-  const scaleXNode = uniform(scaleX)
-  const scaleYNode = uniform(scaleY)
-  const freq1Node = uniform(noiseFreq1)
-  const freq2Node = uniform(noiseFreq2)
-  const speedNode = uniform(speed)
-  watch(
-    () => scaleX,
-    (v) => {
-      scaleXNode.value = v
-    }
-  )
-  watch(
-    () => scaleY,
-    (v) => {
-      scaleYNode.value = v
-    }
-  )
-  watch(
-    () => noiseFreq1,
-    (v) => {
-      freq1Node.value = v
-    }
-  )
-  watch(
-    () => noiseFreq2,
-    (v) => {
-      freq2Node.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const scaleXNode = useUniformProp(() => scaleX)
+  const scaleYNode = useUniformProp(() => scaleY)
+  const freq1Node = useUniformProp(() => noiseFreq1)
+  const freq2Node = useUniformProp(() => noiseFreq2)
+  const speedNode = useUniformProp(() => speed)
 
   const pipeline = useShaderPipelineContext()
 
