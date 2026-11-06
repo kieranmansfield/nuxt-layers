@@ -17,6 +17,8 @@
     })
   )
 
+  const hasSiteInfo = computed(() => !!(catalog.value.site.url || catalog.value.site.description))
+
   const stats = computed(() => [
     {
       label: 'Default',
@@ -84,7 +86,7 @@
           </div>
 
           <div
-            v-if="catalog.site.url || catalog.site.description"
+            v-if="hasSiteInfo"
             class="border-default bg-default/70 flex flex-wrap items-center gap-3 rounded-2xl border px-4 py-3 text-sm shadow-sm backdrop-blur"
           >
             <span class="text-muted text-xs font-semibold tracking-[0.3em] uppercase"> Site </span>
