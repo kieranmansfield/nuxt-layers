@@ -38,3 +38,11 @@ export function useScrollSteps(total: number) {
 
   return { currentStep, isActive, stepProgress }
 }
+
+/** Whether step `index` of `total` owns this scroll progress. The last step stays active at 1. */
+export function isStepActive(progress: number, index: number, total: number) {
+  if (total === 0) return false
+  const stepSize = 1 / total
+  const started = progress >= index * stepSize
+  return started && (index === total - 1 || progress < (index + 1) * stepSize)
+}

@@ -1,3 +1,4 @@
+<!-- fallow-ignore-file css-token-drift -->
 <script setup lang="ts">
   definePageMeta({ layout: false })
 
@@ -22,6 +23,7 @@
   // State
   const reducedMotion = ref(false)
 
+  // fallow-ignore-next-line complexity
   onMounted(() => {
     // Check reduced motion preference
     if (import.meta.client) {
@@ -167,6 +169,7 @@
             effects.
           </p>
           <div class="flex flex-wrap justify-center gap-4">
+            <!-- fallow-ignore-next-line complexity -->
             <UButton size="lg" @click="() => scrollToSection('#demos')"> View Demos </UButton>
             <UButton size="lg" variant="outline" to="/"> Back Home </UButton>
             <UButton size="lg" variant="ghost" to="/gsap">

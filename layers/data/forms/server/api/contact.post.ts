@@ -1,3 +1,4 @@
+import type { H3Event } from 'h3'
 import { createError, defineEventHandler, getRequestHeader, getRequestIP, readBody } from 'h3'
 import { useStorage } from 'nitropack/runtime'
 import { sendContactEmail } from '#layers/mailer/server/utils/email'
@@ -6,13 +7,18 @@ import { mailerLayerHooks } from '#layers/mailer/server/utils/hooks'
 import { contactSchema } from '../../shared/utils/contact-schema'
 import { checkRateLimit, type RateLimitStorage } from '../utils/rate-limit'
 
-export default defineEventHandler(async (event) => {
-  // Netlify's client IP header can't be set by the client; X-Forwarded-For's first entry can
-  const ip =
+// Netlify's client IP header can't be set by the client; X-Forwarded-For's first entry can
+function clientIp(event: H3Event) {
+  return (
     getRequestHeader(event, 'x-nf-client-connection-ip') ??
     getRequestIP(event, { xForwardedFor: true }) ??
     'unknown'
-  if (!(await checkRateLimit(useStorage('rate-limit') as RateLimitStorage, ip))) {
+  )
+}
+
+export default defineEventHandler(async (event) => {
+  const storage = useStorage('rate-limit') as RateLimitStorage
+  if (!(await checkRateLimit(storage, clientIp(event)))) {
     throw createError({
       status: 429,
       statusText: 'Too many requests. Please try again later.',

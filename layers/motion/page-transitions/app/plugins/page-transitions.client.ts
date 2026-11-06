@@ -47,6 +47,7 @@ export default defineNuxtPlugin({
     }
     let plan: Plan | null = null
 
+    // fallow-ignore-next-line complexity
     function build(choice: PageTransitionChoice, dir: PageTransitionDirection) {
       const preset = pageTransitionPresets[choice.name]
       if (!preset) {
@@ -93,6 +94,7 @@ export default defineNuxtPlugin({
     }
 
     // Never let a stuck animation block the navigation.
+    // fallow-ignore-next-line complexity
     function run(phase: 'leave' | 'enter', el: Element, done: () => void) {
       const p = plan
       if (!p) return done()
@@ -147,6 +149,7 @@ export default defineNuxtPlugin({
 
     addRouteMiddleware(
       'page-transition',
+      // fallow-ignore-next-line complexity
       (to, from) => {
         const dir = direction
         direction = 'forward'

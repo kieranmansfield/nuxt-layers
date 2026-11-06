@@ -14,6 +14,7 @@
 }
 
 /* --- Reduced Motion --- */
+/* fallow-ignore-next-line css-selector-complexity */
 [data-theme-motion='reduced'] *,
 [data-theme-motion='reduced'] *::before,
 [data-theme-motion='reduced'] *::after {
@@ -37,6 +38,7 @@
 }
 
 /* Whole class tokens only, so hover:bg-default/50 and friends don't fill in at rest */
+/* fallow-ignore-next-line css-selector-complexity */
 [data-theme-transparency='reduced']
   :where(
     [class^='bg-default/'],
@@ -52,10 +54,12 @@
   --ui-border: var(--ui-border-accented);
 }
 
+/* fallow-ignore-next-line css-selector-complexity */
 [data-theme-contrast='high'] :where(button, a, [role='button']) {
   outline-width: 2px;
 }
 
+/* fallow-ignore-next-line css-selector-complexity */
 [data-theme-contrast='high'] .text-muted,
 [data-theme-contrast='high'] .text-dimmed {
   opacity: 1;

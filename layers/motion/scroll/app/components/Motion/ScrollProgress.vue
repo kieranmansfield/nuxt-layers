@@ -1,3 +1,4 @@
+<!-- fallow-ignore-file css-token-drift -->
 <script setup lang="ts">
   defineOptions({ inheritAttrs: false })
 

@@ -131,9 +131,7 @@ export default {}
     name: 'three-webgpu-ssr-stub',
     enforce: 'pre',
     transform(_code, id, options) {
-      if (!options?.ssr) return null
-      if (!id.includes('three.webgpu.js') && !id.includes('three.tsl.js')) return null
-      return { code: stub, map: null }
+      return options?.ssr && /three\.(webgpu|tsl)\.js/.test(id) ? { code: stub, map: null } : null
     },
   }
 }

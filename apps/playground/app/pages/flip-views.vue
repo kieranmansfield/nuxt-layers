@@ -16,9 +16,9 @@
   ]
 
   const columns = [
-    { key: 'name', label: 'Project', class: 'flex-[2_1_200px]' },
-    { key: 'type', label: 'Category', class: 'text-muted flex-[1_1_120px]' },
-    { key: 'year', label: 'Year', class: 'flex-[0_0_56px]' },
+    { key: 'name', label: 'Project', class: 'grow-2 basis-50' },
+    { key: 'type', label: 'Category', class: 'text-muted grow basis-30' },
+    { key: 'year', label: 'Year', class: 'shrink-0 basis-14' },
   ]
 
   const views = [

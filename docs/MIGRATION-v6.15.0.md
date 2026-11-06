@@ -117,6 +117,9 @@ dev warning. The fallbacks will be deleted in the next major.
   change.
 - **`useUniformProp(() => prop)`** creates a shader uniform that follows a numeric prop.
   `watchUniformProp` stays for uniforms that need a transform.
+- **`useColorProp(() => hex)`** and **`useVector2Prop(() => [x, y])`** do the same for colours and
+  positions. **`useColorMixStage(colorA, colorB, factor, order)`** is the stage for generators that
+  mix two colours, and **`useAmbientControls`** wires an ambient preset's props and mouse.
 - **`useScrollScene(caller)`** returns the enclosing `MotionScrollScene`'s context.
   `useScrollSteps` and `MotionScrollStep` now warn in dev outside a scene, and `SCROLL_SCENE_KEY` is
   a typed `InjectionKey`.

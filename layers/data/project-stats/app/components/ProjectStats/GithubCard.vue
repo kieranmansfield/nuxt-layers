@@ -47,22 +47,7 @@
 <template>
   <UCard variant="outline" :ui="{ body: 'space-y-4' }">
     <template v-if="stats">
-      <div class="flex items-start justify-between gap-3">
-        <div class="min-w-0">
-          <ULink
-            :to="to ?? stats.url"
-            :target="to ? null : '_blank'"
-            class="text-highlighted flex items-center gap-2 font-semibold hover:underline"
-          >
-            <UIcon name="i-lucide-github" class="size-5 shrink-0" />
-            <span class="truncate">{{ stats.fullName }}</span>
-          </ULink>
-          <p v-if="stats.description" class="text-muted mt-1 text-sm">
-            {{ stats.description }}
-          </p>
-        </div>
-        <UBadge v-if="stats.archived" color="warning" variant="subtle" size="sm">Archived</UBadge>
-      </div>
+      <ProjectStatsGithubHeader :stats :to />
 
       <dl class="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <ProjectStatsStat v-for="stat in figures" :key="stat.label" v-bind="stat" />
@@ -83,39 +68,10 @@
         </UBadge>
       </div>
 
-      <div
-        v-if="variant !== 'compact'"
-        class="text-muted flex flex-wrap items-center gap-x-4 gap-y-1 text-xs"
-      >
-        <span v-if="stats.language" class="flex items-center gap-1">
-          <UIcon name="i-lucide-code" class="size-3.5" />{{ stats.language }}
-        </span>
-        <span v-if="stats.license" class="flex items-center gap-1">
-          <UIcon name="i-lucide-scale" class="size-3.5" />{{ stats.license }}
-        </span>
-        <ULink
-          v-if="stats.latestRelease"
-          :to="stats.latestRelease.url"
-          target="_blank"
-          class="flex items-center gap-1 hover:underline"
-        >
-          <UIcon name="i-lucide-tag" class="size-3.5" />{{ stats.latestRelease.tag }}
-        </ULink>
-        <span v-if="stats.pushedAt" class="flex items-center gap-1">
-          <UIcon name="i-lucide-clock" class="size-3.5" />
-          Updated
-          <NuxtTime :datetime="stats.pushedAt" month="short" day="numeric" year="numeric" />
-        </span>
-      </div>
+      <ProjectStatsGithubDetails v-if="variant !== 'compact'" :stats />
     </template>
 
-    <div v-else-if="status === 'pending' || status === 'idle'" class="space-y-4">
-      <USkeleton class="h-5 w-48" />
-      <USkeleton class="h-4 w-full" />
-      <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <USkeleton v-for="n in 4" :key="n" class="h-12" />
-      </div>
-    </div>
+    <ProjectStatsCardSkeleton v-else-if="status === 'pending' || status === 'idle'" :count="4" />
 
     <ULink
       v-else

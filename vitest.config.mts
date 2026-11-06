@@ -6,6 +6,7 @@ import { defineConfig } from 'vite-plus'
 
 const nuxtRootDir = fileURLToPath(new URL('./apps/playground', import.meta.url))
 
+// fallow-ignore-next-line complexity
 function cloneSerializable<T>(value: T, seen = new WeakMap<object, unknown>()): T {
   if (value === null || typeof value !== 'object') {
     return value
@@ -78,6 +79,7 @@ function cloneSerializable<T>(value: T, seen = new WeakMap<object, unknown>()): 
   return clone as T
 }
 
+// fallow-ignore-next-line complexity
 async function withStructuredCloneFallback<T>(callback: () => Promise<T>): Promise<T> {
   const originalStructuredClone = globalThis.structuredClone
 

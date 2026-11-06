@@ -40,16 +40,19 @@
   // Items may come from any collection — normalize the portfolio-style
   // metadata so the template works on a single shape
   const cards = computed(() =>
-    (items.value ?? []).map((item) => ({
-      id: item.id,
-      title: item.title,
-      description: item.description,
-      path: item.path,
-      image: 'image' in item ? item.image : undefined,
-      client: 'client' in item ? item.client : undefined,
-      year: 'year' in item ? item.year : undefined,
-      tags: 'tags' in item ? (item.tags ?? []) : [],
-    }))
+    (items.value ?? []).map((item) => {
+      const { image, client, year, tags } = item as Partial<Collections['portfolio']>
+      return {
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        path: item.path,
+        image,
+        client,
+        year,
+        tags: tags ?? [],
+      }
+    })
   )
 </script>
 

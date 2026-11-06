@@ -65,9 +65,9 @@
               Feed catalog for {{ catalog.site.title }}
             </h1>
             <p class="feeds-body text-toned max-w-2xl leading-7">
-              Configured in <code class="font-mono text-[0.9em]">app.config.ts</code>, validated
-              against <code class="font-mono text-[0.9em]">content.config.ts</code>, and rendered as
-              a human-readable index for readers and site owners.
+              Configured in <code class="feeds-code font-mono">app.config.ts</code>, validated
+              against <code class="feeds-code font-mono">content.config.ts</code>, and rendered as a
+              human-readable index for readers and site owners.
             </p>
           </div>
 
@@ -138,7 +138,7 @@
             </h2>
           </div>
           <p class="text-muted max-w-lg text-sm">
-            Add or remove collections in <code class="font-mono text-[0.9em]">app.config.ts</code>
+            Add or remove collections in <code class="feeds-code font-mono">app.config.ts</code>
             and the catalog updates automatically.
           </p>
         </div>
@@ -186,8 +186,8 @@
             </p>
             <p class="text-muted text-sm">
               Add page collections to
-              <code class="font-mono text-[0.9em]">feedsLayer.feed.collections</code>
-              in <code class="font-mono text-[0.9em]">app.config.ts</code>.
+              <code class="feeds-code font-mono">feedsLayer.feed.collections</code>
+              in <code class="feeds-code font-mono">app.config.ts</code>.
             </p>
           </div>
         </UCard>
@@ -197,6 +197,10 @@
 </template>
 
 <style scoped>
+  .feeds-code {
+    font-size: 0.9em;
+  }
+
   .feeds-shell {
     padding: clamp(1.25rem, 1rem + 1vw, 1.5rem);
   }
