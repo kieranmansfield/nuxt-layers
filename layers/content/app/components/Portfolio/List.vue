@@ -13,17 +13,20 @@
     collection?: keyof Collections
   }>()
 
-  const { featured, tags, limit } = options
   // Fetch only when the parent didn't pass items (e.g. a related-items list it already has).
   // ponytail: decided once at setup — toggling `items` after mount won't start or stop the fetch
   const fetched = passed
     ? undefined
-    : await useCollectionItems(collection, {
-        tags,
-        limit,
-        sortKey: 'year',
-        sortDirection: 'desc',
-        filter: featured !== undefined ? (item) => fieldFeatured(item) === featured : undefined,
+    : await useCollectionItems(collection, () => {
+        const { featured, tags, limit } = options
+        return {
+          tags,
+          limit,
+          sortKey: 'year',
+          sortDirection: 'desc',
+          filter: featured !== undefined ? (item) => fieldFeatured(item) === featured : undefined,
+          filterKey: String(featured),
+        }
       })
   const items = computed(() => passed ?? fetched?.data.value)
   const status = computed(() => (passed ? 'success' : (fetched?.status.value ?? 'idle')))

@@ -1,12 +1,17 @@
 <script setup lang="ts">
+  import type { ObsidianPluginStats } from '#layers/project-stats/shared/types'
+
   const {
     plugin,
+    stats: passed = undefined,
     showInstall = true,
     variant = 'default',
     to = undefined,
   } = defineProps<{
     /** Community plugin id, as in the obsidian.md/plugins?id= listing URL */
     plugin: string
+    /** Stats the parent already has. Skips the fetch. */
+    stats?: ObsidianPluginStats
     showInstall?: boolean
     /** `compact` keeps the name, description and figures; drops the footer details and buttons */
     variant?: 'default' | 'compact'
@@ -14,7 +19,10 @@
     to?: string
   }>()
 
-  const { data: stats, status } = useObsidianPluginStats(() => plugin)
+  const { stats, status } = usePassedOrFetchedStats(
+    () => passed,
+    () => useObsidianPluginStats(() => plugin)
+  )
 
   const figures = computed(() => {
     const s = stats.value

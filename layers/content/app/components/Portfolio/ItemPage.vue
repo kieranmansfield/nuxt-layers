@@ -11,9 +11,7 @@
 </script>
 
 <template>
-  <LayoutSection>
-    <LayoutGridItem>
-      <PortfolioDetail :slug :collection />
-    </LayoutGridItem>
-  </LayoutSection>
+  <NuxtContentDetailTemplate>
+    <PortfolioDetail :slug :collection />
+  </NuxtContentDetailTemplate>
 </template>

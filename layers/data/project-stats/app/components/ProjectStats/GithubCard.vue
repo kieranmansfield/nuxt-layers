@@ -1,12 +1,17 @@
 <script setup lang="ts">
+  import type { GithubRepoStats } from '#layers/project-stats/shared/types'
+
   const {
     repo,
+    stats: passed = undefined,
     showTopics = true,
     variant = 'default',
     to = undefined,
   } = defineProps<{
     /** `owner/name` or a github.com URL */
     repo: string
+    /** Stats the parent already has. Skips the fetch. */
+    stats?: GithubRepoStats
     showTopics?: boolean
     /** `compact` keeps the name, description and figures; drops the topics and footer details */
     variant?: 'default' | 'compact'
@@ -14,7 +19,10 @@
     to?: string
   }>()
 
-  const { data: stats, status } = useGithubRepoStats(() => repo)
+  const { stats, status } = usePassedOrFetchedStats(
+    () => passed,
+    () => useGithubRepoStats(() => repo)
+  )
 
   const figures = computed(() => {
     const s = stats.value

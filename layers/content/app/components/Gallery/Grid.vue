@@ -10,7 +10,7 @@
 
   // Fetch only when the parent didn't pass items (e.g. a related-items list it already has).
   // ponytail: decided once at setup — toggling `items` after mount won't start or stop the fetch
-  const fetched = passed ? undefined : await useGalleryItems(options)
+  const fetched = passed ? undefined : await useGalleryItems(() => options)
   const items = computed(() => passed ?? fetched?.data.value)
   const status = computed(() => (passed ? 'success' : (fetched?.status.value ?? 'idle')))
 </script>

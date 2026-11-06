@@ -18,9 +18,7 @@
 </script>
 
 <template>
-  <LayoutSection>
-    <LayoutGridItem>
-      <GalleryImageDetail :slug :index />
-    </LayoutGridItem>
-  </LayoutSection>
+  <NuxtContentDetailTemplate>
+    <GalleryImageDetail :slug :index />
+  </NuxtContentDetailTemplate>
 </template>
