@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import { Color } from 'three'
   import { mix, smoothstep, time, vec4 } from 'three/tsl'
 
   import { simplexNoise2D } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     color = '#ffffff',
@@ -29,19 +27,12 @@
     order?: number
   }>()
 
-  const colorNode = hexToVec3Uniform(color)
+  const colorNode = useColorProp(() => color)
   const opacityNode = useUniformProp(() => opacity)
   const scaleNode = useUniformProp(() => scale)
   const edge0Node = useUniformProp(() => edge0)
   const edge1Node = useUniformProp(() => edge1)
   const speedNode = useUniformProp(() => speed)
-  watch(
-    () => color,
-    (v) => {
-      const c = new Color(v)
-      colorNode.value.set(c.r, c.g, c.b)
-    }
-  )
 
   const pipeline = useShaderPipelineContext()
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, time, uniform, vec2, vec4 } from 'three/tsl'
+  // fallow-ignore-file code-duplication
+  import { float, mix, time, vec2, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
 
@@ -22,25 +22,10 @@
     order?: number
   }>()
 
-  const colorAVal = new Color(colorA)
-  const colorBVal = new Color(colorB)
-  const colorANode = uniform(colorAVal)
-  const colorBNode = uniform(colorBVal)
+  const colorANode = useColorProp(() => colorA)
+  const colorBNode = useColorProp(() => colorB)
   const scaleNode = useUniformProp(() => scale)
   const speedNode = useUniformProp(() => speed)
-
-  watch(
-    () => colorA,
-    (v) => {
-      colorANode.value.set(v)
-    }
-  )
-  watch(
-    () => colorB,
-    (v) => {
-      colorBNode.value.set(v)
-    }
-  )
 
   const { uvNode } = useShaderPipelineContext()
 

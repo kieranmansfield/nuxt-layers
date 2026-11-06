@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  // fallow-ignore-file code-duplication
   import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
   import { Color, DoubleSide } from 'three'
   import { mix, time as tslTime, uniform, uv, vec3 } from 'three/tsl'

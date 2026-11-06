@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
   import { mix, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
    * Height-based exponential fog: exp2(-ray.y * density).
@@ -24,16 +21,9 @@
     order?: number
   }>()
 
-  const fogColorNode = hexToVec3Uniform(fogColor)
+  const fogColorNode = useColorProp(() => fogColor)
   const densityNode = useUniformProp(() => density)
   const horizonBiasNode = useUniformProp(() => horizonBias)
-  watch(
-    () => fogColor,
-    (v) => {
-      const c = new Color(v)
-      fogColorNode.value.set(c.r, c.g, c.b)
-    }
-  )
 
   const pipeline = useShaderPipelineContext()
 

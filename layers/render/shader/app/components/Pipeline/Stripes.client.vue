@@ -1,9 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, uniform, vec4 } from 'three/tsl'
-
   import { stripes } from '../../shaders/common/shapes'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorA = '#000000',
@@ -23,37 +19,17 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
   const freqNode = useUniformProp(() => frequency)
   const thickNode = useUniformProp(() => thickness)
-  const angleNode = uniform((angle * Math.PI) / 180)
-  watch(
+  const angleNode = useUniformProp(() => (angle * Math.PI) / 180)
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const mask = stripes(uv, freqNode, thickNode, angleNode)
+      return mask
+    },
+    order
   )
-  watch(
-    () => angle,
-    (v) => {
-      angleNode.value = (v * Math.PI) / 180
-    }
-  )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const mask = stripes(uv, freqNode, thickNode, angleNode)
-    return vec4(mix(colorANode, colorBNode, mask), float(1))
-  }, order)
 </script>

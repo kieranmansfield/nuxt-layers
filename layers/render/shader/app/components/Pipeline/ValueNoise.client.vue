@@ -1,9 +1,8 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, time, vec4 } from 'three/tsl'
+  // fallow-ignore-file code-duplication
+  import { time } from 'three/tsl'
 
   import { valueNoise2D } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorA = '#000000',
@@ -19,32 +18,18 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
   const scaleNode = useUniformProp(() => scale)
   const speedNode = useUniformProp(() => speed)
-  watch(
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const t = valueNoise2D(uv.mul(scaleNode).add(time.mul(speedNode)))
+        .mul(0.5)
+        .add(0.5)
+      return t
+    },
+    order
   )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const t = valueNoise2D(uv.mul(scaleNode).add(time.mul(speedNode)))
-      .mul(0.5)
-      .add(0.5)
-    return vec4(mix(colorANode, colorBNode, t), float(1))
-  }, order)
 </script>

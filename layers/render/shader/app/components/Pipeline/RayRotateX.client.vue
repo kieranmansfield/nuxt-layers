@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  // fallow-ignore-file code-duplication
   import { cos, sin, vec3 } from 'three/tsl'
 
   const { angle = 0, order = 0 } = defineProps<{

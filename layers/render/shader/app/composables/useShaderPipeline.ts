@@ -1,5 +1,7 @@
 import type { InjectionKey, Ref, ShallowRef } from 'vue'
 
+import { float, mix, vec4 } from 'three/tsl'
+
 import type { TSLNode } from '../types'
 
 export type ShaderStage = 'fragment' | 'vertex' | 'ray' | 'uv'
@@ -104,4 +106,20 @@ export function useShaderPipelineContext(): ShaderPipelineContext {
     throw new Error('useShaderPipelineContext() must be called inside a <ShaderPipeline> component')
   }
   return pipeline
+}
+
+/** A stage that mixes two colour props by `factor(uv)`, for generators that fill the output. */
+export function useColorMixStage(
+  colorA: () => string,
+  colorB: () => string,
+  factor: (uv: TSLNode) => TSLNode,
+  order = 0
+): void {
+  const colorANode = useColorProp(colorA)
+  const colorBNode = useColorProp(colorB)
+  const pipeline = useShaderPipelineContext()
+  useShaderStage(
+    () => vec4(mix(colorANode, colorBNode, factor(pipeline.uvNode.value)), float(1)),
+    order
+  )
 }

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, time, vec4 } from 'three/tsl'
+  // fallow-ignore-file code-duplication
+  import { time } from 'three/tsl'
 
   import { turbulence2D } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /** Billow/turbulence noise — folded abs() of FBM, producing cloud-like forms. */
   const {
@@ -20,30 +19,16 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
   const scaleNode = useUniformProp(() => scale)
   const speedNode = useUniformProp(() => speed)
-  watch(
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const n = turbulence2D(uv.mul(scaleNode).add(time.mul(speedNode)))
+      return n
+    },
+    order
   )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const n = turbulence2D(uv.mul(scaleNode).add(time.mul(speedNode)))
-    return vec4(mix(colorANode, colorBNode, n), float(1))
-  }, order)
 </script>

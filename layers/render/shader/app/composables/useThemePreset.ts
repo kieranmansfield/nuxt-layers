@@ -58,19 +58,7 @@ export function useThemePreset(
     (hex) => c4.tweenTo(hex, 0.8)
   )
 
-  try {
-    const runtime = useShaderRuntimeContext()
-    watch(
-      () => [runtime.mouse.mouseX.value, runtime.mouse.mouseY.value],
-      ([mx, my]) => {
-        uniforms.mouseX.value = mx ?? 0.5
-        uniforms.mouseY.value = my ?? 0.5
-      },
-      { immediate: true }
-    )
-  } catch {
-    // No runtime context
-  }
+  useRuntimeMouse(uniforms)
 
   watch(
     () => props.speed,

@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
   import { float, mix, sin, time, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorDeep = '#003366',
@@ -25,25 +22,11 @@
     order?: number
   }>()
 
-  const colorDeepNode = hexToVec3Uniform(colorDeep)
-  const colorShallowNode = hexToVec3Uniform(colorShallow)
+  const colorDeepNode = useColorProp(() => colorDeep)
+  const colorShallowNode = useColorProp(() => colorShallow)
   const freqNode = useUniformProp(() => frequency)
   const ampNode = useUniformProp(() => amplitude)
   const speedNode = useUniformProp(() => speed)
-  watch(
-    () => colorDeep,
-    (v) => {
-      const c = new Color(v)
-      colorDeepNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => colorShallow,
-    (v) => {
-      const c = new Color(v)
-      colorShallowNode.value.set(c.r, c.g, c.b)
-    }
-  )
 
   const pipeline = useShaderPipelineContext()
 

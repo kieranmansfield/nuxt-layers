@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import { Color } from 'three'
   import { clamp, float, mix, time, vec3, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorBase = '#ffcc00',
@@ -23,24 +21,10 @@
     order?: number
   }>()
 
-  const colorBaseNode = hexToVec3Uniform(colorBase)
-  const colorTipNode = hexToVec3Uniform(colorTip)
+  const colorBaseNode = useColorProp(() => colorBase)
+  const colorTipNode = useColorProp(() => colorTip)
   const scaleNode = useUniformProp(() => scale)
   const speedNode = useUniformProp(() => speed)
-  watch(
-    () => colorBase,
-    (v) => {
-      const c = new Color(v)
-      colorBaseNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => colorTip,
-    (v) => {
-      const c = new Color(v)
-      colorTipNode.value.set(c.r, c.g, c.b)
-    }
-  )
 
   const pipeline = useShaderPipelineContext()
 

@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, time, uniform, vec4 } from 'three/tsl'
+  import { float, time } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /** Linear gradient with per-pixel FBM noise offset — living, organic gradient. */
   const {
@@ -28,40 +26,20 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
-  const angleNode = uniform((angle * Math.PI) / 180)
+  const angleNode = useUniformProp(() => (angle * Math.PI) / 180)
   const noiseStrNode = useUniformProp(() => noiseStrength)
   const noiseScaleNode = useUniformProp(() => noiseScale)
   const speedNode = useUniformProp(() => speed)
-  watch(
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const n = fbm2D(uv.mul(noiseScaleNode).add(time.mul(speedNode)))
+      const base = uv.x.mul(angleNode.cos()).add(uv.y.mul(angleNode.sin()))
+      const t = base.add(n.mul(noiseStrNode)).clamp(float(0), float(1))
+      return t
+    },
+    order
   )
-  watch(
-    () => angle,
-    (v) => {
-      angleNode.value = (v * Math.PI) / 180
-    }
-  )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const n = fbm2D(uv.mul(noiseScaleNode).add(time.mul(speedNode)))
-    const base = uv.x.mul(angleNode.cos()).add(uv.y.mul(angleNode.sin()))
-    const t = base.add(n.mul(noiseStrNode)).clamp(float(0), float(1))
-    return vec4(mix(colorANode, colorBNode, t), float(1))
-  }, order)
 </script>

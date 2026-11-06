@@ -1,8 +1,6 @@
 <script setup lang="ts">
-  import { Color, Vector3 } from 'three'
+  import { Vector3 } from 'three'
   import { clamp, dot, float, mix, pow, uniform, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     zenith = '#1a3a8a',
@@ -28,43 +26,15 @@
     order?: number
   }>()
 
-  const zenithNode = hexToVec3Uniform(zenith)
-  const horizonNode = hexToVec3Uniform(horizon)
-  const groundNode = hexToVec3Uniform(ground)
-  const sunColorNode = hexToVec3Uniform(sunColor)
+  const zenithNode = useColorProp(() => zenith)
+  const horizonNode = useColorProp(() => horizon)
+  const groundNode = useColorProp(() => ground)
+  const sunColorNode = useColorProp(() => sunColor)
   const sunPowerNode = useUniformProp(() => sunPower)
 
   const sunDir = new Vector3(...sunDirection).normalize()
   const sunDirNode = uniform(new Vector3(sunDir.x, sunDir.y, sunDir.z))
 
-  watch(
-    () => zenith,
-    (v) => {
-      const c = new Color(v)
-      zenithNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => horizon,
-    (v) => {
-      const c = new Color(v)
-      horizonNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => ground,
-    (v) => {
-      const c = new Color(v)
-      groundNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => sunColor,
-    (v) => {
-      const c = new Color(v)
-      sunColorNode.value.set(c.r, c.g, c.b)
-    }
-  )
   watch(
     () => sunDirection,
     ([x, y, z]) => {

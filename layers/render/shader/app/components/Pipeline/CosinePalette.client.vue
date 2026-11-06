@@ -72,12 +72,13 @@
   const { uvNode } = useShaderPipelineContext()
 
   useShaderStage((prev) => {
-    let scalar
-    if (scalarSource === 'uv.x') scalar = uvNode.value.x
-    else if (scalarSource === 'length') scalar = uvNode.value.sub(0.5).length()
-    else if (scalarSource === 'time') scalar = time
-    else if (scalarSource === 'prev') scalar = luminance(prev.xyz)
-    else scalar = uvNode.value.y
+    const scalars: Record<string, () => TSLNode> = {
+      'uv.x': () => uvNode.value.x,
+      length: () => uvNode.value.sub(0.5).length(),
+      time: () => time,
+      prev: () => luminance(prev.xyz),
+    }
+    const scalar = scalars[scalarSource]?.() ?? uvNode.value.y
 
     const t = scalar.add(time.mul(timeScaleNode))
     return vec4(cosinePalette(t, aNode, bNode, cNode, dNode), 1.0)

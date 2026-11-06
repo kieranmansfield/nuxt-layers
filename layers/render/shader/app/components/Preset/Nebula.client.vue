@@ -27,27 +27,14 @@
 
   const colorNode = createNebulaColorNode(uniforms)
 
-  try {
-    const runtime = useShaderRuntimeContext()
-    watch(
-      () => [runtime.mouse.mouseX.value, runtime.mouse.mouseY.value],
-      ([mx, my]) => {
-        uniforms.mouseX.value = mx ?? 0.5
-        uniforms.mouseY.value = my ?? 0.5
-      },
-      { immediate: true }
-    )
-  } catch {
-    // No runtime
-  }
-
-  watchUniformProp(() => speed, uniforms.speed)
-  watchUniformProp(() => intensity, uniforms.intensity)
-  watch(
-    () => mouseInteraction,
-    (v) => {
-      uniforms.mouseStrength.value = v ? 0.3 : 0
-    }
+  useAmbientControls(
+    uniforms,
+    {
+      speed: () => speed,
+      intensity: () => intensity,
+      mouseInteraction: () => mouseInteraction,
+    },
+    0.3
   )
 
   emit('node', colorNode)

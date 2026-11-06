@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  // fallow-ignore-file code-duplication
   import { time, vec2 } from 'three/tsl'
 
   /**

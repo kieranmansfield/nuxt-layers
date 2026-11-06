@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { Color } from 'three'
   import { mix, smoothstep, uniform, vec4 } from 'three/tsl'
 
   /**
@@ -28,26 +27,12 @@
     order?: number
   }>()
 
-  const colorAVal = new Color(colorA)
-  const colorBVal = new Color(colorB)
-  const colorANode = uniform(colorAVal)
-  const colorBNode = uniform(colorBVal)
+  const colorANode = useColorProp(() => colorA)
+  const colorBNode = useColorProp(() => colorB)
   const angleNode = uniform(angle * (Math.PI / 180))
   const edge0Node = useUniformProp(() => edge0)
   const edge1Node = useUniformProp(() => edge1)
 
-  watch(
-    () => colorA,
-    (v) => {
-      colorANode.value.set(v)
-    }
-  )
-  watch(
-    () => colorB,
-    (v) => {
-      colorBNode.value.set(v)
-    }
-  )
   watch(
     () => angle,
     (v) => {

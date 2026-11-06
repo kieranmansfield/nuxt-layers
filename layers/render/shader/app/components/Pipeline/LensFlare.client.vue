@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import { Color, Vector2 } from 'three'
-  import { float, smoothstep, step, uniform, vec2, vec4 } from 'three/tsl'
+  import { float, smoothstep, step, vec2, vec4 } from 'three/tsl'
 
   import type { TSLNode } from '../../shaders/types'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
    * Procedural lens flare — starburst + ghost circle artefacts along the flare axis.
@@ -40,23 +38,10 @@
     { at: 1.8, radius: 0.05, weight: 0.1 },
   ]
 
-  const posNode = uniform(new Vector2(...position))
-  const colorNode = hexToVec3Uniform(color)
+  const posNode = useVector2Prop(() => position)
+  const colorNode = useColorProp(() => color)
   const intensityNode = useUniformProp(() => intensity)
   const ghostCountNode = useUniformProp(() => ghostCount)
-  watch(
-    () => position,
-    ([x, y]) => {
-      posNode.value.set(x, y)
-    }
-  )
-  watch(
-    () => color,
-    (v) => {
-      const c = new Color(v)
-      colorNode.value.set(c.r, c.g, c.b)
-    }
-  )
 
   const pipeline = useShaderPipelineContext()
 

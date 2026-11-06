@@ -1,7 +1,8 @@
 <script setup lang="ts">
-  import { clamp, float, mix, time, vec2, vec4 } from 'three/tsl'
+  // fallow-ignore-file code-duplication
+  import { clamp, float, time, vec2, vec4 } from 'three/tsl'
 
-  import { blendOverlay, blendScreen, blendSoftLight } from '../../shaders/common/blend'
+  import { blendGrain } from '../../shaders/common/blend'
 
   type GrainBlendMode = 'add' | 'sub' | 'screen' | 'overlay' | 'soft-light'
 
@@ -45,23 +46,11 @@
     const raw = vec2(h1, h2).length().mul(float(0.7071))
 
     const mixFactor = intensityNode.mul(opacityNode)
-    let blended
-    switch (blendMode) {
-      case 'add':
-        blended = prev.xyz.add(raw.sub(0.5).mul(intensityNode).mul(opacityNode))
-        break
-      case 'screen':
-        blended = mix(prev.xyz, blendScreen(prev.xyz, raw), mixFactor)
-        break
-      case 'overlay':
-        blended = mix(prev.xyz, blendOverlay(prev.xyz, raw), mixFactor)
-        break
-      case 'soft-light':
-        blended = mix(prev.xyz, blendSoftLight(prev.xyz, raw), mixFactor)
-        break
-      default: // 'sub' — original darkening behaviour
-        blended = prev.xyz.sub(raw.mul(intensityNode).mul(opacityNode))
-    }
+    const blended = blendGrain(blendMode, prev.xyz, raw, mixFactor, () =>
+      blendMode === 'add'
+        ? prev.xyz.add(raw.sub(0.5).mul(intensityNode).mul(opacityNode))
+        : prev.xyz.sub(raw.mul(intensityNode).mul(opacityNode))
+    )
     return vec4(clamp(blended, 0, 1), prev.w)
   }, order)
 </script>

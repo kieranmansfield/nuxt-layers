@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { cos, float, mix, sin, smoothstep, time, uniform, vec2, vec4 } from 'three/tsl'
+  import { cos, float, sin, smoothstep, time, uniform, vec2, vec4 } from 'three/tsl'
 
   import { simplexNoise2D } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
    * Self-contained Grainient/Shadertoy gradient pattern.
@@ -49,8 +47,6 @@
 
   const DEG2RAD = Math.PI / 180
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
   const noiseScaleNode = useUniformProp(() => noiseScale)
   const rotAmountNode = uniform(rotationAmount * DEG2RAD)
   const warpFreqNode = useUniformProp(() => warpFrequency)
@@ -60,20 +56,6 @@
   const edge1Node = useUniformProp(() => edge1)
   const speedNode = useUniformProp(() => speed)
 
-  watch(
-    () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
-  )
   watch(
     () => rotationAmount,
     (v) => {
@@ -87,44 +69,46 @@
     }
   )
 
-  const pipeline = useShaderPipelineContext()
+  useColorMixStage(
+    () => colorA,
+    () => colorB,
+    (uvCurrent) => {
+      if (!uvCurrent) return vec4(0, 0, 0, 1)
 
-  useShaderStage(() => {
-    const uvCurrent = pipeline.uvNode.value
-    if (!uvCurrent) return vec4(0, 0, 0, 1)
+      const t = time.mul(speedNode)
 
-    const t = time.mul(speedNode)
+      // 1. Noise-driven UV rotation
+      const n = simplexNoise2D(uvCurrent.mul(noiseScaleNode).add(t))
+      const angle = n
+        .mul(0.5)
+        .add(0.5)
+        .mul(rotAmountNode)
+        .add(float(Math.PI))
+        .sub(rotAmountNode.mul(0.5))
+      const c1 = cos(angle)
+      const s1 = sin(angle)
+      const centered = uvCurrent.sub(0.5)
+      const rotated = vec2(
+        centered.x.mul(c1).sub(centered.y.mul(s1)),
+        centered.x.mul(s1).add(centered.y.mul(c1))
+      ).add(0.5)
 
-    // 1. Noise-driven UV rotation
-    const n = simplexNoise2D(uvCurrent.mul(noiseScaleNode).add(t))
-    const angle = n
-      .mul(0.5)
-      .add(0.5)
-      .mul(rotAmountNode)
-      .add(float(Math.PI))
-      .sub(rotAmountNode.mul(0.5))
-    const c1 = cos(angle)
-    const s1 = sin(angle)
-    const centered = uvCurrent.sub(0.5)
-    const rotated = vec2(
-      centered.x.mul(c1).sub(centered.y.mul(s1)),
-      centered.x.mul(s1).add(centered.y.mul(c1))
-    ).add(0.5)
+      // 2. Asymmetric sine warp — pure functional (no toVar/addAssign needed)
+      // warpedY uses warpedX to replicate the sequential addAssign behaviour
+      const warpedX = rotated.x.add(sin(rotated.y.mul(warpFreqNode).add(t)).div(warpAmpNode))
+      const warpedY = rotated.y.add(
+        sin(warpedX.mul(warpFreqNode.mul(1.5)).add(t)).div(warpAmpNode.mul(0.5))
+      )
+      const tuv = vec2(warpedX, warpedY)
 
-    // 2. Asymmetric sine warp — pure functional (no toVar/addAssign needed)
-    // warpedY uses warpedX to replicate the sequential addAssign behaviour
-    const warpedX = rotated.x.add(sin(rotated.y.mul(warpFreqNode).add(t)).div(warpAmpNode))
-    const warpedY = rotated.y.add(
-      sin(warpedX.mul(warpFreqNode.mul(1.5)).add(t)).div(warpAmpNode.mul(0.5))
-    )
-    const tuv = vec2(warpedX, warpedY)
+      // 3. Rotated gradient blend
+      const cb = cos(blendAngleNode)
+      const sb = sin(blendAngleNode)
+      const rotX = tuv.sub(0.5).x.mul(cb).sub(tuv.sub(0.5).y.mul(sb)).add(0.5)
+      const blend = smoothstep(edge0Node, edge1Node, rotX)
 
-    // 3. Rotated gradient blend
-    const cb = cos(blendAngleNode)
-    const sb = sin(blendAngleNode)
-    const rotX = tuv.sub(0.5).x.mul(cb).sub(tuv.sub(0.5).y.mul(sb)).add(0.5)
-    const blend = smoothstep(edge0Node, edge1Node, rotX)
-
-    return vec4(mix(colorANode, colorBNode, blend), float(1))
-  }, order)
+      return blend
+    },
+    order
+  )
 </script>

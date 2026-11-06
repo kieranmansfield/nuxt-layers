@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  // fallow-ignore-file code-duplication
   import { time } from 'three/tsl'
 
   import { waveUV } from '../../shaders/common/uv'

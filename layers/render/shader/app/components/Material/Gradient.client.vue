@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  // fallow-ignore-file code-duplication
   import { Color, DoubleSide } from 'three'
   import { mix, sin, time as tslTime, uniform, uv, vec3 } from 'three/tsl'
   import { MeshBasicNodeMaterial } from 'three/webgpu'

@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import { Color } from 'three'
   import { float, mix, smoothstep, time, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorSky = '#5588cc',
@@ -29,26 +27,12 @@
     order?: number
   }>()
 
-  const colorSkyNode = hexToVec3Uniform(colorSky)
-  const colorCloudNode = hexToVec3Uniform(colorCloud)
+  const colorSkyNode = useColorProp(() => colorSky)
+  const colorCloudNode = useColorProp(() => colorCloud)
   const scaleNode = useUniformProp(() => scale)
   const coverageNode = useUniformProp(() => coverage)
   const softnessNode = useUniformProp(() => softness)
   const speedNode = useUniformProp(() => speed)
-  watch(
-    () => colorSky,
-    (v) => {
-      const c = new Color(v)
-      colorSkyNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => colorCloud,
-    (v) => {
-      const c = new Color(v)
-      colorCloudNode.value.set(c.r, c.g, c.b)
-    }
-  )
 
   const pipeline = useShaderPipelineContext()
 

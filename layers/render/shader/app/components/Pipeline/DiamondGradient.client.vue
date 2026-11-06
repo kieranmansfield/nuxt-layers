@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
+  import { float } from 'three/tsl'
 
   /** Chebyshev-distance diamond gradient: max(|x|, |y|) from centre. */
   const {
@@ -18,30 +15,16 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
   const scaleNode = useUniformProp(() => scale)
-  watch(
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const centered = uv.sub(0.5).abs()
+      const t = centered.x.max(centered.y).mul(scaleNode).mul(2).min(float(1))
+      return t
+    },
+    order
   )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const centered = uv.sub(0.5).abs()
-    const t = centered.x.max(centered.y).mul(scaleNode).mul(2).min(float(1))
-    return vec4(mix(colorANode, colorBNode, t), float(1))
-  }, order)
 </script>

@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
   import { mix, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     bottomLeft = '#000000',
@@ -22,38 +19,10 @@
     order?: number
   }>()
 
-  const blNode = hexToVec3Uniform(bottomLeft)
-  const brNode = hexToVec3Uniform(bottomRight)
-  const tlNode = hexToVec3Uniform(topLeft)
-  const trNode = hexToVec3Uniform(topRight)
-  watch(
-    () => bottomLeft,
-    (v) => {
-      const c = new Color(v)
-      blNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => bottomRight,
-    (v) => {
-      const c = new Color(v)
-      brNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => topLeft,
-    (v) => {
-      const c = new Color(v)
-      tlNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => topRight,
-    (v) => {
-      const c = new Color(v)
-      trNode.value.set(c.r, c.g, c.b)
-    }
-  )
+  const blNode = useColorProp(() => bottomLeft)
+  const brNode = useColorProp(() => bottomRight)
+  const tlNode = useColorProp(() => topLeft)
+  const trNode = useColorProp(() => topRight)
 
   const pipeline = useShaderPipelineContext()
 

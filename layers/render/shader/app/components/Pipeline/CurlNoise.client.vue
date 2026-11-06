@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import { Color } from 'three'
   import { mix, time, vec3, vec4 } from 'three/tsl'
 
   import { curlNoise3d } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     color = '#ffffff',
@@ -23,17 +21,10 @@
     order?: number
   }>()
 
-  const colorNode = hexToVec3Uniform(color)
+  const colorNode = useColorProp(() => color)
   const opacityNode = useUniformProp(() => opacity)
   const scaleNode = useUniformProp(() => scale)
   const speedNode = useUniformProp(() => speed)
-  watch(
-    () => color,
-    (v) => {
-      const c = new Color(v)
-      colorNode.value.set(c.r, c.g, c.b)
-    }
-  )
 
   const pipeline = useShaderPipelineContext()
 
