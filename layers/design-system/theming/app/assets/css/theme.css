@@ -36,7 +36,14 @@
   backdrop-filter: none;
 }
 
-[data-theme-transparency='reduced'] :where([class*='bg-default/'], [class*='bg-elevated/']) {
+/* Whole class tokens only, so hover:bg-default/50 and friends don't fill in at rest */
+[data-theme-transparency='reduced']
+  :where(
+    [class^='bg-default/'],
+    [class*=' bg-default/'],
+    [class^='bg-elevated/'],
+    [class*=' bg-elevated/']
+  ) {
   background-color: var(--ui-bg-elevated);
 }
 
