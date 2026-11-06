@@ -2,6 +2,7 @@ import type {
   PageTransitionChoice,
   PageTransitionContext,
   PageTransitionDirection,
+  PageTransitionHookName,
   PageTransitionPreset,
 } from '../types'
 
@@ -74,7 +75,10 @@ export default defineNuxtPlugin({
     // preset.css: play Vue's `<name>-{leave,enter}-{from,active,to}` classes by hand.
     function playClasses(el: Element, p: Plan, phase: 'leave' | 'enter') {
       const c = (s: string) => `${p.name}-${phase}-${s}`
-      el.classList.add(c('from'), c('active'))
+      // Flush `from` first: on a page already on screen (`once`), adding both would transition to it
+      el.classList.add(c('from'))
+      void (el as HTMLElement).offsetWidth
+      el.classList.add(c('active'))
       return new Promise<void>((resolve) => {
         requestAnimationFrame(() =>
           requestAnimationFrame(() => {
@@ -111,20 +115,30 @@ export default defineNuxtPlugin({
       clearPageOverlay()
     }
 
+    // Notifies only: a slow listener must not hold up the navigation
+    function notify(hook: PageTransitionHookName, el: Element) {
+      if (!plan) return
+      void nuxtApp.callHook(hook, { name: plan.name, direction: plan.ctx.direction, el })
+    }
+
     function props(mode: 'out-in' | 'in-out' | 'default') {
       return {
         css: false,
         mode,
-        onBeforeLeave: () => {
+        onBeforeLeave: (el: Element) => {
           if (!plan) return
           root.classList.add('is-page-transitioning')
           root.dataset.pageTransition = plan.name
+          notify('page-transition:before-leave', el)
         },
         onLeave: (el: Element, done: () => void) => run('leave', el, done),
+        onAfterLeave: (el: Element) => notify('page-transition:after-leave', el),
+        onBeforeEnter: (el: Element) => notify('page-transition:before-enter', el),
         onEnter: (el: Element, done: () => void) => run('enter', el, done),
         onAfterEnter: (el: Element) => {
           gsap.set(el, { clearProps: 'all' })
           cleanup()
+          notify('page-transition:after-enter', el)
         },
         onLeaveCancelled: cleanup,
         onEnterCancelled: cleanup,
@@ -160,8 +174,26 @@ export default defineNuxtPlugin({
       { global: true }
     )
 
-    nuxtApp.hook('app:mounted', () =>
+    // First load: there's no leaving page, so this runs outside Vue's transition hooks.
+    // ponytail: SSR has already painted the page, so it shows for a moment before this starts.
+    // A flash-free reveal would need the page hidden in CSS until hydration.
+    const onceName = () => (reduced.value ? 'none' : (config?.once ?? 'none'))
+    const withOnce = (p: PageTransitionPreset) => (p.once ? { ...p, enter: p.once } : p)
+
+    function playOnce() {
+      const name = onceName()
+      if (name === 'none' || !build({ name }, 'forward') || !plan) return
+      plan.preset = withOnce(plan.preset)
+      const el = nuxtApp.vueApp._container as HTMLElement
+      run('enter', el, () => {
+        gsap.set(el, { clearProps: 'all' })
+        cleanup()
+      })
+    }
+
+    nuxtApp.hook('app:mounted', () => {
       root.style.setProperty('--page-transition-duration', `${config?.duration ?? 300}ms`)
-    )
+      playOnce()
+    })
   },
 })

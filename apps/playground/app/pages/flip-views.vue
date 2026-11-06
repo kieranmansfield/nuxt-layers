@@ -1,5 +1,8 @@
 <script setup lang="ts">
   definePageMeta({ layout: false })
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('amber')
+  onUnmounted(() => setPageAccent(null))
 
   const works = [
     { id: 'a', name: 'Atlas', type: 'Identity', year: 2026, color: 'bg-blue-500' },
@@ -32,15 +35,33 @@
 </script>
 
 <template>
-  <LayoutPage title="Flip Views">
-    <div class="bg-default mx-auto flex min-h-screen max-w-5xl flex-col gap-16 p-8">
-      <section class="flex flex-col gap-6">
-        <header class="flex flex-wrap items-center justify-between gap-4">
-          <h1 class="text-highlighted text-3xl font-semibold">MotionFlipViews</h1>
-          <UTabs v-model="view" :items="views" :content="false" />
-        </header>
+  <LayoutPage
+    title="Flip Views Demo"
+    description="Morph shared elements with GSAP Flip when switching between views or components"
+  >
+    <div class="bg-default min-h-screen">
+      <DemoPageHero
+        name="FLIP VIEWS"
+        description="Switch a section between views or components. Elements sharing a data-flip-id travel to their match, and everything else fades."
+      >
+        <div class="flex flex-wrap justify-center gap-4">
+          <UButton size="lg" @click="() => $router.push('#views-demo')">Switch views</UButton>
+          <UButton size="lg" variant="outline" @click="() => $router.push('#sort-demo')">
+            Same DOM
+          </UButton>
+        </div>
+      </DemoPageHero>
 
-        <MotionFlipViews id="views" :view="view" :flip="{ stagger: 0.015 }">
+      <DemoSection
+        id="views-demo"
+        title="MotionFlipViews"
+        description="Three different layouts, one slot each. Colour blocks and names are tagged."
+      >
+        <div class="mb-10 flex justify-center">
+          <UTabs v-model="view" :items="views" :content="false" />
+        </div>
+
+        <MotionFlipViews id="views" :view :flip="{ stagger: 0.015 }">
           <template #cards>
             <LayoutItemCards :items="works" item-key="id" min="200px">
               <template #media="{ item }">
@@ -94,18 +115,21 @@
           </template>
         </MotionFlipViews>
 
-        <p class="text-muted border-default border-t pt-4 text-sm">
+        <p class="text-muted border-default mt-10 border-t pt-4 text-sm">
           Content below the section slides as its height changes.
         </p>
-      </section>
+      </DemoSection>
 
-      <section class="flex flex-col gap-6">
-        <header class="flex flex-wrap items-center justify-between gap-4">
-          <h2 class="text-highlighted text-2xl font-semibold">useFlip, same DOM</h2>
+      <DemoSection
+        id="sort-demo"
+        title="useFlip"
+        description="The same elements rearranged, with no component swap. Works for sort, filter and class changes."
+      >
+        <div class="mb-10 flex justify-center">
           <UButton variant="outline" @click="newestFirst = !newestFirst">
             {{ newestFirst ? 'Oldest first' : 'Newest first' }}
           </UButton>
-        </header>
+        </div>
         <ul ref="sortRoot" class="m-0 grid list-none grid-cols-2 gap-3 p-0 md:grid-cols-4">
           <li
             v-for="item in sorted"
@@ -117,7 +141,17 @@
             {{ item.name }}
           </li>
         </ul>
-      </section>
+      </DemoSection>
+
+      <DemoPageFooter
+        name="Flip Views"
+        description="Part of the Animations layer"
+        :links="[
+          { label: 'Animations Layer', to: '/animations', icon: 'i-lucide-wand-sparkles' },
+          { label: 'Page Transitions', to: '/page-transitions', icon: 'i-lucide-arrow-left-right' },
+          { label: 'Motion Layer', to: '/motion', icon: 'i-lucide-sparkles' },
+        ]"
+      />
     </div>
   </LayoutPage>
 </template>

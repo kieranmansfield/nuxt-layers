@@ -189,6 +189,10 @@
               <UIcon name="i-lucide-book-open-text" class="mr-2" />
               Scrollytelling
             </UButton>
+            <UButton size="lg" variant="ghost" to="/flip-views">
+              <UIcon name="i-lucide-layout-list" class="mr-2" />
+              Flip Views
+            </UButton>
           </div>
         </div>
 
@@ -735,6 +739,10 @@
               <UButton variant="ghost" to="/scrollytelling">
                 <UIcon name="i-lucide-book-open-text" class="mr-2" />
                 Scrollytelling
+              </UButton>
+              <UButton variant="ghost" to="/flip-views">
+                <UIcon name="i-lucide-layout-list" class="mr-2" />
+                Flip Views
               </UButton>
               <UButton variant="ghost" to="/motion-interactions">
                 <UIcon name="i-lucide-mouse-pointer-2" class="mr-2" />

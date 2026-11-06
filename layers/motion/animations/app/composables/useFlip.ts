@@ -11,7 +11,7 @@ export const flipDefaults = {
   nested: true,
 } satisfies FlipVars
 
-export interface UseFlipOptions {
+export type UseFlipOptions = {
   /** FLIP whenever this changes. Omit to call `capture()` and `play()` yourself. */
   on?: WatchSource
   /** Passed to `Flip.from`, over `flipDefaults`. */
