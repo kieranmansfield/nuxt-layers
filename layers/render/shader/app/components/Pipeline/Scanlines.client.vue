@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { time, uniform, vec4 } from 'three/tsl'
+  import { time, vec4 } from 'three/tsl'
 
   import { scanlines } from '../../shaders/common/grain'
 
@@ -18,27 +18,9 @@
     order?: number
   }>()
 
-  const densityNode = uniform(density)
-  const intensityNode = uniform(intensity)
-  const scrollSpeedNode = uniform(scrollSpeed)
-  watch(
-    () => density,
-    (v) => {
-      densityNode.value = v
-    }
-  )
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
-    }
-  )
-  watch(
-    () => scrollSpeed,
-    (v) => {
-      scrollSpeedNode.value = v
-    }
-  )
+  const densityNode = useUniformProp(() => density)
+  const intensityNode = useUniformProp(() => intensity)
+  const scrollSpeedNode = useUniformProp(() => scrollSpeed)
 
   const pipeline = useShaderPipelineContext()
 

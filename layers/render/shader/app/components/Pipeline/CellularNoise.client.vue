@@ -1,9 +1,8 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, time, uniform, vec4 } from 'three/tsl'
+  // fallow-ignore-file code-duplication
+  import { float, time } from 'three/tsl'
 
   import { voronoi2D } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorA = '#000033',
@@ -19,42 +18,16 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
-  const scaleNode = uniform(scale)
-  const speedNode = uniform(speed)
-  watch(
+  const scaleNode = useUniformProp(() => scale)
+  const speedNode = useUniformProp(() => speed)
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const { distance } = voronoi2D(uv.add(time.mul(speedNode)), scaleNode)
+      return distance.min(float(1))
+    },
+    order
   )
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const { distance } = voronoi2D(uv.add(time.mul(speedNode)), scaleNode)
-    return vec4(mix(colorANode, colorBNode, distance.min(float(1))), float(1))
-  }, order)
 </script>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { cosinePalette } from '#layers/shader/app/shaders/common/palette'
-  import { add, mul, time, uniform, uv } from 'three/tsl'
+  import { add, mul, time, uv } from 'three/tsl'
 
   const {
     id = 'gradient',
@@ -33,7 +33,7 @@
 
   const graph = useShaderGraphContext()
 
-  const uSpeed = uniform(speed)
+  const uSpeed = useUniformProp(() => speed)
 
   // Palette presets
   const palettePresets: Record<
@@ -104,13 +104,6 @@
 
   let node = buildNode()
   graph.register(id, node, order, blend, opacity)
-
-  watch(
-    () => speed,
-    (v) => {
-      uSpeed.value = v
-    }
-  )
 
   // Rebuild on type or custom param changes
   watch(

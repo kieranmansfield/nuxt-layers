@@ -1,10 +1,11 @@
+<!-- fallow-ignore-file css-token-drift -->
 <script setup lang="ts">
   const {
     progress,
     size = 120,
     strokeWidth = 8,
     showPercentage = true,
-    colors = ['var(--ui-primary)', 'rgb(168, 85, 247)', 'rgb(236, 72, 153)'],
+    colors = ['var(--ui-primary)', 'var(--ui-secondary)', 'var(--ui-info)'],
     bgColor = 'var(--ui-bg-accented)',
   } = defineProps<{
     progress: number

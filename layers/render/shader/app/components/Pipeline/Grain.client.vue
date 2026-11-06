@@ -1,21 +1,8 @@
 <script setup lang="ts">
-  import {
-    clamp,
-    dot,
-    float,
-    floor,
-    fract,
-    mix,
-    pow,
-    sin,
-    step,
-    time,
-    uniform,
-    vec2,
-    vec4,
-  } from 'three/tsl'
+  // fallow-ignore-file code-duplication
+  import { clamp, dot, float, floor, fract, pow, sin, step, time, vec2, vec4 } from 'three/tsl'
 
-  import { blendOverlay, blendScreen, blendSoftLight } from '../../shaders/common/blend'
+  import { blendGrain } from '../../shaders/common/blend'
 
   type GrainBlendMode = 'add' | 'sub' | 'screen' | 'overlay' | 'soft-light'
   type GrainStyle = 'smooth' | 'dotted' | 'coarse'
@@ -42,34 +29,10 @@
     order?: number
   }>()
 
-  const intensityNode = uniform(intensity)
-  const opacityNode = uniform(opacity)
-  const sizeNode = uniform(size)
-  const fpsNode = uniform(fps)
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
-    }
-  )
-  watch(
-    () => opacity,
-    (v) => {
-      opacityNode.value = v
-    }
-  )
-  watch(
-    () => size,
-    (v) => {
-      sizeNode.value = v
-    }
-  )
-  watch(
-    () => fps,
-    (v) => {
-      fpsNode.value = v
-    }
-  )
+  const intensityNode = useUniformProp(() => intensity)
+  const opacityNode = useUniformProp(() => opacity)
+  const sizeNode = useUniformProp(() => size)
+  const fpsNode = useUniformProp(() => fps)
 
   const { uvNode } = useShaderPipelineContext()
 
@@ -89,23 +52,11 @@
           : raw // smooth: continuous noise
 
     const mixFactor = intensityNode.mul(opacityNode)
-    let blended
-    switch (blendMode) {
-      case 'sub':
-        blended = prev.xyz.sub(shaped.mul(intensityNode).mul(opacityNode))
-        break
-      case 'screen':
-        blended = mix(prev.xyz, blendScreen(prev.xyz, shaped), mixFactor)
-        break
-      case 'overlay':
-        blended = mix(prev.xyz, blendOverlay(prev.xyz, shaped), mixFactor)
-        break
-      case 'soft-light':
-        blended = mix(prev.xyz, blendSoftLight(prev.xyz, shaped), mixFactor)
-        break
-      default: // 'add'
-        blended = prev.xyz.add(shaped.sub(0.5).mul(intensityNode).mul(opacityNode))
-    }
+    const blended = blendGrain(blendMode, prev.xyz, shaped, mixFactor, () =>
+      blendMode === 'sub'
+        ? prev.xyz.sub(shaped.mul(intensityNode).mul(opacityNode))
+        : prev.xyz.add(shaped.sub(0.5).mul(intensityNode).mul(opacityNode))
+    )
     return clamp(vec4(blended, prev.w), 0, 1)
   }, order)
 </script>

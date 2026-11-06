@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { abs, float, mix, pow, sign, time, uniform, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
+  import { abs, float, mix, pow, sign, time, vec4 } from 'three/tsl'
 
   /**
    * Sinusoidal interpolation between a light and dark colour over time.
@@ -27,36 +24,10 @@
     order?: number
   }>()
 
-  const lightNode = hexToVec3Uniform(colorLight)
-  const darkNode = hexToVec3Uniform(colorDark)
-  const speedNode = uniform(speed)
-  const opacityNode = uniform(opacity)
-  watch(
-    () => colorLight,
-    (v) => {
-      const c = new Color(v)
-      lightNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => colorDark,
-    (v) => {
-      const c = new Color(v)
-      darkNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
-  watch(
-    () => opacity,
-    (v) => {
-      opacityNode.value = v
-    }
-  )
+  const lightNode = useColorProp(() => colorLight)
+  const darkNode = useColorProp(() => colorDark)
+  const speedNode = useUniformProp(() => speed)
+  const opacityNode = useUniformProp(() => opacity)
 
   useShaderStage((prev) => {
     const cycle = time.mul(speedNode).sin()

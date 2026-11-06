@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import { Color, Vector2 } from 'three'
-  import { float, smoothstep, uniform, vec2, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
+  import { float, smoothstep, vec2, vec4 } from 'three/tsl'
 
   /**
    * Orange/warm light leak emanating from a screen corner.
@@ -26,35 +23,10 @@
     order?: number
   }>()
 
-  const colorNode = hexToVec3Uniform(color)
-  const originNode = uniform(new Vector2(...origin))
-  const radiusNode = uniform(radius)
-  const intensityNode = uniform(intensity)
-  watch(
-    () => color,
-    (v) => {
-      const c = new Color(v)
-      colorNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => origin,
-    ([x, y]) => {
-      originNode.value.set(x, y)
-    }
-  )
-  watch(
-    () => radius,
-    (v) => {
-      radiusNode.value = v
-    }
-  )
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
-    }
-  )
+  const colorNode = useColorProp(() => color)
+  const originNode = useVector2Prop(() => origin)
+  const radiusNode = useUniformProp(() => radius)
+  const intensityNode = useUniformProp(() => intensity)
 
   const pipeline = useShaderPipelineContext()
 

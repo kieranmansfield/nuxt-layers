@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     '#layers/mailer': import.meta.dirname,
   },
 
-  compatibilityDate: '2026-06-06',
+  compatibilityDate: '2026-10-27',
 
   runtimeConfig: {
     mailerLayer: {

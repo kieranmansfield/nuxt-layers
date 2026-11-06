@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { uniform, vec4 } from 'three/tsl'
+  import { vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
   import { halftone } from '../../shaders/common/grain'
@@ -16,20 +16,8 @@
     order?: number
   }>()
 
-  const scaleNode = uniform(scale)
-  const angleNode = uniform(angle)
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => angle,
-    (v) => {
-      angleNode.value = v
-    }
-  )
+  const scaleNode = useUniformProp(() => scale)
+  const angleNode = useUniformProp(() => angle)
 
   const pipeline = useShaderPipelineContext()
 

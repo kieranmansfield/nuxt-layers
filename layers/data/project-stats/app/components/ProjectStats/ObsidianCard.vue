@@ -1,12 +1,17 @@
 <script setup lang="ts">
+  import type { ObsidianPluginStats } from '#layers/project-stats/shared/types'
+
   const {
     plugin,
+    stats: passed = undefined,
     showInstall = true,
     variant = 'default',
     to = undefined,
   } = defineProps<{
     /** Community plugin id, as in the obsidian.md/plugins?id= listing URL */
     plugin: string
+    /** Stats the parent already has. Skips the fetch. */
+    stats?: ObsidianPluginStats
     showInstall?: boolean
     /** `compact` keeps the name, description and figures; drops the footer details and buttons */
     variant?: 'default' | 'compact'
@@ -14,7 +19,10 @@
     to?: string
   }>()
 
-  const { data: stats, status } = useObsidianPluginStats(() => plugin)
+  const { stats, status } = usePassedOrFetchedStats(
+    () => passed,
+    () => useObsidianPluginStats(() => plugin)
+  )
 
   const figures = computed(() => {
     const s = stats.value
@@ -66,64 +74,10 @@
         <ProjectStatsStat v-for="stat in figures" :key="stat.label" v-bind="stat" />
       </dl>
 
-      <div
-        v-if="variant !== 'compact'"
-        class="text-muted flex flex-wrap items-center gap-x-4 gap-y-1 text-xs"
-      >
-        <span v-if="stats.updatedAt" class="flex items-center gap-1">
-          <UIcon name="i-lucide-clock" class="size-3.5" />
-          Updated
-          <NuxtTime :datetime="stats.updatedAt" month="short" day="numeric" year="numeric" />
-        </span>
-        <span v-if="stats.minAppVersion" class="flex items-center gap-1">
-          <UIcon name="i-lucide-info" class="size-3.5" />Obsidian {{ stats.minAppVersion }}+
-        </span>
-        <UBadge v-if="stats.isDesktopOnly" color="neutral" variant="subtle" size="xs">
-          Desktop only
-        </UBadge>
-      </div>
-
-      <div v-if="variant !== 'compact'" class="flex flex-wrap gap-2">
-        <UButton
-          v-if="showInstall"
-          :to="stats.installUrl"
-          external
-          icon="i-lucide-download"
-          size="sm"
-        >
-          Install in Obsidian
-        </UButton>
-        <UButton
-          :to="stats.repoUrl"
-          target="_blank"
-          icon="i-lucide-github"
-          color="neutral"
-          variant="outline"
-          size="sm"
-        >
-          Source
-        </UButton>
-        <UButton
-          v-if="stats.fundingUrl"
-          :to="stats.fundingUrl"
-          target="_blank"
-          icon="i-lucide-heart"
-          color="neutral"
-          variant="ghost"
-          size="sm"
-        >
-          Support
-        </UButton>
-      </div>
+      <ProjectStatsObsidianDetails v-if="variant !== 'compact'" :stats :show-install />
     </template>
 
-    <div v-else-if="status === 'pending' || status === 'idle'" class="space-y-4">
-      <USkeleton class="h-5 w-40" />
-      <USkeleton class="h-4 w-full" />
-      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
-        <USkeleton v-for="n in 3" :key="n" class="h-12" />
-      </div>
-    </div>
+    <ProjectStatsCardSkeleton v-else-if="status === 'pending' || status === 'idle'" :count="3" />
 
     <ULink
       v-else

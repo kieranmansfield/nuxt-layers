@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { uniform, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
+  import { vec4 } from 'three/tsl'
 
   const {
     color = '#ff8844',
@@ -16,21 +13,8 @@
     order?: number
   }>()
 
-  const colorNode = hexToVec3Uniform(color)
-  const opacityNode = uniform(opacity)
-  watch(
-    () => color,
-    (v) => {
-      const c = new Color(v)
-      colorNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => opacity,
-    (v) => {
-      opacityNode.value = v
-    }
-  )
+  const colorNode = useColorProp(() => color)
+  const opacityNode = useUniformProp(() => opacity)
 
   useShaderStage((prev) => {
     const tinted = prev.xyz.mul(colorNode)

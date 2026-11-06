@@ -8,9 +8,7 @@
 </script>
 
 <template>
-  <LayoutSection>
-    <LayoutGridItem>
-      <GalleryDetail :slug />
-    </LayoutGridItem>
-  </LayoutSection>
+  <NuxtContentDetailTemplate>
+    <GalleryDetail :slug />
+  </NuxtContentDetailTemplate>
 </template>

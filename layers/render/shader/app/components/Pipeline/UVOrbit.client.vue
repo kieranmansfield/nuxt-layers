@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { cos, sin, time, uniform, vec2 } from 'three/tsl'
+  import { cos, sin, time, vec2 } from 'three/tsl'
 
   /**
    * Rotates UV around a centre point continuously over time.
@@ -11,13 +11,7 @@
     order?: number
   }>()
 
-  const speedNode = uniform(speed)
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const speedNode = useUniformProp(() => speed)
 
   useShaderStage(
     (uvIn) => {

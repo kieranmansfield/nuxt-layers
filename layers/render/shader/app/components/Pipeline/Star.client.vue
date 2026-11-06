@@ -1,9 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, uniform, vec4 } from 'three/tsl'
-
   import { star } from '../../shaders/common/shapes'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorA = '#000000',
@@ -25,49 +21,17 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
-  const radiusNode = uniform(radius)
-  const innerNode = uniform(innerRatio)
-  const softnessNode = uniform(softness)
-  watch(
+  const radiusNode = useUniformProp(() => radius)
+  const innerNode = useUniformProp(() => innerRatio)
+  const softnessNode = useUniformProp(() => softness)
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const mask = star(uv, [0.5, 0.5], points, innerNode, radiusNode, softnessNode)
+      return mask
+    },
+    order
   )
-  watch(
-    () => radius,
-    (v) => {
-      radiusNode.value = v
-    }
-  )
-  watch(
-    () => innerRatio,
-    (v) => {
-      innerNode.value = v
-    }
-  )
-  watch(
-    () => softness,
-    (v) => {
-      softnessNode.value = v
-    }
-  )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const mask = star(uv, [0.5, 0.5], points, innerNode, radiusNode, softnessNode)
-    return vec4(mix(colorANode, colorBNode, mask), float(1))
-  }, order)
 </script>

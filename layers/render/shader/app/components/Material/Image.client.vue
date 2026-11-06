@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
   import { DoubleSide, type Texture } from 'three'
   import {
     float,
@@ -8,7 +7,6 @@
     smoothstep,
     texture,
     time as tslTime,
-    uniform,
     uv,
     vec2,
     vec3,
@@ -67,25 +65,15 @@
   const error = ref<Error | null>(null)
 
   // Reactive uniforms
-  const mouseXUniform = uniform(mouseX)
-  const mouseYUniform = uniform(mouseY)
-  const distortionUniform = uniform(distortion)
-  const distortionSpeedUniform = uniform(distortionSpeed)
-  const rippleStrengthUniform = uniform(rippleStrength)
-  const zoomUniform = uniform(zoom)
-  const grayscaleUniform = uniform(grayscale)
-  const rgbShiftUniform = uniform(rgbShift)
-  const vignetteIntensityUniform = uniform(vignetteIntensity)
-
-  watchUniformProp(() => mouseX, mouseXUniform)
-  watchUniformProp(() => mouseY, mouseYUniform)
-  watchUniformProp(() => distortion, distortionUniform)
-  watchUniformProp(() => distortionSpeed, distortionSpeedUniform)
-  watchUniformProp(() => rippleStrength, rippleStrengthUniform)
-  watchUniformProp(() => zoom, zoomUniform)
-  watchUniformProp(() => grayscale, grayscaleUniform)
-  watchUniformProp(() => rgbShift, rgbShiftUniform)
-  watchUniformProp(() => vignetteIntensity, vignetteIntensityUniform)
+  const mouseXUniform = useUniformProp(() => mouseX)
+  const mouseYUniform = useUniformProp(() => mouseY)
+  const distortionUniform = useUniformProp(() => distortion)
+  const distortionSpeedUniform = useUniformProp(() => distortionSpeed)
+  const rippleStrengthUniform = useUniformProp(() => rippleStrength)
+  const zoomUniform = useUniformProp(() => zoom)
+  const grayscaleUniform = useUniformProp(() => grayscale)
+  const rgbShiftUniform = useUniformProp(() => rgbShift)
+  const vignetteIntensityUniform = useUniformProp(() => vignetteIntensity)
 
   // Load texture
   watch(

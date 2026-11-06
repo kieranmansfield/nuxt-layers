@@ -11,7 +11,6 @@ import {
   fract,
   length,
   max,
-  min,
   mix,
   sin,
   smoothstep,
@@ -20,6 +19,7 @@ import {
 
 import type { TSLNode } from '../types'
 import { toScalarNode, toVec2Node } from './nodes'
+import { sdRoundedBox2d } from './sdf'
 
 // ============================================
 // Basic Shapes
@@ -114,13 +114,8 @@ export function roundedRect(
   const [center = [0.5, 0.5], size = [0.4, 0.3], cornerRadius = 0.05, softness = 0.01] = args
   const c = toVec2Node(center)
   const sz = toVec2Node(size)
-  const r = toScalarNode(cornerRadius)
   const s = toScalarNode(softness)
-
-  const p: TSLNode = abs(uv.sub(c)).sub(sz.div(2)).add(r)
-  const d = length(max(p, 0))
-    .add(min(max(p.x, p.y), 0))
-    .sub(r)
+  const d = sdRoundedBox2d(uv.sub(c), sz.div(2), toScalarNode(cornerRadius))
 
   return smoothstep(s, s.negate(), d)
 }

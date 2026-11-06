@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { float, floor, uniform, vec4 } from 'three/tsl'
+  import { float, floor, vec4 } from 'three/tsl'
 
   const { steps = 6, order = 0 } = defineProps<{
     /** Number of colour steps per channel */
@@ -7,13 +7,7 @@
     order?: number
   }>()
 
-  const stepsNode = uniform(steps)
-  watch(
-    () => steps,
-    (v) => {
-      stepsNode.value = v
-    }
-  )
+  const stepsNode = useUniformProp(() => steps)
 
   useShaderStage((prev) => {
     const posterised = floor(prev.xyz.mul(stepsNode)).div(stepsNode.sub(float(1)))

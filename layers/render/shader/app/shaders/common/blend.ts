@@ -258,3 +258,21 @@ export function contrast(color: TSLNode, amount: TSLNode | number = 1): TSLNode 
 export function invert(color: TSLNode): TSLNode {
   return float(1).sub(color)
 }
+
+const GRAIN_BLENDS: Record<string, (base: TSLNode, texture: TSLNode) => TSLNode> = {
+  screen: blendScreen,
+  overlay: blendOverlay,
+  'soft-light': blendSoftLight,
+}
+
+/** Mixes a grain texture in by a named blend, or returns `arithmetic()` for add and subtract. */
+export function blendGrain(
+  mode: string,
+  base: TSLNode,
+  texture: TSLNode,
+  factor: TSLNode,
+  arithmetic: () => TSLNode
+): TSLNode {
+  const blend = GRAIN_BLENDS[mode]
+  return blend ? mix(base, blend(base, texture), factor) : arithmetic()
+}

@@ -45,6 +45,33 @@ test('morph animates the shared data-flip-id box between pages', async ({ page }
   await expect(page.locator('html.is-page-transitioning')).toHaveCount(0)
 })
 
+test('runtime hooks fire in order with the preset name', async ({ page }) => {
+  await open(page)
+  await page.evaluate(() => {
+    const log: string[] = []
+    ;(window as unknown as { hookLog: string[] }).hookLog = log
+    const { hook } = (
+      window as unknown as {
+        useNuxtApp: () => { hook: (n: string, f: (p: { name: string }) => void) => void }
+      }
+    ).useNuxtApp()
+    for (const name of ['before-leave', 'after-leave', 'before-enter', 'after-enter']) {
+      hook(`page-transition:${name}`, (p) => log.push(`${name}:${p.name}`))
+    }
+  })
+  await go(page, 'wipe')
+  await page.waitForURL('**/page-transitions-target')
+  await expect(page.locator('html.is-page-transitioning')).toHaveCount(0)
+  const log = await page.evaluate(() => (window as unknown as { hookLog: string[] }).hookLog)
+  // Vue removes the old page, which mounts the new one, before calling onAfterLeave
+  expect(log).toEqual([
+    'before-leave:wipe',
+    'before-enter:wipe',
+    'after-leave:wipe',
+    'after-enter:wipe',
+  ])
+})
+
 test('reduced motion swaps instantly with no overlay', async ({ browser }) => {
   const page = await (await browser.newContext({ reducedMotion: 'reduce' })).newPage()
   await open(page)

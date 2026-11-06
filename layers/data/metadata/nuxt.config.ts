@@ -10,7 +10,13 @@ export default defineNuxtConfig({
     '#layers/metadata/shared': `${import.meta.dirname}/shared`,
   },
 
-  compatibilityDate: '2026-06-30',
+  compatibilityDate: '2026-10-27',
+
+  runtimeConfig: {
+    // NUXT_METADATA_LAYER_SYNC_SECRET: bearer token for POST /api/metadata/sync.
+    // Unset, sync is open in dev and closed in production.
+    metadataLayer: { syncSecret: '' },
+  },
 
   nitro: {
     storage: {
@@ -25,3 +31,9 @@ export default defineNuxtConfig({
     strict: true,
   },
 })
+
+declare module '@nuxt/schema' {
+  interface RuntimeConfig {
+    metadataLayer: { syncSecret: string }
+  }
+}

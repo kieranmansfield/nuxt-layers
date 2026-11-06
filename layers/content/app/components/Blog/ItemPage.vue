@@ -8,9 +8,7 @@
 </script>
 
 <template>
-  <LayoutSection>
-    <LayoutGridItem>
-      <BlogArticle :slug />
-    </LayoutGridItem>
-  </LayoutSection>
+  <NuxtContentDetailTemplate>
+    <BlogArticle :slug />
+  </NuxtContentDetailTemplate>
 </template>

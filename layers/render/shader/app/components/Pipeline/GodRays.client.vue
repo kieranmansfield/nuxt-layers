@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import { Color, Vector2 } from 'three'
-  import { cos, float, smoothstep, uniform, vec2, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
+  import { cos, float, smoothstep, vec2, vec4 } from 'three/tsl'
 
   /**
    * Radial god rays — procedural volumetric light shafts emanating from a source point.
@@ -29,42 +26,11 @@
     order?: number
   }>()
 
-  const posNode = uniform(new Vector2(...position))
-  const colorNode = hexToVec3Uniform(color)
-  const intensityNode = uniform(intensity)
-  const rayCountNode = uniform(rayCount)
-  const decayNode = uniform(decay)
-  watch(
-    () => position,
-    ([x, y]) => {
-      posNode.value.set(x, y)
-    }
-  )
-  watch(
-    () => color,
-    (v) => {
-      const c = new Color(v)
-      colorNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
-    }
-  )
-  watch(
-    () => rayCount,
-    (v) => {
-      rayCountNode.value = v
-    }
-  )
-  watch(
-    () => decay,
-    (v) => {
-      decayNode.value = v
-    }
-  )
+  const posNode = useVector2Prop(() => position)
+  const colorNode = useColorProp(() => color)
+  const intensityNode = useUniformProp(() => intensity)
+  const rayCountNode = useUniformProp(() => rayCount)
+  const decayNode = useUniformProp(() => decay)
 
   const pipeline = useShaderPipelineContext()
 

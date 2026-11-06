@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     '#layers/database': import.meta.dirname,
   },
 
-  compatibilityDate: '2026-06-28',
+  compatibilityDate: '2026-10-27',
 
   runtimeConfig: {
     databaseLayer: {

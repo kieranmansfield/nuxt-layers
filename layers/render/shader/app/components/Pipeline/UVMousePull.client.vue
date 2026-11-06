@@ -14,13 +14,7 @@
   }>()
 
   const mouse = uniform(new Vector2(0.5, 0.5))
-  const influenceNode = uniform(influence)
-  watch(
-    () => influence,
-    (v) => {
-      influenceNode.value = v
-    }
-  )
+  const influenceNode = useUniformProp(() => influence)
 
   onMounted(() => {
     const onMove = (e: MouseEvent) => {

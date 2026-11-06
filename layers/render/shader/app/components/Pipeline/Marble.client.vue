@@ -1,9 +1,8 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, sin, time, uniform, vec4 } from 'three/tsl'
+  // fallow-ignore-file code-duplication
+  import { sin, time } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorA = '#f5f0e8',
@@ -32,68 +31,24 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
-  const freqNode = uniform(frequency)
-  const noiseScaleNode = uniform(noiseScale)
-  const noiseStrNode = uniform(noiseStrength)
-  const sharpNode = uniform(sharpness)
-  const speedNode = uniform(speed)
-  watch(
+  const freqNode = useUniformProp(() => frequency)
+  const noiseScaleNode = useUniformProp(() => noiseScale)
+  const noiseStrNode = useUniformProp(() => noiseStrength)
+  const sharpNode = useUniformProp(() => sharpness)
+  const speedNode = useUniformProp(() => speed)
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const t = time.mul(speedNode)
+      const n = fbm2D(uv.mul(noiseScaleNode).add(t))
+      // Sine + noise offset creates the vein pattern
+      const vein = sin(uv.x.mul(freqNode).add(n.mul(noiseStrNode)))
+        .abs()
+        .pow(sharpNode)
+      return vein
+    },
+    order
   )
-  watch(
-    () => frequency,
-    (v) => {
-      freqNode.value = v
-    }
-  )
-  watch(
-    () => noiseScale,
-    (v) => {
-      noiseScaleNode.value = v
-    }
-  )
-  watch(
-    () => noiseStrength,
-    (v) => {
-      noiseStrNode.value = v
-    }
-  )
-  watch(
-    () => sharpness,
-    (v) => {
-      sharpNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const t = time.mul(speedNode)
-    const n = fbm2D(uv.mul(noiseScaleNode).add(t))
-    // Sine + noise offset creates the vein pattern
-    const vein = sin(uv.x.mul(freqNode).add(n.mul(noiseStrNode)))
-      .abs()
-      .pow(sharpNode)
-    return vec4(mix(colorANode, colorBNode, vein), float(1))
-  }, order)
 </script>

@@ -1,8 +1,6 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, smoothstep, uniform, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
+  // fallow-ignore-file code-duplication
+  import { smoothstep } from 'three/tsl'
 
   const {
     colorA = '#000000',
@@ -18,43 +16,17 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
-  const radiusNode = uniform(radius)
-  const softnessNode = uniform(softness)
-  watch(
+  const radiusNode = useUniformProp(() => radius)
+  const softnessNode = useUniformProp(() => softness)
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const d = uv.sub(0.5).length()
+      const mask = smoothstep(radiusNode.add(softnessNode), radiusNode.sub(softnessNode), d)
+      return mask
+    },
+    order
   )
-  watch(
-    () => radius,
-    (v) => {
-      radiusNode.value = v
-    }
-  )
-  watch(
-    () => softness,
-    (v) => {
-      softnessNode.value = v
-    }
-  )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const d = uv.sub(0.5).length()
-    const mask = smoothstep(radiusNode.add(softnessNode), radiusNode.sub(softnessNode), d)
-    return vec4(mix(colorANode, colorBNode, mask), float(1))
-  }, order)
 </script>

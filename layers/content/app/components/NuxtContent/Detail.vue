@@ -5,20 +5,29 @@
   const {
     collection,
     slug,
+    item: passedItem = undefined,
+    surround: passedSurround = undefined,
     notFoundMessage = 'Content not found',
     hideToc = false,
   } = defineProps<{
     collection: keyof PageCollections
     slug: string
+    /** Item the parent already has. Skips its fetch. */
+    item?: PageCollections[keyof PageCollections]
+    /** Previous and next links the parent already has. Skips their fetch. */
+    surround?: ContentSurroundLink[]
     notFoundMessage?: string
     hideToc?: boolean
   }>()
 
-  const { data: item, status } = await useCollectionItem(collection, slug)
-  const { data: surround } = await useCollectionSurround(collection, slug)
+  // ponytail: decided once at setup — toggling these props after mount won't start or stop a fetch
+  const fetchedItem = passedItem ? undefined : await useCollectionItem(collection, slug)
+  const fetchedSurround = passedSurround ? undefined : await useCollectionSurround(collection, slug)
 
+  const item = computed(() => passedItem ?? fetchedItem?.data.value)
+  const status = computed(() => fetchedItem?.status.value ?? 'success')
   const surroundLinks = computed<ContentSurroundLink[] | undefined>(
-    () => surround.value ?? undefined
+    () => passedSurround ?? fetchedSurround?.data.value ?? undefined
   )
 
   // Optional props only bound when present (exactOptionalPropertyTypes rejects `undefined`)

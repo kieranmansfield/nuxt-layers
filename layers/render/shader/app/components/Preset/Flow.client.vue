@@ -27,37 +27,14 @@
 
   const colorNode = createFlowColorNode(uniforms)
 
-  try {
-    const runtime = useShaderRuntimeContext()
-    watch(
-      () => [runtime.mouse.mouseX.value, runtime.mouse.mouseY.value],
-      ([mx, my]) => {
-        uniforms.mouseX.value = mx ?? 0.5
-        uniforms.mouseY.value = my ?? 0.5
-      },
-      { immediate: true }
-    )
-  } catch {
-    // No runtime
-  }
-
-  watch(
-    () => speed,
-    (v) => {
-      uniforms.speed.value = v
-    }
-  )
-  watch(
-    () => intensity,
-    (v) => {
-      uniforms.intensity.value = v
-    }
-  )
-  watch(
-    () => mouseInteraction,
-    (v) => {
-      uniforms.mouseStrength.value = v ? 0.5 : 0
-    }
+  useAmbientControls(
+    uniforms,
+    {
+      speed: () => speed,
+      intensity: () => intensity,
+      mouseInteraction: () => mouseInteraction,
+    },
+    0.5
   )
 
   emit('node', colorNode)

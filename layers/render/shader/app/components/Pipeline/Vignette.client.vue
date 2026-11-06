@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { uniform, vec4 } from 'three/tsl'
+  import { vec4 } from 'three/tsl'
 
   import { vignette } from '../../shaders/common/grain'
 
@@ -13,20 +13,8 @@
     order?: number
   }>()
 
-  const intensityNode = uniform(intensity)
-  const smoothnessNode = uniform(smoothness)
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
-    }
-  )
-  watch(
-    () => smoothness,
-    (v) => {
-      smoothnessNode.value = v
-    }
-  )
+  const intensityNode = useUniformProp(() => intensity)
+  const smoothnessNode = useUniformProp(() => smoothness)
 
   const { uvNode } = useShaderPipelineContext()
 

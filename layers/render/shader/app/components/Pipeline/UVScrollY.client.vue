@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { fract, time, uniform, vec2 } from 'three/tsl'
+  import { fract, time, vec2 } from 'three/tsl'
 
   const { speed = 0.1, order = 0 } = defineProps<{
     /** Scroll speed (UV units per second, positive = up) */
@@ -7,13 +7,7 @@
     order?: number
   }>()
 
-  const speedNode = uniform(speed)
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const speedNode = useUniformProp(() => speed)
 
   useShaderStage((uvIn) => vec2(uvIn.x, fract(uvIn.y.add(time.mul(speedNode)))), order, 'uv')
 </script>

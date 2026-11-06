@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { uniform, vec2 } from 'three/tsl'
+  import { vec2 } from 'three/tsl'
 
   const {
     columns = 6,
@@ -13,20 +13,8 @@
     order?: number
   }>()
 
-  const columnsNode = uniform(columns)
-  const factorNode = uniform(factor)
-  watch(
-    () => columns,
-    (v) => {
-      columnsNode.value = v
-    }
-  )
-  watch(
-    () => factor,
-    (v) => {
-      factorNode.value = v
-    }
-  )
+  const columnsNode = useUniformProp(() => columns)
+  const factorNode = useUniformProp(() => factor)
 
   useShaderStage(
     (uvIn) => {

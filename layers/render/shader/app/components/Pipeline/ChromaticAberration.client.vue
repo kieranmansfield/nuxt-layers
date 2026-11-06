@@ -1,5 +1,6 @@
 <script setup lang="ts">
-  import { float, sin, time, uniform, vec3, vec4 } from 'three/tsl'
+  // fallow-ignore-file code-duplication
+  import { float, sin, time, vec3, vec4 } from 'three/tsl'
 
   /**
    * Chromatic aberration — RGB channel offset approximated without texture sampling.
@@ -20,27 +21,9 @@
     order?: number
   }>()
 
-  const strengthNode = uniform(strength)
-  const edgeNode = uniform(edgeFalloff)
-  const speedNode = uniform(speed)
-  watch(
-    () => strength,
-    (v) => {
-      strengthNode.value = v
-    }
-  )
-  watch(
-    () => edgeFalloff,
-    (v) => {
-      edgeNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const strengthNode = useUniformProp(() => strength)
+  const edgeNode = useUniformProp(() => edgeFalloff)
+  const speedNode = useUniformProp(() => speed)
 
   const pipeline = useShaderPipelineContext()
 

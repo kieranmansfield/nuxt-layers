@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { cos, float, mix, sin, uniform, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
+  import { cos, float, sin } from 'three/tsl'
 
   const {
     colorA = '#000000',
@@ -17,38 +14,18 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
-  const angleNode = uniform((angle * Math.PI) / 180)
-  watch(
+  const angleNode = useUniformProp(() => (angle * Math.PI) / 180)
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const t = uv.x
+        .mul(cos(angleNode))
+        .add(uv.y.mul(sin(angleNode)))
+        .clamp(float(0), float(1))
+      return t
+    },
+    order
   )
-  watch(
-    () => angle,
-    (v) => {
-      angleNode.value = (v * Math.PI) / 180
-    }
-  )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const t = uv.x
-      .mul(cos(angleNode))
-      .add(uv.y.mul(sin(angleNode)))
-      .clamp(float(0), float(1))
-    return vec4(mix(colorANode, colorBNode, t), float(1))
-  }, order)
 </script>

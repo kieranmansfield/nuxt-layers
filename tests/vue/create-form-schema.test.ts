@@ -1,13 +1,10 @@
 import { describe, expect, it } from 'vite-plus/test'
 
-import {
-  getFieldValidation,
-  useFormSchema,
-} from '../../layers/data/forms/app/composables/useFormSchema'
+import { getFieldValidation, createFormSchema } from '../../layers/data/forms/app/utils/formSchema'
 
-describe('useFormSchema', () => {
+describe('createFormSchema', () => {
   it('builds a schema that validates the selected field types', () => {
-    const schema = useFormSchema({
+    const schema = createFormSchema({
       name: 'name',
       email: 'email',
       website: 'url',

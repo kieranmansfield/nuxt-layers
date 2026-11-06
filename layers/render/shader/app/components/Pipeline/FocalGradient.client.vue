@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import { Color, Vector2 } from 'three'
-  import { float, mix, uniform, vec2, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
+  import { float, vec2 } from 'three/tsl'
 
   /** Radial gradient with an offset focal point — asymmetric radial. */
   const {
@@ -21,42 +18,16 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
-  const focalNode = uniform(new Vector2(...focal))
-  const radiusNode = uniform(radius)
-  watch(
+  const focalNode = useVector2Prop(() => focal)
+  const radiusNode = useUniformProp(() => radius)
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const t = uv.sub(vec2(focalNode.x, focalNode.y)).length().div(radiusNode).min(float(1))
+      return t
+    },
+    order
   )
-  watch(
-    () => focal,
-    ([x, y]) => {
-      focalNode.value.set(x, y)
-    }
-  )
-  watch(
-    () => radius,
-    (v) => {
-      radiusNode.value = v
-    }
-  )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const t = uv.sub(vec2(focalNode.x, focalNode.y)).length().div(radiusNode).min(float(1))
-    return vec4(mix(colorANode, colorBNode, t), float(1))
-  }, order)
 </script>

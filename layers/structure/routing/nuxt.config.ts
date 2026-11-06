@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     '#layers/routing/types': `${import.meta.dirname}/app/types`,
   },
 
-  compatibilityDate: '2026-01-30',
+  compatibilityDate: '2026-10-27',
 
   typescript: {
     typeCheck: false,
@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     (_options, nuxt) => {
       const appPagesDir = `${resolve(nuxt.options.srcDir, nuxt.options.dir.pages)}/`
       nuxt.hook('pages:extend', (pages) => {
+        // fallow-ignore-next-line complexity
         const tag = (list: RoutePage[]) => {
           for (const page of list) {
             if (page.file && !page.file.startsWith(appPagesDir)) {

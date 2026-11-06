@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, smoothstep, uniform, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
+  import { float, smoothstep, vec4 } from 'three/tsl'
 
   /**
    * Edge haze — additive fog/bloom at screen boundaries.
@@ -23,28 +20,9 @@
     order?: number
   }>()
 
-  const colorNode = hexToVec3Uniform(color)
-  const reachNode = uniform(reach)
-  const intensityNode = uniform(intensity)
-  watch(
-    () => color,
-    (v) => {
-      const c = new Color(v)
-      colorNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => reach,
-    (v) => {
-      reachNode.value = v
-    }
-  )
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
-    }
-  )
+  const colorNode = useColorProp(() => color)
+  const reachNode = useUniformProp(() => reach)
+  const intensityNode = useUniformProp(() => intensity)
 
   const pipeline = useShaderPipelineContext()
 

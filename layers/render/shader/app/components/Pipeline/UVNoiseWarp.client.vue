@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { time, uniform, vec2 } from 'three/tsl'
+  import { time, vec2 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
 
@@ -18,27 +18,9 @@
     order?: number
   }>()
 
-  const strengthNode = uniform(strength)
-  const scaleNode = uniform(scale)
-  const speedNode = uniform(speed)
-  watch(
-    () => strength,
-    (v) => {
-      strengthNode.value = v
-    }
-  )
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const strengthNode = useUniformProp(() => strength)
+  const scaleNode = useUniformProp(() => scale)
+  const speedNode = useUniformProp(() => speed)
 
   useShaderStage(
     (uvIn) => {

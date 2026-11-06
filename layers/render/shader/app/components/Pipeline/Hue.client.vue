@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { uniform, vec4 } from 'three/tsl'
+  import { vec4 } from 'three/tsl'
 
   import { hueShift } from '../../shaders/common/palette'
 
@@ -9,13 +9,7 @@
     order?: number
   }>()
 
-  const shiftNode = uniform(shift)
-  watch(
-    () => shift,
-    (v) => {
-      shiftNode.value = v
-    }
-  )
+  const shiftNode = useUniformProp(() => shift)
 
   useShaderStage((prev) => vec4(hueShift(prev.xyz, shiftNode), prev.w), order)
 </script>

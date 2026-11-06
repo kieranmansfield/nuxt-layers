@@ -49,3 +49,42 @@ This pass did not audit ignored generated folders, local `.env`, or every Vue de
 3. Fix findings 3 and 4 while the server route coverage is fresh.
 4. Add focused tests for the same paths before larger refactors.
 5. Address dependency advisories and feed query performance after the baseline is stable.
+
+## Rerun (6 Nov 2026)
+
+Surveyed `feat/flip-views` at `8e469e8` with uncommitted review fixes, not `main`. Not covered: the
+Vitest `nuxt` project, production builds, `apps/visual-identity`, `apps/debug`, `apps/starter`, the
+capture CLI, and most shader internals. Priorities and status live in the review artifact, as
+`IM-01` to `IM-15`.
+
+**Fixed since August:** forms status addresses, behaviour tests, content list cache keys, format
+baseline, CSS lint, and the routing flags endpoint. The `esbuild` and `ws` advisories are gone too,
+but overall advisories got worse (`IM-15`). `Layout/Grid/Item.vue` complexity has improved.
+
+**Still present from August:**
+
+- Server code is outside root typecheck and type-aware lint (`IM-12`)
+- Forms demo shows the wrong env names (`IM-14`)
+- Feeds fetch a whole collection before applying the limit
+- Invalid feed dates crash serialisation (`IM-13`)
+- Feed ETags use MD5 (`IM-06`)
+- Shader duplication (`IM-07`) and the playground `getActiveBlocks()` switches
+
+**New:**
+
+| ID      | Finding                                                             | Severity | Effort |
+| ------- | ------------------------------------------------------------------- | -------- | ------ |
+| `IM-01` | Feed `collections` allowlist is not enforced on the server          | Medium   | S      |
+| `IM-02` | Public metadata routes bypass the quota guard `sync` has            | Medium   | S      |
+| `IM-03` | Collection feeds advertise the wrong self URL and share one Atom ID | Medium   | S      |
+| `IM-04` | Metadata search caches provider outages as empty results            | Medium   | XS     |
+| `IM-05` | Metadata composable cache keys omit inputs                          | Low      | XS     |
+| `IM-06` | Twelve copy-paste feed route handlers                               | Low      | S      |
+| `IM-07` | Shader uniform wiring has three parallel APIs                       | Medium   | L      |
+| `IM-08` | Feeds app-config shape declared several times                       | Low      | S      |
+| `IM-09` | `useErrorLog` reads a bearer token from public app config           | Low      | S      |
+| `IM-10` | `createModal` is in the wrong layer                                 | Low      | XS     |
+| `IM-11` | Unused shader composables and two helper libraries                  | Low      | M      |
+
+A spot check of `IM-01`, `IM-03`, `IM-04` and `IM-14` against the code confirmed them. The rest come
+from the survey's own file-level evidence and haven't been exercised at runtime.

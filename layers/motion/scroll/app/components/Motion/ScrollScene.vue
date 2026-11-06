@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import type { ScrollTrigger as GSAPScrollTrigger } from 'gsap/ScrollTrigger'
 
-  import type { ScrollSceneContext } from '../../types/scroll'
   import { SCROLL_SCENE_KEY } from '../../composables/useScrollSteps'
 
   const {
@@ -66,7 +65,7 @@
     registeredSteps.value = next
   }
 
-  provide<ScrollSceneContext>(SCROLL_SCENE_KEY, {
+  provide(SCROLL_SCENE_KEY, {
     progress,
     active,
     name,

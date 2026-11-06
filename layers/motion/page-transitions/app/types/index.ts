@@ -33,6 +33,21 @@ export type PageTransitionPreset = {
   duration?: number
   leave?: Hook
   enter?: Hook
+  /** First page load, when `pageTransitions.once` names this preset. Falls back to `enter`. */
+  once?: Hook
+}
+
+export type PageTransitionHookName =
+  | 'page-transition:before-leave'
+  | 'page-transition:after-leave'
+  | 'page-transition:before-enter'
+  | 'page-transition:after-enter'
+
+/** Passed to the `page-transition:*` runtime hooks. */
+export type PageTransitionHookPayload = {
+  name: string
+  direction: PageTransitionDirection
+  el: Element
 }
 
 export type PageTransitionChoice = {
@@ -52,5 +67,13 @@ declare module '#app' {
   interface PageMeta {
     /** Preset (and optional duration) used when navigating to this page. */
     pageTransitionPreset?: string | PageTransitionChoice
+  }
+
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions -- augmentation must merge
+  interface RuntimeNuxtHooks {
+    'page-transition:before-leave': (payload: PageTransitionHookPayload) => void
+    'page-transition:after-leave': (payload: PageTransitionHookPayload) => void
+    'page-transition:before-enter': (payload: PageTransitionHookPayload) => void
+    'page-transition:after-enter': (payload: PageTransitionHookPayload) => void
   }
 }

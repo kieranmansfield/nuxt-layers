@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, time, uniform, vec2, vec4 } from 'three/tsl'
+  // fallow-ignore-file code-duplication
+  import { float, mix, time, vec2, vec4 } from 'three/tsl'
 
   import { simplexNoise2D } from '../../shaders/common/noise'
 
@@ -20,37 +20,10 @@
     order?: number
   }>()
 
-  const colorAVal = new Color(colorA)
-  const colorBVal = new Color(colorB)
-  const colorANode = uniform(colorAVal)
-  const colorBNode = uniform(colorBVal)
-  const scaleNode = uniform(scale)
-  const speedNode = uniform(speed)
-
-  watch(
-    () => colorA,
-    (v) => {
-      colorANode.value.set(v)
-    }
-  )
-  watch(
-    () => colorB,
-    (v) => {
-      colorBNode.value.set(v)
-    }
-  )
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const colorANode = useColorProp(() => colorA)
+  const colorBNode = useColorProp(() => colorB)
+  const scaleNode = useUniformProp(() => scale)
+  const speedNode = useUniformProp(() => speed)
 
   const { uvNode } = useShaderPipelineContext()
 

@@ -1,8 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { mix, sin, time, uniform, vec2, vec4 } from 'three/tsl'
-
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
+  import { mix, sin, time, vec2, vec4 } from 'three/tsl'
 
   const {
     color = '#4488ff',
@@ -20,42 +17,11 @@
     order?: number
   }>()
 
-  const colorNode = hexToVec3Uniform(color)
-  const opacityNode = uniform(opacity)
-  const freqNode = uniform(frequency)
-  const speedNode = uniform(speed)
-  const warpNode = uniform(warpStrength)
-  watch(
-    () => color,
-    (v) => {
-      const c = new Color(v)
-      colorNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => opacity,
-    (v) => {
-      opacityNode.value = v
-    }
-  )
-  watch(
-    () => frequency,
-    (v) => {
-      freqNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
-  watch(
-    () => warpStrength,
-    (v) => {
-      warpNode.value = v
-    }
-  )
+  const colorNode = useColorProp(() => color)
+  const opacityNode = useUniformProp(() => opacity)
+  const freqNode = useUniformProp(() => frequency)
+  const speedNode = useUniformProp(() => speed)
+  const warpNode = useUniformProp(() => warpStrength)
 
   const pipeline = useShaderPipelineContext()
 

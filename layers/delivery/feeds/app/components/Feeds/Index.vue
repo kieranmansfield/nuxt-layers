@@ -16,6 +16,26 @@
       manifest: contentManifest,
     })
   )
+
+  const hasSiteInfo = computed(() => !!(catalog.value.site.url || catalog.value.site.description))
+
+  const stats = computed(() => [
+    {
+      label: 'Default',
+      value: catalog.value.feed.defaultCollection,
+      hint: 'Shorthand routes point here.',
+    },
+    {
+      label: 'Exposed',
+      value: `${catalog.value.collectionGroups.length} collections`,
+      hint: 'Published in the feed catalog.',
+    },
+    {
+      label: 'Limit',
+      value: `${catalog.value.feed.limit} items`,
+      hint: 'Applied to each feed response.',
+    },
+  ])
 </script>
 
 <template>
@@ -45,46 +65,28 @@
               Feed catalog for {{ catalog.site.title }}
             </h1>
             <p class="feeds-body text-toned max-w-2xl leading-7">
-              Configured in <code class="font-mono text-[0.9em]">app.config.ts</code>, validated
-              against <code class="font-mono text-[0.9em]">content.config.ts</code>, and rendered as
-              a human-readable index for readers and site owners.
+              Configured in <code class="feeds-code font-mono">app.config.ts</code>, validated
+              against <code class="feeds-code font-mono">content.config.ts</code>, and rendered as a
+              human-readable index for readers and site owners.
             </p>
           </div>
 
           <div class="feeds-cards-grid gap-3">
             <div
+              v-for="stat in stats"
+              :key="stat.label"
               class="border-default bg-default/75 rounded-2xl border p-4 shadow-sm backdrop-blur"
             >
-              <p class="text-muted text-xs font-semibold tracking-[0.3em] uppercase">Default</p>
-              <p class="text-highlighted mt-2 text-lg font-semibold">
-                {{ catalog.feed.defaultCollection }}
+              <p class="text-muted text-xs font-semibold tracking-[0.3em] uppercase">
+                {{ stat.label }}
               </p>
-              <p class="text-muted mt-1 text-xs">Shorthand routes point here.</p>
-            </div>
-
-            <div
-              class="border-default bg-default/75 rounded-2xl border p-4 shadow-sm backdrop-blur"
-            >
-              <p class="text-muted text-xs font-semibold tracking-[0.3em] uppercase">Exposed</p>
-              <p class="text-highlighted mt-2 text-lg font-semibold">
-                {{ catalog.collectionGroups.length }} collections
-              </p>
-              <p class="text-muted mt-1 text-xs">Published in the feed catalog.</p>
-            </div>
-
-            <div
-              class="border-default bg-default/75 rounded-2xl border p-4 shadow-sm backdrop-blur"
-            >
-              <p class="text-muted text-xs font-semibold tracking-[0.3em] uppercase">Limit</p>
-              <p class="text-highlighted mt-2 text-lg font-semibold">
-                {{ catalog.feed.limit }} items
-              </p>
-              <p class="text-muted mt-1 text-xs">Applied to each feed response.</p>
+              <p class="text-highlighted mt-2 text-lg font-semibold">{{ stat.value }}</p>
+              <p class="text-muted mt-1 text-xs">{{ stat.hint }}</p>
             </div>
           </div>
 
           <div
-            v-if="catalog.site.url || catalog.site.description"
+            v-if="hasSiteInfo"
             class="border-default bg-default/70 flex flex-wrap items-center gap-3 rounded-2xl border px-4 py-3 text-sm shadow-sm backdrop-blur"
           >
             <span class="text-muted text-xs font-semibold tracking-[0.3em] uppercase"> Site </span>
@@ -136,7 +138,7 @@
             </h2>
           </div>
           <p class="text-muted max-w-lg text-sm">
-            Add or remove collections in <code class="font-mono text-[0.9em]">app.config.ts</code>
+            Add or remove collections in <code class="feeds-code font-mono">app.config.ts</code>
             and the catalog updates automatically.
           </p>
         </div>
@@ -184,8 +186,8 @@
             </p>
             <p class="text-muted text-sm">
               Add page collections to
-              <code class="font-mono text-[0.9em]">feedsLayer.feed.collections</code>
-              in <code class="font-mono text-[0.9em]">app.config.ts</code>.
+              <code class="feeds-code font-mono">feedsLayer.feed.collections</code>
+              in <code class="feeds-code font-mono">app.config.ts</code>.
             </p>
           </div>
         </UCard>
@@ -195,6 +197,10 @@
 </template>
 
 <style scoped>
+  .feeds-code {
+    font-size: 0.9em;
+  }
+
   .feeds-shell {
     padding: clamp(1.25rem, 1rem + 1vw, 1.5rem);
   }

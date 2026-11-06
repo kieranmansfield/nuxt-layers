@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import { Color } from 'three'
   import { mix, vec4 } from 'three/tsl'
 
   import { luminance } from '../../shaders/common/blend'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     shadowColor = '#1a0033',
@@ -17,22 +15,8 @@
     order?: number
   }>()
 
-  const shadowNode = hexToVec3Uniform(shadowColor)
-  const highlightNode = hexToVec3Uniform(highlightColor)
-  watch(
-    () => shadowColor,
-    (v) => {
-      const c = new Color(v)
-      shadowNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => highlightColor,
-    (v) => {
-      const c = new Color(v)
-      highlightNode.value.set(c.r, c.g, c.b)
-    }
-  )
+  const shadowNode = useColorProp(() => shadowColor)
+  const highlightNode = useColorProp(() => highlightColor)
 
   useShaderStage((prev) => {
     const lum = luminance(prev.xyz)

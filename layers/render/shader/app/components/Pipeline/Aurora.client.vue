@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { clamp, float, mix, time, uniform, vec2, vec4 } from 'three/tsl'
+  import { clamp, float, mix, time, vec2, vec4 } from 'three/tsl'
 
   import { fbm2D } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /**
    * Aurora borealis — layered animated colour bands across the upper screen.
@@ -33,50 +31,12 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
-  const bandYNode = uniform(bandY)
-  const bandHNode = uniform(bandHeight)
-  const speedNode = uniform(speed)
-  const intensityNode = uniform(intensity)
-  watch(
-    () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => bandY,
-    (v) => {
-      bandYNode.value = v
-    }
-  )
-  watch(
-    () => bandHeight,
-    (v) => {
-      bandHNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
-  watch(
-    () => intensity,
-    (v) => {
-      intensityNode.value = v
-    }
-  )
+  const colorANode = useColorProp(() => colorA)
+  const colorBNode = useColorProp(() => colorB)
+  const bandYNode = useUniformProp(() => bandY)
+  const bandHNode = useUniformProp(() => bandHeight)
+  const speedNode = useUniformProp(() => speed)
+  const intensityNode = useUniformProp(() => intensity)
 
   const pipeline = useShaderPipelineContext()
 

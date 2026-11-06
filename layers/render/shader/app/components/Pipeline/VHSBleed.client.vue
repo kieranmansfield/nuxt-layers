@@ -1,5 +1,6 @@
 <script setup lang="ts">
-  import { floor, fract, sin, time, uniform, vec3, vec4 } from 'three/tsl'
+  // fallow-ignore-file code-duplication
+  import { floor, fract, sin, time, vec3, vec4 } from 'three/tsl'
 
   /**
    * VHS colour bleed + horizontal noise drift.
@@ -23,34 +24,10 @@
     order?: number
   }>()
 
-  const bleedNode = uniform(bleedStrength)
-  const noiseFreqNode = uniform(noiseFreq)
-  const trackingNode = uniform(trackingNoise)
-  const speedNode = uniform(speed)
-  watch(
-    () => bleedStrength,
-    (v) => {
-      bleedNode.value = v
-    }
-  )
-  watch(
-    () => noiseFreq,
-    (v) => {
-      noiseFreqNode.value = v
-    }
-  )
-  watch(
-    () => trackingNoise,
-    (v) => {
-      trackingNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
+  const bleedNode = useUniformProp(() => bleedStrength)
+  const noiseFreqNode = useUniformProp(() => noiseFreq)
+  const trackingNode = useUniformProp(() => trackingNoise)
+  const speedNode = useUniformProp(() => speed)
 
   const pipeline = useShaderPipelineContext()
 

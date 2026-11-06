@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { uniform, vec2 } from 'three/tsl'
+  import { vec2 } from 'three/tsl'
 
   const {
     shearX = 0.2,
@@ -13,20 +13,8 @@
     order?: number
   }>()
 
-  const shearXNode = uniform(shearX)
-  const shearYNode = uniform(shearY)
-  watch(
-    () => shearX,
-    (v) => {
-      shearXNode.value = v
-    }
-  )
-  watch(
-    () => shearY,
-    (v) => {
-      shearYNode.value = v
-    }
-  )
+  const shearXNode = useUniformProp(() => shearX)
+  const shearYNode = useUniformProp(() => shearY)
 
   useShaderStage(
     (uvIn) => vec2(uvIn.x.add(uvIn.y.mul(shearXNode)), uvIn.y.add(uvIn.x.mul(shearYNode))),

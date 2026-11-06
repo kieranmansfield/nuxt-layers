@@ -45,7 +45,7 @@ export default defineNuxtConfig({
     fallback: 'light',
   },
 
-  compatibilityDate: '2026-01-24',
+  compatibilityDate: '2026-10-27',
 
   typescript: {
     // vite-plugin-checker@0.14.1 bundles TypeScript 6 which crashes on Nuxt's

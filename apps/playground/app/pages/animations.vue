@@ -49,6 +49,10 @@
             <UIcon name="i-lucide-mouse-pointer-2" class="mr-2" />
             Interactions Showcase
           </UButton>
+          <UButton size="lg" variant="ghost" to="/flip-views">
+            <UIcon name="i-lucide-layout-list" class="mr-2" />
+            Flip Views
+          </UButton>
         </div>
       </DemoPageHero>
 
@@ -162,7 +166,7 @@
           <div
             v-for="i in 8"
             :key="i"
-            class="border-accented text-highlighted flex aspect-square items-center justify-center rounded-2xl border bg-linear-to-br from-[var(--ui-bg-accented)] to-[var(--ui-bg-muted)] text-3xl font-bold"
+            class="border-accented text-highlighted flex aspect-square items-center justify-center rounded-2xl border bg-linear-to-br from-(--ui-bg-accented) to-(--ui-bg-muted) text-3xl font-bold"
           >
             {{ i }}
           </div>
@@ -228,6 +232,7 @@
             icon: 'i-lucide-mouse-pointer-2',
           },
           { label: 'MarqueeText', to: '/marquee-text', icon: 'i-lucide-text-cursor-input' },
+          { label: 'Flip Views', to: '/flip-views', icon: 'i-lucide-layout-list' },
           { label: 'Motion Layer', to: '/motion', icon: 'i-lucide-sparkles' },
         ]"
       />

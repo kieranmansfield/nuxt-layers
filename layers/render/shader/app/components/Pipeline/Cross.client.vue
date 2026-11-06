@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, smoothstep, uniform, vec4 } from 'three/tsl'
+  import { smoothstep, vec2 } from 'three/tsl'
 
-  import { sdBox2d } from '../../shaders/common/sdf'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
+  import { sdRoundedBox2d } from '../../shaders/common/sdf'
 
   const {
     colorA = '#000000',
@@ -15,7 +13,7 @@
   } = defineProps<{
     colorA?: string
     colorB?: string
-    /** Length of each arm */
+    /** Length of each arm, from the centre */
     size?: number
     /** Width of each arm */
     thickness?: number
@@ -23,54 +21,22 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
-  const sizeNode = uniform(size)
-  const thickNode = uniform(thickness)
-  const softnessNode = uniform(softness)
-  watch(
+  const sizeNode = useUniformProp(() => size)
+  const thickNode = useUniformProp(() => thickness)
+  const softnessNode = useUniformProp(() => softness)
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const p = uv.sub(0.5)
+      const halfThick = thickNode.div(2)
+      const d = sdRoundedBox2d(p, vec2(sizeNode, halfThick)).min(
+        sdRoundedBox2d(p, vec2(halfThick, sizeNode))
+      )
+      const mask = smoothstep(softnessNode, softnessNode.negate(), d)
+      return mask
+    },
+    order
   )
-  watch(
-    () => size,
-    (v) => {
-      sizeNode.value = v
-    }
-  )
-  watch(
-    () => thickness,
-    (v) => {
-      thickNode.value = v
-    }
-  )
-  watch(
-    () => softness,
-    (v) => {
-      softnessNode.value = v
-    }
-  )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const p = uv.sub(0.5)
-    // Horizontal arm and vertical arm — union = min
-    const dH = sdBox2d(p, thickNode.div(2)) // approx — sdBox2d expects a scalar half-size
-    const dV = sdBox2d(p.yx, thickNode.div(2))
-    const d = dH.min(dV)
-    const mask = smoothstep(softnessNode, softnessNode.negate(), d)
-    return vec4(mix(colorANode, colorBNode, mask), float(1))
-  }, order)
 </script>

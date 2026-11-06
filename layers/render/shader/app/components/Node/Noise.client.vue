@@ -6,7 +6,7 @@
     simplexNoise2D,
     voronoi2D,
   } from '#layers/shader/app/shaders/common/noise'
-  import { add, mul, time, uniform, uv, vec2, vec3 } from 'three/tsl'
+  import { add, mul, time, uv, vec2, vec3 } from 'three/tsl'
 
   const {
     id = 'noise',
@@ -31,8 +31,8 @@
   const graph = useShaderGraphContext()
 
   // Create uniforms once
-  const uScale = uniform(scale)
-  const uSpeed = uniform(speed)
+  const uScale = useUniformProp(() => scale)
+  const uSpeed = useUniformProp(() => speed)
 
   // Build TSL node
   function buildNode() {
@@ -41,28 +41,14 @@
     const scaledUV = mul(uvCoord, uScale)
     const animatedUV = add(scaledUV, vec2(t, mul(t, 0.3)))
 
-    let noiseValue
-
-    switch (type) {
-      case 'fbm':
-        noiseValue = fbm2D(animatedUV, { octaves, frequency: 1.0 }).mul(0.5).add(0.5)
-        break
-      case 'voronoi': {
-        const { distance } = voronoi2D(animatedUV, 1.0)
-        noiseValue = distance
-        break
-      }
-      case 'ridged':
-        noiseValue = ridgedFbm2d(animatedUV, { octaves, frequency: 1.0 })
-        break
-      case 'fbm3d':
-        noiseValue = fbm3dSimplex(vec3(scaledUV, t), { octaves }).mul(0.5).add(0.5)
-        break
-      case 'simplex':
-      default:
-        noiseValue = simplexNoise2D(animatedUV).mul(0.5).add(0.5)
-        break
+    const noises = {
+      simplex: () => simplexNoise2D(animatedUV).mul(0.5).add(0.5),
+      fbm: () => fbm2D(animatedUV, { octaves, frequency: 1.0 }).mul(0.5).add(0.5),
+      voronoi: () => voronoi2D(animatedUV, 1.0).distance,
+      ridged: () => ridgedFbm2d(animatedUV, { octaves, frequency: 1.0 }),
+      fbm3d: () => fbm3dSimplex(vec3(scaledUV, t), { octaves }).mul(0.5).add(0.5),
     }
+    const noiseValue = (noises[type] ?? noises.simplex)()
 
     return vec3(noiseValue, noiseValue, noiseValue)
   }
@@ -71,18 +57,6 @@
   graph.register(id, node, order, blend, opacity)
 
   // Watch uniform-driven props (no recompilation)
-  watch(
-    () => scale,
-    (v) => {
-      uScale.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      uSpeed.value = v
-    }
-  )
 
   // Watch topology-changing props (requires graph update)
   watch(

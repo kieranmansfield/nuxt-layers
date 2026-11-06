@@ -1,23 +1,7 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import {
-    abs,
-    Break,
-    clamp,
-    float,
-    Fn,
-    If,
-    Loop,
-    mix,
-    sin,
-    time,
-    uniform,
-    vec3,
-    vec4,
-  } from 'three/tsl'
+  import { abs, Break, clamp, float, Fn, If, Loop, mix, sin, time, vec3, vec4 } from 'three/tsl'
 
   import type { TSLNode } from '../../shaders/types'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     radius = 0.8,
@@ -40,38 +24,11 @@
     order?: number
   }>()
 
-  const radiusNode = uniform(radius)
-  const speedNode = uniform(speed)
+  const radiusNode = useUniformProp(() => radius)
+  const speedNode = useUniformProp(() => speed)
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
-
-  watch(
-    () => radius,
-    (v) => {
-      radiusNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
-  watch(
-    () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
-  )
+  const colorANode = useColorProp(() => colorA)
+  const colorBNode = useColorProp(() => colorB)
 
   const pipeline = useShaderPipelineContext()
 

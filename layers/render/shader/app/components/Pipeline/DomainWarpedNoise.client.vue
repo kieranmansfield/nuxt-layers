@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, time, uniform, vec4 } from 'three/tsl'
+  import { time } from 'three/tsl'
 
   import { domainWarp2D } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   const {
     colorA = '#000000',
@@ -23,57 +21,19 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
-  const scaleNode = uniform(scale)
-  const warpStrNode = uniform(warpStrength)
-  const warpScaleNode = uniform(warpScale)
-  const speedNode = uniform(speed)
-  watch(
+  const scaleNode = useUniformProp(() => scale)
+  const warpStrNode = useUniformProp(() => warpStrength)
+  const warpScaleNode = useUniformProp(() => warpScale)
+  const speedNode = useUniformProp(() => speed)
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const animated = uv.add(time.mul(speedNode))
+      const n = domainWarp2D(animated.mul(scaleNode), warpStrNode, warpScaleNode).mul(0.5).add(0.5)
+      return n
+    },
+    order
   )
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => warpStrength,
-    (v) => {
-      warpStrNode.value = v
-    }
-  )
-  watch(
-    () => warpScale,
-    (v) => {
-      warpScaleNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const animated = uv.add(time.mul(speedNode))
-    const n = domainWarp2D(animated.mul(scaleNode), warpStrNode, warpScaleNode).mul(0.5).add(0.5)
-    return vec4(mix(colorANode, colorBNode, n), float(1))
-  }, order)
 </script>

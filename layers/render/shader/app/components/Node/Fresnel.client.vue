@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { cameraPosition, normalView, positionWorld, pow, sub, uniform, vec3 } from 'three/tsl'
+  import { cameraPosition, normalView, positionWorld, pow, sub, vec3 } from 'three/tsl'
 
   const {
     id = 'fresnel',
@@ -18,7 +18,7 @@
   const graph = useShaderGraphContext()
 
   // Create uniforms once
-  const uPower = uniform(power)
+  const uPower = useUniformProp(() => power)
 
   // Build fresnel node
   const viewDirection = positionWorld.sub(cameraPosition).normalize()
@@ -26,13 +26,6 @@
   const node = vec3(fresnelFactor, fresnelFactor, fresnelFactor)
 
   graph.register(id, node, order, blend, opacity)
-
-  watch(
-    () => power,
-    (v) => {
-      uPower.value = v
-    }
-  )
 
   onUnmounted(() => {
     graph.unregister(id)

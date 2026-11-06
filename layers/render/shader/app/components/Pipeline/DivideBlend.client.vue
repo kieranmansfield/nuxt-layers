@@ -16,18 +16,12 @@
     const c = new Color(color)
     return uniform(new Vector3(c.r, c.g, c.b))
   })()
-  const opacityNode = uniform(opacity)
+  const opacityNode = useUniformProp(() => opacity)
   watch(
     () => color,
     (v) => {
       const c = new Color(v)
       colorNode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
-    () => opacity,
-    (v) => {
-      opacityNode.value = v
     }
   )
 

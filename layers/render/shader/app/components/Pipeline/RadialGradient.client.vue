@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { clamp, mix, uniform, vec4 } from 'three/tsl'
+  import { clamp, mix, vec4 } from 'three/tsl'
 
   const {
     colorCenter = '#ffffff',
@@ -14,30 +13,9 @@
     order?: number
   }>()
 
-  const colorCenterVal = new Color(colorCenter)
-  const colorEdgeVal = new Color(colorEdge)
-  const colorCenterNode = uniform(colorCenterVal)
-  const colorEdgeNode = uniform(colorEdgeVal)
-  const radiusNode = uniform(radius)
-
-  watch(
-    () => colorCenter,
-    (v) => {
-      colorCenterNode.value.set(v)
-    }
-  )
-  watch(
-    () => colorEdge,
-    (v) => {
-      colorEdgeNode.value.set(v)
-    }
-  )
-  watch(
-    () => radius,
-    (v) => {
-      radiusNode.value = v
-    }
-  )
+  const colorCenterNode = useColorProp(() => colorCenter)
+  const colorEdgeNode = useColorProp(() => colorEdge)
+  const radiusNode = useUniformProp(() => radius)
 
   const { uvNode } = useShaderPipelineContext()
 

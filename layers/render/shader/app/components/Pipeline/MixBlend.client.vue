@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { smoothstep, uniform, vec4 } from 'three/tsl'
+  import { smoothstep, vec4 } from 'three/tsl'
 
   /**
    * Fades the accumulated pipeline colour toward transparent/black based on
@@ -23,20 +23,8 @@
     order?: number
   }>()
 
-  const edge0Node = uniform(edge0)
-  const edge1Node = uniform(edge1)
-  watch(
-    () => edge0,
-    (v) => {
-      edge0Node.value = v
-    }
-  )
-  watch(
-    () => edge1,
-    (v) => {
-      edge1Node.value = v
-    }
-  )
+  const edge0Node = useUniformProp(() => edge0)
+  const edge1Node = useUniformProp(() => edge1)
 
   const { uvNode } = useShaderPipelineContext()
 

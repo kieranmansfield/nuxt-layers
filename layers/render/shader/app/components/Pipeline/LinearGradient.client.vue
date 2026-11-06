@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { mix, uniform, vec4 } from 'three/tsl'
+  import { mix, vec4 } from 'three/tsl'
 
   const {
     colorA = '#000000',
@@ -14,22 +13,8 @@
     order?: number
   }>()
 
-  const colorAVal = new Color(colorA)
-  const colorBVal = new Color(colorB)
-  const colorANode = uniform(colorAVal)
-  const colorBNode = uniform(colorBVal)
-  watch(
-    () => colorA,
-    (v) => {
-      colorANode.value.set(v)
-    }
-  )
-  watch(
-    () => colorB,
-    (v) => {
-      colorBNode.value.set(v)
-    }
-  )
+  const colorANode = useColorProp(() => colorA)
+  const colorBNode = useColorProp(() => colorB)
 
   const { uvNode } = useShaderPipelineContext()
 

@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     '#layers/motion/types': `${import.meta.dirname}/app/types`,
   },
 
-  compatibilityDate: '2026-06-06',
+  compatibilityDate: '2026-10-27',
 
   typescript: {
     typeCheck: false,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { uniform, vec4 } from 'three/tsl'
+  import { vec4 } from 'three/tsl'
 
   import { tanhTonemap } from '../../shaders/common/tonemapping'
 
@@ -9,13 +9,7 @@
     order?: number
   }>()
 
-  const exposureNode = uniform(exposure)
-  watch(
-    () => exposure,
-    (v) => {
-      exposureNode.value = v
-    }
-  )
+  const exposureNode = useUniformProp(() => exposure)
 
   useShaderStage((prev) => vec4(tanhTonemap(prev.xyz.mul(exposureNode)), prev.w), order)
 </script>

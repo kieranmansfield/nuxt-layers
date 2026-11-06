@@ -24,20 +24,8 @@
     onUnmounted(() => window.removeEventListener('mousemove', onMove))
   })
 
-  const yawRangeNode = uniform(yawRange)
-  const pitchRangeNode = uniform(pitchRange)
-  watch(
-    () => yawRange,
-    (v) => {
-      yawRangeNode.value = v
-    }
-  )
-  watch(
-    () => pitchRange,
-    (v) => {
-      pitchRangeNode.value = v
-    }
-  )
+  const yawRangeNode = useUniformProp(() => yawRange)
+  const pitchRangeNode = useUniformProp(() => pitchRange)
 
   useShaderStage(
     (ray) => {

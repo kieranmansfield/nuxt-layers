@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
+  // fallow-ignore-file code-duplication
   import { Color, DoubleSide } from 'three'
   import { mix, sin, time as tslTime, uniform, uv, vec3 } from 'three/tsl'
   import { MeshBasicNodeMaterial } from 'three/webgpu'
@@ -35,11 +35,11 @@
   }>()
 
   // Create reactive uniforms for all animatable properties
-  const angleUniform = uniform(angle)
-  const speedUniform = uniform(speed)
-  const mouseXUniform = uniform(mouseX)
-  const mouseYUniform = uniform(mouseY)
-  const mouseStrengthUniform = uniform(mouseStrength)
+  const angleUniform = useUniformProp(() => angle)
+  const speedUniform = useUniformProp(() => speed)
+  const mouseXUniform = useUniformProp(() => mouseX)
+  const mouseYUniform = useUniformProp(() => mouseY)
+  const mouseStrengthUniform = useUniformProp(() => mouseStrength)
 
   // Create color uniforms (up to 5 colors supported) - stored as typed array
   const colorUniforms: TSLNode[] = [
@@ -49,12 +49,6 @@
     uniform(new Color(colors[3] || '#ec4899')),
     uniform(new Color(colors[4] || '#ec4899')),
   ]
-
-  watchUniformProp(() => angle, angleUniform)
-  watchUniformProp(() => speed, speedUniform)
-  watchUniformProp(() => mouseX, mouseXUniform)
-  watchUniformProp(() => mouseY, mouseYUniform)
-  watchUniformProp(() => mouseStrength, mouseStrengthUniform)
 
   watch(
     () => colors,

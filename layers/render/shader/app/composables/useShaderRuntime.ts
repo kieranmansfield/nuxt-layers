@@ -2,6 +2,8 @@ import type { InjectionKey } from 'vue'
 import { Color } from 'three'
 import { uniform } from 'three/tsl'
 
+import type { AmbientUniforms } from './useAmbientMaterials'
+
 export type ShaderRuntimeOptions = {
   speed?: number
   accentColor?: string
@@ -90,4 +92,36 @@ export function useShaderRuntimeContext(): ShaderRuntime {
     throw new Error('useShaderRuntimeContext() must be used inside a <ShaderRuntime> component')
   }
   return runtime
+}
+
+/** Feeds the enclosing runtime's mouse into these uniforms. Outside a runtime they keep their value. */
+export function useRuntimeMouse(uniforms: {
+  mouseX: { value: number }
+  mouseY: { value: number }
+}) {
+  try {
+    const { mouse } = useShaderRuntimeContext()
+    watch(
+      () => [mouse.mouseX.value, mouse.mouseY.value],
+      ([mx, my]) => {
+        uniforms.mouseX.value = mx ?? 0.5
+        uniforms.mouseY.value = my ?? 0.5
+      },
+      { immediate: true }
+    )
+  } catch {
+    // No runtime: mouse can be set externally
+  }
+}
+
+/** Wires an ambient preset's uniforms to its props and the runtime's mouse. */
+export function useAmbientControls(
+  uniforms: AmbientUniforms,
+  props: { speed: () => number; intensity: () => number; mouseInteraction: () => boolean },
+  mouseStrength: number
+) {
+  useRuntimeMouse(uniforms)
+  watchUniformProp(props.speed, uniforms.speed)
+  watchUniformProp(props.intensity, uniforms.intensity)
+  watchUniformProp(props.mouseInteraction, uniforms.mouseStrength, (on) => (on ? mouseStrength : 0))
 }

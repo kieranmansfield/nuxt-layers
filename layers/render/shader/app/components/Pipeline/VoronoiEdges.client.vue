@@ -1,9 +1,8 @@
 <script setup lang="ts">
-  import { Color } from 'three'
-  import { float, mix, smoothstep, time, uniform, vec4 } from 'three/tsl'
+  // fallow-ignore-file code-duplication
+  import { smoothstep, time } from 'three/tsl'
 
   import { voronoi2D } from '../../shaders/common/noise'
-  import { hexToVec3Uniform } from '../../utils/tsl/color'
 
   /** Voronoi cell edge lines only — the cell boundaries as thin lines. */
   const {
@@ -25,51 +24,19 @@
     order?: number
   }>()
 
-  const colorANode = hexToVec3Uniform(colorA)
-  const colorBNode = hexToVec3Uniform(colorB)
-  const scaleNode = uniform(scale)
-  const edgeNode = uniform(edgeWidth)
-  const speedNode = uniform(speed)
-  watch(
+  const scaleNode = useUniformProp(() => scale)
+  const edgeNode = useUniformProp(() => edgeWidth)
+  const speedNode = useUniformProp(() => speed)
+
+  useColorMixStage(
     () => colorA,
-    (v) => {
-      const c = new Color(v)
-      colorANode.value.set(c.r, c.g, c.b)
-    }
-  )
-  watch(
     () => colorB,
-    (v) => {
-      const c = new Color(v)
-      colorBNode.value.set(c.r, c.g, c.b)
-    }
+    (uv) => {
+      const { distance } = voronoi2D(uv.add(time.mul(speedNode)), scaleNode)
+      // Edge = near-zero distance → smooth threshold
+      const edge = smoothstep(edgeNode, edgeNode.mul(0.1), distance)
+      return edge
+    },
+    order
   )
-  watch(
-    () => scale,
-    (v) => {
-      scaleNode.value = v
-    }
-  )
-  watch(
-    () => edgeWidth,
-    (v) => {
-      edgeNode.value = v
-    }
-  )
-  watch(
-    () => speed,
-    (v) => {
-      speedNode.value = v
-    }
-  )
-
-  const pipeline = useShaderPipelineContext()
-
-  useShaderStage(() => {
-    const uv = pipeline.uvNode.value
-    const { distance } = voronoi2D(uv.add(time.mul(speedNode)), scaleNode)
-    // Edge = near-zero distance → smooth threshold
-    const edge = smoothstep(edgeNode, edgeNode.mul(0.1), distance)
-    return vec4(mix(colorANode, colorBNode, edge), float(1))
-  }, order)
 </script>
