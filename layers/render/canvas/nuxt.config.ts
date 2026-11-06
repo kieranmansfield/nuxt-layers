@@ -143,7 +143,7 @@ export default defineNuxtConfig({
     name: 'canvas',
   },
 
-  compatibilityDate: '2026-06-06',
+  compatibilityDate: '2026-10-27',
 
   extends: ['../../core'],
 

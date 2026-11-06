@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     '#layers/animations': import.meta.dirname,
   },
 
-  compatibilityDate: '2026-06-06',
+  compatibilityDate: '2026-10-27',
 
   typescript: {
     typeCheck: false,

@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     '#layers/metadata-tmdb': import.meta.dirname,
   },
 
-  compatibilityDate: '2026-06-30',
+  compatibilityDate: '2026-10-27',
 
   runtimeConfig: {
     metadataTmdb: {

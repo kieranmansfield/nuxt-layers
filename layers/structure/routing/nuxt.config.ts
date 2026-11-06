@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     '#layers/routing/types': `${import.meta.dirname}/app/types`,
   },
 
-  compatibilityDate: '2026-01-30',
+  compatibilityDate: '2026-10-27',
 
   typescript: {
     typeCheck: false,

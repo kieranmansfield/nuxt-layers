@@ -13,7 +13,7 @@ export default defineNuxtConfig({
 
   css: ['#layers/grid/app/assets/css/grid.css'],
 
-  compatibilityDate: '2026-01-20',
+  compatibilityDate: '2026-10-27',
 
   typescript: {
     typeCheck: false,
