@@ -32,6 +32,7 @@ left out.
 | `layers/content/app/components/Gallery/Page.vue`                           | page      |
 | `layers/content/app/components/Gallery/SlugPage.vue`                       | page      |
 | `layers/content/app/components/NuxtContent/Detail.vue`                     | template  |
+| `layers/content/app/components/NuxtContent/DetailTemplate.vue`             | template  |
 | `layers/content/app/components/NuxtContent/IndexTemplate.vue`              | template  |
 | `layers/content/app/components/NuxtContent/List.vue`                       | organism  |
 | `layers/content/app/components/NuxtContent/Surround.vue`                   | molecule  |
@@ -117,11 +118,8 @@ left out.
 | `layers/structure/layout/app/components/VStack.vue`                        | atom      |
 | `layers/structure/layout/app/components/ZStack.vue`                        | atom      |
 | `layers/structure/navigation/app/components/Links/Group.vue`               | behaviour |
-| `layers/structure/navigation/app/components/Links/Named.vue`               | atom      |
 | `layers/structure/navigation/app/components/Mast/Footer.vue`               | organism  |
 | `layers/structure/navigation/app/components/Mast/Header.vue`               | organism  |
 | `layers/structure/navigation/app/components/Mast/Nav.vue`                  | organism  |
 | `layers/structure/navigation/app/components/Mast/NavModal.vue`             | organism  |
 | `layers/structure/navigation/app/components/Site/Logo.vue`                 | atom      |
-| `layers/structure/navigation/app/components/Site/Subtitle.vue`             | atom      |
-| `layers/structure/navigation/app/components/Site/Title.vue`                | atom      |

@@ -4,6 +4,50 @@ This file is the entry point for the layer-by-layer Fallow refactor handoff. Eac
 
 Use the split documents instead of one combined warning list. They separate complexity work from duplication work and identify whether the likely extraction target is a component, composable, utility, or local refactor.
 
+## Latest Rerun (6 Nov 2026)
+
+Fallow 2.92.1, on `feat/flip-views` at `8e469e8` plus uncommitted review fixes, after the tier
+reorg. The split documents below still use the old flat paths and the 3 Sep numbers. Use them for
+the refactor approach, and these numbers for current size.
+
+| Measure                      | Result                                 |
+| ---------------------------- | -------------------------------------- |
+| Files, functions analysed    | 910, 4,390                             |
+| Functions over a threshold   | 105 (7 critical, 28 high, 70 moderate) |
+| Average cyclomatic, p90      | 1.6, 3                                 |
+| Average maintainability      | 93                                     |
+| Duplicated lines             | 5,495 of 78,759 (7.0%)                 |
+| Clone groups, instances      | 140, 380                               |
+| Circular dependencies        | 0                                      |
+| Boundary violations          | 0                                      |
+| Unused files, exports, types | 2, 6, 18                               |
+
+Functions over a threshold, by area:
+
+| Area                       | Findings | Critical | High |
+| -------------------------- | -------- | -------- | ---- |
+| `layers/render/shader`     | 26       | 1        | 8    |
+| `apps/playground`          | 11       | 3        | 1    |
+| `layers/core`              | 10       | 0        | 3    |
+| `layers/motion/animations` | 8        | 0        | 5    |
+| `layers/delivery/capture`  | 7        | 1        | 4    |
+| `layers/motion/scroll`     | 7        | 0        | 0    |
+
+The seven critical findings:
+
+- `getActiveBlocks` in `apps/playground/app/pages/shader-background.vue`
+- `getActiveBlocks` in `apps/playground/app/pages/shader-pipeline-background.vue`
+- the arrow function at line 25 of `apps/playground/app/pages/motion.vue`
+- `main` in `layers/delivery/capture/cli/capture.mjs`
+- `padBlankLinesInComponents` in `layers/content/scripts/format-content.mjs`
+- `cloneSerializable` in `vitest.config.mts`
+- `updatePaperShadingUniforms` in `layers/render/shader/app/shaders/layers/paperShading.ts`
+
+Duplication is concentrated in the shader layer, which appears in 109 of the 140 clone groups. The
+largest clone is 248 lines shared by the two playground shader demo pages, so merging those pages
+removes both the biggest clone and the two worst `getActiveBlocks` findings. The recommended order
+below still holds.
+
 ## Source Data
 
 The audit uses two sources:

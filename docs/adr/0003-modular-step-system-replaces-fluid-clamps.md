@@ -72,3 +72,18 @@ recompute `--step-display` from them on the element. `class="[--display-from:4]
 - `--step-display` still exists at `:root` (TypographyHeadline levels and theming read it). An
   unlayered `--step-display` override on an element still beats the utility's, so existing
   overrides keep working.
+
+## Amendment (2026-11-06): which layers use the step scale
+
+Atomic audit AD-11 asked whether every `text-*` use should move to `text-step-*`, and whether
+the step tokens should move into `core`. Neither: the split is the design.
+
+- `text-step-*` is for reading and display type: prose, headings, hero text. It lives with
+  `typography`.
+- Tailwind's `text-*` is for UI chrome: labels, captions, card metadata and anything sitting
+  beside Nuxt UI, whose own sizes are also fixed. Body is 20 to 24px on the step scale, so
+  sweeping chrome onto it would resize the interface without improving its proportions.
+- `core`, `layout`, `content` and `feeds` keep `text-*` for chrome. A consumer can still use
+  `text-step-*` anywhere: `core.css` imports `typography.css` into the one Tailwind build root, so
+  the utilities exist whether or not the `typography` layer is loaded.
+- `typography.css` stays in the typography layer and keeps its relative import from `core.css`.
