@@ -162,6 +162,11 @@ export default defineNuxtConfig({
         'three/webgpu',
         '@unhead/schema-org/vue',
         'baseline-status',
+        // Only reached through lazy page chunks, which the dep scanner misses. Discovered at
+        // runtime instead, they trigger a re-bundle that strands the open tab on stale chunks
+        // (two Vue copies → hydration mismatch, "useHead() was called without provide context")
+        '@tresjs/cientos',
+        'zod',
       ],
     },
     ssr: {
