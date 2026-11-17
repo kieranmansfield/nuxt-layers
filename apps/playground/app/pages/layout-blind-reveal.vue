@@ -28,7 +28,7 @@
     const footer = document.querySelector<HTMLElement>('[data-blind-footer]')
     if (!footer || contentSections.length === 0) return
 
-    const lastContent = contentSections[contentSections.length - 1]
+    const lastContent = contentSections.at(-1)
 
     ctx = gsap.context(() => {
       gsap.fromTo(

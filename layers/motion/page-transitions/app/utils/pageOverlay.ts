@@ -3,7 +3,7 @@ import type { PageOverlay } from '../types'
 const ID = 'page-transition-overlay'
 
 export function getPageOverlay(): PageOverlay {
-  let el = document.getElementById(ID)
+  let el = document.querySelector<HTMLElement>(`#${ID}`)
   if (!el) {
     el = document.createElement('div')
     el.id = ID
@@ -26,5 +26,5 @@ export function getPageOverlay(): PageOverlay {
 }
 
 export function clearPageOverlay() {
-  document.getElementById(ID)?.replaceChildren()
+  document.querySelector(`#${ID}`)?.replaceChildren()
 }

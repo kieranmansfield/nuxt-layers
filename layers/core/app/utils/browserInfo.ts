@@ -92,8 +92,8 @@ export function parseBrowserInfo(userAgent?: string | null): ParsedBrowserInfo {
 export function getBrowserVersionParts(version: string) {
   const [major = '0', minor = '0'] = version.split('.')
   return {
-    major: Number.parseInt(major, 10) || 0,
-    minor: Number.parseInt(minor, 10) || 0,
+    major: Math.trunc(Number(major)) || 0,
+    minor: Math.trunc(Number(minor)) || 0,
   }
 }
 
@@ -105,7 +105,10 @@ export function isBrowserAtLeast(version: string, minVersion: string): boolean {
   if (!minMajor) return false
 
   const required = {
+    // Caller-supplied, so keep parseInt's tolerance of suffixes ('17a', '4-beta'); Number gives NaN
+    // oxlint-disable-next-line prefer-number-coercion
     major: Number.parseInt(minMajor, 10) || 0,
+    // oxlint-disable-next-line prefer-number-coercion
     minor: Number.parseInt(minMinor, 10) || 0,
   }
 

@@ -16,6 +16,17 @@ function fmtN(n: number): string {
   return Number.isInteger(n) ? String(n) : n.toFixed(2)
 }
 
+function pipelineSnippet(blocks: string[]): string {
+  return [
+    '<ShaderPipelineContext>',
+    '  <div class="hidden" aria-hidden="true">',
+    ...blocks.map((b) => `    ${b}`),
+    '  </div>',
+    '  <ShaderCanvas :webgpu="true" />',
+    '</ShaderPipelineContext>',
+  ].join('\n')
+}
+
 export function useShaderBackgroundDemo<
   G extends { colorB: string; vignetteIntensity: number },
   M extends { warpSpeed: number; speed: number },
@@ -409,17 +420,6 @@ export function useShaderBackgroundDemo<
   /** Copy-code blocks for the presets both pages share; [] for page-specific ones. */
   function sharedBlocks(cat: PipelineBgCategory): string[] {
     return sharedBlockBuilders[cat][activeIds.value[cat]]?.() ?? []
-  }
-
-  function pipelineSnippet(blocks: string[]): string {
-    return [
-      '<ShaderPipelineContext>',
-      '  <div class="hidden" aria-hidden="true">',
-      ...blocks.map((b) => `    ${b}`),
-      '  </div>',
-      '  <ShaderCanvas :webgpu="true" />',
-      '</ShaderPipelineContext>',
-    ].join('\n')
   }
 
   const { copied, copy } = useClipboard({ copiedDuring: 2000 })

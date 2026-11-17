@@ -10,6 +10,10 @@ function downloadText(content: string, filename: string, mimeType = 'text/plain'
   URL.revokeObjectURL(url)
 }
 
+async function copyToClipboard(text: string) {
+  await navigator.clipboard.writeText(text)
+}
+
 export function useExport() {
   const { state } = useBrandState()
 
@@ -35,10 +39,6 @@ export function useExport() {
 
   function exportJson() {
     downloadText(generateJson(), 'brand-config.json', 'application/json')
-  }
-
-  async function copyToClipboard(text: string) {
-    await navigator.clipboard.writeText(text)
   }
 
   return {

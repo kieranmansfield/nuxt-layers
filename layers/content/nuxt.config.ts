@@ -58,7 +58,7 @@ export default defineNuxtConfig({
     },
   },
 
-  ...(studioModule.length && {
+  ...(studioModule.length > 0 && {
     studio: {
       editor: {
         components: { groups: studioComponentGroups, ungrouped: 'omit' as const },

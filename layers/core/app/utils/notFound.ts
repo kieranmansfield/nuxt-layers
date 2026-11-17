@@ -38,7 +38,7 @@ export function resolveNotFoundActions(config: NotFoundConfig, onBack: () => voi
     })
   }
 
-  return [...actions, ...(config.actions ?? []).map(toButtonProps)]
+  return [...actions, ...(config.actions ?? []).map((action) => toButtonProps(action))]
 }
 
 /** Fills `coreLayer.notFound` with the 404 page's defaults. */

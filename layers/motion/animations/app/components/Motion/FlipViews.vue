@@ -18,8 +18,8 @@
    *
    * @example
    * <MotionFlipViews :view="view" :flip="{ stagger: 0.02 }">
-   *   <template #cards><img :data-flip-id="`${id}:media`" /></template>
-   *   <template #list><img :data-flip-id="`${id}:media`" class="size-8" /></template>
+   *   <template #cards><img :data-flip-id="`${id}:media`" alt="" /></template>
+   *   <template #list><img :data-flip-id="`${id}:media`" class="size-8" alt="" /></template>
    * </MotionFlipViews>
    */
   import type { FlipTimeline, FlipVars } from '../../composables/useFlip'
@@ -56,7 +56,7 @@
   // Whatever has no tag and no tagged descendant, so it can fade without fading a morph inside it
   function untagged(el: Element): Element[] {
     return [...el.children].flatMap((child) => {
-      if (child.hasAttribute('data-flip-id')) return []
+      if ((child as HTMLElement).dataset.flipId !== undefined) return []
       return child.querySelector('[data-flip-id]') ? untagged(child) : [child]
     })
   }
@@ -65,8 +65,9 @@
     const half = duration / 2
     const fadeOut = untagged(from)
     const fadeIn = untagged(to)
-    if (fadeOut.length) timeline.to(fadeOut, { opacity: 0, duration: half, ease: 'power1.out' }, 0)
-    if (fadeIn.length) {
+    if (fadeOut.length > 0)
+      timeline.to(fadeOut, { opacity: 0, duration: half, ease: 'power1.out' }, 0)
+    if (fadeIn.length > 0) {
       timeline.fromTo(
         fadeIn,
         { opacity: 0 },

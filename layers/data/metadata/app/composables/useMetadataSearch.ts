@@ -39,7 +39,7 @@ export function useMetadataSearch(
           q: q.value,
           ...(mt.value ? { mediaType: mt.value } : {}),
           ...(providerList.value ? { providers: providerList.value } : {}),
-          ...(limitValue.value !== undefined ? { limit: limitValue.value } : {}),
+          ...(limitValue.value === undefined ? {} : { limit: limitValue.value }),
         },
       }) as Promise<MetadataSearchResult[]>
     },

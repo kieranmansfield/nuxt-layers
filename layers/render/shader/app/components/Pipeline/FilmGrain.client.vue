@@ -43,7 +43,7 @@
     const h1 = p.dot(k1).sin().mul(43758.5453).fract()
     const h2 = p.add(t.mul(0.3)).dot(k2).sin().mul(43758.5453).fract()
     // Raw [0,1] noise from vector length, normalised by max possible (√2)
-    const raw = vec2(h1, h2).length().mul(float(0.7071))
+    const raw = vec2(h1, h2).length().mul(float(Math.SQRT1_2))
 
     const mixFactor = intensityNode.mul(opacityNode)
     const blended = blendGrain(blendMode, prev.xyz, raw, mixFactor, () =>

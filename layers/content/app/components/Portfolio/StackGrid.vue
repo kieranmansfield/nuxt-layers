@@ -19,7 +19,7 @@
     title?: string
   }>()
 
-  const cards = computed(() => items.map(resolveStackItem))
+  const cards = computed(() => items.map((item) => resolveStackItem(item)))
 
   const placements = computed(() =>
     cards.value.map((_, index) => ({

@@ -19,7 +19,7 @@ test('tagged elements travel to their match, then only the new view remains', as
     widths.push(await media.evaluate((e) => e.getBoundingClientRect().width))
     await page.waitForTimeout(60)
   }
-  expect(new Set(widths.map(Math.round)).size).toBeGreaterThan(2)
+  expect(new Set(widths.map((w) => Math.round(w))).size).toBeGreaterThan(2)
 
   await expect(views(page)).toHaveCount(1)
   await expect(views(page)).toHaveAttribute('data-view', 'list')
@@ -51,7 +51,7 @@ test('useFlip morphs the same elements when the source changes', async ({ page }
     lefts.push(await item.evaluate((e) => e.getBoundingClientRect().left))
     await page.waitForTimeout(60)
   }
-  expect(new Set(lefts.map(Math.round)).size).toBeGreaterThan(2)
+  expect(new Set(lefts.map((l) => Math.round(l))).size).toBeGreaterThan(2)
 })
 
 test('reduced motion swaps instantly', async ({ browser }) => {

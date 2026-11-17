@@ -33,7 +33,7 @@
           {{ asPortfolio(item).year }}
         </UBadge>
         <UBadge
-          v-for="tag in asPortfolio(item).tags"
+          v-for="tag in (item as PortfolioCollectionItem).tags"
           :key="tag"
           color="neutral"
           variant="subtle"

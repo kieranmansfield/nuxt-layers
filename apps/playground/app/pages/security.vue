@@ -66,6 +66,7 @@
       vector: "eval('window.__probe_eval = true')",
       run: () => {
         try {
+          // oxlint-disable-next-line no-eval -- probe: demonstrates CSP blocking eval
           eval('window.__probe_eval = true')
         } catch {
           // CSP refusal throws EvalError — the flag staying false is the result.
@@ -102,7 +103,9 @@
     lastViolation = ''
     probe.run()
     // Violation events and onerror both fire async.
-    await new Promise((r) => setTimeout(r, 300))
+    await new Promise((r) => {
+      setTimeout(r, 300)
+    })
     probe.status = w()[`__probe_${probe.id}`] ? 'ran' : 'blocked'
     probe.directive = lastViolation || undefined
   }

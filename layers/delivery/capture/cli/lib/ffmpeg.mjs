@@ -16,7 +16,7 @@ function playwrightFfmpeg() {
   ].filter(Boolean)
   for (const root of roots) {
     if (!existsSync(root)) continue
-    for (const d of readdirSync(root).filter((d) => d.startsWith('ffmpeg-'))) {
+    for (const d of readdirSync(root).filter((name) => name.startsWith('ffmpeg-'))) {
       const bin = join(root, d, BUNDLED[platform()] ?? 'ffmpeg')
       if (existsSync(bin)) return bin
     }

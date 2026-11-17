@@ -29,7 +29,7 @@ const BREAKPOINT_GROUPS = [
 export function buildResponsiveSizesQueries(sizes: ResponsiveSizes): string[] {
   const breakpoints = BREAKPOINT_GROUPS.filter(([key]) => sizes[key])
     .map(([key, value]) => ({ key, value }))
-    .sort((a, b) => b.value - a.value)
+    .toSorted((a, b) => b.value - a.value)
 
   const queries: string[] = []
 

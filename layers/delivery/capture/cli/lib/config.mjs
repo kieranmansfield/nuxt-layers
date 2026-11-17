@@ -92,7 +92,7 @@ export function frontMatter(md) {
  * The site name is the file name, so captures land next to the matching content entry.
  */
 export async function sitesFromContent(dir, { field = 'link' } = {}) {
-  const files = (await readdir(dir)).filter((f) => f.endsWith('.md')).sort()
+  const files = (await readdir(dir)).filter((f) => f.endsWith('.md')).toSorted()
   const sites = []
   for (const f of files) {
     const data = frontMatter(await readFile(join(dir, f), 'utf8'))
@@ -124,7 +124,7 @@ export async function loadConfig(path) {
 export function resolveSite(config, site, overrides = {}) {
   const r = merge(DEFAULTS, { ...config, sites: undefined }, site, overrides)
   if (!r.url) throw new Error(`Site "${r.name ?? '?'}" has no url`)
-  r.name ??= new URL(r.url).hostname.replace(/^www\./, '').replace(/\./g, '-')
+  r.name ??= new URL(r.url).hostname.replace(/^www\./, '').replaceAll('.', '-')
   // a config can drop a default device with `devices: { mobile: false }`
   r.devices = Object.fromEntries(Object.entries(r.devices).filter(([, d]) => d))
   return r

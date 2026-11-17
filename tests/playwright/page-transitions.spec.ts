@@ -46,7 +46,7 @@ test('morph animates the shared data-flip-id box between pages', async ({ page }
     )
     await page.waitForTimeout(80)
   }
-  expect(new Set(widths.map(Math.round)).size).toBeGreaterThan(2)
+  expect(new Set(widths.map((w) => Math.round(w))).size).toBeGreaterThan(2)
   await expect(page.locator('html.is-page-transitioning')).toHaveCount(0)
 })
 

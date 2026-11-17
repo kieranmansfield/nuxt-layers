@@ -13,7 +13,7 @@ import { pathToFileURL } from 'node:url'
 const args = process.argv.slice(2)
 const check = args.includes('--check')
 const dirs = args.filter((arg) => !arg.startsWith('--'))
-if (!dirs.length) dirs.push('content')
+if (dirs.length === 0) dirs.push('content')
 
 async function loadComark() {
   let studioEntry
@@ -53,7 +53,9 @@ function padBlankLinesInComponents(markdown) {
     const line = lines[i]
     if (fence) {
       if (fence.closing.test(line)) fence = undefined
-      else if (!line.trim() && components.length) blanks.push({ index: i, indent: fence.indent })
+      else if (!line.trim() && components.length > 0) {
+        blanks.push({ index: i, indent: fence.indent })
+      }
       continue
     }
     if (inProps) {
@@ -78,9 +80,9 @@ function padBlankLinesInComponents(markdown) {
       }
       continue
     }
-    if (COMPONENT_CLOSING.test(line) && components.length) {
+    if (COMPONENT_CLOSING.test(line) && components.length > 0) {
       components.pop()
-      if (components.length) continue
+      if (components.length > 0) continue
       if (hasIndentedFence) {
         for (const { index, indent } of blanks) lines[index] = indent
       }
@@ -88,7 +90,9 @@ function padBlankLinesInComponents(markdown) {
       hasIndentedFence = false
       continue
     }
-    if (!line.trim() && components.length) blanks.push({ index: i, indent: components.at(-1) })
+    if (!line.trim() && components.length > 0) {
+      blanks.push({ index: i, indent: components.at(-1) })
+    }
   }
   return lines.join('\n')
 }
@@ -98,9 +102,9 @@ function sortAttributes(node) {
   if (!Array.isArray(node) || node[0] === null) return node
   const [tag, attrs, ...children] = node
   const sorted = Object.fromEntries(
-    Object.entries(attrs ?? {}).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+    Object.entries(attrs ?? {}).toSorted(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
   )
-  return [tag, sorted, ...children.map(sortAttributes)]
+  return [tag, sorted, ...children.map((child) => sortAttributes(child))]
 }
 
 async function* markdownFiles(dir) {
@@ -142,14 +146,14 @@ for (const dir of dirs) {
   }
 }
 
-if (check && changed.length) {
+if (check && changed.length > 0) {
   console.error(
     `Not in canonical Comark formatting (run content:format):\n  ${changed.join('\n  ')}`
   )
   process.exit(1)
 }
 console.log(
-  changed.length
+  changed.length > 0
     ? `${check ? 'Would format' : 'Formatted'} ${changed.length} file(s):\n  ${changed.join('\n  ')}`
     : 'All content files are in canonical Comark formatting.'
 )

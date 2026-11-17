@@ -94,9 +94,9 @@ async function main() {
     const wanted = list(opts.site)
     sites = sites.filter((s) => wanted.includes(s.name))
     const missing = wanted.filter((n) => !sites.some((s) => s.name === n))
-    if (missing.length) throw new Error(`Unknown site(s): ${missing.join(', ')}`)
+    if (missing.length > 0) throw new Error(`Unknown site(s): ${missing.join(', ')}`)
   }
-  if (!sites.length) {
+  if (sites.length === 0) {
     throw new Error(
       file ? `No sites in ${file}` : 'No capture.config.mjs here: pass --url or --config'
     )
@@ -165,7 +165,9 @@ async function main() {
   }
 }
 
-main().catch((e) => {
+try {
+  await main()
+} catch (e) {
   console.error(`✗ ${e.message}`)
   process.exit(1)
-})
+}

@@ -27,9 +27,9 @@ async function setSlider(page: Page, label: string, value: number) {
 async function pixels(page: Page): Promise<number[]> {
   const png = (await page.locator('canvas').first().screenshot()).toString('base64')
   return page.evaluate(
-    async ({ png, size }) => {
+    async ({ png: base64, size }) => {
       const image = new Image()
-      image.src = `data:image/png;base64,${png}`
+      image.src = `data:image/png;base64,${base64}`
       await image.decode()
       const canvas = document.createElement('canvas')
       canvas.width = canvas.height = size
@@ -42,11 +42,12 @@ async function pixels(page: Page): Promise<number[]> {
   )
 }
 
+const bright = (n: number) => n > 128
+
 /** Fraction of the canvas the bright shape spans along a row and a column through UV (x, y). */
 function spans(grey: number[], x = 0.5, y = 0.5) {
   const col = Math.floor(x * SAMPLE)
   const row = Math.floor((1 - y) * SAMPLE)
-  const bright = (n: number) => n > 128
   let across = 0
   let down = 0
   for (let i = 0; i < SAMPLE; i++) {
@@ -71,6 +72,19 @@ function brightnessAt(grey: number[], x: number, y: number, radius = 0.015) {
     }
   }
   return total / count
+}
+
+// Ghost centres for the default source (0.7, 0.8), by `at` from the LensFlare component's table
+const ghostAt = (at: number): [number, number] => [0.7 - 0.2 * at, 0.8 - 0.3 * at]
+
+const lift = (grey: number[], at: number) => {
+  const [x, y] = ghostAt(at)
+  // Against a ring just outside the ghost, so the moving noise behind it cancels out
+  const ring = [0, 1, 2, 3].map((i) => {
+    const angle = (i * Math.PI) / 2
+    return brightnessAt(grey, x + Math.cos(angle) * 0.1, y + Math.sin(angle) * 0.1)
+  })
+  return brightnessAt(grey, x, y) - ring.reduce((sum, n) => sum + n, 0) / ring.length
 }
 
 test('Rectangle honours width and height independently', async ({ page }) => {
@@ -121,18 +135,6 @@ test('Cross has arms set by size and thickness, and empty corners', async ({ pag
 test('LensFlare shows exactly ghostCount ghosts', async ({ page }) => {
   await open(page, 'Lighting', 'Lens Flare')
   await setSlider(page, 'Intensity', 1)
-
-  // Ghost centres for the default source (0.7, 0.8), by `at` from the component's table
-  const ghostAt = (at: number): [number, number] => [0.7 - 0.2 * at, 0.8 - 0.3 * at]
-  const lift = (grey: number[], at: number) => {
-    const [x, y] = ghostAt(at)
-    // Against a ring just outside the ghost, so the moving noise behind it cancels out
-    const ring = [0, 1, 2, 3].map((i) => {
-      const angle = (i * Math.PI) / 2
-      return brightnessAt(grey, x + Math.cos(angle) * 0.1, y + Math.sin(angle) * 0.1)
-    })
-    return brightnessAt(grey, x, y) - ring.reduce((sum, n) => sum + n, 0) / ring.length
-  }
 
   await setSlider(page, 'Ghost Count', 1)
   let grey = await pixels(page)

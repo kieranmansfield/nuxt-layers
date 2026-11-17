@@ -38,7 +38,7 @@ export function toColumnsCss(config: TrackConfig): string {
     parts.push(`minmax(${minWidth}, ${segment.size}fr)`)
   })
 
-  const lastSegment = segments[segments.length - 1]
+  const lastSegment = segments.at(-1)
   const trailBracket = toBracket(normalizeNames(lastSegment?.lineEnd))
   if (trailBracket) parts.push(trailBracket)
 

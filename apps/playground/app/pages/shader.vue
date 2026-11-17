@@ -29,6 +29,7 @@
     { id: 'math', label: 'Math', icon: 'i-lucide-calculator' },
     { id: 'uv', label: 'UV & Grain', icon: 'i-lucide-move' },
   ] as const
+  const overviewCategories = categories.filter((c) => c.id !== 'overview')
 
   // Mouse interaction state
   const mouseX = ref(0.5)
@@ -552,7 +553,7 @@
 
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               <div
-                v-for="cat in categories.filter((c) => c.id !== 'overview')"
+                v-for="cat in overviewCategories"
                 :key="cat.id"
                 class="bg-accented/50 border-accented group hover:border-primary/50 cursor-pointer rounded-2xl border p-6 transition-colors"
                 @click="() => (activeCategory = cat.id)"

@@ -1,3 +1,11 @@
+function smoothScroll() {
+  try {
+    return useSmoothScroll().locomotiveScroll
+  } catch {
+    return undefined
+  }
+}
+
 /**
  * Shared open state for the site nav. Plain `useState`, not an overlay: layouts and triggers read
  * `isOpen`, and `<MastNavModal />` (rendered once by the layout) binds to it. Any number of
@@ -9,14 +17,6 @@
  */
 export function useMastNav() {
   const isOpen = useState('mast-nav:open', () => false)
-
-  function smoothScroll() {
-    try {
-      return useSmoothScroll().locomotiveScroll
-    } catch {
-      return undefined
-    }
-  }
 
   function open() {
     const scroll = smoothScroll()

@@ -52,7 +52,7 @@ export function gradient3(
   t: TSLNode,
   ...colors: [color1: TSLNode | string, color2: TSLNode | string, color3: TSLNode | string]
 ): TSLNode {
-  const [c1, c2, c3] = colors.map(toColorNode)
+  const [c1, c2, c3] = colors.map((c) => toColorNode(c))
 
   const tClamped = clamp(t, 0, 1)
   const first = mix(c1, c2, clamp(tClamped.mul(2), 0, 1))
@@ -73,7 +73,7 @@ export function gradient4(
     color4: TSLNode | string,
   ]
 ): TSLNode {
-  const [c1, c2, c3, c4] = colors.map(toColorNode)
+  const [c1, c2, c3, c4] = colors.map((c) => toColorNode(c))
 
   const tClamped = clamp(t, 0, 1)
 
@@ -96,7 +96,7 @@ export function gradientMulti(t: TSLNode, stops: ColorStop[]): TSLNode {
   }
 
   // Sort stops by position
-  const sortedStops = [...stops].sort((a, b) => a.position - b.position)
+  const sortedStops = stops.toSorted((a, b) => a.position - b.position)
   const [firstStop] = sortedStops
   if (!firstStop) {
     throw new Error('Gradient requires at least 2 color stops')

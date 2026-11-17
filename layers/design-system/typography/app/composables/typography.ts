@@ -101,7 +101,7 @@ export function useTypography(
       // step is the parallel modular-scale namespace (see typography.css) — takes
       // precedence over size when both are set, rather than emitting two
       // conflicting font-size utilities. Checked against undefined: step 0 is valid.
-      p.step !== undefined ? TYPE_STEP_CLASSES[p.step] : getSizeClass(p.size),
+      p.step === undefined ? getSizeClass(p.size) : TYPE_STEP_CLASSES[p.step],
 
       p.align ? `text-${p.align}` : '',
 

@@ -1,4 +1,3 @@
-import { fileURLToPath } from 'node:url'
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import json from '@eslint/json'
 import markdown from '@eslint/markdown'
@@ -15,7 +14,7 @@ import vue from 'eslint-plugin-vue'
 // Node 24 strips TS types natively, so the Vite+ config loads as-is.
 import viteConfig from './vite.config.ts'
 
-const tsconfigRootDir = fileURLToPath(new URL('.', import.meta.url))
+const tsconfigRootDir = import.meta.dirname
 
 export default defineConfigWithVueTs(
   {

@@ -24,7 +24,7 @@ describe('component levels', () => {
   })
 
   it('uses only known levels', () => {
-    const levels = ['atom', 'behaviour', 'molecule', 'organism', 'template', 'page']
-    expect([...rows.values()].filter((l) => !levels.includes(l))).toEqual([])
+    const levels = new Set(['atom', 'behaviour', 'molecule', 'organism', 'template', 'page'])
+    expect([...rows.values()].filter((l) => !levels.has(l))).toEqual([])
   })
 })

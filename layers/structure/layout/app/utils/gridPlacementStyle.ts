@@ -125,7 +125,7 @@ export function resolveRhythmStyles(density?: Density): PlacementStyle {
 
 export function resolveLayerStyles(layer?: LayerName): PlacementStyle {
   const zIndex = layer ? layerZIndex[layer] : undefined
-  return zIndex !== undefined ? { zIndex: String(zIndex) } : {}
+  return zIndex === undefined ? {} : { zIndex: String(zIndex) }
 }
 
 // fallow-ignore-next-line complexity

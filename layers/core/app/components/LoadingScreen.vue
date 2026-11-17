@@ -48,7 +48,7 @@
   // uncovering the page top-first. If GSAP fails to load the screen just leaves.
   async function onLeave(el: Element, done: () => void): Promise<void> {
     // Releases the scroll lock (see the style block)
-    el.setAttribute('data-leaving', '')
+    ;(el as HTMLElement).dataset.leaving = ''
     if (exit === 'skip') return done()
     try {
       const [{ gsap }, { Flip }] = await loadGsap()

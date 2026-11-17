@@ -71,5 +71,5 @@ function buildAccentRule(accent: AccentName) {
 }
 
 export function buildAccentCSS(): string {
-  return ACCENTS.map(buildAccentRule).join('')
+  return ACCENTS.map((accent) => buildAccentRule(accent)).join('')
 }

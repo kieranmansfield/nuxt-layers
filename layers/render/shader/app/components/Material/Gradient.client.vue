@@ -52,8 +52,8 @@
 
   watch(
     () => colors,
-    (colors) => {
-      colors.forEach((c, i) => {
+    (next) => {
+      next.forEach((c, i) => {
         if (i < colorUniforms.length) {
           colorUniforms[i]!.value = new Color(c)
         }

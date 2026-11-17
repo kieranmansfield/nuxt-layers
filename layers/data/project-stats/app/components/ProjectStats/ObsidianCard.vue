@@ -32,9 +32,9 @@
       ...(s.latestVersion
         ? [{ label: 'Version', value: s.latestVersion, icon: 'i-lucide-tag' }]
         : []),
-      ...(s.latestVersionDownloads !== undefined
-        ? [{ label: 'This version', value: s.latestVersionDownloads, icon: 'i-lucide-package' }]
-        : []),
+      ...(s.latestVersionDownloads === undefined
+        ? []
+        : [{ label: 'This version', value: s.latestVersionDownloads, icon: 'i-lucide-package' }]),
     ]
   })
 

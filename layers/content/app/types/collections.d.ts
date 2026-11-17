@@ -51,5 +51,3 @@ declare module '@nuxt/content' {
     date?: string
   }
 }
-
-export {}

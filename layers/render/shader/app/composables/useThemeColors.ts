@@ -1,5 +1,15 @@
 import { oklchToColor, parseOKLCH } from '../utils/tsl/oklch'
 
+function cssVarToHex(varName: string): string {
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(varName).trim()
+  try {
+    const [l, c, h] = parseOKLCH(raw)
+    return `#${oklchToColor(l, c, h).getHexString()}`
+  } catch {
+    return '#888888'
+  }
+}
+
 export function useThemeColors() {
   const { activeAccent } = useAccentColor()
   const colorMode = useColorMode()
@@ -10,16 +20,6 @@ export function useThemeColors() {
   const primaryLightHex = ref('#a78bfa')
 
   const clearColor = computed(() => (colorMode.value === 'dark' ? '#0a0a0a' : '#f8f8f8'))
-
-  function cssVarToHex(varName: string): string {
-    const raw = getComputedStyle(document.documentElement).getPropertyValue(varName).trim()
-    try {
-      const [l, c, h] = parseOKLCH(raw)
-      return `#${oklchToColor(l, c, h).getHexString()}`
-    } catch {
-      return '#888888'
-    }
-  }
 
   function applyColors() {
     const isDark = colorMode.value === 'dark'

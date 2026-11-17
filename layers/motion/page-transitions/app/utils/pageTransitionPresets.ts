@@ -125,7 +125,7 @@ export const pageTransitionPresets: Record<string, PageTransitionPreset> = {
       tl.from(el, { opacity: 0, duration: ctx.duration * 0.6, ease: 'power1.inOut' }, 0)
       const state = ctx.store.state as ReturnType<typeof ctx.Flip.getState> | undefined
       const targets = el.querySelectorAll('[data-flip-id]')
-      if (state && targets.length) {
+      if (state && targets.length > 0) {
         tl.add(
           ctx.Flip.from(state, {
             targets,

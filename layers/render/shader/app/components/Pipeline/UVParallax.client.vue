@@ -16,13 +16,14 @@
   const mouse = uniform(new Vector2(0, 0))
   const parallaxNode = useUniformProp(() => parallax)
 
+  const onMove = (e: MouseEvent) => {
+    mouse.value.set(
+      (e.clientX / window.innerWidth) * 2 - 1,
+      -((e.clientY / window.innerHeight) * 2 - 1)
+    )
+  }
+
   onMounted(() => {
-    const onMove = (e: MouseEvent) => {
-      mouse.value.set(
-        (e.clientX / window.innerWidth) * 2 - 1,
-        -((e.clientY / window.innerHeight) * 2 - 1)
-      )
-    }
     window.addEventListener('mousemove', onMove)
     onUnmounted(() => window.removeEventListener('mousemove', onMove))
   })

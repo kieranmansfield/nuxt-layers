@@ -6,6 +6,8 @@ import type {
   PageTransitionPreset,
 } from '../types'
 
+const withOnce = (p: PageTransitionPreset) => (p.once ? { ...p, enter: p.once } : p)
+
 export default defineNuxtPlugin({
   name: 'page-transitions:page-transitions',
   setup(nuxtApp) {
@@ -181,7 +183,6 @@ export default defineNuxtPlugin({
     // ponytail: SSR has already painted the page, so it shows for a moment before this starts.
     // A flash-free reveal would need the page hidden in CSS until hydration.
     const onceName = () => (reduced.value ? 'none' : (config?.once ?? 'none'))
-    const withOnce = (p: PageTransitionPreset) => (p.once ? { ...p, enter: p.once } : p)
 
     function playOnce() {
       const name = onceName()

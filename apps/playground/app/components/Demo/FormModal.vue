@@ -22,7 +22,9 @@
   async function submit() {
     if (!name.value || !email.value) return
     loading.value = true
-    await new Promise((r) => setTimeout(r, 800))
+    await new Promise((r) => {
+      setTimeout(r, 800)
+    })
     onSubmit?.({ name: name.value, email: email.value, message: message.value })
     loading.value = false
     name.value = ''

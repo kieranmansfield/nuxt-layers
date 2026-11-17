@@ -11,6 +11,8 @@ export const flipDefaults = {
   nested: true,
 } satisfies FlipVars
 
+const targets = (el: Element) => el.querySelectorAll('[data-flip-id]')
+
 export type UseFlipOptions = {
   /** FLIP whenever this changes. Omit to call `capture()` and `play()` yourself. */
   on?: WatchSource
@@ -44,8 +46,6 @@ export function useFlip(
 
   let state: ReturnType<typeof Flip.getState> | undefined
   let active: FlipTimeline | undefined
-
-  const targets = (el: Element) => el.querySelectorAll('[data-flip-id]')
 
   function settle() {
     locomotiveScroll.value?.resize()

@@ -20,13 +20,13 @@ export function useCollectionItems<K extends keyof Collections>(
   // fallow-ignore-next-line complexity
   const cacheKey = () => {
     const { tags, limit, sortKey, sortDirection = 'desc', filterKey } = toValue(options)
-    const tagKey = (tags ?? []).slice().sort().join(',')
+    const tagKey = (tags ?? []).toSorted().join(',')
     return `${collectionName}-items:${sortKey ?? ''}:${sortDirection}:${tagKey}:${limit ?? ''}:${filterKey ?? ''}`
   }
 
   return useContentData(cacheKey, async () => {
-    const items = (await queryCollection(collectionName).all()).map(
-      hoistFrontmatter
+    const items = (await queryCollection(collectionName).all()).map((item) =>
+      hoistFrontmatter(item)
     ) as AnyCollectionItem[]
 
     // Cast back to the specific collection's item type — selectCollection is

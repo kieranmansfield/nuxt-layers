@@ -36,7 +36,7 @@ export const gradientLinear = Fn(([t, stops]: [TSLNode, GradientStop[]]) => {
   }
 
   // Handle end
-  const lastStop = stops[stops.length - 1]
+  const lastStop = stops.at(-1)
   if (lastStop) {
     result = mix(result, lastStop.color, t.greaterThanEqual(lastStop.position))
   }

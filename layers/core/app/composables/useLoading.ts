@@ -12,6 +12,10 @@ const _loop = {
   done: false,
 }
 
+function updateProgress(value: number): void {
+  _loop.target = Math.max(_loop.target, Math.min(Math.max(value, 0), 99))
+}
+
 /**
  * Loading state composable for app initialization and async operations
  *
@@ -74,10 +78,6 @@ export function useLoading() {
   function stopLoading(): void {
     _loop.done = true
     if (isLoading.value) run()
-  }
-
-  function updateProgress(value: number): void {
-    _loop.target = Math.max(_loop.target, Math.min(Math.max(value, 0), 99))
   }
 
   function finishNow(): void {

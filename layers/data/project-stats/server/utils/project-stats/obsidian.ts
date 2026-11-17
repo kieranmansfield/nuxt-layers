@@ -30,7 +30,10 @@ export type ObsidianManifest = {
 }
 
 function compareVersions(a: string, b: string): number {
+  // parseInt keeps the leading number of parts like "3rc1"; Number() would give NaN (or read "0b1" as binary)
+  // oxlint-disable-next-line unicorn/prefer-number-coercion -- see above
   const pa = a.split(/[.-]/).map((n) => Number.parseInt(n, 10) || 0)
+  // oxlint-disable-next-line unicorn/prefer-number-coercion -- see above
   const pb = b.split(/[.-]/).map((n) => Number.parseInt(n, 10) || 0)
   for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
     const diff = (pa[i] ?? 0) - (pb[i] ?? 0)
@@ -43,7 +46,7 @@ function compareVersions(a: string, b: string): number {
 export function latestStatsVersion(stats: ObsidianStatsEntry): string | undefined {
   return Object.keys(stats)
     .filter((k) => k !== 'downloads' && k !== 'updated')
-    .sort(compareVersions)
+    .toSorted(compareVersions)
     .at(-1)
 }
 

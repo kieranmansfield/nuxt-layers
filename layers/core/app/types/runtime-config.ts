@@ -24,4 +24,5 @@ declare module '@nuxt/schema' {
   }
 }
 
+// oxlint-disable-next-line require-module-specifiers -- makes this file a module so `declare module` augments
 export {}

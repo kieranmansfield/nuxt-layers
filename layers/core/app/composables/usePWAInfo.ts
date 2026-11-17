@@ -1,3 +1,9 @@
+// Update service worker - no-op, handled by PWA module in production
+const updateServiceWorker = async () => {
+  // Service worker updates are handled automatically by @vite-pwa/nuxt in production
+  // This is a no-op placeholder for API consistency
+}
+
 /**
  * PWA composable for managing Progressive Web App functionality
  *
@@ -31,12 +37,6 @@ export function usePWAInfo() {
   const canInstall = computed(() => {
     return !isInstalled.value && deferredPrompt.value !== null
   })
-
-  // Update service worker - no-op, handled by PWA module in production
-  const updateServiceWorker = async () => {
-    // Service worker updates are handled automatically by @vite-pwa/nuxt in production
-    // This is a no-op placeholder for API consistency
-  }
 
   // Initialize PWA detection (client-side only)
   onMounted(() => {

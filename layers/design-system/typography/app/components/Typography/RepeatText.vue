@@ -57,12 +57,12 @@
 
   const rowClasses = computed(() =>
     Array.from({ length: rows }, (_, i) => {
-      const weight = rowWeight(i)
-      const step = rowStep(i)
+      const w = rowWeight(i)
+      const s = rowStep(i)
       return useTypography({
         leading: 'leading-normal',
-        ...(weight !== undefined && { weight }),
-        ...(step !== undefined && { step }),
+        ...(w !== undefined && { weight: w }),
+        ...(s !== undefined && { step: s }),
       }).classes.value
     })
   )
@@ -94,6 +94,9 @@
     return stroke === 'center' && n % 2 === 0 ? n + 1 : n
   }
 
+  // Precomputed so the template's v-for doesn't call rowCopies on every render.
+  const copiesPerRow = computed(() => Array.from({ length: rows }, (_, i) => rowCopies(i)))
+
   const isStrokeCopy = (copy: number, total: number) => {
     if (!stroke) return false
     if (stroke === 'center') return copy !== (total + 1) / 2
@@ -115,8 +118,8 @@
     }"
   >
     <div
-      v-for="i in rows"
-      :key="i - 1"
+      v-for="(copies, r) in copiesPerRow"
+      :key="r"
       ref="containerRefs"
       class="overflow-hidden"
       :class="direction === 'vertical' ? 'h-full' : 'w-full'"
@@ -124,22 +127,22 @@
       <div
         class="flex whitespace-nowrap"
         :class="direction === 'vertical' ? 'flex-col' : 'flex-nowrap'"
-        :style="rowStyle(i - 1)"
+        :style="rowStyle(r)"
       >
-        <template v-for="copy in rowCopies(i - 1)" :key="copy">
+        <template v-for="copy in copies" :key="copy">
           <TypographyTextStroke
-            v-if="isStrokeCopy(copy, rowCopies(i - 1))"
-            :ref="(el) => copy === 1 && setItemRef(el, i - 1)"
-            :text="rowText(i - 1)"
+            v-if="isStrokeCopy(copy, copies)"
+            :ref="(el) => copy === 1 && setItemRef(el, r)"
+            :text="rowText(r)"
             :stroke-width
-            :class="[rowClasses[i - 1], rowColorClasses[i - 1]]"
+            :class="[rowClasses[r], rowColorClasses[r]]"
           />
           <span
             v-else
-            :ref="(el) => copy === 1 && setItemRef(el, i - 1)"
-            :class="[rowClasses[i - 1], rowColorClasses[i - 1]]"
+            :ref="(el) => copy === 1 && setItemRef(el, r)"
+            :class="[rowClasses[r], rowColorClasses[r]]"
           >
-            {{ rowText(i - 1) }}{{ copy < rowCopies(i - 1) ? separator : '' }}
+            {{ rowText(r) }}{{ copy < copies ? separator : '' }}
           </span>
         </template>
       </div>

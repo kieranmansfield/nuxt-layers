@@ -1,11 +1,8 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises'
 import { dirname, relative, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import ts from 'typescript'
 
-const root = resolve(
-  process.env.LAYER_PACKAGE_ROOT ?? resolve(dirname(fileURLToPath(import.meta.url)), '..')
-)
+const root = resolve(process.env.LAYER_PACKAGE_ROOT ?? resolve(import.meta.dirname, '..'))
 const packagePath = resolve(root, 'package.json')
 const packageJson = JSON.parse(await readFile(packagePath, 'utf8'))
 const generated = new Set()
@@ -37,7 +34,7 @@ async function generate(sourcePath) {
     await generate(resolve(dirname(absoluteSource), match[2]))
   }
 
-  const nativeOutput = output.replace(importPattern, (_match, quote, specifier) => {
+  const nativeOutput = output.replaceAll(importPattern, (_match, quote, specifier) => {
     const importedSource = resolve(dirname(absoluteSource), specifier)
     let importedOutput = relative(dirname(outputPath), outputPathFor(importedSource)).replaceAll(
       '\\',

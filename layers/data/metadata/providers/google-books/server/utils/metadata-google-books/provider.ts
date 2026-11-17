@@ -15,7 +15,7 @@ export const googleBooksProvider: MetadataProvider = {
     }
     const q = query + (mediaType ? (subjectHints[mediaType] ?? '') : '')
     const res = await searchGoogleBooks(q, limit)
-    const records = (res.items ?? []).map(normaliseGoogleBooksVolume)
+    const records = (res.items ?? []).map((v) => normaliseGoogleBooksVolume(v))
     return mediaType ? records.filter((r) => r.mediaType === mediaType) : records
   },
 

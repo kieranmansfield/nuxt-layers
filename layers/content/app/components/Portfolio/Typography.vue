@@ -14,6 +14,10 @@
       .split(/[\s,]+/)
       .filter(Boolean)
   }
+
+  const fonts = computed(() =>
+    typography.map((font) => ({ ...font, weightList: weightList(font.weights) }))
+  )
 </script>
 
 <template>
@@ -21,7 +25,7 @@
     <h3 class="text-highlighted text-2xl font-semibold tracking-tight">Typography</h3>
     <div class="grid gap-4 sm:grid-cols-2">
       <div
-        v-for="font in typography"
+        v-for="font in fonts"
         :key="font.name"
         class="border-default/20 flex flex-col gap-6 rounded-lg border p-6"
         :style="{ fontFamily: `'${font.name}', inherit` }"
@@ -36,12 +40,12 @@
           <p>abcdefgh</p>
           <p>0123456789</p>
         </div>
-        <div v-if="weightList(font.weights).length" class="flex flex-wrap items-center gap-4">
+        <div v-if="font.weightList.length" class="flex flex-wrap items-center gap-4">
           <span class="text-muted font-mono text-xs tracking-widest uppercase opacity-50">
             Weights
           </span>
           <span
-            v-for="weight in weightList(font.weights)"
+            v-for="weight in font.weightList"
             :key="weight"
             class="text-muted font-mono text-xs tracking-widest uppercase"
           >

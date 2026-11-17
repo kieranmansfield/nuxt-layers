@@ -25,7 +25,7 @@ export function normaliseOpenLibrarySearchDoc(doc: OpenLibrarySearchDoc): Metada
     mediaType: 'book',
     title: doc.title,
     ...(doc.subtitle && { subtitle: doc.subtitle }),
-    ...(creators.length && { creators }),
+    ...(creators.length > 0 && { creators }),
     ...(doc.publisher?.[0] && { publisher: doc.publisher[0] }),
     ...(doc.first_publish_year && { publishedAt: String(doc.first_publish_year) }),
     ...(doc.cover_i && { coverUrl: openLibraryCoverUrl(doc.cover_i) }),

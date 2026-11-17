@@ -38,8 +38,8 @@ describe('layer server files', () => {
     for (const file of walk('layers')) {
       const src = readFileSync(file, 'utf8')
       const code = src
-        .replace(/^import[\s\S]*?from .*$/gm, '')
-        .replace(/\/\/.*|\/\*[\s\S]*?\*\//g, '')
+        .replaceAll(/^import[\s\S]*?from .*$/gm, '')
+        .replaceAll(/\/\/.*|\/\*[\s\S]*?\*\//g, '')
       for (const [pkg, names] of Object.entries(HELPERS)) {
         for (const name of names) {
           const used = new RegExp(`(?<![\\w.])${name}\\s*[(<]|typeof ${name}\\b`).test(code)

@@ -10,7 +10,7 @@ export async function searchMetadata(input: MetadataSearchInput): Promise<Metada
     ? all.filter((p) => requestedProviders.includes(p.id))
     : all.filter((p) => !input.mediaType || p.mediaTypes.includes(input.mediaType))
 
-  if (!targets.length) return []
+  if (targets.length === 0) return []
 
   const cacheKey = makeCacheKey(
     'metadata-search',

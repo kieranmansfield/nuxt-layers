@@ -83,7 +83,7 @@ const KNOWN_STACK: Record<string, { icon: string; color: string }> = {
   resend: { icon: 'i-logos-resend', color: '#a1a1aa' },
 }
 
-const stackKey = (name: string) => name.toLowerCase().replace(/[\s.\-_]/g, '')
+const stackKey = (name: string) => name.toLowerCase().replaceAll(/[\s.\-_]/g, '')
 
 /** Normalises a frontmatter stack entry, filling icon/colour from the known-tech table. */
 export function resolveStackItem(entry: PortfolioStackEntry): ResolvedStackItem {

@@ -56,11 +56,9 @@ export function parseOKLCH(str: string): [number, number, number] {
     throw new Error(`Invalid OKLCH string: ${str}`)
   }
 
-  let l = parseFloat(lRaw)
-  if (lRaw.endsWith('%')) l /= 100
-
-  const c = parseFloat(cRaw)
-  const h = parseFloat(hRaw)
+  const l = lRaw.endsWith('%') ? Number(lRaw.slice(0, -1)) / 100 : Number(lRaw)
+  const c = Number(cRaw)
+  const h = Number(hRaw)
 
   return [l, c, h]
 }

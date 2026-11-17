@@ -11,7 +11,7 @@
    *
    * @example
    * <LayoutItemCards :items="works" item-key="path">
-   *   <template #media="{ item }"><img :src="item.image" /></template>
+   *   <template #media="{ item }"><img :src="item.image" alt="" /></template>
    *   <template #caption="{ item }">{{ item.name }}</template>
    * </LayoutItemCards>
    */

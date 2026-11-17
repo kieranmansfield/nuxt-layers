@@ -76,7 +76,7 @@ function unique(values: readonly string[]): string[] {
 
 export function formatFeedCollectionName(collection: string): string {
   return collection
-    .replace(/[-_]+/g, ' ')
+    .replaceAll(/[-_]+/g, ' ')
     .split(' ')
     .filter(Boolean)
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
