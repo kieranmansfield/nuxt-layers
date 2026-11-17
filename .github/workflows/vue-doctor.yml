@@ -26,8 +26,8 @@ jobs:
           node-version-file: .node-version
           cache: true
       # Report-only for now: the repo scored 0 when this was added (2026-11), so any --min-score
-      # would fail every run. Once the backlog is down, add `--min-score <n>` here to
-      # make it a gate. Config (ignored rules/paths, dead code off — fallow owns that) lives in
-      # .vue-doctorrc.json.
+      # would fail every run. Once the backlog is down, add `--min-score <n>` here to make it a
+      # gate. --no-dead-code is CLI-only (0.0.4 ignores `deadCode` in config): fallow owns dead
+      # code, and vue-doctor's knip pass chokes on Nuxt's stdout. See docs/vue-doctor.md.
       - name: Vue Doctor
-        run: vp exec vue-doctor . --verbose
+        run: vp exec vue-doctor . --no-dead-code --verbose

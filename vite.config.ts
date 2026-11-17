@@ -6,6 +6,19 @@ export default defineConfig({
     rules: { 'vite-plus/prefer-vite-plus-imports': 'error' },
     options: { typeAware: false, typeCheck: false },
   },
+  // Pre-commit gates. `.vite-hooks/pre-commit` runs `vp staged --hide-unstaged`, so the working
+  // tree equals the index here. Function form runs each command once and ignores the file list:
+  // both tools resolve the diff themselves.
+  staged: {
+    '*': () => [
+      // vue-doctor passes its --diff base straight to `git diff --name-only <base>`, so `--cached`
+      // means staged files. It scores whole files (no new-only mode), so debt already in a touched
+      // file counts. 75 is vue-doctor's own "Great" boundary.
+      'vue-doctor . --diff=--cached --min-score 75',
+      // fallow fails only on findings this changeset introduces.
+      'fallow audit --changed-since HEAD --quiet',
+    ],
+  },
   // Test config lives in vitest.config.mts (it boots Nuxt via defineVitestProject, which
   // must not run when vp lint/fmt load this file).
   fmt: {
