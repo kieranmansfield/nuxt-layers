@@ -1,4 +1,3 @@
-// fallow-ignore-file unused-file
 /**
  * Compile-time-only checks for `ResponsiveValue<T>` (spec §13, §23). Nothing
  * here runs — `pnpm typecheck` is what verifies these `@ts-expect-error`

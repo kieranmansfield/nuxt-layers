@@ -25,5 +25,4 @@ export const BREAKPOINT_PX = {
   xl: 1280,
 } as const
 
-// fallow-ignore-next-line unused-type
 export type Breakpoint = keyof typeof BREAKPOINT_PX

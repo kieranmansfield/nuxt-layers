@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@tresjs/post-processing": "catalog:",
     "@vueuse/core": "catalog:",
     "three": "catalog:"
   },

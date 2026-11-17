@@ -30,7 +30,7 @@ export default defineNuxtConfig({
 | **database** / **auth** / **metadata** / **project-stats** / **mailer** / **forms** | Data — Drizzle + Neon, GitHub OAuth, metadata providers, GitHub/Obsidian project stats, Resend, Zod forms |
 | **scroll** / **animations** / **transitions** / **page-transitions** / **motion** | Motion — GSAP, Locomotive Scroll |
 | **canvas** / **shader** | Render — TresJS, WebGPU/TSL |
-| **seo** / **scripts** / **feeds** | Delivery — @nuxtjs/seo, @nuxt/scripts, RSS/Atom/JSON feeds |
+| **seo** / **scripts** / **security** / **feeds** | Delivery — @nuxtjs/seo, @nuxt/scripts, nuxt-security (opt-in), RSS/Atom/JSON feeds |
 
 Upgrading from v2: `ui` → `typography` + `navigation` + `visual`, `theme` → `theming`, `starter` removed.
 

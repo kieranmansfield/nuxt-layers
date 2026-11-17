@@ -1,9 +1,54 @@
 {
   "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
-  "ignoreDependencies": ["@vueuse/core", "@nuxt/ui"],
+  "ignoreDependencies": [
+    "@vueuse/core",
+    "@nuxt/ui",
+    "@nuxt/eslint",
+    "@nuxt/image",
+    "better-sqlite3",
+    "postcss-html",
+    "browserslist",
+    "browserslist-config-baseline",
+    "skills",
+    "vite-plus",
+    "@vue/test-utils",
+    "prettier",
+    "@nuxt/content",
+    "@iconify-json/logos"
+  ],
   "ignorePatterns": ["**/.output/**"],
   "audit": {
     "deadCodeBaseline": ".fallow-baseline/dead-code.json",
     "dupesBaseline": ".fallow-baseline/dupes.json"
-  }
+  },
+  "ignoreDependencyOverrides": [
+    {
+      "package": "citty",
+      "source": "pnpm-workspace.yaml"
+    },
+    {
+      "package": "ws",
+      "source": "pnpm-workspace.yaml"
+    },
+    {
+      "package": "@opentelemetry/core",
+      "source": "pnpm-workspace.yaml"
+    },
+    {
+      "package": "@vue/runtime-core",
+      "source": "pnpm-workspace.yaml"
+    },
+    {
+      "package": "@vue/runtime-dom",
+      "source": "pnpm-workspace.yaml"
+    },
+    {
+      "package": "@vue/reactivity",
+      "source": "pnpm-workspace.yaml"
+    },
+    {
+      "package": "@vue/shared",
+      "source": "pnpm-workspace.yaml"
+    }
+  ]
 }

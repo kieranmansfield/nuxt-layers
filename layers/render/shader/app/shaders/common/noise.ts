@@ -210,42 +210,50 @@ export function gradientNoise3D(p: TSLNode): TSLNode {
 export type { FBMOptions }
 
 /**
- * 2D Fractal Brownian Motion
+ * Shared octave loop for every FBM variant: sums `octave(freq, amp)` while scaling freq by
+ * `lacunarity` and amp by `gain`. `maxValue` (sum of amps) is for variants that normalise.
  */
-export function fbm2D(p: TSLNode, options: FBMOptions = {}): TSLNode {
+function sumOctaves(
+  options: FBMOptions,
+  octave: (freq: TSLNode, amp: TSLNode) => TSLNode
+): { value: TSLNode; maxValue: TSLNode } {
   const { octaves = 5, lacunarity = 2.0, gain = 0.5, amplitude = 0.5, frequency = 1.0 } = options
 
   let value: TSLNode = float(0)
   let amp: TSLNode = float(amplitude)
   let freq: TSLNode = float(frequency)
-  const currentP = p
+  let maxValue: TSLNode = float(0)
 
   for (let i = 0; i < octaves; i++) {
-    value = value.add(amp.mul(simplexNoise2D(currentP.mul(freq))))
+    value = value.add(octave(freq, amp))
+    maxValue = maxValue.add(amp)
     amp = amp.mul(gain)
     freq = freq.mul(lacunarity)
   }
 
-  return value
+  return { value, maxValue }
+}
+
+/**
+ * Ridged octave: invert |n| into ridges, then square to sharpen them
+ */
+function ridge(n: TSLNode): TSLNode {
+  const ridgedValue = float(1.0).sub(abs(n))
+  return ridgedValue.mul(ridgedValue)
+}
+
+/**
+ * 2D Fractal Brownian Motion
+ */
+export function fbm2D(p: TSLNode, options: FBMOptions = {}): TSLNode {
+  return sumOctaves(options, (freq, amp) => amp.mul(simplexNoise2D(p.mul(freq)))).value
 }
 
 /**
  * 3D Fractal Brownian Motion
  */
 export function fbm3D(p: TSLNode, options: FBMOptions = {}): TSLNode {
-  const { octaves = 5, lacunarity = 2.0, gain = 0.5, amplitude = 0.5, frequency = 1.0 } = options
-
-  let value: TSLNode = float(0)
-  let amp: TSLNode = float(amplitude)
-  let freq: TSLNode = float(frequency)
-
-  for (let i = 0; i < octaves; i++) {
-    value = value.add(amp.mul(gradientNoise3D(p.mul(freq))))
-    amp = amp.mul(gain)
-    freq = freq.mul(lacunarity)
-  }
-
-  return value
+  return sumOctaves(options, (freq, amp) => amp.mul(gradientNoise3D(p.mul(freq)))).value
 }
 
 // ============================================
@@ -268,7 +276,9 @@ export function voronoi2D(uv: TSLNode, scale: TSLNode | number = 1): VoronoiResu
   let minDist: TSLNode = float(1)
   let cellId: TSLNode = vec2(0, 0)
 
-  // Check 3x3 neighborhood
+  // Check 3x3 neighborhood. Deliberately not shared between the two voronoi impls: each
+  // uses its own hash and tie-break (step vs lessThan), so a helper would hide the math.
+  // fallow-ignore-next-line code-duplication
   for (let y = -1; y <= 1; y++) {
     for (let x = -1; x <= 1; x++) {
       const neighbor = vec2(x, y)
@@ -321,19 +331,7 @@ export function domainWarp2D(
  * Turbulence (absolute value of FBM)
  */
 export function turbulence2D(p: TSLNode, options: FBMOptions = {}): TSLNode {
-  const { octaves = 5, lacunarity = 2.0, gain = 0.5, amplitude = 0.5, frequency = 1.0 } = options
-
-  let value: TSLNode = float(0)
-  let amp: TSLNode = float(amplitude)
-  let freq: TSLNode = float(frequency)
-
-  for (let i = 0; i < octaves; i++) {
-    value = value.add(amp.mul(abs(simplexNoise2D(p.mul(freq)))))
-    amp = amp.mul(gain)
-    freq = freq.mul(lacunarity)
-  }
-
-  return value
+  return sumOctaves(options, (freq, amp) => amp.mul(abs(simplexNoise2D(p.mul(freq))))).value
 }
 
 // ============================================
@@ -644,28 +642,9 @@ export function curlNoise3d(inputA: TSLNode): TSLNode {
  * Good for mountain-like terrain or veins
  */
 export function ridgedFbm2d(p: TSLNode, options: FBMOptions = {}): TSLNode {
-  const { octaves = 5, lacunarity = 2.0, gain = 0.5, amplitude = 0.5, frequency = 1.0 } = options
-
-  let value: TSLNode = float(0)
-  let amp: TSLNode = float(amplitude)
-  let freq: TSLNode = float(frequency)
-  let maxValue: TSLNode = float(0)
-
-  for (let i = 0; i < octaves; i++) {
-    // Sample noise and create ridges by taking absolute value and inverting
-    const noiseValue = simplexNoise2D(p.mul(freq))
-    const ridgedValue = float(1.0).sub(abs(noiseValue))
-
-    // Square the ridged value to make ridges sharper
-    const sharpRidges = ridgedValue.mul(ridgedValue)
-
-    value = value.add(sharpRidges.mul(amp))
-    maxValue = maxValue.add(amp)
-
-    amp = amp.mul(gain)
-    freq = freq.mul(lacunarity)
-  }
-
+  const { value, maxValue } = sumOctaves(options, (freq, amp) =>
+    ridge(simplexNoise2D(p.mul(freq))).mul(amp)
+  )
   return value.div(maxValue)
 }
 
@@ -673,25 +652,9 @@ export function ridgedFbm2d(p: TSLNode, options: FBMOptions = {}): TSLNode {
  * Ridged FBM using 3D simplex noise
  */
 export function ridgedFbm3d(p: TSLNode, options: FBMOptions = {}): TSLNode {
-  const { octaves = 5, lacunarity = 2.0, gain = 0.5, amplitude = 0.5, frequency = 1.0 } = options
-
-  let value: TSLNode = float(0)
-  let amp: TSLNode = float(amplitude)
-  let freq: TSLNode = float(frequency)
-  let maxValue: TSLNode = float(0)
-
-  for (let i = 0; i < octaves; i++) {
-    const noiseValue = simplexNoise3d(p.mul(freq))
-    const ridgedValue = float(1.0).sub(abs(noiseValue))
-    const sharpRidges = ridgedValue.mul(ridgedValue)
-
-    value = value.add(sharpRidges.mul(amp))
-    maxValue = maxValue.add(amp)
-
-    amp = amp.mul(gain)
-    freq = freq.mul(lacunarity)
-  }
-
+  const { value, maxValue } = sumOctaves(options, (freq, amp) =>
+    ridge(simplexNoise3d(p.mul(freq))).mul(amp)
+  )
   return value.div(maxValue)
 }
 
@@ -805,19 +768,9 @@ export function turbulenceRotational(
  * Returns values in [-1, 1] range
  */
 export function fbm3dSimplex(p: TSLNode, options: FBMOptions = {}): TSLNode {
-  const { octaves = 4, lacunarity = 2.0, gain = 0.5, amplitude = 1.0, frequency = 1.0 } = options
-
-  let value: TSLNode = float(0)
-  let amp: TSLNode = float(amplitude)
-  let freq: TSLNode = float(frequency)
-  let maxValue: TSLNode = float(0)
-
-  for (let i = 0; i < octaves; i++) {
-    value = value.add(simplexNoise3d(p.mul(freq)).mul(amp))
-    maxValue = maxValue.add(amp)
-    freq = freq.mul(lacunarity)
-    amp = amp.mul(gain)
-  }
-
+  const { octaves = 4, amplitude = 1.0 } = options
+  const { value, maxValue } = sumOctaves({ ...options, octaves, amplitude }, (freq, amp) =>
+    simplexNoise3d(p.mul(freq)).mul(amp)
+  )
   return value.div(maxValue)
 }

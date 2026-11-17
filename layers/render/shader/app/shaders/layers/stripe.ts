@@ -7,6 +7,7 @@ import { float, mix, smoothstep, time as tslTime, uniform, uv, vec2, vec3 } from
 
 import { simplexNoise2D } from '../common/noise'
 import type { FloatUniform, TSLNode } from '../types'
+import { setColorUniforms, setScalarUniforms } from './colorUniforms'
 
 export type StripeGradientOptions = {
   /** Array of colors (3-5 recommended) */
@@ -121,17 +122,13 @@ export function updateStripeGradientUniforms(
   uniforms: StripeGradientUniforms,
   options: Partial<StripeGradientOptions>
 ): void {
-  if (options.speed !== undefined) uniforms.speed.value = options.speed
-  if (options.noiseScale !== undefined) uniforms.noiseScale.value = options.noiseScale
-  if (options.flowAngle !== undefined) uniforms.flowAngle.value = options.flowAngle
-  if (options.mouseX !== undefined) uniforms.mouseX.value = options.mouseX
-  if (options.mouseY !== undefined) uniforms.mouseY.value = options.mouseY
-  if (options.mouseStrength !== undefined) uniforms.mouseStrength.value = options.mouseStrength
-  if (options.colors) {
-    options.colors.forEach((c, i) => {
-      if (uniforms.colors[i]) {
-        uniforms.colors[i].value = new Color(c)
-      }
-    })
-  }
+  setScalarUniforms(uniforms, options, [
+    'speed',
+    'noiseScale',
+    'flowAngle',
+    'mouseX',
+    'mouseY',
+    'mouseStrength',
+  ])
+  setColorUniforms(uniforms.colors, options.colors)
 }

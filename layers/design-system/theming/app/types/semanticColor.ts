@@ -1,5 +1,3 @@
-// fallow-ignore-file unused-file
-
 /**
  * Phase 5 semantic colour types (spec §4.3), first real implementation. Not
  * yet consumed by any component prop; wiring them into the theme adapter /

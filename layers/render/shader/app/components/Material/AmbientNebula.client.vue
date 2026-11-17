@@ -1,24 +1,12 @@
 <script setup lang="ts">
-  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
-  import { Color, DoubleSide } from 'three'
-  import {
-    add,
-    exp,
-    length,
-    mix,
-    mul,
-    smoothstep,
-    sub,
-    time as tslTime,
-    uniform,
-    uv,
-    vec2,
-    vec3,
-  } from 'three/tsl'
+  import { useColorUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
+  import { DoubleSide } from 'three'
+  import { add, exp, length, mix, mul, smoothstep, sub, time as tslTime, uv, vec3 } from 'three/tsl'
   import { MeshBasicNodeMaterial } from 'three/webgpu'
 
   import { fbm3D, hash21, ridgedFbm2d, voronoi2D } from '../../shaders/common/noise'
   import { cosinePalette } from '../../shaders/common/palette'
+  import { centeredMouseOffset } from '../../shaders/common/math'
   import type { TSLNode } from '../../shaders/types'
 
   const {
@@ -29,6 +17,7 @@
     color2 = '#ff6b6b',
     color3 = '#4ecdc4',
     color4 = '#ffe66d',
+    // fallow-ignore-next-line code-duplication
     mouseX = 0.5,
     mouseY = 0.5,
     mouseInteraction = true,
@@ -52,32 +41,10 @@
   const mouseXUniform = useUniformProp(() => mouseX)
   const mouseYUniform = useUniformProp(() => mouseY)
   const mouseStrengthUniform = useUniformProp(() => mouseStrength)
-  const color1Uniform: TSLNode = uniform(new Color(color1))
-  const color2Uniform: TSLNode = uniform(new Color(color2))
-  const color3Uniform: TSLNode = uniform(new Color(color3))
-  const color4Uniform: TSLNode = uniform(new Color(color4))
-
-  watchUniformProp(
-    () => color1,
-    color1Uniform,
-    (val) => new Color(val)
-  )
-  watchUniformProp(
-    () => color2,
-    color2Uniform,
-    (val) => new Color(val)
-  )
-  watchUniformProp(
-    () => color3,
-    color3Uniform,
-    (val) => new Color(val)
-  )
-  // fallow-ignore-next-line code-duplication
-  watchUniformProp(
-    () => color4,
-    color4Uniform,
-    (val) => new Color(val)
-  )
+  const color1Uniform: TSLNode = useColorUniformProp(() => color1)
+  const color2Uniform: TSLNode = useColorUniformProp(() => color2)
+  const color3Uniform: TSLNode = useColorUniformProp(() => color3)
+  const color4Uniform: TSLNode = useColorUniformProp(() => color4)
 
   const material = computed(() => {
     const mat = new MeshBasicNodeMaterial()
@@ -89,9 +56,10 @@
     const uvCoord = sub(uv(), 0.5)
 
     // Mouse offset
-    const mouseOffset = vec2(
-      sub(mouseXUniform, 0.5).mul(mouseInteraction ? mouseStrengthUniform : 0),
-      sub(mouseYUniform, 0.5).mul(mouseInteraction ? mouseStrengthUniform : 0)
+    const mouseOffset = centeredMouseOffset(
+      mouseXUniform,
+      mouseYUniform,
+      mouseInteraction ? mouseStrengthUniform : 0
     )
     const adjustedUV = add(uvCoord, mouseOffset)
 

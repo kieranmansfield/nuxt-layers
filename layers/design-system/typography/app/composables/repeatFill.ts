@@ -11,8 +11,6 @@ export function useRepeatFill(options: {
   const { containerRefs, itemRefs, rowCount, axis } = options
   const calculatedCopies = ref<number[]>([])
 
-  let debounceTimer: ReturnType<typeof setTimeout> | null = null
-
   function calculate() {
     const n = unref(rowCount)
     const dimension = unref(axis) === 'height' ? 'offsetHeight' : 'offsetWidth'
@@ -26,26 +24,7 @@ export function useRepeatFill(options: {
     }
   }
 
-  function debouncedCalculate() {
-    if (debounceTimer) clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(() => {
-      calculate()
-      debounceTimer = null
-    }, 150)
-  }
-
-  onMounted(() => {
-    nextTick(() => {
-      calculate()
-      setTimeout(calculate, 100)
-    })
-    window.addEventListener('resize', debouncedCalculate, { passive: true })
-  })
-
-  onUnmounted(() => {
-    if (debounceTimer) clearTimeout(debounceTimer)
-    window.removeEventListener('resize', debouncedCalculate)
-  })
+  useMeasureOnResize(calculate)
 
   return { calculatedCopies }
 }

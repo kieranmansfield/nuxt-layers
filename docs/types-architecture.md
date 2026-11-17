@@ -17,10 +17,8 @@ The rule: **if only one layer needs it, it lives in that layer. If two or more l
 kmcom-nuxt-layers/
 │
 ├── types/                          # Cross-layer contracts & public API
-│   ├── theme.ts                    # Token shapes, mode/palette/contrast enums
-│   ├── motion.ts                   # Shared motion contracts (e.g. scroll lock events)
-│   ├── events.ts                   # Event bus payload types (cross-layer)
-│   ├── runtime.ts                  # runtimeConfig shape types
+│   ├── theme.ts                    # Accent + semantic UI colour types
+│   ├── auth.ts                     # SessionUser
 │   └── index.ts                    # Public barrel — consuming apps import from here
 │
 ├── layers/
@@ -72,94 +70,16 @@ These are the types that define how layers talk to each other. Treat them as a p
 
 ### `theme.ts`
 
-Consumed by: `ui`, `layout`, `motion`, `shader`, `theme`
+Accent and semantic UI colour types (`AccentColor`, `ColorUsage`, `UiColors`, …), consumed by
+`theming`, `typography` and `visual` via the `#types` alias.
 
-```ts
-export type ColourMode = 'light' | 'dark' | 'system'
-export type ContrastLevel = 'standard' | 'high'
-export type MotionPreference = 'full' | 'reduced' | 'none'
-export type TransparencyPreference = 'full' | 'reduced' | 'none'
+### `auth.ts`
 
-export interface ThemeState {
-  mode: ColourMode
-  palette: string // e.g. 'default' | 'ocean' | custom slug
-  contrast: ContrastLevel
-  motion: MotionPreference
-  transparency: TransparencyPreference
-}
-
-export interface ThemeTokens {
-  // Add resolved CSS custom property shapes here as the system matures
-  [key: string]: string
-}
-```
-
-### `events.ts`
-
-Consumed by: any layer using the event bus (e.g. `motion` scroll lock, `core` loading states)
-
-```ts
-export interface ScrollLockEvent {
-  locked: boolean
-  source: string // which layer/component emitted it
-}
-
-export interface LoadingStateEvent {
-  loading: boolean
-  id?: string
-}
-
-// Extend as new cross-layer events are introduced
-export type LayerEvent =
-  | { type: 'scroll:lock'; payload: ScrollLockEvent }
-  | { type: 'loading:state'; payload: LoadingStateEvent }
-```
-
-### `motion.ts`
-
-Consumed by: `motion`, `layout` (section entry animations), `shader` (transition hooks)
-
-```ts
-export interface MotionConfig {
-  duration: number
-  ease: string
-  delay?: number
-}
-
-export interface TransitionConfig extends MotionConfig {
-  enterFrom?: Record<string, string | number>
-  enterTo?: Record<string, string | number>
-  leaveFrom?: Record<string, string | number>
-  leaveTo?: Record<string, string | number>
-}
-```
-
-### `runtime.ts`
-
-Consumed by: `core`, any layer that reads `useRuntimeConfig()`
-
-```ts
-export interface PublicRuntimeConfig {
-  apiBase: string
-  // Extend per project — this is the shared baseline
-}
-```
+`SessionUser` — session shape shared by the `auth` layer and consuming apps.
 
 ### `index.ts` — Public Barrel
 
-```ts
-// What consuming apps are allowed to import
-export type {
-  ColourMode,
-  ContrastLevel,
-  MotionPreference,
-  TransparencyPreference,
-  ThemeState,
-} from './theme'
-export type { ScrollLockEvent, LoadingStateEvent, LayerEvent } from './events'
-export type { MotionConfig, TransitionConfig } from './motion'
-export type { PublicRuntimeConfig } from './runtime'
-```
+Re-exports the above. Add a contract here only once a second layer actually consumes it.
 
 ---
 

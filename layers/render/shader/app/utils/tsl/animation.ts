@@ -69,34 +69,42 @@ const easeOutBounceFn = Fn(([t]: [TSLNode]) => {
 })
 
 /**
+ * In-out polynomial ease of degree `power`: 2^(power-1)·t^power below 0.5, mirrored above
+ */
+function easeInOutPoly(t: TSLNode, power: number): TSLNode {
+  const inv: TSLNode = float(-2.0).mul(t).add(2.0)
+  let tn: TSLNode = t
+  for (let i = 1; i < power; i++) tn = tn.mul(t)
+  return t.lessThan(0.5).select(tn.mul(2 ** (power - 1)), float(1.0).sub(inv.pow(power).div(2.0)))
+}
+
+const ELASTIC_C4 = (2 * Math.PI) / 3
+
+/**
+ * Force exact 0 at t = 0 and 1 at t = 1, `value` in between
+ */
+function pinEndpoints(t: TSLNode, value: TSLNode): TSLNode {
+  return t.equal(0.0).select(float(0.0), t.equal(1.0).select(float(1.0), value))
+}
+
+/**
  * Easing functions
  */
 export const easing = {
   // Quadratic
   easeInQuad: Fn(([t]: [TSLNode]) => t.mul(t)),
   easeOutQuad: Fn(([t]: [TSLNode]) => t.mul(float(2.0).sub(t))),
-  easeInOutQuad: Fn(([t]: [TSLNode]) => {
-    const inv: TSLNode = float(-2.0).mul(t).add(2.0)
-    return t.lessThan(0.5).select(t.mul(t).mul(2.0), float(1.0).sub(inv.pow(2.0).div(2.0)))
-  }),
+  easeInOutQuad: Fn(([t]: [TSLNode]) => easeInOutPoly(t, 2)),
 
   // Cubic
   easeInCubic: Fn(([t]: [TSLNode]) => t.mul(t).mul(t)),
   easeOutCubic: Fn(([t]: [TSLNode]) => float(1.0).sub(pow(float(1.0).sub(t), 3.0))),
-  easeInOutCubic: Fn(([t]: [TSLNode]) => {
-    const inv: TSLNode = float(-2.0).mul(t).add(2.0)
-    return t.lessThan(0.5).select(t.mul(t).mul(t).mul(4.0), float(1.0).sub(inv.pow(3.0).div(2.0)))
-  }),
+  easeInOutCubic: Fn(([t]: [TSLNode]) => easeInOutPoly(t, 3)),
 
   // Quartic
   easeInQuart: Fn(([t]: [TSLNode]) => t.mul(t).mul(t).mul(t)),
   easeOutQuart: Fn(([t]: [TSLNode]) => float(1.0).sub(pow(float(1.0).sub(t), 4.0))),
-  easeInOutQuart: Fn(([t]: [TSLNode]) => {
-    const inv: TSLNode = float(-2.0).mul(t).add(2.0)
-    return t
-      .lessThan(0.5)
-      .select(t.mul(t).mul(t).mul(t).mul(8.0), float(1.0).sub(inv.pow(4.0).div(2.0)))
-  }),
+  easeInOutQuart: Fn(([t]: [TSLNode]) => easeInOutPoly(t, 4)),
 
   // Exponential
   easeInExpo: Fn(([t]: [TSLNode]) => {
@@ -189,22 +197,16 @@ export const easing = {
 
   // Elastic
   easeInElastic: Fn(([t]: [TSLNode]) => {
-    const c4 = (2 * Math.PI) / 3
-    const isZero = t.equal(0.0)
-    const isOne = t.equal(1.0)
     const elastic = pow(2.0, t.mul(10.0).sub(10.0))
-      .mul(sin(t.mul(10.0).sub(10.75).mul(c4)))
+      .mul(sin(t.mul(10.0).sub(10.75).mul(ELASTIC_C4)))
       .negate()
-    return isZero.select(float(0.0), isOne.select(float(1.0), elastic))
+    return pinEndpoints(t, elastic)
   }),
   easeOutElastic: Fn(([t]: [TSLNode]) => {
-    const c4 = (2 * Math.PI) / 3
-    const isZero = t.equal(0.0)
-    const isOne = t.equal(1.0)
     const elastic = pow(2.0, t.mul(-10.0))
-      .mul(sin(t.mul(10.0).sub(0.75).mul(c4)))
+      .mul(sin(t.mul(10.0).sub(0.75).mul(ELASTIC_C4)))
       .add(1.0)
-    return isZero.select(float(0.0), isOne.select(float(1.0), elastic))
+    return pinEndpoints(t, elastic)
   }),
 
   // Bounce

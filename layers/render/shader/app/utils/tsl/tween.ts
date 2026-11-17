@@ -9,14 +9,19 @@ export type TweenHandle = {
 }
 
 /**
- * Tween a uniform node's value from `from` to `to` over `duration` seconds.
- * Returns a handle with cancel() and a promise that resolves on completion.
+ * Drive a 0→1 eased progress over `duration` seconds, calling `onFrame(t)` every frame and
+ * `onComplete()` once the tween finishes (not when cancelled).
+ * Returns a handle with cancel() and a promise that resolves on completion or cancel.
  */
-export function tweenUniform(
-  uniformNode: { value: number },
-  ...args: [from: number, to: number, duration: number, easing?: (t: number) => number]
+export function runTween(
+  ...args: [
+    duration: number,
+    easing: ((t: number) => number) | undefined,
+    onFrame: (t: number) => void,
+    onComplete?: () => void,
+  ]
 ): TweenHandle {
-  const [from, to, duration, easing] = args
+  const [duration, easing, onFrame, onComplete] = args
   let startTime: number | null = null
   let cancelled = false
   let resolvePromise: () => void
@@ -33,14 +38,13 @@ export function tweenUniform(
 
     const elapsed = (now - startTime) / 1000
     const rawT = Math.min(elapsed / duration, 1)
-    const t = easeFn(rawT)
-
-    uniformNode.value = from + (to - from) * t
+    onFrame(easeFn(rawT))
 
     if (rawT < 1) {
       requestAnimationFrame(tick)
       return
     }
+    onComplete?.()
     resolvePromise()
   }
 
@@ -53,4 +57,39 @@ export function tweenUniform(
     },
     promise,
   }
+}
+
+/**
+ * Holds at most one running tween: starting a new one or cancelling clears the slot.
+ */
+export function createTweenSlot() {
+  let active: TweenHandle | null = null
+
+  return {
+    cancel() {
+      active?.cancel()
+      active = null
+    },
+    start(handle: TweenHandle): TweenHandle {
+      active = handle
+      handle.promise.then(() => {
+        if (active === handle) active = null
+      })
+      return handle
+    },
+  }
+}
+
+/**
+ * Tween a uniform node's value from `from` to `to` over `duration` seconds.
+ * Returns a handle with cancel() and a promise that resolves on completion.
+ */
+export function tweenUniform(
+  uniformNode: { value: number },
+  ...args: [from: number, to: number, duration: number, easing?: (t: number) => number]
+): TweenHandle {
+  const [from, to, duration, easing] = args
+  return runTween(duration, easing, (t) => {
+    uniformNode.value = from + (to - from) * t
+  })
 }

@@ -38,6 +38,7 @@ and omits `grid`, `feeds` and the `metadata` providers.
 | `core`             | Base utilities, 404, loading screen, scroll guard, Element/ElementTw polymorphic primitives (layout/grid/spacing/sizing/surface/interaction vocabulary — inline `:style` and Tailwind-class variants) | nothing (loads @nuxt/ui, @vueuse/nuxt, @nuxtjs/device)    |
 | `seo`              | SEO: robots, sitemap, og-image, schema-org via @nuxtjs/seo                                     | `core`                                                    |
 | `scripts`          | Third-party script loading via @nuxt/scripts (analytics, GTM, embeds)                          | `core`                                                    |
+| `security`         | Opt-in nuxt-security wrapper: CSP, security headers, rate limiter, XSS validator               | `core`                                                    |
 | `typography`       | Typography components (Headline, TextStroke, CodeBlock) + useTypography, useColor              | `core`                                                    |
 | `navigation`       | Nav/header/footer, site title, links, useMastNav, useSite, useAppToast                         | `core`, `scroll`, `layout`, `typography`, `visual`        |
 | `visual`           | Accent blobs, gradients, tints, modals, picture, progress + their composables                  | `core`                                                    |

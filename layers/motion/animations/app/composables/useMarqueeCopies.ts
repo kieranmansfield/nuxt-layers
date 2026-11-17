@@ -8,8 +8,6 @@ export function useMarqueeCopies(
   const copyWidths = ref<number[]>([])
   const calculatedCopies = ref<number[]>([])
 
-  let debounceTimer: ReturnType<typeof setTimeout> | null = null
-
   function calculate() {
     const n = unref(rowCount)
     for (let i = 0; i < n; i++) {
@@ -25,26 +23,7 @@ export function useMarqueeCopies(
     }
   }
 
-  function debouncedCalculate() {
-    if (debounceTimer) clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(() => {
-      calculate()
-      debounceTimer = null
-    }, 150)
-  }
-
-  onMounted(() => {
-    nextTick(() => {
-      calculate()
-      setTimeout(calculate, 100)
-    })
-    window.addEventListener('resize', debouncedCalculate, { passive: true })
-  })
-
-  onUnmounted(() => {
-    if (debounceTimer) clearTimeout(debounceTimer)
-    window.removeEventListener('resize', debouncedCalculate)
-  })
+  useMeasureOnResize(calculate)
 
   return { copyWidths, calculatedCopies }
 }

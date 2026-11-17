@@ -385,6 +385,10 @@ Neither change is breaking. Existing apps using `portfolio`, `blog`, or `gallery
 
 ## 1. Collection Aliases
 
+> **Since removed.** The `create*Collection` factories and `*CollectionSchema` exports were dropped:
+> collections are rooted at the layer that defines them, so apps must declare their own, and
+> schemas can't be passed to `defineCollection`. See `docs/adr/0002-content-config-is-app-owned.md`.
+
 ### The problem
 
 The content layer hard-codes the collection names `blog`, `portfolio`, and `gallery`. If your app wants a `works` section that uses the portfolio schema, you previously had to duplicate the entire Zod schema in your own `content.config.ts`.

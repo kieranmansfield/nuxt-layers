@@ -1,5 +1,7 @@
 <script setup lang="ts">
-  import { cos, sin, time, vec3 } from 'three/tsl'
+  import { time } from 'three/tsl'
+
+  import { rotateVec3X, rotateVec3Y } from '../../shaders/common/math'
 
   const {
     speed = 0.5,
@@ -16,20 +18,9 @@
   const speedNode = useUniformProp(() => speed)
   const pitchNode = useUniformProp(() => pitch)
 
+  // Y-axis orbit, then X-axis pitch
   useShaderStage(
-    (ray) => {
-      const yaw = time.mul(speedNode)
-
-      // Y-axis rotation (orbit)
-      const cy = cos(yaw)
-      const sy = sin(yaw)
-      const rayY = vec3(ray.x.mul(cy).add(ray.z.mul(sy)), ray.y, ray.z.mul(cy).sub(ray.x.mul(sy)))
-
-      // X-axis pitch
-      const cp = cos(pitchNode)
-      const sp = sin(pitchNode)
-      return vec3(rayY.x, rayY.y.mul(cp).sub(rayY.z.mul(sp)), rayY.y.mul(sp).add(rayY.z.mul(cp)))
-    },
+    (ray) => rotateVec3X(rotateVec3Y(ray, time.mul(speedNode)), pitchNode),
     order,
     'ray'
   )

@@ -1,5 +1,3 @@
-// fallow-ignore-file unused-file
-
 export type ContactEmailData = {
   name: string
   email: string

@@ -1,3 +1,4 @@
+// fallow-ignore-next-line code-duplication
 import { mockComponent, mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it, vi } from 'vite-plus/test'
 

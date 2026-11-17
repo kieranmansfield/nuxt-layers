@@ -34,13 +34,15 @@ export type ColorStop = {
 // Basic Palette Functions
 // ============================================
 
+function toColorNode(color: TSLNode | string): TSLNode {
+  return typeof color === 'string' ? hexToVec3(color) : color
+}
+
 /**
  * Simple 2-color gradient
  */
 export function gradient2(t: TSLNode, color1: TSLNode | string, color2: TSLNode | string): TSLNode {
-  const c1 = typeof color1 === 'string' ? hexToVec3(color1) : color1
-  const c2 = typeof color2 === 'string' ? hexToVec3(color2) : color2
-  return mix(c1, c2, clamp(t, 0, 1))
+  return mix(toColorNode(color1), toColorNode(color2), clamp(t, 0, 1))
 }
 
 /**
@@ -50,10 +52,7 @@ export function gradient3(
   t: TSLNode,
   ...colors: [color1: TSLNode | string, color2: TSLNode | string, color3: TSLNode | string]
 ): TSLNode {
-  const [color1, color2, color3] = colors
-  const c1 = typeof color1 === 'string' ? hexToVec3(color1) : color1
-  const c2 = typeof color2 === 'string' ? hexToVec3(color2) : color2
-  const c3 = typeof color3 === 'string' ? hexToVec3(color3) : color3
+  const [c1, c2, c3] = colors.map(toColorNode)
 
   const tClamped = clamp(t, 0, 1)
   const first = mix(c1, c2, clamp(tClamped.mul(2), 0, 1))
@@ -74,11 +73,7 @@ export function gradient4(
     color4: TSLNode | string,
   ]
 ): TSLNode {
-  const [color1, color2, color3, color4] = colors
-  const c1 = typeof color1 === 'string' ? hexToVec3(color1) : color1
-  const c2 = typeof color2 === 'string' ? hexToVec3(color2) : color2
-  const c3 = typeof color3 === 'string' ? hexToVec3(color3) : color3
-  const c4 = typeof color4 === 'string' ? hexToVec3(color4) : color4
+  const [c1, c2, c3, c4] = colors.map(toColorNode)
 
   const tClamped = clamp(t, 0, 1)
 

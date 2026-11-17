@@ -1,13 +1,3 @@
-import { buildFeed } from '../../../../utils/feed-service'
-import { setFeedCacheHeaders } from '../../../../utils/cache'
-import { toRSS } from '../../../../utils/formats/rss'
-import { defineEventHandler, getRouterParam, setHeader } from 'h3'
+import { defineCollectionFeedRoute } from '../../../../utils/feed-route'
 
-export default defineEventHandler(async (event) => {
-  const collection = getRouterParam(event, 'collection')
-  const { items, config } = await buildFeed(event, collection, { unlimited: true })
-  const content = toRSS(items, config)
-  setFeedCacheHeaders(event, content)
-  setHeader(event, 'Content-Type', 'text/xml; charset=utf-8')
-  return content
-})
+export default defineCollectionFeedRoute('rss', { unlimited: true })

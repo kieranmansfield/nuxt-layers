@@ -1,5 +1,3 @@
-// fallow-ignore-file unused-file
-
 /**
  * Phase 5 token foundation (spec §21); the theme adapter and CSS token file
  * consume it by convention (hand-synced values), not by import, matching

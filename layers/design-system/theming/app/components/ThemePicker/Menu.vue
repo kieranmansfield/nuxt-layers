@@ -16,19 +16,19 @@
     <ThemePickerMenuButton />
 
     <template #content>
-      <UCard :ui="{ root: 'sm:bg-default/30 sm:dark:bg-default/40 backdrop-blur-3xl' }">
-        <UCard :ui="{ root: 'divide-y-0 ring-0 sm:bg-transparent' }">
+      <LazyUCard :ui="{ root: 'sm:bg-default/30 sm:dark:bg-default/40 backdrop-blur-3xl' }">
+        <LazyUCard :ui="{ root: 'divide-y-0 ring-0 sm:bg-transparent' }">
           <ul class="flex flex-col gap-6">
             <li>
               <h2 class="my-2 text-lg font-semibold">Color Mode</h2>
-              <UFieldGroup>
-                <UColorModeSelect size="lg" />
-              </UFieldGroup>
+              <LazyUFieldGroup>
+                <LazyUColorModeSelect size="lg" />
+              </LazyUFieldGroup>
             </li>
 
             <li>
               <h2 class="my-2 text-lg font-semibold">Accent</h2>
-              <ThemePickerColors />
+              <LazyThemePickerColors />
             </li>
 
             <li class="flex w-full flex-row items-center justify-between py-1">
@@ -38,7 +38,7 @@
                   Following system
                 </p>
               </div>
-              <USwitch
+              <LazyUSwitch
                 v-model="contrastModel"
                 unchecked-icon="i-lucide-x"
                 checked-icon="i-lucide-check"
@@ -53,7 +53,7 @@
                   Following system
                 </p>
               </div>
-              <USwitch
+              <LazyUSwitch
                 v-model="motionModel"
                 unchecked-icon="i-lucide-x"
                 checked-icon="i-lucide-check"
@@ -68,7 +68,7 @@
                   Following system
                 </p>
               </div>
-              <USwitch
+              <LazyUSwitch
                 v-model="transparencyModel"
                 unchecked-icon="i-lucide-x"
                 checked-icon="i-lucide-check"
@@ -76,8 +76,8 @@
               />
             </li>
           </ul>
-        </UCard>
-      </UCard>
+        </LazyUCard>
+      </LazyUCard>
     </template>
   </UPopover>
 </template>

@@ -16,6 +16,18 @@ export type ThemePresetProps = {
   color4?: string
 }
 
+/** Shared `withDefaults` for every Theme preset component. */
+export const THEME_PRESET_DEFAULTS = {
+  speed: 1.0,
+  intensity: 1.0,
+  mouseInteraction: true,
+  mouseStrength: 0.3,
+  color1: '#8b5cf6',
+  color2: '#6366f1',
+  color3: '#a78bfa',
+  color4: '#38bdf8',
+}
+
 export function useThemePreset(
   colorNodeFactory: (uniforms: AmbientUniforms, colors: ThemeColorUniforms) => TSLNode,
   props: Readonly<Required<ThemePresetProps>>

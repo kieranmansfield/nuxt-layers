@@ -8,7 +8,7 @@
   const { site, ogImageComponent, twitterCard, schemaOrgEnabled } = useSeoConfig()
 
   useSeoMeta({
-    title: 'SEO Layer — Nuxt Layers Playground',
+    title: 'SEO Layer',
     description: '@nuxtjs/seo wrapper with robots, sitemap, OG images, and schema-org.',
     ogTitle: 'SEO Layer Demo',
     ogDescription: '@nuxtjs/seo wrapper: robots, sitemap, OG images, and schema-org.',

@@ -22,7 +22,9 @@ import {
   sin,
   smoothstep,
   sqrt,
+  sub,
   vec2,
+  vec3,
   vec4,
 } from 'three/tsl'
 
@@ -252,4 +254,37 @@ export function polarToCartesian(p: TSLNode): TSLNode {
   const r = float(polar.x).toVar()
   const theta = float(polar.y).toVar()
   return vec2(r.mul(cos(theta)), r.mul(sin(theta)))
+}
+
+// ============================================
+// 3D Rotation
+// ============================================
+
+/**
+ * Rotates a vec3 around the Y axis (yaw)
+ */
+export function rotateVec3Y(v: TSLNode, angle: TSLNode): TSLNode {
+  const c = cos(angle)
+  const s = sin(angle)
+  return vec3(v.x.mul(c).add(v.z.mul(s)), v.y, v.z.mul(c).sub(v.x.mul(s)))
+}
+
+/**
+ * Rotates a vec3 around the X axis (pitch)
+ */
+export function rotateVec3X(v: TSLNode, angle: TSLNode): TSLNode {
+  const c = cos(angle)
+  const s = sin(angle)
+  return vec3(v.x, v.y.mul(c).sub(v.z.mul(s)), v.y.mul(s).add(v.z.mul(c)))
+}
+
+/**
+ * Cursor offset from the canvas centre, scaled by `strength` (pass 0 to disable the effect).
+ */
+export function centeredMouseOffset(
+  mouseX: TSLNode,
+  mouseY: TSLNode,
+  strength: TSLNode | number
+): TSLNode {
+  return vec2(mul(sub(mouseX, 0.5), strength), mul(sub(mouseY, 0.5), strength))
 }

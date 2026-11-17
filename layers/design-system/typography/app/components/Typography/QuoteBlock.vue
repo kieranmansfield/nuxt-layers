@@ -45,6 +45,7 @@
     width,
     slant,
     leading,
+    // fallow-ignore-next-line code-duplication
     tracking,
     align,
     transform,

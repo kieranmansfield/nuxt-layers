@@ -17,7 +17,7 @@
    * <LayoutItemList :items="works" :columns="cols" href="link" external numbered />
    */
 
-  export interface ItemListColumn {
+  interface ItemListColumn {
     key: string
     label?: string
     class?: string

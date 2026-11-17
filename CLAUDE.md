@@ -88,6 +88,8 @@ nuxt-layers/
 │   └── delivery/                   # Tier 7
 │       ├── seo/                      # @nuxtjs/seo wrapper (robots, sitemap, og-image, schema-org)
 │       ├── scripts/                  # @nuxt/scripts wrapper (analytics, GTM, embeds, baseline-status badge)
+│       ├── security/                 # Opt-in nuxt-security wrapper (CSP, security headers, rate limiter,
+│       │                               XSS validator) tuned so other layers don't break under it
 │       ├── feeds/                    # RSS/Atom/JSON feed generation from content collections
 │       └── capture/                  # kmcom-capture CLI: Monkr-framed screenshots + scroll videos
 │                                       of any site; client plugin signals capture-readiness
@@ -170,6 +172,7 @@ shader → canvas, theming
 # Tier 7 — Delivery
 seo → core
 scripts → core
+security → core
 feeds → core, content
 capture → core
 ```

@@ -34,6 +34,7 @@ dist
 **/app/components/**/*.js
 **/app.config.js
 layers/**/nuxt.config.mjs
+config-runtime/
 
 # Local Netlify folder
 .netlify

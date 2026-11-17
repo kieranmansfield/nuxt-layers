@@ -7,6 +7,7 @@ import { cos, float, mix, sin, time as tslTime, uniform, uv, vec2, vec3 } from '
 
 import { blob } from '../common/shapes'
 import type { FloatUniform, TSLNode } from '../types'
+import { setColorUniforms, setScalarUniforms } from './colorUniforms'
 
 export type MeshGradientOptions = {
   /** Array of colors (4 recommended) */
@@ -136,17 +137,13 @@ export function updateMeshGradientUniforms(
   uniforms: MeshGradientUniforms,
   options: Partial<MeshGradientOptions>
 ): void {
-  if (options.speed !== undefined) uniforms.speed.value = options.speed
-  if (options.blobScale !== undefined) uniforms.blobScale.value = options.blobScale
-  if (options.softness !== undefined) uniforms.softness.value = options.softness
-  if (options.mouseX !== undefined) uniforms.mouseX.value = options.mouseX
-  if (options.mouseY !== undefined) uniforms.mouseY.value = options.mouseY
-  if (options.mouseStrength !== undefined) uniforms.mouseStrength.value = options.mouseStrength
-  if (options.colors) {
-    options.colors.forEach((c, i) => {
-      if (uniforms.colors[i]) {
-        uniforms.colors[i].value = new Color(c)
-      }
-    })
-  }
+  setScalarUniforms(uniforms, options, [
+    'speed',
+    'blobScale',
+    'softness',
+    'mouseX',
+    'mouseY',
+    'mouseStrength',
+  ])
+  setColorUniforms(uniforms.colors, options.colors)
 }

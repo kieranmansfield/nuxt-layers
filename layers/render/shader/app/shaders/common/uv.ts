@@ -213,6 +213,25 @@ export function swirlUV(
 }
 
 /**
+ * Radial d² distortion shared by barrel (`add`) and pincushion (`sub`)
+ */
+function radialDistortUV(
+  uv: TSLNode,
+  ...args: [strength: TSLNode | number, center: TSLNode | [number, number], op: 'add' | 'sub']
+): TSLNode {
+  const [strength, center, op] = args
+  const c = toVec2Node(center)
+  const str = toScalarNode(strength)
+
+  const centered = uv.sub(c)
+  const dist = length(centered)
+  const distPow = pow(dist, 2)
+
+  const distorted = centered.mul(float(1)[op](str.mul(distPow)))
+  return distorted.add(c)
+}
+
+/**
  * Barrel distortion (fisheye)
  */
 export function barrelUV(
@@ -220,15 +239,7 @@ export function barrelUV(
   strength: TSLNode | number = 0.5,
   center: TSLNode | [number, number] = [0.5, 0.5]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const str = typeof strength === 'number' ? float(strength) : strength
-
-  const centered = uv.sub(c)
-  const dist = length(centered)
-  const distPow = pow(dist, 2)
-
-  const distorted = centered.mul(float(1).add(str.mul(distPow)))
-  return distorted.add(c)
+  return radialDistortUV(uv, strength, center, 'add')
 }
 
 /**
@@ -239,15 +250,7 @@ export function pincushionUV(
   strength: TSLNode | number = 0.5,
   center: TSLNode | [number, number] = [0.5, 0.5]
 ): TSLNode {
-  const c = Array.isArray(center) ? vec2(center[0], center[1]) : center
-  const str = typeof strength === 'number' ? float(strength) : strength
-
-  const centered = uv.sub(c)
-  const dist = length(centered)
-  const distPow = pow(dist, 2)
-
-  const distorted = centered.mul(float(1).sub(str.mul(distPow)))
-  return distorted.add(c)
+  return radialDistortUV(uv, strength, center, 'sub')
 }
 
 /**
@@ -307,8 +310,8 @@ export function coverUV(
   containerAspect: TSLNode | number,
   contentAspect: TSLNode | number
 ): TSLNode {
-  const container = typeof containerAspect === 'number' ? float(containerAspect) : containerAspect
-  const content = typeof contentAspect === 'number' ? float(contentAspect) : contentAspect
+  const container = toScalarNode(containerAspect)
+  const content = toScalarNode(contentAspect)
 
   const scale = container.div(content).max(1)
   const offset = float(1).sub(float(1).div(scale)).mul(0.5)
@@ -328,8 +331,8 @@ export function containUV(
   containerAspect: TSLNode | number,
   contentAspect: TSLNode | number
 ): TSLNode {
-  const container = typeof containerAspect === 'number' ? float(containerAspect) : containerAspect
-  const content = typeof contentAspect === 'number' ? float(contentAspect) : contentAspect
+  const container = toScalarNode(containerAspect)
+  const content = toScalarNode(contentAspect)
 
   const scale = container.div(content).min(1)
   const offset = float(1).sub(scale).mul(0.5)

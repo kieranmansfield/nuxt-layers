@@ -17,7 +17,8 @@ import {
 } from 'three/tsl'
 
 import type { TSLNode } from '../types'
-import { toScalarNode, toVec2Node } from './nodes'
+import { toScalarNode } from './nodes'
+import { bulgeUV } from './uv'
 
 // ============================================
 // LED Effect
@@ -197,27 +198,7 @@ export function bulgeEffect(
   inputUV: () => TSLNode = uv,
   options: BulgeEffectOptions = {}
 ): TSLNode {
-  const { strength, radius, power, center } = { ...DEFAULT_BULGE_EFFECT_OPTIONS, ...options }
-
-  const _strength = toScalarNode(strength)
-  const _radius = toScalarNode(radius)
-  const _power = toScalarNode(power)
-  const _center = toVec2Node(center)
-
-  const _uv = inputUV().toVar()
-  const offset = _uv.sub(_center).toVar()
-  const dist = length(offset).toVar()
-
-  // Normalized distance within radius
-  const normalizedDist = smoothstep(0, 1, dist.div(_radius).min(1)).toVar()
-
-  // Use power curve for stronger center effect
-  const falloff = pow(float(1).sub(normalizedDist), _power).mul(_strength)
-
-  // Apply radial displacement
-  const direction = normalize(offset)
-  const displacedUV = _center.add(direction.mul(dist.mul(falloff.add(float(1.0)))))
-
+  const displacedUV = bulgeUV(inputUV(), { ...DEFAULT_BULGE_EFFECT_OPTIONS, ...options })
   return input.sample(displacedUV)
 }
 

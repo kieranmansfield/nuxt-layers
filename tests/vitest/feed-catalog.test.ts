@@ -12,7 +12,26 @@ describe('formatFeedCollectionName', () => {
   })
 })
 
+const SITE_ROUTE_PATHS = ['/feed', '/feed/rss', '/feed/atom', '/feed/json']
+
 describe('createFeedCatalog', () => {
+  it('builds the default site routes from a minimal manifest', () => {
+    const catalog = createFeedCatalog({
+      manifest: {
+        blog: { type: 'page' },
+      },
+    })
+
+    expect(catalog.site.title).toBe('Site')
+    expect(catalog.site.url).toBe('')
+    expect(catalog.feed.defaultCollection).toBe('blog')
+    expect(catalog.feed.collections).toEqual(['blog'])
+    expect(catalog.feed.availableCollections).toEqual(['blog'])
+    expect(catalog.feed.missingCollections).toEqual([])
+    expect(catalog.siteRoutes.map((route) => route.path)).toEqual(SITE_ROUTE_PATHS)
+    expect(catalog.collectionGroups).toHaveLength(0)
+  })
+
   it('builds the feed manifest from app config and content collections', () => {
     const catalog = createFeedCatalog({
       site: {
@@ -41,12 +60,7 @@ describe('createFeedCatalog', () => {
     expect(catalog.feed.collections).toEqual(['blog', 'portfolio', 'gallery'])
     expect(catalog.feed.availableCollections).toEqual(['content', 'blog', 'portfolio', 'gallery'])
     expect(catalog.feed.missingCollections).toEqual([])
-    expect(catalog.siteRoutes.map((route) => route.path)).toEqual([
-      '/feed',
-      '/feed/rss',
-      '/feed/atom',
-      '/feed/json',
-    ])
+    expect(catalog.siteRoutes.map((route) => route.path)).toEqual(SITE_ROUTE_PATHS)
     expect(catalog.collectionGroups).toHaveLength(2)
     expect(catalog.collectionGroups.map((group) => group.collection)).toEqual([
       'portfolio',

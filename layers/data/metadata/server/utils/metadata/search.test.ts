@@ -63,14 +63,31 @@ function baseInput(overrides: Partial<MetadataSearchInput> = {}): MetadataSearch
   return { query: 'watchmen', ...overrides }
 }
 
+/** Registers a single comicvine provider returning one live result; returns its search spy. */
+function registerLiveProvider() {
+  const search = vi.fn(async () => [makeResult({ id: 'live-1' })])
+  providerState.mockProviders = [makeProvider({ id: 'comicvine', search })]
+  return search
+}
+
+/** Registers comicvine (comic) + openlibrary providers; returns their search spies. */
+function registerPair(
+  aResults: MetadataSearchResult[],
+  bResults: MetadataSearchResult[],
+  bMediaTypes: MetadataProvider['mediaTypes'] = ['book']
+) {
+  const a = vi.fn(async () => aResults)
+  const b = vi.fn(async () => bResults)
+  providerState.mockProviders = [
+    makeProvider({ id: 'comicvine', mediaTypes: ['comic'], search: a }),
+    makeProvider({ id: 'openlibrary', mediaTypes: bMediaTypes, search: b }),
+  ]
+  return [a, b] as const
+}
+
 describe('searchMetadata', () => {
   it('targets only providers named in input.providers', async () => {
-    const a = vi.fn(async () => [makeResult({ id: 'a-1' })])
-    const b = vi.fn(async () => [makeResult({ id: 'b-1' })])
-    providerState.mockProviders = [
-      makeProvider({ id: 'comicvine', search: a }),
-      makeProvider({ id: 'openlibrary', mediaTypes: ['book'], search: b }),
-    ]
+    const [a, b] = registerPair([makeResult({ id: 'a-1' })], [makeResult({ id: 'b-1' })])
 
     await searchMetadata(baseInput({ providers: ['comicvine'] }))
 
@@ -79,12 +96,7 @@ describe('searchMetadata', () => {
   })
 
   it('targets providers by mediaType when providers[] is not given', async () => {
-    const comic = vi.fn(async () => [makeResult()])
-    const book = vi.fn(async () => [makeResult({ mediaType: 'book' })])
-    providerState.mockProviders = [
-      makeProvider({ id: 'comicvine', mediaTypes: ['comic'], search: comic }),
-      makeProvider({ id: 'openlibrary', mediaTypes: ['book'], search: book }),
-    ]
+    const [comic, book] = registerPair([makeResult()], [makeResult({ mediaType: 'book' })])
 
     await searchMetadata(baseInput({ mediaType: 'comic' }))
 
@@ -93,12 +105,7 @@ describe('searchMetadata', () => {
   })
 
   it('targets all providers when neither providers[] nor mediaType is given', async () => {
-    const comic = vi.fn(async () => [makeResult()])
-    const book = vi.fn(async () => [makeResult({ mediaType: 'book' })])
-    providerState.mockProviders = [
-      makeProvider({ id: 'comicvine', mediaTypes: ['comic'], search: comic }),
-      makeProvider({ id: 'openlibrary', mediaTypes: ['book'], search: book }),
-    ]
+    const [comic, book] = registerPair([makeResult()], [makeResult({ mediaType: 'book' })])
 
     await searchMetadata(baseInput())
 
@@ -145,16 +152,11 @@ describe('searchMetadata', () => {
   })
 
   it('deduplicates results by mediaType:title(lowercase):year', async () => {
-    const a = vi.fn(async () => [
-      makeResult({ id: 'a-1', title: 'Watchmen', mediaType: 'comic', publishedAt: '1986-09-01' }),
-    ])
-    const b = vi.fn(async () => [
-      makeResult({ id: 'b-1', title: 'WATCHMEN', mediaType: 'comic', publishedAt: '1986-12-25' }),
-    ])
-    providerState.mockProviders = [
-      makeProvider({ id: 'comicvine', search: a }),
-      makeProvider({ id: 'openlibrary', mediaTypes: ['comic'], search: b }),
-    ]
+    registerPair(
+      [makeResult({ id: 'a-1', title: 'Watchmen', mediaType: 'comic', publishedAt: '1986-09-01' })],
+      [makeResult({ id: 'b-1', title: 'WATCHMEN', mediaType: 'comic', publishedAt: '1986-12-25' })],
+      ['comic']
+    )
 
     const result = await searchMetadata(baseInput())
 
@@ -163,16 +165,11 @@ describe('searchMetadata', () => {
   })
 
   it('does not dedupe results with different years', async () => {
-    const a = vi.fn(async () => [
-      makeResult({ id: 'a-1', title: 'Watchmen', publishedAt: '1986-09-01' }),
-    ])
-    const b = vi.fn(async () => [
-      makeResult({ id: 'b-1', title: 'Watchmen', publishedAt: '2019-10-20' }),
-    ])
-    providerState.mockProviders = [
-      makeProvider({ id: 'comicvine', search: a }),
-      makeProvider({ id: 'openlibrary', mediaTypes: ['comic'], search: b }),
-    ]
+    registerPair(
+      [makeResult({ id: 'a-1', title: 'Watchmen', publishedAt: '1986-09-01' })],
+      [makeResult({ id: 'b-1', title: 'Watchmen', publishedAt: '2019-10-20' })],
+      ['comic']
+    )
 
     const result = await searchMetadata(baseInput())
 
@@ -182,8 +179,7 @@ describe('searchMetadata', () => {
   it('short-circuits on a cache hit without calling provider search functions', async () => {
     const cached = [makeResult({ id: 'cached-1' })]
     getSearchCacheMock.mockResolvedValue(cached)
-    const search = vi.fn(async () => [makeResult({ id: 'live-1' })])
-    providerState.mockProviders = [makeProvider({ id: 'comicvine', search })]
+    const search = registerLiveProvider()
 
     const result = await searchMetadata(baseInput())
 
@@ -193,8 +189,7 @@ describe('searchMetadata', () => {
   })
 
   it('writes deduped results to the cache after a live search', async () => {
-    const search = vi.fn(async () => [makeResult({ id: 'live-1' })])
-    providerState.mockProviders = [makeProvider({ id: 'comicvine', search })]
+    registerLiveProvider()
 
     const result = await searchMetadata(baseInput())
 

@@ -130,7 +130,9 @@ export const voronoiNoise = Fn(([uv, scale]: [TSLNode, TSLNode]) => {
   let minDist: TSLNode = float(8.0)
   let cellCenter: TSLNode = vec2(0.0)
 
-  // Check 3x3 neighborhood
+  // Check 3x3 neighborhood. Deliberately not shared between the two voronoi impls: each
+  // uses its own hash and tie-break (step vs lessThan), so a helper would hide the math.
+  // fallow-ignore-next-line code-duplication
   for (let y = -1; y <= 1; y++) {
     for (let x = -1; x <= 1; x++) {
       const neighbor = vec2(x, y)

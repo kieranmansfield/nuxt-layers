@@ -66,6 +66,21 @@
 
   // ── Presets ───────────────────────────────────────────────────────────────
 
+  /** New theme mapping secondary/accent to the two harmony colours of the primary. */
+  function applyTwoColourHarmony(
+    kind: 'analogous' | 'triadic',
+    themeName: string,
+    [nameA, nameB]: [string, string]
+  ) {
+    const p = state.value.colours.find((c) => c.role === 'primary')
+    if (!p) return
+    const [a, b] = computeHarmony(p.hex, kind)
+    addTheme(themeName)
+    const t = state.value.themes.at(-1)!
+    if (a) setThemeColour(t.id, 'secondary', addToPalette(a, `${p.name} ${nameA}`))
+    if (b) setThemeColour(t.id, 'accent', addToPalette(b, `${p.name} ${nameB}`))
+  }
+
   const presets = [
     {
       label: 'Swapped',
@@ -102,29 +117,13 @@
       label: 'Analogous',
       icon: 'i-lucide-layers',
       description: 'Analogous palette from primary',
-      apply() {
-        const p = state.value.colours.find((c) => c.role === 'primary')
-        if (!p) return
-        const [a, b] = computeHarmony(p.hex, 'analogous')
-        addTheme('Analogous')
-        const t = state.value.themes.at(-1)!
-        if (a) setThemeColour(t.id, 'secondary', addToPalette(a, `${p.name} Analog 1`))
-        if (b) setThemeColour(t.id, 'accent', addToPalette(b, `${p.name} Analog 2`))
-      },
+      apply: () => applyTwoColourHarmony('analogous', 'Analogous', ['Analog 1', 'Analog 2']),
     },
     {
       label: 'Triadic',
       icon: 'i-lucide-triangle',
       description: 'Triadic palette from primary',
-      apply() {
-        const p = state.value.colours.find((c) => c.role === 'primary')
-        if (!p) return
-        const [a, b] = computeHarmony(p.hex, 'triadic')
-        addTheme('Triadic')
-        const t = state.value.themes.at(-1)!
-        if (a) setThemeColour(t.id, 'secondary', addToPalette(a, `${p.name} Triadic 2`))
-        if (b) setThemeColour(t.id, 'accent', addToPalette(b, `${p.name} Triadic 3`))
-      },
+      apply: () => applyTwoColourHarmony('triadic', 'Triadic', ['Triadic 2', 'Triadic 3']),
     },
   ]
 

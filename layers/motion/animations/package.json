@@ -5,5 +5,8 @@
   "main": "./nuxt.config.mjs",
   "scripts": {
     "lint": "eslint ."
+  },
+  "dependencies": {
+    "gsap": "catalog:"
   }
 }

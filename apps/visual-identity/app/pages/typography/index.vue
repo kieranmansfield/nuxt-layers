@@ -1,13 +1,9 @@
 <script setup lang="ts">
   import { DEFAULT_AXES, FONT_AXIS_META, type FontAxes } from '~/composables/useBrandState'
 
-  const { state, updateFontAxis } = useBrandState()
+  const { updateFontAxis } = useBrandState()
 
-  const activeFont = ref(state.value.typography[0]?.id ?? 'heading')
-
-  const currentFont = computed(
-    () => state.value.typography.find((f) => f.id === activeFont.value) ?? state.value.typography[0]
-  )
+  const { activeFont, currentFont, fontTabs } = useActiveFont()
 
   const previewText = ref('Aa')
   const previewSize = ref(220)
@@ -38,10 +34,6 @@
     if (!currentFont.value || v === undefined) return
     updateFontAxis(currentFont.value.id, axis, v)
   }
-
-  const fontTabs = computed(() =>
-    state.value.typography.map((f) => ({ label: f.role, value: f.id }))
-  )
 </script>
 
 <template>

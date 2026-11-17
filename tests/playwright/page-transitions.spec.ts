@@ -15,6 +15,12 @@ const go = (page: import('@playwright/test').Page, name: string) =>
       el.click()
     }, name)
 
+// Landed on the target page with the transition class cleared.
+async function expectSettledOnTarget(page: import('@playwright/test').Page) {
+  await page.waitForURL('**/page-transitions-target')
+  await expect(page.locator('html.is-page-transitioning')).toHaveCount(0)
+}
+
 test('wipe fills the overlay, swaps the page, then cleans up', async ({ page }) => {
   await open(page)
   await go(page, 'wipe')
@@ -23,8 +29,7 @@ test('wipe fills the overlay, swaps the page, then cleans up', async ({ page }) 
     'wipe'
   )
   await expect(page.locator('#page-transition-overlay > div')).toHaveCount(1)
-  await page.waitForURL('**/page-transitions-target')
-  await expect(page.locator('html.is-page-transitioning')).toHaveCount(0)
+  await expectSettledOnTarget(page)
   await expect(page.locator('#page-transition-overlay > div')).toHaveCount(0)
 })
 
@@ -60,8 +65,7 @@ test('runtime hooks fire in order with the preset name', async ({ page }) => {
     }
   })
   await go(page, 'wipe')
-  await page.waitForURL('**/page-transitions-target')
-  await expect(page.locator('html.is-page-transitioning')).toHaveCount(0)
+  await expectSettledOnTarget(page)
   const log = await page.evaluate(() => (window as unknown as { hookLog: string[] }).hookLog)
   // Vue removes the old page, which mounts the new one, before calling onAfterLeave
   expect(log).toEqual([
@@ -76,7 +80,6 @@ test('reduced motion swaps instantly with no overlay', async ({ browser }) => {
   const page = await (await browser.newContext({ reducedMotion: 'reduce' })).newPage()
   await open(page)
   await go(page, 'curved')
-  await page.waitForURL('**/page-transitions-target')
-  await expect(page.locator('html.is-page-transitioning')).toHaveCount(0)
+  await expectSettledOnTarget(page)
   await expect(page.locator('#page-transition-overlay > div')).toHaveCount(0)
 })

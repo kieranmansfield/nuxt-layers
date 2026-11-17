@@ -46,3 +46,10 @@ export function useVector2Prop(source: () => readonly [number, number]) {
   })
   return node
 }
+
+/** A `Color` uniform seeded from a CSS colour prop (or any getter) that follows it. */
+export function useColorUniformProp(source: () => string) {
+  const node = uniform(new Color(source()))
+  watchUniformProp(source, node, (hex) => new Color(hex))
+  return node
+}

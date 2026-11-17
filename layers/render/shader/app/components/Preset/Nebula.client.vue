@@ -1,44 +1,22 @@
 <script setup lang="ts">
+  import { createNebulaColorNode } from '#layers/shader/app/composables/useAmbientMaterials'
   import {
-    createAmbientUniforms,
-    createNebulaColorNode,
-  } from '#layers/shader/app/composables/useAmbientMaterials'
+    AMBIENT_PRESET_DEFAULTS,
+    type AmbientPresetProps,
+    useAmbientPreset,
+  } from '../../composables/useAmbientPreset'
   import type { TSLNode } from '#layers/shader/app/types/tsl'
 
-  const {
-    speed = 1.0,
-    intensity = 1.0,
-    mouseInteraction = true,
-  } = defineProps<{
-    speed?: number
-    intensity?: number
-    mouseInteraction?: boolean
-  }>()
+  const props = withDefaults(defineProps<AmbientPresetProps>(), AMBIENT_PRESET_DEFAULTS)
 
   const emit = defineEmits<{
     node: [colorNode: TSLNode]
   }>()
 
-  const uniforms = createAmbientUniforms({
-    speed: speed,
-    intensity: intensity,
-    mouseInteraction: mouseInteraction,
-  })
+  const { uniforms, colorNode } = useAmbientPreset(createNebulaColorNode, props, 0.3)
 
-  const colorNode = createNebulaColorNode(uniforms)
-
-  useAmbientControls(
-    uniforms,
-    {
-      speed: () => speed,
-      intensity: () => intensity,
-      mouseInteraction: () => mouseInteraction,
-    },
-    0.3
-  )
-
+  // Emit the node for parent (ShaderHost) to consume
   emit('node', colorNode)
-
   defineExpose({ uniforms, colorNode })
 </script>
 

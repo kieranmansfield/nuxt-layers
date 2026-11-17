@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
-  import { Color, DoubleSide } from 'three'
+  import { useColorUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
+  import { DoubleSide } from 'three'
   import {
     add,
     exp,
@@ -12,7 +12,6 @@
     smoothstep,
     sub,
     time as tslTime,
-    uniform,
     uv,
     vec2,
     vec3,
@@ -28,6 +27,7 @@
     color1 = '#0a1628',
     color2 = '#1e3a5f',
     color3 = '#7ec8e3',
+    // fallow-ignore-next-line code-duplication
     mouseX = 0.5,
     mouseY = 0.5,
     mouseInteraction = true,
@@ -50,25 +50,9 @@
   const mouseXUniform = useUniformProp(() => mouseX)
   const mouseYUniform = useUniformProp(() => mouseY)
   const mouseStrengthUniform = useUniformProp(() => mouseStrength)
-  const color1Uniform: TSLNode = uniform(new Color(color1))
-  const color2Uniform: TSLNode = uniform(new Color(color2))
-  const color3Uniform: TSLNode = uniform(new Color(color3))
-
-  watchUniformProp(
-    () => color1,
-    color1Uniform,
-    (val) => new Color(val)
-  )
-  watchUniformProp(
-    () => color2,
-    color2Uniform,
-    (val) => new Color(val)
-  )
-  watchUniformProp(
-    () => color3,
-    color3Uniform,
-    (val) => new Color(val)
-  )
+  const color1Uniform: TSLNode = useColorUniformProp(() => color1)
+  const color2Uniform: TSLNode = useColorUniformProp(() => color2)
+  const color3Uniform: TSLNode = useColorUniformProp(() => color3)
 
   const material = computed(() => {
     const mat = new MeshBasicNodeMaterial()

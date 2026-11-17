@@ -43,6 +43,7 @@ describe('buildFormFieldProps', () => {
 
 describe('buildBaseInputProps', () => {
   it('omits placeholder and leadingIcon when undefined', () => {
+    // fallow-ignore-next-line code-duplication
     const props = buildBaseInputProps({ size: 'md' })
 
     expect(props).toEqual({ size: 'md' })
@@ -117,6 +118,7 @@ describe('buildTextInputProps', () => {
 
 describe('buildNumberInputProps', () => {
   it('omits placeholder, leadingIcon, formatOptions when undefined', () => {
+    // fallow-ignore-next-line code-duplication
     const props = buildNumberInputProps({ size: 'md' })
 
     expect(props).toEqual({ size: 'md' })

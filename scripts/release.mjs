@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-import { spawnSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 
-import { ROOT } from './lib/layers.mjs'
+import { createRunner, sh } from './lib/run.mjs'
 
 const level = process.argv[2]
 if (!['patch', 'minor', 'major'].includes(level)) {
@@ -10,19 +9,7 @@ if (!['patch', 'minor', 'major'].includes(level)) {
   process.exit(1)
 }
 
-function run(label, cmd, args, opts = {}) {
-  console.log(`\n▶ ${label}`)
-  const result = spawnSync(cmd, args, { cwd: ROOT, stdio: 'inherit', ...opts })
-  if (result.status !== 0) {
-    console.error(`\n✗ ${label} failed. Release aborted — nothing pushed.`)
-    process.exit(result.status ?? 1)
-  }
-  console.log(`✓ ${label}`)
-}
-
-function sh(cmd, args) {
-  return spawnSync(cmd, args, { cwd: ROOT, encoding: 'utf8' })
-}
+const run = createRunner('Release aborted — nothing pushed.')
 
 const branch = sh('git', ['branch', '--show-current']).stdout.trim()
 if (branch !== 'main') {

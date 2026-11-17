@@ -2,6 +2,7 @@
   import { time, vec2 } from 'three/tsl'
 
   import { simplexNoise2D } from '../../shaders/common/noise'
+  import { rotateUV } from '../../shaders/common/uv'
 
   const {
     rotationAmount = 720,
@@ -33,14 +34,7 @@
       const angleDeg = n.mul(0.5).mul(rotAmountNode).add(180.0)
       const angle = angleDeg.mul(DEG_TO_RAD)
 
-      const pivot = vec2(0.5, 0.5)
-      const cosA = angle.cos()
-      const sinA = angle.sin()
-      const centered = uvIn.sub(pivot)
-      return vec2(
-        centered.x.mul(cosA).sub(centered.y.mul(sinA)),
-        centered.x.mul(sinA).add(centered.y.mul(cosA))
-      ).add(pivot)
+      return rotateUV(uvIn, angle)
     },
     order,
     'uv'

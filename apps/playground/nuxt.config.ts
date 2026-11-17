@@ -3,6 +3,7 @@ const AVAILABLE_LAYERS = [
   'core',
   'seo',
   'scripts',
+  'security',
   'typography',
   'navigation',
   'visual',
@@ -37,6 +38,7 @@ const LAYER_PATHS: Record<LayerName, string> = {
   core: '../../layers/core',
   seo: '../../layers/delivery/seo',
   scripts: '../../layers/delivery/scripts',
+  security: '../../layers/delivery/security',
   typography: '../../layers/design-system/typography',
   navigation: '../../layers/structure/navigation',
   visual: '../../layers/design-system/visual',
@@ -99,6 +101,8 @@ export default defineNuxtConfig({
   future: { compatibilityVersion: 5 },
   devtools: { enabled: true, vscode: { enabled: true } },
   css: ['~/assets/css/playground.css'],
+  // The seo layer ships an empty site name, which leaves `%siteName` unresolved in page titles
+  site: { name: 'Nuxt Layers Playground', url: 'https://nuxtlayers.netlify.app' },
 
   routeRules: {
     '/_studio/**': { redirect: '/' },
@@ -241,6 +245,8 @@ export default defineNuxtConfig({
 
   modules: [
     '@netlify/nuxt',
+    // Dev-only (no-op in builds): hydration-mismatch diffs, web vitals, third-party script audit
+    '@nuxt/hints',
     '@nuxt/ui',
     '@nuxt/test-utils/module',
     '@vueuse/nuxt',

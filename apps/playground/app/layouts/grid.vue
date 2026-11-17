@@ -9,13 +9,13 @@
 
 <template>
   <div class="flex min-h-dvh flex-col">
-    <MastHeader v-if="showHeader" />
-    <MastNav v-if="showNav" class="fixed top-0 right-0 z-(--z-header)" />
-    <MastNavModal v-if="showNav" />
+    <LazyMastHeader v-if="showHeader" />
+    <LazyMastNav v-if="showNav" class="fixed top-0 right-0 z-(--z-header)" />
+    <LazyMastNavModal v-if="showNav" />
     <LayoutMain class="grow">
       <slot />
     </LayoutMain>
-    <MastFooter v-if="showFooter" />
-    <LayoutGridDebug v-if="showGridDebug" />
+    <LazyMastFooter v-if="showFooter" />
+    <LazyLayoutGridDebug v-if="showGridDebug" />
   </div>
 </template>

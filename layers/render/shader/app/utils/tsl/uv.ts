@@ -1,5 +1,6 @@
 import { atan, cos, float, Fn, fract, length, sin, vec2 } from 'three/tsl'
 
+import { rotateUV as rotateAround } from '../../shaders/common/uv'
 import type { TSLNode } from '../../types'
 
 /**
@@ -12,16 +13,9 @@ export const tileUV = Fn(([uv, scale]: [TSLNode, TSLNode]) => {
 /**
  * Rotate UV around a center point
  */
-export const rotateUV = Fn(([uv, angle, center]: [TSLNode, TSLNode, TSLNode]) => {
-  const cosA = cos(angle)
-  const sinA = sin(angle)
-  const centered = uv.sub(center)
-  const rotated = vec2(
-    centered.x.mul(cosA).sub(centered.y.mul(sinA)),
-    centered.x.mul(sinA).add(centered.y.mul(cosA))
-  )
-  return rotated.add(center)
-})
+export const rotateUV = Fn(([uv, angle, center]: [TSLNode, TSLNode, TSLNode]) =>
+  rotateAround(uv, angle, center)
+)
 
 /**
  * Distort UV with a noise function
@@ -134,15 +128,8 @@ export const pincushionUV = Fn(([uv, center, strength]: [TSLNode, TSLNode, TSLNo
  */
 export const swirlUV = Fn(
   ([uv, center, strength, radius]: [TSLNode, TSLNode, TSLNode, TSLNode]) => {
-    const centered = uv.sub(center)
-    const dist = length(centered)
+    const dist = length(uv.sub(center))
     const angle = strength.mul(float(1.0).sub(dist.div(radius).min(1.0)))
-    const cosA = cos(angle)
-    const sinA = sin(angle)
-    const rotated = vec2(
-      centered.x.mul(cosA).sub(centered.y.mul(sinA)),
-      centered.x.mul(sinA).add(centered.y.mul(cosA))
-    )
-    return dist.lessThan(radius).select(rotated.add(center), uv)
+    return dist.lessThan(radius).select(rotateAround(uv, angle, center), uv)
   }
 )

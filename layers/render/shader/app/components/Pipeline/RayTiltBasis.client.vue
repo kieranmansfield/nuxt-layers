@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import { cos, sin, vec3 } from 'three/tsl'
 
+  import { rotateVec3X, rotateVec3Y } from '../../shaders/common/math'
+
   const {
     yaw = 0,
     pitch = 0,
@@ -22,15 +24,7 @@
 
   useShaderStage(
     (ray) => {
-      // Yaw (Y)
-      const cy = cos(yawNode)
-      const sy = sin(yawNode)
-      const r1 = vec3(ray.x.mul(cy).add(ray.z.mul(sy)), ray.y, ray.z.mul(cy).sub(ray.x.mul(sy)))
-
-      // Pitch (X)
-      const cp = cos(pitchNode)
-      const sp = sin(pitchNode)
-      const r2 = vec3(r1.x, r1.y.mul(cp).sub(r1.z.mul(sp)), r1.y.mul(sp).add(r1.z.mul(cp)))
+      const r2 = rotateVec3X(rotateVec3Y(ray, yawNode), pitchNode)
 
       // Roll (Z)
       const cr = cos(rollNode)

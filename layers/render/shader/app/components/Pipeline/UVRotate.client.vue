@@ -1,5 +1,7 @@
 <script setup lang="ts">
-  import { uniform, vec2 } from 'three/tsl'
+  import { uniform } from 'three/tsl'
+
+  import { rotateUV } from '../../shaders/common/uv'
 
   const {
     angle = 0,
@@ -22,18 +24,5 @@
     }
   )
 
-  useShaderStage(
-    (uvIn) => {
-      const pivot = vec2(pivotX, pivotY)
-      const cosA = angleNode.cos()
-      const sinA = angleNode.sin()
-      const centered = uvIn.sub(pivot)
-      return vec2(
-        centered.x.mul(cosA).sub(centered.y.mul(sinA)),
-        centered.x.mul(sinA).add(centered.y.mul(cosA))
-      ).add(pivot)
-    },
-    order,
-    'uv'
-  )
+  useShaderStage((uvIn) => rotateUV(uvIn, angleNode, [pivotX, pivotY]), order, 'uv')
 </script>

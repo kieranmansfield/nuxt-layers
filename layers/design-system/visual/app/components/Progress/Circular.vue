@@ -1,4 +1,3 @@
-<!-- fallow-ignore-file css-token-drift -->
 <script setup lang="ts">
   const {
     progress,

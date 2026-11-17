@@ -1,6 +1,7 @@
 <script setup lang="ts">
-  import { Vector2 } from 'three'
-  import { uniform, vec2 } from 'three/tsl'
+  import { vec2 } from 'three/tsl'
+
+  import { useWindowMouseUniform } from '../../composables/useWindowMouseUniform'
 
   /**
    * Warps UV toward the mouse cursor — different from UVParallax, which shifts
@@ -13,16 +14,8 @@
     order?: number
   }>()
 
-  const mouse = uniform(new Vector2(0.5, 0.5))
+  const mouse = useWindowMouseUniform()
   const influenceNode = useUniformProp(() => influence)
-
-  onMounted(() => {
-    const onMove = (e: MouseEvent) => {
-      mouse.value.set(e.clientX / window.innerWidth, 1 - e.clientY / window.innerHeight)
-    }
-    window.addEventListener('mousemove', onMove)
-    onUnmounted(() => window.removeEventListener('mousemove', onMove))
-  })
 
   useShaderStage(
     (uvIn) => {

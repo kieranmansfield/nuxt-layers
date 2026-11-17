@@ -7,6 +7,7 @@ import { float, mix, pow, smoothstep, time as tslTime, uniform, uv, vec2, vec3 }
 
 import { simplexNoise2D } from '../common/noise'
 import type { FloatUniform, TSLNode } from '../types'
+import { setColorUniforms, setScalarUniforms } from './colorUniforms'
 
 export type AuroraOptions = {
   /** Array of colors (3 recommended) */
@@ -129,18 +130,14 @@ export function updateAuroraUniforms(
   uniforms: AuroraUniforms,
   options: Partial<AuroraOptions>
 ): void {
-  if (options.speed !== undefined) uniforms.speed.value = options.speed
-  if (options.density !== undefined) uniforms.density.value = options.density
-  if (options.fadePower !== undefined) uniforms.fadePower.value = options.fadePower
-  if (options.glowIntensity !== undefined) uniforms.glowIntensity.value = options.glowIntensity
-  if (options.mouseX !== undefined) uniforms.mouseX.value = options.mouseX
-  if (options.mouseStrength !== undefined) uniforms.mouseStrength.value = options.mouseStrength
+  setScalarUniforms(uniforms, options, [
+    'speed',
+    'density',
+    'fadePower',
+    'glowIntensity',
+    'mouseX',
+    'mouseStrength',
+  ])
   if (options.skyColor !== undefined) uniforms.skyColor.value = new Color(options.skyColor)
-  if (options.colors) {
-    options.colors.forEach((c, i) => {
-      if (uniforms.colors[i]) {
-        uniforms.colors[i].value = new Color(c)
-      }
-    })
-  }
+  setColorUniforms(uniforms.colors, options.colors)
 }

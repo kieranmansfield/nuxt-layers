@@ -1,6 +1,8 @@
 import { Color, Vector3 } from 'three'
 import { uniform } from 'three/tsl'
 
+import { useRootStyleObserver } from './useRootStyleObserver'
+
 /**
  * Creates a TSL vec3 uniform that tracks a CSS custom property (colour).
  * Syncs on mount and whenever :root's class or style changes (theme switches).
@@ -24,15 +26,7 @@ export function useCSSColourUniform(varName: string) {
     }
   }
 
-  onMounted(() => {
-    sync()
-    const observer = new MutationObserver(sync)
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['style', 'class'],
-    })
-    onUnmounted(() => observer.disconnect())
-  })
+  useRootStyleObserver(sync)
 
   return node
 }

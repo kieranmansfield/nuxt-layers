@@ -221,6 +221,19 @@
       buttonClass: 'bg-lime-500/10 text-lime-500 hover:bg-lime-500/20',
     },
     {
+      name: 'Security',
+      description: 'Opt-in nuxt-security: per-request nonce CSP and hardened security headers',
+      loaded: true,
+      icon: 'i-lucide-shield-check',
+      to: '/security',
+      features: ['Nonce CSP', 'HSTS', 'Frame Ancestors', 'SRI', 'SSG Hashes'],
+      borderColor: 'border-red-500/50',
+      bgColor: 'bg-red-500/10',
+      iconBg: 'bg-red-500/10',
+      iconColor: 'text-red-500',
+      buttonClass: 'bg-red-500/10 text-red-500 hover:bg-red-500/20',
+    },
+    {
       name: 'Typography',
       description: 'Typography components — Headline, TextStroke, CodeBlock — and useTypography',
       loaded: true,
@@ -510,6 +523,8 @@
   }
 
   definePageMeta({ layout: { name: 'grid', props: { showHeader: false, showFooter: false } } })
+  // Home is the site itself - plain site name, not "<title> | <site name>"
+  useHead({ titleTemplate: '%siteName' })
 </script>
 
 <template>
