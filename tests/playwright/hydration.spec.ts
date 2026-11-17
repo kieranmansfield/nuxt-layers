@@ -15,7 +15,11 @@ async function collectHydrationIssues(page: Page, path: string) {
   const issues: string[] = []
   page.on('console', (msg) => {
     const text = msg.text()
-    if (/hydrat/i.test(text)) issues.push(text.split('\n').slice(0, 3).join(' | '))
+    // ponytail: skip @nuxt/hints advisories — its pre/post-hydration HTML diff flags any
+    // onMounted DOM change (GSAP, etc.) and its lazy-load tips mention "hydration time".
+    // Vue's own mismatch warnings still fail the test.
+    if (/hydrat/i.test(text) && !text.includes('hints:'))
+      issues.push(text.split('\n').slice(0, 3).join(' | '))
   })
   page.on('pageerror', (err) => issues.push(`pageerror: ${err.message}`))
 

@@ -124,7 +124,10 @@ describe('layer extends', () => {
   it('every package.json export points at an existing layer config', () => {
     const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'))
     for (const target of Object.values<string>(pkg.exports)) {
-      expect(existsSync(join(root, target)), target).toBe(true)
+      // nuxt.config.mjs entrypoints are gitignored and generated from .ts at prepack
+      // (scripts/generate-layer-configs.mjs), so a clean checkout only has the source.
+      const source = join(root, target.replace(/nuxt\.config\.mjs$/, 'nuxt.config.ts'))
+      expect(existsSync(source), target).toBe(true)
     }
   })
 
