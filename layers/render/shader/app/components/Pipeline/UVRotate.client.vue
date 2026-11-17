@@ -26,3 +26,7 @@
 
   useShaderStage((uvIn) => rotateUV(uvIn, angleNode, [pivotX, pivotY]), order, 'uv')
 </script>
+
+<template>
+  <slot />
+</template>

@@ -23,3 +23,7 @@
 
   useShaderStage((uvIn) => uvIn.add(speedNode.mul(time)).fract(), order, 'uv')
 </script>
+
+<template>
+  <slot />
+</template>

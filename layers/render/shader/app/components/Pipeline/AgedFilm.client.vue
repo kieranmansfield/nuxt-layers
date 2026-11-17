@@ -56,3 +56,7 @@
     return vec4(result.mix(prev.xyz, float(1).sub(intensityNode)), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

@@ -30,3 +30,7 @@
 
   useShaderStage((uvIn) => uvIn.add(vec2(mouse.x, mouse.y).mul(parallaxNode).mul(0.1)), order, 'uv')
 </script>
+
+<template>
+  <slot />
+</template>

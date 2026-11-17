@@ -25,3 +25,7 @@
     return vec4(rgb, prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

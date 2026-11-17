@@ -65,3 +65,7 @@
     return vec4(prev.xyz.add(flare), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

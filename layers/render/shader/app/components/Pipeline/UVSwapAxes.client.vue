@@ -5,3 +5,7 @@
 
   useShaderStage((uvIn) => vec2(uvIn.y, uvIn.x), order, 'uv')
 </script>
+
+<template>
+  <slot />
+</template>

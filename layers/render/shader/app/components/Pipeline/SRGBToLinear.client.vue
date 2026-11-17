@@ -17,3 +17,7 @@
 
   useShaderStage((prev) => vec4(pow(prev.xyz.max(float(0)), gammaNode), prev.w), order)
 </script>
+
+<template>
+  <slot />
+</template>

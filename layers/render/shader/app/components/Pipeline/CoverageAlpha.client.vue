@@ -10,3 +10,7 @@
 
   useShaderStage((prev) => vec4(prev.xyz, prev.x.max(prev.y).max(prev.z)), order)
 </script>
+
+<template>
+  <slot />
+</template>

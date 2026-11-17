@@ -64,3 +64,7 @@
     return vec4(prev.xyz.add(contribution), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

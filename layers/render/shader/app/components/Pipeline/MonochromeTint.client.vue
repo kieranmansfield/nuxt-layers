@@ -20,3 +20,7 @@
 
   useShaderStage((prev) => vec4(desaturate(prev.xyz, desatNode).mul(colorNode), prev.w), order)
 </script>
+
+<template>
+  <slot />
+</template>

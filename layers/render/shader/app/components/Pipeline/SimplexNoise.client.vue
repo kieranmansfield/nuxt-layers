@@ -35,3 +35,7 @@
     return vec4(mix(colorANode, colorBNode, n), 1.0)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

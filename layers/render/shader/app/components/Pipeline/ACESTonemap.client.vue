@@ -7,3 +7,7 @@
 
   useShaderStage((prev) => vec4(acesTonemap(prev.xyz), prev.w), order)
 </script>
+
+<template>
+  <slot />
+</template>

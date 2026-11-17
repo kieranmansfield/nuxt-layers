@@ -13,3 +13,7 @@
 
   useShaderStage((prev) => vec4(hueShift(prev.xyz, shiftNode), prev.w), order)
 </script>
+
+<template>
+  <slot />
+</template>

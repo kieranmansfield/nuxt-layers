@@ -31,3 +31,7 @@
     return vec4(prev.xyz.mul(factor), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

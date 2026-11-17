@@ -3,15 +3,14 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 import { runTween, tweenUniform } from './tween'
 
 // Manual rAF: each step() fires the queued frame callbacks at the given timestamp (ms)
-let queue: FrameRequestCallback[] = []
+const queue: FrameRequestCallback[] = []
 function step(now: number) {
-  const frames = queue
-  queue = []
+  const frames = queue.splice(0)
   for (const cb of frames) cb(now)
 }
 
 beforeEach(() => {
-  queue = []
+  queue.length = 0
   vi.stubGlobal('requestAnimationFrame', (cb: FrameRequestCallback) => queue.push(cb))
 })
 afterEach(() => vi.unstubAllGlobals())

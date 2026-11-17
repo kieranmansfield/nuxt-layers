@@ -34,3 +34,7 @@
     return vec4(mix(fogColorNode, prev.xyz, fogFactor), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

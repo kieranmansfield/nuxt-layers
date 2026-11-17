@@ -36,3 +36,7 @@
     return vec4(toned, prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

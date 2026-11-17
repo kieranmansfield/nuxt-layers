@@ -60,3 +60,7 @@
     return clamp(vec4(blended, prev.w), 0, 1)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

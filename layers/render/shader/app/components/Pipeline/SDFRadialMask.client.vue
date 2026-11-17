@@ -25,3 +25,7 @@
     return vec4(prev.xyz, prev.w.mul(mask))
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

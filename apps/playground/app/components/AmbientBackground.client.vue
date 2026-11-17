@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { TresCanvas } from '@tresjs/core'
-  import { Clock, Color, DoubleSide, ShaderMaterial, Vector2 } from 'three'
+  import { Color, DoubleSide, ShaderMaterial, Timer, Vector2 } from 'three'
 
   type PresetType =
     | 'aurora'
@@ -758,14 +758,14 @@ void main() {
   })
 
   // Animation
-  const clock = new Clock()
+  const timer = new Timer()
   let animationId: number
 
   function updateUniforms() {
     const uniforms = material.value?.uniforms as AmbientBackgroundUniforms | undefined
     if (!uniforms) return
 
-    uniforms.uTime.value = clock.getElapsedTime()
+    uniforms.uTime.value = timer.update().getElapsed()
     uniforms.uSpeed.value = speed
     uniforms.uIntensity.value = intensity
     uniforms.uMouse.value.set(mouseX, mouseY)

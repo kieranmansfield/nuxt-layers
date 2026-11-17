@@ -34,3 +34,7 @@
     return vec4(prev.xyz.mul(warm).mul(tinted), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

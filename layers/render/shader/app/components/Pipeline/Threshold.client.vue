@@ -17,3 +17,7 @@
     return vec4(float(t), float(t), float(t), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

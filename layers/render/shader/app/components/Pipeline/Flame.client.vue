@@ -40,3 +40,7 @@
     return vec4(fireColor, heat)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

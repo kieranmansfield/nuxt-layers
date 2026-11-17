@@ -39,3 +39,7 @@
     return vec4(mix(prev.xyz, colour, opacityNode), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

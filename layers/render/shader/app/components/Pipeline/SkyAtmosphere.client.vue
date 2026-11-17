@@ -60,3 +60,7 @@
     return vec4(colour.add(sun), 1.0)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

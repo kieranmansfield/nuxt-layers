@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { OrbitControls } from '@tresjs/cientos'
   import { TresCanvas } from '@tresjs/core'
-  import { Clock, DoubleSide, ShaderMaterial, TextureLoader, type Texture } from 'three'
+  import { DoubleSide, ShaderMaterial, TextureLoader, Timer, type Texture } from 'three'
 
   const {
     distortion = 0.02,
@@ -176,14 +176,14 @@ void main() {
   })
 
   // Animation
-  const clock = new Clock()
+  const timer = new Timer()
   let animationId: number
 
   function updateUniforms() {
     const uniforms = material.value?.uniforms as ShaderImageUniforms | undefined
     if (!uniforms) return
 
-    const elapsed = clock.getElapsedTime()
+    const elapsed = timer.update().getElapsed()
     uniforms.uTime.value = elapsed
     uniforms.uDistortion.value = distortion
     uniforms.uMouseX.value = mouseX
@@ -211,7 +211,14 @@ void main() {
 <template>
   <TresCanvas clear-color="#0a0a0a">
     <TresPerspectiveCamera :position="[0, 0, 2]" />
-    <OrbitControls :enable-zoom="!disableZoom" />
+    <!-- The image is a fixed 3×3 plane: dollying past the start, orbiting or panning shows its
+         edges as a square in a black void, so zoom in only. -->
+    <OrbitControls
+      :enable-zoom="!disableZoom"
+      :enable-rotate="false"
+      :enable-pan="false"
+      :max-distance="2"
+    />
 
     <TresMesh v-if="material">
       <TresPlaneGeometry :args="[3, 3, 1, 1]" />

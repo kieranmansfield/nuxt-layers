@@ -7,3 +7,7 @@
 
   useShaderStage((prev) => vec4(invert(prev.xyz), prev.w), order)
 </script>
+
+<template>
+  <slot />
+</template>

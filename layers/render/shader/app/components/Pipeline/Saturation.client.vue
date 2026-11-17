@@ -13,3 +13,7 @@
 
   useShaderStage((prev) => vec4(saturate(prev.xyz, amountNode), prev.w), order)
 </script>
+
+<template>
+  <slot />
+</template>

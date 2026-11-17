@@ -29,3 +29,7 @@
     'ray'
   )
 </script>
+
+<template>
+  <slot />
+</template>

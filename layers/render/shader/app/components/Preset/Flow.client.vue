@@ -7,6 +7,7 @@
   } from '../../composables/useAmbientPreset'
   import type { TSLNode } from '#layers/shader/app/types/tsl'
 
+  // eslint-disable-next-line vue/define-props-destructuring, vue/no-unused-properties -- useAmbientPreset reads the whole reactive props object
   const props = withDefaults(defineProps<AmbientPresetProps>(), AMBIENT_PRESET_DEFAULTS)
 
   const emit = defineEmits<{

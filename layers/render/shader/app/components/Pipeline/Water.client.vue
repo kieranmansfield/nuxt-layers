@@ -46,3 +46,7 @@
     return vec4(mix(colorDeepNode, colorShallowNode, wave), float(1))
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

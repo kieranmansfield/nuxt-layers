@@ -54,3 +54,7 @@
     return vec4(clamp(blended, 0, 1), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

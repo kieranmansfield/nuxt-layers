@@ -14,3 +14,7 @@
     return vec4(posterised, prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

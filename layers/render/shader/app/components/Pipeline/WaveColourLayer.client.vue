@@ -45,3 +45,7 @@
     return vec4(mix(prev.xyz, colorNode, band), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

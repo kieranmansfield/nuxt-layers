@@ -33,3 +33,7 @@
     order
   )
 </script>
+
+<template>
+  <slot />
+</template>

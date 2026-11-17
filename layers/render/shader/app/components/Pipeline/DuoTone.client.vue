@@ -23,3 +23,7 @@
     return vec4(mix(shadowNode, highlightNode, lum), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

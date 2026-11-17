@@ -47,3 +47,7 @@
     return vec4(vec3(rContrib, gContrib, bContrib), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

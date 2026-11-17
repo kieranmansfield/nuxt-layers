@@ -10,3 +10,7 @@
 
   useShaderStage((_prev) => vec4(colorNode, 1.0), order)
 </script>
+
+<template>
+  <slot />
+</template>

@@ -14,3 +14,7 @@
     return vec4(corrected, prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>
