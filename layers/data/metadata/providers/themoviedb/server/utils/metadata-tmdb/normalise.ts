@@ -16,7 +16,7 @@ export function normaliseTmdbMovie(movie: TMDBMovie): MetadataRecord {
     mediaType: 'movie',
     title: movie.title,
     ...(movie.overview && { description: movie.overview }),
-    ...(directors.length && { creators: directors }),
+    ...(directors.length > 0 && { creators: directors }),
     ...(movie.production_companies?.[0]?.name && {
       publisher: movie.production_companies[0].name,
     }),
@@ -47,7 +47,7 @@ export function normaliseTmdbTV(show: TMDBTVShow): MetadataRecord {
     mediaType: 'tv-show',
     title: show.name,
     ...(show.overview && { description: show.overview }),
-    ...(creators.length && { creators }),
+    ...(creators.length > 0 && { creators }),
     ...(show.networks?.[0]?.name && { publisher: show.networks[0].name }),
     ...(show.first_air_date && { publishedAt: show.first_air_date }),
     ...(show.poster_path && { coverUrl: tmdbImageUrl(show.poster_path) }),

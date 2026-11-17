@@ -55,22 +55,19 @@
 
   const importError = ref('')
 
-  function handleImport(event: Event) {
+  async function handleImport(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0]
     if (!file) return
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      try {
-        importState(e.target?.result as string)
-        importError.value = ''
-      } catch {
-        importError.value = 'Invalid brand configuration file.'
-      }
+    try {
+      importState(await file.text())
+      importError.value = ''
+    } catch {
+      importError.value = 'Invalid brand configuration file.'
     }
-    reader.readAsText(file)
   }
 
   const isEmpty = computed(() => state.value.colours.length === 0)
+  const previewColours = computed(() => state.value.colours.slice(0, 4))
 </script>
 
 <template>
@@ -108,7 +105,7 @@
           <div class="flex items-center gap-3">
             <div class="flex -space-x-2">
               <div
-                v-for="colour in state.colours.slice(0, 4)"
+                v-for="colour in previewColours"
                 :key="colour.id"
                 class="border-default size-6 rounded-full border-2"
                 :style="{ backgroundColor: colour.hex }"

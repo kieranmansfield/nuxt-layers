@@ -52,3 +52,7 @@
     return vec4(vec3(rBleed, prev.g, bBleed).mul(scanBrightness), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

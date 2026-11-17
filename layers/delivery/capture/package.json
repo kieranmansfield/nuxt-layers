@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "private": true,
-  "main": "./nuxt.config.ts",
+  "main": "./nuxt.config.mjs",
   "bin": {
     "kmcom-capture": "./cli/capture.mjs"
   },

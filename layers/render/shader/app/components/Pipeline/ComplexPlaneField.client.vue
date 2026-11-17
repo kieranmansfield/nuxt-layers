@@ -68,3 +68,7 @@
     return vec4(scalar, scalar, scalar, float(1))
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

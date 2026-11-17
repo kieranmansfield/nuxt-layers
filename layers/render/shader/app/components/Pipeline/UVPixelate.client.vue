@@ -9,3 +9,7 @@
 
   useShaderStage((uvIn) => uvIn.mul(gridSizeNode).floor().div(gridSizeNode), order, 'uv')
 </script>
+
+<template>
+  <slot />
+</template>

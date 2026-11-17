@@ -21,7 +21,7 @@ export default defineNuxtPlugin({
 
     const html = document.documentElement
     html.dataset.capture = ''
-    if (hide.length) {
+    if (hide.length > 0) {
       const style = document.createElement('style')
       style.textContent = `${hide.join(',')}{display:none!important}`
       document.head.append(style)

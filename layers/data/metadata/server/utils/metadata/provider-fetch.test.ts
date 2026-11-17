@@ -17,7 +17,9 @@ describe('providerFetch', () => {
   it('wraps failures in a MetadataProviderError for the provider', async () => {
     vi.stubGlobal(
       '$fetch',
-      vi.fn(async () => Promise.reject(new Error('boom')))
+      vi.fn(async () => {
+        throw new Error('boom')
+      })
     )
     const err = await providerFetch('tmdb', 'https://x.test').catch((e) => e)
     expect(err).toBeInstanceOf(MetadataProviderError)

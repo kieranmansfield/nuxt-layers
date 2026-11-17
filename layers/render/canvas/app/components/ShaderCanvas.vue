@@ -62,10 +62,10 @@
     return outputColorSpace === 'srgb' ? SRGBColorSpace : 'srgb-linear'
   })
 
-  const maxDpr = computed(() => {
-    const configDpr = shaderConfig.maxPixelRatio ?? 2
-    return Math.min(window.devicePixelRatio, configDpr)
-  })
+  // A [min, max] range makes Tres clamp the live devicePixelRatio, so browser zoom (which changes
+  // it) resizes the drawing buffer. A plain number freezes it at mount: zooming out then multiplies
+  // the larger CSS size by the stale ratio and overruns WebGPU's 8192px texture limit.
+  const dprRange: [number, number] = [0, shaderConfig.maxPixelRatio ?? 2]
 
   // WebGPU renderer factory — TresJS v5 calls renderer.init() automatically
   // when the returned object has isRenderer === true (three/webgpu Renderer base class)
@@ -76,7 +76,6 @@
       // WebGPU has no 'default' power preference — omit to let the browser decide
       ...(powerPreference === 'default' ? {} : { powerPreference }),
     })
-    r.setPixelRatio(Math.min(window.devicePixelRatio, maxDpr.value))
     r.setClearColor(new Color(clearColor))
     r.toneMapping = resolvedToneMapping.value
     r.outputColorSpace = resolvedColorSpace.value
@@ -101,7 +100,7 @@
     :preserve-drawing-buffer
     :power-preference
     :window-size
-    :dpr="maxDpr"
+    :dpr="dprRange"
     v-bind="rendererBinding"
     class="shader-canvas"
     @ready="onReady"

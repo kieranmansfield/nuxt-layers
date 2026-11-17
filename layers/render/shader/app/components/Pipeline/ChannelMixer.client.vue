@@ -63,3 +63,7 @@
     return vec4(vec3(r, g, b), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

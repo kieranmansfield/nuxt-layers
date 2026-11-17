@@ -9,7 +9,7 @@ const pagesDir = resolve(__dirname, '../../apps/playground/app/pages')
 const routes = readdirSync(pagesDir)
   .filter((f) => f.endsWith('.vue'))
   .map((f) => (f === 'index.vue' ? '/' : `/${f.replace(/\.vue$/, '')}`))
-  .sort()
+  .toSorted()
 
 async function collectHydrationIssues(page: Page, path: string) {
   const issues: string[] = []

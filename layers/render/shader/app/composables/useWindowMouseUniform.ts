@@ -8,10 +8,11 @@ import { uniform } from 'three/tsl'
 export function useWindowMouseUniform() {
   const mouse = uniform(new Vector2(0.5, 0.5))
 
+  const onMove = (e: MouseEvent) => {
+    mouse.value.set(e.clientX / window.innerWidth, 1 - e.clientY / window.innerHeight)
+  }
+
   onMounted(() => {
-    const onMove = (e: MouseEvent) => {
-      mouse.value.set(e.clientX / window.innerWidth, 1 - e.clientY / window.innerHeight)
-    }
     window.addEventListener('mousemove', onMove)
     onUnmounted(() => window.removeEventListener('mousemove', onMove))
   })

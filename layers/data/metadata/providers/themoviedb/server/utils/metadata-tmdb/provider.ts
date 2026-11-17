@@ -16,7 +16,7 @@ export const tmdbProvider: MetadataProvider = {
         if (mediaType === 'tv-show') return r.media_type === 'tv'
         return true
       })
-      .map(normaliseTmdbSearchResult)
+      .map((r) => normaliseTmdbSearchResult(r))
   },
 
   async lookup({ providerId, resourceType = 'movie' }) {

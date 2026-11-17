@@ -29,7 +29,7 @@
   const view = ref('cards')
 
   const newestFirst = ref(true)
-  const sorted = computed(() => (newestFirst.value ? works : [...works].reverse()))
+  const sorted = computed(() => (newestFirst.value ? works : works.toReversed()))
   const sortRoot = useTemplateRef<HTMLElement>('sortRoot')
   useFlip(sortRoot, { on: newestFirst, vars: { stagger: 0.02 } })
 </script>

@@ -31,7 +31,7 @@
           }}
         </span>
         <UBadge
-          v-for="tag in asGallery(item).tags"
+          v-for="tag in (item as GalleryCollectionItem).tags"
           :key="tag"
           color="neutral"
           variant="subtle"
@@ -47,7 +47,7 @@
         <USeparator class="my-8" />
         <div class="gallery-grid gap-4">
           <div
-            v-for="(img, idx) in asGallery(item).images"
+            v-for="(img, idx) in (item as GalleryCollectionItem).images"
             :key="img.src"
             class="group relative overflow-hidden rounded-lg"
           >

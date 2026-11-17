@@ -25,7 +25,7 @@
   onMounted(() => {
     const items = [...(root.value?.children ?? [])]
     if (reduced.value) {
-      root.value?.setAttribute('data-reduced', '')
+      if (root.value) root.value.dataset.reduced = ''
       return items.forEach((item) => item.classList.add('animated'))
     }
     items.forEach((item, index) => {
@@ -38,7 +38,7 @@
     })
   })
 
-  onBeforeUnmount(() => timers.forEach(clearTimeout))
+  onBeforeUnmount(() => timers.forEach((timer) => clearTimeout(timer)))
 </script>
 
 <template>

@@ -2,6 +2,87 @@
 import { useOnline } from '@vueuse/core'
 
 /**
+ * Check if a specific URL is cached
+ * @param url - URL to check
+ */
+async function isCached(url: string): Promise<boolean> {
+  if (!import.meta.client || !('caches' in window)) return false
+
+  try {
+    const cache = await caches.open('workbox-precache-v2')
+    const response = await cache.match(url)
+    return Boolean(response)
+  } catch (error) {
+    console.warn('[useCache] Failed to check cache:', error)
+    return false
+  }
+}
+
+/**
+ * Get total cache size in bytes
+ */
+async function getCacheSize(): Promise<number> {
+  if (!import.meta.client || !('caches' in window)) return 0
+
+  try {
+    const cacheNames = await caches.keys()
+    let totalSize = 0
+
+    for (const cacheName of cacheNames) {
+      const cache = await caches.open(cacheName)
+      const requests = await cache.keys()
+
+      for (const request of requests) {
+        const response = await cache.match(request)
+        if (response) {
+          const blob = await response.blob()
+          totalSize += blob.size
+        }
+      }
+    }
+
+    return totalSize
+  } catch (error) {
+    console.warn('[useCache] Failed to get cache size:', error)
+    return 0
+  }
+}
+
+/**
+ * Clear all caches
+ */
+async function clearCache(): Promise<void> {
+  if (!import.meta.client || !('caches' in window)) return
+
+  try {
+    const cacheNames = await caches.keys()
+    await Promise.all(cacheNames.map((name) => caches.delete(name)))
+    if (import.meta.dev) {
+      console.log('[useCache] All caches cleared')
+    }
+  } catch (error) {
+    if (import.meta.dev) {
+      console.error('[useCache] Failed to clear cache:', error)
+    }
+  }
+}
+
+/**
+ * Get formatted cache size (human-readable)
+ */
+async function getFormattedCacheSize(): Promise<string> {
+  const bytes = await getCacheSize()
+
+  if (bytes === 0) return '0 B'
+
+  const units = ['B', 'KB', 'MB', 'GB']
+  const k = 1024
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+  return `${Number((bytes / Math.pow(k, i)).toFixed(2))} ${units[i]}`
+}
+
+/**
  * Cache management composable for PWA
  *
  * Provides utilities for managing service worker cache,
@@ -21,87 +102,6 @@ import { useOnline } from '@vueuse/core'
 export function useCache() {
   const isOnline = useOnline()
   const offlineReady = ref(false)
-
-  /**
-   * Check if a specific URL is cached
-   * @param url - URL to check
-   */
-  async function isCached(url: string): Promise<boolean> {
-    if (!import.meta.client || !('caches' in window)) return false
-
-    try {
-      const cache = await caches.open('workbox-precache-v2')
-      const response = await cache.match(url)
-      return Boolean(response)
-    } catch (error) {
-      console.warn('[useCache] Failed to check cache:', error)
-      return false
-    }
-  }
-
-  /**
-   * Get total cache size in bytes
-   */
-  async function getCacheSize(): Promise<number> {
-    if (!import.meta.client || !('caches' in window)) return 0
-
-    try {
-      const cacheNames = await caches.keys()
-      let totalSize = 0
-
-      for (const cacheName of cacheNames) {
-        const cache = await caches.open(cacheName)
-        const requests = await cache.keys()
-
-        for (const request of requests) {
-          const response = await cache.match(request)
-          if (response) {
-            const blob = await response.blob()
-            totalSize += blob.size
-          }
-        }
-      }
-
-      return totalSize
-    } catch (error) {
-      console.warn('[useCache] Failed to get cache size:', error)
-      return 0
-    }
-  }
-
-  /**
-   * Clear all caches
-   */
-  async function clearCache(): Promise<void> {
-    if (!import.meta.client || !('caches' in window)) return
-
-    try {
-      const cacheNames = await caches.keys()
-      await Promise.all(cacheNames.map((name) => caches.delete(name)))
-      if (import.meta.dev) {
-        console.log('[useCache] All caches cleared')
-      }
-    } catch (error) {
-      if (import.meta.dev) {
-        console.error('[useCache] Failed to clear cache:', error)
-      }
-    }
-  }
-
-  /**
-   * Get formatted cache size (human-readable)
-   */
-  async function getFormattedCacheSize(): Promise<string> {
-    const bytes = await getCacheSize()
-
-    if (bytes === 0) return '0 B'
-
-    const units = ['B', 'KB', 'MB', 'GB']
-    const k = 1024
-    const i = Math.floor(Math.log(bytes) / Math.log(k))
-
-    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${units[i]}`
-  }
 
   /**
    * Check if service worker has cached essential resources

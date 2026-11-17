@@ -88,7 +88,7 @@ export function ensureMonkr({ dir, ref = MONKR_REF, managed = true, log = consol
 /** Pull in frame art for these slugs. The server falls back to static/, so no rebuild is needed. */
 export function ensureFrameArt({ dir, slugs, managed = true, log = console.log }) {
   const missing = slugs.filter((s) => !existsSync(join(dir, 'static', 'devices', s)))
-  if (!missing.length) return
+  if (missing.length === 0) return
   if (!managed) throw new Error(`Monkr at ${dir} has no frame art for: ${missing.join(', ')}`)
   log(`• Fetching frame art: ${missing.join(', ')}`)
   const file = join(dir, '.git', 'info', 'sparse-checkout')
@@ -121,7 +121,9 @@ function serve(dir) {
     res.writeHead(404)
     res.end()
   })
-  return new Promise((resolve) => server.listen(0, '127.0.0.1', () => resolve(server)))
+  return new Promise((resolve) => {
+    server.listen(0, '127.0.0.1', () => resolve(server))
+  })
 }
 
 // Runs inside Monkr's page. Rewrites the browser frame's placeholder address to
@@ -171,6 +173,9 @@ export function frameLayout(device, w, h) {
   }
 }
 
+// even, for video encoders; nearest, so float noise doesn't add a column of padding
+const even = (n) => Math.round(n / 2) * 2
+
 /**
  * A .monkr project that frames one screenshot of w x h so its pixels map 1:1 onto the frame's
  * screen (export scale 1). `style` is { background, padding, shadow }.
@@ -179,8 +184,6 @@ export function frameProject(device, colorId, w, h, style = {}) {
   const { displayW, displayH, screenW } = frameLayout(device, w, h)
   const k = w / screenW // canvas px per display unit
   const padding = style.padding ?? 0
-  // even, for video encoders; nearest, so float noise doesn't add a column of padding
-  const even = (n) => Math.round(n / 2) * 2
   const bg = style.background ?? 'transparent'
   const isGradient = /gradient\(/.test(bg)
   return {
@@ -269,18 +272,23 @@ export async function startMonkr(browser, { dir, managed = true, log = console.l
     // device art has transparent margins: crop a transparent mockup to what's visible
     const trim = project.background.type === 'transparent'
     const out = await page.evaluate(
-      async ({ project, screenshots, bar, trim }) => {
+      async ({ projectJson, images, bar, crop }) => {
         window.__captureUrlBar = bar
         window.__captureApplyUrlBar()
         return window.__monkr.render({
-          projectJson: project,
-          screenshots,
+          projectJson,
+          screenshots: images,
           format: 'png',
           scale: 1,
-          trim,
+          trim: crop,
         })
       },
-      { project, screenshots, bar: url ? urlBarText(url) : PLACEHOLDER_URL, trim }
+      {
+        projectJson: project,
+        images: screenshots,
+        bar: url ? urlBarText(url) : PLACEHOLDER_URL,
+        crop: trim,
+      }
     )
     return out.map((u) => Buffer.from(u.slice(u.indexOf(',') + 1), 'base64'))
   }
@@ -293,14 +301,14 @@ export async function startMonkr(browser, { dir, managed = true, log = console.l
   async function compositor({ deviceId, colorId, width, height, url, style }) {
     const solid = (color) =>
       page.evaluate(
-        ({ w, h, color }) => {
+        ({ w, h, fill }) => {
           const c = Object.assign(document.createElement('canvas'), { width: w, height: h })
           const g = c.getContext('2d')
-          g.fillStyle = color
+          g.fillStyle = fill
           g.fillRect(0, 0, w, h)
           return c.toDataURL('image/png').split(',')[1]
         },
-        { w: width, h: height, color }
+        { w: width, h: height, fill: color }
       )
     const shots = [
       Buffer.from(await solid('#000'), 'base64'),
@@ -308,12 +316,15 @@ export async function startMonkr(browser, { dir, managed = true, log = console.l
     ]
     const [black, white] = await frame({ deviceId, colorId, shots, width, height, url, style })
     const size = await page.evaluate(
-      async ({ black, white }) => {
+      async ({ blackB64, whiteB64 }) => {
+        // load and canvas run in the page (serialized by page.evaluate), so they can't be hoisted
+        // oxlint-disable-next-line consistent-function-scoping -- runs inside page.evaluate
         const load = async (b64) =>
           createImageBitmap(await (await fetch(`data:image/png;base64,${b64}`)).blob())
-        const [a, b] = await Promise.all([load(black), load(white)])
+        const [a, b] = await Promise.all([load(blackB64), load(whiteB64)])
         const w = a.width
         const h = a.height
+        // oxlint-disable-next-line consistent-function-scoping -- runs inside page.evaluate
         const canvas = (cw, ch) => {
           const c = Object.assign(document.createElement('canvas'), { width: cw, height: ch })
           return [c, c.getContext('2d', { willReadFrequently: true })]
@@ -365,16 +376,18 @@ export async function startMonkr(browser, { dir, managed = true, log = console.l
           og.fillRect(0, 0, ow, oh)
           og.drawImage(ac, 0, 0)
           og.drawImage(vc, 0, 0)
-          const blob = await new Promise((r) => oc.toBlob(r, 'image/jpeg', 0.95))
+          const blob = await new Promise((r) => {
+            oc.toBlob(r, 'image/jpeg', 0.95)
+          })
           const bytes = new Uint8Array(await blob.arrayBuffer())
           let s = ''
           for (let i = 0; i < bytes.length; i += 0x8000)
-            s += String.fromCharCode(...bytes.subarray(i, i + 0x8000))
+            s += String.fromCodePoint(...bytes.subarray(i, i + 0x8000))
           return btoa(s)
         }
         return { width: ow, height: oh, screen: { x: x0, y: y0, w: x1 - x0 + 1, h: y1 - y0 + 1 } }
       },
-      { black: black.toString('base64'), white: white.toString('base64') }
+      { blackB64: black.toString('base64'), whiteB64: white.toString('base64') }
     )
     return {
       ...size,

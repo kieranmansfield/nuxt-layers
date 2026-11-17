@@ -9,8 +9,8 @@ export function styleToTailwindClasses(style: Partial<CSSProperties>): string[] 
   return Object.entries(style)
     .filter(([, value]) => value !== undefined && value !== null && value !== '')
     .map(([property, value]) => {
-      const kebabProperty = property.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)
-      const escapedValue = String(value).replace(/\s+/g, '_')
+      const kebabProperty = property.replaceAll(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)
+      const escapedValue = String(value).replaceAll(/\s+/g, '_')
       return `[${kebabProperty}:${escapedValue}]`
     })
 }

@@ -34,3 +34,7 @@
     return vec4(colour, 1.0)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

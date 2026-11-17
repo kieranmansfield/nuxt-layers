@@ -23,3 +23,7 @@
     return vec4(prev.xyz.mul(v), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

@@ -61,9 +61,10 @@
     appConfig.routingLayer.preset = preset
   }
 
-  function presetFlags(preset: RoutingPreset): string[] {
-    return buildPresetFlags(preset)
-  }
+  // Presets are static, so their flags are computed once.
+  const presetFlags = Object.fromEntries(
+    PRESETS.map((preset) => [preset, buildPresetFlags(preset)])
+  ) as Record<RoutingPreset, string[]>
 
   // Feature flags panel
   const DEMO_FEATURES = ['blog', 'shop', 'dashboard', 'api'] as const
@@ -115,10 +116,10 @@
   const maintenanceEnabled = computed({
     get: () => config.value.maintenance.enabled,
     set: (val: boolean) => {
-      if (!appConfig.routingLayer.maintenance) {
-        appConfig.routingLayer.maintenance = { enabled: val, allowRoutes: ['/maintenance'] }
-      } else {
+      if (appConfig.routingLayer.maintenance) {
         appConfig.routingLayer.maintenance.enabled = val
+      } else {
+        appConfig.routingLayer.maintenance = { enabled: val, allowRoutes: ['/maintenance'] }
       }
     },
   })
@@ -176,7 +177,7 @@
                   <p class="text-muted mb-3 text-xs">{{ presetMeta[preset].description }}</p>
                   <div class="flex flex-wrap gap-1">
                     <UBadge
-                      v-for="flag in presetFlags(preset)"
+                      v-for="flag in presetFlags[preset]"
                       :key="flag"
                       size="xs"
                       variant="subtle"
@@ -184,7 +185,7 @@
                     >
                       {{ flag }}
                     </UBadge>
-                    <span v-if="presetFlags(preset).length === 0" class="text-muted text-xs italic">
+                    <span v-if="presetFlags[preset].length === 0" class="text-muted text-xs italic">
                       no flags active
                     </span>
                   </div>

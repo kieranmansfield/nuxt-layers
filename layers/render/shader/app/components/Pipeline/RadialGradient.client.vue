@@ -24,3 +24,7 @@
     return vec4(mix(colorCenterNode, colorEdgeNode, t), 1.0)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

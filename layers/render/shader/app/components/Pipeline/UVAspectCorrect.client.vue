@@ -5,3 +5,7 @@
 
   useShaderStage((uvIn) => uvIn.mul(vec2(screenSize.x.div(screenSize.y), 1.0)), order, 'uv')
 </script>
+
+<template>
+  <slot />
+</template>

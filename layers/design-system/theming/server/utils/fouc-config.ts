@@ -91,7 +91,7 @@ export function buildThemeInitScript(defaultAccent: string): string {
     '(function(){try{' +
     'var h=document.documentElement;' +
     colourBlock +
-    THEME_PREFERENCES.map(buildPrefFragment).join('') +
+    THEME_PREFERENCES.map((p) => buildPrefFragment(p)).join('') +
     '}catch(e){}})()'
   )
 }

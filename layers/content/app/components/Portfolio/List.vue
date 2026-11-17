@@ -24,7 +24,7 @@
           limit,
           sortKey: 'year',
           sortDirection: 'desc',
-          filter: featured !== undefined ? (item) => fieldFeatured(item) === featured : undefined,
+          filter: featured === undefined ? undefined : (item) => fieldFeatured(item) === featured,
           filterKey: String(featured),
         }
       })

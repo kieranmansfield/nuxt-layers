@@ -23,3 +23,7 @@
 
   useShaderStage((uvIn) => uvIn.mul(repeatNode).fract(), order, 'uv')
 </script>
+
+<template>
+  <slot />
+</template>

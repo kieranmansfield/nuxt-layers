@@ -10,10 +10,10 @@ import { beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 // control provider/cache lookups via mocks.
 const { providerState, getProvidersMock, getSearchCacheMock, setSearchCacheMock } = vi.hoisted(
   () => {
-    const providerState: { mockProviders: MetadataProvider[] } = { mockProviders: [] }
+    const state: { mockProviders: MetadataProvider[] } = { mockProviders: [] }
     return {
-      providerState,
-      getProvidersMock: vi.fn(() => providerState.mockProviders),
+      providerState: state,
+      getProvidersMock: vi.fn(() => state.mockProviders),
       getSearchCacheMock: vi.fn(async () => null as MetadataSearchResult[] | null),
       setSearchCacheMock: vi.fn(async () => undefined),
     }

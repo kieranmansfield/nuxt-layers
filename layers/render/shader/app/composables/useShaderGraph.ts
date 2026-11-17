@@ -61,7 +61,7 @@ export function useShaderGraph(): ShaderGraph {
     // Touch version to track topology changes
     void version.value
 
-    const sorted = [...entries.values()].sort((a, b) => a.order - b.order)
+    const sorted = [...entries.values()].toSorted((a, b) => a.order - b.order)
     const [first] = sorted
     if (!first) return null
 
@@ -124,8 +124,6 @@ function applyBlend(
       blended = tslMix(multiply, screen, base)
       break
     }
-    case 'mix':
-    case 'normal':
     default:
       blended = layer
       break

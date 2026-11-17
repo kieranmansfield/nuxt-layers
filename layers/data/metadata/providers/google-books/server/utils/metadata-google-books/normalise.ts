@@ -40,7 +40,7 @@ export function normaliseGoogleBooksVolume(volume: GoogleBooksVolume): MetadataR
     title: volumeInfo.title,
     ...(volumeInfo.subtitle && { subtitle: volumeInfo.subtitle }),
     ...(volumeInfo.description && { description: volumeInfo.description }),
-    ...(creators.length && { creators }),
+    ...(creators.length > 0 && { creators }),
     ...(volumeInfo.publisher && { publisher: volumeInfo.publisher }),
     ...(volumeInfo.publishedDate && { publishedAt: volumeInfo.publishedDate }),
     ...(rawCover && { coverUrl: googleBooksCoverUrl(rawCover) }),

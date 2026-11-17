@@ -23,7 +23,7 @@ export function useDevice() {
   }
 
   // Fallback: basic user agent detection (client only)
-  const ua = typeof navigator !== 'undefined' ? navigator.userAgent : ''
+  const ua = typeof navigator === 'undefined' ? '' : navigator.userAgent
   const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)
   const isTablet = /Tablet|iPad/i.test(ua)
   const isDesktop = !isMobile && !isTablet

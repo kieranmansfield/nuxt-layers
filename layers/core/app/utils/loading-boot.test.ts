@@ -53,7 +53,7 @@ function setLoaded(loaded: boolean): void {
 }
 
 const mount = () => loading().mounted()
-const shown = () => el('#loading-screen').hasAttribute('data-shown')
+const shown = () => 'shown' in (el('#loading-screen') as HTMLElement).dataset
 
 beforeEach(() => {
   clock.now = 0

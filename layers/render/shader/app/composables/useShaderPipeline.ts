@@ -52,7 +52,7 @@ export function useShaderPipeline(): ShaderPipelineContext {
   }
 
   function stagesFor(stage: ShaderStage): ShaderStageEntry[] {
-    return entries.filter((e) => e.stage === stage).sort((a, b) => a.order - b.order)
+    return entries.filter((e) => e.stage === stage).toSorted((a, b) => a.order - b.order)
   }
 
   const context: ShaderPipelineContext = {

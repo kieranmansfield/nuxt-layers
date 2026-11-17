@@ -1,9 +1,10 @@
 <script setup lang="ts">
   import { OrbitControls } from '@tresjs/cientos'
   import { TresCanvas } from '@tresjs/core'
-  import { Clock, Color, DoubleSide, ShaderMaterial } from 'three'
+  import { Color, DoubleSide, ShaderMaterial, Timer } from 'three'
 
   const {
+    activeDemo,
     mouseInteraction = true,
     mouseX = 0.5,
     mouseY = 0.5,
@@ -25,6 +26,11 @@
     /** Animation speed multiplier */
     speed?: number
   }>()
+
+  // Farthest the camera can sit while the 4×4 plane still fills the canvas (fov 50 → visible
+  // width 2·z·tan(25°)·aspect ≤ 4 holds up to aspect ≈ 1.53; the demo boxes are ~1.44).
+  const PLANE_CAMERA_Z = 2.8
+  const isSphere = computed(() => activeDemo === 'fresnel')
 
   // ============================================
   // STRIPE GRADIENT (animated flowing gradient)
@@ -545,11 +551,11 @@ void main() {
   // ============================================
   // ANIMATION
   // ============================================
-  const clock = new Clock()
+  const timer = new Timer()
 
   let animationId: number
   const animate = () => {
-    const elapsed = clock.getElapsedTime() * speed
+    const elapsed = timer.update().getElapsed() * speed
 
     // Update all time-based uniforms
     if (stripeMaterial.uniforms.uTime) stripeMaterial.uniforms.uTime.value = elapsed
@@ -582,8 +588,15 @@ void main() {
 
 <template>
   <TresCanvas clear-color="#0a0a0a">
-    <TresPerspectiveCamera :position="[0, 0, 3]" />
-    <OrbitControls :enable-zoom="!disableZoom" />
+    <TresPerspectiveCamera :position="[0, 0, PLANE_CAMERA_Z]" />
+    <!-- Flat demos are a fixed 4×4 plane: dollying out, orbiting or panning shows its edges as a
+         square in a black void. Only the fresnel sphere is a real 3D object worth orbiting. -->
+    <OrbitControls
+      :enable-zoom="!disableZoom"
+      :enable-rotate="isSphere"
+      :enable-pan="isSphere"
+      :max-distance="isSphere ? Infinity : PLANE_CAMERA_Z"
+    />
 
     <!-- Stripe Gradient Demo -->
     <TresMesh v-if="activeDemo === 'stripe'">

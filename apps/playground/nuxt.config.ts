@@ -84,14 +84,14 @@ function resolveExtendedLayers(): string[] {
     return AVAILABLE_LAYERS.map((name) => LAYER_PATHS[name])
   }
 
-  const requested = layersEnv
-    .split(',')
-    .map((s) => s.trim().toLowerCase() as LayerName)
-    .filter((name) => AVAILABLE_LAYERS.includes(name))
-
-  return AVAILABLE_LAYERS.filter((name) => requested.includes(name)).map(
-    (name) => LAYER_PATHS[name]
+  const requested = new Set(
+    layersEnv
+      .split(',')
+      .map((s) => s.trim().toLowerCase() as LayerName)
+      .filter((name) => AVAILABLE_LAYERS.includes(name))
   )
+
+  return AVAILABLE_LAYERS.filter((name) => requested.has(name)).map((name) => LAYER_PATHS[name])
 }
 
 export default defineNuxtConfig({

@@ -28,7 +28,7 @@
     duration,
     ease,
     once,
-    ...(format !== undefined ? { format } : {}),
+    ...(format === undefined ? {} : { format }),
   })
 </script>
 

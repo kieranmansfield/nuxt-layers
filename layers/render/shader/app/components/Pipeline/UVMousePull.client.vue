@@ -26,3 +26,7 @@
     'uv'
   )
 </script>
+
+<template>
+  <slot />
+</template>

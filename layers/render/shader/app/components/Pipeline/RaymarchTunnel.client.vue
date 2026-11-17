@@ -91,3 +91,7 @@
     return raymarchFn([ray])
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

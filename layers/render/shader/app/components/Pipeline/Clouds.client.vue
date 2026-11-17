@@ -45,3 +45,7 @@
     return vec4(mix(colorSkyNode, colorCloudNode, cloud), float(1))
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

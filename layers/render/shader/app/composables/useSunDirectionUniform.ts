@@ -27,10 +27,11 @@ export function useSunDirectionUniform(options: SunDirectionOptions = {}) {
   if (useMouseY) {
     const mouse = uniform(new Vector2(0.5, 0.5))
 
+    const onMove = (e: MouseEvent) => {
+      mouse.value.set(e.clientX / window.innerWidth, e.clientY / window.innerHeight)
+    }
+
     onMounted(() => {
-      const onMove = (e: MouseEvent) => {
-        mouse.value.set(e.clientX / window.innerWidth, e.clientY / window.innerHeight)
-      }
       window.addEventListener('mousemove', onMove)
       onUnmounted(() => window.removeEventListener('mousemove', onMove))
     })

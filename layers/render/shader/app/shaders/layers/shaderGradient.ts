@@ -21,15 +21,15 @@ const DEFAULT_SHADER_GRADIENT_OPTIONS = {
   zoom: 1,
 } as const
 
-function setNumberUniform(uniform: FloatUniform, value: number | undefined): void {
+function setNumberUniform(node: FloatUniform, value: number | undefined): void {
   if (value !== undefined) {
-    uniform.value = value
+    node.value = value
   }
 }
 
-function setColorUniform(uniform: TSLNode, value: string | undefined): void {
+function setColorUniform(node: TSLNode, value: string | undefined): void {
   if (value !== undefined) {
-    uniform.value = new Color(value)
+    node.value = new Color(value)
   }
 }
 

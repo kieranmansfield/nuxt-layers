@@ -80,7 +80,7 @@ export function bootLoading(
   config: BootConfig
 ): void {
   const doc = win.document
-  const screen = doc.getElementById('loading-screen')
+  const screen = doc.querySelector<HTMLElement>('#loading-screen')
   if (win.__coreLoading || !screen) return
 
   // Share of the count each part earns; the last 1% is only given on completion
@@ -177,7 +177,7 @@ export function bootLoading(
   function reveal(now: number): void {
     if (state.shown || now - start < config.showAfter) return
     state.shown = true
-    screen?.setAttribute('data-shown', '')
+    if (screen) screen.dataset.shown = ''
   }
 
   function nextProgress(dt: number, complete: boolean): number {

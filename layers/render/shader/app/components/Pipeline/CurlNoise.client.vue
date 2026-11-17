@@ -37,3 +37,7 @@
     return vec4(blended, prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

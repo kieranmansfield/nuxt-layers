@@ -55,3 +55,7 @@
     return vec4(box, box, box, float(1))
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

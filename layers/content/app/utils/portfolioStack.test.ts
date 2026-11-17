@@ -60,9 +60,9 @@ describe('fanPlacement', () => {
   })
 })
 
-describe('fanSpread', () => {
-  const at = (index: number) => fanPlacement(index, 10, STACK_FAN_TRACKS.md)
+const at = (index: number) => fanPlacement(index, 10, STACK_FAN_TRACKS.md)
 
+describe('fanSpread', () => {
   it('parts same-row neighbours away from the lifted card, less with distance', () => {
     expect(fanSpread(at(2), at(1))).toBeLessThan(0)
     expect(fanSpread(at(2), at(3))).toBeGreaterThan(0)

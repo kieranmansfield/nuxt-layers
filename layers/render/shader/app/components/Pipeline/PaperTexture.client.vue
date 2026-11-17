@@ -36,3 +36,7 @@
     return vec4(prev.xyz.add(tex), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

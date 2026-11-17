@@ -66,3 +66,7 @@
     return vec4(prev.xyz.mix(debugColour, float(1).sub(blendNode)), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

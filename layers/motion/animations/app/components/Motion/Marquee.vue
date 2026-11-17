@@ -76,7 +76,7 @@
       modifiers: {
         x: gsap.utils.unitize((x) => {
           const mod = contentWidth / 2
-          return direction === 'left' ? parseFloat(x) % mod : Math.abs(parseFloat(x) % mod)
+          return direction === 'left' ? Number(x) % mod : Math.abs(Number(x) % mod)
         }),
       },
       paused: reduced.value,

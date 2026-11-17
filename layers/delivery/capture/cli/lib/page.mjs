@@ -27,7 +27,7 @@ function hideNotices() {
 }
 
 export const slugOf = (route) =>
-  route === '/' ? 'home' : route.replace(/^\/|\/$/g, '').replace(/[/?#=&]+/g, '-') || 'home'
+  route === '/' ? 'home' : route.replaceAll(/^\/|\/$/g, '').replaceAll(/[/?#=&]+/g, '-') || 'home'
 
 /** A fresh context + page for one device x theme, navigated to url and settled. Caller closes ctx. */
 export async function openPage(browser, url, { device, theme, scale, settleMs }) {

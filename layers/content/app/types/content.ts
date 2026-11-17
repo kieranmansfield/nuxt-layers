@@ -61,7 +61,7 @@ export type BaseContent = {
   draft?: boolean
 }
 
-export type ContentPage = {} & BaseContent
+export type ContentPage = BaseContent
 
 export type BlogPost = {
   date: string

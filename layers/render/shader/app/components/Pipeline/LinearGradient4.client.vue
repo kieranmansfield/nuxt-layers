@@ -83,3 +83,7 @@
     return vec4(col, float(1))
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

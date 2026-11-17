@@ -22,30 +22,30 @@ export default defineNuxtPlugin({
 
     useHead(() => {
       // Derive which collection (if any) the current page belongs to
-      const segment = route.path.split('/').filter(Boolean)[0] ?? ''
+      const segment = route.path.split('/').find(Boolean) ?? ''
       const currentCollection = catalog.collectionGroups.find(
         (group) => group.collection === segment
       )
 
       // Always present: main site feeds via the shorthand routes
       const mainLinks = catalog.siteRoutes
-        .filter((route) => route.kind === 'format')
-        .map((route) => ({
+        .filter((feedRoute) => feedRoute.kind === 'format')
+        .map((feedRoute) => ({
           rel: 'alternate' as const,
-          type: route.contentType ?? 'application/octet-stream',
-          title: `${siteTitle || 'Site'} (${route.label})`,
-          href: route.path,
+          type: feedRoute.contentType ?? 'application/octet-stream',
+          title: `${siteTitle || 'Site'} (${feedRoute.label})`,
+          href: feedRoute.path,
         }))
 
       // Collection-specific feeds — only when on a non-default collection's pages.
       // The default collection is already covered by the main shorthand links above.
       const collectionLinks =
         currentCollection && currentCollection.collection !== catalog.feed.defaultCollection
-          ? currentCollection.routes.map((route) => ({
+          ? currentCollection.routes.map((feedRoute) => ({
               rel: 'alternate' as const,
-              type: route.contentType ?? 'application/octet-stream',
-              title: `${currentCollection.label} (${route.label})`,
-              href: route.path,
+              type: feedRoute.contentType ?? 'application/octet-stream',
+              title: `${currentCollection.label} (${feedRoute.label})`,
+              href: feedRoute.path,
             }))
           : []
 

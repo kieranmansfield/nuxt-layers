@@ -49,3 +49,7 @@
     return vec4(prev.xyz.mul(vec3(r, g, b)), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

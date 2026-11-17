@@ -8,6 +8,8 @@ export type MousePositionOptions = {
   normalized?: boolean
 }
 
+const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor
+
 export function useMousePosition(options: MousePositionOptions = {}) {
   const { smoothing = 0.1, normalized = false } = options
 
@@ -23,11 +25,6 @@ export function useMousePosition(options: MousePositionOptions = {}) {
   const mouseXNode = uniform(0.5)
   const mouseYNode = uniform(0.5)
   const mouseVec2Node = tslVec2(mouseXNode, mouseYNode)
-
-  // Lerp function
-  const lerp = (start: number, end: number, factor: number) => {
-    return start + (end - start) * factor
-  }
 
   // Compute normalized mouse position
   const normalizedX = computed(() => {

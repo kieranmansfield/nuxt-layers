@@ -27,10 +27,10 @@ describe('TYPE_STEP_CLASSES ↔ typography.css', () => {
   })
 })
 
-describe('useTypography step', () => {
-  const classesOf = (props: Parameters<typeof useTypography>[0]) =>
-    useTypography(props).classes.value.split(' ')
+const classesOf = (props: Parameters<typeof useTypography>[0]) =>
+  useTypography(props).classes.value.split(' ')
 
+describe('useTypography step', () => {
   it('emits step 0 rather than treating it as unset', () => {
     expect(classesOf({ step: 0 })).toContain('text-step-0')
   })

@@ -32,3 +32,7 @@
     return vec4(prev.xyz.add(colorNode.mul(glow)), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

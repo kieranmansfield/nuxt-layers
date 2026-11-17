@@ -11,3 +11,7 @@
 
   useShaderStage((prev) => vec4(reinhardTonemap(prev.xyz), prev.w), order)
 </script>
+
+<template>
+  <slot />
+</template>

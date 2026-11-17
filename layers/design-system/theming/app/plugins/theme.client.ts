@@ -29,7 +29,7 @@ export default defineNuxtPlugin({
     watch(
       activeAccent,
       (color) => {
-        document.documentElement.setAttribute('data-theme-colour', color)
+        document.documentElement.dataset.themeColour = color
       },
       { immediate: true }
     )
@@ -37,7 +37,7 @@ export default defineNuxtPlugin({
     watch(
       effectiveHighContrast,
       (high) => {
-        document.documentElement.setAttribute('data-theme-contrast', high ? 'high' : 'standard')
+        document.documentElement.dataset.themeContrast = high ? 'high' : 'standard'
       },
       { immediate: true }
     )
@@ -45,7 +45,7 @@ export default defineNuxtPlugin({
     watch(
       effectiveReducedMotion,
       (reduced) => {
-        document.documentElement.setAttribute('data-theme-motion', reduced ? 'reduced' : 'full')
+        document.documentElement.dataset.themeMotion = reduced ? 'reduced' : 'full'
       },
       { immediate: true }
     )
@@ -60,10 +60,7 @@ export default defineNuxtPlugin({
     watch(
       effectiveReducedTransparency,
       (reduced) => {
-        document.documentElement.setAttribute(
-          'data-theme-transparency',
-          reduced ? 'reduced' : 'full'
-        )
+        document.documentElement.dataset.themeTransparency = reduced ? 'reduced' : 'full'
       },
       { immediate: true }
     )

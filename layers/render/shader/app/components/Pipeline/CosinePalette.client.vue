@@ -84,3 +84,7 @@
     return vec4(cosinePalette(t, aNode, bNode, cNode, dNode), 1.0)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

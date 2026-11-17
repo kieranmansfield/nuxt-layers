@@ -11,10 +11,10 @@ const RSS_ICON = `<svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www
 
 function escapeHtml(str: string): string {
   return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
 }
 
 function formatDate(date: Date): string {

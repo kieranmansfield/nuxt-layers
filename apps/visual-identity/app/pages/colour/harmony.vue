@@ -6,10 +6,14 @@
 
   const { state, updateColour } = useBrandState()
 
-  const harmonyHexes = (colour: { hex: string; harmonyType: HarmonyType | null }) => {
-    if (!colour.harmonyType) return []
-    return computeHarmony(colour.hex, colour.harmonyType)
-  }
+  const harmonyHexesById = computed(() =>
+    Object.fromEntries(
+      state.value.colours.map((colour) => [
+        colour.id,
+        colour.harmonyType ? computeHarmony(colour.hex, colour.harmonyType) : [],
+      ])
+    )
+  )
 
   // UTabs items — shorter labels for compact display
   const harmonyTabs: TabsItem[] = [
@@ -62,7 +66,10 @@
         style="height: 70vh; padding: 1.5rem 2rem"
       >
         <div style="width: min(65vh, 88%)">
-          <ColourHarmonyWheel :base-hex="colour.hex" :harmony-hexes="harmonyHexes(colour)" />
+          <ColourHarmonyWheel
+            :base-hex="colour.hex"
+            :harmony-hexes="harmonyHexesById[colour.id] ?? []"
+          />
         </div>
       </div>
 
@@ -94,7 +101,7 @@
 
           <template v-if="colour.harmonyType">
             <div
-              v-for="(hex, i) in harmonyHexes(colour)"
+              v-for="(hex, i) in harmonyHexesById[colour.id]"
               :key="i"
               class="flex flex-col items-center gap-1.5"
             >

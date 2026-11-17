@@ -66,3 +66,7 @@
     return vec4(t, t, t, float(1))
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

@@ -9,8 +9,10 @@ import type { MetadataProvider } from '#layers/metadata/shared/types'
 
 import type { ComicVineIssue, ComicVineVolume } from './types'
 
+// Devanagari comes first: U+0900 is a combining mark, which lint flags when it follows another char
 // Matches CJK, Hangul, Arabic, Hebrew, Thai, Devanagari, Cyrillic, etc.
-const NON_LATIN_RE = /[Ͱ-ϿЀ-ӿ؀-ۿऀ-ॿ　-鿿가-힯豈-﫿]/
+const NON_LATIN_RE =
+  /[\u0900-\u097F\u0370-\u03FF\u0400-\u04FF\u0600-\u06FF\u3000-\u9FFF\uAC00-\uD7AF\uF900-\uFAFF]/
 
 function isEnglish(title: string): boolean {
   return !NON_LATIN_RE.test(title)
@@ -26,14 +28,14 @@ export const comicVineProvider: MetadataProvider = {
       const res = await searchComicVineVolumes(query, limit)
       return (Array.isArray(res.results) ? res.results : [])
         .filter((v) => isEnglish(v.name))
-        .map(normaliseComicVineVolume)
+        .map((v) => normaliseComicVineVolume(v))
     }
 
     if (mediaType === 'comic') {
       const res = await searchComicVineIssues(query, limit)
       return (Array.isArray(res.results) ? res.results : [])
         .filter((i) => isEnglish(i.name ?? i.volume?.name ?? ''))
-        .map(normaliseComicVineIssue)
+        .map((i) => normaliseComicVineIssue(i))
     }
 
     // All — split limit between issues and series
@@ -43,10 +45,10 @@ export const comicVineProvider: MetadataProvider = {
     ])
     const issues = (Array.isArray(issueRes.results) ? issueRes.results : [])
       .filter((i) => isEnglish(i.name ?? i.volume?.name ?? ''))
-      .map(normaliseComicVineIssue)
+      .map((i) => normaliseComicVineIssue(i))
     const volumes = (Array.isArray(volumeRes.results) ? volumeRes.results : [])
       .filter((v) => isEnglish(v.name))
-      .map(normaliseComicVineVolume)
+      .map((v) => normaliseComicVineVolume(v))
     return [...issues, ...volumes]
   },
 

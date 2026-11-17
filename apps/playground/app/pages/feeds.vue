@@ -14,7 +14,7 @@
   const feedCollections = [...new Set(feedSettings.collections ?? [])]
   const feedDefaultCollection = feedSettings.defaultCollection ?? 'blog'
   const feedLimit = feedSettings.limit ?? 30
-  const feedCollectionsLabel = feedCollections.length ? feedCollections.join(', ') : 'none'
+  const feedCollectionsLabel = feedCollections.length > 0 ? feedCollections.join(', ') : 'none'
   const feedCollectionsLiteral = feedCollections
     .map((collection) => JSON.stringify(collection))
     .join(', ')

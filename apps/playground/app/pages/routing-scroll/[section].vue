@@ -20,14 +20,14 @@
     const els = Array.from(document.querySelectorAll<HTMLElement>('[data-section]'))
     sectionEls.value = els
 
-    const initial = els.find((el) => el.getAttribute('data-section') === activeSection.value)
+    const initial = els.find((el) => el.dataset.section === activeSection.value)
     initial?.scrollIntoView()
 
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries.find((e) => e.isIntersecting)
         if (!visible) return
-        const id = visible.target.getAttribute('data-section')
+        const id = (visible.target as HTMLElement).dataset.section
         if (!id) return
         activeSection.value = id
         const method = urlMode.value === 'replace' ? 'replaceState' : 'pushState'

@@ -25,12 +25,13 @@ export function useUniformProp(source: () => number) {
   return node
 }
 
+function toVector(hex: string) {
+  const { r, g, b } = new Color(hex)
+  return new Vector3(r, g, b)
+}
+
 /** A vec3 uniform seeded from a CSS colour prop (or any getter) that follows it. */
 export function useColorProp(source: () => string) {
-  const toVector = (hex: string) => {
-    const { r, g, b } = new Color(hex)
-    return new Vector3(r, g, b)
-  }
   const node = uniform(toVector(source()))
   watch(source, (hex) => {
     node.value.copy(toVector(hex))

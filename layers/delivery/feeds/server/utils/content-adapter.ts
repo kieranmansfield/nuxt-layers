@@ -54,7 +54,7 @@ export async function getContentFeedItems(
 
   return raw
     .filter((item) => !item.draft)
-    .sort((a, b) => resolveFeedDate(b).getTime() - resolveFeedDate(a).getTime())
+    .toSorted((a, b) => resolveFeedDate(b).getTime() - resolveFeedDate(a).getTime())
     .slice(0, limit)
     .map((item): FeedItem => {
       const link = item.path ?? item._path ?? ''

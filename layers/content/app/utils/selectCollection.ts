@@ -35,7 +35,7 @@ export function selectCollection<T extends object>(
 ): T[] {
   let selected = [...items]
   if (sortKey) selected.sort((a, b) => compareField(a, b, sortKey, sortDirection))
-  if (filter) selected = selected.filter(filter)
+  if (filter) selected = selected.filter((item) => filter(item))
   if (tags?.length) {
     selected = selected.filter((item) => itemTags(item).some((tag) => tags.includes(tag)))
   }

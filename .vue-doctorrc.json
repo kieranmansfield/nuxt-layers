@@ -1,0 +1,20 @@
+{
+  "ignore": {
+    "rules": [
+      "vue-doctor/reactivity-destructure-props",
+      "vue-doctor/perf-giant-component",
+      "max-lines",
+      "max-lines-per-function",
+      "max-classes-per-file",
+      "require-unicode-regexp",
+      "no-useless-undefined",
+      "no-underscore-dangle",
+      "no-inline-comments",
+      "no-await-in-loop",
+      "require-await",
+      "no-map-spread",
+      "sort-vars"
+    ],
+    "files": [".agents/**", ".claude/**", ".vue-doctor-eslint.config.mjs"]
+  }
+}

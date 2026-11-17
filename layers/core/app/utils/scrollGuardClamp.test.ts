@@ -16,21 +16,22 @@ describe('isOverflowing', () => {
   })
 })
 
+const matchesCarousel = (sel: string) => sel === '.carousel'
+const matchesNothing = () => false
+const throwsInvalidSelector = () => {
+  throw new DOMException('invalid selector')
+}
+
 describe('shouldExclude', () => {
   it('is true when any selector matches', () => {
-    const matches = (sel: string) => sel === '.carousel'
-    expect(shouldExclude(matches, ['.overflow-intent', '.carousel'])).toBe(true)
+    expect(shouldExclude(matchesCarousel, ['.overflow-intent', '.carousel'])).toBe(true)
   })
 
   it('is false when no selector matches', () => {
-    const matches = () => false
-    expect(shouldExclude(matches, ['.carousel', '.overflow-intent'])).toBe(false)
+    expect(shouldExclude(matchesNothing, ['.carousel', '.overflow-intent'])).toBe(false)
   })
 
   it('swallows an invalid selector and treats it as non-matching', () => {
-    const matches = () => {
-      throw new DOMException('invalid selector')
-    }
-    expect(shouldExclude(matches, ['::not-a-real-selector'])).toBe(false)
+    expect(shouldExclude(throwsInvalidSelector, ['::not-a-real-selector'])).toBe(false)
   })
 })

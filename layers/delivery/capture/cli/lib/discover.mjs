@@ -6,7 +6,7 @@ const SKIP =
 /** <loc> entries of a sitemap (or sitemap index). */
 export function parseSitemap(xml) {
   return [...xml.matchAll(/<loc>\s*(?:<!\[CDATA\[)?\s*([^<\]\s]+)\s*(?:\]\]>)?\s*<\/loc>/g)].map(
-    (m) => m[1].replace(/&amp;/g, '&')
+    (m) => m[1].replaceAll('&amp;', '&')
   )
 }
 
@@ -30,7 +30,7 @@ export function uniquePaths(paths) {
     const key = p.replace(/\/+$/, '') || '/'
     if (!seen.has(key)) seen.set(key, p)
   }
-  return [...seen.values()].sort((a, b) => {
+  return [...seen.values()].toSorted((a, b) => {
     const da = a.split('/').filter(Boolean).length
     const db = b.split('/').filter(Boolean).length
     return da - db || a.localeCompare(b)
@@ -41,7 +41,7 @@ async function fromSitemap(request, base, log) {
   const urls = []
   const queue = [new URL('/sitemap.xml', base).href, new URL('/sitemap_index.xml', base).href]
   const seen = new Set()
-  while (queue.length && seen.size < 20) {
+  while (queue.length > 0 && seen.size < 20) {
     const url = queue.shift()
     if (seen.has(url)) continue
     seen.add(url)
@@ -51,10 +51,22 @@ async function fromSitemap(request, base, log) {
       if (/\.xml($|\?)/.test(loc)) queue.push(loc)
       else urls.push(loc)
     }
-    if (urls.length) break // one sitemap is enough; the index variant is a fallback
+    if (urls.length > 0) break // one sitemap is enough; the index variant is a fallback
   }
-  if (urls.length) log(`• ${urls.length} URL(s) in sitemap`)
+  if (urls.length > 0) log(`• ${urls.length} URL(s) in sitemap`)
   return urls.map((u) => pagePath(u, base)).filter(Boolean)
+}
+
+/** Add new page paths from hrefs to found and next, until found holds max. */
+function collectLinks(hrefs, base, found, next, max) {
+  for (const h of hrefs) {
+    if (found.size >= max) return
+    const p = pagePath(h, base)
+    const key = p?.replace(/\/+$/, '') || '/'
+    if (!p || [...found].some((f) => (f.replace(/\/+$/, '') || '/') === key)) continue
+    found.add(p)
+    next.push(p)
+  }
 }
 
 async function fromLinks(context, base, { max, depth }) {
@@ -62,7 +74,7 @@ async function fromLinks(context, base, { max, depth }) {
   let frontier = [new URL('/', base).pathname]
   const page = await context.newPage()
   try {
-    for (let d = 0; d < depth && frontier.length && found.size < max; d++) {
+    for (let d = 0; d < depth && frontier.length > 0 && found.size < max; d++) {
       const next = []
       for (const path of frontier) {
         const ok = await page
@@ -70,14 +82,7 @@ async function fromLinks(context, base, { max, depth }) {
           .catch(() => null)
         if (!ok) continue
         const hrefs = await page.$$eval('a[href]', (as) => as.map((a) => a.getAttribute('href')))
-        for (const h of hrefs) {
-          const p = pagePath(h, base)
-          const key = p?.replace(/\/+$/, '') || '/'
-          if (!p || [...found].some((f) => (f.replace(/\/+$/, '') || '/') === key)) continue
-          found.add(p)
-          next.push(p)
-          if (found.size >= max) break
-        }
+        collectLinks(hrefs, base, found, next, max)
         if (found.size >= max) break
       }
       frontier = next
@@ -97,7 +102,7 @@ export async function discoverPages(browser, site, { log = console.log } = {}) {
   const context = await browser.newContext()
   try {
     let paths = await fromSitemap(context.request, site.url, log)
-    if (!paths.length) {
+    if (paths.length === 0) {
       log('• No sitemap; following links')
       paths = await fromLinks(context, site.url, { max: site.maxPages, depth: site.crawlDepth })
     }

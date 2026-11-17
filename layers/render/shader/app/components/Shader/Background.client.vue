@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useWindowSize } from '@vueuse/core'
+  import { useDevicePixelRatio, useWindowSize } from '@vueuse/core'
   import {
     ACESFilmicToneMapping,
     CineonToneMapping,
@@ -48,6 +48,9 @@
 
   const canvasRef = useTemplateRef<HTMLCanvasElement>('canvasRef')
   const { width, height } = useWindowSize()
+  // Browser zoom changes devicePixelRatio; reading it once at init left zoomed-out pages
+  // rendering at the old ratio, past WebGPU's 8192px texture limit.
+  const { pixelRatio } = useDevicePixelRatio()
 
   let renderer: ThreeWebGPU.WebGPURenderer | undefined
   let scene: Scene
@@ -89,7 +92,7 @@
 
   function createRenderer(canvas: HTMLCanvasElement) {
     const nextRenderer = new ThreeWebGPU.WebGPURenderer({ canvas, antialias: antialias })
-    nextRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    nextRenderer.setPixelRatio(Math.min(pixelRatio.value, 2))
     nextRenderer.setSize(width.value, height.value)
     nextRenderer.setClearColor(new Color(clearColor))
     nextRenderer.toneMapping = toneMappingMap[toneMapping] ?? ACESFilmicToneMapping
@@ -195,10 +198,11 @@
     }
   )
 
-  watch([width, height], ([w, h]) => {
+  watch([width, height, pixelRatio], ([w, h, dpr]) => {
     if (!initialized || !renderer) return
     camera.aspect = w / (h || 1)
     camera.updateProjectionMatrix()
+    renderer.setPixelRatio(Math.min(dpr, 2))
     renderer.setSize(w, h)
     if (planeMesh) {
       planeMesh.geometry.dispose()

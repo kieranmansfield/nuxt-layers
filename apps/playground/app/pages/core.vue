@@ -87,11 +87,15 @@
     startLoading()
     // Progress only moves at milestones, so step through three
     for (const step of [25, 50, 75]) {
-      await new Promise((resolve) => setTimeout(resolve, 750))
+      await new Promise((resolve) => {
+        setTimeout(resolve, 750)
+      })
       updateProgress(step)
     }
     stopLoading()
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 500)
+    })
     showLoadingDemo.value = false
   }
 

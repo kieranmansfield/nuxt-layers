@@ -18,3 +18,7 @@
 
   useShaderStage((uvIn) => swirlUV(uvIn, [0.5, 0.5], strengthNode, radiusNode), order, 'uv')
 </script>
+
+<template>
+  <slot />
+</template>

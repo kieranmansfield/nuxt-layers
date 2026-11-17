@@ -43,6 +43,7 @@ export async function setSearchCache<T extends StorageValue>(
 export function hashQuery(query: string): string {
   let h = 0
   for (let i = 0; i < query.length; i++) {
+    // oxlint-disable-next-line unicorn/prefer-math-trunc, unicorn/prefer-code-point -- int32-wrapping UTF-16 hash; changing either changes cache keys
     h = (Math.imul(31, h) + query.charCodeAt(i)) | 0
   }
   return Math.abs(h).toString(36)

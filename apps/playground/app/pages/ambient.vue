@@ -64,7 +64,9 @@
       description: 'Underwater caustics and waves',
       colors: ['#0a1628', '#1e3a5f', '#7ec8e3'],
     },
-  ]
+  ].map((preset) => ({ ...preset, previewColors: preset.colors.slice(0, 3) }))
+
+  const activePresetData = computed(() => presets.find((p) => p.id === activePreset.value))
 </script>
 
 <template>
@@ -152,7 +154,7 @@
                   <!-- Color preview -->
                   <div class="mb-2 flex gap-1">
                     <div
-                      v-for="(color, i) in preset.colors.slice(0, 3)"
+                      v-for="(color, i) in preset.previewColors"
                       :key="i"
                       class="h-4 w-4 rounded-full"
                       :style="{ backgroundColor: color }"
@@ -168,16 +170,16 @@
               <!-- Current preset info -->
               <div class="bg-accented/50 border-accented rounded-xl border p-5">
                 <h3 class="mb-2 font-semibold">
-                  {{ presets.find((p) => p.id === activePreset)?.name }}
+                  {{ activePresetData?.name }}
                 </h3>
                 <p class="text-muted mb-4 text-sm">
-                  {{ presets.find((p) => p.id === activePreset)?.description }}
+                  {{ activePresetData?.description }}
                 </p>
 
                 <!-- Color swatches -->
                 <div class="flex gap-2">
                   <div
-                    v-for="(color, i) in presets.find((p) => p.id === activePreset)?.colors"
+                    v-for="(color, i) in activePresetData?.colors"
                     :key="i"
                     class="h-8 w-8 rounded-lg border border-white/10"
                     :style="{ backgroundColor: color }"

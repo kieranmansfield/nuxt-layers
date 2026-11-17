@@ -37,3 +37,7 @@
     return vec4(prev.xyz.add(colorNode.mul(leak)), prev.w)
   }, order)
 </script>
+
+<template>
+  <slot />
+</template>

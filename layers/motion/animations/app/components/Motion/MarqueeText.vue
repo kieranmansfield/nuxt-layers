@@ -79,7 +79,7 @@
     animLastTime = now
 
     texts.forEach((_, index) => {
-      const baseVelocity = index % 2 !== 0 ? -velocity : velocity
+      const baseVelocity = index % 2 === 0 ? velocity : -velocity
       let moveBy = (directionFactors.value[index] ?? 1) * baseVelocity * (delta / 1000)
 
       if (velocityFactor.value < 0) {

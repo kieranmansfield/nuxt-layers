@@ -128,8 +128,8 @@ async function checkImageFormat(format: 'webp' | 'avif'): Promise<boolean> {
 
   return new Promise((resolve) => {
     const img = new Image()
-    img.onload = () => resolve(img.width > 0 && img.height > 0)
-    img.onerror = () => resolve(false)
+    img.addEventListener('load', () => resolve(img.width > 0 && img.height > 0))
+    img.addEventListener('error', () => resolve(false))
     img.src = testImages[format]
   })
 }

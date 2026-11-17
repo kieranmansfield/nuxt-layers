@@ -43,8 +43,8 @@
   const currentPreset = shallowRef<Component | null>(preset)
   const nextPreset = shallowRef<Component | null>(null)
 
-  function setCurrentPreset(preset: Component | null) {
-    currentPreset.value = preset
+  function setCurrentPreset(next: Component | null) {
+    currentPreset.value = next
   }
 
   // Material created once, updated via colorNode

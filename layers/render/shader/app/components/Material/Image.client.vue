@@ -78,15 +78,15 @@
   // Load texture
   watch(
     () => src,
-    async (src) => {
-      if (!src) return
+    async (url) => {
+      if (!url) return
 
       isLoading.value = true
       error.value = null
 
       try {
         const loader = new TextureLoader()
-        loadedTexture.value = await loader.loadAsync(src)
+        loadedTexture.value = await loader.loadAsync(url)
       } catch (e) {
         error.value = e as Error
         void e

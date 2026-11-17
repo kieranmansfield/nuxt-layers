@@ -13,3 +13,7 @@
 
   useShaderStage((prev) => vec4(tanhTonemap(prev.xyz.mul(exposureNode)), prev.w), order)
 </script>
+
+<template>
+  <slot />
+</template>

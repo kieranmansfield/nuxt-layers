@@ -42,12 +42,12 @@ function closure(dir: string, seen = new Set<string>()): Set<string> {
 
 // Nuxt's default component naming: path segments under components/ PascalCased, `index`
 // dropped, and a file name that already starts with its directory prefix not repeated.
-const pascal = (s: string) => s.replace(/(^|[-_])(\w)/g, (_, __, c: string) => c.toUpperCase())
+const pascal = (s: string) => s.replaceAll(/(^|[-_])(\w)/g, (_, __, c: string) => c.toUpperCase())
 function componentName(rel: string): string {
   const parts = rel
     .replace(/(\.client|\.server)?\.vue$/, '')
     .split('/')
-    .map(pascal)
+    .map((s) => pascal(s))
   const file = parts.pop()!
   const prefix = parts.join('')
   if (/^index$/i.test(file)) return prefix

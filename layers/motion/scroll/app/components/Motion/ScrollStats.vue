@@ -34,7 +34,6 @@
       case 'bottom-left':
         classes.push('bottom-4', 'left-4')
         break
-      case 'bottom-right':
       default:
         classes.push('bottom-4', 'right-4')
         break

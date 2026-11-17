@@ -11,3 +11,7 @@
 
   useShaderStage((uvIn) => vec2(uvIn.x, fract(uvIn.y.add(time.mul(speedNode)))), order, 'uv')
 </script>
+
+<template>
+  <slot />
+</template>
