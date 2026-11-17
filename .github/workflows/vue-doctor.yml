@@ -1,0 +1,33 @@
+name: Vue Doctor
+
+# Full-repo scan on every PR and every published release. The pre-commit hook only scans the
+# staged diff; this catches what lands across the whole branch.
+on:
+  pull_request:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vue-doctor-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    name: Vue Doctor (full scan)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: voidzero-dev/setup-vp@v1.21.2
+        with:
+          node-version-file: .node-version
+          cache: true
+      # Report-only for now: the repo scored 0 when this was added (2026-11), so any --min-score
+      # would fail every run. Once the backlog is down, add `--min-score <n>` here to
+      # make it a gate. Config (ignored rules/paths, dead code off — fallow owns that) lives in
+      # .vue-doctorrc.json.
+      - name: Vue Doctor
+        run: vp exec vue-doctor . --verbose

@@ -1,0 +1,7 @@
+{
+  "deadCode": false,
+  "ignore": {
+    "rules": ["vue-doctor/reactivity-destructure-props"],
+    "files": [".agents/**", ".claude/**"]
+  }
+}

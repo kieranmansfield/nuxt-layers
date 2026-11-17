@@ -1,0 +1,11 @@
+# Diff-scoped health gates on the staged changeset; full-repo scans run in CI (vue-doctor.yml).
+# Bypass once with `git commit --no-verify`, or per shell with VP_GIT_HOOKS=0.
+
+# vue-doctor hands its --diff base straight to `git diff --name-only <base>`, so `--cached` scopes
+# it to staged files. It scores whole files (no new-only mode), so debt already in a touched file
+# counts. 75 is vue-doctor's own "Great" boundary.
+# ponytail: reads files from disk, so unstaged hunks of a partially staged file are scored too.
+vue-doctor . --diff=--cached --min-score 75
+
+# fallow: line-level scope to the staged diff; fails only on findings this changeset introduces.
+git diff --cached | fallow audit --changed-since HEAD --diff-stdin --quiet
