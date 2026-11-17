@@ -16,7 +16,7 @@ import { uniform } from 'three/tsl'
 export type ThemeId = 'mesh' | 'wave' | 'lavalamp' | 'bubble' | 'plasma'
 
 // Unset props fall back to speed/intensity 1 and white colours inside the composable.
-export interface ThemeNodeProps {
+export type ThemeNodeProps = {
   themeId: ThemeId
   speed?: number | undefined
   intensity?: number | undefined
