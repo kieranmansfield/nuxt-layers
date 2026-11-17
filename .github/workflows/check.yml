@@ -36,9 +36,29 @@ jobs:
         run: vp exec stylelint "**/*.{vue,css}" --ignore-path .gitignore
       # Advisory for now: the repo has existing findings (core/typography/theming cycles,
       # a stale suppression). Drop continue-on-error once they're cleaned up.
+      # Full-repo report. `vp exec` uses the catalog-pinned fallow, not a fresh dlx download.
       - name: Dead code (fallow)
         continue-on-error: true
-        run: vp dlx fallow dead-code
+        run: vp exec fallow dead-code
+
+  fallow-audit:
+    name: Fallow audit (PR diff)
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # audit diffs against, and snapshots, the base branch
+      - uses: voidzero-dev/setup-vp@v1.21.2
+        with:
+          node-version-file: .node-version
+          cache: true
+      # Blocking, unlike the full report above: the default new-only gate fails only on dead
+      # code, complexity or duplication this PR introduces (baselines from .fallowrc.json).
+      - name: Fallow audit
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: vp exec fallow audit --changed-since "origin/$BASE_REF" --quiet
 
   typecheck:
     name: Typecheck
