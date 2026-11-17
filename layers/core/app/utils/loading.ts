@@ -111,6 +111,8 @@ export function bootLoading(
   }
 
   let mounted = false
+  // While held the count keeps running but nothing is written to the DOM (see `hold`)
+  let held = false
   let pageLoaded = doc.readyState === 'complete'
   if (!pageLoaded) win.addEventListener('load', () => (pageLoaded = true), { once: true })
 
@@ -131,6 +133,10 @@ export function bootLoading(
       state.skipped = true
       end()
     },
+    hold(on) {
+      held = on
+      if (!on) render()
+    },
   }
   win.__coreLoading = state
 
@@ -143,6 +149,8 @@ export function bootLoading(
   let written = -1
 
   function render(): void {
+    if (held) return
+    if (state.shown && screen && screen.dataset.shown === undefined) screen.dataset.shown = ''
     const value = Math.floor(state.progress)
     if (value !== written) {
       written = value
@@ -177,7 +185,6 @@ export function bootLoading(
   function reveal(now: number): void {
     if (state.shown || now - start < config.showAfter) return
     state.shown = true
-    if (screen) screen.dataset.shown = ''
   }
 
   function nextProgress(dt: number, complete: boolean): number {

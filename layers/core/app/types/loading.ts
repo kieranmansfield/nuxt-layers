@@ -50,6 +50,9 @@ export type BootLoading = {
   mounted: () => void
   /** End now, skipping the rest of the count */
   finish: () => void
+  /** Pause (`true`) or resume DOM writes; the count keeps running underneath and catches up on
+   * resume */
+  hold: (on: boolean) => void
 }
 
 declare global {

@@ -158,6 +158,19 @@ describe('bootLoading', () => {
     expect(clock.pending).toBeUndefined()
   })
 
+  it('hold() freezes the DOM while the count runs on, and resume catches it up', () => {
+    boot()
+    runTo(300)
+    loading().hold(true)
+    const frozen = el('#loading-screen').outerHTML
+    runTo(1500)
+    expect(el('#loading-screen').outerHTML).toBe(frozen)
+    expect(loading()).toMatchObject({ shown: true })
+    loading().hold(false)
+    expect(el('[data-loading-count]').textContent).toBe(String(Math.floor(loading().progress)))
+    expect(shown()).toBe(true)
+  })
+
   it('reaches browser globals only through win - the server build rewrites bare ones', () => {
     // Nuxt's server `define` turns these into `undefined` in the serialised source
     const bare = /(?<![.\w])(window|document|navigator|location|XMLHttpRequest)\b/

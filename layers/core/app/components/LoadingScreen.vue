@@ -37,6 +37,14 @@
     })
   }
 
+  // Dev only: @nuxt/hints snapshots this component's HTML at setup and again on mount, so the boot
+  // runtime's live count between the two reads as a hydration mismatch. Hold its DOM writes for
+  // that window (its onMounted is registered before ours, so it compares first).
+  if (import.meta.dev && import.meta.client && enabled) {
+    window.__coreLoading?.hold(true)
+    onMounted(() => window.__coreLoading?.hold(false))
+  }
+
   // Started on mount, so a slow connection has fetched GSAP by the time the count finishes
   let gsapReady: Promise<[typeof import('gsap'), typeof import('gsap/Flip')]> | undefined
   const loadGsap = () => (gsapReady ??= Promise.all([import('gsap'), import('gsap/Flip')]))
