@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-import { spawnSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 
-import { ROOT } from './lib/layers.mjs'
+import { createRunner, sh } from './lib/run.mjs'
 
 // nuxt is deliberately excluded from automated `--latest` updates: nuxt@4.5.0+ requires
 // vite ^8.2.0, conflicting with this workspace's `overrides: { vite: '^7' }` pin (Vite 8
@@ -21,23 +20,9 @@ const FRAMEWORK_PACKAGES = [
   'vue',
   'vue-router',
   'tailwindcss',
-  'pinia',
 ]
 
-function run(label, cmd, args, opts = {}) {
-  console.log(`\n▶ ${label}`)
-  console.log(`  ${cmd} ${args.join(' ')}`)
-  const result = spawnSync(cmd, args, { cwd: ROOT, stdio: 'inherit', ...opts })
-  if (result.status !== 0) {
-    console.error(`\n✗ ${label} failed. Stopping — project is not left half-updated.`)
-    process.exit(result.status ?? 1)
-  }
-  console.log(`✓ ${label}`)
-}
-
-function sh(cmd, args) {
-  return spawnSync(cmd, args, { cwd: ROOT, encoding: 'utf8' })
-}
+const run = createRunner('Stopping — project is not left half-updated.', { echo: true })
 
 const status = sh('git', ['status', '--porcelain'])
 if (status.stdout.trim() !== '') {

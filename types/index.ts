@@ -1,11 +1,5 @@
 export type {
-  ColourMode,
-  ContrastLevel,
-  MotionPreference,
-  TransparencyPreference,
   AccentColor,
-  ThemeState,
-  ThemeTokens,
   ColorUsage,
   UiColors,
   UiSemanticColor,
@@ -14,8 +8,5 @@ export type {
   UiCustomColors,
   UiBaseColor,
 } from './theme'
-export type { ScrollLockEvent, LoadingStateEvent, LayerEvent } from './events'
-export type { MotionConfig, TransitionConfig } from './motion'
-export type { PublicRuntimeConfig } from './runtime'
 // fallow-ignore-next-line unused-type
 export type { SessionUser } from './auth'

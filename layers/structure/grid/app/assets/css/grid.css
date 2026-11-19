@@ -1,0 +1,44 @@
+/* Grid layer rhythm — derives all vertical spacing from --fs. See
+   docs/superpowers/specs/2026-09-04-grid-layer-design.md and root LAYOUT-SYSTEM.md
+   for the full derivation rationale. Column composition is NOT here — it comes from
+   useGridTracks().toColumnsCss(), applied inline per grid-tracks instance. */
+
+/* --fs stays unregistered on purpose: a registered <length> holding rem on :root, read by
+   :root's own line-height, is a dependency cycle in Gecko -- Firefox falls back to the initial
+   value and freezes the unit at 24px. Unregistered, it substitutes and resolves the same in
+   every engine. (An `initial-value: 1rem` @property is invalid anyway: rem is not
+   computationally independent.) */
+
+:root {
+  /* Shares the type scale's endpoints (typography.css --type-min/--type-max) but stays
+     continuous across 320 → 1280px, so the unit never takes the type base's 48rem jump.
+     Fallbacks keep grid valid on core alone. The slope is hand-fitted to 1rem → 1.2rem over
+     320 → 1280px — retune it if --type-min/--type-max change. rem term keeps this WCAG
+     1.4.4 zoom-safe; svi never vw (viewport-bar-collapse safe) */
+  --fs: clamp(var(--type-min, 1rem), 0.9333rem + 0.3333svi, var(--type-max, 1.2rem));
+
+  /* rounded, not raw, so grid boundaries land on-pixel */
+  line-height: round(nearest, var(--fs) * 1.5, 1px);
+}
+
+.grid-tracks {
+  /* rlh not lh: always resolves against root, unaffected by a nested element's own
+     line-height */
+  --unit: 1rlh;
+  --measure-min: 22rem;
+
+  /* margin floor > 0, steep svi slope so it shrinks fast on narrow screens */
+  --edge-min: clamp(1rlh, 8svi, 3rlh);
+  --avail-b: calc(100svh - 2 * var(--edge-min));
+  --lines: calc(round(down, var(--avail-b), var(--unit)) / var(--unit));
+  --lpf: clamp(4, round(down, calc(100svh / var(--unit) / 4.5), 1), 8);
+  --fields: max(1, round(down, calc((var(--lines) + 1) / (var(--lpf) + 1)), 1));
+
+  display: grid;
+  grid-auto-rows: minmax(calc(var(--lpf) * var(--unit)), max-content);
+  gap: var(--unit);
+  container-name: grid-tracks;
+  container-type: inline-size;
+  padding-inline: var(--edge-min);
+  padding-block: var(--edge-min);
+}

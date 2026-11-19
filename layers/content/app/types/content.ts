@@ -4,6 +4,15 @@ export type ContentAuthor = {
   avatar?: string
 } & Author
 
+export type ContentLayerConfig = {
+  name?: string
+  sections?: {
+    blog?: boolean
+    portfolio?: boolean
+    gallery?: boolean
+  }
+}
+
 export type GalleryImage = {
   src: string
   alt: string
@@ -18,6 +27,8 @@ export type PortfolioColor = {
   name: string
   value: string
   usage?: string
+  /** Colours sharing a `theme` render together as one swatch (on white and black) */
+  theme?: string
 }
 
 export type PortfolioFont = {
@@ -25,6 +36,21 @@ export type PortfolioFont = {
   weights?: string[]
   usage?: string
 }
+
+/**
+ * One technology in a project's stack. `icon` (any Iconify name, e.g. `i-logos-vue`) and `color`
+ * (brand hex) fall back to the built-in table in `utils/portfolioStack.ts` when omitted.
+ */
+export type PortfolioStackItem = {
+  name: string
+  icon?: string
+  color?: string
+  /** Makes the card a link (docs, repo, …) */
+  url?: string
+}
+
+/** Frontmatter accepts a bare name (`- Vue`) or the full object */
+export type PortfolioStackEntry = string | PortfolioStackItem
 
 export type BaseContent = {
   title: string
@@ -35,7 +61,7 @@ export type BaseContent = {
   draft?: boolean
 }
 
-export type ContentPage = {} & BaseContent
+export type ContentPage = BaseContent
 
 export type BlogPost = {
   date: string
@@ -52,9 +78,14 @@ export type PortfolioItem = {
   year?: number
   /** External project URL */
   url?: string
+  /** GitHub repo (`owner/name` or URL) whose stats card shows on the item page */
+  github?: string
+  /** Obsidian community plugin id whose listing card shows on the item page */
+  obsidian?: string
   featured: boolean
   colors: PortfolioColor[]
   typography: PortfolioFont[]
+  stack: PortfolioStackEntry[]
 } & BaseContent
 
 export type GalleryItem = {

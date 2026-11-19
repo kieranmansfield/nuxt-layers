@@ -35,19 +35,19 @@
   <div class="vi-page">
     <div class="mb-6 flex items-start justify-between gap-3">
       <div>
-        <h1 class="text-2xl font-semibold text-default mb-1">Colour Scales</h1>
+        <h1 class="text-default mb-1 text-2xl font-semibold">Colour Scales</h1>
         <p class="text-muted text-sm">
           Tailwind-compatible 50–950 scales generated in Oklch for perceptual uniformity.
         </p>
       </div>
-      <div class="flex items-center gap-2 shrink-0">
-        <span class="text-xs text-muted hidden sm:inline">Show Oklch</span>
+      <div class="flex shrink-0 items-center gap-2">
+        <span class="text-muted hidden text-xs sm:inline">Show Oklch</span>
         <USwitch v-model="showOklch" size="sm" />
       </div>
     </div>
 
-    <div v-if="state.colours.length === 0" class="text-center py-16 text-muted">
-      <UIcon name="i-lucide-layers" class="size-10 mx-auto mb-3" />
+    <div v-if="state.colours.length === 0" class="text-muted py-16 text-center">
+      <UIcon name="i-lucide-layers" class="mx-auto mb-3 size-10" />
       <p class="text-sm">Add colours on the Foundation page first.</p>
       <UButton to="/colour/foundation" variant="outline" class="mt-4" size="sm">
         Go to Foundation
@@ -56,22 +56,22 @@
 
     <div v-else>
       <!-- Mobile: collapsible vertical list (no horizontal scroll) -->
-      <div class="sm:hidden flex flex-col gap-3">
+      <div class="flex flex-col gap-3 sm:hidden">
         <div
           v-for="colour in scaledColours"
           :key="colour.id"
-          class="border border-default rounded-xl overflow-hidden"
+          class="border-default overflow-hidden rounded-xl border"
         >
           <!-- Collapse trigger -->
           <button
-            class="w-full flex items-center gap-3 px-4 py-3 bg-elevated text-left"
+            class="bg-elevated flex w-full items-center gap-3 px-4 py-3 text-left"
             @click="() => toggle(colour.id)"
           >
             <div
-              class="size-5 rounded-full border border-black/10 shrink-0"
+              class="size-5 shrink-0 rounded-full border border-black/10"
               :style="{ backgroundColor: colour.hex }"
             />
-            <span class="font-medium text-default flex-1 capitalize">{{ colour.name }}</span>
+            <span class="text-default flex-1 font-medium capitalize">{{ colour.name }}</span>
             <UBadge
               :label="colour.role"
               color="neutral"
@@ -81,25 +81,25 @@
             />
             <UIcon
               :name="isOpen(colour.id) ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
-              class="size-4 text-muted shrink-0"
+              class="text-muted size-4 shrink-0"
             />
           </button>
 
           <!-- Vertical swatch list -->
-          <div v-show="isOpen(colour.id)" class="divide-y divide-default">
+          <div v-show="isOpen(colour.id)" class="divide-default divide-y">
             <div
               v-for="entry in colour.scale"
               :key="entry.step"
               class="flex items-center gap-3 px-4 py-2.5"
             >
               <div
-                class="size-9 rounded-lg shrink-0 border border-black/8"
+                class="size-9 shrink-0 rounded-lg border border-black/8"
                 :style="{ backgroundColor: entry.hex }"
               />
-              <span class="text-xs font-mono w-10 shrink-0 text-default font-semibold">
+              <span class="text-default w-10 shrink-0 font-mono text-xs font-semibold">
                 {{ entry.step }}
               </span>
-              <span class="text-xs font-mono text-muted flex-1 min-w-0 truncate">
+              <span class="text-muted min-w-0 flex-1 truncate font-mono text-xs">
                 {{ showOklch ? entry.oklchStr : entry.hex }}
               </span>
             </div>
@@ -108,13 +108,13 @@
       </div>
 
       <!-- Desktop: horizontal scale grid rows -->
-      <div class="hidden sm:flex flex-col gap-8">
+      <div class="hidden flex-col gap-8 sm:flex">
         <div v-for="colour in scaledColours" :key="colour.id">
-          <div class="flex items-center gap-3 mb-3">
+          <div class="mb-3 flex items-center gap-3">
             <ColourSwatch :hex="colour.hex" size="sm" />
-            <p class="font-medium text-default">{{ colour.name }}</p>
+            <p class="text-default font-medium">{{ colour.name }}</p>
             <UBadge :label="colour.role" color="neutral" variant="soft" size="xs" />
-            <span class="text-xs text-muted font-mono ml-auto">{{ colour.hex }}</span>
+            <span class="text-muted ml-auto font-mono text-xs">{{ colour.hex }}</span>
           </div>
           <ColourScaleRow :name="colour.name" :scale="colour.scale" :show-oklch />
         </div>

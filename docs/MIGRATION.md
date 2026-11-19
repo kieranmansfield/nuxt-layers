@@ -1,3 +1,7 @@
+> **Upgrading?** v6.4 → v6.5: [`MIGRATION-v6.5.0.md`](./MIGRATION-v6.5.0.md) · v6.3 → v6.4:
+> [`MIGRATION-v6.4.0.md`](./MIGRATION-v6.4.0.md) · v6.2 → v6.3:
+> [`MIGRATION-v6.3.0.md`](./MIGRATION-v6.3.0.md). The guides below cover older versions.
+
 # Agent Migration Guide — Update an app to nuxt-layers v2.2.x
 
 **Audience:** an AI coding agent (or developer) updating a downstream Nuxt app that consumes these layers.
@@ -381,6 +385,10 @@ Neither change is breaking. Existing apps using `portfolio`, `blog`, or `gallery
 
 ## 1. Collection Aliases
 
+> **Since removed.** The `create*Collection` factories and `*CollectionSchema` exports were dropped:
+> collections are rooted at the layer that defines them, so apps must declare their own, and
+> schemas can't be passed to `defineCollection`. See `docs/adr/0002-content-config-is-app-owned.md`.
+
 ### The problem
 
 The content layer hard-codes the collection names `blog`, `portfolio`, and `gallery`. If your app wants a `works` section that uses the portfolio schema, you previously had to duplicate the entire Zod schema in your own `content.config.ts`.
@@ -521,7 +529,7 @@ definePageMeta({
 // No chrome needed (content-only page):
 definePageMeta({ layout: 'grid' })
 
-// Full-bleed pages (no mastmain grid at all):
+// Full-bleed pages (no grid-root grid at all):
 definePageMeta({ layout: false })
 ```
 

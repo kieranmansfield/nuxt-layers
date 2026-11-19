@@ -1,0 +1,16 @@
+import { useFeatureFlags } from '../composables/useFeatureFlags'
+import { resolveRoute } from '../utils/resolveRoute'
+
+export default defineNuxtRouteMiddleware((to) => {
+  const { config } = useRoutingConfig()
+  const { resolve } = useFeatureFlags()
+
+  if (config.debug) console.log('[routing] governance check', to.path, to.meta)
+
+  const resolution = resolveRoute(to.meta, config, resolve)
+
+  if (config.debug) console.log('[routing] resolution', resolution)
+
+  if (resolution.outcome === 'deny') return abortNavigation(createError({ status: 404 }))
+  if (resolution.outcome === 'redirect') return navigateTo(resolution.to)
+})

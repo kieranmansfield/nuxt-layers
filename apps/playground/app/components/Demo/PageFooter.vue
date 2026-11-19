@@ -17,11 +17,11 @@
 </script>
 
 <template>
-  <section class="py-16 bg-default border-t border-default">
+  <section class="bg-default border-default border-t py-16">
     <UContainer>
-      <div class="flex flex-col md:flex-row gap-8 items-start md:items-center justify-between">
+      <div class="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
         <div>
-          <h2 class="text-2xl font-bold text-highlighted mb-2">{{ name }}</h2>
+          <h2 class="text-highlighted mb-2 text-2xl font-bold">{{ name }}</h2>
           <p class="text-muted">{{ description }}</p>
         </div>
         <div class="flex flex-wrap gap-3">

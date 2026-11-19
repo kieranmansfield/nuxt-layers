@@ -5,6 +5,16 @@
     colors?: PortfolioColor[]
   }>()
 
+  // Themed colours group into one swatch each; the rest keep the plain card grid
+  const themes = computed(() => {
+    const groups = new Map<string, PortfolioColor[]>()
+    for (const color of colors) {
+      if (color.theme) groups.set(color.theme, [...(groups.get(color.theme) ?? []), color])
+    }
+    return [...groups]
+  })
+  const loose = computed(() => colors.filter((color) => !color.theme))
+
   function contrastColor(hex: string): string {
     const r = parseInt(hex.slice(1, 3), 16)
     const g = parseInt(hex.slice(3, 5), 16)
@@ -16,21 +26,27 @@
 
 <template>
   <div v-if="colors.length" class="space-y-6">
-    <h3 class="text-2xl font-semibold tracking-tight text-highlighted">Palette</h3>
-    <LinksGroup class="palette-grid gap-3">
-      <div v-for="color in colors" :key="color.value">
+    <h3 class="text-highlighted text-2xl font-semibold tracking-tight">Palette</h3>
+    <PortfolioColorSwatch
+      v-for="[theme, group] in themes"
+      :key="theme"
+      :name="theme"
+      :colors="group"
+    />
+    <HoverDimGroup v-if="loose.length" class="palette-grid gap-3">
+      <div v-for="color in loose" :key="color.value">
         <div
-          class="aspect-2/3 flex flex-col justify-between p-4 rounded-lg border border-default/20 shadow-lg cursor-default"
+          class="border-default/20 flex aspect-2/3 cursor-default flex-col justify-between rounded-lg border p-4 shadow-lg"
           :style="{ backgroundColor: color.value, color: contrastColor(color.value) }"
         >
           <div>
-            <p class="text-sm font-medium leading-tight">{{ color.name }}</p>
-            <p v-if="color.usage" class="text-xs mt-1 opacity-60">{{ color.usage }}</p>
+            <p class="text-sm leading-tight font-medium">{{ color.name }}</p>
+            <p v-if="color.usage" class="mt-1 text-xs opacity-60">{{ color.usage }}</p>
           </div>
-          <p class="text-xs font-mono uppercase opacity-50">{{ color.value }}</p>
+          <p class="font-mono text-xs uppercase opacity-50">{{ color.value }}</p>
         </div>
       </div>
-    </LinksGroup>
+    </HoverDimGroup>
   </div>
 </template>
 

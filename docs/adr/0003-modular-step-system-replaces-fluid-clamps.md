@@ -1,0 +1,89 @@
+# 0003 — One modular step scale replaces the fluid type and spacing clamps
+
+Status: accepted (2026-10-20)
+
+## Context
+
+Type and spacing were two unrelated sets of hand-tuned `clamp()` ranges: 13 `text-fluid-*`
+utilities (plus 13 `-cq` copies) snapped by `round(down, …, 0.25rem)`, and 8 `--fluid-space-*`
+tokens (plus 7 `-cq` copies). No ratio linked one size to the next, so every new size was
+another clamp to tune, and the `-cq` sets had no consumers. The reference system (matuzo.at,
+analysed in `matuzo-typography-system-1.md`) gets better proportions from two ratios.
+
+## Decision
+
+Every size is a step on a scale:
+
+- **Type:** `font-size = round(--type-base × 1.26^--step, 0.0625rem)`. Base is `1rem` below
+  48rem and `1.2rem` from 48rem; body is step 1 (20 → 24px). `h1` uses a fluid display step,
+  5 → 7 across 360 → 1280px, cast from a length with `tan(atan2(…, 1rem))`. Utilities are
+  `text-step-sm`, `text-step-0` … `text-step-12`, `text-step-display`.
+- **Space:** `--space-* = --space-base × 1.414^n`, with `--space-base` running 11.3 → 16px
+  across 320 → 1280px — one step of growth, not the reference's two (8 → 16px), so phones keep
+  the old token sizes. The `Spacing` union is unchanged; only the values behind it moved.
+- **Grid:** the `grid` layer's `--fs` shares the type scale's endpoint tokens (`--type-min`,
+  `--type-max`) but stays continuous, so its rhythm unit does not inherit the 48rem jump.
+
+It is a parallel namespace: Tailwind's `--text-*`, Nuxt UI's `--ui-*` and the `html` font-size
+are untouched. Tokens are plain `:root` properties, not `@theme`, so `var(--step)` resolves on
+the element using it.
+
+## Consequences
+
+- The top end is coarser: `TypographyHeadline` levels step down from the fluid display step
+  (97/77/61/48/38/30px at 1280px, 51 → 16px at 320px) instead of the old 144/120/96/76/36/24px,
+  which also overflowed phone widths. Plain h1–h6 use the reading scale (display, 3, 2, 1, 0, 0).
+- Step line heights fall smoothly with size (sm 1.5 … body 1.7, h2/h3 1.2 … display 0.95) and
+  now reach components: `useTypography` only emits `leading-*` when asked.
+- Body text grows from 16px to 20/24px, and body line-height from 1.5 to 1.7. Nuxt UI
+  components with explicit `text-*` sizes are unaffected; anything that inherits body size
+  (card bodies, plain prose) grows. Heading defaults skip `[data-slot]` headings, so Nuxt UI's
+  own titles (UModal, USlideover) inherit instead of jumping to a heading step.
+- Every step jumps ×1.2 at 48rem because the base switches there (h1 ≈ 62 → 75px at 768px).
+- Spacing matches the old tokens on phones and stays close on desktop for xs–xl; 2xl/3xl top out
+  smaller than before (64/90px vs 80/112px).
+- `--space-*` steps are substituted at `:root`, so per-subtree spacing retuning is not
+  supported. Type retuning is: `--type-base` and `--type-scale` are read per element.
+- The display step is normalised by `1rem` and its `vw` term is scaled by root / 16px, so its
+  exponent depends only on viewport width and every size grows with a larger root font size.
+  (Unscaled, the exponent fell as the root grew: h1 was only 1.02× larger at a 24px root.)
+- The old `--heading-text-scale-damp` multiplier is gone. As written it enlarged steps ≥ 7
+  under OS text-scale > 100% instead of damping them; a true damp would break "visibly larger
+  at a larger root".
+- `--fs` stays unregistered: a registered `<length>` holding `rem` on `:root`, read by the
+  root's own line-height, is a dependency cycle in Gecko that freezes the grid unit.
+- Nuxt UI prose is retuned onto the scale (typography `app.config.ts`): prose headings take
+  steps (h1 4, h2 3, h3 2, h4 1) and `p`/`li` keep the body's 1.7 leading. Otherwise the
+  24px copy sat at or above Nuxt UI's fixed `text-2xl`/`text-xl` prose headings. This needs
+  `text-step-*` registered as a font-size group in tailwind-merge (`ui.tv.twMergeConfig`).
+
+## Amendment (v6.4.0): per-element display range
+
+The display step was computed once at `:root`, so retuning it for one element (a hero wordmark)
+meant restating the whole `tan(atan2(clamp(…)))` expression. Its two ends are now plain numbers,
+`--display-from: 5` and `--display-to: 7`, and `text-step-display` and the `h1` base rule
+recompute `--step-display` from them on the element. `class="[--display-from:4]
+[--display-to:9]"` retunes one element without touching the formula.
+
+- At the defaults the middle term reduces to the old `4.2176rem + 3.4784vw·k`; computed sizes
+  are identical (Chromium, Firefox and WebKit, 360–1600px).
+- The accessibility rules above are unchanged: the `tan(atan2(1rem, 16px))` factor keeps the
+  exponent independent of root font size, and the clamp keeps its rem terms.
+- `--step-display` still exists at `:root` (TypographyHeadline levels and theming read it). An
+  unlayered `--step-display` override on an element still beats the utility's, so existing
+  overrides keep working.
+
+## Amendment (2026-11-06): which layers use the step scale
+
+Atomic audit AD-11 asked whether every `text-*` use should move to `text-step-*`, and whether
+the step tokens should move into `core`. Neither: the split is the design.
+
+- `text-step-*` is for reading and display type: prose, headings, hero text. It lives with
+  `typography`.
+- Tailwind's `text-*` is for UI chrome: labels, captions, card metadata and anything sitting
+  beside Nuxt UI, whose own sizes are also fixed. Body is 20 to 24px on the step scale, so
+  sweeping chrome onto it would resize the interface without improving its proportions.
+- `core`, `layout`, `content` and `feeds` keep `text-*` for chrome. A consumer can still use
+  `text-step-*` anywhere: `core.css` imports `typography.css` into the one Tailwind build root, so
+  the utilities exist whether or not the `typography` layer is loaded.
+- `typography.css` stays in the typography layer and keeps its relative import from `core.css`.

@@ -86,28 +86,28 @@ const { progress } = useSmoothScroll()
 
       <!-- Hero -->
       <section
-        class="min-h-screen flex items-center justify-center relative bg-default overflow-hidden"
+        class="bg-default relative flex min-h-screen items-center justify-center overflow-hidden"
       >
         <!-- Velocity-reactive background using MotionVelocityEffect -->
-        <div class="absolute inset-0 pointer-events-none">
+        <div class="pointer-events-none absolute inset-0">
           <MotionVelocityEffect effect="scale" :intensity="0.08" class="absolute top-1/4 left-1/4">
-            <div class="w-96 h-96 bg-primary/20 rounded-full blur-[60px]" />
+            <div class="bg-primary/20 h-96 w-96 rounded-full blur-[60px]" />
           </MotionVelocityEffect>
           <MotionVelocityEffect
             effect="translateY"
             :intensity="8"
-            class="absolute bottom-1/4 right-1/4"
+            class="absolute right-1/4 bottom-1/4"
           >
-            <div class="w-64 h-64 bg-purple-500/20 rounded-full blur-2xl" />
+            <div class="h-64 w-64 rounded-full bg-purple-500/20 blur-2xl" />
           </MotionVelocityEffect>
           <MotionVelocityEffect effect="scale" :intensity="0.1" class="absolute top-1/2 right-1/3">
-            <div class="w-48 h-48 bg-cyan-500/15 rounded-full blur-[50px]" />
+            <div class="h-48 w-48 rounded-full bg-cyan-500/15 blur-[50px]" />
           </MotionVelocityEffect>
         </div>
 
-        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+        <div class="relative z-10 mx-auto max-w-5xl px-4 text-center">
           <div
-            class="inline-flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-2 rounded-full text-sm text-highlighted/80 mb-8"
+            class="text-highlighted/80 mb-8 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm backdrop-blur"
           >
             <UIcon name="i-lucide-train" />
             <span>Locomotive Scroll v5</span>
@@ -117,17 +117,17 @@ const { progress } = useSmoothScroll()
             effect="skew"
             :intensity="1.5"
             as="h1"
-            class="text-5xl md:text-7xl lg:text-9xl font-black text-highlighted mb-8"
+            class="text-highlighted mb-8 text-5xl font-black md:text-7xl lg:text-9xl"
           >
             Deep Dive
           </MotionVelocityEffect>
 
-          <p class="text-xl md:text-2xl text-muted max-w-3xl mx-auto mb-12">
+          <p class="text-muted mx-auto mb-12 max-w-3xl text-xl md:text-2xl">
             Everything you need to know about smooth scrolling, parallax effects, and scroll-linked
             animations
           </p>
 
-          <div class="flex flex-wrap gap-4 justify-center">
+          <div class="flex flex-wrap justify-center gap-4">
             <MotionScrollLink to="#playground" :duration="1.5" as="span">
               <UButton size="xl"> Interactive Playground </UButton>
             </MotionScrollLink>
@@ -137,27 +137,27 @@ const { progress } = useSmoothScroll()
 
         <!-- Live stats panel -->
         <div
-          class="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-sm rounded-xl px-6 py-3"
+          class="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-xl bg-black/60 px-6 py-3 backdrop-blur-sm"
         >
           <div class="flex gap-8 text-sm">
             <div class="text-center">
-              <div class="text-muted text-xs mb-1">VELOCITY</div>
+              <div class="text-muted mb-1 text-xs">VELOCITY</div>
               <div class="text-highlighted font-bold tabular-nums">{{ velocity.toFixed(2) }}</div>
             </div>
             <div class="text-center">
-              <div class="text-muted text-xs mb-1">PROGRESS</div>
+              <div class="text-muted mb-1 text-xs">PROGRESS</div>
               <div class="text-highlighted font-bold tabular-nums">
                 {{ (progress * 100).toFixed(0) }}%
               </div>
             </div>
             <div class="text-center">
-              <div class="text-muted text-xs mb-1">DIRECTION</div>
+              <div class="text-muted mb-1 text-xs">DIRECTION</div>
               <div class="text-highlighted font-bold">
                 {{ direction > 0 ? 'DOWN' : direction < 0 ? 'UP' : 'IDLE' }}
               </div>
             </div>
             <div class="text-center">
-              <div class="text-muted text-xs mb-1">SCROLL Y</div>
+              <div class="text-muted mb-1 text-xs">SCROLL Y</div>
               <div class="text-highlighted font-bold tabular-nums">{{ Math.round(scrollY) }}px</div>
             </div>
           </div>
@@ -165,77 +165,77 @@ const { progress } = useSmoothScroll()
 
         <!-- Scroll indicator -->
         <div
-          class="absolute bottom-24 left-1/2 -translate-x-1/2 text-highlighted/30 animate-bounce"
+          class="text-highlighted/30 absolute bottom-24 left-1/2 -translate-x-1/2 animate-bounce"
         >
           <UIcon name="i-lucide-chevron-down" class="text-3xl" />
         </div>
       </section>
 
       <!-- Features Overview -->
-      <section id="features" class="py-32 bg-default">
+      <section id="features" class="bg-default py-32">
         <UContainer>
-          <div class="text-center mb-20">
-            <span class="text-primary text-sm font-semibold tracking-wider uppercase mb-4 block">
+          <div class="mb-20 text-center">
+            <span class="text-primary mb-4 block text-sm font-semibold tracking-wider uppercase">
               Built on Lenis
             </span>
-            <h2 class="text-4xl md:text-6xl font-bold text-highlighted mb-6">Core Features</h2>
-            <p class="text-muted text-xl max-w-2xl mx-auto">
+            <h2 class="text-highlighted mb-6 text-4xl font-bold md:text-6xl">Core Features</h2>
+            <p class="text-muted mx-auto max-w-2xl text-xl">
               What makes Locomotive Scroll v5 the gold standard for smooth scrolling
             </p>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div
-              class="bg-accented/50 backdrop-blur rounded-3xl p-8 text-center border border-accented/50 hover:border-primary/50 transition-colors"
+              class="bg-accented/50 border-accented/50 hover:border-primary/50 rounded-3xl border p-8 text-center backdrop-blur transition-colors"
             >
               <div
-                class="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6"
+                class="bg-primary/10 mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl"
               >
-                <UIcon name="i-lucide-zap" class="text-4xl text-primary" />
+                <UIcon name="i-lucide-zap" class="text-primary text-4xl" />
               </div>
-              <h3 class="text-xl font-bold text-highlighted mb-3">Native Performance</h3>
+              <h3 class="text-highlighted mb-3 text-xl font-bold">Native Performance</h3>
               <p class="text-muted">
                 Uses native scroll with CSS transforms. No scroll hijacking, feels natural.
               </p>
             </div>
 
             <div
-              class="bg-accented/50 backdrop-blur rounded-3xl p-8 text-center border border-accented/50 hover:border-purple-500/50 transition-colors"
+              class="bg-accented/50 border-accented/50 rounded-3xl border p-8 text-center backdrop-blur transition-colors hover:border-purple-500/50"
             >
               <div
-                class="w-20 h-20 bg-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6"
+                class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-purple-500/10"
               >
                 <UIcon name="i-lucide-gauge" class="text-4xl text-purple-500" />
               </div>
-              <h3 class="text-xl font-bold text-highlighted mb-3">Velocity Tracking</h3>
+              <h3 class="text-highlighted mb-3 text-xl font-bold">Velocity Tracking</h3>
               <p class="text-muted">
                 Real-time scroll velocity for momentum-based effects and dynamic UI.
               </p>
             </div>
 
             <div
-              class="bg-accented/50 backdrop-blur rounded-3xl p-8 text-center border border-accented/50 hover:border-cyan-500/50 transition-colors"
+              class="bg-accented/50 border-accented/50 rounded-3xl border p-8 text-center backdrop-blur transition-colors hover:border-cyan-500/50"
             >
               <div
-                class="w-20 h-20 bg-cyan-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6"
+                class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-cyan-500/10"
               >
                 <UIcon name="i-lucide-link" class="text-4xl text-cyan-500" />
               </div>
-              <h3 class="text-xl font-bold text-highlighted mb-3">GSAP Integration</h3>
+              <h3 class="text-highlighted mb-3 text-xl font-bold">GSAP Integration</h3>
               <p class="text-muted">
                 Seamless ScrollTrigger proxy for advanced scroll-linked animations.
               </p>
             </div>
 
             <div
-              class="bg-accented/50 backdrop-blur rounded-3xl p-8 text-center border border-accented/50 hover:border-pink-500/50 transition-colors"
+              class="bg-accented/50 border-accented/50 rounded-3xl border p-8 text-center backdrop-blur transition-colors hover:border-pink-500/50"
             >
               <div
-                class="w-20 h-20 bg-pink-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6"
+                class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-pink-500/10"
               >
                 <UIcon name="i-lucide-smartphone" class="text-4xl text-pink-500" />
               </div>
-              <h3 class="text-xl font-bold text-highlighted mb-3">Touch Optimized</h3>
+              <h3 class="text-highlighted mb-3 text-xl font-bold">Touch Optimized</h3>
               <p class="text-muted">Perfect touch and trackpad handling on all devices.</p>
             </div>
           </div>
@@ -243,144 +243,144 @@ const { progress } = useSmoothScroll()
       </section>
 
       <!-- Velocity Effects Showcase using MotionVelocityEffect -->
-      <section class="py-32 bg-default overflow-hidden">
+      <section class="bg-default overflow-hidden py-32">
         <UContainer>
-          <div class="text-center mb-20">
-            <span class="text-purple-500 text-sm font-semibold tracking-wider uppercase mb-4 block">
+          <div class="mb-20 text-center">
+            <span class="mb-4 block text-sm font-semibold tracking-wider text-purple-500 uppercase">
               Live Demo
             </span>
-            <h2 class="text-4xl md:text-6xl font-bold text-highlighted mb-6">Velocity Effects</h2>
+            <h2 class="text-highlighted mb-6 text-4xl font-bold md:text-6xl">Velocity Effects</h2>
             <p class="text-muted text-xl">Using the MotionVelocityEffect component</p>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <!-- Skew Effect -->
-            <div class="bg-default rounded-2xl p-8 border border-default">
-              <h3 class="text-lg font-semibold text-muted mb-6">Skew Transform</h3>
+            <div class="bg-default border-default rounded-2xl border p-8">
+              <h3 class="text-muted mb-6 text-lg font-semibold">Skew Transform</h3>
               <MotionVelocityEffect
                 effect="skew"
                 :intensity="3"
-                class="text-4xl md:text-5xl font-black text-highlighted text-center py-8"
+                class="text-highlighted py-8 text-center text-4xl font-black md:text-5xl"
               >
                 SKEW
               </MotionVelocityEffect>
-              <code class="text-xs text-muted block mt-4">effect="skew" :intensity="3"</code>
+              <code class="text-muted mt-4 block text-xs">effect="skew" :intensity="3"</code>
             </div>
 
             <!-- Scale Effect -->
-            <div class="bg-default rounded-2xl p-8 border border-default">
-              <h3 class="text-lg font-semibold text-muted mb-6">Scale Transform</h3>
+            <div class="bg-default border-default rounded-2xl border p-8">
+              <h3 class="text-muted mb-6 text-lg font-semibold">Scale Transform</h3>
               <MotionVelocityEffect
                 effect="scale"
                 :intensity="0.12"
-                class="text-4xl md:text-5xl font-black text-highlighted text-center py-8"
+                class="text-highlighted py-8 text-center text-4xl font-black md:text-5xl"
               >
                 SCALE
               </MotionVelocityEffect>
-              <code class="text-xs text-muted block mt-4">effect="scale" :intensity="0.12"</code>
+              <code class="text-muted mt-4 block text-xs">effect="scale" :intensity="0.12"</code>
             </div>
 
             <!-- Blur Effect -->
-            <div class="bg-default rounded-2xl p-8 border border-default">
-              <h3 class="text-lg font-semibold text-muted mb-6">Motion Blur</h3>
+            <div class="bg-default border-default rounded-2xl border p-8">
+              <h3 class="text-muted mb-6 text-lg font-semibold">Motion Blur</h3>
               <MotionVelocityEffect
                 effect="blur"
                 :intensity="1.5"
-                class="text-4xl md:text-5xl font-black text-highlighted text-center py-8"
+                class="text-highlighted py-8 text-center text-4xl font-black md:text-5xl"
               >
                 BLUR
               </MotionVelocityEffect>
-              <code class="text-xs text-muted block mt-4">effect="blur" :intensity="1.5"</code>
+              <code class="text-muted mt-4 block text-xs">effect="blur" :intensity="1.5"</code>
             </div>
 
             <!-- Opacity Effect -->
-            <div class="bg-default rounded-2xl p-8 border border-default">
-              <h3 class="text-lg font-semibold text-muted mb-6">Opacity Fade</h3>
+            <div class="bg-default border-default rounded-2xl border p-8">
+              <h3 class="text-muted mb-6 text-lg font-semibold">Opacity Fade</h3>
               <MotionVelocityEffect
                 effect="opacity"
                 :intensity="0.25"
-                class="text-4xl md:text-5xl font-black text-highlighted text-center py-8"
+                class="text-highlighted py-8 text-center text-4xl font-black md:text-5xl"
               >
                 FADE
               </MotionVelocityEffect>
-              <code class="text-xs text-muted block mt-4">
+              <code class="text-muted mt-4 block text-xs">
                 effect="opacity" :intensity="0.25"
               </code>
             </div>
 
             <!-- Letter Spacing Effect -->
-            <div class="bg-default rounded-2xl p-8 border border-default">
-              <h3 class="text-lg font-semibold text-muted mb-6">Letter Spacing</h3>
+            <div class="bg-default border-default rounded-2xl border p-8">
+              <h3 class="text-muted mb-6 text-lg font-semibold">Letter Spacing</h3>
               <MotionVelocityEffect
                 effect="letterSpacing"
                 :intensity="6"
-                class="text-4xl md:text-5xl font-black text-highlighted text-center py-8"
+                class="text-highlighted py-8 text-center text-4xl font-black md:text-5xl"
               >
                 SPACE
               </MotionVelocityEffect>
-              <code class="text-xs text-muted block mt-4">
+              <code class="text-muted mt-4 block text-xs">
                 effect="letterSpacing" :intensity="6"
               </code>
             </div>
 
             <!-- Rotate Effect -->
-            <div class="bg-default rounded-2xl p-8 border border-default">
-              <h3 class="text-lg font-semibold text-muted mb-6">Rotation</h3>
+            <div class="bg-default border-default rounded-2xl border p-8">
+              <h3 class="text-muted mb-6 text-lg font-semibold">Rotation</h3>
               <MotionVelocityEffect
                 effect="rotate"
                 :intensity="4"
-                class="text-4xl md:text-5xl font-black text-highlighted text-center py-8"
+                class="text-highlighted py-8 text-center text-4xl font-black md:text-5xl"
               >
                 SPIN
               </MotionVelocityEffect>
-              <code class="text-xs text-muted block mt-4">effect="rotate" :intensity="4"</code>
+              <code class="text-muted mt-4 block text-xs">effect="rotate" :intensity="4"</code>
             </div>
 
             <!-- Color Shift Effect -->
-            <div class="bg-default rounded-2xl p-8 border border-default">
-              <h3 class="text-lg font-semibold text-muted mb-6">Hue Rotation</h3>
+            <div class="bg-default border-default rounded-2xl border p-8">
+              <h3 class="text-muted mb-6 text-lg font-semibold">Hue Rotation</h3>
               <MotionVelocityEffect
                 effect="hueRotate"
                 :intensity="45"
-                class="text-4xl md:text-5xl font-black text-primary text-center py-8"
+                class="text-primary py-8 text-center text-4xl font-black md:text-5xl"
               >
                 COLOR
               </MotionVelocityEffect>
-              <code class="text-xs text-muted block mt-4">
+              <code class="text-muted mt-4 block text-xs">
                 effect="hueRotate" :intensity="45"
               </code>
             </div>
 
             <!-- Y Translation -->
-            <div class="bg-default rounded-2xl p-8 border border-default overflow-hidden">
-              <h3 class="text-lg font-semibold text-muted mb-6">Y Translation</h3>
+            <div class="bg-default border-default overflow-hidden rounded-2xl border p-8">
+              <h3 class="text-muted mb-6 text-lg font-semibold">Y Translation</h3>
               <MotionVelocityEffect
                 effect="translateY"
                 :intensity="8"
-                class="text-4xl md:text-5xl font-black text-highlighted text-center py-8"
+                class="text-highlighted py-8 text-center text-4xl font-black md:text-5xl"
               >
                 SHIFT
               </MotionVelocityEffect>
-              <code class="text-xs text-muted block mt-4">
+              <code class="text-muted mt-4 block text-xs">
                 effect="translateY" :intensity="8"
               </code>
             </div>
 
             <!-- Combined - manual for complex combinations -->
             <div
-              class="bg-linear-to-br from-primary/20 to-purple-600/20 rounded-2xl p-8 border border-primary/30"
+              class="from-primary/20 border-primary/30 rounded-2xl border bg-linear-to-br to-purple-600/20 p-8"
             >
-              <h3 class="text-lg font-semibold text-primary mb-6">Combined (Manual)</h3>
+              <h3 class="text-primary mb-6 text-lg font-semibold">Combined (Manual)</h3>
               <MotionVelocityEffect
                 effect="skew"
                 :intensity="2"
-                class="text-4xl md:text-5xl font-black text-highlighted text-center py-8"
+                class="text-highlighted py-8 text-center text-4xl font-black md:text-5xl"
               >
                 <MotionVelocityEffect effect="scale" :intensity="0.08" as="span">
                   MIX
                 </MotionVelocityEffect>
               </MotionVelocityEffect>
-              <code class="text-xs text-muted block mt-4">
+              <code class="text-muted mt-4 block text-xs">
                 Nested components for combinations
               </code>
             </div>
@@ -389,28 +389,28 @@ const { progress } = useSmoothScroll()
       </section>
 
       <!-- Interactive Playground -->
-      <section id="playground" class="py-32 bg-default">
+      <section id="playground" class="bg-default py-32">
         <UContainer>
-          <div class="text-center mb-16">
-            <span class="text-cyan-500 text-sm font-semibold tracking-wider uppercase mb-4 block">
+          <div class="mb-16 text-center">
+            <span class="mb-4 block text-sm font-semibold tracking-wider text-cyan-500 uppercase">
               Try It Out
             </span>
-            <h2 class="text-4xl md:text-6xl font-bold text-highlighted mb-6">
+            <h2 class="text-highlighted mb-6 text-4xl font-bold md:text-6xl">
               Interactive Playground
             </h2>
             <p class="text-muted text-xl">Explore the API and see code examples</p>
           </div>
 
           <!-- Tab Navigation -->
-          <div class="flex flex-wrap justify-center gap-2 mb-12">
+          <div class="mb-12 flex flex-wrap justify-center gap-2">
             <button
               v-for="tab in tabs"
               :key="tab.id"
               type="button"
-              class="flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all"
+              class="flex items-center gap-2 rounded-xl px-5 py-3 font-medium transition-all"
               :class="
                 activeTab === tab.id
-                  ? 'bg-primary text-highlighted shadow-lg shadow-primary/25'
+                  ? 'bg-primary text-highlighted shadow-primary/25 shadow-lg'
                   : 'bg-accented text-muted hover:text-highlighted hover:bg-accented'
               "
               @click="activeTab = tab.id"
@@ -421,11 +421,11 @@ const { progress } = useSmoothScroll()
           </div>
 
           <!-- Tab Content -->
-          <div class="max-w-5xl mx-auto">
+          <div class="mx-auto max-w-5xl">
             <!-- Velocity Effects Tab -->
             <div v-show="activeTab === 'velocity'" class="space-y-8">
-              <div class="bg-accented/50 rounded-3xl p-8 border border-accented">
-                <h3 class="text-2xl font-bold text-highlighted mb-4">
+              <div class="bg-accented/50 border-accented rounded-3xl border p-8">
+                <h3 class="text-highlighted mb-4 text-2xl font-bold">
                   MotionVelocityEffect Component
                 </h3>
                 <p class="text-muted mb-8">
@@ -433,21 +433,21 @@ const { progress } = useSmoothScroll()
                   animations.
                 </p>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                <div class="mb-8 grid grid-cols-2 gap-6 md:grid-cols-4">
                   <div class="bg-default rounded-xl p-6 text-center">
-                    <p class="text-muted text-sm mb-2">Velocity</p>
-                    <p class="text-3xl font-bold text-primary tabular-nums">
+                    <p class="text-muted mb-2 text-sm">Velocity</p>
+                    <p class="text-primary text-3xl font-bold tabular-nums">
                       {{ velocity.toFixed(2) }}
                     </p>
                   </div>
                   <div class="bg-default rounded-xl p-6 text-center">
-                    <p class="text-muted text-sm mb-2">Absolute</p>
+                    <p class="text-muted mb-2 text-sm">Absolute</p>
                     <p class="text-3xl font-bold text-purple-500 tabular-nums">
                       {{ absVelocity.toFixed(2) }}
                     </p>
                   </div>
                   <div class="bg-default rounded-xl p-6 text-center">
-                    <p class="text-muted text-sm mb-2">Direction</p>
+                    <p class="text-muted mb-2 text-sm">Direction</p>
                     <p
                       class="text-3xl font-bold"
                       :class="
@@ -462,7 +462,7 @@ const { progress } = useSmoothScroll()
                     </p>
                   </div>
                   <div class="bg-default rounded-xl p-6 text-center">
-                    <p class="text-muted text-sm mb-2">Scrolling</p>
+                    <p class="text-muted mb-2 text-sm">Scrolling</p>
                     <p
                       class="text-3xl font-bold"
                       :class="isScrolling ? 'text-green-500' : 'text-toned'"
@@ -473,22 +473,22 @@ const { progress } = useSmoothScroll()
                 </div>
 
                 <pre
-                  class="bg-default rounded-xl p-6 overflow-x-auto text-sm"
+                  class="bg-default overflow-x-auto rounded-xl p-6 text-sm"
                 ><code class="text-toned">{{ codeExamples.velocityEffect }}</code></pre>
               </div>
             </div>
 
             <!-- Progress Tab -->
             <div v-show="activeTab === 'progress'" class="space-y-8">
-              <div class="bg-accented/50 rounded-3xl p-8 border border-accented">
-                <h3 class="text-2xl font-bold text-highlighted mb-4">
+              <div class="bg-accented/50 border-accented rounded-3xl border p-8">
+                <h3 class="text-highlighted mb-4 text-2xl font-bold">
                   MotionScrollProgress Component
                 </h3>
                 <p class="text-muted mb-8">
                   Display scroll progress as linear or circular indicator.
                 </p>
 
-                <div class="flex flex-col md:flex-row items-center justify-center gap-12 mb-8">
+                <div class="mb-8 flex flex-col items-center justify-center gap-12 md:flex-row">
                   <!-- Circular using component -->
                   <div class="text-center">
                     <MotionScrollProgress
@@ -497,31 +497,31 @@ const { progress } = useSmoothScroll()
                       :stroke-width="10"
                       class="text-highlighted"
                     />
-                    <p class="text-muted text-sm mt-4">type="circular"</p>
+                    <p class="text-muted mt-4 text-sm">type="circular"</p>
                   </div>
 
                   <!-- Linear using component -->
-                  <div class="flex-1 max-w-md">
+                  <div class="max-w-md flex-1">
                     <MotionScrollProgress type="linear" :height="8" class="text-highlighted" />
-                    <p class="text-muted text-sm mt-4 text-center">type="linear"</p>
+                    <p class="text-muted mt-4 text-center text-sm">type="linear"</p>
                   </div>
                 </div>
 
                 <pre
-                  class="bg-default rounded-xl p-6 overflow-x-auto text-sm"
+                  class="bg-default overflow-x-auto rounded-xl p-6 text-sm"
                 ><code class="text-toned">{{ codeExamples.progressBar }}</code></pre>
               </div>
             </div>
 
             <!-- Programmatic Tab -->
             <div v-show="activeTab === 'programmatic'" class="space-y-8">
-              <div class="bg-accented/50 rounded-3xl p-8 border border-accented">
-                <h3 class="text-2xl font-bold text-highlighted mb-4">MotionScrollLink Component</h3>
+              <div class="bg-accented/50 border-accented rounded-3xl border p-8">
+                <h3 class="text-highlighted mb-4 text-2xl font-bold">MotionScrollLink Component</h3>
                 <p class="text-muted mb-8">
                   Create smooth scroll links to any element or position.
                 </p>
 
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
                   <MotionScrollLink :to="0" :duration="1.5" as="span" class="block">
                     <UButton size="lg" block>
                       <UIcon name="i-lucide-arrow-up" class="mr-2" />
@@ -549,22 +549,22 @@ const { progress } = useSmoothScroll()
                 </div>
 
                 <pre
-                  class="bg-default rounded-xl p-6 overflow-x-auto text-sm"
+                  class="bg-default overflow-x-auto rounded-xl p-6 text-sm"
                 ><code class="text-toned">{{ codeExamples.scrollTo }}</code></pre>
               </div>
             </div>
 
             <!-- GSAP Tab -->
             <div v-show="activeTab === 'gsap'" class="space-y-8">
-              <div class="bg-accented/50 rounded-3xl p-8 border border-accented">
-                <h3 class="text-2xl font-bold text-highlighted mb-4">MotionParallax Component</h3>
+              <div class="bg-accented/50 border-accented rounded-3xl border p-8">
+                <h3 class="text-highlighted mb-4 text-2xl font-bold">MotionParallax Component</h3>
                 <p class="text-muted mb-8">
                   Create GSAP-powered parallax effects with a simple component.
                 </p>
 
-                <div class="bg-default rounded-xl p-6 mb-8">
-                  <h4 class="text-lg font-semibold text-highlighted mb-4">Props:</h4>
-                  <ul class="space-y-3 text-muted">
+                <div class="bg-default mb-8 rounded-xl p-6">
+                  <h4 class="text-highlighted mb-4 text-lg font-semibold">Props:</h4>
+                  <ul class="text-muted space-y-3">
                     <li class="flex gap-3">
                       <code class="text-primary">speed</code>
                       <span>Parallax speed (-1 to 1, negative = slower)</span>
@@ -585,23 +585,23 @@ const { progress } = useSmoothScroll()
                 </div>
 
                 <pre
-                  class="bg-default rounded-xl p-6 overflow-x-auto text-sm"
+                  class="bg-default overflow-x-auto rounded-xl p-6 text-sm"
                 ><code class="text-toned">{{ codeExamples.gsapIntegration }}</code></pre>
               </div>
             </div>
 
             <!-- API Tab -->
             <div v-show="activeTab === 'api'" class="space-y-8">
-              <div class="bg-accented/50 rounded-3xl p-8 border border-accented">
-                <h3 class="text-2xl font-bold text-highlighted mb-4">Available Components</h3>
+              <div class="bg-accented/50 border-accented rounded-3xl border p-8">
+                <h3 class="text-highlighted mb-4 text-2xl font-bold">Available Components</h3>
                 <p class="text-muted mb-8">
                   All motion layer components for scroll-linked animations.
                 </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div class="bg-default rounded-xl p-4">
-                    <h4 class="text-sm font-semibold text-primary mb-3">Velocity & Effects</h4>
-                    <ul class="space-y-2 text-sm text-muted">
+                    <h4 class="text-primary mb-3 text-sm font-semibold">Velocity & Effects</h4>
+                    <ul class="text-muted space-y-2 text-sm">
                       <li>
                         <code class="text-highlighted">MotionVelocityEffect</code> - Velocity
                         transforms
@@ -616,10 +616,10 @@ const { progress } = useSmoothScroll()
                     </ul>
                   </div>
                   <div class="bg-default rounded-xl p-4">
-                    <h4 class="text-sm font-semibold text-purple-500 mb-3">
+                    <h4 class="mb-3 text-sm font-semibold text-purple-500">
                       Navigation & Progress
                     </h4>
-                    <ul class="space-y-2 text-sm text-muted">
+                    <ul class="text-muted space-y-2 text-sm">
                       <li>
                         <code class="text-highlighted">MotionScrollLink</code> - Smooth scroll links
                       </li>
@@ -638,7 +638,7 @@ const { progress } = useSmoothScroll()
                 </div>
 
                 <pre
-                  class="bg-default rounded-xl p-6 overflow-x-auto text-sm"
+                  class="bg-default overflow-x-auto rounded-xl p-6 text-sm"
                 ><code class="text-toned">{{ codeExamples.composable }}</code></pre>
               </div>
             </div>
@@ -647,45 +647,45 @@ const { progress } = useSmoothScroll()
       </section>
 
       <!-- Parallax Demo using MotionParallax -->
-      <section id="parallax-demo" class="py-32 bg-default overflow-hidden relative min-h-screen">
+      <section id="parallax-demo" class="bg-default relative min-h-screen overflow-hidden py-32">
         <div class="absolute inset-0 flex items-center justify-center">
           <!-- Background layer (slowest) using MotionParallax -->
           <MotionParallax :speed="-0.4" :scale="0.1" class="absolute">
-            <div class="text-[25vw] font-black text-default/30 select-none whitespace-nowrap">
+            <div class="text-default/30 text-[25vw] font-black whitespace-nowrap select-none">
               PARALLAX
             </div>
           </MotionParallax>
         </div>
 
         <!-- Floating shapes using MotionParallax -->
-        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div class="pointer-events-none absolute inset-0 overflow-hidden">
           <MotionParallax :speed="0.3" :rotate="10" class="absolute top-[15%] left-[10%]">
-            <div class="w-24 h-24 border-4 border-primary/40 rounded-full" />
+            <div class="border-primary/40 h-24 w-24 rounded-full border-4" />
           </MotionParallax>
           <MotionParallax :speed="-0.2" :rotate="-15" class="absolute top-[25%] right-[15%]">
-            <div class="w-16 h-16 bg-purple-500/30 rotate-45" />
+            <div class="h-16 w-16 rotate-45 bg-purple-500/30" />
           </MotionParallax>
           <MotionParallax :speed="0.4" class="absolute bottom-[35%] left-[20%]">
-            <div class="w-20 h-20 border-4 border-pink-500/40" />
+            <div class="h-20 w-20 border-4 border-pink-500/40" />
           </MotionParallax>
-          <MotionParallax :speed="-0.3" :rotate="20" class="absolute bottom-[20%] right-[25%]">
-            <div class="w-28 h-28 border-4 border-cyan-500/30 rounded-full" />
+          <MotionParallax :speed="-0.3" :rotate="20" class="absolute right-[25%] bottom-[20%]">
+            <div class="h-28 w-28 rounded-full border-4 border-cyan-500/30" />
           </MotionParallax>
           <MotionParallax :speed="0.2" class="absolute top-[40%] left-[40%]">
-            <div class="w-12 h-12 bg-green-500/30 rounded-full" />
+            <div class="h-12 w-12 rounded-full bg-green-500/30" />
           </MotionParallax>
         </div>
 
         <!-- Middle layer content -->
         <MotionParallax :speed="-0.1" class="relative z-10">
           <UContainer>
-            <div class="text-center py-32">
-              <h2 class="text-5xl md:text-7xl font-bold text-highlighted mb-6">MotionParallax</h2>
-              <p class="text-xl text-muted max-w-xl mx-auto mb-8">
+            <div class="py-32 text-center">
+              <h2 class="text-highlighted mb-6 text-5xl font-bold md:text-7xl">MotionParallax</h2>
+              <p class="text-muted mx-auto mb-8 max-w-xl text-xl">
                 Multiple layers moving at different speeds using the MotionParallax component
               </p>
               <div
-                class="inline-flex items-center gap-2 bg-white/10 backdrop-blur px-4 py-2 rounded-full text-sm text-highlighted/70"
+                class="text-highlighted/70 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm backdrop-blur"
               >
                 <UIcon name="i-lucide-info" />
                 Scroll slowly to see the effect
@@ -695,34 +695,34 @@ const { progress } = useSmoothScroll()
         </MotionParallax>
 
         <!-- Foreground blurs using MotionParallax -->
-        <MotionParallax :speed="0.5" :scale="0.15" class="absolute inset-0 pointer-events-none">
-          <div class="absolute top-1/4 left-[10%] w-48 h-48 bg-primary/30 rounded-full blur-3xl" />
+        <MotionParallax :speed="0.5" :scale="0.15" class="pointer-events-none absolute inset-0">
+          <div class="bg-primary/30 absolute top-1/4 left-[10%] h-48 w-48 rounded-full blur-3xl" />
           <div
-            class="absolute bottom-1/4 right-[15%] w-64 h-64 bg-purple-500/30 rounded-full blur-3xl"
+            class="absolute right-[15%] bottom-1/4 h-64 w-64 rounded-full bg-purple-500/30 blur-3xl"
           />
         </MotionParallax>
       </section>
 
       <!-- Progress Indicator Section using MotionScrollProgress -->
-      <section class="py-32 bg-default">
+      <section class="bg-default py-32">
         <UContainer>
-          <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-16">
-              <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+          <div class="mx-auto max-w-4xl">
+            <div class="mb-16 text-center">
+              <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">
                 MotionScrollProgress
               </h2>
               <p class="text-muted text-lg">Circular and linear progress indicators</p>
             </div>
 
             <!-- Using MotionScrollProgress components -->
-            <div class="flex flex-col md:flex-row items-center justify-center gap-12 mb-12">
+            <div class="mb-12 flex flex-col items-center justify-center gap-12 md:flex-row">
               <MotionScrollProgress
                 type="circular"
                 :size="192"
                 :stroke-width="8"
                 class="text-highlighted"
               />
-              <div class="flex-1 max-w-md">
+              <div class="max-w-md flex-1">
                 <MotionScrollProgress
                   type="linear"
                   :height="12"
@@ -736,11 +736,11 @@ const { progress } = useSmoothScroll()
       </section>
 
       <!-- Footer -->
-      <section class="py-20 bg-default">
+      <section class="bg-default py-20">
         <UContainer>
-          <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
+          <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
             <div>
-              <h2 class="text-3xl font-bold text-highlighted mb-3">Locomotive Scroll v5</h2>
+              <h2 class="text-highlighted mb-3 text-3xl font-bold">Locomotive Scroll v5</h2>
               <p class="text-muted text-lg">Smooth scrolling for the modern web</p>
             </div>
             <div class="flex gap-4">

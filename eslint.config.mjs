@@ -1,19 +1,20 @@
-import { fileURLToPath } from 'node:url'
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import json from '@eslint/json'
 import markdown from '@eslint/markdown'
 import typescript from '@typescript-eslint/eslint-plugin'
 import typescriptParser from '@typescript-eslint/parser'
 import compat from 'eslint-plugin-compat'
-// import pluginOxlint from 'eslint-plugin-oxlint'
+import pluginOxlint from 'eslint-plugin-oxlint'
 import { configs as pnpmConfigs } from 'eslint-plugin-pnpm'
 import prettier from 'eslint-plugin-prettier'
 // import pluginUnicorn from 'eslint-plugin-unicorn'
 import vue from 'eslint-plugin-vue'
 
 // import glsl from 'eslint-plugin-glsl'
+// Node 24 strips TS types natively, so the Vite+ config loads as-is.
+import viteConfig from './vite.config.ts'
 
-const tsconfigRootDir = fileURLToPath(new URL('.', import.meta.url))
+const tsconfigRootDir = import.meta.dirname
 
 export default defineConfigWithVueTs(
   {
@@ -22,10 +23,10 @@ export default defineConfigWithVueTs(
       '**/.nuxt/**',
       '**/.output/**',
       '**/.vscode/**',
-      '**/.turbo/**',
       '**/.playground/**',
       '**/.netlify/**',
       '**/dist/**',
+      '**/coverage/**',
       '**/oldApp/**',
       '**/package-lock.json',
       // Vendored agent-skill content — not project source
@@ -36,6 +37,11 @@ export default defineConfigWithVueTs(
       'layers/shader/additional-modular-tsl-shaders-for-claude/**',
       // jiti reproduction scratch file
       'layers/content/_jiti_test.ts',
+      // Prose/scratch docs, JSONC editor settings and generated type shims
+      'old-blog-files/**',
+      'plans/**',
+      'settings.json',
+      'env.d.ts',
       // tsconfig files use JSONC comments the JSON language parser rejects
       '**/tsconfig.json',
       '**/tsconfig.*.json',
@@ -43,8 +49,14 @@ export default defineConfigWithVueTs(
     ],
   },
 
-  ...vue.configs['flat/essential'].map((config) => ({ ...config, files: ['**/*.vue'] })),
-  ...vue.configs['flat/recommended'].map((config) => ({ ...config, files: ['**/*.vue'] })),
+  ...vue.configs['flat/essential'].map((config) => ({
+    ...config,
+    files: ['**/*.vue'],
+  })),
+  ...vue.configs['flat/recommended'].map((config) => ({
+    ...config,
+    files: ['**/*.vue'],
+  })),
   vueTsConfigs.recommended,
   // pluginUnicorn.configs.recommended,
 
@@ -58,10 +70,10 @@ export default defineConfigWithVueTs(
   // layer `server/` files are not part of that project and would fail to parse.
   {
     files: [
-      'layers/*/app/**/*.ts',
-      'layers/*/app/**/*.tsx',
-      'layers/*/app/**/*.mts',
-      'layers/*/app/**/*.vue',
+      'layers/**/app/**/*.ts',
+      'layers/**/app/**/*.tsx',
+      'layers/**/app/**/*.mts',
+      'layers/**/app/**/*.vue',
     ],
     languageOptions: {
       parserOptions: {
@@ -91,10 +103,8 @@ export default defineConfigWithVueTs(
       compat,
     },
     rules: {
-      'prettier/prettier': ['error'],
-      semi: ['error', 'never'],
-      quotes: ['error', 'single', { avoidEscape: true }],
-      'no-console': 'warn',
+      // console.error/warn are intentional degraded-data logging (e.g. pages/index.vue); ban stray debug logs only
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-debugger': 'error',
       'prefer-const': 'error',
       'no-var': 'error',
@@ -142,7 +152,9 @@ export default defineConfigWithVueTs(
       // Macros
       'vue/define-macros-order': [
         'error',
-        { order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots', 'defineExpose'] },
+        {
+          order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots', 'defineExpose'],
+        },
       ],
       'vue/define-props-destructuring': ['error', { destructure: 'always' }],
       'vue/require-macro-variable-name': [
@@ -195,8 +207,16 @@ export default defineConfigWithVueTs(
       'vue/no-mutating-props': 'error',
       'vue/no-restricted-call-after-await': [
         'error',
-        { module: 'vue', path: 'provide', message: 'provide() must be called before any await.' },
-        { module: 'vue', path: 'inject', message: 'inject() must be called before any await.' },
+        {
+          module: 'vue',
+          path: 'provide',
+          message: 'provide() must be called before any await.',
+        },
+        {
+          module: 'vue',
+          path: 'inject',
+          message: 'inject() must be called before any await.',
+        },
       ],
 
       // The @typescript-eslint variant allows `import type { ... } from 'vue'` —
@@ -211,7 +231,10 @@ export default defineConfigWithVueTs(
               allowTypeImports: true,
             },
             { name: '#imports', message: 'Already auto-imported by Nuxt.' },
-            { name: '#components', message: 'Components are auto-imported by Nuxt.' },
+            {
+              name: '#components',
+              message: 'Components are auto-imported by Nuxt.',
+            },
           ],
           patterns: ['@/components/**', '~/components/**'],
         },
@@ -236,7 +259,7 @@ export default defineConfigWithVueTs(
       compat,
     },
     rules: {
-      complexity: ['warn', { max: 15 }],
+      complexity: ['warn', { max: 10 }],
       'no-nested-ternary': 'error',
       eqeqeq: ['error', 'always'],
       'no-implicit-coercion': 'error',
@@ -270,7 +293,10 @@ export default defineConfigWithVueTs(
 
       'no-restricted-syntax': [
         'error',
-        { selector: 'TSEnumDeclaration', message: 'Use literal unions instead of enums.' },
+        {
+          selector: 'TSEnumDeclaration',
+          message: 'Use literal unions instead of enums.',
+        },
         {
           selector: 'IfStatement > :not(IfStatement).alternate',
           message: 'Avoid else. Use early returns.',
@@ -335,19 +361,6 @@ export default defineConfigWithVueTs(
     },
   },
 
-  // Vitest files live under `tests/`, so point type-aware linting at the shared
-  // root project instead of the default project-service lookup.
-  {
-    files: ['tests/**/*.{ts,tsx,mts}'],
-    languageOptions: {
-      parserOptions: {
-        projectService: false,
-        project: ['./tsconfig.typecheck.json'],
-        tsconfigRootDir,
-      },
-    },
-  },
-
   // JavaScript files
   {
     files: ['**/*.js', '**/*.mjs'],
@@ -385,9 +398,10 @@ export default defineConfigWithVueTs(
   })),
 
   // OXLint integration
-  // ...pluginOxlint.buildFromOxlintConfigFile('./.oxlintrc.json'),
   // pnpm catalog enforcement (bundles its own jsonc parser for package.json)
   ...pnpmConfigs.json,
+  // Vite+ migration moved deps into a pnpm catalog; enforcing it for every dep is a separate decision
+  { files: ['package.json'], rules: { 'pnpm/json-enforce-catalog': 'off' } },
 
   // Layer/app config files (nuxt.config.ts, etc.) sit outside tsconfig.typecheck.json's
   // `include` — they're not part of the type-checked app, so skip type-aware rules for
@@ -400,30 +414,44 @@ export default defineConfigWithVueTs(
   // Layer server/ files are Nitro code outside tsconfig.typecheck.json's project,
   // so type-aware rules can't run on them either.
   {
-    files: [
-      'layers/*/server/**/*.ts',
-      'layers/*/shared/**/*.ts',
-      'layers/*/providers/*/server/**/*.ts',
-    ],
+    files: ['layers/**/server/**/*.ts', 'layers/**/shared/**/*.ts'],
     ...typescript.configs['flat/disable-type-checked'],
   },
 
   // Demo/showcase pages legitimately nest deep and run long — the structural
   // budgets are meant for the reusable layer components, not kitchen-sink demos.
   {
-    files: ['apps/*/app/**/*.vue', 'layers/starter/app/**/*.vue'],
+    files: ['apps/*/app/**/*.vue'],
     rules: {
       'vue/max-template-depth': 'off',
       'vue/max-lines-per-block': 'off',
     },
   },
 
-  // Render-function component — needs real `cloneVNode`/`Fragment` imports,
-  // which Nuxt does not auto-import.
+  // Prose docs: multiple H1s and bare fences are normal in notes and blog content
+  {
+    files: ['**/*.md'],
+    rules: {
+      'markdown/no-multiple-h1': 'off',
+      'markdown/fenced-code-language': 'off',
+    },
+  },
+
+  // Template depth budget only suits reusable layer components, not app pages
+  {
+    files: ['app/**/*.vue'],
+    rules: { 'vue/max-template-depth': 'off' },
+  },
+
+  // Render-function components need explicit Vue runtime imports.
   {
     files: [
-      'layers/navigation/app/components/Links/Group.vue',
-      'layers/baseline/app/components/BaselineStatus.vue',
+      'layers/structure/navigation/app/components/Links/Group.vue',
+      'layers/design-system/visual/app/components/HoverDimGroup.vue',
+      'layers/core/app/components/ElementTw.vue',
+      'layers/motion/animations/app/components/Motion/Staggered.vue',
+      'layers/delivery/scripts/app/components/BaselineStatus.vue',
+      'layers/design-system/typography/app/components/Typography/Headline.vue',
     ],
     rules: {
       '@typescript-eslint/no-restricted-imports': 'off',
@@ -435,15 +463,14 @@ export default defineConfigWithVueTs(
   // Nuxt Content collection typing. Keep `interface` allowed in the files that
   // augment external modules.
   {
-    files: [
-      '**/*.d.ts',
-      '**/app.config.ts',
-      '**/types/runtime-config.ts',
-      'layers/database/nuxt.config.ts',
-      'layers/theme/nuxt.config.ts',
-    ],
+    files: ['**/*.d.ts', '**/app.config.ts', '**/nuxt.config.ts', '**/types/runtime-config.ts'],
     rules: {
       '@typescript-eslint/consistent-type-definitions': 'off',
     },
-  }
+  },
+
+  // Oxlint (via `vp check`) already covers these ESLint rules — switch them off here so
+  // ESLint is left with the Vue/Nuxt-specific rules Oxlint can't run. Must come last.
+  // Derived from vite.config.ts `lint` (the same block `vp lint` reads), so the two can't drift.
+  ...pluginOxlint.buildFromOxlintConfig(viteConfig.lint ?? {})
 )

@@ -6,7 +6,7 @@ export default {
     'stylelint-config-recommended-vue',
   ],
 
-  plugins: ['stylelint-prettier', 'stylelint-no-unsupported-browser-features'],
+  plugins: ['stylelint-no-unsupported-browser-features'],
 
   overrides: [
     {
@@ -18,6 +18,10 @@ export default {
       customSyntax: 'postcss',
     },
     {
+      files: ['**/*.vue'],
+      rules: { 'no-invalid-position-declaration': null },
+    },
+    {
       files: ['**/tokens.css', '**/design-tokens.css', '**/_tokens.css'],
       rules: {
         'color-no-hex': null,
@@ -27,8 +31,6 @@ export default {
   ],
 
   rules: {
-    'prettier/prettier': true,
-
     'color-function-notation': 'modern',
     'alpha-value-notation': 'number',
     'media-feature-range-notation': 'context',
@@ -98,6 +100,9 @@ export default {
         ],
       },
     ],
+    'no-invalid-position-at-import-rule': null,
+    'at-rule-prelude-no-invalid': null,
+    'value-keyword-case': ['lower', { ignoreProperties: ['/font/', '/^--.*font/'] }],
 
     'plugin/no-unsupported-browser-features': [
       true,
@@ -110,6 +115,8 @@ export default {
           'subgrid',
           'css-grid',
           'viewport-unit-variants',
+          // Safari only lacks the non-separable modes (hue/saturation/color/luminosity); 'difference' works
+          'css-mixblendmode',
         ],
       },
     ],
@@ -117,5 +124,12 @@ export default {
     'custom-property-pattern': null,
   },
 
-  ignoreFiles: ['node_modules/**', '.nuxt/**', '.output/**', '.data', '.playground/**'],
+  ignoreFiles: [
+    'node_modules/**',
+    '.nuxt/**',
+    '.output/**',
+    '.data',
+    '.playground/**',
+    '**/dist/**',
+  ],
 }

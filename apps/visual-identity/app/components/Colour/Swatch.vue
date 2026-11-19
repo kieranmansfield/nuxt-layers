@@ -13,7 +13,7 @@
 <template>
   <div class="flex flex-col items-center gap-1">
     <div
-      class="rounded-lg border border-black/10 dark:border-white/10 shrink-0"
+      class="shrink-0 rounded-lg border border-black/10 dark:border-white/10"
       :class="{
         'size-8': size === 'sm',
         'size-12': size === 'md' || !size,
@@ -21,6 +21,6 @@
       }"
       :style="{ backgroundColor: hex }"
     />
-    <span v-if="label" class="text-[10px] text-muted font-mono">{{ label }}</span>
+    <span v-if="label" class="text-muted font-mono text-[10px]">{{ label }}</span>
   </div>
 </template>

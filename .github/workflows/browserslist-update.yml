@@ -18,16 +18,19 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v5
+        uses: actions/checkout@v7
         with:
-          node-version: 24
-          cache: pnpm
+          # The action rebases the existing browserslist-update branch onto main. With the
+          # default shallow clone main looks like one unrelated commit, so every file
+          # add/add-conflicts.
+          fetch-depth: 0
+
+      - name: Setup Vite+
+        uses: voidzero-dev/setup-vp@v1.21.2
+        with:
+          node-version-file: .node-version
+          cache: true
+          run-install: false
 
       - name: Configure Git
         run: |
@@ -37,4 +40,17 @@ jobs:
       - name: Update Browserslist
         uses: c2corg/browserslist-update-action@v2.5.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.DEPS_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          base_branch: main
+
+      # Requires the "Main" ruleset's required status checks: auto-merge waits for them,
+      # then squash-merges (the repo's auto-delete setting removes the branch).
+      # Uses GITHUB_TOKEN, not DEPS_PR_TOKEN: the PAT can open the PR but got "Resource not
+      # accessible by personal access token (mergePullRequest)" when merging.
+      - name: Enable auto-merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pr=$(gh pr list --head browserslist-update --state open --json number -q '.[0].number')
+          [ -n "$pr" ] || { echo "No open PR, nothing to merge"; exit 0; }
+          gh pr merge "$pr" --auto --squash

@@ -47,10 +47,10 @@
   <UModal
     v-model:open="open"
     fullscreen
-    :ui="{ content: 'bg-black/95 flex items-center justify-center' }"
+    :ui="{ content: 'flex items-center justify-center bg-black/95' }"
   >
     <template #content>
-      <div class="relative w-full h-full flex items-center justify-center p-4">
+      <div class="relative flex h-full w-full items-center justify-center p-4">
         <!-- Close -->
         <UButton
           icon="i-lucide-x"
@@ -82,7 +82,7 @@
           :alt="currentImage.alt"
           :width="currentImage.width"
           :height="currentImage.height"
-          class="max-w-full max-h-full object-contain"
+          class="max-h-full max-w-full object-contain"
         />
 
         <!-- Next -->
@@ -97,7 +97,7 @@
         />
 
         <!-- Counter -->
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm">
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white">
           {{ currentIndex + 1 }} / {{ images.length }}
         </div>
       </div>

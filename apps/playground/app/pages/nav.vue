@@ -5,6 +5,7 @@
 
   const { open } = useMastNav()
   const appConfig = useAppConfig()
+  const logoSizes = ['sm', 'md', 'lg', 'display'] as const
 
   const configSnippet = `// apps/my-app/app/app.config.ts
 export default defineAppConfig({
@@ -13,16 +14,27 @@ export default defineAppConfig({
     links: [
       { id: 'home',    label: 'Home',    to: { name: 'index' } },
       { id: 'about',   label: 'About',   to: { name: 'about' } },
-      { id: 'work',    label: 'Work',    to: { name: 'work'  } },
-      { id: 'contact', label: 'Contact', to: { name: 'contact' } },
+      { id: 'drafts',  label: 'Drafts',  to: { name: 'drafts' }, hidden: true },
     ],
+    // UButton props for <MastNav>
+    trigger: { label: 'Menu', icon: undefined, variant: 'ghost', size: 'xl' },
+    // MastNavModal classes, merged per key — a key you set replaces the default string
+    ui: {
+      nav: 'flex w-full flex-col items-start gap-2 px-12',
+      link: 'cursor-pointer py-3 text-step-4 aria-[current=page]:underline',
+    },
+  },
+  siteLogo: {
+    sizes: { display: 'text-step-display [--display-from:4] [--display-to:9]' },
   },
 })`
 
   const layoutSnippet = `<!-- app/layouts/default.vue -->
 <template>
   <LayoutMain>
-    <MastNav />
+    <MastNav class="fixed top-0 right-0 z-(--z-header)" />
+    <!-- Once per layout: every trigger opens this one modal -->
+    <MastNavModal />
     <slot />
   </LayoutMain>
 </template>`
@@ -40,34 +52,25 @@ mastNav: {
 // The 'id' field is the scroll target — useSmoothScroll().scrollTo('#id')
 // The 'to' field is the fallback route when not on the index page`
 
-  const composableSnippet = `// composables/mastNav.ts (in the ui layer)
-import { createSharedComposable } from '@vueuse/core'
+  const composableSnippet = `// Shared state, not an overlay — any component can read or drive it
+const { isOpen, open, close, toggle } = useMastNav()
 
-function _useMastNav() {
-  const overlay = useOverlay()
-  const modal = overlay.create(MastNavModal)
+// open()  locks smooth scroll, then sets isOpen
+// close() clears isOpen, unlocks and resizes Lenis/Locomotive so they resync
 
-  function open() {
-    try { useSmoothScroll().lockScrolling() } catch {}
-    modal.open()
-  }
+// Replace one link's markup; navigate() scrolls or routes, then dismisses
+<MastNavModal :links="visibleLinks">
+  <template #link="{ link, active, navigate }">
+    <UButton :label="link.label" :variant="active ? 'solid' : 'ghost'" @click="navigate" />
+  </template>
+  <template #footer><SocialLinks /></template>
+</MastNavModal>`
 
-  function close() {
-    modal.close()
-    try { useSmoothScroll().unlockScrolling() } catch {}
-  }
-
-  return { open, close }
-}
-
-// createSharedComposable ensures overlay.create() runs only once
-export const useMastNav = createSharedComposable(_useMastNav)`
-
-  const activeSectionSnippet = `// Your scroll composable writes to this key:
+  const activeSectionSnippet = `// A link is active when your scroll composable has written its id here…
 const activeSection = useState('activeSection', () => '')
+// …or (outside the smooth-scroll index) when its \`to\` resolves to the current route.
 
-// NavModal reads it reactively to highlight the current section:
-:class="activeSection === link.id ? 'font-normal' : 'font-light'"`
+// Active links get aria-current="page" plus mastNav.ui.linkActive`
 
   definePageMeta({
     layout: false,
@@ -76,6 +79,8 @@ const activeSection = useState('activeSection', () => '')
 
 <template>
   <LayoutPage title="MastNav Demo" description="Hamburger nav + full-screen overlay modal">
+    <MastNav class="fixed right-0 bottom-0 z-(--z-header)" />
+    <MastNavModal />
     <div class="bg-default min-h-screen">
       <DemoPageHero
         name="NAVIGATION"
@@ -88,10 +93,10 @@ const activeSection = useState('activeSection', () => '')
           color="info"
           variant="subtle"
           title="Live demo active"
-          description="The hamburger button is live in the top-right corner of this page. Click it to open the nav modal."
+          description="The hamburger button is live in the bottom-right corner of this page — this page positions it there. Click it to open the nav modal."
         >
           <template #actions>
-            <UButton size="sm" variant="subtle" color="info" @click="open">
+            <UButton size="sm" variant="subtle" color="info" @click="() => open()">
               Or open it here
             </UButton>
           </template>
@@ -130,6 +135,42 @@ const activeSection = useState('activeSection', () => '')
           </template>
         </UCard>
 
+        <!-- Site logo -->
+        <UCard>
+          <template #header>
+            <div class="flex items-center gap-2">
+              <UIcon name="lucide:signature" class="text-primary" />
+              <h3 class="text-xl font-semibold">SiteLogo</h3>
+            </div>
+            <p class="text-muted mt-1 text-sm">
+              <code class="text-primary">site.title</code> as a wordmark, sized on the step scale by
+              <code class="text-primary">siteLogo.sizes</code>
+            </p>
+          </template>
+          <div class="space-y-8">
+            <div class="flex flex-wrap items-end gap-8">
+              <div v-for="size in logoSizes" :key="size" data-logo-size>
+                <SiteLogo :size />
+                <code class="text-muted mt-2 block text-xs">size="{{ size }}"</code>
+              </div>
+            </div>
+            <div data-logo-inline>
+              <SiteLogo size="md" :stacked="false" />
+              <code class="text-muted mt-2 block text-xs">:stacked="false"</code>
+            </div>
+            <div data-logo-range class="overflow-hidden">
+              <SiteLogo
+                size="display"
+                :stacked="false"
+                class="[--display-from:4] [--display-to:9]"
+              />
+              <code class="text-muted mt-2 block text-xs"
+                >class="[--display-from:4] [--display-to:9]" — step 4 → 9 across 360 → 1280px</code
+              >
+            </div>
+          </div>
+        </UCard>
+
         <!-- Layout wiring -->
         <UCard>
           <template #header>
@@ -138,8 +179,8 @@ const activeSection = useState('activeSection', () => '')
               <h3 class="text-xl font-semibold">Layout wiring</h3>
             </div>
             <p class="text-muted mt-1 text-sm">
-              Drop <code class="text-primary">&lt;MastNav /&gt;</code> anywhere in your layout — no
-              further config needed
+              Drop <code class="text-primary">&lt;MastNav /&gt;</code> into your layout and position
+              it there — the trigger doesn't place itself
             </p>
           </template>
           <TypographyCodeBlock language="vue" class="text-sm">{{
@@ -191,8 +232,8 @@ const activeSection = useState('activeSection', () => '')
               <h3 class="text-xl font-semibold">Active section highlighting</h3>
             </div>
             <p class="text-muted mt-1 text-sm">
-              NavModal reads <code class="text-primary">useState('activeSection')</code> to
-              highlight the current section
+              Section id from <code class="text-primary">useState('activeSection')</code>, or the
+              current route
             </p>
           </template>
           <TypographyCodeBlock language="ts" class="text-sm">{{
@@ -208,8 +249,7 @@ const activeSection = useState('activeSection', () => '')
               <h3 class="text-xl font-semibold">useMastNav internals</h3>
             </div>
             <p class="text-muted mt-1 text-sm">
-              <code class="text-primary">createSharedComposable</code> ensures the overlay is
-              registered exactly once
+              <code class="text-primary">useState</code>-backed, so every trigger shares one modal
             </p>
           </template>
           <TypographyCodeBlock language="ts" class="text-sm">{{
@@ -221,7 +261,7 @@ const activeSection = useState('activeSection', () => '')
         name="Navigation Layer"
         description="Navigation components and composables"
         :links="[
-          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Typography', to: '/typography', icon: 'i-lucide-type' },
           { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
           { label: 'Overlays', to: '/overlays', icon: 'i-lucide-layers' },
         ]"

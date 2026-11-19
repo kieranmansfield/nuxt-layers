@@ -1,5 +1,5 @@
 [build]
-  command = "turbo run build --filter playground"
+  command = "vp run --filter playground build"
   publish = "apps/playground/dist"
 
 [build.environment]

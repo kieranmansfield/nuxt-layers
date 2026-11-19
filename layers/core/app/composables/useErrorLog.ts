@@ -48,11 +48,13 @@ export function useErrorLog() {
   const appConfig = useAppConfig()
   const route = useRoute()
 
+  const errorConfig = (appConfig.coreLayer as { errors?: ErrorLogConfig } | undefined)?.errors
+
   const config = computed(() => ({
-    logToConsole: appConfig.coreLayer?.errors?.logToConsole ?? true,
-    logToExternal: appConfig.coreLayer?.errors?.logToExternal ?? false,
-    externalUrl: appConfig.coreLayer?.errors?.externalUrl,
-    externalToken: appConfig.coreLayer?.errors?.externalToken,
+    logToConsole: errorConfig?.logToConsole ?? true,
+    logToExternal: errorConfig?.logToExternal ?? false,
+    externalUrl: errorConfig?.externalUrl,
+    externalToken: errorConfig?.externalToken,
   }))
 
   /**
@@ -71,7 +73,7 @@ export function useErrorLog() {
     }
 
     // Console logging (development only by default)
-    if (config.value.logToConsole && import.meta.dev && process.env.NODE_ENV === 'development') {
+    if (config.value.logToConsole && import.meta.dev) {
       console.group('🔴 Error Logged')
 
       console.error('Error:', errorObj)
@@ -94,7 +96,7 @@ export function useErrorLog() {
     const { externalUrl, externalToken } = config.value
 
     if (!externalUrl) {
-      if (process.env.NODE_ENV === 'development') {
+      if (import.meta.dev) {
         console.warn('Error logging enabled but no externalUrl configured')
       }
       return
@@ -118,7 +120,7 @@ export function useErrorLog() {
       })
     } catch (loggingError) {
       // Don't let logging errors crash the app
-      if (import.meta.dev && process.env.NODE_ENV === 'development') {
+      if (import.meta.dev) {
         console.error('Failed to send error to external service:', loggingError)
       }
     }
@@ -128,7 +130,7 @@ export function useErrorLog() {
    * Log a warning (non-critical error)
    */
   const logWarning = (message: string, context?: ErrorContext) => {
-    if (config.value.logToConsole && import.meta.dev && process.env.NODE_ENV === 'development') {
+    if (config.value.logToConsole && import.meta.dev) {
       console.warn('⚠️  Warning:', message, context)
     }
   }
@@ -137,7 +139,7 @@ export function useErrorLog() {
    * Log info (for debugging)
    */
   const logInfo = (message: string, data?: unknown) => {
-    if (config.value.logToConsole && import.meta.dev && process.env.NODE_ENV === 'development') {
+    if (config.value.logToConsole && import.meta.dev) {
       console.log('ℹ️  Info:', message, data)
     }
   }

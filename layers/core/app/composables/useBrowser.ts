@@ -2,7 +2,7 @@ import {
   getBrowserVersionParts,
   isBrowserAtLeast,
   parseBrowserInfo,
-  type BrowserInfo,
+  type ParsedBrowserInfo,
 } from '#layers/core/app/utils/browserInfo'
 
 /**
@@ -16,7 +16,7 @@ import {
  * @returns Browser information and helper flags
  */
 export function useBrowser() {
-  const info = ref<BrowserInfo>(parseBrowserInfo())
+  const info = ref<ParsedBrowserInfo>(parseBrowserInfo())
 
   // Helper flags
   const isChrome = computed(() => info.value.name === 'chrome')

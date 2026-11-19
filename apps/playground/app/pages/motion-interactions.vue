@@ -33,13 +33,13 @@
     <div>
       <!-- Hero -->
       <section
-        class="min-h-screen flex items-center justify-center relative overflow-hidden bg-default"
+        class="bg-default relative flex min-h-screen items-center justify-center overflow-hidden"
       >
         <div
-          class="absolute inset-0 bg-linear-to-b from-primary/10 via-transparent to-transparent"
+          class="from-primary/10 absolute inset-0 bg-linear-to-b via-transparent to-transparent"
         />
-        <div class="text-center z-10 px-4">
-          <h1 class="text-6xl sm:text-8xl font-black text-highlighted mb-6">
+        <div class="z-10 px-4 text-center">
+          <h1 class="text-highlighted mb-6 text-6xl font-black sm:text-8xl">
             <span
               v-gsap.from="{ y: 100, opacity: 0, rotateX: -80, duration: 1.2, ease: 'power3.out' }"
               class="inline-block"
@@ -55,16 +55,16 @@
                 duration: 1.2,
                 ease: 'power3.out',
               }"
-              class="inline-block text-primary"
+              class="text-primary inline-block"
             >
               INTERACTIONS
             </span>
           </h1>
-          <p class="text-xl text-muted max-w-xl mx-auto mb-10">
+          <p class="text-muted mx-auto mb-10 max-w-xl text-xl">
             Spring physics composables applied to mouse position, scroll velocity, and element
             geometry.
           </p>
-          <div class="flex flex-wrap gap-4 justify-center">
+          <div class="flex flex-wrap justify-center gap-4">
             <UButton size="lg" to="/motion">
               <UIcon name="i-lucide-arrow-left" class="mr-2" />
               Motion Layer
@@ -72,25 +72,25 @@
             <UButton size="lg" variant="outline" to="/marquee-text">Marquee Text</UButton>
           </div>
         </div>
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-highlighted/40 animate-bounce">
+        <div class="text-highlighted/40 absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
           <UIcon name="i-lucide-chevron-down" class="text-3xl" />
         </div>
       </section>
 
       <!-- Velocity debug -->
       <div
-        class="fixed top-4 right-4 z-50 bg-black/80 text-highlighted px-4 py-3 rounded-lg font-mono text-xs"
+        class="text-highlighted fixed top-4 right-4 z-50 rounded-lg bg-black/80 px-4 py-3 font-mono text-xs"
       >
         Velocity: {{ velocity.toFixed(2) }}
       </div>
 
       <!-- ─── MotionMagnetic ──────────────────────────────────────────────────── -->
-      <section class="py-32 bg-default">
+      <section class="bg-default py-32">
         <UContainer>
-          <div class="text-center mb-16">
+          <div class="mb-16 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Magnetic</UBadge>
-            <h2 class="text-4xl font-bold text-highlighted mb-3">MotionMagnetic</h2>
-            <p class="text-muted max-w-lg mx-auto">
+            <h2 class="text-highlighted mb-3 text-4xl font-bold">MotionMagnetic</h2>
+            <p class="text-muted mx-auto max-w-lg">
               Move your cursor near each element — it springs toward you then snaps back. Each
               button has a different <code class="text-primary">strength</code> and
               <code class="text-primary">radius</code>.
@@ -98,9 +98,9 @@
           </div>
 
           <!-- Strength comparison -->
-          <div class="flex flex-wrap gap-12 justify-center mb-16">
+          <div class="mb-16 flex flex-wrap justify-center gap-12">
             <div class="text-center">
-              <p class="text-muted text-xs font-mono mb-6">strength: 0.15 — subtle</p>
+              <p class="text-muted mb-6 font-mono text-xs">strength: 0.15 — subtle</p>
               <MotionMagnetic :strength="0.15" :radius="120">
                 <template #default="{ isActive }">
                   <UButton
@@ -115,7 +115,7 @@
             </div>
 
             <div class="text-center">
-              <p class="text-muted text-xs font-mono mb-6">strength: 0.3 — default</p>
+              <p class="text-muted mb-6 font-mono text-xs">strength: 0.3 — default</p>
               <MotionMagnetic :strength="0.3" :radius="120">
                 <template #default="{ isActive }">
                   <UButton size="xl" :class="isActive ? 'bg-primary' : ''"> Default Pull </UButton>
@@ -124,7 +124,7 @@
             </div>
 
             <div class="text-center">
-              <p class="text-muted text-xs font-mono mb-6">strength: 0.6 — strong</p>
+              <p class="text-muted mb-6 font-mono text-xs">strength: 0.6 — strong</p>
               <MotionMagnetic :strength="0.6" :radius="120">
                 <template #default="{ isActive }">
                   <UButton
@@ -141,7 +141,7 @@
           </div>
 
           <!-- Icon magnets -->
-          <div class="flex flex-wrap gap-16 justify-center">
+          <div class="flex flex-wrap justify-center gap-16">
             <div
               v-for="icon in [
                 'i-lucide-github',
@@ -155,7 +155,7 @@
               <MotionMagnetic :strength="0.4" :radius="80" :stiffness="400">
                 <template #default="{ isActive }">
                   <div
-                    class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-200 cursor-pointer"
+                    class="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full border-2 transition-all duration-200"
                     :class="
                       isActive
                         ? 'bg-primary border-primary text-highlighted'
@@ -172,63 +172,63 @@
       </section>
 
       <!-- ─── MotionTilt ─────────────────────────────────────────────────────── -->
-      <section class="py-32 bg-default">
+      <section class="bg-default py-32">
         <UContainer>
-          <div class="text-center mb-16">
+          <div class="mb-16 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Tilt</UBadge>
-            <h2 class="text-4xl font-bold text-highlighted mb-3">MotionTilt</h2>
-            <p class="text-muted max-w-lg mx-auto">
+            <h2 class="text-highlighted mb-3 text-4xl font-bold">MotionTilt</h2>
+            <p class="text-muted mx-auto max-w-lg">
               Hover over each card — it rotates in 3D following your cursor position. Different
               <code class="text-primary">maxTilt</code> and spring values per card.
             </p>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div class="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3">
             <!-- Gentle tilt -->
             <MotionTilt :max-tilt="8" :stiffness="200">
               <div
-                class="h-64 rounded-2xl bg-linear-to-br from-blue-600 to-blue-900 flex flex-col items-center justify-center p-8 cursor-pointer select-none"
+                class="flex h-64 cursor-pointer flex-col items-center justify-center rounded-2xl bg-linear-to-br from-blue-600 to-blue-900 p-8 select-none"
               >
-                <UIcon name="i-lucide-feather" class="text-5xl text-highlighted/80 mb-4" />
-                <h3 class="text-xl font-bold text-highlighted">Gentle</h3>
-                <p class="text-blue-300 text-sm mt-1 font-mono">maxTilt: 8°</p>
+                <UIcon name="i-lucide-feather" class="text-highlighted/80 mb-4 text-5xl" />
+                <h3 class="text-highlighted text-xl font-bold">Gentle</h3>
+                <p class="mt-1 font-mono text-sm text-blue-300">maxTilt: 8°</p>
               </div>
             </MotionTilt>
 
             <!-- Default tilt -->
             <MotionTilt>
               <div
-                class="h-64 rounded-2xl bg-linear-to-br from-violet-600 to-violet-900 flex flex-col items-center justify-center p-8 cursor-pointer select-none"
+                class="flex h-64 cursor-pointer flex-col items-center justify-center rounded-2xl bg-linear-to-br from-violet-600 to-violet-900 p-8 select-none"
               >
-                <UIcon name="i-lucide-box" class="text-5xl text-highlighted/80 mb-4" />
-                <h3 class="text-xl font-bold text-highlighted">Default</h3>
-                <p class="text-violet-300 text-sm mt-1 font-mono">maxTilt: 15°</p>
+                <UIcon name="i-lucide-box" class="text-highlighted/80 mb-4 text-5xl" />
+                <h3 class="text-highlighted text-xl font-bold">Default</h3>
+                <p class="mt-1 font-mono text-sm text-violet-300">maxTilt: 15°</p>
               </div>
             </MotionTilt>
 
             <!-- Dramatic tilt -->
             <MotionTilt :max-tilt="25" :stiffness="350" :damping="30">
               <div
-                class="h-64 rounded-2xl bg-linear-to-br from-pink-600 to-pink-900 flex flex-col items-center justify-center p-8 cursor-pointer select-none"
+                class="flex h-64 cursor-pointer flex-col items-center justify-center rounded-2xl bg-linear-to-br from-pink-600 to-pink-900 p-8 select-none"
               >
-                <UIcon name="i-lucide-zap" class="text-5xl text-highlighted/80 mb-4" />
-                <h3 class="text-xl font-bold text-highlighted">Dramatic</h3>
-                <p class="text-pink-300 text-sm mt-1 font-mono">maxTilt: 25°</p>
+                <UIcon name="i-lucide-zap" class="text-highlighted/80 mb-4 text-5xl" />
+                <h3 class="text-highlighted text-xl font-bold">Dramatic</h3>
+                <p class="mt-1 font-mono text-sm text-pink-300">maxTilt: 25°</p>
               </div>
             </MotionTilt>
           </div>
 
           <!-- Tilt + Magnetic combined -->
-          <div class="text-center mt-16">
-            <p class="text-muted text-sm mb-8">Composed together — tilt wraps magnetic</p>
+          <div class="mt-16 text-center">
+            <p class="text-muted mb-8 text-sm">Composed together — tilt wraps magnetic</p>
             <div class="flex justify-center">
               <MotionTilt :max-tilt="20" :perspective="600">
                 <MotionMagnetic :strength="0.25" :radius="150">
                   <div
-                    class="w-48 h-48 rounded-3xl bg-linear-to-br from-amber-500 to-orange-600 flex items-center justify-center cursor-pointer select-none shadow-2xl shadow-amber-500/30"
+                    class="flex h-48 w-48 cursor-pointer items-center justify-center rounded-3xl bg-linear-to-br from-amber-500 to-orange-600 shadow-2xl shadow-amber-500/30 select-none"
                   >
                     <div class="text-center">
-                      <UIcon name="i-lucide-sparkles" class="text-5xl text-highlighted mb-2" />
+                      <UIcon name="i-lucide-sparkles" class="text-highlighted mb-2 text-5xl" />
                       <p class="text-highlighted font-bold">Tilt + Magnetic</p>
                     </div>
                   </div>
@@ -240,24 +240,24 @@
       </section>
 
       <!-- ─── MotionCountUp ─────────────────────────────────────────────────── -->
-      <section class="py-32 bg-default">
+      <section class="bg-default py-32">
         <UContainer>
-          <div class="text-center mb-16">
+          <div class="mb-16 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Count Up</UBadge>
-            <h2 class="text-4xl font-bold text-highlighted mb-3">MotionCountUp</h2>
-            <p class="text-muted max-w-lg mx-auto">
+            <h2 class="text-highlighted mb-3 text-4xl font-bold">MotionCountUp</h2>
+            <p class="text-muted mx-auto max-w-lg">
               Numbers count from zero when they scroll into view. Scroll back up and back down to
               replay (or set <code class="text-primary">:once="false"</code>).
             </p>
           </div>
 
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
             <div
               v-for="stat in stats"
               :key="stat.label"
               class="bg-accented rounded-2xl p-8 text-center"
             >
-              <div class="text-4xl md:text-5xl font-black text-primary mb-2">
+              <div class="text-primary mb-2 text-4xl font-black md:text-5xl">
                 <MotionCountUp
                   :to="stat.to"
                   :duration="stat.duration"
@@ -273,30 +273,30 @@
 
           <!-- Custom format example -->
           <div class="mt-12 text-center">
-            <p class="text-muted text-sm mb-6">Custom format function</p>
-            <div class="inline-flex items-baseline gap-1 bg-accented rounded-2xl px-12 py-8">
+            <p class="text-muted mb-6 text-sm">Custom format function</p>
+            <div class="bg-accented inline-flex items-baseline gap-1 rounded-2xl px-12 py-8">
               <MotionCountUp
                 :to="9.87"
                 :from="0"
                 :duration="2.5"
                 :format="(n) => n.toFixed(2)"
                 as="span"
-                class="text-6xl font-black text-highlighted"
+                class="text-highlighted text-6xl font-black"
               />
-              <span class="text-2xl text-muted ml-1">sec</span>
+              <span class="text-muted ml-1 text-2xl">sec</span>
             </div>
-            <p class="text-toned text-xs font-mono mt-3">:format="(n) => n.toFixed(2)"</p>
+            <p class="text-toned mt-3 font-mono text-xs">:format="(n) => n.toFixed(2)"</p>
           </div>
         </UContainer>
       </section>
 
       <!-- ─── VelocityEffect ────────────────────────────────────────────────── -->
-      <section class="py-32 bg-default overflow-hidden">
+      <section class="bg-default overflow-hidden py-32">
         <UContainer>
-          <div class="text-center mb-16">
+          <div class="mb-16 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Velocity Effect</UBadge>
-            <h2 class="text-4xl font-bold text-highlighted mb-3">MotionVelocityEffect</h2>
-            <p class="text-muted max-w-lg mx-auto">
+            <h2 class="text-highlighted mb-3 text-4xl font-bold">MotionVelocityEffect</h2>
+            <p class="text-muted mx-auto max-w-lg">
               Scroll fast to trigger each effect. Now driven by the GSAP ticker with spring physics
               instead of requestAnimationFrame.
             </p>
@@ -304,30 +304,30 @@
 
           <div class="space-y-24">
             <div class="text-center">
-              <p class="text-toned text-xs font-mono mb-6">effect: "skew"</p>
+              <p class="text-toned mb-6 font-mono text-xs">effect: "skew"</p>
               <MotionVelocityEffect effect="skew">
-                <h3 class="text-5xl md:text-7xl font-black text-highlighted">SCROLL SKEW</h3>
+                <h3 class="text-highlighted text-5xl font-black md:text-7xl">SCROLL SKEW</h3>
               </MotionVelocityEffect>
             </div>
 
             <div class="text-center">
-              <p class="text-toned text-xs font-mono mb-6">effect: "scale"</p>
+              <p class="text-toned mb-6 font-mono text-xs">effect: "scale"</p>
               <MotionVelocityEffect effect="scale">
-                <h3 class="text-5xl md:text-7xl font-black text-highlighted">SCROLL SCALE</h3>
+                <h3 class="text-highlighted text-5xl font-black md:text-7xl">SCROLL SCALE</h3>
               </MotionVelocityEffect>
             </div>
 
             <div class="text-center">
-              <p class="text-toned text-xs font-mono mb-6">effect: "blur"</p>
+              <p class="text-toned mb-6 font-mono text-xs">effect: "blur"</p>
               <MotionVelocityEffect effect="blur">
-                <h3 class="text-5xl md:text-7xl font-black text-highlighted">SCROLL BLUR</h3>
+                <h3 class="text-highlighted text-5xl font-black md:text-7xl">SCROLL BLUR</h3>
               </MotionVelocityEffect>
             </div>
 
             <div class="text-center">
-              <p class="text-toned text-xs font-mono mb-6">effect: "letterSpacing"</p>
+              <p class="text-toned mb-6 font-mono text-xs">effect: "letterSpacing"</p>
               <MotionVelocityEffect effect="letterSpacing">
-                <h3 class="text-5xl md:text-7xl font-black text-highlighted">LETTER SPACING</h3>
+                <h3 class="text-highlighted text-5xl font-black md:text-7xl">LETTER SPACING</h3>
               </MotionVelocityEffect>
             </div>
           </div>
@@ -335,12 +335,12 @@
       </section>
 
       <!-- ─── MotionCursor ──────────────────────────────────────────────────── -->
-      <section class="py-32 bg-default">
+      <section class="bg-default py-32">
         <UContainer>
-          <div class="text-center mb-12">
+          <div class="mb-12 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Cursor</UBadge>
-            <h2 class="text-4xl font-bold text-highlighted mb-3">MotionCursor</h2>
-            <p class="text-muted max-w-lg mx-auto">
+            <h2 class="text-highlighted mb-3 text-4xl font-bold">MotionCursor</h2>
+            <p class="text-muted mx-auto max-w-lg">
               Enable the cursor, then adjust type, visibility, and smoothing live.
             </p>
           </div>
@@ -354,12 +354,12 @@
           />
 
           <!-- Controls -->
-          <div class="max-w-xl mx-auto space-y-8">
+          <div class="mx-auto max-w-xl space-y-8">
             <!-- Enable toggle -->
-            <div class="flex items-center justify-between bg-accented rounded-2xl px-6 py-4">
+            <div class="bg-accented flex items-center justify-between rounded-2xl px-6 py-4">
               <div>
                 <p class="text-highlighted font-medium">Cursor follower</p>
-                <p class="text-muted text-xs mt-0.5">
+                <p class="text-muted mt-0.5 text-xs">
                   {{ showCursor ? 'Active — move your mouse' : 'Disabled' }}
                 </p>
               </div>
@@ -377,7 +377,7 @@
 
             <!-- Type selector -->
             <div class="bg-accented rounded-2xl px-6 py-5">
-              <p class="text-muted text-sm mb-4">Type</p>
+              <p class="text-muted mb-4 text-sm">Type</p>
               <div class="grid grid-cols-4 gap-2">
                 <button
                   v-for="t in ['dot', 'ring', 'dot-ring', 'glow'] as const"
@@ -393,22 +393,22 @@
                   {{ t }}
                 </button>
               </div>
-              <p class="text-toned text-xs font-mono mt-3">type="{{ cursorType }}"</p>
+              <p class="text-toned mt-3 font-mono text-xs">type="{{ cursorType }}"</p>
             </div>
 
             <!-- Visibility toggle -->
-            <div class="flex items-center justify-between bg-accented rounded-2xl px-6 py-4">
+            <div class="bg-accented flex items-center justify-between rounded-2xl px-6 py-4">
               <div>
                 <p class="text-highlighted font-medium">Visible</p>
-                <p class="text-muted text-xs mt-0.5">Fades without remounting</p>
+                <p class="text-muted mt-0.5 text-xs">Fades without remounting</p>
               </div>
               <button
-                class="w-12 h-6 rounded-full transition-colors relative"
+                class="relative h-6 w-12 rounded-full transition-colors"
                 :class="cursorVisible ? 'bg-primary' : 'bg-accented'"
                 @click="() => (cursorVisible = !cursorVisible)"
               >
                 <span
-                  class="absolute top-1 w-4 h-4 rounded-full bg-white transition-all"
+                  class="absolute top-1 h-4 w-4 rounded-full bg-white transition-all"
                   :class="cursorVisible ? 'left-7' : 'left-1'"
                 />
               </button>
@@ -416,7 +416,7 @@
 
             <!-- Smoothing slider -->
             <div class="bg-accented rounded-2xl px-6 py-5">
-              <div class="flex items-center justify-between mb-3">
+              <div class="mb-3 flex items-center justify-between">
                 <p class="text-muted text-sm">Smoothing</p>
                 <p class="text-highlighted font-mono text-sm">{{ cursorSmoothing.toFixed(2) }}</p>
               </div>
@@ -426,9 +426,9 @@
                 min="0.02"
                 max="0.5"
                 step="0.01"
-                class="w-full accent-primary"
+                class="accent-primary w-full"
               />
-              <div class="flex justify-between text-toned text-xs mt-1.5">
+              <div class="text-toned mt-1.5 flex justify-between text-xs">
                 <span>0.02 — heavy lag</span>
                 <span>0.5 — instant</span>
               </div>
@@ -438,11 +438,11 @@
       </section>
 
       <!-- Footer nav -->
-      <section class="py-16 bg-default">
+      <section class="bg-default py-16">
         <UContainer>
-          <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
+          <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
             <div>
-              <h2 class="text-2xl font-bold text-highlighted mb-2">Motion Interactions</h2>
+              <h2 class="text-highlighted mb-2 text-2xl font-bold">Motion Interactions</h2>
               <p class="text-muted">Magnetic, tilt, count-up, velocity effects</p>
             </div>
             <div class="flex flex-wrap gap-4">

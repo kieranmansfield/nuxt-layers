@@ -1,3 +1,5 @@
+import type { ComponentPublicInstance } from 'vue'
+
 export default defineNuxtPlugin({
   name: 'core:error-handler',
   setup(nuxtApp) {
@@ -18,21 +20,24 @@ export default defineNuxtPlugin({
     }
 
     // Nuxt-specific error hook (catches errors during SSR, routing, etc.)
-    nuxtApp.hook('vue:error', (error, instance, info) => {
-      // Get component name for context
-      const componentName =
-        instance?.$options?.name || instance?.$options?.__name || 'Unknown Component'
+    nuxtApp.hook(
+      'vue:error',
+      (error: unknown, instance: ComponentPublicInstance | null, info: string) => {
+        // Get component name for context
+        const componentName =
+          instance?.$options?.name || instance?.$options?.__name || 'Unknown Component'
 
-      // Log error with context
-      logError(error, {
-        component: componentName,
-        info: String(info),
-        type: 'nuxt-error',
-      })
-    })
+        // Log error with context
+        logError(error, {
+          component: componentName,
+          info: String(info),
+          type: 'nuxt-error',
+        })
+      }
+    )
 
     // Handle app initialization errors
-    nuxtApp.hook('app:error', (error) => {
+    nuxtApp.hook('app:error', (error: unknown) => {
       logError(error, {
         type: 'app-error',
         info: 'Application initialization error',

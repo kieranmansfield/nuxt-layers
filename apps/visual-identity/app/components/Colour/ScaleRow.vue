@@ -10,18 +10,18 @@
 
 <template>
   <div>
-    <p class="text-sm font-medium text-default mb-2 capitalize">{{ name }}</p>
+    <p class="text-default mb-2 text-sm font-medium capitalize">{{ name }}</p>
     <div class="scale-grid">
       <div v-for="entry in scale" :key="entry.step" class="group relative">
         <div
-          class="h-12 w-full rounded-md border border-black/10 dark:border-white/10 cursor-pointer transition-transform hover:scale-105"
+          class="h-12 w-full cursor-pointer rounded-md border border-black/10 transition-transform hover:scale-105 dark:border-white/10"
           :style="{ backgroundColor: entry.hex }"
           :title="showOklch ? entry.oklchStr : entry.hex"
         />
-        <div class="text-center mt-1">
-          <p class="text-[10px] text-muted font-mono">{{ entry.step }}</p>
+        <div class="mt-1 text-center">
+          <p class="text-muted font-mono text-[10px]">{{ entry.step }}</p>
           <p
-            class="text-[9px] text-muted font-mono opacity-0 group-hover:opacity-100 transition-opacity"
+            class="text-muted font-mono text-[9px] opacity-0 transition-opacity group-hover:opacity-100"
           >
             {{ showOklch ? entry.oklchStr.replace('oklch(', '').replace(')', '') : entry.hex }}
           </p>

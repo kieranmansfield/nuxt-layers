@@ -16,6 +16,10 @@ export default defineAppConfig({
     url: 'https://nuxtlayers.netlify.app/',
     author: { name: 'Kieran Mansfield' },
   },
+  // Opt in, for the demo on /theming
+  themeLayer: {
+    themeColor: { enabled: true },
+  },
   feedsLayer: {
     feed: {
       limit: 30,
@@ -27,12 +31,13 @@ export default defineAppConfig({
     scrollBehaviour: 'router',
     links: [
       { id: 'home', label: 'Home', to: { name: 'index' } },
+      { id: 'nav', label: 'Nav', to: { name: 'nav' } },
       { id: 'core', label: 'Core', to: { name: 'core' } },
-      { id: 'ui', label: 'UI', to: { name: 'ui' } },
+      { id: 'typography', label: 'Typography', to: { name: 'typography' } },
       { id: 'layout', label: 'Layout', to: { name: 'layout' } },
       { id: 'motion', label: 'Motion', to: { name: 'motion' } },
       { id: 'shader', label: 'Shader', to: { name: 'shader' } },
-      { id: 'theme', label: 'Theme', to: { name: 'theme' } },
+      { id: 'theming', label: 'Theming', to: { name: 'theming' } },
       { id: 'forms', label: 'Forms', to: { name: 'forms' } },
       { id: 'content', label: 'Content', to: { name: 'content' } },
       { id: 'routing', label: 'Routing', to: { name: 'routing' } },
@@ -41,11 +46,6 @@ export default defineAppConfig({
   },
   coreLayer: {
     name: 'My amazing Nuxt layer (overwritten)',
-    // Loading screen configuration (initial app load only)
-    loading: {
-      // Master toggle - set to false to disable completely
-      enabled: false,
-    },
     scrollGuard: {
       enabled: false,
     },

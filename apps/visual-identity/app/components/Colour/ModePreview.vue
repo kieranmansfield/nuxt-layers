@@ -64,23 +64,23 @@
 
 <template>
   <div
-    class="rounded-xl p-5 overflow-hidden"
+    class="overflow-hidden rounded-xl p-5"
     :class="scheme === 'light' ? 'border border-black/10' : ''"
     :style="{ backgroundColor: bg }"
   >
-    <div class="flex items-center gap-2 mb-3">
+    <div class="mb-3 flex items-center gap-2">
       <div class="size-3 rounded-full" :style="{ backgroundColor: accentColour }" />
-      <div class="h-2 rounded w-16 opacity-40" :style="{ backgroundColor: textColour }" />
+      <div class="h-2 w-16 rounded opacity-40" :style="{ backgroundColor: textColour }" />
     </div>
-    <div class="h-2 rounded w-full mb-1.5 opacity-20" :style="{ backgroundColor: textColour }" />
-    <div class="h-2 rounded w-3/4 mb-4 opacity-20" :style="{ backgroundColor: textColour }" />
+    <div class="mb-1.5 h-2 w-full rounded opacity-20" :style="{ backgroundColor: textColour }" />
+    <div class="mb-4 h-2 w-3/4 rounded opacity-20" :style="{ backgroundColor: textColour }" />
     <div
-      class="inline-block px-3 py-1.5 rounded-lg text-xs font-medium text-white"
+      class="inline-block rounded-lg px-3 py-1.5 text-xs font-medium text-white"
       :style="{ backgroundColor: accentColour }"
     >
       Button
     </div>
-    <p class="text-[10px] mt-3 font-medium opacity-40" :style="{ color: textColour }">
+    <p class="mt-3 text-[10px] font-medium opacity-40" :style="{ color: textColour }">
       {{ label }}
     </p>
   </div>

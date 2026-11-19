@@ -1,0 +1,60 @@
+<script setup lang="ts">
+  // fallow-ignore-file code-duplication
+  import { clamp, float, time, vec2, vec4 } from 'three/tsl'
+
+  import { blendGrain } from '../../shaders/common/blend'
+
+  type GrainBlendMode = 'add' | 'sub' | 'screen' | 'overlay' | 'soft-light'
+
+  const {
+    intensity = 0.06,
+    opacity = 1.0,
+    size = 1.0,
+    fps = 24,
+    blendMode = 'sub',
+    order = 0,
+  } = defineProps<{
+    /** Grain intensity — amplitude of the noise effect */
+    intensity?: number
+    /** Blend opacity — how strongly grain mixes into the output */
+    opacity?: number
+    /** UV scale — higher = finer dots, lower = coarser */
+    size?: number
+    fps?: number
+    blendMode?: GrainBlendMode
+    order?: number
+  }>()
+
+  const intensityNode = useUniformProp(() => intensity)
+  const opacityNode = useUniformProp(() => opacity)
+  const sizeNode = useUniformProp(() => size)
+  const fpsNode = useUniformProp(() => fps)
+
+  const pipeline = useShaderPipelineContext()
+
+  useShaderStage((prev) => {
+    const uvScaled = pipeline.uvNode.value.mul(sizeNode)
+    const t = time.mul(fpsNode).floor().div(fpsNode)
+
+    // Two-pass hash for coarser, more organic texture
+    const k1 = vec2(127.1, 311.7)
+    const k2 = vec2(269.5, 183.3)
+    const p = uvScaled.add(t)
+    const h1 = p.dot(k1).sin().mul(43758.5453).fract()
+    const h2 = p.add(t.mul(0.3)).dot(k2).sin().mul(43758.5453).fract()
+    // Raw [0,1] noise from vector length, normalised by max possible (√2)
+    const raw = vec2(h1, h2).length().mul(float(Math.SQRT1_2))
+
+    const mixFactor = intensityNode.mul(opacityNode)
+    const blended = blendGrain(blendMode, prev.xyz, raw, mixFactor, () =>
+      blendMode === 'add'
+        ? prev.xyz.add(raw.sub(0.5).mul(intensityNode).mul(opacityNode))
+        : prev.xyz.sub(raw.mul(intensityNode).mul(opacityNode))
+    )
+    return vec4(clamp(blended, 0, 1), prev.w)
+  }, order)
+</script>
+
+<template>
+  <slot />
+</template>

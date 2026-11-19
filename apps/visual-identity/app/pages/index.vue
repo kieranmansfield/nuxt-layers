@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  await navigateTo('/colour/foundation', { replace: true })
+  definePageMeta({ redirect: '/colour/foundation' })
 </script>
 
 <template>

@@ -1,0 +1,22 @@
+{
+  "name": "kmcom-layer-feeds",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "main": "./nuxt.config.mjs",
+  "scripts": {
+    "typecheck": "vue-tsc --noEmit -p ../../../tsconfig.typecheck.json",
+    "build": "nuxi build",
+    "generate": "nuxi generate",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "feed": "catalog:"
+  },
+  "devDependencies": {
+    "@nuxt/content": "catalog:",
+    "nuxt": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:"
+  }
+}

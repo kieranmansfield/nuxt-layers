@@ -84,6 +84,7 @@ robots.txt
 README.md
 CHANGELOG.md
 
-# Vendored agent-skill content — not project source (see eslint.config.mjs ignores)
-.agents/
-.claude/
+# Nuxt Content markdown is formatted by Comark (the parser Nuxt Studio reads and writes), not
+# oxfmt/Prettier: they rewrite `::component` + `---` props blocks into setext headings.
+# oxfmt reads this file by default (`vp fmt`, `vp check`, the pre-commit hook).
+**/content/**/*.md

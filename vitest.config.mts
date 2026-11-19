@@ -2,10 +2,11 @@ import { fileURLToPath } from 'node:url'
 import { toRaw } from 'vue'
 import { defineVitestProject } from '@nuxt/test-utils/config'
 import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vite-plus'
 
 const nuxtRootDir = fileURLToPath(new URL('./apps/playground', import.meta.url))
 
+// fallow-ignore-next-line complexity
 function cloneSerializable<T>(value: T, seen = new WeakMap<object, unknown>()): T {
   if (value === null || typeof value !== 'object') {
     return value
@@ -78,6 +79,7 @@ function cloneSerializable<T>(value: T, seen = new WeakMap<object, unknown>()): 
   return clone as T
 }
 
+// fallow-ignore-next-line complexity
 async function withStructuredCloneFallback<T>(callback: () => Promise<T>): Promise<T> {
   const originalStructuredClone = globalThis.structuredClone
 
@@ -122,15 +124,36 @@ export default defineConfig({
   test: {
     coverage: {
       provider: 'v8',
-      include: ['layers/*/app/utils/**', 'layers/*/server/utils/**', 'layers/**/server/utils/**'],
+      include: [
+        'layers/*/app/utils/**',
+        'layers/*/server/utils/**',
+        'layers/*/*/app/utils/**',
+        'layers/*/*/server/utils/**',
+        'layers/**/server/utils/**',
+      ],
       exclude: ['**/*.test.ts', '**/*.spec.ts'],
       reporter: ['text', 'html'],
     },
     projects: [
       {
+        // Unlike the other projects, 'unit' has no Nuxt/Vite plugin resolving
+        // #layers/* aliases for it — add the ones actually crossed by a
+        // runtime (non-type-only) import from a unit-tested file.
+        resolve: {
+          alias: {
+            '#layers/core/types': fileURLToPath(
+              new URL('./layers/core/app/types', import.meta.url)
+            ),
+            '#layers/metadata': fileURLToPath(new URL('./layers/data/metadata', import.meta.url)),
+            'nitropack/runtime': fileURLToPath(
+              new URL('./tests/stubs/nitropack-runtime.ts', import.meta.url)
+            ),
+          },
+        },
         test: {
           name: 'unit',
           include: ['layers/**/*.test.ts', 'layers/**/*.spec.ts'],
+          exclude: ['layers/**/app/components/**/*.test.ts', '**/node_modules/**'],
           environment: 'node',
         },
       },
@@ -143,9 +166,19 @@ export default defineConfig({
       },
       {
         plugins: [vue()],
+        resolve: {
+          alias: {
+            '#layers/core': fileURLToPath(new URL('./layers/core', import.meta.url)),
+            '#components': fileURLToPath(
+              new URL('./tests/stubs/nuxt-components.ts', import.meta.url)
+            ),
+          },
+        },
         test: {
           name: 'vue',
-          include: ['tests/vue/**/*.{test,spec}.ts'],
+          // Component-mount tests colocated with their .vue file (layer components
+          // need happy-dom + the vue plugin, unlike the plain-function 'unit' project).
+          include: ['tests/vue/**/*.{test,spec}.ts', 'layers/**/app/components/**/*.test.ts'],
           environment: 'happy-dom',
         },
       },
@@ -154,7 +187,9 @@ export default defineConfig({
           test: {
             name: 'nuxt',
             include: ['tests/nuxt/**/*.{test,spec}.ts'],
-            hookTimeout: 30000,
+            // The first files to start pay the cold Vite build of the whole playground in
+            // setupNuxt (~25s on CI runners and growing with each layer), so leave headroom.
+            hookTimeout: 60000,
             environmentOptions: {
               nuxt: {
                 rootDir: nuxtRootDir,

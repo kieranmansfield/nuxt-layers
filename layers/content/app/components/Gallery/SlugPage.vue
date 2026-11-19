@@ -2,16 +2,13 @@
   const { slug } = defineProps<{
     slug: string
   }>()
-  const { contentLayer } = useAppConfig()
-  if (contentLayer?.sections?.gallery === false) {
-    throw createError({ statusCode: 404, statusMessage: 'Not Found' })
-  }
+
+  useContentSection('gallery')
+  await useContentItemSeo('gallery', slug)
 </script>
 
 <template>
-  <LayoutSection>
-    <LayoutGridItem>
-      <GalleryDetail :slug />
-    </LayoutGridItem>
-  </LayoutSection>
+  <NuxtContentDetailTemplate>
+    <GalleryDetail :slug />
+  </NuxtContentDetailTemplate>
 </template>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-  import type { FluidFontSize } from '#layers/typography/app/types/typography'
-  import type { UiColors } from '#layers/ui/app/types/colors'
-  import type { TintLevel } from '#layers/ui/app/types/tint'
+  // fallow-ignore-next-line code-duplication
+  import type { UiColors } from '#layers/typography/app/types/colors'
+  import type { TypeStep } from '#layers/typography/app/types/typography'
+  import type { TintLevel } from '#layers/visual/app/types/tint'
 
   const { setPageAccent } = useAccentColor()
   setPageAccent('pink')
@@ -40,52 +41,20 @@
   return { isMobile, isDesktop }
 }`
 
-  // 7xl-9xl dropped from the demo — too large to read at typical page/demo
+  // 9-12 dropped from the demo — too large to read at typical page/demo
   // widths; the utilities still exist in typography.css for full-bleed hero use.
-  const fluidSizes: FluidFontSize[] = [
-    'xs',
-    'sm',
-    'md',
-    'lg',
-    'xl',
-    '2xl',
-    '3xl',
-    '4xl',
-    '5xl',
-    '6xl',
-  ]
+  const typeSteps: TypeStep[] = ['sm', 0, 1, 2, 3, 4, 5, 6, 7, 8, 'display']
 
-  // Capped at 4xl-cq: the ladder's rem endpoints were tuned for viewport-scale
-  // growth (vi), so 5xl-cq..9xl-cq only make sense in a viewport-scale
-  // container (e.g. a full-width hero @container), not a component-width box
-  // like the demo below — the same reason 9xl needs a wide viewport, not a card.
-  const fluidSizesCq: FluidFontSize[] = [
-    'xs-cq',
-    'sm-cq',
-    'md-cq',
-    'lg-cq',
-    'xl-cq',
-    '2xl-cq',
-    '3xl-cq',
-    '4xl-cq',
-  ]
-
-  const snippetFluidType = `<!-- via useTypography / Typography component -->
-<Typography fluid-size="md">Fluid, stepped body copy</Typography>
-<Typography tag="h2" fluid-size="2xl">Resize — snaps to 4px steps</Typography>
+  const snippetTypeStep = `<!-- via useTypography / Typography component -->
+<Typography :step="1">Body copy, step 1</Typography>
+<Typography tag="h2" :step="3">Three steps up from 0 — twice its size</Typography>
 
 <!-- or the utility class directly -->
-<p class="text-fluid-md">Fluid, stepped body copy</p>
+<p class="text-step-1">Body copy, step 1</p>
 
-<!-- retune the ladder for a subtree -->
-<div class="editorial-lede" style="--fluid-step: 0.125rem">
-  <p class="text-fluid-lg">Finer steps here only</p>
-</div>`
-
-  const snippetFluidTypeCq = `<!-- cqi instead of vi — scales with the nearest ancestor
-     that has container-type set (e.g. class="@container"), not the viewport -->
-<div class="@container">
-  <Typography fluid-size="xl-cq">Scales with this box, not the viewport</Typography>
+<!-- retune the ratio for a subtree -->
+<div style="--type-scale: 1.2">
+  <p class="text-step-4">Gentler scale here only</p>
 </div>`
 
   const snippetHeadline = '<TypographyHeadline :level="2">Headline Level 2</TypographyHeadline>'
@@ -94,11 +63,11 @@
   <TypographyTextStroke text="Hello" :stroke-width="2" stroke-color="red" />
 </h1>`
 
-  const snippetLinksGroup = `<LinksGroup class="flex gap-6">
+  const snippetHoverDimGroup = `<HoverDimGroup class="flex gap-6">
   <a href="/home">Home</a>
   <a href="/about">About</a>
   <a href="/contact">Contact</a>
-</LinksGroup>`
+</HoverDimGroup>`
 
   const snippetPictureBasic = '<MediaPicture src="/image.jpg" alt="Description" />'
 
@@ -146,7 +115,7 @@
         <!-- Typography Section -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Typography Components</h2>
+            <h2 class="mb-2 text-2xl font-bold">Typography Components</h2>
             <p class="text-muted">
               Semantic typography with configurable weight, width, slant, and more
             </p>
@@ -158,7 +127,7 @@
                 <UIcon name="i-lucide-heading" class="text-primary" />
                 <h3 class="text-xl font-semibold">Headline</h3>
               </div>
-              <p class="text-sm text-muted mt-1">Semantic h1-h6 headings with responsive sizing</p>
+              <p class="text-muted mt-1 text-sm">Semantic h1-h6 headings with responsive sizing</p>
             </template>
 
             <div class="space-y-4">
@@ -183,14 +152,14 @@
                 <UIcon name="i-lucide-type" class="text-primary" />
                 <h3 class="text-xl font-semibold">Typography</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Base typography component with font axis controls
               </p>
             </template>
 
             <div class="space-y-6">
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Font Weight
                 </h4>
                 <div class="space-y-2">
@@ -201,7 +170,7 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Font Slant
                 </h4>
                 <div class="space-y-2">
@@ -215,23 +184,23 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Line Height (Leading)
                 </h4>
                 <div class="grid gap-4 md:grid-cols-3">
-                  <div class="p-3 bg-accented rounded">
+                  <div class="bg-accented rounded p-3">
                     <Typography leading="leading-tight" class="text-sm">
                       <strong>Tight</strong> - Lorem ipsum dolor sit amet, consectetur adipiscing
                       elit. Sed do eiusmod tempor.
                     </Typography>
                   </div>
-                  <div class="p-3 bg-accented rounded">
+                  <div class="bg-accented rounded p-3">
                     <Typography leading="leading-normal" class="text-sm">
                       <strong>Normal</strong> - Lorem ipsum dolor sit amet, consectetur adipiscing
                       elit. Sed do eiusmod tempor.
                     </Typography>
                   </div>
-                  <div class="p-3 bg-accented rounded">
+                  <div class="bg-accented rounded p-3">
                     <Typography leading="leading-loose" class="text-sm">
                       <strong>Loose</strong> - Lorem ipsum dolor sit amet, consectetur adipiscing
                       elit. Sed do eiusmod tempor.
@@ -241,7 +210,7 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Text Transform
                 </h4>
                 <div class="flex flex-wrap gap-4">
@@ -260,12 +229,12 @@
                 <UIcon name="i-lucide-code" class="text-primary" />
                 <h3 class="text-xl font-semibold">CodeBlock</h3>
               </div>
-              <p class="text-sm text-muted mt-1">Semantic pre/code wrapper for code snippets</p>
+              <p class="text-muted mt-1 text-sm">Semantic pre/code wrapper for code snippets</p>
             </template>
 
             <TypographyCodeBlock
               language="typescript"
-              class="bg-muted text-highlighted p-4 rounded-lg"
+              class="bg-muted text-highlighted rounded-lg p-4"
             >
               {{ sampleCode }}
             </TypographyCodeBlock>
@@ -277,12 +246,12 @@
                 <UIcon name="i-lucide-quote" class="text-primary" />
                 <h3 class="text-xl font-semibold">QuoteBlock</h3>
               </div>
-              <p class="text-sm text-muted mt-1">Semantic blockquote wrapper</p>
+              <p class="text-muted mt-1 text-sm">Semantic blockquote wrapper</p>
             </template>
 
-            <TypographyQuoteBlock class="border-l-4 border-primary pl-4 italic">
+            <TypographyQuoteBlock class="border-primary border-l-4 pl-4 italic">
               "The best way to predict the future is to create it."
-              <Typography tag="span" class="block mt-2 text-sm text-muted not-italic">
+              <Typography tag="span" class="text-muted mt-2 block text-sm not-italic">
                 - Peter Drucker
               </Typography>
             </TypographyQuoteBlock>
@@ -294,14 +263,14 @@
                 <UIcon name="i-lucide-pen-tool" class="text-primary" />
                 <h3 class="text-xl font-semibold">TextStroke</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 SVG-based text stroke for crisp outlines at any size
               </p>
             </template>
 
             <div class="space-y-8">
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Outline Only
                 </h4>
                 <div class="text-7xl font-bold">
@@ -310,10 +279,10 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Fill + Stroke
                 </h4>
-                <div class="text-7xl font-bold text-primary">
+                <div class="text-primary text-7xl font-bold">
                   <TypographyTextStroke
                     text="Filled"
                     :stroke-width="3"
@@ -324,7 +293,7 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Stroke Widths
                 </h4>
                 <div class="space-y-2">
@@ -341,7 +310,7 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">Colors</h4>
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Colors</h4>
                 <div class="flex flex-wrap gap-6">
                   <div class="text-5xl font-bold">
                     <TypographyTextStroke text="Red" :stroke-width="2" stroke-color="red" />
@@ -361,7 +330,7 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Inside Headline
                 </h4>
                 <TypographyHeadline :level="1">
@@ -378,13 +347,14 @@
           </UCard>
         </section>
 
-        <!-- Fluid Type Scale Section -->
+        <!-- Modular Type Scale Section -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Fluid Type Scale</h2>
+            <h2 class="mb-2 text-2xl font-bold">Modular Type Scale</h2>
             <p class="text-muted">
-              Opt-in <code>clamp()</code> sizing rounded to discrete 4px steps via CSS
-              <code>round()</code> — resize the viewport to see it snap
+              Every size is <code>base × 1.26^step</code>, rounded via CSS <code>round()</code>. The
+              base switches from <code>1rem</code> to <code>1.2rem</code> at 48rem;
+              <code>display</code> grows from step 5 to 7 with the viewport
             </p>
           </div>
 
@@ -392,67 +362,27 @@
             <template #header>
               <div class="flex items-center gap-2">
                 <UIcon name="i-lucide-move-vertical" class="text-primary" />
-                <h3 class="text-xl font-semibold">text-fluid-*</h3>
+                <h3 class="text-xl font-semibold">text-step-*</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
-                Via <code>useTypography</code>'s <code>fluidSize</code> prop — parallel namespace to
+              <p class="text-muted mt-1 text-sm">
+                Via <code>useTypography</code>'s <code>step</code> prop — parallel namespace to
                 Tailwind's <code>--text-*</code>, no default token or Nuxt UI component size is
                 affected
               </p>
             </template>
 
             <div class="space-y-4">
-              <div v-for="size in fluidSizes" :key="size" class="flex items-baseline gap-4">
-                <span class="w-28 shrink-0 font-mono text-xs text-muted uppercase tracking-wide">{{
-                  size
+              <div v-for="step in typeSteps" :key="step" class="flex items-baseline gap-4">
+                <span class="text-muted w-28 shrink-0 font-mono text-xs tracking-wide uppercase">{{
+                  step
                 }}</span>
-                <Typography :fluid-size="size" weight="font-semibold">
-                  Stepped fluid type
-                </Typography>
+                <Typography :step weight="font-semibold">Modular type</Typography>
               </div>
             </div>
 
             <template #footer>
               <TypographyCodeBlock language="vue" class="text-sm">{{
-                snippetFluidType
-              }}</TypographyCodeBlock>
-            </template>
-          </UCard>
-
-          <UCard>
-            <template #header>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-scan" class="text-primary" />
-                <h3 class="text-xl font-semibold">text-fluid-*-cq</h3>
-              </div>
-              <p class="text-sm text-muted mt-1">
-                Same ladder, <code>cqi</code> instead of <code>vi</code> — scales with the
-                <code>@container</code> box below, not the viewport. Drag the handle at its
-                bottom-right corner. Capped at <code>4xl-cq</code> — larger steps assume a
-                viewport-scale container, same as <code>9xl</code> assumes a wide viewport.
-              </p>
-            </template>
-
-            <div
-              class="@container resize-x overflow-auto rounded border border-default p-4"
-              style="min-width: 8rem; max-width: 100%; width: 28rem"
-            >
-              <div class="space-y-4">
-                <div v-for="size in fluidSizesCq" :key="size" class="flex items-baseline gap-4">
-                  <span
-                    class="w-28 shrink-0 font-mono text-xs text-muted uppercase tracking-wide"
-                    >{{ size }}</span
-                  >
-                  <Typography :fluid-size="size" weight="font-semibold" class="min-w-0">
-                    Stepped fluid type
-                  </Typography>
-                </div>
-              </div>
-            </div>
-
-            <template #footer>
-              <TypographyCodeBlock language="vue" class="text-sm">{{
-                snippetFluidTypeCq
+                snippetTypeStep
               }}</TypographyCodeBlock>
             </template>
           </UCard>
@@ -461,7 +391,7 @@
         <!-- Color System Section -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Color System</h2>
+            <h2 class="mb-2 text-2xl font-bold">Color System</h2>
             <p class="text-muted">Semantic, status, brand, and base color tokens</p>
           </div>
 
@@ -471,21 +401,21 @@
                 <UIcon name="i-lucide-palette" class="text-primary" />
                 <h3 class="text-xl font-semibold">useColor()</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Color tokens with text, bg, and border usage types
               </p>
             </template>
 
             <div class="space-y-6">
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Semantic Colors
                 </h4>
                 <div class="flex flex-wrap gap-3">
                   <div
                     v-for="color in semanticColors"
                     :key="color"
-                    class="px-4 py-2 rounded-lg border"
+                    class="rounded-lg border px-4 py-2"
                   >
                     <Typography :color weight="font-medium">{{ color }}</Typography>
                   </div>
@@ -493,7 +423,7 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Status Colors
                 </h4>
                 <div class="flex flex-wrap gap-3">
@@ -504,7 +434,7 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Brand Colors
                 </h4>
                 <div class="flex flex-wrap gap-3">
@@ -514,7 +444,7 @@
                   <div
                     v-for="color in customColors"
                     :key="color"
-                    class="px-3 py-1.5 rounded-full text-sm font-medium"
+                    class="rounded-full px-3 py-1.5 text-sm font-medium"
                   >
                     <Typography :color weight="font-medium">{{ color }}</Typography>
                   </div>
@@ -522,15 +452,15 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Base Colors
                 </h4>
                 <div class="flex flex-wrap gap-3">
                   <div
                     v-for="color in baseColors"
                     :key="color"
-                    class="px-4 py-2 rounded-lg border"
-                    :class="color === 'black' ? 'bg-black text-highlighted' : 'bg-white text-black'"
+                    class="rounded-lg border px-4 py-2"
+                    :class="color === 'black' ? 'text-highlighted bg-black' : 'bg-white text-black'"
                   >
                     {{ color }}
                   </div>
@@ -543,7 +473,7 @@
         <!-- Link Group Section -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Link Group</h2>
+            <h2 class="mb-2 text-2xl font-bold">Link Group</h2>
             <p class="text-muted">
               Hover one item to dim the rest — works with any direct children
             </p>
@@ -553,9 +483,9 @@
             <template #header>
               <div class="flex items-center gap-2">
                 <UIcon name="i-lucide-mouse-pointer-click" class="text-primary" />
-                <h3 class="text-xl font-semibold">LinksGroup</h3>
+                <h3 class="text-xl font-semibold">HoverDimGroup</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Wraps children in a hover-to-focus group with configurable dim opacity and
                 transition duration
               </p>
@@ -563,65 +493,65 @@
 
             <div class="space-y-8">
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Navigation Links
                 </h4>
-                <LinksGroup class="flex gap-6">
-                  <a href="#" class="text-lg font-medium text-highlighted">Home</a>
-                  <a href="#" class="text-lg font-medium text-highlighted">About</a>
-                  <a href="#" class="text-lg font-medium text-highlighted">Work</a>
-                  <a href="#" class="text-lg font-medium text-highlighted">Blog</a>
-                  <a href="#" class="text-lg font-medium text-highlighted">Contact</a>
-                </LinksGroup>
+                <HoverDimGroup class="flex gap-6">
+                  <a href="#" class="text-highlighted text-lg font-medium">Home</a>
+                  <a href="#" class="text-highlighted text-lg font-medium">About</a>
+                  <a href="#" class="text-highlighted text-lg font-medium">Work</a>
+                  <a href="#" class="text-highlighted text-lg font-medium">Blog</a>
+                  <a href="#" class="text-highlighted text-lg font-medium">Contact</a>
+                </HoverDimGroup>
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">Buttons</h4>
-                <LinksGroup class="flex gap-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Buttons</h4>
+                <HoverDimGroup class="flex gap-3">
                   <UButton variant="solid">Primary</UButton>
                   <UButton variant="outline">Outline</UButton>
                   <UButton variant="soft">Soft</UButton>
                   <UButton variant="ghost">Ghost</UButton>
-                </LinksGroup>
+                </HoverDimGroup>
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Card Grid
                 </h4>
-                <LinksGroup class="grid grid-cols-3 gap-4" :duration="300">
-                  <div class="p-6 rounded-lg border border-default bg-elevated text-center">
-                    <UIcon name="i-lucide-code" class="text-2xl text-primary mb-2" />
+                <HoverDimGroup class="grid grid-cols-3 gap-4" :duration="300">
+                  <div class="border-default bg-elevated rounded-lg border p-6 text-center">
+                    <UIcon name="i-lucide-code" class="text-primary mb-2 text-2xl" />
                     <p class="font-medium">Development</p>
                   </div>
-                  <div class="p-6 rounded-lg border border-default bg-elevated text-center">
-                    <UIcon name="i-lucide-palette" class="text-2xl text-primary mb-2" />
+                  <div class="border-default bg-elevated rounded-lg border p-6 text-center">
+                    <UIcon name="i-lucide-palette" class="text-primary mb-2 text-2xl" />
                     <p class="font-medium">Design</p>
                   </div>
-                  <div class="p-6 rounded-lg border border-default bg-elevated text-center">
-                    <UIcon name="i-lucide-rocket" class="text-2xl text-primary mb-2" />
+                  <div class="border-default bg-elevated rounded-lg border p-6 text-center">
+                    <UIcon name="i-lucide-rocket" class="text-primary mb-2 text-2xl" />
                     <p class="font-medium">Deploy</p>
                   </div>
-                </LinksGroup>
+                </HoverDimGroup>
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Custom Dim (0.1)
                 </h4>
-                <LinksGroup class="flex gap-4" :dim-opacity="0.1">
+                <HoverDimGroup class="flex gap-4" :dim-opacity="0.1">
                   <span class="text-3xl">&#x1F680;</span>
                   <span class="text-3xl">&#x1F4A1;</span>
                   <span class="text-3xl">&#x2B50;</span>
                   <span class="text-3xl">&#x1F525;</span>
                   <span class="text-3xl">&#x1F308;</span>
-                </LinksGroup>
+                </HoverDimGroup>
               </div>
             </div>
 
             <template #footer>
               <TypographyCodeBlock language="vue" class="text-sm">{{
-                snippetLinksGroup
+                snippetHoverDimGroup
               }}</TypographyCodeBlock>
             </template>
           </UCard>
@@ -630,7 +560,7 @@
         <!-- Media Section -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Media Components</h2>
+            <h2 class="mb-2 text-2xl font-bold">Media Components</h2>
             <p class="text-muted">Responsive images with smart sizing and format optimization</p>
           </div>
 
@@ -640,7 +570,7 @@
                 <UIcon name="i-lucide-image" class="text-primary" />
                 <h3 class="text-xl font-semibold">Picture</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 NuxtPicture wrapper with responsive sizing and format detection
               </p>
             </template>
@@ -648,14 +578,14 @@
             <div class="space-y-6">
               <div class="grid gap-6 md:grid-cols-2">
                 <div class="space-y-3">
-                  <h4 class="text-sm font-medium uppercase tracking-wide text-muted">
+                  <h4 class="text-muted text-sm font-medium tracking-wide uppercase">
                     Basic Usage
                   </h4>
                   <div
-                    class="aspect-video bg-accented rounded-lg overflow-hidden flex items-center justify-center"
+                    class="bg-accented flex aspect-video items-center justify-center overflow-hidden rounded-lg"
                   >
-                    <div class="text-center text-muted">
-                      <UIcon name="i-lucide-image" class="text-4xl mb-2" />
+                    <div class="text-muted text-center">
+                      <UIcon name="i-lucide-image" class="mb-2 text-4xl" />
                       <p class="text-sm">Image placeholder</p>
                     </div>
                   </div>
@@ -665,14 +595,14 @@
                 </div>
 
                 <div class="space-y-3">
-                  <h4 class="text-sm font-medium uppercase tracking-wide text-muted">
+                  <h4 class="text-muted text-sm font-medium tracking-wide uppercase">
                     Responsive Sizes
                   </h4>
                   <div
-                    class="aspect-video bg-accented rounded-lg overflow-hidden flex items-center justify-center"
+                    class="bg-accented flex aspect-video items-center justify-center overflow-hidden rounded-lg"
                   >
-                    <div class="text-center text-muted">
-                      <UIcon name="i-lucide-monitor-smartphone" class="text-4xl mb-2" />
+                    <div class="text-muted text-center">
+                      <UIcon name="i-lucide-monitor-smartphone" class="mb-2 text-4xl" />
                       <p class="text-sm">Responsive image</p>
                     </div>
                   </div>
@@ -688,7 +618,7 @@
         <!-- Breakpoints Section -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Breakpoint System</h2>
+            <h2 class="mb-2 text-2xl font-bold">Breakpoint System</h2>
             <p class="text-muted">Multiple breakpoint paradigms for responsive design</p>
           </div>
 
@@ -702,7 +632,7 @@
 
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Tailwind
                 </h4>
                 <div class="space-y-1.5 text-sm">
@@ -725,7 +655,7 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">Device</h4>
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Device</h4>
                 <div class="space-y-1.5 text-sm">
                   <div class="flex justify-between">
                     <span class="font-mono">mobile</span><span class="text-muted">0px</span>
@@ -744,7 +674,7 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">Phone</h4>
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Phone</h4>
                 <div class="space-y-1.5 text-sm">
                   <div class="flex justify-between">
                     <span class="font-mono">phone-sm</span>
@@ -762,7 +692,7 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">Tablet</h4>
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Tablet</h4>
                 <div class="space-y-1.5 text-sm">
                   <div class="flex justify-between">
                     <span class="font-mono">tablet-sm</span>
@@ -780,7 +710,7 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Orientation
                 </h4>
                 <div class="space-y-1.5 text-sm">
@@ -801,7 +731,7 @@
         <!-- Progress Section -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Progress Components</h2>
+            <h2 class="mb-2 text-2xl font-bold">Progress Components</h2>
             <p class="text-muted">Circular ring and linear bar progress indicators</p>
           </div>
 
@@ -811,69 +741,69 @@
                 <UIcon name="i-lucide-loader-circle" class="text-primary" />
                 <h3 class="text-xl font-semibold">ProgressCircular</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 SVG ring with gradient stroke — pass any 0–1 value
               </p>
             </template>
 
             <div class="space-y-8">
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-4">
+                <h4 class="text-muted mb-4 text-sm font-medium tracking-wide uppercase">
                   Static values
                 </h4>
-                <div class="flex flex-wrap gap-8 items-center">
+                <div class="flex flex-wrap items-center gap-8">
                   <div class="flex flex-col items-center gap-2">
                     <ProgressCircular :progress="0.25" />
-                    <span class="text-xs text-muted">:progress="0.25"</span>
+                    <span class="text-muted text-xs">:progress="0.25"</span>
                   </div>
                   <div class="flex flex-col items-center gap-2">
                     <ProgressCircular :progress="0.5" />
-                    <span class="text-xs text-muted">:progress="0.5"</span>
+                    <span class="text-muted text-xs">:progress="0.5"</span>
                   </div>
                   <div class="flex flex-col items-center gap-2">
                     <ProgressCircular :progress="0.75" />
-                    <span class="text-xs text-muted">:progress="0.75"</span>
+                    <span class="text-muted text-xs">:progress="0.75"</span>
                   </div>
                   <div class="flex flex-col items-center gap-2">
                     <ProgressCircular :progress="1" />
-                    <span class="text-xs text-muted">:progress="1"</span>
+                    <span class="text-muted text-xs">:progress="1"</span>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-4">Sizes</h4>
-                <div class="flex flex-wrap gap-8 items-end">
+                <h4 class="text-muted mb-4 text-sm font-medium tracking-wide uppercase">Sizes</h4>
+                <div class="flex flex-wrap items-end gap-8">
                   <div class="flex flex-col items-center gap-2">
                     <ProgressCircular :progress="0.6" :size="64" :stroke-width="5" />
-                    <span class="text-xs text-muted">:size="64"</span>
+                    <span class="text-muted text-xs">:size="64"</span>
                   </div>
                   <div class="flex flex-col items-center gap-2">
                     <ProgressCircular :progress="0.6" />
-                    <span class="text-xs text-muted">:size="120" (default)</span>
+                    <span class="text-muted text-xs">:size="120" (default)</span>
                   </div>
                   <div class="flex flex-col items-center gap-2">
                     <ProgressCircular :progress="0.6" :size="180" :stroke-width="12" />
-                    <span class="text-xs text-muted">:size="180"</span>
+                    <span class="text-muted text-xs">:size="180"</span>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-4">
+                <h4 class="text-muted mb-4 text-sm font-medium tracking-wide uppercase">
                   Without label
                 </h4>
                 <ProgressCircular :progress="0.7" :show-percentage="false" />
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-4">
+                <h4 class="text-muted mb-4 text-sm font-medium tracking-wide uppercase">
                   Interactive
                 </h4>
                 <div class="flex flex-col items-start gap-4">
                   <ProgressCircular :progress="circularProgress" />
                   <USlider v-model="circularSlider" :min="0" :max="100" class="w-64" />
-                  <span class="text-xs text-muted">{{ circularSlider }}%</span>
+                  <span class="text-muted text-xs">{{ circularSlider }}%</span>
                 </div>
               </div>
             </div>
@@ -891,34 +821,34 @@
                 <UIcon name="i-lucide-minus" class="text-primary" />
                 <h3 class="text-xl font-semibold">ProgressBar</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Wraps Nuxt UI's UProgress — pass a 0–1 value, null for indeterminate
               </p>
             </template>
 
             <div class="space-y-6">
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Static values
                 </h4>
                 <div class="space-y-4">
                   <div class="space-y-1">
-                    <span class="text-xs text-muted">:progress="0.3"</span>
+                    <span class="text-muted text-xs">:progress="0.3"</span>
                     <ProgressBar :progress="0.3" />
                   </div>
                   <div class="space-y-1">
-                    <span class="text-xs text-muted">:progress="0.6"</span>
+                    <span class="text-muted text-xs">:progress="0.6"</span>
                     <ProgressBar :progress="0.6" />
                   </div>
                   <div class="space-y-1">
-                    <span class="text-xs text-muted">:progress="1"</span>
+                    <span class="text-muted text-xs">:progress="1"</span>
                     <ProgressBar :progress="1" />
                   </div>
                 </div>
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">Colors</h4>
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Colors</h4>
                 <div class="space-y-3">
                   <ProgressBar :progress="0.6" color="primary" />
                   <ProgressBar :progress="0.6" color="success" />
@@ -928,7 +858,7 @@
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Indeterminate (:progress="null")
                 </h4>
                 <ProgressBar :progress="null" animation="carousel" />
@@ -946,7 +876,7 @@
         <!-- Gradients & Accents Section -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Gradients & Accents</h2>
+            <h2 class="mb-2 text-2xl font-bold">Gradients & Accents</h2>
             <p class="text-muted">CSS-var driven gradients, tints, and decorative blob scenes</p>
           </div>
 
@@ -956,7 +886,7 @@
                 <UIcon name="i-lucide-layers" class="text-primary" />
                 <h3 class="text-xl font-semibold">GradientBackground</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Wraps any tag with a CSS-var gradient that reacts to the active accent
               </p>
             </template>
@@ -966,9 +896,9 @@
                 v-for="preset in ['brand', 'subtle', 'hero']"
                 :key="preset"
                 :preset
-                class="min-h-30 rounded-xl flex items-center justify-center p-4"
+                class="flex min-h-30 items-center justify-center rounded-xl p-4"
               >
-                <span class="font-semibold text-highlighted mix-blend-overlay capitalize">{{
+                <span class="text-highlighted font-semibold capitalize mix-blend-overlay">{{
                   preset
                 }}</span>
               </GradientBackground>
@@ -987,7 +917,7 @@
                 <UIcon name="i-lucide-type" class="text-primary" />
                 <h3 class="text-xl font-semibold">GradientText</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Gradient-clipped text that reacts live to accent changes
               </p>
             </template>
@@ -1017,7 +947,7 @@
                 <UIcon name="i-lucide-blend" class="text-primary" />
                 <h3 class="text-xl font-semibold">TintOverlay</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Semi-transparent color layer — opacity set as inline style for non-JIT-safe values
               </p>
             </template>
@@ -1028,9 +958,9 @@
                 :key="level"
                 color="primary"
                 :level
-                class="min-h-20 rounded-xl border border-default flex items-end p-3"
+                class="border-default flex min-h-20 items-end rounded-xl border p-3"
               >
-                <span class="text-xs font-mono text-highlighted relative z-10">{{ level }}</span>
+                <span class="text-highlighted relative z-10 font-mono text-xs">{{ level }}</span>
               </TintOverlay>
             </div>
 
@@ -1047,7 +977,7 @@
                 <UIcon name="i-lucide-sparkles" class="text-primary" />
                 <h3 class="text-xl font-semibold">AccentScene</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Composable blurred orbs clipped to their container — all accent-reactive
               </p>
             </template>
@@ -1057,10 +987,10 @@
                 v-for="preset in ['hero', 'corner', 'scattered', 'minimal']"
                 :key="preset"
                 :preset
-                class="h-48 rounded-xl border border-default bg-elevated/30"
+                class="border-default bg-elevated/30 h-48 rounded-xl border"
               >
-                <div class="flex items-center justify-center h-full">
-                  <span class="font-semibold text-highlighted capitalize">{{ preset }}</span>
+                <div class="flex h-full items-center justify-center">
+                  <span class="text-highlighted font-semibold capitalize">{{ preset }}</span>
                 </div>
               </AccentScene>
             </div>
@@ -1073,7 +1003,7 @@
           </UCard>
         </section>
 
-        <div class="flex gap-4 justify-center pt-4">
+        <div class="flex justify-center gap-4 pt-4">
           <UButton to="/core" variant="outline" icon="i-lucide-arrow-left">
             Core Layer Demo
           </UButton>
@@ -1084,7 +1014,7 @@
         name="Typography Layer"
         description="Typography components and composables"
         :links="[
-          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Theming', to: '/theming', icon: 'i-lucide-palette' },
           { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
         ]"
       />

@@ -1,3 +1,6 @@
+// fallow-ignore-file code-duplication
+// Deliberate mirror of the layer config: apps must own their collections (docs/adr/0002).
+
 import { defineCollection, defineContentConfig } from '@nuxt/content'
 
 export default defineContentConfig({

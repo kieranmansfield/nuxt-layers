@@ -1,0 +1,79 @@
+<script setup lang="ts">
+  defineOptions({ inheritAttrs: false })
+
+  const {
+    type = 'linear',
+    size = 120,
+    strokeWidth = 8,
+    showPercentage = true,
+    colors = ['var(--ui-primary)', 'var(--ui-secondary)', 'var(--ui-info)'],
+    bgColor = 'var(--ui-bg-accented)',
+    height = 4,
+  } = defineProps<{
+    /**
+     * Display type: linear bar or circular
+     */
+    type?: 'linear' | 'circular'
+    /**
+     * Size for circular progress (px)
+     */
+    size?: number
+    /**
+     * Stroke width for circular progress
+     */
+    strokeWidth?: number
+    /**
+     * Show percentage text
+     */
+    showPercentage?: boolean
+    /**
+     * Gradient colors (start, middle, end)
+     */
+    colors?: [string, string, string]
+    /**
+     * Background color
+     */
+    bgColor?: string
+    /**
+     * Height for linear progress bar (px)
+     */
+    height?: number
+  }>()
+
+  const { progress } = useSmoothScroll()
+
+  const percentage = computed(() => Math.round(progress.value * 100))
+</script>
+
+<template>
+  <!-- Linear Progress -->
+  <div v-if="type === 'linear'" class="motion-scroll-progress-linear" v-bind="$attrs">
+    <div
+      class="w-full overflow-hidden rounded-full"
+      :style="{ height: `${height}px`, backgroundColor: bgColor }"
+    >
+      <div
+        class="h-full rounded-full transition-[width] duration-100"
+        :style="{
+          width: `${percentage}%`,
+          background: `linear-gradient(to right, ${colors[0]}, ${colors[1]}, ${colors[2]})`,
+        }"
+      />
+    </div>
+    <span v-if="showPercentage" class="mt-2 block text-center text-sm font-medium tabular-nums">
+      {{ percentage }}%
+    </span>
+  </div>
+
+  <!-- Circular Progress -->
+  <ProgressCircular
+    v-else
+    v-bind="$attrs"
+    :progress
+    :size
+    :stroke-width
+    :show-percentage
+    :colors
+    :bg-color
+  />
+</template>

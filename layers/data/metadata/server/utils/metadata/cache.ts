@@ -1,0 +1,50 @@
+import { useStorage } from 'nitropack/runtime'
+import type { MetadataCacheRecord } from '#layers/metadata/shared/types'
+
+// Cache keys: metadata:{provider}:{resourceType}:{providerId}
+//             metadata-search:{provider}:{mediaType}:{queryHash}
+
+// unstorage isn't a direct dependency, so derive its StorageValue type from
+// useStorage's own signature rather than importing the package by name.
+type StorageValue = Parameters<ReturnType<typeof useStorage>['setItem']>[1]
+
+export function makeCacheKey(...parts: string[]): string {
+  return parts.join(':')
+}
+
+export async function getCacheRecord(key: string): Promise<MetadataCacheRecord | null> {
+  const storage = useStorage('metadata')
+  return (await storage.getItem<MetadataCacheRecord>(key)) ?? null
+}
+
+export async function setCacheRecord(
+  key: string,
+  record: MetadataCacheRecord,
+  ttl?: number
+): Promise<void> {
+  const storage = useStorage('metadata')
+  await storage.setItem(key, record, ttl ? { ttl } : undefined)
+}
+
+export async function getSearchCache<T extends StorageValue>(key: string): Promise<T | null> {
+  const storage = useStorage('metadata')
+  return (await storage.getItem<T>(key)) ?? null
+}
+
+export async function setSearchCache<T extends StorageValue>(
+  key: string,
+  value: T,
+  ttl = 3600
+): Promise<void> {
+  const storage = useStorage('metadata')
+  await storage.setItem(key, value, { ttl })
+}
+
+export function hashQuery(query: string): string {
+  let h = 0
+  for (let i = 0; i < query.length; i++) {
+    // oxlint-disable-next-line unicorn/prefer-math-trunc, unicorn/prefer-code-point -- int32-wrapping UTF-16 hash; changing either changes cache keys
+    h = (Math.imul(31, h) + query.charCodeAt(i)) | 0
+  }
+  return Math.abs(h).toString(36)
+}

@@ -36,7 +36,7 @@
         name="ANIMATIONS"
         description="GSAP-powered micro-interaction components — the pieces the Motion layer composes into its scrollytelling demos."
       >
-        <div class="flex flex-wrap gap-4 justify-center">
+        <div class="flex flex-wrap justify-center gap-4">
           <UButton size="lg" @click="() => $router.push('#interactive')">Interactions</UButton>
           <UButton size="lg" variant="outline" @click="() => $router.push('#text')"
             >Text & Counters</UButton
@@ -49,169 +49,159 @@
             <UIcon name="i-lucide-mouse-pointer-2" class="mr-2" />
             Interactions Showcase
           </UButton>
+          <UButton size="lg" variant="ghost" to="/flip-views">
+            <UIcon name="i-lucide-layout-list" class="mr-2" />
+            Flip Views
+          </UButton>
         </div>
       </DemoPageHero>
 
       <!-- Interactive components -->
-      <section id="interactive" class="py-24 bg-default">
-        <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
-              Pointer Interactions
-            </h2>
-            <p class="text-muted text-lg">Tilt, Magnetic, and Cursor — driven by spring physics</p>
+      <DemoSection
+        id="interactive"
+        title="Pointer Interactions"
+        description="Tilt, Magnetic, and Cursor — driven by spring physics"
+      >
+        <div class="mb-16 grid gap-8 md:grid-cols-2">
+          <div
+            class="bg-accented border-accented flex flex-col items-center rounded-2xl border p-8"
+          >
+            <h3 class="text-highlighted mb-6 text-lg font-bold">MotionTilt</h3>
+            <MotionTilt
+              :max-tilt="18"
+              class="from-primary flex h-48 w-48 items-center justify-center rounded-3xl bg-linear-to-br to-purple-600 shadow-xl"
+            >
+              <UIcon name="i-lucide-move-3d" class="text-highlighted text-5xl" />
+            </MotionTilt>
+            <p class="text-muted mt-6 text-sm">
+              Hover the card — perspective tilt with damping/stiffness springs
+            </p>
           </div>
 
-          <div class="grid md:grid-cols-2 gap-8 mb-16">
-            <div
-              class="bg-accented rounded-2xl p-8 flex flex-col items-center border border-accented"
-            >
-              <h3 class="text-lg font-bold text-highlighted mb-6">MotionTilt</h3>
-              <MotionTilt
-                :max-tilt="18"
-                class="w-48 h-48 rounded-3xl bg-linear-to-br from-primary to-purple-600 flex items-center justify-center shadow-xl"
+          <div
+            class="bg-accented border-accented flex flex-col items-center rounded-2xl border p-8"
+          >
+            <h3 class="text-highlighted mb-6 text-lg font-bold">MotionMagnetic</h3>
+            <MotionMagnetic :strength="0.5" :radius="120" class="inline-block">
+              <UButton size="xl" class="rounded-full px-10">
+                <UIcon name="i-lucide-magnet" class="mr-2" />
+                Pull me
+              </UButton>
+            </MotionMagnetic>
+            <p class="text-muted mt-6 text-sm">Cursor proximity pulls the element toward it</p>
+          </div>
+        </div>
+
+        <div class="bg-default border-default rounded-2xl border p-8">
+          <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+            <h3 class="text-highlighted text-lg font-bold">MotionCursor</h3>
+            <div class="flex gap-2">
+              <UButton
+                v-for="type in cursorTypes"
+                :key="type"
+                size="sm"
+                :variant="cursorType === type ? 'solid' : 'outline'"
+                @click="() => (cursorType = type)"
               >
-                <UIcon name="i-lucide-move-3d" class="text-5xl text-highlighted" />
-              </MotionTilt>
-              <p class="text-muted text-sm mt-6">
-                Hover the card — perspective tilt with damping/stiffness springs
-              </p>
-            </div>
-
-            <div
-              class="bg-accented rounded-2xl p-8 flex flex-col items-center border border-accented"
-            >
-              <h3 class="text-lg font-bold text-highlighted mb-6">MotionMagnetic</h3>
-              <MotionMagnetic :strength="0.5" :radius="120" class="inline-block">
-                <UButton size="xl" class="rounded-full px-10">
-                  <UIcon name="i-lucide-magnet" class="mr-2" />
-                  Pull me
-                </UButton>
-              </MotionMagnetic>
-              <p class="text-muted text-sm mt-6">Cursor proximity pulls the element toward it</p>
+                {{ type }}
+              </UButton>
             </div>
           </div>
-
-          <div class="bg-default rounded-2xl p-8 border border-default">
-            <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
-              <h3 class="text-lg font-bold text-highlighted">MotionCursor</h3>
-              <div class="flex gap-2">
-                <UButton
-                  v-for="type in cursorTypes"
-                  :key="type"
-                  size="sm"
-                  :variant="cursorType === type ? 'solid' : 'outline'"
-                  @click="() => (cursorType = type)"
-                >
-                  {{ type }}
-                </UButton>
-              </div>
-            </div>
-            <div
-              class="h-56 rounded-2xl bg-muted relative overflow-hidden flex items-center justify-center cursor-none"
-            >
-              <MotionCursor :type="cursorType" />
-              <p class="text-muted">Move your mouse inside this box</p>
-            </div>
+          <div
+            class="bg-muted relative flex h-56 cursor-none items-center justify-center overflow-hidden rounded-2xl"
+          >
+            <MotionCursor :type="cursorType" />
+            <p class="text-muted">Move your mouse inside this box</p>
           </div>
-        </UContainer>
-      </section>
+        </div>
+      </DemoSection>
 
       <!-- Velocity -->
-      <section class="py-24 bg-default overflow-hidden">
-        <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
-              MotionVelocityEffect
-            </h2>
-            <p class="text-muted text-lg">
-              Reacts to scroll velocity — try scrolling quickly past this section
-            </p>
-          </div>
-          <div class="flex gap-2 justify-center mb-10">
-            <UButton
-              v-for="effect in velocityEffects"
-              :key="effect"
-              size="sm"
-              :variant="velocityEffect === effect ? 'solid' : 'outline'"
-              @click="() => (velocityEffect = effect)"
-            >
-              {{ effect }}
-            </UButton>
-          </div>
-          <MotionVelocityEffect
-            :effect="velocityEffect"
-            :intensity="1.2"
-            as="div"
-            class="text-center"
+      <DemoSection
+        class="overflow-hidden"
+        title="MotionVelocityEffect"
+        description="Reacts to scroll velocity — try scrolling quickly past this section"
+      >
+        <div class="mb-10 flex justify-center gap-2">
+          <UButton
+            v-for="effect in velocityEffects"
+            :key="effect"
+            size="sm"
+            :variant="velocityEffect === effect ? 'solid' : 'outline'"
+            @click="() => (velocityEffect = effect)"
           >
-            <h3 class="text-5xl md:text-7xl font-black text-highlighted">SCROLL TO REACT</h3>
-          </MotionVelocityEffect>
-        </UContainer>
-      </section>
+            {{ effect }}
+          </UButton>
+        </div>
+        <MotionVelocityEffect
+          :effect="velocityEffect"
+          :intensity="1.2"
+          as="div"
+          class="text-center"
+        >
+          <h3 class="text-highlighted text-5xl font-black md:text-7xl">SCROLL TO REACT</h3>
+        </MotionVelocityEffect>
+      </DemoSection>
 
       <!-- Text & Counters -->
-      <section id="text" class="py-24 bg-default">
-        <UContainer>
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">Text & Counters</h2>
-            <p class="text-muted text-lg">MotionTextReveal, MotionStaggered, and MotionCountUp</p>
-          </div>
+      <DemoSection
+        id="text"
+        title="Text & Counters"
+        description="MotionTextReveal, MotionStaggered, and MotionCountUp"
+      >
+        <div class="mx-auto mb-16 max-w-3xl text-center">
+          <h3 class="text-highlighted mb-4 text-3xl font-bold md:text-5xl">
+            <MotionTextReveal text="Characters reveal in sequence" type="chars" :stagger="0.02" />
+          </h3>
+          <p class="text-muted text-lg">
+            <MotionTextReveal
+              text="Words animate in as a group when scrolled into view"
+              type="words"
+              :stagger="0.06"
+            />
+          </p>
+        </div>
 
-          <div class="max-w-3xl mx-auto text-center mb-16">
-            <h3 class="text-3xl md:text-5xl font-bold text-highlighted mb-4">
-              <MotionTextReveal text="Characters reveal in sequence" type="chars" :stagger="0.02" />
-            </h3>
-            <p class="text-lg text-muted">
-              <MotionTextReveal
-                text="Words animate in as a group when scrolled into view"
-                type="words"
-                :stagger="0.06"
-              />
+        <MotionStaggered class="mb-16 grid grid-cols-2 gap-4 md:grid-cols-4" :stagger-delay="80">
+          <div
+            v-for="i in 8"
+            :key="i"
+            class="border-accented text-highlighted flex aspect-square items-center justify-center rounded-2xl border bg-linear-to-br from-(--ui-bg-accented) to-(--ui-bg-muted) text-3xl font-bold"
+          >
+            {{ i }}
+          </div>
+        </MotionStaggered>
+
+        <div class="mx-auto grid max-w-3xl gap-6 text-center sm:grid-cols-3">
+          <div class="bg-accented border-accented rounded-2xl border p-8">
+            <p class="text-primary text-4xl font-black">
+              <MotionCountUp :key="`a-${countKey}`" :to="142" suffix="" />
             </p>
+            <p class="text-muted mt-2 text-sm">TSL pipeline blocks</p>
           </div>
-
-          <MotionStaggered class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16" :stagger-delay="80">
-            <div
-              v-for="i in 8"
-              :key="i"
-              class="aspect-square rounded-2xl bg-linear-to-br from-[var(--ui-bg-accented)] to-[var(--ui-bg-muted)] border border-accented flex items-center justify-center text-3xl font-bold text-highlighted"
-            >
-              {{ i }}
-            </div>
-          </MotionStaggered>
-
-          <div class="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto text-center">
-            <div class="bg-accented rounded-2xl p-8 border border-accented">
-              <p class="text-4xl font-black text-primary">
-                <MotionCountUp :key="`a-${countKey}`" :to="142" suffix="" />
-              </p>
-              <p class="text-muted text-sm mt-2">TSL pipeline blocks</p>
-            </div>
-            <div class="bg-accented rounded-2xl p-8 border border-accented">
-              <p class="text-4xl font-black text-primary">
-                <MotionCountUp :key="`b-${countKey}`" :to="21" />
-              </p>
-              <p class="text-muted text-sm mt-2">Layers in the monorepo</p>
-            </div>
-            <div class="bg-accented rounded-2xl p-8 border border-accented">
-              <p class="text-4xl font-black text-primary">
-                <MotionCountUp :key="`c-${countKey}`" :to="60" suffix="fps" />
-              </p>
-              <p class="text-muted text-sm mt-2">Target frame rate</p>
-            </div>
+          <div class="bg-accented border-accented rounded-2xl border p-8">
+            <p class="text-primary text-4xl font-black">
+              <MotionCountUp :key="`b-${countKey}`" :to="21" />
+            </p>
+            <p class="text-muted mt-2 text-sm">Layers in the monorepo</p>
           </div>
-          <div class="text-center mt-8">
-            <UButton variant="outline" @click="replayCount">
-              <UIcon name="i-lucide-rotate-ccw" class="mr-2" />
-              Replay counters
-            </UButton>
+          <div class="bg-accented border-accented rounded-2xl border p-8">
+            <p class="text-primary text-4xl font-black">
+              <MotionCountUp :key="`c-${countKey}`" :to="60" suffix="fps" />
+            </p>
+            <p class="text-muted mt-2 text-sm">Target frame rate</p>
           </div>
-        </UContainer>
-      </section>
+        </div>
+        <div class="mt-8 text-center">
+          <UButton variant="outline" @click="replayCount">
+            <UIcon name="i-lucide-rotate-ccw" class="mr-2" />
+            Replay counters
+          </UButton>
+        </div>
+      </DemoSection>
 
       <!-- Marquee -->
-      <section class="py-0 bg-primary text-highlighted overflow-hidden">
+      <section class="bg-primary text-highlighted overflow-hidden py-0">
         <MotionMarquee :speed="70" direction="left" gap="3rem">
           <span
             v-for="item in [
@@ -225,7 +215,7 @@
               '✦',
             ]"
             :key="item"
-            class="text-3xl md:text-5xl font-black whitespace-nowrap"
+            class="text-3xl font-black whitespace-nowrap md:text-5xl"
           >
             {{ item }}
           </span>
@@ -242,6 +232,7 @@
             icon: 'i-lucide-mouse-pointer-2',
           },
           { label: 'MarqueeText', to: '/marquee-text', icon: 'i-lucide-text-cursor-input' },
+          { label: 'Flip Views', to: '/flip-views', icon: 'i-lucide-layout-list' },
           { label: 'Motion Layer', to: '/motion', icon: 'i-lucide-sparkles' },
         ]"
       />

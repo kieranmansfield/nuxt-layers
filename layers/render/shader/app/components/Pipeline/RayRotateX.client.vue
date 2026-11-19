@@ -1,0 +1,26 @@
+<script setup lang="ts">
+  // fallow-ignore-file code-duplication
+  import { cos, sin, vec3 } from 'three/tsl'
+
+  const { angle = 0, order = 0 } = defineProps<{
+    /** Rotation angle in radians */
+    angle?: number
+    order?: number
+  }>()
+
+  const angleNode = useUniformProp(() => angle)
+
+  useShaderStage(
+    (ray) => {
+      const c = cos(angleNode)
+      const s = sin(angleNode)
+      return vec3(ray.x, ray.y.mul(c).sub(ray.z.mul(s)), ray.y.mul(s).add(ray.z.mul(c)))
+    },
+    order,
+    'ray'
+  )
+</script>
+
+<template>
+  <slot />
+</template>

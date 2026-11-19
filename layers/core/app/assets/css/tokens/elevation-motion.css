@@ -1,0 +1,43 @@
+/**
+ * Shadow/duration tokens, declared once in @theme static so `shadow-lg`, `duration-base`, etc.
+ * resolve to one value and are also plain custom properties for non-Tailwind CSS.
+ * `static` is required — Tailwind v4 tree-shakes @theme entries that no
+ * utility in the scanned source actually uses; without it, an unused
+ * shade here silently disappears from the theme namespace instead of
+ * just being unused. Mirrors the font-token pattern in
+ * layers/design-system/typography/app/assets/css/typography.css.
+ *
+ * Radius is deliberately NOT here. Nuxt UI already owns the rounded-*
+ * scale via its own --ui-radius-based overrides (rounded-sm through
+ * rounded-3xl all resolve to calc(var(--ui-radius) * N)), registered in
+ * a lower-priority cascade layer than Tailwind's own generated
+ * utilities. Defining --radius-* in @theme here made Tailwind generate
+ * competing utilities-layer rules for rounded-sm/md/lg/xl that silently
+ * beat Nuxt UI's design-system scaling app-wide (confirmed: every Nuxt
+ * UI component's corner radius changed), while rounded-2xl/3xl (never
+ * given a --radius-* entry here) stayed on Nuxt UI's scale — a visible,
+ * inconsistent split. Bridging radius through this file needs its
+ * values aligned to --ui-radius's own multipliers to avoid this, which
+ * is out of scope here; until then, Nuxt UI stays the single source of
+ * truth for radius.
+ *
+ * Shadow literals live in @theme static (not var() aliases): Tailwind v4 parses each
+ * shadow's resolved value at build time to build the `shadow-primary/25` colour slot, and a
+ * var() indirection would hide it. Duration needs no such parsing.
+ *
+ * Colours are NOT here — they're already single-sourced dynamically via
+ * accent-css.ts's per-accent --ui-color-* generation (runtime accent
+ * switching), a different mechanism this file does not touch.
+ */
+@theme static {
+  --shadow-none: none;
+  --shadow-sm: 0 1px 2px 0 oklch(0% 0 0deg / 0.05);
+  --shadow-md: 0 4px 6px -1px oklch(0% 0 0deg / 0.1), 0 2px 4px -2px oklch(0% 0 0deg / 0.1);
+  --shadow-lg: 0 10px 15px -3px oklch(0% 0 0deg / 0.1), 0 4px 6px -4px oklch(0% 0 0deg / 0.1);
+  --shadow-xl: 0 20px 25px -5px oklch(0% 0 0deg / 0.1), 0 8px 10px -6px oklch(0% 0 0deg / 0.1);
+
+  /* base matches theme.css's .theme-transition duration */
+  --duration-fast: 150ms;
+  --duration-base: 700ms;
+  --duration-slow: 1000ms;
+}

@@ -1,0 +1,30 @@
+/**
+ * Fluid spacing scale — one ratio, same idea as typography.css's type scale:
+ *   space = --space-base × --space-scale ^ n
+ * 1.414 ≈ 2^(1/2), so two steps double a gap. --space-base runs 11.3px at ≤320px to 16px
+ * at ≥1280px — one step of growth (√2), not the reference's two (8 → 16px), so phones keep
+ * the old fluid tokens' sizes (xs 8 · md 16 · xl 32 · 3xl 64px at 320px). The rem term in the
+ * middle keeps it zoom-safe (WCAG 1.4.4).
+ * Backs the `Spacing` token (layers/core/app/types/tokens.ts) consumed by
+ * useLayoutAttrs(). --space-none is 0, not a step.
+ * Plain :root properties, not @theme: --space-* is not a Tailwind namespace, and
+ * xs/md/xl declared there would risk colliding with --container-* size names.
+ *
+ * Trap: each step substitutes --space-base here at :root, so overriding --space-base
+ * on a subtree does NOT change --space-md inside it. Per-subtree spacing retuning is
+ * not a supported extension point (type retuning is — see typography.css).
+ */
+:root {
+  --space-scale: 1.414;
+  --space-base: clamp(0.7071rem, 0.6095rem + 0.4882vw, 1rem);
+
+  /* n = −1 … 5 */
+  --space-none: 0px;
+  --space-xs: calc(var(--space-base) * pow(var(--space-scale), -1));
+  --space-sm: calc(var(--space-base) * pow(var(--space-scale), 0));
+  --space-md: calc(var(--space-base) * pow(var(--space-scale), 1));
+  --space-lg: calc(var(--space-base) * pow(var(--space-scale), 2));
+  --space-xl: calc(var(--space-base) * pow(var(--space-scale), 3));
+  --space-2xl: calc(var(--space-base) * pow(var(--space-scale), 4));
+  --space-3xl: calc(var(--space-base) * pow(var(--space-scale), 5));
+}

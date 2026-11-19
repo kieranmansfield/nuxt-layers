@@ -30,30 +30,35 @@ Placing it at the layer root silently ignores it — `useAppConfig()` returns `u
 
 ## All Layers
 
+The dependency graph in the root `CLAUDE.md` is the source of truth; this table is a summary
+and omits `grid`, `feeds` and the `metadata` providers.
+
 | Layer              | Purpose                                                                                        | Depends on                                                |
 | ------------------ | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `core`             | Base utilities, 404, loading screen, scroll guard                                              | nothing (loads @nuxt/ui, @vueuse/nuxt, @nuxtjs/device)    |
+| `core`             | Base utilities, 404, loading screen, scroll guard, Element/ElementTw polymorphic primitives (layout/grid/spacing/sizing/surface/interaction vocabulary — inline `:style` and Tailwind-class variants) | nothing (loads @nuxt/ui, @vueuse/nuxt, @nuxtjs/device)    |
 | `seo`              | SEO: robots, sitemap, og-image, schema-org via @nuxtjs/seo                                     | `core`                                                    |
 | `scripts`          | Third-party script loading via @nuxt/scripts (analytics, GTM, embeds)                          | `core`                                                    |
+| `security`         | Opt-in nuxt-security wrapper: CSP, security headers, rate limiter, XSS validator               | `core`                                                    |
 | `typography`       | Typography components (Headline, TextStroke, CodeBlock) + useTypography, useColor              | `core`                                                    |
-| `navigation`       | Nav/header/footer, site title, links, useMastNav, useSite, useAppToast                         | `core`, `scroll`, `layout`, `typography`                  |
+| `navigation`       | Nav/header/footer, site title, links, useMastNav, useSite, useAppToast                         | `core`, `scroll`, `layout`, `typography`, `visual`        |
 | `visual`           | Accent blobs, gradients, tints, modals, picture, progress + their composables                  | `core`                                                    |
-| `ui`               | UI orchestrator — composes typography, navigation, visual + default layout                     | `typography`, `navigation`, `visual`                      |
 | `layout`           | Page layout components (header, footer, sidebar)                                               | `core`                                                    |
-| `scroll`           | GSAP + Locomotive Scroll infrastructure, scroll-reactive components                            | `core`                                                    |
-| `animations`       | Animation components (Marquee, Cursor, Tilt, Magnetic, CountUp, TextReveal)                    | `scroll`                                                  |
+| `scroll`           | GSAP + Locomotive Scroll infrastructure, scroll-reactive components                            | `core`, `visual`                                          |
+| `animations`       | Animation components (Marquee, Cursor, Tilt, Magnetic, CountUp, TextReveal)                    | `scroll`, `transitions`                                   |
 | `transitions`      | CSS transition/animation classes + Transition.vue component                                    | `core`                                                    |
 | `page-transitions` | Nuxt page transition defaults + usePageTransition()                                            | `core`                                                    |
 | `motion`           | Motion orchestrator — composes scroll, animations, transitions, page-transitions               | `scroll`, `animations`, `transitions`, `page-transitions` |
 | `canvas`           | WebGL/WebGPU/TresJS rendering context                                                          | `core`                                                    |
-| `shader`           | TSL shader pipeline blocks, materials, presets                                                 | `canvas`                                                  |
+| `shader`           | TSL shader pipeline blocks, materials, presets                                                 | `canvas`, `theming`                                       |
 | `mailer`           | Email sending via Resend, hooks, runtime config                                                | `core`                                                    |
 | `forms`            | Form UI components, Zod validation                                                             | `mailer`                                                  |
 | `database`         | Drizzle ORM + Neon Postgres connection; useSql(), useDrizzle(schema) server utils              | `core`                                                    |
 | `auth`             | nuxt-auth-utils + GitHub OAuth handler; sealed-cookie sessions, opt-in `auth` route middleware | `core`                                                    |
-| `theme`            | Design tokens and theming utilities                                                            | `core`                                                    |
-| `content`          | Nuxt Content v3 collections and components                                                     | `core`                                                    |
+| `theming`          | Design tokens and theming utilities                                                            | `core`, `typography`                                      |
+| `content`          | Nuxt Content v3 collections and components                                                     | `core`, `layout`, `visual`, `project-stats`               |
+| `project-stats`    | GitHub repo + Obsidian plugin stats (cached API routes, composables, cards)                    | `core`                                                    |
 | `routing`          | Advanced routing, maintenance mode, feature flags                                              | `core`                                                    |
+| `capture`          | `kmcom-capture` CLI (Monkr-framed screenshots/videos of any site) + capture-ready client plugin | `core`                                                    |
 
 ## Alias Pattern
 
@@ -73,6 +78,18 @@ Import examples:
 
 - `import { formsLayerHooks } from '#layers/forms/server/utils/hooks'`
 - `import type { GridConfig } from '#layers/layout/types/layouts'`
+
+## CSS Single Build-Root Rule
+
+Tailwind v4 is CSS-first and only tolerates **one** `@import 'tailwindcss/...'` build root per
+app. Any layer adding Tailwind-consuming CSS (custom properties, `@utility` blocks) must fold
+into `core.css`'s import chain via a relative path, and must never open its own
+`@import 'tailwindcss/...'` root. A second build root fails silently — no error, just broken
+utility output (e.g. `typography.css` opening its own root once broke `@nuxt/ui`'s
+`UNavigationMenu` padding in production with zero warning).
+
+This is a permanent, documented exception to "core has zero layer deps" — true for JS/TS, not
+true for CSS build-root ownership.
 
 ## Dependency Graph
 

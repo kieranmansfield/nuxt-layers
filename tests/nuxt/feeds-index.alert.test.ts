@@ -1,7 +1,8 @@
+// fallow-ignore-next-line code-duplication
 import { mockComponent, mountSuspended } from '@nuxt/test-utils/runtime'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vite-plus/test'
 
-import FeedsIndex from '../../layers/feeds/app/components/Feeds/Index.vue'
+import FeedsIndex from '../../layers/delivery/feeds/app/components/Feeds/Index.vue'
 
 mockComponent('UCard', {
   template: '<div><slot /></div>',

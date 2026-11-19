@@ -18,8 +18,10 @@ dist
 # Local History
 .history
 
-# VSCode
-.vscode/
+# VSCode (shared formatter/extension settings are committed; everything else stays local)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 
 # JetBrains/WebStorm
 .idea/
@@ -31,6 +33,8 @@ dist
 **/app/utils/*.js
 **/app/components/**/*.js
 **/app.config.js
+layers/**/nuxt.config.mjs
+config-runtime/
 
 # Local Netlify folder
 .netlify
@@ -63,6 +67,7 @@ dist
 .claude-flow/
 .swarm/
 .mcp.json
+.claude/worktrees/
 
 # Superpowers skills
 .superpowers/
@@ -75,3 +80,4 @@ dist
 /ambient-page.png
 .pnpm-store/
 coverage/
+.vitest/

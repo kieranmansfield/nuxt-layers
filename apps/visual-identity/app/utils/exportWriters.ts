@@ -9,7 +9,7 @@ import type {
 import { generateScale, type ScaleEntry } from '../composables/useTailwindScale'
 
 function colourCssName(colour: { role: string; name: string }): string {
-  return colour.role === 'custom' ? colour.name.toLowerCase().replace(/\s+/g, '-') : colour.role
+  return colour.role === 'custom' ? colour.name.toLowerCase().replaceAll(/\s+/g, '-') : colour.role
 }
 
 function contrastScale(entries: ScaleEntry[], contrast: ContrastLevel): ScaleEntry[] {
@@ -86,9 +86,8 @@ function resolveThemeColours(theme: ThemeVariant, colours: BrandColour[]) {
 // fallow-ignore-next-line complexity
 export function buildCssVariablesExport(state: BrandState): string {
   const { schemes, contrastLevels } = state.themeMode
-  const lines: string[] = []
+  const lines: string[] = [':root {']
 
-  lines.push(':root {')
   pushColourLines(lines, state.colours, { contrast: 'standard', format: 'hex' })
   lines.push('')
   pushFontLines(lines, state.typography)
@@ -96,9 +95,7 @@ export function buildCssVariablesExport(state: BrandState): string {
 
   for (const scheme of schemes) {
     if (scheme === 'dark') {
-      lines.push('[data-scheme="dark"] {')
-      lines.push('  color-scheme: dark;')
-      lines.push('}', '')
+      lines.push('[data-scheme="dark"] {', '  color-scheme: dark;', '}', '')
     }
   }
 
@@ -110,9 +107,9 @@ export function buildCssVariablesExport(state: BrandState): string {
   }
 
   for (const theme of state.themes.filter((variant) => !variant.isDefault)) {
-    const slug = theme.name.toLowerCase().replace(/\s+/g, '-')
+    const slug = theme.name.toLowerCase().replaceAll(/\s+/g, '-')
     const themeColours = resolveThemeColours(theme, state.colours)
-    if (!themeColours.length) continue
+    if (themeColours.length === 0) continue
 
     lines.push(`[data-theme="${slug}"] {`)
     pushColourLines(lines, themeColours, { contrast: 'standard', format: 'hex' })
@@ -134,26 +131,24 @@ export function buildTailwindV4Export(state: BrandState): string {
 
   for (const contrast of contrastLevels) {
     if (contrast === 'standard') continue
-    lines.push(`/* ${contrast} contrast */`)
-    lines.push('@layer utilities {')
-    lines.push(`  [data-contrast="${contrast}"] {`)
+    lines.push(
+      `/* ${contrast} contrast */`,
+      '@layer utilities {',
+      `  [data-contrast="${contrast}"] {`
+    )
     pushColourLines(lines, state.colours, { contrast, format: 'oklch', indent: '    ' })
     // fallow-ignore-next-line code-duplication
-    lines.push('  }')
-    lines.push('}', '')
+    lines.push('  }', '}', '')
   }
 
   for (const theme of state.themes.filter((variant) => !variant.isDefault)) {
-    const slug = theme.name.toLowerCase().replace(/\s+/g, '-')
+    const slug = theme.name.toLowerCase().replaceAll(/\s+/g, '-')
     const themeColours = resolveThemeColours(theme, state.colours)
-    if (!themeColours.length) continue
+    if (themeColours.length === 0) continue
 
-    lines.push(`/* theme: ${theme.name} */`)
-    lines.push('@layer utilities {')
-    lines.push(`  [data-theme="${slug}"] {`)
+    lines.push(`/* theme: ${theme.name} */`, '@layer utilities {', `  [data-theme="${slug}"] {`)
     pushColourLines(lines, themeColours, { contrast: 'standard', format: 'oklch', indent: '    ' })
-    lines.push('  }')
-    lines.push('}', '')
+    lines.push('  }', '}', '')
   }
 
   return lines.join('\n').trimEnd()

@@ -7,6 +7,7 @@
   setPageAccent('amber')
   onUnmounted(() => setPageAccent(null))
 
+  // fallow-ignore-next-line code-duplication
   const galleryItems = [
     { id: 1, title: 'Item 1', color: 'bg-blue-500' },
     { id: 2, title: 'Item 2', color: 'bg-green-500' },
@@ -16,90 +17,49 @@
     { id: 6, title: 'Item 6', color: 'bg-cyan-500' },
   ]
 
+  const workItems = [
+    {
+      id: 'a',
+      name: 'Atlas',
+      type: 'Identity',
+      role: 'Design',
+      year: 2026,
+      link: 'https://example.com/a',
+      color: 'bg-blue-500',
+    },
+    {
+      id: 'b',
+      name: 'Beacon',
+      type: 'Web app',
+      role: 'Design + build',
+      year: 2025,
+      link: 'https://example.com/b',
+      color: 'bg-green-500',
+    },
+    {
+      id: 'c',
+      name: 'Cinder',
+      type: 'iOS',
+      role: 'Build',
+      year: 2024,
+      link: 'https://example.com/c',
+      color: 'bg-purple-500',
+    },
+  ]
+  const workColumns = [
+    { key: 'name', label: 'Project', class: 'flex-[2_1_200px]' },
+    { key: 'type', label: 'Category', class: 'text-muted flex-[1_1_120px]' },
+    { key: 'role', label: 'Role', class: 'text-muted flex-[1_1_120px]' },
+    { key: 'year', label: 'Year', class: 'flex-[0_0_56px]' },
+  ]
+
   // Preset gallery data — mini-bar diagrams show the lg (18-col) layout
   const presetGroups = [
     {
       label: 'Full-width',
       presets: [
         { name: 'hero', desc: 'Full width · all 12 rows', lgStart: 1, lgSpan: 18 },
-        { name: 'fullWidth', desc: 'All columns, no bleed', lgStart: 1, lgSpan: 18 },
-        { name: 'superCentered', desc: 'Full width · content centered', lgStart: 1, lgSpan: 18 },
-      ],
-    },
-    {
-      label: 'Width variants',
-      presets: [
-        { name: 'wide', desc: 'lg: cols 2–17 · 16 cols', lgStart: 2, lgSpan: 16 },
         { name: 'centered', desc: 'Full width · 12 rows (100vh)', lgStart: 1, lgSpan: 18 },
-        { name: 'prose', desc: 'lg: cols 5–14 · 10 cols', lgStart: 5, lgSpan: 10 },
-      ],
-    },
-    {
-      label: 'Sidebar pair',
-      presets: [
-        { name: 'sidebar', desc: 'lg: cols 1–4 · 4 cols', lgStart: 1, lgSpan: 4 },
-        { name: 'content', desc: 'lg: cols 5–18 · 14 cols', lgStart: 5, lgSpan: 14 },
-      ],
-    },
-    {
-      label: '50/50 vertical split',
-      presets: [
-        { name: 'splitLeft', desc: 'lg: cols 1–9', lgStart: 1, lgSpan: 9 },
-        { name: 'splitRight', desc: 'lg: cols 10–18', lgStart: 10, lgSpan: 9 },
-      ],
-    },
-    {
-      label: '25/75 vertical split',
-      presets: [
-        { name: 'quarterLeft', desc: 'lg: cols 1–5', lgStart: 1, lgSpan: 5 },
-        { name: 'threeQuarterRight', desc: 'lg: cols 6–18', lgStart: 6, lgSpan: 13 },
-        { name: 'threeQuarterLeft', desc: 'lg: cols 1–13', lgStart: 1, lgSpan: 13 },
-        { name: 'quarterRight', desc: 'lg: cols 14–18', lgStart: 14, lgSpan: 5 },
-      ],
-    },
-    {
-      label: 'Horizontal stacks',
-      presets: [
-        { name: 'halfTop', desc: 'Full width · rows 1–6', lgStart: 1, lgSpan: 18 },
-        { name: 'halfBottom', desc: 'Full width · rows 7–12', lgStart: 1, lgSpan: 18 },
-      ],
-    },
-  ]
-
-  type PresetPart = { name: string; lgStart: number; lgSpan: number; colorClass: string }
-
-  // Paired presets — shown as combined 18-column visualizations (lg layout)
-  const presetPairs: { label: string; note: string; parts: [PresetPart, PresetPart] }[] = [
-    {
-      label: 'Sidebar pair',
-      note: '4 + 14 = 18 ✓',
-      parts: [
-        { name: 'sidebar', lgStart: 1, lgSpan: 4, colorClass: 'bg-green-500/30' },
-        { name: 'content', lgStart: 5, lgSpan: 14, colorClass: 'bg-teal-500/30' },
-      ],
-    },
-    {
-      label: '50/50 vertical split',
-      note: '9 + 9 = 18 ✓',
-      parts: [
-        { name: 'splitLeft', lgStart: 1, lgSpan: 9, colorClass: 'bg-orange-500/30' },
-        { name: 'splitRight', lgStart: 10, lgSpan: 9, colorClass: 'bg-rose-500/30' },
-      ],
-    },
-    {
-      label: '25/75 vertical split',
-      note: '5 + 13 = 18 ✓',
-      parts: [
-        { name: 'quarterLeft', lgStart: 1, lgSpan: 5, colorClass: 'bg-indigo-500/30' },
-        { name: 'threeQuarterRight', lgStart: 6, lgSpan: 13, colorClass: 'bg-cyan-500/30' },
-      ],
-    },
-    {
-      label: '75/25 vertical split',
-      note: '13 + 5 = 18 ✓',
-      parts: [
-        { name: 'threeQuarterLeft', lgStart: 1, lgSpan: 13, colorClass: 'bg-emerald-500/30' },
-        { name: 'quarterRight', lgStart: 14, lgSpan: 5, colorClass: 'bg-pink-500/30' },
       ],
     },
   ]
@@ -121,7 +81,7 @@
         <div class="flex items-center gap-4">
           <UButton to="/" variant="ghost" icon="i-lucide-arrow-left" />
           <div>
-            <h1 class="text-3xl font-bold text-highlighted">Layout Layer</h1>
+            <h1 class="text-highlighted text-3xl font-bold">Layout Layer</h1>
             <p class="text-muted">Swiss Grid system, sections, and page components</p>
           </div>
           <div class="ml-auto">
@@ -132,7 +92,7 @@
         <!-- Page Component Section (LayoutPage) -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Page Components</h2>
+            <h2 class="mb-2 text-2xl font-bold">Page Components</h2>
             <p class="text-muted">Canonical page wrappers with SEO and layout integration</p>
           </div>
 
@@ -144,65 +104,65 @@
                 <h3 class="text-xl font-semibold">LayoutPage</h3>
                 <UBadge color="primary" size="sm">Canonical</UBadge>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 The standard page wrapper. Handles SEO, grid context, and debug overlay.
               </p>
             </template>
 
             <div class="space-y-6">
               <div class="grid gap-4 md:grid-cols-2">
-                <div class="p-4 bg-elevated rounded-lg">
-                  <h4 class="font-medium mb-2">Automatic SEO</h4>
-                  <p class="text-sm text-muted">
+                <div class="bg-elevated rounded-lg p-4">
+                  <h4 class="mb-2 font-medium">Automatic SEO</h4>
+                  <p class="text-muted text-sm">
                     Sets page title, meta description, and Open Graph tags via useHead()
                   </p>
                 </div>
-                <div class="p-4 bg-elevated rounded-lg">
-                  <h4 class="font-medium mb-2">Grid Context</h4>
-                  <p class="text-sm text-muted">
-                    Wraps page in &lt;main class="mastmain"&gt; — the root of the Swiss Grid
+                <div class="bg-elevated rounded-lg p-4">
+                  <h4 class="mb-2 font-medium">Grid Context</h4>
+                  <p class="text-muted text-sm">
+                    Wraps page in &lt;main class="grid-root"&gt; — the root of the Swiss Grid
                   </p>
                 </div>
-                <div class="p-4 bg-elevated rounded-lg">
-                  <h4 class="font-medium mb-2">Mode Aware</h4>
-                  <p class="text-sm text-muted">
+                <div class="bg-elevated rounded-lg p-4">
+                  <h4 class="mb-2 font-medium">Mode Aware</h4>
+                  <p class="text-muted text-sm">
                     Reads layoutLayer.ui.grid.mode — falls back to UMain+UPage when 'disabled'
                   </p>
                 </div>
-                <div class="p-4 bg-elevated rounded-lg">
-                  <h4 class="font-medium mb-2">Debug Included</h4>
-                  <p class="text-sm text-muted">
+                <div class="bg-elevated rounded-lg p-4">
+                  <h4 class="mb-2 font-medium">Debug Included</h4>
+                  <p class="text-muted text-sm">
                     LayoutGridDebug is built in — toggle with Cmd/Ctrl+G
                   </p>
                 </div>
               </div>
 
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">Props</h4>
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Props</h4>
                 <div class="overflow-x-auto">
                   <table class="w-full text-sm">
                     <thead>
-                      <tr class="border-b border-default">
-                        <th class="text-left py-2 px-3">Prop</th>
-                        <th class="text-left py-2 px-3">Type</th>
-                        <th class="text-left py-2 px-3">Default</th>
+                      <tr class="border-default border-b">
+                        <th class="px-3 py-2 text-left">Prop</th>
+                        <th class="px-3 py-2 text-left">Type</th>
+                        <th class="px-3 py-2 text-left">Default</th>
                       </tr>
                     </thead>
-                    <tbody class="divide-y divide-default">
+                    <tbody class="divide-default divide-y">
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">title</td>
-                        <td class="py-2 px-3 font-mono text-xs">string</td>
-                        <td class="py-2 px-3 text-muted">required</td>
+                        <td class="px-3 py-2 font-mono text-xs">title</td>
+                        <td class="px-3 py-2 font-mono text-xs">string</td>
+                        <td class="text-muted px-3 py-2">required</td>
                       </tr>
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">description</td>
-                        <td class="py-2 px-3 font-mono text-xs">string</td>
-                        <td class="py-2 px-3 text-muted">—</td>
+                        <td class="px-3 py-2 font-mono text-xs">description</td>
+                        <td class="px-3 py-2 font-mono text-xs">string</td>
+                        <td class="text-muted px-3 py-2">—</td>
                       </tr>
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">showHeader</td>
-                        <td class="py-2 px-3 font-mono text-xs">boolean</td>
-                        <td class="py-2 px-3 font-mono text-xs">false</td>
+                        <td class="px-3 py-2 font-mono text-xs">showHeader</td>
+                        <td class="px-3 py-2 font-mono text-xs">boolean</td>
+                        <td class="px-3 py-2 font-mono text-xs">false</td>
                       </tr>
                     </tbody>
                   </table>
@@ -210,7 +170,7 @@
               </div>
 
               <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
               ><code>&lt;!-- pages/about.vue --&gt;
 &lt;template&gt;
   &lt;LayoutPage title="About" description="Learn about us" :show-header="true"&gt;
@@ -235,35 +195,31 @@
                 <UIcon name="i-lucide-toggle-left" class="text-primary" />
                 <h3 class="text-xl font-semibold">Layout Mode</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
-                Switch between Swiss Grid, fluid container-query grid, or disabled fallback
+              <p class="text-muted mt-1 text-sm">
+                Switch between Swiss Grid and the disabled fallback
               </p>
             </template>
 
             <div class="space-y-4">
-              <div class="grid gap-3 sm:grid-cols-3">
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">'swiss'</div>
-                  <p class="text-xs text-muted mt-1">Default. 6/12/18-column subgrid.</p>
+              <div class="grid gap-3 sm:grid-cols-2">
+                <div class="bg-elevated rounded-lg p-3">
+                  <div class="text-primary font-mono text-sm">'swiss'</div>
+                  <p class="text-muted mt-1 text-xs">Default. 6/12/18-column subgrid.</p>
                 </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">'fluid'</div>
-                  <p class="text-xs text-muted mt-1">Container-query auto-fit grid.</p>
-                </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">'disabled'</div>
-                  <p class="text-xs text-muted mt-1">Falls back to UMain > UPage.</p>
+                <div class="bg-elevated rounded-lg p-3">
+                  <div class="text-primary font-mono text-sm">'disabled'</div>
+                  <p class="text-muted mt-1 text-xs">Falls back to UMain > UPage.</p>
                 </div>
               </div>
 
               <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
               ><code>// app.config.ts
 export default defineAppConfig({
   layoutLayer: {
     ui: {
       grid: {
-        mode: 'fluid', // 'swiss' | 'fluid' | 'disabled'
+        mode: 'swiss', // 'swiss' | 'disabled'
         // enabled: false is still supported (maps to mode: 'disabled')
       },
     },
@@ -271,7 +227,7 @@ export default defineAppConfig({
 })</code></pre>
 
               <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
               ><code>// Read in components
 const { mode, isEnabled } = useGridConfig()</code></pre>
             </div>
@@ -285,9 +241,9 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                 <h3 class="text-xl font-semibold">LayoutMain</h3>
                 <UBadge color="primary" size="sm">New</UBadge>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 The grid root element — renders
-                <code class="font-mono text-xs">&lt;main class="mastmain"&gt;</code> and owns the
+                <code class="font-mono text-xs">&lt;main class="grid-root"&gt;</code> and owns the
                 stacking context. Drops the class when
                 <code class="font-mono text-xs">mode: 'disabled'</code>.
               </p>
@@ -295,27 +251,27 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
 
             <div class="space-y-4">
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">Props</h4>
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">Props</h4>
                 <table class="w-full text-sm">
                   <thead>
-                    <tr class="border-b border-default">
-                      <th class="text-left py-2 px-3">Prop</th>
-                      <th class="text-left py-2 px-3">Type</th>
-                      <th class="text-left py-2 px-3">Default</th>
+                    <tr class="border-default border-b">
+                      <th class="px-3 py-2 text-left">Prop</th>
+                      <th class="px-3 py-2 text-left">Type</th>
+                      <th class="px-3 py-2 text-left">Default</th>
                     </tr>
                   </thead>
-                  <tbody class="divide-y divide-default">
+                  <tbody class="divide-default divide-y">
                     <tr>
-                      <td class="py-2 px-3 font-mono text-xs">tag</td>
-                      <td class="py-2 px-3 font-mono text-xs">string</td>
-                      <td class="py-2 px-3 font-mono text-xs">'main'</td>
+                      <td class="px-3 py-2 font-mono text-xs">tag</td>
+                      <td class="px-3 py-2 font-mono text-xs">string</td>
+                      <td class="px-3 py-2 font-mono text-xs">'main'</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
               <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
               ><code>&lt;!-- default.vue layout --&gt;
 &lt;LayoutMain&gt;
   &lt;NuxtPage /&gt;
@@ -324,72 +280,53 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
             </div>
           </UCard>
 
-          <!-- LayoutContainer -->
+          <!-- AppContainer -->
           <UCard>
             <template #header>
               <div class="flex items-center gap-2">
                 <UIcon name="i-lucide-align-center-horizontal" class="text-primary" />
-                <h3 class="text-xl font-semibold">LayoutContainer</h3>
-                <UBadge color="primary" size="sm">New</UBadge>
+                <h3 class="text-xl font-semibold">AppContainer</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Constrains content to a max-width and centres it within the grid.
               </p>
             </template>
 
             <div class="space-y-4">
               <div class="grid gap-3 sm:grid-cols-2">
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">'content'</div>
-                  <p class="text-xs text-muted mt-1">max-width: 65ch — prose and articles</p>
+                <div class="bg-elevated rounded-lg p-3">
+                  <div class="text-primary font-mono text-sm">'content'</div>
+                  <p class="text-muted mt-1 text-xs">max-width: 65ch — prose and articles</p>
                 </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">'wide'</div>
-                  <p class="text-xs text-muted mt-1">max-width: 90rem — cards, media (default)</p>
+                <div class="bg-elevated rounded-lg p-3">
+                  <div class="text-primary font-mono text-sm">'wide'</div>
+                  <p class="text-muted mt-1 text-xs">max-width: 90rem — cards, media (default)</p>
                 </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">'fluid'</div>
-                  <p class="text-xs text-muted mt-1">max-width: 100% — fills grid padding</p>
+                <div class="bg-elevated rounded-lg p-3">
+                  <div class="text-primary font-mono text-sm">'fluid'</div>
+                  <p class="text-muted mt-1 text-xs">max-width: 100% — fills grid padding</p>
                 </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">'full'</div>
-                  <p class="text-xs text-muted mt-1">100vw — escapes gutters, true full-bleed</p>
+                <div class="bg-elevated rounded-lg p-3">
+                  <div class="text-primary font-mono text-sm">'full'</div>
+                  <p class="text-muted mt-1 text-xs">100vw — escapes gutters, true full-bleed</p>
                 </div>
               </div>
 
               <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
-              ><code>&lt;LayoutGridItem preset="fullWidth"&gt;
-  &lt;LayoutContainer size="content"&gt;
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
+              ><code>&lt;LayoutGridItem preset="centered"&gt;
+  &lt;AppContainer size="content"&gt;
     &lt;p&gt;Prose constrained to ~65 characters.&lt;/p&gt;
-  &lt;/LayoutContainer&gt;
+  &lt;/AppContainer&gt;
 &lt;/LayoutGridItem&gt;</code></pre>
             </div>
-          </UCard>
-
-          <!-- PageContainer (legacy) -->
-          <UCard>
-            <template #header>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-file-x" class="text-muted" />
-                <h3 class="text-xl font-semibold text-muted">LayoutPageContainer</h3>
-                <UBadge color="neutral" variant="subtle" size="sm">Legacy</UBadge>
-              </div>
-              <p class="text-sm text-muted mt-1">
-                Kept for backwards compatibility. Use LayoutPage for new pages.
-              </p>
-            </template>
-            <p class="text-sm text-muted">
-              LayoutPageContainer remains functional but LayoutPage is now the canonical API. It
-              offers the same SEO + grid debug, with the feature flag built in.
-            </p>
           </UCard>
         </section>
 
         <!-- Grid System Section -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Swiss Grid System</h2>
+            <h2 class="mb-2 text-2xl font-bold">Swiss Grid System</h2>
             <p class="text-muted">18-column responsive grid with CSS subgrid</p>
           </div>
 
@@ -399,7 +336,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                 <UIcon name="i-lucide-grid-3x3" class="text-primary" />
                 <h3 class="text-xl font-semibold">LayoutGridItem</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Position content on the 18-column grid with responsive values
               </p>
             </template>
@@ -407,41 +344,41 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
             <div class="space-y-6">
               <!-- Responsive Columns -->
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Responsive Column Spans
                 </h4>
-                <div class="bg-elevated rounded-lg p-4 space-y-2">
+                <div class="bg-elevated space-y-2 rounded-lg p-4">
                   <div class="grid grid-cols-18 gap-1">
-                    <div class="col-span-6 bg-blue-500/20 p-2 text-center text-xs rounded">
+                    <div class="col-span-6 rounded bg-blue-500/20 p-2 text-center text-xs">
                       6 cols (mobile)
                     </div>
                     <div
-                      class="col-span-6 bg-blue-500/10 p-2 text-center text-xs rounded opacity-50"
+                      class="col-span-6 rounded bg-blue-500/10 p-2 text-center text-xs opacity-50"
                     >
                       ...
                     </div>
                     <div
-                      class="col-span-6 bg-blue-500/10 p-2 text-center text-xs rounded opacity-50"
+                      class="col-span-6 rounded bg-blue-500/10 p-2 text-center text-xs opacity-50"
                     >
                       ...
                     </div>
                   </div>
                   <div class="grid grid-cols-18 gap-1">
-                    <div class="col-span-9 bg-green-500/20 p-2 text-center text-xs rounded">
+                    <div class="col-span-9 rounded bg-green-500/20 p-2 text-center text-xs">
                       9 cols (tablet)
                     </div>
                     <div
-                      class="col-span-9 bg-green-500/10 p-2 text-center text-xs rounded opacity-50"
+                      class="col-span-9 rounded bg-green-500/10 p-2 text-center text-xs opacity-50"
                     >
                       ...
                     </div>
                   </div>
                   <div class="grid grid-cols-18 gap-1">
-                    <div class="col-span-12 bg-purple-500/20 p-2 text-center text-xs rounded">
+                    <div class="col-span-12 rounded bg-purple-500/20 p-2 text-center text-xs">
                       12 cols (desktop)
                     </div>
                     <div
-                      class="col-span-6 bg-purple-500/10 p-2 text-center text-xs rounded opacity-50"
+                      class="col-span-6 rounded bg-purple-500/10 p-2 text-center text-xs opacity-50"
                     >
                       ...
                     </div>
@@ -451,74 +388,74 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
 
               <!-- Props Table -->
               <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
+                <h4 class="text-muted mb-3 text-sm font-medium tracking-wide uppercase">
                   Available Props
                 </h4>
                 <div class="overflow-x-auto">
                   <table class="w-full text-sm">
                     <thead>
-                      <tr class="border-b border-default">
-                        <th class="text-left py-2 px-3">Prop</th>
-                        <th class="text-left py-2 px-3">Type</th>
-                        <th class="text-left py-2 px-3">Description</th>
+                      <tr class="border-default border-b">
+                        <th class="px-3 py-2 text-left">Prop</th>
+                        <th class="px-3 py-2 text-left">Type</th>
+                        <th class="px-3 py-2 text-left">Description</th>
                       </tr>
                     </thead>
-                    <tbody class="divide-y divide-default">
+                    <tbody class="divide-default divide-y">
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">preset</td>
-                        <td class="py-2 px-3 font-mono text-xs">string</td>
-                        <td class="py-2 px-3">Named preset from app.config.ts</td>
+                        <td class="px-3 py-2 font-mono text-xs">preset</td>
+                        <td class="px-3 py-2 font-mono text-xs">string</td>
+                        <td class="px-3 py-2">Named preset from app.config.ts</td>
                       </tr>
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">colStart</td>
-                        <td class="py-2 px-3 font-mono text-xs">number | ResponsiveValue</td>
-                        <td class="py-2 px-3">Starting column (1–18)</td>
+                        <td class="px-3 py-2 font-mono text-xs">colStart</td>
+                        <td class="px-3 py-2 font-mono text-xs">number | ResponsiveValue</td>
+                        <td class="px-3 py-2">Starting column (1–18)</td>
                       </tr>
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">colSpan</td>
-                        <td class="py-2 px-3 font-mono text-xs">number | ResponsiveValue</td>
-                        <td class="py-2 px-3">Number of columns to span</td>
+                        <td class="px-3 py-2 font-mono text-xs">colSpan</td>
+                        <td class="px-3 py-2 font-mono text-xs">number | ResponsiveValue</td>
+                        <td class="px-3 py-2">Number of columns to span</td>
                       </tr>
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">rowStart</td>
-                        <td class="py-2 px-3 font-mono text-xs">number | ResponsiveValue</td>
-                        <td class="py-2 px-3">Starting row (1–12)</td>
+                        <td class="px-3 py-2 font-mono text-xs">rowStart</td>
+                        <td class="px-3 py-2 font-mono text-xs">number | ResponsiveValue</td>
+                        <td class="px-3 py-2">Starting row (1–12)</td>
                       </tr>
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">rowSpan</td>
-                        <td class="py-2 px-3 font-mono text-xs">number | ResponsiveValue</td>
-                        <td class="py-2 px-3">Rows to span</td>
+                        <td class="px-3 py-2 font-mono text-xs">rowSpan</td>
+                        <td class="px-3 py-2 font-mono text-xs">number | ResponsiveValue</td>
+                        <td class="px-3 py-2">Rows to span</td>
                       </tr>
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">align</td>
-                        <td class="py-2 px-3 font-mono text-xs">
+                        <td class="px-3 py-2 font-mono text-xs">align</td>
+                        <td class="px-3 py-2 font-mono text-xs">
                           'start' | 'center' | 'end' | 'stretch'
                         </td>
-                        <td class="py-2 px-3">Vertical alignment</td>
+                        <td class="px-3 py-2">Vertical alignment</td>
                       </tr>
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">justify</td>
-                        <td class="py-2 px-3 font-mono text-xs">
+                        <td class="px-3 py-2 font-mono text-xs">justify</td>
+                        <td class="px-3 py-2 font-mono text-xs">
                           'start' | 'center' | 'end' | 'stretch'
                         </td>
-                        <td class="py-2 px-3">Horizontal alignment</td>
+                        <td class="px-3 py-2">Horizontal alignment</td>
                       </tr>
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">layer</td>
-                        <td class="py-2 px-3 font-mono text-xs">
+                        <td class="px-3 py-2 font-mono text-xs">layer</td>
+                        <td class="px-3 py-2 font-mono text-xs">
                           'back' | 'mid' | 'front' | 'top'
                         </td>
-                        <td class="py-2 px-3">Grid stacking layer (0 / 10 / 20 / 30)</td>
+                        <td class="px-3 py-2">Grid stacking layer (0 / 10 / 20 / 30)</td>
                       </tr>
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">bleed</td>
-                        <td class="py-2 px-3 font-mono text-xs">'left' | 'right' | 'both'</td>
-                        <td class="py-2 px-3">Edge-to-edge bleed past gutters</td>
+                        <td class="px-3 py-2 font-mono text-xs">bleed</td>
+                        <td class="px-3 py-2 font-mono text-xs">'left' | 'right' | 'both'</td>
+                        <td class="px-3 py-2">Edge-to-edge bleed past gutters</td>
                       </tr>
                       <tr>
-                        <td class="py-2 px-3 font-mono text-xs">aspect</td>
-                        <td class="py-2 px-3 font-mono text-xs">'1/1' | '4/3' | '16/9' | ...</td>
-                        <td class="py-2 px-3">Aspect ratio constraint</td>
+                        <td class="px-3 py-2 font-mono text-xs">aspect</td>
+                        <td class="px-3 py-2 font-mono text-xs">'1/1' | '4/3' | '16/9' | ...</td>
+                        <td class="px-3 py-2">Aspect ratio constraint</td>
                       </tr>
                     </tbody>
                   </table>
@@ -526,7 +463,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
               </div>
 
               <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
               ><code>&lt;LayoutGridItem
   :col-start="{ default: 1, md: 2, lg: 4 }"
   :col-span="{ default: 6, md: 10, lg: 12 }"
@@ -545,25 +482,25 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                 <UIcon name="i-lucide-layout-template" class="text-primary" />
                 <h3 class="text-xl font-semibold">Grid Presets</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Named layouts from app.config.ts — use via the preset prop
               </p>
             </template>
 
             <div class="space-y-6">
               <div v-for="group in presetGroups" :key="group.label" class="space-y-2">
-                <h4 class="text-xs font-semibold uppercase tracking-wider text-muted">
+                <h4 class="text-muted text-xs font-semibold tracking-wider uppercase">
                   {{ group.label }}
                 </h4>
                 <div class="space-y-1.5">
                   <div
                     v-for="preset in group.presets"
                     :key="preset.name"
-                    class="p-2.5 bg-elevated rounded-lg space-y-1.5"
+                    class="bg-elevated space-y-1.5 rounded-lg p-2.5"
                   >
                     <div class="flex items-baseline justify-between gap-4">
                       <span class="font-mono text-sm font-medium">{{ preset.name }}</span>
-                      <span class="text-xs text-muted shrink-0">{{ preset.desc }}</span>
+                      <span class="text-muted shrink-0 text-xs">{{ preset.desc }}</span>
                     </div>
                     <!-- 18-column mini bar (lg layout) -->
                     <div class="flex gap-0.5">
@@ -583,72 +520,10 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
               </div>
 
               <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
               ><code>&lt;LayoutGridItem preset="centered"&gt;
   &lt;!-- full width within the grid's padding · 12 rows (100vh) --&gt;
-&lt;/LayoutGridItem&gt;
-
-&lt;!-- Pair two presets for a sidebar layout --&gt;
-&lt;LayoutGridItem preset="sidebar"&gt;Nav&lt;/LayoutGridItem&gt;
-&lt;LayoutGridItem preset="content"&gt;Main&lt;/LayoutGridItem&gt;</code></pre>
-            </div>
-          </UCard>
-
-          <!-- Preset Pairs -->
-          <UCard>
-            <template #header>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-columns-2" class="text-primary" />
-                <h3 class="text-xl font-semibold">Preset Pairs</h3>
-              </div>
-              <p class="text-sm text-muted mt-1">
-                Some presets are designed to be used together — they sum to 18 columns at lg and
-                stack to full-width on mobile. The bars below show both presets simultaneously.
-              </p>
-            </template>
-
-            <div class="space-y-6">
-              <div v-for="pair in presetPairs" :key="pair.label" class="space-y-2">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="text-sm font-medium">{{ pair.label }}</span>
-                  <span class="text-xs text-muted font-mono">{{ pair.note }}</span>
-                </div>
-
-                <!-- Combined 18-column bar -->
-                <div class="flex gap-0.5" style="height: 2.5rem">
-                  <div
-                    v-for="col in 18"
-                    :key="col"
-                    class="flex-1 rounded-sm"
-                    :class="
-                      col >= pair.parts[0].lgStart &&
-                      col < pair.parts[0].lgStart + pair.parts[0].lgSpan
-                        ? pair.parts[0].colorClass
-                        : pair.parts[1].colorClass
-                    "
-                  />
-                </div>
-
-                <!-- Legend -->
-                <div class="flex flex-wrap gap-4 text-xs text-muted">
-                  <div
-                    v-for="part in pair.parts"
-                    :key="part.name"
-                    class="flex items-center gap-1.5"
-                  >
-                    <div class="w-3 h-3 rounded-sm shrink-0" :class="part.colorClass" />
-                    <code class="font-mono">{{ part.name }}</code>
-                    <span>lg: cols {{ part.lgStart }}–{{ part.lgStart + part.lgSpan - 1 }}</span>
-                  </div>
-                </div>
-              </div>
-
-              <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
-              ><code>&lt;LayoutSection&gt;
-  &lt;LayoutGridItem preset="splitLeft" :row-span="12"&gt;Left&lt;/LayoutGridItem&gt;
-  &lt;LayoutGridItem preset="splitRight" :row-span="12"&gt;Right&lt;/LayoutGridItem&gt;
-&lt;/LayoutSection&gt;</code></pre>
+&lt;/LayoutGridItem&gt;</code></pre>
             </div>
           </UCard>
         </section>
@@ -656,7 +531,7 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
         <!-- Section Components -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Section Components</h2>
+            <h2 class="mb-2 text-2xl font-bold">Section Components</h2>
             <p class="text-muted">Pre-configured layouts for common page patterns</p>
           </div>
 
@@ -667,23 +542,23 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                 <UIcon name="i-lucide-image" class="text-primary" />
                 <h3 class="text-xl font-semibold">LayoutSectionHero</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Full-viewport hero section with background, content, and footer slots
               </p>
             </template>
 
             <div class="space-y-6">
-              <div class="relative bg-elevated rounded-lg overflow-hidden aspect-video">
+              <div class="bg-elevated relative aspect-video overflow-hidden rounded-lg">
                 <div class="absolute inset-0 bg-linear-to-br from-blue-500/20 to-purple-500/20" />
                 <div class="absolute inset-0 flex flex-col">
-                  <div class="flex-1 flex items-center justify-center">
+                  <div class="flex flex-1 items-center justify-center">
                     <div class="text-center">
-                      <div class="text-2xl font-bold mb-2">Hero Content</div>
-                      <div class="text-sm text-muted">default slot — centered</div>
+                      <div class="mb-2 text-2xl font-bold">Hero Content</div>
+                      <div class="text-muted text-sm">default slot — centered</div>
                     </div>
                   </div>
                   <div class="p-4 text-center">
-                    <div class="inline-block px-4 py-2 bg-primary/20 rounded text-sm">
+                    <div class="bg-primary/20 inline-block rounded px-4 py-2 text-sm">
                       #footer slot — bottom aligned
                     </div>
                   </div>
@@ -691,22 +566,22 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
               </div>
 
               <div class="grid gap-3 md:grid-cols-3">
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">#background</div>
-                  <p class="text-sm text-muted mt-1">Full-bleed background (z: back)</p>
+                <div class="bg-elevated rounded-lg p-3">
+                  <div class="text-primary font-mono text-sm">#background</div>
+                  <p class="text-muted mt-1 text-sm">Full-bleed background (z: back)</p>
                 </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">#default</div>
-                  <p class="text-sm text-muted mt-1">Main centered content (z: mid)</p>
+                <div class="bg-elevated rounded-lg p-3">
+                  <div class="text-primary font-mono text-sm">#default</div>
+                  <p class="text-muted mt-1 text-sm">Main centered content (z: mid)</p>
                 </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">#footer</div>
-                  <p class="text-sm text-muted mt-1">Bottom-aligned content (z: mid)</p>
+                <div class="bg-elevated rounded-lg p-3">
+                  <div class="text-primary font-mono text-sm">#footer</div>
+                  <p class="text-muted mt-1 text-sm">Bottom-aligned content (z: mid)</p>
                 </div>
               </div>
 
               <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
               ><code>&lt;LayoutSectionHero&gt;
   &lt;template #background&gt;
     &lt;NuxtImg src="/hero.jpg" class="size-full object-cover" /&gt;
@@ -729,29 +604,29 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                 <UIcon name="i-lucide-columns-2" class="text-primary" />
                 <h3 class="text-xl font-semibold">LayoutSectionSplit</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Two-column layout (9+9 on desktop) with optional mobile reversal
               </p>
             </template>
 
             <div class="space-y-6">
               <div class="grid gap-4 md:grid-cols-2">
-                <div class="bg-blue-500/20 rounded-lg p-8 flex items-center justify-center">
+                <div class="flex items-center justify-center rounded-lg bg-blue-500/20 p-8">
                   <div class="text-center">
                     <div class="font-mono text-sm">#left</div>
-                    <div class="text-sm text-muted">cols 1–9</div>
+                    <div class="text-muted text-sm">cols 1–9</div>
                   </div>
                 </div>
-                <div class="bg-purple-500/20 rounded-lg p-8 flex items-center justify-center">
+                <div class="flex items-center justify-center rounded-lg bg-purple-500/20 p-8">
                   <div class="text-center">
                     <div class="font-mono text-sm">#right</div>
-                    <div class="text-sm text-muted">cols 10–18</div>
+                    <div class="text-muted text-sm">cols 10–18</div>
                   </div>
                 </div>
               </div>
 
               <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
               ><code>&lt;LayoutSectionSplit reverse&gt;
   &lt;template #left&gt;
     &lt;NuxtImg src="/image.jpg" class="size-full object-cover" /&gt;
@@ -770,25 +645,25 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                 <UIcon name="i-lucide-layout-grid" class="text-primary" />
                 <h3 class="text-xl font-semibold">LayoutSectionGallery</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Auto-placing grid for collections with responsive columns
               </p>
             </template>
 
             <div class="space-y-6">
-              <div class="grid gap-3 grid-cols-2 md:grid-cols-3">
+              <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
                 <div
                   v-for="item in galleryItems"
                   :key="item.id"
                   :class="item.color"
-                  class="rounded-lg p-6 flex items-center justify-center text-highlighted font-medium"
+                  class="text-highlighted flex items-center justify-center rounded-lg p-6 font-medium"
                 >
                   {{ item.title }}
                 </div>
               </div>
 
               <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
               ><code>&lt;LayoutSectionGallery :items="images" :columns="3"&gt;
   &lt;template #item="{ item }"&gt;
     &lt;NuxtImg :src="item.src" class="size-full object-cover" /&gt;
@@ -796,12 +671,83 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
 &lt;/LayoutSectionGallery&gt;</code></pre>
             </div>
           </UCard>
+
+          <!-- Item List -->
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-list" class="text-primary" />
+                <h3 class="text-xl font-semibold">LayoutItemList</h3>
+              </div>
+              <p class="text-muted mt-1 text-sm">
+                Generic table-style list — column config, per-cell slots, optional row links
+              </p>
+            </template>
+
+            <div class="space-y-6">
+              <LayoutItemList
+                :items="workItems"
+                :columns="workColumns"
+                item-key="id"
+                href="link"
+                external
+                numbered
+              >
+                <template #cell-name="{ item }">
+                  <span class="text-highlighted font-medium">{{ item.name }}</span>
+                </template>
+              </LayoutItemList>
+
+              <pre
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
+              ><code>&lt;LayoutItemList :items="items" :columns="columns" href="link" external numbered&gt;
+  &lt;template #cell-name="{ item }"&gt;&lt;strong&gt;&#123;&#123; item.name &#125;&#125;&lt;/strong&gt;&lt;/template&gt;
+&lt;/LayoutItemList&gt;</code></pre>
+            </div>
+          </UCard>
+
+          <!-- Item Cards -->
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-layout-grid" class="text-primary" />
+                <h3 class="text-xl font-semibold">LayoutItemCards</h3>
+              </div>
+              <p class="text-muted mt-1 text-sm">
+                Generic auto-fit card grid — media and caption slots
+              </p>
+            </template>
+
+            <div class="space-y-6">
+              <LayoutItemCards :items="workItems" item-key="id" min="200px">
+                <template #media="{ item }">
+                  <div
+                    :class="item.color"
+                    class="flex aspect-4/3 items-center justify-center rounded-lg"
+                  />
+                </template>
+                <template #caption="{ item }">
+                  <div class="flex justify-between gap-4 text-sm">
+                    <span class="text-highlighted">{{ item.name }}</span>
+                    <span class="text-muted">{{ item.year }}</span>
+                  </div>
+                </template>
+              </LayoutItemCards>
+
+              <pre
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
+              ><code>&lt;LayoutItemCards :items="items" min="200px"&gt;
+  &lt;template #media="{ item }"&gt;&lt;img :src="item.image" /&gt;&lt;/template&gt;
+  &lt;template #caption="{ item }"&gt;&#123;&#123; item.name &#125;&#125;&lt;/template&gt;
+&lt;/LayoutItemCards&gt;</code></pre>
+            </div>
+          </UCard>
         </section>
 
         <!-- Nuxt UI Integration -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Nuxt UI Integration</h2>
+            <h2 class="mb-2 text-2xl font-bold">Nuxt UI Integration</h2>
             <p class="text-muted">UHeader and UPage components configured to align with the grid</p>
           </div>
 
@@ -811,13 +757,13 @@ const { mode, isEnabled } = useGridConfig()</code></pre>
                 <UIcon name="i-lucide-panels-top-left" class="text-primary" />
                 <h3 class="text-xl font-semibold">UHeader</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Configured full-width with grid-matching gutters (clamp-based padding)
               </p>
             </template>
 
             <pre
-              class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+              class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
             ><code>// app.config.ts (provided by the layout layer)
 ui: {
   header: {
@@ -832,29 +778,29 @@ ui: {
                 <UIcon name="i-lucide-layout" class="text-primary" />
                 <h3 class="text-xl font-semibold">UPage + UPage* Components</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Configured as subgrid participants — left/center/right map to grid columns
               </p>
             </template>
 
             <div class="space-y-4">
               <div class="grid gap-3 sm:grid-cols-3">
-                <div class="p-3 bg-elevated rounded-lg text-center">
-                  <div class="font-mono text-sm text-primary">left</div>
-                  <p class="text-xs text-muted mt-1">cols 1–4 (sidebar)</p>
+                <div class="bg-elevated rounded-lg p-3 text-center">
+                  <div class="text-primary font-mono text-sm">left</div>
+                  <p class="text-muted mt-1 text-xs">cols 1–4 (sidebar)</p>
                 </div>
-                <div class="p-3 bg-elevated rounded-lg text-center">
-                  <div class="font-mono text-sm text-primary">center</div>
-                  <p class="text-xs text-muted mt-1">cols 5–14 (content)</p>
+                <div class="bg-elevated rounded-lg p-3 text-center">
+                  <div class="text-primary font-mono text-sm">center</div>
+                  <p class="text-muted mt-1 text-xs">cols 5–14 (content)</p>
                 </div>
-                <div class="p-3 bg-elevated rounded-lg text-center">
-                  <div class="font-mono text-sm text-primary">right</div>
-                  <p class="text-xs text-muted mt-1">cols 15–18 (aside)</p>
+                <div class="bg-elevated rounded-lg p-3 text-center">
+                  <div class="text-primary font-mono text-sm">right</div>
+                  <p class="text-muted mt-1 text-xs">cols 15–18 (aside)</p>
                 </div>
               </div>
 
               <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
               ><code>&lt;LayoutPage title="Docs"&gt;
   &lt;LayoutSection&gt;
     &lt;UPage&gt;
@@ -870,7 +816,7 @@ ui: {
         <!-- Z-Index System -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Z-Index System</h2>
+            <h2 class="mb-2 text-2xl font-bold">Z-Index System</h2>
             <p class="text-muted">
               Semantic stacking layers — read via
               <code class="font-mono text-sm">useGridConfig().useZIndex(layer)</code>
@@ -883,7 +829,7 @@ ui: {
                 <UIcon name="i-lucide-layers" class="text-primary" />
                 <h3 class="text-xl font-semibold">Stacking Layers</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Named values from
                 <code class="font-mono text-xs">layoutLayer.ui.grid.layers</code> — override any in
                 app.config.ts
@@ -905,18 +851,18 @@ ui: {
                     toast: { value: 500, description: 'Toast notifications' },
                   }"
                   :key="name"
-                  class="flex items-center justify-between p-3 bg-elevated rounded-lg"
+                  class="bg-elevated flex items-center justify-between rounded-lg p-3"
                 >
                   <div>
-                    <span class="font-mono text-sm text-primary">{{ name }}</span>
-                    <p class="text-xs text-muted">{{ description }}</p>
+                    <span class="text-primary font-mono text-sm">{{ name }}</span>
+                    <p class="text-muted text-xs">{{ description }}</p>
                   </div>
                   <UBadge color="neutral" variant="subtle" size="xs">{{ value }}</UBadge>
                 </div>
               </div>
 
               <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 text-sm"
               ><code>const { useZIndex } = useGridConfig()
 
 // Returns the configured z-index number for that layer
@@ -932,7 +878,7 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
                 <UIcon name="i-lucide-layers-3" class="text-primary" />
                 <h3 class="text-xl font-semibold">Visual stack</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Four layers at their z-index positions — same pattern used by
                 <code class="font-mono text-xs">LayoutGridItem layer="…"</code>
               </p>
@@ -941,41 +887,41 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
             <div class="space-y-4">
               <!-- Bounded mini-viewport -->
               <div
-                class="relative h-60 overflow-hidden rounded-lg bg-default border border-white/10"
+                class="bg-default relative h-60 overflow-hidden rounded-lg border border-white/10"
               >
                 <!-- back: z-0 -->
                 <div
-                  class="absolute inset-0 bg-amber-900/60 flex items-end px-4 pb-3"
+                  class="absolute inset-0 flex items-end bg-amber-900/60 px-4 pb-3"
                   style="z-index: 0"
                 >
-                  <span class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded">
+                  <span class="text-highlighted rounded bg-black/50 px-2 py-1 font-mono text-xs">
                     layer="back" · z-index: 0
                   </span>
                 </div>
                 <!-- mid: z-10 -->
                 <div
-                  class="absolute inset-x-6 top-6 bottom-10 rounded-lg bg-sky-800/70 flex items-end px-4 pb-3 shadow-lg"
+                  class="absolute inset-x-6 top-6 bottom-10 flex items-end rounded-lg bg-sky-800/70 px-4 pb-3 shadow-lg"
                   style="z-index: 10"
                 >
-                  <span class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded">
+                  <span class="text-highlighted rounded bg-black/50 px-2 py-1 font-mono text-xs">
                     layer="mid" · z-index: 10
                   </span>
                 </div>
                 <!-- front: z-20 -->
                 <div
-                  class="absolute inset-x-16 top-12 bottom-14 rounded-lg bg-violet-700/80 flex items-end px-4 pb-3 shadow-xl"
+                  class="absolute inset-x-16 top-12 bottom-14 flex items-end rounded-lg bg-violet-700/80 px-4 pb-3 shadow-xl"
                   style="z-index: 20"
                 >
-                  <span class="font-mono text-xs bg-black/50 text-highlighted px-2 py-1 rounded">
+                  <span class="text-highlighted rounded bg-black/50 px-2 py-1 font-mono text-xs">
                     layer="front" · z-index: 20
                   </span>
                 </div>
                 <!-- top: z-30 -->
                 <div
-                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-500 px-5 py-2 shadow-2xl whitespace-nowrap"
+                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-500 px-5 py-2 whitespace-nowrap shadow-2xl"
                   style="z-index: 30"
                 >
-                  <span class="font-mono text-xs text-highlighted">layer="top" · z-index: 30</span>
+                  <span class="text-highlighted font-mono text-xs">layer="top" · z-index: 30</span>
                 </div>
               </div>
 
@@ -1001,84 +947,10 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
           </UCard>
         </section>
 
-        <!-- Fluid Mode -->
-        <section class="space-y-8">
-          <div>
-            <h2 class="text-2xl font-bold mb-2">Fluid Mode</h2>
-            <p class="text-muted">
-              Container-query auto-fit grid utilities — active when
-              <code class="font-mono text-sm">mode: 'fluid'</code>
-            </p>
-          </div>
-
-          <UCard>
-            <template #header>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-grid-2x2" class="text-primary" />
-                <h3 class="text-xl font-semibold">fluid-grid utilities</h3>
-              </div>
-              <p class="text-sm text-muted mt-1">
-                Auto-fit columns that respond to the container width, not the viewport
-              </p>
-            </template>
-
-            <div class="space-y-4">
-              <div class="grid gap-3 sm:grid-cols-2">
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">fluid-grid</div>
-                  <p class="text-xs text-muted mt-1">
-                    auto-fit, min <code class="font-mono">--fluid-col-min</code> (default 16rem)
-                  </p>
-                </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">fluid-grid-2</div>
-                  <p class="text-xs text-muted mt-1">2 cols ≥ 30rem container</p>
-                </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">fluid-grid-3</div>
-                  <p class="text-xs text-muted mt-1">3 cols ≥ 44rem container</p>
-                </div>
-                <div class="p-3 bg-elevated rounded-lg">
-                  <div class="font-mono text-sm text-primary">fluid-grid-4</div>
-                  <p class="text-xs text-muted mt-1">4 cols ≥ 52rem container</p>
-                </div>
-              </div>
-
-              <!-- Live demo -->
-              <div>
-                <h4 class="text-sm font-medium uppercase tracking-wide text-muted mb-3">
-                  Live demo — fluid-grid-3 (resize the window)
-                </h4>
-                <div class="fluid-grid-3 @container">
-                  <div
-                    v-for="n in 6"
-                    :key="n"
-                    class="bg-primary/10 rounded-lg p-6 flex items-center justify-center font-mono text-sm text-primary"
-                  >
-                    {{ n }}
-                  </div>
-                </div>
-              </div>
-
-              <pre
-                class="bg-muted text-highlighted p-4 rounded-lg text-sm overflow-x-auto"
-              ><code>&lt;!-- Custom min-width override --&gt;
-&lt;div class="fluid-grid" style="--fluid-col-min: 20rem"&gt;
-  &lt;div v-for="item in items" :key="item.id"&gt;…&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- Named column variant --&gt;
-&lt;div class="fluid-grid-3"&gt;
-  &lt;div v-for="item in items" :key="item.id"&gt;…&lt;/div&gt;
-&lt;/div&gt;</code></pre>
-            </div>
-          </UCard>
-        </section>
-
         <!-- Developer Tools -->
         <section class="space-y-8">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Developer Tools</h2>
+            <h2 class="mb-2 text-2xl font-bold">Developer Tools</h2>
             <p class="text-muted">Debugging utilities — included automatically by LayoutPage</p>
           </div>
 
@@ -1088,19 +960,19 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
                 <UIcon name="i-lucide-bug" class="text-primary" />
                 <h3 class="text-xl font-semibold">LayoutGridDebug</h3>
               </div>
-              <p class="text-sm text-muted mt-1">
+              <p class="text-muted mt-1 text-sm">
                 Visual 18-column overlay. Included by LayoutPage — no manual setup needed.
               </p>
             </template>
 
             <div class="space-y-4">
-              <div class="flex items-center gap-3 p-4 bg-elevated rounded-lg">
+              <div class="bg-elevated flex items-center gap-3 rounded-lg p-4">
                 <UKbd>Cmd</UKbd>
                 <span>+</span>
                 <UKbd>G</UKbd>
                 <span class="text-muted">Toggle grid column overlay</span>
               </div>
-              <p class="text-sm text-muted">
+              <p class="text-muted text-sm">
                 Adapts to responsive grid density (6 / 12 / 18 columns). Can also be used standalone
                 with custom gap and color props.
               </p>
@@ -1108,10 +980,108 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
           </UCard>
         </section>
 
+        <!-- Declarative Layout Primitives (Phase 1-3) -->
+        <section class="space-y-8">
+          <div>
+            <h2 class="mb-2 text-2xl font-bold">Declarative Layout Primitives</h2>
+            <p class="text-muted">
+              HStack / VStack / ZStack / Spacer / AppContainer — from
+              <code class="font-mono text-xs">layers/core</code>
+              and
+              <code class="font-mono text-xs">layers/layout</code>. Fluid
+              <code class="font-mono text-xs">gap</code>
+              tokens scale continuously with viewport width — resize the window, no breakpoint jump.
+            </p>
+          </div>
+
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-layout-panel-left" class="text-primary" />
+                <h3 class="text-xl font-semibold">Project card example</h3>
+                <UBadge color="primary" size="sm">spec §17</UBadge>
+              </div>
+              <p class="text-muted mt-1 text-sm">
+                Container + VStack + HStack composed around Nuxt UI components — layout stays ours,
+                interactive components stay Nuxt UI's.
+              </p>
+            </template>
+
+            <AppContainer size="content" class="bg-elevated rounded-lg">
+              <VStack gap="lg" class="p-6">
+                <VStack gap="sm">
+                  <h1 class="text-highlighted text-2xl font-bold">Projects</h1>
+                  <p class="text-muted">Things I have been working on.</p>
+                </VStack>
+                <HStack gap="sm" align="center" justify="between">
+                  <UButton size="sm">View project</UButton>
+                  <UBadge>Shipped</UBadge>
+                </HStack>
+              </VStack>
+            </AppContainer>
+          </UCard>
+
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-move-horizontal" class="text-primary" />
+                <h3 class="text-xl font-semibold">Fluid gap — resize test</h3>
+              </div>
+              <p class="text-muted mt-1 text-sm">
+                Same HStack, three fixed <code class="font-mono text-xs">gap</code> tokens — watch
+                the spacing scale smoothly while resizing, never snap at a breakpoint.
+              </p>
+            </template>
+
+            <VStack gap="md">
+              <div v-for="size in ['sm', 'md', 'xl'] as const" :key="size">
+                <p class="text-muted mb-2 font-mono text-xs">gap="{{ size }}"</p>
+                <HStack :gap="size">
+                  <div
+                    v-for="n in 4"
+                    :key="n"
+                    class="bg-primary/20 text-primary flex h-12 flex-1 items-center justify-center rounded font-mono text-xs"
+                  >
+                    {{ n }}
+                  </div>
+                </HStack>
+              </div>
+            </VStack>
+          </UCard>
+
+          <UCard>
+            <template #header>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-layers-2" class="text-primary" />
+                <h3 class="text-xl font-semibold">ZStack + Spacer</h3>
+              </div>
+              <p class="text-muted mt-1 text-sm">
+                ZStack layers children via CSS (no JS positioning); Spacer fills remaining space in
+                a flex axis.
+              </p>
+            </template>
+
+            <VStack gap="md">
+              <ZStack class="h-32 overflow-hidden rounded-lg">
+                <div class="bg-primary/20 flex items-center justify-center text-sm">Back</div>
+                <div class="flex items-center justify-center text-sm">
+                  <UBadge color="primary">Front</UBadge>
+                </div>
+              </ZStack>
+
+              <HStack class="bg-elevated rounded-lg p-3">
+                <UBadge variant="soft">left</UBadge>
+                <Spacer />
+                <UBadge variant="soft">right</UBadge>
+              </HStack>
+            </VStack>
+          </UCard>
+        </section>
+
         <!-- Sub-demos -->
         <section class="space-y-4">
           <div>
-            <h2 class="text-2xl font-bold mb-1">Sub-demos</h2>
+            <h2 class="mb-1 text-2xl font-bold">Sub-demos</h2>
             <p class="text-muted">Scroll-driven layout compositions built on the layout layer</p>
           </div>
           <div class="flex flex-wrap gap-3">
@@ -1125,8 +1095,10 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
         </section>
 
         <!-- Navigation -->
-        <div class="flex gap-4 justify-center pt-4">
-          <UButton to="/ui" variant="outline" icon="i-lucide-arrow-left">UI Layer Demo</UButton>
+        <div class="flex justify-center gap-4 pt-4">
+          <UButton to="/visual" variant="outline" icon="i-lucide-arrow-left"
+            >Visual Layer Demo</UButton
+          >
           <UButton to="/" icon="i-lucide-home">Back to Home</UButton>
           <UButton to="/core" variant="outline" trailing-icon="i-lucide-arrow-right">
             Core Layer Demo
@@ -1138,7 +1110,7 @@ const zHeader  = useZIndex('header')  // → 100</code></pre>
         description="Swiss Grid system and page composition"
         :links="[
           { label: 'Core', to: '/core', icon: 'i-lucide-box' },
-          { label: 'UI Layer', to: '/ui', icon: 'i-lucide-palette' },
+          { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
           { label: 'Blind Reveal', to: '/layout-blind-reveal', icon: 'i-lucide-eye' },
           { label: 'Stacking', to: '/layout-stacking', icon: 'i-lucide-stack' },
         ]"

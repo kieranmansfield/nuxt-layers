@@ -61,25 +61,25 @@
     <template #error="{ error, clearError }">
       <slot name="error" :error :clear-error>
         <!-- Default error UI -->
-        <div class="rounded-lg border border-error bg-error/10 p-4">
+        <div class="border-error bg-error/10 rounded-lg border p-4">
           <div class="flex items-start gap-3">
             <!-- Error icon -->
             <span
-              class="iconify i-lucide:alert-circle mt-0.5 shrink-0 text-error"
+              class="iconify i-lucide:alert-circle text-error mt-0.5 shrink-0"
               aria-hidden="true"
             />
 
             <!-- Error content -->
             <div class="flex-1 space-y-2">
               <!-- Error message -->
-              <p class="text-sm font-medium text-error">
+              <p class="text-error text-sm font-medium">
                 {{ message }}
               </p>
 
               <!-- Error details (dev only) -->
               <details v-if="showDetails && import.meta.dev" class="text-xs">
-                <summary class="cursor-pointer text-muted">Show error details</summary>
-                <pre class="mt-2 overflow-x-auto rounded bg-elevated p-2">{{ error }}</pre>
+                <summary class="text-muted cursor-pointer">Show error details</summary>
+                <pre class="bg-elevated mt-2 overflow-x-auto rounded p-2">{{ error }}</pre>
               </details>
 
               <!-- Retry button -->

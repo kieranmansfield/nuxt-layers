@@ -3,11 +3,12 @@ const AVAILABLE_LAYERS = [
   'core',
   'seo',
   'scripts',
+  'security',
   'typography',
   'navigation',
   'visual',
-  'ui',
   'layout',
+  'grid',
   'scroll',
   'animations',
   'transitions',
@@ -17,11 +18,11 @@ const AVAILABLE_LAYERS = [
   'shader',
   'mailer',
   'forms',
-  'theme',
+  'theming',
   'content',
   'routing',
   'feeds',
-  'baseline',
+  'capture',
   'database',
   'auth',
   'metadata',
@@ -29,79 +30,50 @@ const AVAILABLE_LAYERS = [
   'metadata-openlibrary',
   'metadata-google-books',
   'metadata-tmdb',
+  'project-stats',
 ] as const
 type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
 const LAYER_PATHS: Record<LayerName, string> = {
   core: '../../layers/core',
-  seo: '../../layers/seo',
-  scripts: '../../layers/scripts',
-  typography: '../../layers/typography',
-  navigation: '../../layers/navigation',
-  visual: '../../layers/visual',
-  ui: '../../layers/ui',
-  layout: '../../layers/layout',
-  scroll: '../../layers/scroll',
-  animations: '../../layers/animations',
-  transitions: '../../layers/transitions',
-  'page-transitions': '../../layers/page-transitions',
-  motion: '../../layers/motion',
-  canvas: '../../layers/canvas',
-  shader: '../../layers/shader',
-  mailer: '../../layers/mailer',
-  forms: '../../layers/forms',
-  theme: '../../layers/theme',
+  seo: '../../layers/delivery/seo',
+  scripts: '../../layers/delivery/scripts',
+  security: '../../layers/delivery/security',
+  typography: '../../layers/design-system/typography',
+  navigation: '../../layers/structure/navigation',
+  visual: '../../layers/design-system/visual',
+  layout: '../../layers/structure/layout',
+  grid: '../../layers/structure/grid',
+  scroll: '../../layers/motion/scroll',
+  animations: '../../layers/motion/animations',
+  transitions: '../../layers/motion/transitions',
+  'page-transitions': '../../layers/motion/page-transitions',
+  motion: '../../layers/motion/motion',
+  canvas: '../../layers/render/canvas',
+  shader: '../../layers/render/shader',
+  mailer: '../../layers/data/mailer',
+  forms: '../../layers/data/forms',
+  theming: '../../layers/design-system/theming',
   content: '../../layers/content',
-  routing: '../../layers/routing',
-  feeds: '../../layers/feeds',
-  baseline: '../../layers/baseline',
-  database: '../../layers/database',
-  auth: '../../layers/auth',
-  metadata: '../../layers/metadata',
-  'metadata-comicvine': '../../layers/metadata/providers/comicvine',
-  'metadata-openlibrary': '../../layers/metadata/providers/openlibrary',
-  'metadata-google-books': '../../layers/metadata/providers/google-books',
-  'metadata-tmdb': '../../layers/metadata/providers/themoviedb',
+  routing: '../../layers/structure/routing',
+  feeds: '../../layers/delivery/feeds',
+  capture: '../../layers/delivery/capture',
+  database: '../../layers/data/database',
+  auth: '../../layers/data/auth',
+  metadata: '../../layers/data/metadata',
+  'metadata-comicvine': '../../layers/data/metadata/providers/comicvine',
+  'metadata-openlibrary': '../../layers/data/metadata/providers/openlibrary',
+  'metadata-google-books': '../../layers/data/metadata/providers/google-books',
+  'metadata-tmdb': '../../layers/data/metadata/providers/themoviedb',
+  'project-stats': '../../layers/data/project-stats',
 }
 
-// Layer dependencies - if a layer is enabled, its dependencies are auto-included
-const LAYER_DEPENDENCIES: Record<LayerName, LayerName[]> = {
-  core: [],
-  seo: ['core'],
-  scripts: ['core'],
-  typography: ['core'],
-  navigation: ['core', 'scroll', 'layout', 'typography'],
-  visual: ['core'],
-  ui: ['typography', 'navigation', 'visual'],
-  layout: ['core'],
-  scroll: ['core'],
-  animations: ['scroll'],
-  transitions: ['core'],
-  'page-transitions': ['core'],
-  motion: ['scroll', 'animations', 'transitions', 'page-transitions'],
-  canvas: ['core'],
-  shader: ['canvas'],
-  mailer: ['core'],
-  forms: ['mailer'],
-  theme: ['core'],
-  content: ['core'],
-  routing: ['core'],
-  feeds: ['core', 'content'],
-  baseline: ['core'],
-  database: ['core'],
-  auth: ['core'],
-  metadata: ['core'],
-  'metadata-comicvine': ['metadata'],
-  'metadata-openlibrary': ['metadata'],
-  'metadata-google-books': ['metadata'],
-  'metadata-tmdb': ['metadata'],
-}
+// Nuxt resolves each layer's own `extends` transitively, so dependencies are NOT listed here.
 
 /**
- * Resolves which layers to extend based on environment configuration
- * Automatically includes layer dependencies.
+ * Resolves which layers to extend based on environment configuration.
  *
- * PLAYGROUND_LAYERS: Comma-separated list (e.g., "core,ui")
+ * PLAYGROUND_LAYERS: Comma-separated list (e.g., "core,typography")
  * If not set, all layers are enabled
  */
 function resolveExtendedLayers(): string[] {
@@ -112,37 +84,34 @@ function resolveExtendedLayers(): string[] {
     return AVAILABLE_LAYERS.map((name) => LAYER_PATHS[name])
   }
 
-  // Parse comma-separated layer names
-  const requestedLayers = layersEnv
-    .split(',')
-    .map((s) => s.trim().toLowerCase() as LayerName)
-    .filter((name) => AVAILABLE_LAYERS.includes(name))
-
-  // Resolve dependencies
-  const resolvedLayers = new Set<LayerName>()
-
-  function addWithDependencies(layer: LayerName) {
-    if (resolvedLayers.has(layer)) return
-    LAYER_DEPENDENCIES[layer].forEach(addWithDependencies)
-    resolvedLayers.add(layer)
-  }
-
-  requestedLayers.forEach(addWithDependencies)
-
-  // Return paths in correct order (dependencies first)
-  return AVAILABLE_LAYERS.filter((name) => resolvedLayers.has(name)).map(
-    (name) => LAYER_PATHS[name]
+  const requested = new Set(
+    layersEnv
+      .split(',')
+      .map((s) => s.trim().toLowerCase() as LayerName)
+      .filter((name) => AVAILABLE_LAYERS.includes(name))
   )
+
+  return AVAILABLE_LAYERS.filter((name) => requested.has(name)).map((name) => LAYER_PATHS[name])
 }
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   extends: resolveExtendedLayers(),
-  devtools: { enabled: true },
-  css: ['./app/assets/css/playground.css'],
+  // App-level choices (previously forced on every consumer by the core layer)
+  future: { compatibilityVersion: 5 },
+  devtools: { enabled: true, vscode: { enabled: true } },
+  css: ['~/assets/css/playground.css'],
+  // The seo layer ships an empty site name, which leaves `%siteName` unresolved in page titles
+  site: { name: 'Nuxt Layers Playground', url: 'https://nuxtlayers.netlify.app' },
 
   routeRules: {
     '/_studio/**': { redirect: '/' },
+  },
+
+  // The content layer loads nuxt-studio whenever it's installed. The playground deploy has no
+  // Studio OAuth app, so keep Studio to `pnpm dev` (local file editing) only.
+  $production: {
+    studio: false,
   },
 
   // TresJS components (Tres*, primitive) must be excluded from Vue component
@@ -188,6 +157,7 @@ export default defineNuxtConfig({
       // and throws "does not provide an export named 'default'".
       // include: ['slugify'],
       include: [
+        '@vue/devtools-core',
         '@vue/devtools-kit',
         'locomotive-scroll',
         'slugify',
@@ -196,6 +166,11 @@ export default defineNuxtConfig({
         'three/webgpu',
         '@unhead/schema-org/vue',
         'baseline-status',
+        // Only reached through lazy page chunks, which the dep scanner misses. Discovered at
+        // runtime instead, they trigger a re-bundle that strands the open tab on stale chunks
+        // (two Vue copies → hydration mismatch, "useHead() was called without provide context")
+        '@tresjs/cientos',
+        'zod',
       ],
     },
     ssr: {
@@ -216,6 +191,7 @@ export default defineNuxtConfig({
         // is always re-run when the cache is cleared.
         // include: ['slugify'],
         include: [
+          '@vue/devtools-core',
           '@vue/devtools-kit',
           'locomotive-scroll',
           'slugify',
@@ -269,6 +245,8 @@ export default defineNuxtConfig({
 
   modules: [
     '@netlify/nuxt',
+    // Dev-only (no-op in builds): hydration-mismatch diffs, web vitals, third-party script audit
+    '@nuxt/hints',
     '@nuxt/ui',
     '@nuxt/test-utils/module',
     '@vueuse/nuxt',

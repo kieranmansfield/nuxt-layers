@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Nuxt 4 monorepo using pnpm workspaces and Turbo for task orchestration. The project
+This is a Nuxt 4 monorepo using pnpm workspaces and Vite+ (`vp run`) for task orchestration. The project
 implements a composable layers-based architecture for building scalable Vue applications. Each layer
 is an independent package that can be used standalone or composed with others.
 
@@ -13,12 +13,13 @@ is an independent package that can be used standalone or composed with others.
 ```bash
 # Development
 pnpm dev                                  # Start the playground dev server (all layers loaded)
-PLAYGROUND_LAYERS=core,ui pnpm dev        # Load specific layers only
+PLAYGROUND_LAYERS=core,typography pnpm dev  # Load specific layers only
 
 # Build & Type Check
 pnpm build                  # Build all packages
 pnpm typecheck              # Type check all packages
 pnpm lint                   # Lint all packages
+pnpm content:format         # Comark-format content markdown (oxfmt skips it; see layers/content/CLAUDE.md)
 
 # Cleanup
 pnpm clean                  # Remove node_modules, .nuxt, dist from all packages
@@ -26,98 +27,168 @@ pnpm clean                  # Remove node_modules, .nuxt, dist from all packages
 
 ## Architecture
 
+Layers are organized by build-workflow tier (foundation → design system → structure → content →
+data → motion → render → delivery) rather than flat domain buckets. Tiers with more than one
+layer get a physical tier-parent folder under `layers/`; a tier with exactly one layer skips the
+extra nesting and that layer sits directly under `layers/` (`core`, `content`) — a tier-parent
+folder holding a single same-named child (`core/core`, `content/content`) added a path segment
+with no information in it. This grouping and the audit/decision history behind it live in
+`docs/superpowers/specs/2026-08-30-layer-taxonomy-tier-{0-1,2,3,4,5,6,7}-design.md` — read those
+for the "why", this file only tracks current structure.
+
 ```
 nuxt-layers/
 ├── apps/
-│   └── playground/         # Demo/development Nuxt app
+│   ├── playground/         # Demo/development Nuxt app (all layers loadable via PLAYGROUND_LAYERS)
+│   └── starter/            # Standalone starter/demo app — not a layer, lives outside layers/
 ├── layers/
-│   ├── core/               # Base utilities, 404, loading — always the foundation
+│   ├── core/                       # Tier 0 — Foundation (single layer, no tier-parent folder)
+│   │                                 Base utilities, 404, loading, design tokens, Element/ElementTw
+│   │                                 polymorphic primitives (layout/spacing/sizing/surface/
+│   │                                 interaction vocabulary) — always the foundation
 │   │
-│   ├── seo/                # @nuxtjs/seo wrapper (robots, sitemap, og-image, schema-org)
-│   ├── scripts/            # @nuxt/scripts wrapper (analytics, GTM, embeds)
+│   ├── design-system/              # Tier 1
+│   │   ├── theming/                 # Accent/contrast/motion/transparency preferences, ThemePicker UI
+│   │   ├── typography/              # Typography components + useTypography, useColor
+│   │   └── visual/                  # Accent, Gradient, Tint, Progress, Modal, Picture
 │   │
-│   ├── typography/         # Typography components + useTypography, useColor
-│   ├── navigation/         # Mast/Site/Links components + useMastNav, useSite
-│   ├── visual/             # Accent, Gradient, Tint, Progress, Modal, Picture
-│   ├── ui/                 # UI orchestrator → typography + navigation + visual
+│   ├── structure/                  # Tier 2
+│   │   ├── layout/                  # Grid/spacing/breakpoints + HStack/VStack/ZStack/Spacer primitives
+│   │   ├── grid/                    # Data-driven column tracks + presets, rhythm CSS, named-line placement
+│   │   ├── navigation/              # Mast/Site/Links components + useMastNav, useSite
+│   │   └── routing/                 # Advanced routing, maintenance mode, feature flags
 │   │
-│   ├── layout/             # Page layout (grid, spacing, breakpoints)
+│   ├── content/                    # Tier 3 (single layer, no tier-parent folder)
+│   │                                 Nuxt Content v3 collections and components
 │   │
-│   ├── scroll/             # GSAP + Locomotive Scroll + scroll-reactive components
-│   ├── animations/         # Marquee, Cursor, Tilt, Magnetic, CountUp, TextReveal
-│   ├── transitions/        # CSS transition classes + MotionTransition component
-│   ├── page-transitions/   # Nuxt page transition defaults + usePageTransition
-│   ├── motion/             # Motion orchestrator → scroll + animations + transitions + page-transitions
+│   ├── data/                       # Tier 4
+│   │   ├── database/                # Drizzle + Neon Postgres connection, useDrizzle() helper
+│   │   ├── auth/                     # nuxt-auth-utils + GitHub OAuth, session utilities
+│   │   ├── metadata/                 # Provider registry, cache, normalised types, API routes
+│   │   │   └── providers/
+│   │   │       ├── comicvine/           # Comic Vine provider (issues, volumes)
+│   │   │       ├── openlibrary/         # Open Library provider (books, ISBNs)
+│   │   │       ├── google-books/        # Google Books provider (fallback/enrichment)
+│   │   │       └── themoviedb/          # TMDB provider (movies, TV shows; IMDB ID passthrough)
+│   │   ├── project-stats/            # GitHub repo + Obsidian plugin stats: cached API routes, cards
+│   │   ├── forms/                    # Form UI + Zod validation (depends on mailer)
+│   │   └── mailer/                   # Resend email sending + runtime config
 │   │
-│   ├── canvas/             # TresJS/WebGL/WebGPU rendering context
-│   ├── shader/             # TSL shader pipeline blocks, materials, presets
+│   ├── motion/                     # Tier 5 — still has the same `motion/motion` self-nesting as
+│   │   ├── scroll/                   # `content` did; deliberately left alone for now (see below)
+│   │   ├── animations/               # GSAP + Locomotive Scroll + scroll-reactive components
+│   │   ├── transitions/              # CSS transition classes + MotionTransition component
+│   │   ├── page-transitions/         # Nuxt page transition defaults + usePageTransition
+│   │   └── motion/                   # Motion orchestrator → scroll + animations + transitions + page-transitions
 │   │
-│   ├── mailer/             # Resend email sending + runtime config
-│   ├── forms/              # Form UI + Zod validation (depends on mailer)
+│   ├── render/                     # Tier 6
+│   │   ├── canvas/                   # TresJS/WebGL/WebGPU rendering context
+│   │   └── shader/                   # TSL shader pipeline blocks, materials, presets
 │   │
-│   ├── database/           # Drizzle + Neon Postgres connection, useDrizzle() helper
-│   ├── auth/               # nuxt-auth-utils + GitHub OAuth, session utilities
-│   │
-│   ├── metadata/           # Provider registry, cache, normalised types, API routes
-│   │   └── providers/
-│   │       ├── comicvine/      # Comic Vine provider (issues, volumes)
-│   │       ├── openlibrary/    # Open Library provider (books, ISBNs)
-│   │       ├── google-books/   # Google Books provider (fallback/enrichment)
-│   │       └── themoviedb/     # TMDB provider (movies, TV shows; IMDB ID passthrough)
-│   │
-│   ├── theme/              # Design tokens and theming utilities
-│   ├── content/            # Nuxt Content v3 collections and components
-│   └── routing/            # Advanced routing, maintenance mode, feature flags
+│   └── delivery/                   # Tier 7
+│       ├── seo/                      # @nuxtjs/seo wrapper (robots, sitemap, og-image, schema-org)
+│       ├── scripts/                  # @nuxt/scripts wrapper (analytics, GTM, embeds, baseline-status badge)
+│       ├── security/                 # Opt-in nuxt-security wrapper (CSP, security headers, rate limiter,
+│       │                               XSS validator) tuned so other layers don't break under it
+│       ├── feeds/                    # RSS/Atom/JSON feed generation from content collections
+│       └── capture/                  # kmcom-capture CLI: Monkr-framed screenshots + scroll videos
+│                                       of any site; client plugin signals capture-readiness
 └── packages/               # Shared utilities (placeholder)
 ```
+
+Each layer's package name (`kmcom-layer-*`, used in `pnpm --filter`/`vp run --filter`) is unchanged
+by any of this — only folder paths changed.
+
+**Open item, not yet decided:** Tier 5 (Motion) still nests its orchestrator layer as
+`motion/motion`, the same redundant shape `core` and `content` were just pulled out of. Left alone
+deliberately — motion has other real siblings (`scroll`, `animations`, `transitions`,
+`page-transitions`) so the tier-parent folder itself is still earning its keep; only the
+`motion/motion` leaf reads oddly. Revisit whether the orchestrator layer should be renamed, or the
+whole tier reshaped, in a future pass — not folded into this one.
+
+`ui` (formerly Tier 1) and `baseline` (formerly Tier 7) no longer exist as layers — `ui` was
+dissolved (its 4 stack primitives moved into `layout`, `Container` renamed `AppContainer` and
+moved into `core`), and `baseline` was merged into `scripts` (it wrapped a third-party embed, the
+same shape as `scripts`' other embed facades). `theme` was renamed `theming`. `starter` was
+relocated out of `layers/` into `apps/` — it's a demo app, not a layer. `element` (formerly Tier 1)
+was folded into `core` — it had no layer deps of its own beyond `core`, no other layer depended on
+it, and every layer benefits from the primitive being always-present rather than opt-in; `core`
+now ships both `Element` (inline-`:style`) and `ElementTw` (Tailwind arbitrary-property classes,
+same props, one shared `resolveElementStyle`).
+
+**Open item, not yet decided:** the tier design's summary table describes `transitions` as
+absorbing `page-transitions`, but that merge was never implemented — both still exist as separate,
+real layers with real content. Treat them as distinct Tier 5 members until that merge is either
+done or dropped; don't assume the absorption already happened.
+
+**Open item, deliberately deferred:** Tier 2 has two grid systems. `layout` still carries its
+fixed 6/12/18-column Swiss grid (`LayoutGridItem`, `useGridConfig`, `layoutLayer.ui.grid`), and
+`grid` is the data-driven replacement (`useGridTracks`, presets, named-line placement) that no
+layer consumes yet. Do not merge them piecemeal — see `docs/adr/0001-grid-replaces-layout-swiss-grid.md`.
 
 ## Layer Dependency Graph
 
 ```
+# Tier 0 — Foundation
 core → (nothing)
 
-seo → core
-scripts → core
-
+# Tier 1 — Design System
+theming → core, typography
 typography → core
-navigation → core, scroll, layout, typography
 visual → core
-ui → typography, navigation, visual
 
+# Tier 2 — Structure
 layout → core
+grid → core
+navigation → core, scroll, layout, typography, visual
+routing → core
 
-scroll → core
-animations → scroll
-transitions → core
-page-transitions → core
-motion → scroll, animations, transitions, page-transitions
+# Tier 3 — Content
+content → core, layout, visual, project-stats, animations
 
-canvas → core
-shader → canvas
-
+# Tier 4 — Data
+database → core
+auth → core
+metadata → core
+data/metadata/providers/comicvine → metadata
+data/metadata/providers/openlibrary → metadata
+data/metadata/providers/google-books → metadata
+data/metadata/providers/themoviedb → metadata
+project-stats → core
 mailer → core
 forms → mailer
 
-database → core
-auth → core
+# Tier 5 — Motion
+scroll → core, visual
+animations → scroll, transitions
+transitions → core
+page-transitions → core, scroll
+motion → scroll, animations, transitions, page-transitions
 
-metadata → core
-metadata/providers/comicvine → metadata
-metadata/providers/openlibrary → metadata
-metadata/providers/google-books → metadata
-metadata/providers/themoviedb → metadata
+# Tier 6 — Render
+canvas → core
+shader → canvas, theming
 
-theme → core
-content → core
-routing → core
+# Tier 7 — Delivery
+seo → core
+scripts → core
+security → core
+feeds → core, content
+capture → core
 ```
 
 **Rules:**
 
 - `core` has no layer dependencies — it is always the base
 - Every non-core layer MUST declare its full `extends` list explicitly in `nuxt.config.ts`
-- Do not rely on playground load order to provide dependencies
+- Do not rely on playground load order to provide dependencies — the playground lists no
+  dependencies; Nuxt resolves each layer's `extends` transitively
+- `tests/vitest/layer-extends.test.ts` fails if a layer imports `#layers/<name>` or renders an
+  auto-imported component from a layer it doesn't extend (auto-imported composables are not covered)
 - Nuxt deduplicates layers, so declaring a dep that's already loaded is safe and free
+- Every UI component's atomic level (atom / behaviour / molecule / organism / template / page) is
+  recorded in `docs/component-levels.md`; `tests/vitest/component-levels.test.ts` fails when a new
+  component has no row
 
 ## Tech Stack
 
@@ -129,7 +200,7 @@ routing → core
 - **Zod** for form validation
 - **@nuxtjs/seo** for robots, sitemap, og-image, schema-org
 - **@nuxt/scripts** for consent-aware third-party scripts
-- **Turbo** for monorepo task running
+- **Vite+** (`vp run`) for monorepo task running
 - **Vitest** for unit tests, **Playwright/Cypress** for E2E
 
 ## Path-Based Rules

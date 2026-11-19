@@ -1,0 +1,26 @@
+<script setup lang="ts">
+  // fallow-ignore-file code-duplication
+  import { float, pow, vec4 } from 'three/tsl'
+
+  /**
+   * Gamma-encodes linear light to sRGB for display.
+   * Use as the last step in HDR pipelines before output.
+   * Approximate form: pow(col, 1/2.2).
+   */
+  const { gamma = 2.2, order = 0 } = defineProps<{
+    /** Gamma exponent — 2.2 matches sRGB standard */
+    gamma?: number
+    order?: number
+  }>()
+
+  const gammaNode = useUniformProp(() => gamma)
+
+  useShaderStage(
+    (prev) => vec4(pow(prev.xyz.max(float(0)), float(1).div(gammaNode)), prev.w),
+    order
+  )
+</script>
+
+<template>
+  <slot />
+</template>

@@ -127,7 +127,7 @@
     <div class="bg-default min-h-screen">
       <!-- Scroll progress bar -->
       <MotionScrollProgress
-        class="fixed top-0 left-0 right-0 z-50"
+        class="fixed top-0 right-0 left-0 z-50"
         :show-percentage="false"
         :height="3"
       />
@@ -136,7 +136,7 @@
         name="SCROLL"
         description="GSAP + Locomotive Scroll infrastructure. The base layer for all animation and motion in the stack."
       >
-        <div class="flex flex-wrap gap-4 justify-center">
+        <div class="flex flex-wrap justify-center gap-4">
           <UButton size="lg" to="/motion" icon="i-lucide-sparkles"> Motion Layer </UButton>
           <UButton size="lg" variant="outline" to="/gsap" icon="i-lucide-zap"> GSAP Guide </UButton>
           <UButton size="lg" variant="ghost" to="/locomotive-scroll" icon="i-lucide-train">
@@ -147,14 +147,14 @@
 
       <!-- Live scroll stats overlay -->
       <div
-        class="fixed top-16 right-4 z-50 bg-black/80 text-highlighted px-4 py-2 rounded-lg font-mono text-sm backdrop-blur-sm"
+        class="text-highlighted fixed top-16 right-4 z-50 rounded-lg bg-black/80 px-4 py-2 font-mono text-sm backdrop-blur-sm"
       >
         <div>Velocity: {{ velocity.toFixed(2) }}</div>
         <div>Progress: {{ (progress * 100).toFixed(1) }}%</div>
       </div>
 
       <section class="bg-default pb-24">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div class="space-y-8 py-8">
             <!-- Composables -->
             <UCard>
@@ -163,22 +163,22 @@
                   <UIcon name="i-lucide-puzzle" class="text-primary" />
                   <h2 class="text-xl font-semibold">Composables</h2>
                 </div>
-                <p class="text-sm text-muted mt-1">Four composables for scroll-driven behaviour</p>
+                <p class="text-muted mt-1 text-sm">Four composables for scroll-driven behaviour</p>
               </template>
 
               <div class="space-y-4">
                 <div
                   v-for="comp in composables"
                   :key="comp.name"
-                  class="p-4 rounded-lg bg-elevated border border-default"
+                  class="bg-elevated border-default rounded-lg border p-4"
                 >
                   <div class="flex items-start gap-3">
-                    <UIcon :name="comp.icon" class="text-primary text-xl mt-0.5 shrink-0" />
-                    <div class="flex-1 min-w-0">
-                      <code class="text-sm font-mono font-bold text-highlighted">
+                    <UIcon :name="comp.icon" class="text-primary mt-0.5 shrink-0 text-xl" />
+                    <div class="min-w-0 flex-1">
+                      <code class="text-highlighted font-mono text-sm font-bold">
                         {{ comp.name }}
                       </code>
-                      <p class="text-sm text-muted mt-1 mb-3">{{ comp.description }}</p>
+                      <p class="text-muted mt-1 mb-3 text-sm">{{ comp.description }}</p>
                       <div class="flex flex-wrap gap-1.5">
                         <UBadge
                           v-for="prop in comp.props"
@@ -203,7 +203,7 @@
                   <UIcon name="i-lucide-zap" class="text-primary" />
                   <h2 class="text-xl font-semibold">GSAP Directives</h2>
                 </div>
-                <p class="text-sm text-muted mt-1">
+                <p class="text-muted mt-1 text-sm">
                   Declarative GSAP animations via Vue directives
                 </p>
               </template>
@@ -212,17 +212,17 @@
                 <div
                   v-for="dir in directives"
                   :key="dir.name"
-                  class="flex flex-col sm:flex-row sm:items-center gap-2 py-2 border-b border-default last:border-0"
+                  class="border-default flex flex-col gap-2 border-b py-2 last:border-0 sm:flex-row sm:items-center"
                 >
-                  <code class="text-sm font-mono text-primary shrink-0 w-48">{{ dir.name }}</code>
-                  <span class="text-sm text-muted flex-1">{{ dir.description }}</span>
+                  <code class="text-primary w-48 shrink-0 font-mono text-sm">{{ dir.name }}</code>
+                  <span class="text-muted flex-1 text-sm">{{ dir.description }}</span>
                 </div>
               </div>
 
               <!-- Live demo -->
               <template #footer>
-                <p class="text-xs text-muted mb-3">Scroll-triggered animation demo:</p>
-                <div class="grid grid-cols-3 md:grid-cols-6 gap-3">
+                <p class="text-muted mb-3 text-xs">Scroll-triggered animation demo:</p>
+                <div class="grid grid-cols-3 gap-3 md:grid-cols-6">
                   <div
                     v-for="box in demoBoxes"
                     :key="box.label"
@@ -233,9 +233,9 @@
                       ease: 'power3.out',
                       delay: box.delay,
                     }"
-                    class="aspect-square bg-primary/10 border border-primary/30 rounded-xl flex items-center justify-center"
+                    class="bg-primary/10 border-primary/30 flex aspect-square items-center justify-center rounded-xl border"
                   >
-                    <span class="text-xs font-mono text-primary">{{ box.label }}</span>
+                    <span class="text-primary font-mono text-xs">{{ box.label }}</span>
                   </div>
                 </div>
               </template>
@@ -248,7 +248,7 @@
                   <UIcon name="i-lucide-component" class="text-primary" />
                   <h2 class="text-xl font-semibold">Components</h2>
                 </div>
-                <p class="text-sm text-muted mt-1">
+                <p class="text-muted mt-1 text-sm">
                   Eight components for scroll-reactive UI and scrollytelling
                 </p>
               </template>
@@ -257,19 +257,19 @@
                 <div
                   v-for="comp in components"
                   :key="comp.name"
-                  class="flex items-start gap-3 p-3 rounded-lg bg-elevated"
+                  class="bg-elevated flex items-start gap-3 rounded-lg p-3"
                 >
-                  <UIcon :name="comp.icon" class="text-primary text-lg mt-0.5 shrink-0" />
+                  <UIcon :name="comp.icon" class="text-primary mt-0.5 shrink-0 text-lg" />
                   <div>
-                    <code class="text-sm font-mono text-highlighted">{{ comp.name }}</code>
-                    <p class="text-xs text-muted mt-0.5">{{ comp.description }}</p>
+                    <code class="text-highlighted font-mono text-sm">{{ comp.name }}</code>
+                    <p class="text-muted mt-0.5 text-xs">{{ comp.description }}</p>
                   </div>
                 </div>
               </div>
             </UCard>
 
             <!-- Navigation to sub-pages -->
-            <div class="flex flex-wrap gap-4 justify-center pt-4">
+            <div class="flex flex-wrap justify-center gap-4 pt-4">
               <UButton to="/motion" icon="i-lucide-sparkles"> Motion Layer </UButton>
               <UButton to="/gsap" variant="outline" icon="i-lucide-zap"> GSAP Guide </UButton>
               <UButton to="/locomotive-scroll" variant="outline" icon="i-lucide-train">

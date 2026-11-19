@@ -1,0 +1,19 @@
+<script setup lang="ts">
+  import { vec4 } from 'three/tsl'
+
+  import { tanhTonemap } from '../../shaders/common/tonemapping'
+
+  const { exposure = 1.0, order = 0 } = defineProps<{
+    /** Controls how aggressively values above 1 are compressed. dawn5 uses 2.5. */
+    exposure?: number
+    order?: number
+  }>()
+
+  const exposureNode = useUniformProp(() => exposure)
+
+  useShaderStage((prev) => vec4(tanhTonemap(prev.xyz.mul(exposureNode)), prev.w), order)
+</script>
+
+<template>
+  <slot />
+</template>

@@ -1,0 +1,378 @@
+<script setup lang="ts">
+  import { useThemePreferenceModels } from '#layers/theming/app/composables/useThemePreferenceModels'
+
+  const {
+    contrastOverride,
+    motionOverride,
+    transparencyOverride,
+    contrastModel,
+    motionModel,
+    transparencyModel,
+  } = useThemePreferenceModels()
+
+  const { activeAccent } = useAccentColor()
+
+  const { systemContrast, systemMotion, systemTransparency } = useTheme()
+
+  // Media query support detection (onMounted to avoid SSR window access)
+  const contrastSupported = ref(false)
+  const motionSupported = ref(false)
+  const transparencySupported = ref(false)
+
+  onMounted(() => {
+    contrastSupported.value = window.matchMedia('(prefers-contrast: more)').media !== 'not all'
+    motionSupported.value =
+      window.matchMedia('(prefers-reduced-motion: reduce)').media !== 'not all'
+    transparencySupported.value =
+      window.matchMedia('(prefers-reduced-transparency: reduce)').media !== 'not all'
+  })
+
+  const COLOR_SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const
+
+  const COLOR_ROLES = [
+    { key: 'primary', label: 'Primary' },
+    { key: 'secondary', label: 'Secondary' },
+    { key: 'info', label: 'Accent' },
+    { key: 'neutral', label: 'Neutral' },
+  ] as const
+
+  // Theme-color demo: an override wins over the page background until it's released
+  const themeColorOverride = useThemeColorOverride()
+  const themeColorSwatches = ['#e11d48', '#f59e0b', '#16a34a', '#2563eb', '#0a0a0a']
+  const themeColorTags = ref<{ media: string; content: string }[]>([])
+
+  // Reads the tags back from the DOM, so the section shows what the browser actually gets
+  function readThemeColorTags() {
+    themeColorTags.value = [
+      ...document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]'),
+    ].map((meta) => ({ media: meta.media, content: meta.content }))
+  }
+
+  onMounted(() => {
+    readThemeColorTags()
+    useMutationObserver(document.head, readThemeColorTags, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+    })
+  })
+  onUnmounted(() => (themeColorOverride.value = null))
+
+  definePageMeta({ layout: false })
+
+  const { setPageAccent } = useAccentColor()
+  setPageAccent('indigo')
+  onUnmounted(() => setPageAccent(null))
+</script>
+
+<template>
+  <LayoutPage
+    title="Theming Layer Demo"
+    description="Demonstrating the Theming layer color system, palettes, and design tokens"
+  >
+    <div class="bg-default min-h-screen">
+      <DemoPageHero
+        name="THEMING"
+        description="Config-driven theme system with dark mode, accent colours, and CSS variable tokens."
+      />
+      <UContainer class="space-y-12 py-8">
+        <!-- Color Mode -->
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold">Color Mode</h2>
+          <UColorModeSelect class="w-48" />
+        </section>
+
+        <!-- Browser Toolbar Colour -->
+        <section class="space-y-4">
+          <div>
+            <h2 class="text-2xl font-bold">Browser Toolbar Colour</h2>
+            <p class="text-muted mt-1 text-sm">
+              <code>useThemeColorOverride()</code> - theme-color meta tags kept on the page
+              background. Opt-in via <code>themeLayer.themeColor.enabled</code>; used by installed
+              web apps and Chrome on Android.
+            </p>
+          </div>
+
+          <div class="grid gap-6 md:grid-cols-2">
+            <!-- Live tags -->
+            <div class="space-y-3">
+              <h3 class="text-muted text-sm font-medium tracking-wide uppercase">Live Meta Tags</h3>
+              <!-- fallow-ignore-next-line complexity -->
+              <p v-if="!themeColorTags.length" class="text-muted text-sm">
+                No tags - <code>themeLayer.themeColor.enabled</code> is off.
+              </p>
+              <div
+                v-for="tag in themeColorTags"
+                :key="tag.media"
+                class="flex items-center justify-between gap-3"
+              >
+                <span class="text-toned dark:text-muted text-sm">{{ tag.media }}</span>
+                <span class="flex items-center gap-2 font-mono text-sm">
+                  <span
+                    class="border-default size-4 rounded border"
+                    :style="{ backgroundColor: tag.content }"
+                  />
+                  {{ tag.content }}
+                </span>
+              </div>
+              <p class="text-muted text-sm">Switch colour mode above: both tags follow it.</p>
+            </div>
+
+            <!-- Override -->
+            <div class="space-y-3">
+              <h3 class="text-muted text-sm font-medium tracking-wide uppercase">Override</h3>
+              <div class="flex flex-wrap gap-2">
+                <UButton
+                  v-for="color in themeColorSwatches"
+                  :key="color"
+                  size="xs"
+                  color="neutral"
+                  :variant="themeColorOverride === color ? 'solid' : 'outline'"
+                  @click="themeColorOverride = color"
+                >
+                  <span class="size-3 rounded-full" :style="{ backgroundColor: color }" />
+                  <span class="font-mono">{{ color }}</span>
+                </UButton>
+              </div>
+              <UButton
+                size="xs"
+                variant="soft"
+                icon="i-lucide-undo-2"
+                :disabled="!themeColorOverride"
+                @click="themeColorOverride = null"
+              >
+                Release
+              </UButton>
+              <p class="text-muted text-sm">Released when you leave this page.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Accent Picker -->
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold">
+            Accent Color
+            <span class="text-primary ml-2 capitalize">{{ activeAccent }}</span>
+          </h2>
+          <ThemePickerColors />
+        </section>
+
+        <!-- Color Palettes -->
+        <section class="space-y-6">
+          <h2 class="text-2xl font-bold">Color Palettes</h2>
+          <div class="space-y-4">
+            <div v-for="role in COLOR_ROLES" :key="role.key" class="space-y-1.5">
+              <p class="text-muted text-sm font-medium capitalize">{{ role.label }}</p>
+              <div class="flex overflow-hidden rounded-lg">
+                <div
+                  v-for="shade in COLOR_SHADES"
+                  :key="shade"
+                  class="group relative h-10 flex-1"
+                  :style="{ background: `var(--ui-color-${role.key}-${shade})` }"
+                >
+                  <span
+                    class="absolute inset-0 flex items-end justify-center pb-1 font-mono text-[9px] opacity-0 transition-opacity group-hover:opacity-100"
+                    :style="{
+                      color:
+                        shade < 500
+                          ? `var(--ui-color-${role.key}-800)`
+                          : `var(--ui-color-${role.key}-100)`,
+                    }"
+                  >
+                    {{ shade }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Component previews -->
+          <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div v-for="role in COLOR_ROLES" :key="role.key" class="space-y-2">
+              <p class="text-muted text-xs font-medium">{{ role.label }}</p>
+              <div class="flex flex-col gap-1.5">
+                <UButton
+                  :color="role.key"
+                  size="sm"
+                  :label="role.label"
+                  class="w-full justify-center"
+                />
+                <UBadge :color="role.key" :label="role.label" class="justify-center" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Accessibility Preferences -->
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold">Accessibility Preferences</h2>
+          <div class="space-y-3">
+            <!-- High Contrast -->
+            <UCard :ui="{ body: 'p-4' }">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <UIcon name="i-lucide-contrast" class="text-muted size-4" />
+                    <span class="font-semibold">High Contrast</span>
+                  </div>
+                  <USwitch
+                    v-model="contrastModel"
+                    unchecked-icon="i-lucide-x"
+                    checked-icon="i-lucide-check"
+                    size="lg"
+                  />
+                </div>
+                <div class="grid grid-cols-3 gap-3 text-sm">
+                  <div class="space-y-1">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">
+                      Media Query
+                    </p>
+                    <UBadge
+                      :color="contrastSupported ? 'success' : 'neutral'"
+                      :leading-icon="contrastSupported ? 'i-lucide-check' : 'i-lucide-x'"
+                      :label="contrastSupported ? 'Supported' : 'Not Supported'"
+                      variant="subtle"
+                      size="sm"
+                    />
+                  </div>
+                  <div class="space-y-1">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">System</p>
+                    <UBadge
+                      :color="systemContrast === 'more' ? 'warning' : 'neutral'"
+                      :label="systemContrast"
+                      variant="subtle"
+                      size="sm"
+                    />
+                  </div>
+                  <div class="space-y-1">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">
+                      User Override
+                    </p>
+                    <UBadge
+                      :color="contrastOverride === 'system' ? 'neutral' : 'primary'"
+                      :label="contrastOverride"
+                      variant="subtle"
+                      size="sm"
+                    />
+                  </div>
+                </div>
+              </div>
+            </UCard>
+
+            <!-- Reduce Motion -->
+            <UCard :ui="{ body: 'p-4' }">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <UIcon name="i-lucide-zap-off" class="text-muted size-4" />
+                    <span class="font-semibold">Reduce Motion</span>
+                  </div>
+                  <USwitch
+                    v-model="motionModel"
+                    unchecked-icon="i-lucide-x"
+                    checked-icon="i-lucide-check"
+                    size="lg"
+                  />
+                </div>
+                <div class="grid grid-cols-3 gap-3 text-sm">
+                  <div class="space-y-1">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">
+                      Media Query
+                    </p>
+                    <UBadge
+                      :color="motionSupported ? 'success' : 'neutral'"
+                      :leading-icon="motionSupported ? 'i-lucide-check' : 'i-lucide-x'"
+                      :label="motionSupported ? 'Supported' : 'Not Supported'"
+                      variant="subtle"
+                      size="sm"
+                    />
+                  </div>
+                  <div class="space-y-1">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">System</p>
+                    <UBadge
+                      :color="systemMotion === 'reduce' ? 'warning' : 'neutral'"
+                      :label="systemMotion"
+                      variant="subtle"
+                      size="sm"
+                    />
+                  </div>
+                  <div class="space-y-1">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">
+                      User Override
+                    </p>
+                    <UBadge
+                      :color="motionOverride === 'system' ? 'neutral' : 'primary'"
+                      :label="motionOverride"
+                      variant="subtle"
+                      size="sm"
+                    />
+                  </div>
+                </div>
+              </div>
+            </UCard>
+
+            <!-- Reduce Transparency -->
+            <UCard :ui="{ body: 'p-4' }">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <UIcon name="i-lucide-eye-off" class="text-muted size-4" />
+                    <span class="font-semibold">Reduce Transparency</span>
+                  </div>
+                  <USwitch
+                    v-model="transparencyModel"
+                    unchecked-icon="i-lucide-x"
+                    checked-icon="i-lucide-check"
+                    size="lg"
+                  />
+                </div>
+                <div class="grid grid-cols-3 gap-3 text-sm">
+                  <div class="space-y-1">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">
+                      Media Query
+                    </p>
+                    <UBadge
+                      :color="transparencySupported ? 'success' : 'neutral'"
+                      :leading-icon="transparencySupported ? 'i-lucide-check' : 'i-lucide-x'"
+                      :label="transparencySupported ? 'Supported' : 'Not Supported'"
+                      variant="subtle"
+                      size="sm"
+                    />
+                  </div>
+                  <div class="space-y-1">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">System</p>
+                    <UBadge
+                      :color="systemTransparency === 'reduce' ? 'warning' : 'neutral'"
+                      :label="systemTransparency"
+                      variant="subtle"
+                      size="sm"
+                    />
+                  </div>
+                  <div class="space-y-1">
+                    <p class="text-muted text-xs font-medium tracking-wide uppercase">
+                      User Override
+                    </p>
+                    <UBadge
+                      :color="transparencyOverride === 'system' ? 'neutral' : 'primary'"
+                      :label="transparencyOverride"
+                      variant="subtle"
+                      size="sm"
+                    />
+                  </div>
+                </div>
+              </div>
+            </UCard>
+          </div>
+        </section>
+      </UContainer>
+      <DemoPageFooter
+        name="Theming Layer"
+        description="Design tokens and theming utilities"
+        :links="[
+          { label: 'Visual', to: '/visual', icon: 'i-lucide-sparkles' },
+          { label: 'Typography', to: '/typography', icon: 'i-lucide-type' },
+        ]"
+      />
+    </div>
+  </LayoutPage>
+</template>

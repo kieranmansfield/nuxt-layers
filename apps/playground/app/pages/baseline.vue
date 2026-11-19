@@ -79,12 +79,12 @@
               <strong>Baseline</strong> is a Web Platform initiative by the W3C WebDX Community
               Group that gives each web feature a clear availability signal:
             </p>
-            <div class="grid gap-4 md:grid-cols-3 not-prose mt-4">
+            <div class="not-prose mt-4 grid gap-4 md:grid-cols-3">
               <div
-                class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800"
+                class="rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20"
               >
-                <div class="flex items-center gap-2 mb-2">
-                  <span class="text-green-600 font-bold text-lg">✓</span>
+                <div class="mb-2 flex items-center gap-2">
+                  <span class="text-lg font-bold text-green-600">✓</span>
                   <h3 class="font-semibold text-green-800 dark:text-green-200">Widely Available</h3>
                 </div>
                 <p class="text-sm text-green-700 dark:text-green-300">
@@ -92,22 +92,22 @@
                 </p>
               </div>
               <div
-                class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800"
+                class="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20"
               >
-                <div class="flex items-center gap-2 mb-2">
-                  <span class="text-blue-600 font-bold text-lg">◎</span>
+                <div class="mb-2 flex items-center gap-2">
+                  <span class="text-lg font-bold text-blue-600">◎</span>
                   <h3 class="font-semibold text-blue-800 dark:text-blue-200">Newly Available</h3>
                 </div>
                 <p class="text-sm text-blue-700 dark:text-blue-300">
                   Landed in all major browsers recently — use with care
                 </p>
               </div>
-              <div class="p-4 bg-accented rounded-lg border border-default">
-                <div class="flex items-center gap-2 mb-2">
-                  <span class="text-muted font-bold text-lg">✗</span>
+              <div class="bg-accented border-default rounded-lg border p-4">
+                <div class="mb-2 flex items-center gap-2">
+                  <span class="text-muted text-lg font-bold">✗</span>
                   <h3 class="font-semibold">Limited Availability</h3>
                 </div>
-                <p class="text-sm text-toned">
+                <p class="text-toned text-sm">
                   Not yet in all major browsers — check support tables
                 </p>
               </div>
@@ -118,10 +118,10 @@
         <!-- Live demo — featured features -->
         <section class="space-y-6">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Featured Features</h2>
+            <h2 class="mb-2 text-2xl font-bold">Featured Features</h2>
             <p class="text-muted">
               Live status badges fetched from
-              <code class="text-xs bg-accented px-1.5 py-0.5 rounded">api.webstatus.dev</code>
+              <code class="bg-accented rounded px-1.5 py-0.5 text-xs">api.webstatus.dev</code>
             </p>
           </div>
 
@@ -130,14 +130,14 @@
               <template #header>
                 <div>
                   <h3 class="font-semibold">{{ feature.label }}</h3>
-                  <p class="text-sm text-muted mt-0.5">{{ feature.description }}</p>
+                  <p class="text-muted mt-0.5 text-sm">{{ feature.description }}</p>
                 </div>
               </template>
 
               <BaselineStatus :feature-id="feature.id" />
 
               <template #footer>
-                <code class="text-xs text-muted">featureId="{{ feature.id }}"</code>
+                <code class="text-muted text-xs">featureId="{{ feature.id }}"</code>
               </template>
             </UCard>
           </div>
@@ -146,10 +146,10 @@
         <!-- Interactive sandbox -->
         <section class="space-y-6">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Try Any Feature</h2>
+            <h2 class="mb-2 text-2xl font-bold">Try Any Feature</h2>
             <p class="text-muted">
               Enter any feature ID from
-              <code class="text-xs bg-accented px-1.5 py-0.5 rounded">webstatus.dev</code>
+              <code class="bg-accented rounded px-1.5 py-0.5 text-xs">webstatus.dev</code>
               to see its Baseline status
             </p>
           </div>
@@ -171,9 +171,9 @@
               />
 
               <div v-if="customFeatureId" class="space-y-2">
-                <p class="text-sm text-muted">
+                <p class="text-muted text-sm">
                   Status for
-                  <code class="text-xs bg-accented px-1.5 py-0.5 rounded">{{
+                  <code class="bg-accented rounded px-1.5 py-0.5 text-xs">{{
                     customFeatureId
                   }}</code
                   >:
@@ -183,13 +183,13 @@
             </div>
 
             <template #footer>
-              <p class="text-xs text-muted">
+              <p class="text-muted text-xs">
                 Find feature IDs at
                 <ULink to="https://webstatus.dev" target="_blank" class="underline"
                   >webstatus.dev</ULink
                 >
                 — the ID is the last segment of the URL, e.g.
-                <code class="bg-accented px-1 py-0.5 rounded">intl-list-format</code>
+                <code class="bg-accented rounded px-1 py-0.5">intl-list-format</code>
               </p>
             </template>
           </UCard>
@@ -198,9 +198,9 @@
         <!-- Usage -->
         <section class="space-y-6">
           <div>
-            <h2 class="text-2xl font-bold mb-2">Usage</h2>
+            <h2 class="mb-2 text-2xl font-bold">Usage</h2>
             <p class="text-muted">
-              <code class="text-xs bg-accented px-1.5 py-0.5 rounded">BaselineStatus</code>
+              <code class="bg-accented rounded px-1.5 py-0.5 text-xs">BaselineStatus</code>
               is auto-imported — no manual import needed
             </p>
           </div>
@@ -215,13 +215,13 @@
 
             <div class="space-y-6">
               <div
-                class="bg-muted text-highlighted p-4 rounded-lg font-mono text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 font-mono text-sm"
               >
                 <pre>{{ usageCode }}</pre>
               </div>
 
               <div
-                class="bg-muted text-highlighted p-4 rounded-lg font-mono text-sm overflow-x-auto"
+                class="bg-muted text-highlighted overflow-x-auto rounded-lg p-4 font-mono text-sm"
               >
                 <pre>{{ advancedCode }}</pre>
               </div>
@@ -240,22 +240,22 @@
               <table class="w-full text-sm">
                 <thead>
                   <tr class="border-b">
-                    <th class="text-left py-2 px-3">Prop</th>
-                    <th class="text-left py-2 px-3">Type</th>
-                    <th class="text-left py-2 px-3">Required</th>
-                    <th class="text-left py-2 px-3">Description</th>
+                    <th class="px-3 py-2 text-left">Prop</th>
+                    <th class="px-3 py-2 text-left">Type</th>
+                    <th class="px-3 py-2 text-left">Required</th>
+                    <th class="px-3 py-2 text-left">Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="py-2 px-3 font-mono text-xs">featureId</td>
-                    <td class="py-2 px-3 font-mono text-xs">string</td>
-                    <td class="py-2 px-3">
+                    <td class="px-3 py-2 font-mono text-xs">featureId</td>
+                    <td class="px-3 py-2 font-mono text-xs">string</td>
+                    <td class="px-3 py-2">
                       <UBadge color="error" variant="subtle" size="xs">required</UBadge>
                     </td>
-                    <td class="py-2 px-3">
+                    <td class="px-3 py-2">
                       Web platform feature slug from
-                      <code class="text-xs bg-accented px-1 rounded">webstatus.dev</code>
+                      <code class="bg-accented rounded px-1 text-xs">webstatus.dev</code>
                     </td>
                   </tr>
                 </tbody>
@@ -265,7 +265,7 @@
         </section>
 
         <!-- Navigation -->
-        <div class="flex gap-4 justify-center pt-4">
+        <div class="flex justify-center gap-4 pt-4">
           <UButton to="/content" variant="outline" icon="i-lucide-arrow-left">
             Content Layer
           </UButton>

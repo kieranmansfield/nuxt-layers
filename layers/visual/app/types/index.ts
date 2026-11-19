@@ -1,6 +1,0 @@
-export type * from './accent'
-export type * from './breakpoints'
-export type * from './gradient'
-export type * from './media'
-export type { TintLevel, TintColorSlot, TintConfig } from './tint'
-export { TINT_LEVEL_OPACITY } from './tint'

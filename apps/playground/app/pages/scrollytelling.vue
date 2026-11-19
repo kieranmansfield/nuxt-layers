@@ -46,13 +46,13 @@
     <div class="scrollytelling-page">
       <!-- Hero -->
       <section
-        class="min-h-screen flex items-center justify-center relative overflow-hidden bg-default"
+        class="bg-default relative flex min-h-screen items-center justify-center overflow-hidden"
       >
         <div
           class="absolute inset-0 bg-linear-to-b from-violet-900/20 via-transparent to-transparent"
         />
-        <div class="text-center z-10 px-4">
-          <h1 class="text-6xl sm:text-8xl md:text-9xl font-black text-highlighted mb-6">
+        <div class="z-10 px-4 text-center">
+          <h1 class="text-highlighted mb-6 text-6xl font-black sm:text-8xl md:text-9xl">
             <span
               v-gsap.from="{ y: 120, opacity: 0, rotateX: -90, duration: 1.2, ease: 'power3.out' }"
               class="inline-block"
@@ -73,12 +73,12 @@
               TELLING
             </span>
           </h1>
-          <p class="text-xl text-muted max-w-2xl mx-auto mb-10">
+          <p class="text-muted mx-auto mb-10 max-w-2xl text-xl">
             Scroll-driven narratives using <code class="text-violet-400">MotionScrollScene</code>,
             <code class="text-violet-400">MotionPinnedSection</code>, and
             <code class="text-violet-400">MotionHorizontalScroll</code>.
           </p>
-          <div class="flex flex-wrap gap-4 justify-center">
+          <div class="flex flex-wrap justify-center gap-4">
             <UButton size="lg" to="/motion">
               <UIcon name="i-lucide-arrow-left" class="mr-2" />
               Motion Layer
@@ -86,14 +86,14 @@
             <UButton size="lg" variant="outline" to="/">Home</UButton>
           </div>
         </div>
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-highlighted/40 animate-bounce">
+        <div class="text-highlighted/40 absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
           <UIcon name="i-lucide-chevron-down" class="text-3xl" />
         </div>
       </section>
 
       <!-- Global debug overlay -->
       <div
-        class="fixed top-4 right-4 z-50 bg-black/80 text-highlighted px-4 py-3 rounded-lg font-mono text-xs space-y-1"
+        class="text-highlighted fixed top-4 right-4 z-50 space-y-1 rounded-lg bg-black/80 px-4 py-3 font-mono text-xs"
       >
         <div>Global: {{ (globalProgress * 100).toFixed(1) }}%</div>
         <div>Velocity: {{ velocity.toFixed(2) }}</div>
@@ -104,11 +104,11 @@
       <!-- ─────────────────────────────────────────────────────────────────────
            Chapter 1: ScrollScene + ScrollStep (narrative reveal)
            ───────────────────────────────────────────────────────────────────── -->
-      <section class="py-24 bg-default">
+      <section class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
+          <div class="mb-16 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Chapter 1</UBadge>
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">MotionScrollScene</h2>
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">MotionScrollScene</h2>
             <p class="text-muted text-lg">
               Two narrative beats revealed in sequence as you scroll.
             </p>
@@ -124,7 +124,7 @@
         @enter="() => (sceneActive = true)"
         @leave="() => (sceneActive = false)"
       >
-        <div class="min-h-screen flex flex-col items-center justify-center bg-default px-4">
+        <div class="bg-default flex min-h-screen flex-col items-center justify-center px-4">
           <!-- Progress arc -->
           <div class="mb-12 flex gap-3">
             <div
@@ -138,21 +138,21 @@
           <!-- Step 0 -->
           <MotionScrollStep
             :index="0"
-            class="w-full max-w-3xl mb-8"
+            class="mb-8 w-full max-w-3xl"
             @enter="() => (currentChapter = 0)"
           >
             <template #default="{ isActive }">
               <div
-                class="rounded-3xl p-12 border-2 transition-all duration-700"
+                class="rounded-3xl border-2 p-12 transition-all duration-700"
                 :class="
                   isActive
-                    ? 'bg-violet-900/40 border-violet-500/60 shadow-2xl shadow-violet-500/20'
+                    ? 'border-violet-500/60 bg-violet-900/40 shadow-2xl shadow-violet-500/20'
                     : 'bg-muted/40 border-accented/40 opacity-40'
                 "
               >
-                <div class="flex items-center gap-4 mb-6">
+                <div class="mb-6 flex items-center gap-4">
                   <div
-                    class="w-10 h-10 rounded-full bg-violet-500 flex items-center justify-center text-highlighted font-bold"
+                    class="text-highlighted flex h-10 w-10 items-center justify-center rounded-full bg-violet-500 font-bold"
                   >
                     1
                   </div>
@@ -160,7 +160,7 @@
                     {{ isActive ? 'Active' : 'Waiting' }}
                   </UBadge>
                 </div>
-                <h3 class="text-3xl md:text-4xl font-bold text-highlighted mb-4">The Setup</h3>
+                <h3 class="text-highlighted mb-4 text-3xl font-bold md:text-4xl">The Setup</h3>
                 <p class="text-toned text-lg leading-relaxed">
                   Every scrollytelling experience begins with orientation. Give your reader a fixed
                   point of reference — a hero, a moment, a question — before the world starts
@@ -174,16 +174,16 @@
           <MotionScrollStep :index="1" class="w-full max-w-3xl" @enter="() => (currentChapter = 1)">
             <template #default="{ isActive }">
               <div
-                class="rounded-3xl p-12 border-2 transition-all duration-700"
+                class="rounded-3xl border-2 p-12 transition-all duration-700"
                 :class="
                   isActive
-                    ? 'bg-pink-900/40 border-pink-500/60 shadow-2xl shadow-pink-500/20'
+                    ? 'border-pink-500/60 bg-pink-900/40 shadow-2xl shadow-pink-500/20'
                     : 'bg-muted/40 border-accented/40 opacity-40'
                 "
               >
-                <div class="flex items-center gap-4 mb-6">
+                <div class="mb-6 flex items-center gap-4">
                   <div
-                    class="w-10 h-10 rounded-full bg-pink-500 flex items-center justify-center text-highlighted font-bold"
+                    class="text-highlighted flex h-10 w-10 items-center justify-center rounded-full bg-pink-500 font-bold"
                   >
                     2
                   </div>
@@ -191,7 +191,7 @@
                     {{ isActive ? 'Active' : 'Waiting' }}
                   </UBadge>
                 </div>
-                <h3 class="text-3xl md:text-4xl font-bold text-highlighted mb-4">The Revelation</h3>
+                <h3 class="text-highlighted mb-4 text-3xl font-bold md:text-4xl">The Revelation</h3>
                 <p class="text-toned text-lg leading-relaxed">
                   Now the scroll does the work. As the reader moves forward, context accumulates.
                   Each step is a doorway — crossed at the reader's own pace, with no rush.
@@ -205,11 +205,11 @@
       <!-- ─────────────────────────────────────────────────────────────────────
            Chapter 2: MotionPinnedSection (staggered card reveals)
            ───────────────────────────────────────────────────────────────────── -->
-      <section class="py-24 bg-default">
+      <section class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
+          <div class="mb-16 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Chapter 2</UBadge>
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">
               MotionPinnedSection
             </h2>
             <p class="text-muted text-lg">
@@ -220,18 +220,18 @@
       </section>
 
       <MotionPinnedSection :duration="300" class="bg-default">
-        <div class="grid md:grid-cols-3 gap-8 px-8 max-w-6xl w-full">
+        <div class="grid w-full max-w-6xl gap-8 px-8 md:grid-cols-3">
           <div
             v-for="card in cards"
             :key="card.title"
-            class="rounded-3xl p-10 bg-linear-to-br text-highlighted flex flex-col justify-between min-h-64"
+            class="text-highlighted flex min-h-64 flex-col justify-between rounded-3xl bg-linear-to-br p-10"
             :class="card.color"
           >
             <div>
-              <h3 class="text-2xl md:text-3xl font-bold mb-4">{{ card.title }}</h3>
+              <h3 class="mb-4 text-2xl font-bold md:text-3xl">{{ card.title }}</h3>
               <p class="text-highlighted/80 leading-relaxed">{{ card.body }}</p>
             </div>
-            <UIcon name="i-lucide-arrow-right" class="text-3xl text-highlighted/50 mt-6 self-end" />
+            <UIcon name="i-lucide-arrow-right" class="text-highlighted/50 mt-6 self-end text-3xl" />
           </div>
         </div>
       </MotionPinnedSection>
@@ -239,33 +239,33 @@
       <!-- ─────────────────────────────────────────────────────────────────────
            Chapter 3: useSectionProgress debug overlay
            ───────────────────────────────────────────────────────────────────── -->
-      <section ref="debugSectionRef" class="py-32 bg-default">
+      <section ref="debugSectionRef" class="bg-default py-32">
         <UContainer>
-          <div class="text-center mb-16">
+          <div class="mb-16 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Chapter 3</UBadge>
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">useSectionProgress</h2>
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">useSectionProgress</h2>
             <p class="text-muted text-lg">
               Section-local progress tracked independently of the page scroll.
             </p>
           </div>
 
           <!-- Live visualisation -->
-          <div class="max-w-2xl mx-auto">
-            <div class="bg-accented rounded-2xl p-8 mb-8">
-              <div class="flex justify-between text-sm text-muted mb-3">
+          <div class="mx-auto max-w-2xl">
+            <div class="bg-accented mb-8 rounded-2xl p-8">
+              <div class="text-muted mb-3 flex justify-between text-sm">
                 <span>Section progress</span>
                 <span class="font-mono">{{ (sectionProg * 100).toFixed(1) }}%</span>
               </div>
-              <div class="h-3 bg-accented rounded-full overflow-hidden">
+              <div class="bg-accented h-3 overflow-hidden rounded-full">
                 <div
-                  class="h-full rounded-full transition-none bg-linear-to-r from-violet-500 to-pink-500"
+                  class="h-full rounded-full bg-linear-to-r from-violet-500 to-pink-500 transition-none"
                   :style="{ width: `${sectionProg * 100}%` }"
                 />
               </div>
               <div class="mt-4 flex items-center gap-3">
                 <div
-                  class="w-3 h-3 rounded-full"
-                  :class="sectionActive ? 'bg-green-400 animate-pulse' : 'bg-accented'"
+                  class="h-3 w-3 rounded-full"
+                  :class="sectionActive ? 'animate-pulse bg-green-400' : 'bg-accented'"
                 />
                 <span class="text-sm" :class="sectionActive ? 'text-green-400' : 'text-muted'">
                   {{ sectionActive ? 'Section is active' : 'Outside section' }}
@@ -277,7 +277,7 @@
               <div
                 v-for="n in 3"
                 :key="n"
-                class="h-32 rounded-2xl flex items-center justify-center text-2xl font-bold text-highlighted transition-all duration-500"
+                class="text-highlighted flex h-32 items-center justify-center rounded-2xl text-2xl font-bold transition-all duration-500"
                 :class="
                   sectionProg >= (n - 1) / 3
                     ? 'bg-violet-600 shadow-lg shadow-violet-500/30'
@@ -288,7 +288,7 @@
               </div>
             </div>
 
-            <p class="text-center text-muted text-sm mt-6">
+            <p class="text-muted mt-6 text-center text-sm">
               Each block lights up as section progress crosses its threshold.
             </p>
           </div>
@@ -298,11 +298,11 @@
       <!-- ─────────────────────────────────────────────────────────────────────
            Chapter 4: MotionHorizontalScroll
            ───────────────────────────────────────────────────────────────────── -->
-      <section class="py-24 bg-default">
+      <section class="bg-default py-24">
         <UContainer>
-          <div class="text-center mb-16">
+          <div class="mb-16 text-center">
             <UBadge color="primary" variant="subtle" class="mb-4">Chapter 4</UBadge>
-            <h2 class="text-4xl md:text-5xl font-bold text-highlighted mb-4">
+            <h2 class="text-highlighted mb-4 text-4xl font-bold md:text-5xl">
               MotionHorizontalScroll
             </h2>
             <p class="text-muted text-lg">
@@ -321,14 +321,14 @@
             'from-amber-600 to-orange-900',
           ]"
           :key="i"
-          class="shrink-0 w-[80vw] md:w-[55vw] h-[70vh] mx-6 first:ml-[10vw] last:mr-[10vw] rounded-3xl bg-linear-to-br text-highlighted flex flex-col items-center justify-center p-12"
+          class="text-highlighted mx-6 flex h-[70vh] w-[80vw] shrink-0 flex-col items-center justify-center rounded-3xl bg-linear-to-br p-12 first:ml-[10vw] last:mr-[10vw] md:w-[55vw]"
           :class="color"
         >
-          <span class="text-8xl font-black mb-6 opacity-20">0{{ i + 1 }}</span>
-          <h3 class="text-3xl md:text-5xl font-bold mb-4">
+          <span class="mb-6 text-8xl font-black opacity-20">0{{ i + 1 }}</span>
+          <h3 class="mb-4 text-3xl font-bold md:text-5xl">
             {{ ['Set the Stage', 'Build Tension', 'Deliver Impact', 'Leave a Mark'][i] }}
           </h3>
-          <p class="text-highlighted/70 text-center max-w-sm">
+          <p class="text-highlighted/70 max-w-sm text-center">
             {{
               [
                 'Orient the reader. Establish time, place, and protagonist.',
@@ -342,14 +342,14 @@
       </MotionHorizontalScroll>
 
       <!-- Footer -->
-      <section class="py-20 bg-default text-center">
+      <section class="bg-default py-20 text-center">
         <UContainer>
-          <h2 class="text-3xl font-bold text-highlighted mb-4">That's the full toolkit.</h2>
-          <p class="text-muted mb-10 max-w-xl mx-auto">
+          <h2 class="text-highlighted mb-4 text-3xl font-bold">That's the full toolkit.</h2>
+          <p class="text-muted mx-auto mb-10 max-w-xl">
             Compose scenes, steps, pins, and horizontal tracks to build any narrative scroll
             experience.
           </p>
-          <div class="flex flex-wrap gap-4 justify-center">
+          <div class="flex flex-wrap justify-center gap-4">
             <UButton to="/motion" size="lg" variant="outline">
               <UIcon name="i-lucide-arrow-left" class="mr-2" />
               Motion Layer

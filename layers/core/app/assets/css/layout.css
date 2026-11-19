@@ -1,9 +1,4 @@
 @layer components {
-  table {
-    border-color: inherit;
-    border-collapse: collapse;
-  }
-
   th {
     vertical-align: top;
     padding: 0;
@@ -19,18 +14,17 @@
   hr {
     margin: 1rem 0;
     border: 0;
-    border-top: 1px solid #ccc;
-    height: 0;
-    color: inherit;
+    border-top: 1px solid var(--ui-border);
   }
 
-  img,
+  /* Tailwind preflight covers img/video/svg/canvas display + img/video max-width */
   svg,
   canvas,
-  video,
+  picture {
+    max-width: 100%;
+  }
+
   picture {
     display: block;
-    vertical-align: middle;
-    max-width: 100%;
   }
 }

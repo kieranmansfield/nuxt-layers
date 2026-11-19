@@ -1,3 +1,15 @@
+import { createRequire } from 'node:module'
+
+// @nuxt/eslint is an optional peer: load it outside production only when the app has it
+// installed, otherwise a consumer without it fails module resolution in dev/test builds.
+const lintModules: string[] = []
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    createRequire(import.meta.url).resolve('@nuxt/eslint')
+    lintModules.push('@nuxt/eslint')
+  } catch {}
+}
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   $meta: {
@@ -5,43 +17,35 @@ export default defineNuxtConfig({
   },
 
   alias: {
-    '#layers/core': import.meta.dirname,
+    // More specific key first — Vite/vite-node's alias matcher is first-match-wins
+    // (declaration order), not longest-prefix. '#layers/core' would otherwise
+    // intercept '#layers/core/types/*' lookups before this entry is reached.
     '#layers/core/types': `${import.meta.dirname}/app/types`,
+    '#layers/core': import.meta.dirname,
     '#types': `${import.meta.dirname}/../../types`,
   },
 
   // Base modules (always loaded)
   modules: [
-    ...(process.env.NODE_ENV !== 'production' ? ['@nuxt/eslint'] : []),
+    ...lintModules,
     '@nuxt/ui',
     // '@nuxt/image'
     '@vueuse/nuxt',
     '@nuxtjs/device',
-    // PWA module - only in production
-    ...(process.env.NODE_ENV === 'production' ? ['@vite-pwa/nuxt'] : []),
+    // PWA module — disabled pending a decision on the PWA approach; useCache/usePWAInfo
+    // stay in place, dormant, ready to re-enable.
+    // ...(process.env.NODE_ENV === 'production' ? ['@vite-pwa/nuxt'] : []),
   ],
 
   css: ['#layers/core/app/assets/css/core.css'],
 
-  devtools: {
-    enabled: true,
-
-    vscode: {
-      enabled: true,
-    },
-  },
-
-  // Force light mode for consistent appearance
+  // Follow the OS colour scheme; light when it can't be detected
   colorMode: {
     preference: 'system',
     fallback: 'light',
   },
 
-  future: {
-    compatibilityVersion: 4,
-  },
-
-  compatibilityDate: '2026-01-24',
+  compatibilityDate: '2026-10-27',
 
   typescript: {
     // vite-plugin-checker@0.14.1 bundles TypeScript 6 which crashes on Nuxt's
@@ -76,11 +80,11 @@ export default defineNuxtConfig({
     },
   },
 
-  // PWA configuration (only applied when module is loaded in production)
-  pwa: {
-    workbox: {
-      globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff,woff2}'],
-      globIgnores: ['**/node_modules/**/*', 'sw.js', 'workbox-*.js'],
-    },
-  },
+  // PWA configuration — dormant while @vite-pwa/nuxt is disabled above.
+  // pwa: {
+  //   workbox: {
+  //     globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff,woff2}'],
+  //     globIgnores: ['**/node_modules/**/*', 'sw.js', 'workbox-*.js'],
+  //   },
+  // },
 })

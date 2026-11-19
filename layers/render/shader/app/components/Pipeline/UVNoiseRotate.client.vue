@@ -1,0 +1,46 @@
+<script setup lang="ts">
+  import { time, vec2 } from 'three/tsl'
+
+  import { simplexNoise2D } from '../../shaders/common/noise'
+  import { rotateUV } from '../../shaders/common/uv'
+
+  const {
+    rotationAmount = 720,
+    speed = 0.1,
+    noiseScale = 1,
+    order = 0,
+  } = defineProps<{
+    /** Max rotation in degrees (default 720 = 2 full turns) */
+    rotationAmount?: number
+    /** Noise animation speed */
+    speed?: number
+    /** Noise spatial frequency */
+    noiseScale?: number
+    order?: number
+  }>()
+
+  const rotAmountNode = useUniformProp(() => rotationAmount)
+  const speedNode = useUniformProp(() => speed)
+  const noiseScaleNode = useUniformProp(() => noiseScale)
+
+  const DEG_TO_RAD = Math.PI / 180
+
+  useShaderStage(
+    (uvIn) => {
+      // Sample gradient noise at animated position: (time*speed, uv.x*uv.y) * noiseScale
+      const noiseInput = vec2(time.mul(speedNode), uvIn.x.mul(uvIn.y)).mul(noiseScaleNode)
+      const n = simplexNoise2D(noiseInput)
+      // Remap noise to angle: (n*0.5) * rotAmount + 180 degrees, avoids snapping to 0
+      const angleDeg = n.mul(0.5).mul(rotAmountNode).add(180.0)
+      const angle = angleDeg.mul(DEG_TO_RAD)
+
+      return rotateUV(uvIn, angle)
+    },
+    order,
+    'uv'
+  )
+</script>
+
+<template>
+  <slot />
+</template>

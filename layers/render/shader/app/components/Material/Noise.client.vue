@@ -1,0 +1,110 @@
+<script setup lang="ts">
+  // fallow-ignore-file code-duplication
+  import { watchUniformProp } from '#layers/shader/app/composables/useUniformWatchers'
+  import { Color, DoubleSide } from 'three'
+  import { mix, time as tslTime, uniform, uv, vec3 } from 'three/tsl'
+  import { MeshBasicNodeMaterial } from 'three/webgpu'
+
+  import type { TSLNode } from '../../shaders/types'
+  import { fbm, simplexNoise2D } from '../../utils/tsl/noise'
+
+  const {
+    scale = 3,
+    speed = 0.5,
+    octaves = 4,
+    baseColor = '#1e1b4b',
+    peakColor = '#c084fc',
+    type = 'simplex',
+    transparent = false,
+    mouseX = 0.5,
+    mouseY = 0.5,
+    mouseInteraction = false,
+    mouseStrength = 0.5,
+  } = defineProps<{
+    scale?: number
+    speed?: number
+    octaves?: number
+    baseColor?: string
+    peakColor?: string
+    type?: 'simplex' | 'fbm'
+    transparent?: boolean
+    /** Mouse X position (0-1) for interaction */
+    mouseX?: number
+    /** Mouse Y position (0-1) for interaction */
+    mouseY?: number
+    /** Enable mouse interaction */
+    mouseInteraction?: boolean
+    /** Mouse interaction strength */
+    mouseStrength?: number
+  }>()
+
+  // Create reactive uniforms
+  const scaleUniform = useUniformProp(() => scale)
+  const speedUniform = useUniformProp(() => speed)
+  const mouseXUniform = useUniformProp(() => mouseX)
+  const mouseYUniform = useUniformProp(() => mouseY)
+  const mouseStrengthUniform = useUniformProp(() => mouseStrength)
+  const baseColorUniform: TSLNode = uniform(new Color(baseColor))
+  const peakColorUniform: TSLNode = uniform(new Color(peakColor))
+
+  // fallow-ignore-next-line code-duplication
+  watchUniformProp(
+    () => baseColor,
+    baseColorUniform,
+    (val) => new Color(val)
+  )
+  watchUniformProp(
+    () => peakColor,
+    peakColorUniform,
+    (val) => new Color(val)
+  )
+
+  const material = computed(() => {
+    const mat = new MeshBasicNodeMaterial()
+
+    // Animated UV with reactive uniforms
+    let animatedUV = uv().mul(scaleUniform).add(tslTime.mul(speedUniform))
+
+    // Add mouse interaction
+    if (mouseInteraction) {
+      const mouseOffset = vec3(
+        mouseXUniform.sub(0.5).mul(mouseStrengthUniform),
+        mouseYUniform.sub(0.5).mul(mouseStrengthUniform),
+        0
+      )
+      animatedUV = animatedUV.add(mouseOffset.xy)
+    }
+
+    // Generate noise based on type
+    let noiseValue
+    if (type === 'fbm') {
+      noiseValue = fbm(vec3(animatedUV.x, animatedUV.y, tslTime.mul(speedUniform.mul(0.1))), {
+        octaves: octaves,
+        lacunarity: 2.0,
+        gain: 0.5,
+        amplitude: 0.5,
+        frequency: 1.0,
+      })
+    } else {
+      noiseValue = simplexNoise2D(animatedUV)
+    }
+
+    // Remap noise from [-1, 1] to [0, 1]
+    const normalizedNoise = noiseValue.mul(0.5).add(0.5)
+
+    // Mix colors based on noise using reactive uniforms
+    const colorNode = mix(vec3(baseColorUniform), vec3(peakColorUniform), normalizedNoise)
+
+    mat.colorNode = colorNode as TSLNode
+    mat.transparent = transparent
+    mat.side = DoubleSide
+
+    return mat
+  })
+
+  defineExpose({ material })
+</script>
+
+<template>
+  <primitive :object="material" attach="material" />
+</template>

@@ -64,7 +64,7 @@ function resolveScrollRoutingConfig(
 }
 
 function resolveFeaturesConfig(features: Record<string, FeatureValue> | undefined) {
-  return { ...(features ?? {}) }
+  return { ...features }
 }
 
 // fallow-ignore-next-line complexity

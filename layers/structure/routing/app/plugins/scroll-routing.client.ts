@@ -1,0 +1,25 @@
+export default defineNuxtPlugin({
+  name: 'routing:scroll-routing',
+  setup() {
+    const { config } = useRoutingConfig()
+    if (!config.scrollRouting.enabled) return
+
+    const router = useRouter()
+    // fallow-ignore-next-line code-duplication
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((e) => e.isIntersecting)
+        if (!visible) return
+        const id = (visible.target as HTMLElement).dataset.section
+        if (!id) return
+        const method = config.scrollRouting.mode === 'push' ? 'push' : 'replace'
+        router[method]({ hash: `#${id}` })
+      },
+      { threshold: 0.5 }
+    )
+
+    onNuxtReady(() => {
+      document.querySelectorAll('[data-section]').forEach((el) => observer.observe(el))
+    })
+  },
+})

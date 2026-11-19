@@ -8,7 +8,7 @@ export function listLayers() {
   return readdirSync(layersDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
-    .sort()
+    .toSorted()
 }
 
 export function isWellFormedLayer(name) {
@@ -21,7 +21,7 @@ export function listApps() {
   return readdirSync(appsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
-    .sort()
+    .toSorted()
 }
 
 export { ROOT }

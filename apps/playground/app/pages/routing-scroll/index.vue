@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  await navigateTo('/routing-scroll/intro', { replace: true })
+  definePageMeta({ redirect: '/routing-scroll/intro' })
 </script>
 
 <template>

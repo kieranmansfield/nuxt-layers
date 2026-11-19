@@ -20,7 +20,7 @@
 
 <template>
   <div
-    class="font-preview select-none transition-all duration-100 text-default"
+    class="font-preview text-default transition-all duration-100 select-none"
     :style="{
       fontFamily: `'${family}', sans-serif`,
       fontVariationSettings: variationSettings,

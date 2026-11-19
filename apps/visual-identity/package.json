@@ -17,6 +17,7 @@
     "vue-router": "catalog:conflicts_conflicts_vue-router_5_1_0_h5_1_0"
   },
   "devDependencies": {
-    "@nuxt/fonts": "catalog:"
+    "@nuxt/fonts": "catalog:",
+    "typescript": "catalog:"
   }
 }

@@ -1,22 +1,15 @@
 <script setup lang="ts">
-  const { contentLayer } = useAppConfig()
-  if (contentLayer?.sections?.gallery === false) {
-    throw createError({ statusCode: 404, statusMessage: 'Not Found' })
-  }
+  const { title = 'Gallery', description = 'Photo collections and visual work' } = defineProps<{
+    title?: string
+    description?: string
+  }>()
 
-  useSeoMeta({
-    title: 'Gallery',
-    description: 'Photo collections and visual work',
-  })
+  useContentSection('gallery')
+  useSeoMeta({ title: () => title, description: () => description })
 </script>
 
 <template>
-  <LayoutSection>
-    <LayoutGridItem>
-      <UPageHeader title="Gallery" description="Photo collections and visual work" />
-      <UPageBody>
-        <GalleryGrid />
-      </UPageBody>
-    </LayoutGridItem>
-  </LayoutSection>
+  <NuxtContentIndexTemplate :title :description>
+    <GalleryGrid />
+  </NuxtContentIndexTemplate>
 </template>

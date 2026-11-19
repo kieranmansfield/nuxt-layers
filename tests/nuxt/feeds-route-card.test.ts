@@ -1,8 +1,8 @@
 import { mockComponent, mountSuspended } from '@nuxt/test-utils/runtime'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 
-import RouteCard from '../../layers/feeds/app/components/Feeds/RouteCard.vue'
-import type { FeedRoute } from '../../layers/feeds/app/utils/feed-catalog'
+import RouteCard from '../../layers/delivery/feeds/app/components/Feeds/RouteCard.vue'
+import type { FeedRoute } from '../../layers/delivery/feeds/app/utils/feed-catalog'
 
 mockComponent('UCard', {
   template: '<div><slot /></div>',

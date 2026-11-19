@@ -20,7 +20,7 @@
 <template>
   <NuxtContentDetail collection="blog" :slug not-found-message="Blog post not found">
     <template #headline="{ item }">
-      <div class="flex items-center gap-3 text-sm text-muted">
+      <div class="text-muted flex items-center gap-3 text-sm">
         <time v-if="asBlog(item).date">{{ formatDate(asBlog(item).date) }}</time>
         <UBadge v-if="asBlog(item).badge" color="primary" variant="subtle">
           {{ asBlog(item).badge }}

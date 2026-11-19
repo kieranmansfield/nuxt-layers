@@ -1,7 +1,0 @@
-<script setup lang="ts">
-  import { float, vec2 } from 'three/tsl'
-
-  const { order = 0 } = defineProps<{ order?: number }>()
-
-  useShaderStage((uvIn) => vec2(uvIn.x, float(1).sub(uvIn.y)), order, 'uv')
-</script>

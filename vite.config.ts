@@ -1,0 +1,115 @@
+import { defineConfig } from 'vite-plus'
+
+export default defineConfig({
+  lint: {
+    jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
+    rules: { 'vite-plus/prefer-vite-plus-imports': 'error' },
+    options: { typeAware: false, typeCheck: false },
+  },
+  // Pre-commit gates. `.vite-hooks/pre-commit` runs `vp staged --hide-unstaged`, so the working
+  // tree equals the index here. Function form runs each command once and ignores the file list:
+  // both tools resolve the diff themselves.
+  staged: {
+    '*': () => [
+      // vue-doctor passes its --diff base straight to `git diff --name-only <base>`, so `--cached`
+      // means staged files. It scores whole files (no new-only mode), so debt already in a touched
+      // file counts. 75 is vue-doctor's own "Great" boundary.
+      'vue-doctor . --diff=--cached --min-score 75',
+      // fallow fails only on findings this changeset introduces.
+      'fallow audit --changed-since HEAD --quiet',
+    ],
+  },
+  // Test config lives in vitest.config.mts (it boots Nuxt via defineVitestProject, which
+  // must not run when vp lint/fmt load this file).
+  fmt: {
+    semi: false,
+    singleQuote: true,
+    trailingComma: 'es5',
+    printWidth: 100,
+    tabWidth: 2,
+    endOfLine: 'lf',
+    vueIndentScriptAndStyle: true,
+    arrowParens: 'always',
+    singleAttributePerLine: false,
+    htmlWhitespaceSensitivity: 'css',
+    sortPackageJson: false,
+    sortTailwindcss: {
+      attributes: ['class', ':class', 'ui'],
+    },
+    overrides: [
+      {
+        files: ['*.{md,mdx}'],
+        options: {
+          proseWrap: 'preserve',
+        },
+      },
+      {
+        files: ['*.json'],
+        options: {
+          printWidth: 200,
+        },
+      },
+    ],
+    ignorePatterns: [
+      'node_modules/',
+      '.pnpm-store/',
+      '.output/',
+      '.nuxt/',
+      'dist/',
+      '.netlify/',
+      '.cache/',
+      '.data/',
+      '.github/',
+      '*.min.js',
+      '*.min.css',
+      '*.bundle.js',
+      '*.bundle.css',
+      '*.zip',
+      '*.tar.gz',
+      '*.rar',
+      'OLD/',
+      'oldApp/',
+      'Archive.zip',
+      'appOLD.zip',
+      '*.log',
+      'npm-debug.log*',
+      'yarn-debug.log*',
+      'yarn-error.log*',
+      'pnpm-debug.log*',
+      'lerna-debug.log*',
+      'package-lock.json',
+      'yarn.lock',
+      'pnpm-lock.yaml',
+      '.env',
+      '.env.*',
+      '.DS_Store',
+      'Thumbs.db',
+      '.idea/',
+      'public/images/',
+      'public/icons/',
+      '*.ico',
+      '*.png',
+      '*.jpg',
+      '*.jpeg',
+      '*.gif',
+      '*.svg',
+      '*.webp',
+      '*.avif',
+      '*.woff',
+      '*.woff2',
+      '*.ttf',
+      '*.otf',
+      '*.eot',
+      'netlify.toml',
+      'robots.txt',
+      'README.md',
+      'CHANGELOG.md',
+      // Nuxt Content markdown is owned by Comark (`pnpm content:format`): oxfmt rewrites
+      // `::component` + `---` props blocks into setext headings and swaps `*em*` for `_em_`.
+      '**/content/**/*.md',
+      '.agents/',
+      '.fallow-baseline/',
+      '.claude/',
+    ],
+  },
+})

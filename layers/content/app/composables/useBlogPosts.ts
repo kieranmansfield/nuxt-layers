@@ -1,26 +1,17 @@
+import type { MaybeRefOrGetter } from 'vue'
+
 import type { BlogQueryOptions } from '../types/content'
 
-export function useBlogPosts(options: BlogQueryOptions = {}) {
-  const { excludeDrafts = true, tags, limit } = options
-
-  const key = `blog-posts:${excludeDrafts}:${(tags ?? []).slice().sort().join(',')}:${limit ?? ''}`
-  return useContentData(key, async () => {
-    let posts = (await queryCollection('blog').all()).sort((a, b) =>
-      (b.date ?? '').localeCompare(a.date ?? '')
-    )
-
-    if (excludeDrafts) {
-      posts = posts.filter((post) => !post.draft)
+export function useBlogPosts(options: MaybeRefOrGetter<BlogQueryOptions> = {}) {
+  return useCollectionItems('blog', () => {
+    const { excludeDrafts = true, tags, limit } = toValue(options)
+    return {
+      tags,
+      limit,
+      sortKey: 'date',
+      sortDirection: 'desc',
+      filter: excludeDrafts ? (post) => !('draft' in post && post.draft) : undefined,
+      filterKey: String(excludeDrafts),
     }
-
-    if (tags?.length) {
-      posts = posts.filter((post) => post.tags?.some((tag: string) => tags.includes(tag)))
-    }
-
-    if (limit) {
-      posts = posts.slice(0, limit)
-    }
-
-    return posts
   })
 }

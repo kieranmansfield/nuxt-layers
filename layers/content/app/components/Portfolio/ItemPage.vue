@@ -5,16 +5,13 @@
     slug: string
     collection?: keyof PageCollections
   }>()
-  const { contentLayer } = useAppConfig()
-  if (contentLayer?.sections?.portfolio === false) {
-    throw createError({ statusCode: 404, statusMessage: 'Not Found' })
-  }
+
+  useContentSection('portfolio')
+  await useContentItemSeo(collection, slug)
 </script>
 
 <template>
-  <LayoutSection>
-    <LayoutGridItem>
-      <PortfolioDetail :slug :collection />
-    </LayoutGridItem>
-  </LayoutSection>
+  <NuxtContentDetailTemplate>
+    <PortfolioDetail :slug :collection />
+  </NuxtContentDetailTemplate>
 </template>

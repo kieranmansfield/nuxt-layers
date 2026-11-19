@@ -1,0 +1,29 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 16b53df9009169219abcfac5d95c1a1d467b6a00..92dfcfaf5f26363bf6ef71a00d37473c20af116d 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -720,14 +720,16 @@ function listenAndRestrict(server, socketPath) {
+ 			try {
+ 				fs.chmodSync(socketPath, 384);
+ 			} catch (error) {
+-				bundlerDiagnostics.NUXT_B7018({ cause: error });
+-				server.close();
+-				try {
+-					fs.rmSync(dirname(socketPath), {
+-						recursive: true,
+-						force: true
+-					});
+-				} catch {}
++				if (error.code !== "ENOENT") {
++					bundlerDiagnostics.NUXT_B7018({ cause: error });
++					server.close();
++					try {
++						fs.rmSync(dirname(socketPath), {
++							recursive: true,
++							force: true
++						});
++					} catch {}
++				}
+ 			}
+ 		});
+ 	} finally {

@@ -21,21 +21,13 @@
       buttonClass: 'bg-blue-500/10 text-blue-500 hover:bg-blue-500/20',
     },
     {
-      name: 'UI',
-      description: 'Typography, gradients, navigation, modals, and visual identity components',
+      name: 'Element',
+      description:
+        'Polymorphic layout/spacing/sizing/surface/interaction primitive for every layer',
       loaded: true,
-      icon: 'i-lucide-palette',
-      to: '/ui',
-      features: [
-        'Typography System',
-        'Color Tokens',
-        'Gradient System',
-        'Tint Overlays',
-        'Accent Blobs',
-        'Navigation',
-        'Modals & Toasts',
-        'Responsive Images',
-      ],
+      icon: 'i-lucide-component',
+      to: '/element',
+      features: ['Layout', 'Grid', 'Spacing', 'Sizing', 'Surface', 'Interaction'],
       borderColor: 'border-pink-500/50',
       bgColor: 'bg-pink-500/10',
       iconBg: 'bg-pink-500/10',
@@ -109,11 +101,11 @@
       buttonClass: 'bg-violet-500/10 text-violet-500 hover:bg-violet-500/20',
     },
     {
-      name: 'Theme',
+      name: 'Theming',
       description: 'Config-driven theme system with dark mode and accent colour support',
       loaded: true,
       icon: 'i-lucide-swatch-book',
-      to: '/theme',
+      to: '/theming',
       features: ['Dark Mode', 'Accent Colors', 'Color Themes', 'CSS Variables'],
       borderColor: 'border-indigo-500/50',
       bgColor: 'bg-indigo-500/10',
@@ -229,6 +221,19 @@
       buttonClass: 'bg-lime-500/10 text-lime-500 hover:bg-lime-500/20',
     },
     {
+      name: 'Security',
+      description: 'Opt-in nuxt-security: per-request nonce CSP and hardened security headers',
+      loaded: true,
+      icon: 'i-lucide-shield-check',
+      to: '/security',
+      features: ['Nonce CSP', 'HSTS', 'Frame Ancestors', 'SRI', 'SSG Hashes'],
+      borderColor: 'border-red-500/50',
+      bgColor: 'bg-red-500/10',
+      iconBg: 'bg-red-500/10',
+      iconColor: 'text-red-500',
+      buttonClass: 'bg-red-500/10 text-red-500 hover:bg-red-500/20',
+    },
+    {
       name: 'Typography',
       description: 'Typography components — Headline, TextStroke, CodeBlock — and useTypography',
       loaded: true,
@@ -323,6 +328,19 @@
       buttonClass: 'bg-fuchsia-500/10 text-fuchsia-500 hover:bg-fuchsia-500/20',
     },
     {
+      name: 'Flip Views',
+      description: 'Morph shared elements when switching between views or components',
+      loaded: true,
+      icon: 'i-lucide-layout-list',
+      to: '/flip-views',
+      features: ['MotionFlipViews', 'useFlip', 'data-flip-id'],
+      borderColor: 'border-fuchsia-500/50',
+      bgColor: 'bg-fuchsia-500/10',
+      iconBg: 'bg-fuchsia-500/10',
+      iconColor: 'text-fuchsia-500',
+      buttonClass: 'bg-fuchsia-500/10 text-fuchsia-500 hover:bg-fuchsia-500/20',
+    },
+    {
       name: 'Canvas',
       description: 'TresJS/Three.js WebGL and WebGPU rendering context with scene management',
       loaded: true,
@@ -349,17 +367,17 @@
       buttonClass: 'bg-teal-500/10 text-teal-500 hover:bg-teal-500/20',
     },
     {
-      name: 'Baseline',
-      description: 'Browser compatibility badges from the Web Platform Baseline initiative',
+      name: 'Project Stats',
+      description: 'GitHub repo and Obsidian plugin stats cards, fetched server-side and cached',
       loaded: true,
-      icon: 'i-lucide-shield-check',
-      to: '/baseline',
-      features: ['BaselineStatus', 'Widely Available', 'Newly Available', 'Live API Data'],
-      borderColor: 'border-sky-500/50',
-      bgColor: 'bg-sky-500/10',
-      iconBg: 'bg-sky-500/10',
-      iconColor: 'text-sky-500',
-      buttonClass: 'bg-sky-500/10 text-sky-500 hover:bg-sky-500/20',
+      icon: 'i-lucide-chart-no-axes-column',
+      to: '/project-stats',
+      features: ['Stars & Forks', 'Release Downloads', 'Obsidian Listing', 'Portfolio Frontmatter'],
+      borderColor: 'border-teal-500/50',
+      bgColor: 'bg-teal-500/10',
+      iconBg: 'bg-teal-500/10',
+      iconColor: 'text-teal-500',
+      buttonClass: 'bg-teal-500/10 text-teal-500 hover:bg-teal-500/20',
     },
     {
       name: 'Metadata',
@@ -406,6 +424,12 @@
       layer: 'Motion',
     },
     {
+      label: 'RepeatText',
+      to: '/repeat-text-demo',
+      icon: 'i-lucide-rows-3',
+      layer: 'Typography',
+    },
+    {
       label: 'Locomotive Scroll',
       to: '/locomotive-scroll',
       icon: 'i-lucide-train',
@@ -434,6 +458,18 @@
       layer: 'Layout',
     },
     {
+      label: 'Layout: Swiss Grid',
+      to: '/layout-swiss',
+      icon: 'i-lucide-grid-3x3',
+      layer: 'Layout',
+    },
+    {
+      label: 'Grid Builder',
+      to: '/grid-builder',
+      icon: 'i-lucide-layout-panel-top',
+      layer: 'Grid',
+    },
+    {
       label: 'Layout: Stacking',
       to: '/layout-stacking',
       icon: 'i-lucide-square-stack',
@@ -452,6 +488,24 @@
       icon: 'i-lucide-library',
       layer: 'Metadata',
     },
+    {
+      label: 'Project Stats',
+      to: '/project-stats',
+      icon: 'i-lucide-chart-no-axes-column',
+      layer: 'Project Stats',
+    },
+    {
+      label: 'Baseline Status',
+      to: '/baseline',
+      icon: 'i-lucide-shield-check',
+      layer: 'Scripts',
+    },
+    {
+      label: 'Can I Use',
+      to: '/caniuse',
+      icon: 'i-lucide-table',
+      layer: 'Scripts',
+    },
   ]
 
   const layerDemoColors: Record<string, { icon: string; border: string; bg: string }> = {
@@ -462,9 +516,15 @@
     Layout: { icon: 'text-amber-500', border: 'border-amber-500/50', bg: 'bg-amber-500/10' },
     Routing: { icon: 'text-orange-500', border: 'border-orange-500/50', bg: 'bg-orange-500/10' },
     Metadata: { icon: 'text-teal-500', border: 'border-teal-500/50', bg: 'bg-teal-500/10' },
+    'Project Stats': { icon: 'text-teal-500', border: 'border-teal-500/50', bg: 'bg-teal-500/10' },
+    Typography: { icon: 'text-sky-500', border: 'border-sky-500/50', bg: 'bg-sky-500/10' },
+    Scripts: { icon: 'text-lime-500', border: 'border-lime-500/50', bg: 'bg-lime-500/10' },
+    Grid: { icon: 'text-green-500', border: 'border-green-500/50', bg: 'bg-green-500/10' },
   }
 
   definePageMeta({ layout: { name: 'grid', props: { showHeader: false, showFooter: false } } })
+  // Home is the site itself - plain site name, not "<title> | <site name>"
+  useHead({ titleTemplate: '%siteName' })
 </script>
 
 <template>
@@ -482,7 +542,7 @@
 
           <!-- Layer Cards -->
           <div>
-            <h2 class="text-xs font-semibold uppercase tracking-widest text-muted mb-4">Layers</h2>
+            <h2 class="text-muted mb-4 text-xs font-semibold tracking-widest uppercase">Layers</h2>
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               <div
                 v-for="layer in layers"
@@ -490,18 +550,18 @@
                 class="rounded-xl border-2 p-5"
                 :class="[layer.borderColor, layer.bgColor]"
               >
-                <div class="flex flex-col h-full">
+                <div class="flex h-full flex-col">
                   <!-- Header -->
-                  <div class="flex items-center justify-between mb-4">
+                  <div class="mb-4 flex items-center justify-between">
                     <div class="flex items-center gap-3">
                       <div
-                        class="w-10 h-10 rounded-lg flex items-center justify-center"
+                        class="flex h-10 w-10 items-center justify-center rounded-lg"
                         :class="[layer.iconBg]"
                       >
                         <UIcon :name="layer.icon" class="text-xl" :class="[layer.iconColor]" />
                       </div>
                       <div>
-                        <h3 class="font-semibold text-lg text-highlighted">
+                        <h3 class="text-highlighted text-lg font-semibold">
                           {{ layer.name }}
                         </h3>
                         <UBadge color="success" variant="subtle" size="xs">Loaded</UBadge>
@@ -510,12 +570,12 @@
                   </div>
 
                   <!-- Description -->
-                  <p class="text-sm text-muted mb-4">
+                  <p class="text-muted mb-4 text-sm">
                     {{ layer.description }}
                   </p>
 
                   <!-- Features -->
-                  <div class="flex flex-wrap gap-1.5 mb-4 grow">
+                  <div class="mb-4 flex grow flex-wrap gap-1.5">
                     <UBadge
                       v-for="feature in layer.features"
                       :key="feature"
@@ -531,11 +591,11 @@
                   <div class="mt-auto pt-4">
                     <NuxtLink
                       :to="layer.to"
-                      class="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg font-medium transition-colors"
+                      class="text-normal text-step-0 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 font-medium transition-colors"
                       :class="[layer.buttonClass]"
                     >
                       Explore {{ layer.name }}
-                      <UIcon name="i-lucide-arrow-right" class="text-sm" />
+                      <UIcon name="i-lucide-arrow-right" />
                     </NuxtLink>
                   </div>
                 </div>
@@ -545,7 +605,7 @@
 
           <!-- Demo Pages -->
           <div>
-            <h2 class="text-xs font-semibold uppercase tracking-widest text-muted mb-4">
+            <h2 class="text-muted mb-4 text-xs font-semibold tracking-widest uppercase">
               Featured Demos
             </h2>
             <div class="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
@@ -553,10 +613,10 @@
                 v-for="demo in demos"
                 :key="demo.to"
                 :to="demo.to"
-                class="flex flex-col gap-3 p-4 rounded-xl border-2 transition-colors group"
+                class="group flex flex-col gap-3 rounded-xl border-2 p-4 transition-colors"
                 :class="
                   layerDemoColors[demo.layer]
-                    ? [layerDemoColors[demo.layer].border, layerDemoColors[demo.layer].bg]
+                    ? [layerDemoColors[demo.layer]!.border, layerDemoColors[demo.layer]!.bg]
                     : ['border-default', 'bg-elevated', 'hover:bg-muted']
                 "
               >
@@ -568,7 +628,7 @@
                   "
                 />
                 <div>
-                  <div class="font-semibold text-sm text-highlighted leading-tight">
+                  <div class="text-highlighted text-sm leading-tight font-semibold">
                     {{ demo.label }}
                   </div>
                   <UBadge variant="subtle" color="neutral" size="xs" class="mt-1.5">
@@ -580,7 +640,7 @@
           </div>
 
           <!-- Quick Links -->
-          <div class="flex flex-wrap gap-4 justify-center pt-2">
+          <div class="flex flex-wrap justify-center gap-4 pt-2">
             <UButton to="/diagnostics" variant="outline" icon="i-lucide-activity">
               System Diagnostics
             </UButton>
