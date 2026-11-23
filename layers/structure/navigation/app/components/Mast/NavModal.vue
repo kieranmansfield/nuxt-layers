@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import type { RouteLocationRaw } from '#vue-router'
   import type { MastNavLink, MastNavUi } from '../../types/nav'
 
   // Render once, in the layout. Behaviour lives here (dialog, scroll lock via useMastNav,
@@ -39,7 +40,8 @@
 
   function matchesRoute(link: MastNavLink) {
     try {
-      return router.resolve(link.to).path === route.path
+      // MastNavLink names are app-defined strings; typed routes can't check them here
+      return router.resolve(link.to as RouteLocationRaw).path === route.path
     } catch {
       return false // a named route that doesn't exist
     }
@@ -69,7 +71,7 @@
         useSmoothScroll().scrollTo(`#${link.id}`)
       } catch {}
     } else {
-      navigateTo(link.to)
+      navigateTo(link.to as RouteLocationRaw)
     }
     dismiss()
   }
