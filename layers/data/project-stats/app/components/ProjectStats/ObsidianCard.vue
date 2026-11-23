@@ -52,6 +52,7 @@
           :target="to ? null : '_blank'"
           class="text-highlighted flex items-center gap-2 font-semibold hover:underline"
         >
+          <!-- eslint-disable-next-line better-tailwindcss/no-restricted-classes -- Obsidian brand colour, not a theme colour -->
           <UIcon name="i-simple-icons-obsidian" class="size-5 shrink-0 text-violet-500" />
           <span class="truncate">{{ stats.name }}</span>
         </ULink>

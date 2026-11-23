@@ -6,6 +6,8 @@
     compact?: boolean
   }>()
 
+  // Raw palette colours are deliberate: per-format identity swatches (RSS orange etc.),
+  // not theme/status colours, so they must not follow an app's colour aliases.
   const routeThemes: Record<
     'index' | 'rss' | 'atom' | 'json',
     {

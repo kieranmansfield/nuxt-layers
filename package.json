@@ -307,6 +307,7 @@
     "browserslist": "catalog:",
     "browserslist-config-baseline": "catalog:",
     "eslint": "catalog:",
+    "eslint-plugin-better-tailwindcss": "^4.11.0",
     "eslint-plugin-compat": "catalog:",
     "eslint-plugin-oxlint": "^1.90.0",
     "eslint-plugin-pnpm": "catalog:",

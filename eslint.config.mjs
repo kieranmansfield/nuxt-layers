@@ -6,6 +6,7 @@ import typescriptParser from '@typescript-eslint/parser'
 import compat from 'eslint-plugin-compat'
 import pluginOxlint from 'eslint-plugin-oxlint'
 import { configs as pnpmConfigs } from 'eslint-plugin-pnpm'
+import nuxtUI from '@nuxt/ui/eslint'
 import prettier from 'eslint-plugin-prettier'
 // import pluginUnicorn from 'eslint-plugin-unicorn'
 import vue from 'eslint-plugin-vue'
@@ -483,6 +484,17 @@ export default defineConfigWithVueTs(
       '@typescript-eslint/consistent-type-definitions': 'off',
     },
   },
+
+  // Nuxt UI class linting (eslint-plugin-better-tailwindcss): flags raw palette colours
+  // (`text-gray-500` → `text-muted`) and conflicting classes. Standalone import, not
+  // `ui.eslint` — that only feeds `withNuxt()`, which this hand-written config doesn't use.
+  // `colors` left at defaults: layer code must use semantic tokens whatever an app aliases.
+  // ponytail: `no-unknown-classes` stays off — per-layer CSS utilities aren't visible
+  // through core.css; enable with an `ignore` list if it earns its keep.
+  ...nuxtUI({
+    entryPoint: 'layers/core/app/assets/css/core.css',
+    files: ['layers/**/*.vue', 'layers/**/app/**/*.ts'],
+  }),
 
   // Oxlint (via `vp check`) already covers these ESLint rules — switch them off here so
   // ESLint is left with the Vue/Nuxt-specific rules Oxlint can't run. Must come last.
