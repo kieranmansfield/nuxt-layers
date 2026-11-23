@@ -9,7 +9,6 @@ const warned = new Set<string>()
 function warnRemoved(name: string, instead: string) {
   if (!import.meta.dev || warned.has(name)) return
   warned.add(name)
-  // eslint-disable-next-line no-console -- one-time removal notice, dev only
   console.warn(`[navigation] <${name}> was removed and is a fallback now. Use ${instead}.`)
 }
 

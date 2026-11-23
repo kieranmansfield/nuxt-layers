@@ -179,6 +179,8 @@ export default defineConfigWithVueTs(
       'vue/no-deprecated-v-bind-sync': 'error',
       'vue/prefer-prop-type-boolean-first': 'error',
       'vue/no-required-prop-with-default': 'error',
+      // Destructured type-based props already default optional props to undefined.
+      'vue/require-default-prop': 'off',
       // Off: the rule demands named wrapper methods for every trivial handler
       // (`@click="emit('close')"` etc.) — noise for demo-heavy pages.
       'vue/v-on-handler-style': 'off',
@@ -259,14 +261,14 @@ export default defineConfigWithVueTs(
       compat,
     },
     rules: {
-      complexity: ['warn', { max: 10 }],
+      complexity: ['warn', { max: 12 }],
       'no-nested-ternary': 'error',
       eqeqeq: ['error', 'always'],
       'no-implicit-coercion': 'error',
       'no-useless-concat': 'error',
       'no-useless-return': 'error',
       'no-unneeded-ternary': 'error',
-      'max-params': ['warn', { max: 3 }],
+      'max-params': ['warn', { max: 4 }],
 
       // 'never' is unworkable here: TSL node graphs, Nuxt app-config generics and
       // h3 utilities all need occasional `as` bridges. Ban only angle-bracket style.
@@ -416,6 +418,19 @@ export default defineConfigWithVueTs(
   {
     files: ['layers/**/server/**/*.ts', 'layers/**/shared/**/*.ts'],
     ...typescript.configs['flat/disable-type-checked'],
+  },
+
+  // Provider/stat normalisers are flat field mappers — every `??` / `?.` / `&&` spread
+  // counts as a branch, so complexity scores them high without any real branching.
+  {
+    files: ['layers/data/**/normalise.ts', 'layers/data/project-stats/server/utils/**/*.ts'],
+    rules: { complexity: 'off' },
+  },
+
+  // TSL node builders take positional args by convention (mirrors three/tsl's own API).
+  {
+    files: ['layers/render/shader/**/*.ts'],
+    rules: { 'max-params': 'off' },
   },
 
   // Demo/showcase pages legitimately nest deep and run long — the structural

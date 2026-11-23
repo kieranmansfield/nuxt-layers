@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-restricted-imports -- the fallback below is the one place it belongs
 import { useAppConfig as useNitroAppConfig } from 'nitropack/runtime'
 
 /**
