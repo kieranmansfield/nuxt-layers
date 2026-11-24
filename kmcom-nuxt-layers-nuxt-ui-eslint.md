@@ -6,12 +6,12 @@ theme. Docs:
 <https://ui.nuxt.com/docs/getting-started/integrations/eslint/nuxt> (Nuxt)
 and `/vue` (standalone flat config).
 
-| Rule | Default | Catches |
-| --- | --- | --- |
-| `no-palette-colors` | warn | `text-gray-500` → `text-muted`, `bg-red-500` → `bg-error-500`, hardcoded colours |
-| `no-conflicting-classes` | warn | `p-2 p-4` in one list (stylesheet order wins, not source order) |
-| `no-unknown-classes` | off | classes the stylesheet doesn't generate |
-| `enforce-logical-properties` | off | `ml-2`/`text-left` → logical (RTL) |
+| Rule                         | Default | Catches                                                                          |
+| ---------------------------- | ------- | -------------------------------------------------------------------------------- |
+| `no-palette-colors`          | warn    | `text-gray-500` → `text-muted`, `bg-red-500` → `bg-error-500`, hardcoded colours |
+| `no-conflicting-classes`     | warn    | `p-2 p-4` in one list (stylesheet order wins, not source order)                  |
+| `no-unknown-classes`         | off     | classes the stylesheet doesn't generate                                          |
+| `enforce-logical-properties` | off     | `ml-2`/`text-left` → logical (RTL)                                               |
 
 It checks `class` attributes, `:ui` objects, `<UTheme>` `:ui`/`:props`, and
 the `ui` in `app.config.ts`. Neither warn rule has an autofix.
@@ -32,6 +32,7 @@ This is where the payoff is. Survey of the published package (v6.16.0,
   `ui.colors.neutral` (fs-studios uses `old-gray`) actually re-skin them.
   Raw `gray-*` ignores the app's neutral alias. That's a real theming bug
   for consumers, not just style.
+
 - Layer components are consumed by every app, so drift here multiplies.
 
 ## Proposed setup
