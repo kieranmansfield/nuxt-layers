@@ -74,7 +74,7 @@ jobs:
           for p in ${{ matrix.patterns }}; do
             v=$(node -p "require('./node_modules/$p/package.json').version")
             sed -i -E "s#^(  '?$p'?): .*#\\1: ^$v#" pnpm-workspace.yaml
-            pnpm up -r "$p" --dedupe
+            pnpm up -r "$p"
           done
           pnpm install --no-frozen-lockfile
 
@@ -99,7 +99,7 @@ jobs:
       - name: Update ${{ matrix.name }} (latest)
         if: steps.gate.outputs.skip != 'true' && !matrix.minor
         run: |
-          for p in ${{ matrix.patterns }}; do pnpm up -r "$p" --latest --dedupe || true; done
+          for p in ${{ matrix.patterns }}; do pnpm up -r "$p" --latest || true; done
           pnpm install --no-frozen-lockfile
 
       # Exact-pinned override must follow the catalog or pnpm keeps the old version.
