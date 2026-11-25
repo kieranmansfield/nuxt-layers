@@ -104,15 +104,8 @@ export default defineNuxtConfig({
   // The seo layer ships an empty site name, which leaves `%siteName` unresolved in page titles
   site: { name: 'Nuxt Layers Playground', url: 'https://nuxtlayers.netlify.app' },
 
-  routeRules: {
-    '/_studio/**': { redirect: '/' },
-  },
-
-  // The content layer loads nuxt-studio whenever it's installed. The playground deploy has no
-  // Studio OAuth app, so keep Studio to `pnpm dev` (local file editing) only.
-  $production: {
-    studio: false,
-  },
+  // The content layer loads nuxt-studio whenever it's installed; the playground doesn't need it.
+  studio: false,
 
   // TresJS components (Tres*, primitive) must be excluded from Vue component
   // resolution — they're handled by TresJS's custom renderer. @tresjs/nuxt sets

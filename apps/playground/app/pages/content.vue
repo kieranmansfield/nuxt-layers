@@ -156,19 +156,6 @@
                   Studio is an optional peer dependency — the layer works without it installed.
                 </p>
               </div>
-
-              <template #footer>
-                <div class="flex gap-3">
-                  <UButton
-                    to="/_studio"
-                    variant="soft"
-                    icon="i-lucide-external-link"
-                    target="_blank"
-                  >
-                    Open Studio
-                  </UButton>
-                </div>
-              </template>
             </UCard>
 
             <!-- Architecture Note -->
