@@ -3,12 +3,14 @@ import { createRequire } from 'node:module'
 // Load nuxt-studio whenever the app has it installed (optional peer dependency). In dev it edits
 // local files; in production the app supplies `studio.repository` + OAuth env vars, or opts out
 // with `$production: { studio: false }` (Nuxt skips a module whose config key is `false`).
-// Resolve rather than import: nuxt-studio 1.8's entry can't be imported outside Nuxt's loader.
+// Browser tests don't use the editor UI and skip its module entry to avoid its Jiti fallback.
 const studioModule: string[] = []
-try {
-  createRequire(import.meta.url).resolve('nuxt-studio')
-  studioModule.push('nuxt-studio')
-} catch {}
+if (!process.env.PLAYWRIGHT) {
+  try {
+    createRequire(import.meta.url).resolve('nuxt-studio')
+    studioModule.push('nuxt-studio')
+  } catch {}
+}
 
 const contentComponentsDir = `${import.meta.dirname}/app/components/content`
 

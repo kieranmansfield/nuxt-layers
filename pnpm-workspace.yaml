@@ -84,7 +84,7 @@ catalog:
   '@nuxt/ui': latest
   '@playwright/test': 1.64.1
   '@nuxtjs/device': ^4.0.0
-  '@nuxtjs/seo': ^5.0.0
+  '@nuxtjs/seo': ^6.1.0
   '@tresjs/cientos': ^5.7.2
   '@tresjs/core': ^5.8.1
   '@tresjs/nuxt': ^5.6.1

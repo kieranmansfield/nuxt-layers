@@ -34,6 +34,9 @@ const AVAILABLE_LAYERS = [
 ] as const
 type LayerName = (typeof AVAILABLE_LAYERS)[number]
 
+const isPlaywright = process.env.PLAYWRIGHT === '1'
+const devtoolsOptimizeDeps = isPlaywright ? [] : ['@vue/devtools-core', '@vue/devtools-kit']
+
 const LAYER_PATHS: Record<LayerName, string> = {
   core: '../../layers/core',
   seo: '../../layers/delivery/seo',
@@ -100,8 +103,13 @@ export default defineNuxtConfig({
   // App-level choices (previously forced on every consumer by the core layer)
   future: { compatibilityVersion: 5 },
   // Off under Playwright: devtools injects its own dialogs/panels into every page
-  devtools: { enabled: !process.env.PLAYWRIGHT, vscode: { enabled: true } },
+  devtools: {
+    enabled: !isPlaywright,
+    viteInspect: !isPlaywright,
+    vscode: { enabled: !isPlaywright },
+  },
   css: ['~/assets/css/playground.css'],
+  ogImage: { zeroRuntime: isPlaywright },
   // The seo layer ships an empty site name, which leaves `%siteName` unresolved in page titles
   site: { name: 'Nuxt Layers Playground', url: 'https://nuxtlayers.netlify.app' },
 
@@ -151,8 +159,7 @@ export default defineNuxtConfig({
       // and throws "does not provide an export named 'default'".
       // include: ['slugify'],
       include: [
-        '@vue/devtools-core',
-        '@vue/devtools-kit',
+        ...devtoolsOptimizeDeps,
         'locomotive-scroll',
         'slugify',
         'three',
@@ -185,8 +192,7 @@ export default defineNuxtConfig({
         // is always re-run when the cache is cleared.
         // include: ['slugify'],
         include: [
-          '@vue/devtools-core',
-          '@vue/devtools-kit',
+          ...devtoolsOptimizeDeps,
           'locomotive-scroll',
           'slugify',
           'three',

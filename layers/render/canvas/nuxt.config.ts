@@ -153,7 +153,7 @@ export default defineNuxtConfig({
   modules: ['@tresjs/nuxt'],
 
   tres: {
-    devtools: true,
+    devtools: process.env.PLAYWRIGHT !== '1',
   },
 
   alias: {
