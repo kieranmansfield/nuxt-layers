@@ -1,6 +1,8 @@
 import type { MaybeRefOrGetter } from 'vue'
 import type { ScrollTrigger as GSAPScrollTrigger } from 'gsap/ScrollTrigger'
 
+import { roundCountUp } from '../utils/countUp'
+
 type UseCountUpOptions = {
   to: number
   from?: number
@@ -37,7 +39,7 @@ export function useCountUp(
       duration: opts.duration ?? 2,
       ease: opts.ease ?? 'power2.out',
       onUpdate: () => {
-        displayValue.value = format(Math.round(counter.value))
+        displayValue.value = format(roundCountUp(counter.value, opts.from ?? 0, opts.to))
       },
       onComplete: () => {
         isComplete.value = true
