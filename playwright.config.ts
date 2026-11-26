@@ -18,7 +18,7 @@ export default defineConfig({
   },
   webServer: {
     // TMPDIR=/tmp keeps vite-node's unix socket path under the macOS 104-char limit
-    command: 'TMPDIR=/tmp pnpm -F playground exec nuxt dev --host 127.0.0.1 --port 4173',
+    command: 'PLAYWRIGHT=1 TMPDIR=/tmp pnpm -F playground exec nuxt dev --host 127.0.0.1 --port 4173',
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 180000,

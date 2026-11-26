@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { sampleRects } from './sample-rects'
 
 // Navigates /page-transitions → /page-transitions-target with a clicked [data-transition] link.
 async function open(page: import('@playwright/test').Page) {
@@ -35,18 +36,10 @@ test('wipe fills the overlay, swaps the page, then cleans up', async ({ page }) 
 
 test('morph animates the shared data-flip-id box between pages', async ({ page }) => {
   await open(page)
+  const widths = sampleRects(page, '[data-flip-id="demo-box"]', 'width')
   await go(page, 'morph')
   await page.waitForURL('**/page-transitions-target')
-  const widths: number[] = []
-  for (let i = 0; i < 8; i++) {
-    widths.push(
-      await page
-        .locator('[data-flip-id="demo-box"]')
-        .evaluate((e) => e.getBoundingClientRect().width)
-    )
-    await page.waitForTimeout(80)
-  }
-  expect(new Set(widths.map((w) => Math.round(w))).size).toBeGreaterThan(2)
+  expect((await widths).size).toBeGreaterThan(2)
   await expect(page.locator('html.is-page-transitioning')).toHaveCount(0)
 })
 

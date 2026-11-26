@@ -1,8 +1,10 @@
 import { expect, test, type Page } from '@playwright/test'
+import { sampleRects } from './sample-rects'
 
 async function open(page: Page) {
   await page.goto('/flip-views')
-  await page.waitForLoadState('networkidle')
+  // networkidle can fire before hydration under load; a click before it has no handler
+  await page.waitForFunction(() => window.useNuxtApp?.().isHydrating === false)
 }
 
 const pick = (page: Page, name: string) => page.getByRole('tab', { name }).click()
@@ -11,15 +13,9 @@ const views = (page: Page) => page.locator('#views [data-view]')
 test('tagged elements travel to their match, then only the new view remains', async ({ page }) => {
   await open(page)
   await expect(views(page)).toHaveCount(1)
+  const widths = sampleRects(page, '#views [data-view="list"] [data-flip-id="a:media"]', 'width')
   await pick(page, 'List')
-
-  const media = page.locator('#views [data-view="list"] [data-flip-id="a:media"]')
-  const widths: number[] = []
-  for (let i = 0; i < 8; i++) {
-    widths.push(await media.evaluate((e) => e.getBoundingClientRect().width))
-    await page.waitForTimeout(60)
-  }
-  expect(new Set(widths.map((w) => Math.round(w))).size).toBeGreaterThan(2)
+  expect((await widths).size).toBeGreaterThan(2)
 
   await expect(views(page)).toHaveCount(1)
   await expect(views(page)).toHaveAttribute('data-view', 'list')
@@ -44,14 +40,9 @@ test('rapid switching ends on the last view only', async ({ page }) => {
 
 test('useFlip morphs the same elements when the source changes', async ({ page }) => {
   await open(page)
+  const lefts = sampleRects(page, '[data-flip-id="a"]', 'left')
   await page.getByRole('button', { name: 'Oldest first' }).click()
-  const item = page.locator('[data-flip-id="a"]')
-  const lefts: number[] = []
-  for (let i = 0; i < 8; i++) {
-    lefts.push(await item.evaluate((e) => e.getBoundingClientRect().left))
-    await page.waitForTimeout(60)
-  }
-  expect(new Set(lefts.map((l) => Math.round(l))).size).toBeGreaterThan(2)
+  expect((await lefts).size).toBeGreaterThan(2)
 })
 
 test('reduced motion swaps instantly', async ({ browser }) => {
