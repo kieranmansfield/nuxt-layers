@@ -1,5 +1,10 @@
 <script setup lang="ts">
-  import { useDevicePixelRatio, useWindowSize } from '@vueuse/core'
+  import {
+    useDevicePixelRatio,
+    useElementSize,
+    useElementVisibility,
+    useWindowSize,
+  } from '@vueuse/core'
   import {
     ACESFilmicToneMapping,
     CineonToneMapping,
@@ -44,13 +49,38 @@
 
   const emit = defineEmits<{
     ready: [renderer: ThreeWebGPU.WebGPURenderer]
+    /** Renderer init or shader pre-compilation threw. */
+    error: [error: unknown]
   }>()
 
+  defineSlots<{
+    /** Shown instead of the canvas when no renderer could start (blocklisted GPU, lost context). */
+    fallback?: () => unknown
+  }>()
+
+  /** Schedule one frame; use after changing the material graph while the loop is parked. */
+  defineExpose({ kick })
+
+  const containerRef = useTemplateRef<HTMLDivElement>('containerRef')
   const canvasRef = useTemplateRef<HTMLCanvasElement>('canvasRef')
-  const { width, height } = useWindowSize()
+  // Fixed covers the viewport; otherwise the drawing buffer follows the container, not the window.
+  const windowSize = useWindowSize()
+  const elementSize = useElementSize(containerRef)
+  const width = computed(() => (fixed ? windowSize.width.value : elementSize.width.value))
+  const height = computed(() => (fixed ? windowSize.height.value : elementSize.height.value))
   // Browser zoom changes devicePixelRatio; reading it once at init left zoomed-out pages
   // rendering at the old ratio, past WebGPU's 8192px texture limit.
   const { pixelRatio } = useDevicePixelRatio()
+  const maxPixelRatio = (useAppConfig().shader as { maxPixelRatio?: number } | undefined)
+    ?.maxPixelRatio
+  const cappedPixelRatio = () => Math.min(pixelRatio.value, maxPixelRatio ?? 2)
+
+  // Loop only while on screen and motion is allowed. Parked, it still draws single frames
+  // on kick(): material changes, resizes and theme switches (CSS-variable uniforms).
+  const { effectiveReducedMotion } = useThemeMotion()
+  const visible = useElementVisibility(containerRef)
+  const live = computed(() => visible.value && !effectiveReducedMotion.value)
+  const failed = ref(false)
 
   let renderer: ThreeWebGPU.WebGPURenderer | undefined
   let scene: Scene
@@ -92,7 +122,7 @@
 
   function createRenderer(canvas: HTMLCanvasElement) {
     const nextRenderer = new ThreeWebGPU.WebGPURenderer({ canvas, antialias: antialias })
-    nextRenderer.setPixelRatio(Math.min(pixelRatio.value, 2))
+    nextRenderer.setPixelRatio(cappedPixelRatio())
     nextRenderer.setSize(width.value, height.value)
     nextRenderer.setClearColor(new Color(clearColor))
     nextRenderer.toneMapping = toneMappingMap[toneMapping] ?? ACESFilmicToneMapping
@@ -126,10 +156,23 @@
     // Bail if the component unmounted — guards against a frame scheduled just
     // before teardown rendering on a disposed renderer.
     if (disposed) return
-    animationId = requestAnimationFrame(animate)
+    // Schedule before rendering so one throwing frame doesn't end a live loop.
+    if (live.value) schedule()
     if (renderer && scene && camera) {
       renderer.render(scene, camera)
     }
+  }
+
+  // Every frame goes through here, and a new one replaces any pending one: one chain, never two.
+  function schedule() {
+    cancelAnimationFrame(animationId)
+    animationId = requestAnimationFrame(animate)
+  }
+
+  // A frame, not a direct render: uniform observers sync before it runs.
+  function kick() {
+    if (disposed || !scene || !camera) return
+    schedule()
   }
 
   async function init() {
@@ -168,9 +211,16 @@
       if (disposed) return
 
       initialized = true
+      applySize()
       emit('ready', renderer)
     } catch (e) {
-      void e
+      emit('error', e)
+      // No scene means the renderer never started: show the fallback slot instead.
+      if (!scene) {
+        failed.value = true
+        renderer?.dispose()
+        renderer = undefined
+      }
     }
 
     // Always start the animation loop even if pre-compilation failed — Three.js
@@ -185,6 +235,7 @@
     (mat) => {
       if (planeMesh && mat) {
         planeMesh.material = mat
+        kick()
       }
     }
   )
@@ -194,22 +245,31 @@
     (color) => {
       if (renderer && initialized) {
         renderer.setClearColor(new Color(color))
+        kick()
       }
     }
   )
 
-  watch([width, height, pixelRatio], ([w, h, dpr]) => {
-    if (!initialized || !renderer) return
-    camera.aspect = w / (h || 1)
+  // Also called once after init, so a size that changed during the async init isn't lost.
+  function applySize() {
+    const w = width.value
+    const h = height.value
+    if (!initialized || !renderer || !w || !h) return
+    camera.aspect = w / h
     camera.updateProjectionMatrix()
-    renderer.setPixelRatio(Math.min(dpr, 2))
+    renderer.setPixelRatio(cappedPixelRatio())
     renderer.setSize(w, h)
     if (planeMesh) {
       planeMesh.geometry.dispose()
       const { width: pw, height: ph } = getPlaneSize(w, h)
       planeMesh.geometry = new PlaneGeometry(pw, ph)
     }
-  })
+    kick()
+  }
+
+  watch([width, height, pixelRatio], applySize)
+  watch(live, kick)
+  useRootStyleObserver(kick)
 
   // As a `.client.vue` component, the real <canvas> can attach a tick after this
   // component's onMounted fires, leaving canvasRef.value null. Drive init() off the
@@ -236,8 +296,14 @@
 </script>
 
 <template>
-  <div class="shader-background" :style="containerStyle">
-    <canvas ref="canvasRef" style="display: block; width: 100%; height: 100%" />
+  <div ref="containerRef" class="shader-background" :style="containerStyle">
+    <canvas
+      v-show="!failed"
+      ref="canvasRef"
+      aria-hidden="true"
+      style="display: block; width: 100%; height: 100%"
+    />
+    <slot v-if="failed" name="fallback" />
   </div>
 </template>
 
