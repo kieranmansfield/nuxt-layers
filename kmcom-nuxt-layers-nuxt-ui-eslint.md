@@ -55,7 +55,9 @@ This is where the payoff is. Survey of the published package (v6.16.0,
 
    // ...before the final pluginOxlint.buildFromOxlintConfig(...) entry:
    ...nuxtUI({
-     entryPoint: 'layers/core/app/assets/css/core.css',
+     // Absolute: the plugin resolves entryPoint against the working directory, and
+     // per-layer `eslint .` runs inside each layer folder.
+     entryPoint: `${import.meta.dirname}/layers/core/app/assets/css/core.css`,
      files: ['layers/**/*.vue', 'layers/**/app/**/*.ts'],
    }),
    ```
