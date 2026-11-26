@@ -6,6 +6,7 @@
     showPercentage = true,
     colors = ['var(--ui-primary)', 'var(--ui-secondary)', 'var(--ui-info)'],
     bgColor = 'var(--ui-bg-accented)',
+    label = 'Progress',
   } = defineProps<{
     progress: number
     size?: number
@@ -13,6 +14,8 @@
     showPercentage?: boolean
     colors?: [string, string, string]
     bgColor?: string
+    /** Accessible name announced with the value. */
+    label?: string
   }>()
 
   const percentage = computed(() => Math.round(progress * 100))
@@ -24,8 +27,21 @@
 </script>
 
 <template>
-  <div class="progress-circular relative inline-flex items-center justify-center">
-    <svg :width="size" :height="size" class="-rotate-90" :viewBox="`0 0 ${size} ${size}`">
+  <div
+    class="progress-circular relative inline-flex items-center justify-center"
+    role="progressbar"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    :aria-valuenow="percentage"
+    :aria-label="label"
+  >
+    <svg
+      :width="size"
+      :height="size"
+      class="-rotate-90"
+      :viewBox="`0 0 ${size} ${size}`"
+      aria-hidden="true"
+    >
       <circle
         :cx="size / 2"
         :cy="size / 2"
@@ -55,6 +71,7 @@
     </svg>
     <span
       v-if="showPercentage"
+      aria-hidden="true"
       class="absolute inset-0 flex items-center justify-center text-2xl font-bold tabular-nums"
     >
       {{ percentage }}%
