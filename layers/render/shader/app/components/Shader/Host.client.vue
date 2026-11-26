@@ -65,6 +65,10 @@
     updateMaterialNode()
   }
 
+  // ShaderBackground parks its loop offscreen and under reduced motion, so ask it for a
+  // frame whenever the graph changes in place (same material object, new colorNode).
+  const background = useTemplateRef<{ kick: () => void }>('background')
+
   function updateMaterialNode() {
     if (isTransitioning.value && currentNode && nextNode) {
       material.colorNode = tslMix(currentNode, nextNode, transitionProgress)
@@ -73,6 +77,7 @@
       material.colorNode = currentNode
       material.needsUpdate = true
     }
+    background.value?.kick()
   }
 
   // Watch preset changes for crossfade
@@ -122,7 +127,19 @@
 </script>
 
 <template>
-  <ShaderBackground :material :clear-color :tone-mapping :fixed :z-index :pointer-events />
+  <ShaderBackground
+    ref="background"
+    :material
+    :clear-color
+    :tone-mapping
+    :fixed
+    :z-index
+    :pointer-events
+  >
+    <template v-if="$slots.fallback" #fallback>
+      <slot name="fallback" />
+    </template>
+  </ShaderBackground>
 
   <!-- Render current preset (invisible — just registers its TSL node) -->
   <component

@@ -99,7 +99,8 @@ export default defineNuxtConfig({
   extends: resolveExtendedLayers(),
   // App-level choices (previously forced on every consumer by the core layer)
   future: { compatibilityVersion: 5 },
-  devtools: { enabled: true, vscode: { enabled: true } },
+  // Off under Playwright: devtools injects its own dialogs/panels into every page
+  devtools: { enabled: !process.env.PLAYWRIGHT, vscode: { enabled: true } },
   css: ['~/assets/css/playground.css'],
   // The seo layer ships an empty site name, which leaves `%siteName` unresolved in page titles
   site: { name: 'Nuxt Layers Playground', url: 'https://nuxtlayers.netlify.app' },

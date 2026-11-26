@@ -75,7 +75,9 @@ missing `@nuxt/ui/eslint` in a repo that did opt in.
 // no-unknown-classes stays off (default): per-layer CSS utilities aren't visible via core.css.
 /** @type {import('@nuxt/ui/eslint').NuxtUIESLintOptions} */
 export default {
-  entryPoint: 'layers/core/app/assets/css/core.css',
+  // Absolute: the plugin resolves entryPoint against the working directory, and
+  // per-layer `eslint .` runs inside each layer folder.
+  entryPoint: `${import.meta.dirname}/layers/core/app/assets/css/core.css`,
   files: ['layers/**/*.vue', 'layers/**/app/**/*.ts'],
 }
 ```

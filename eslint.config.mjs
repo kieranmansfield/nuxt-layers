@@ -491,8 +491,11 @@ export default defineConfigWithVueTs(
   // `colors` left at defaults: layer code must use semantic tokens whatever an app aliases.
   // ponytail: `no-unknown-classes` stays off — per-layer CSS utilities aren't visible
   // through core.css; enable with an `ignore` list if it earns its keep.
+  // entryPoint must be absolute: the plugin resolves it against the working directory, and
+  // per-layer `eslint .` runs inside each layer, where a relative path finds no core.css
+  // and silently lints against the default Tailwind theme (no semantic tokens).
   ...nuxtUI({
-    entryPoint: 'layers/core/app/assets/css/core.css',
+    entryPoint: `${import.meta.dirname}/layers/core/app/assets/css/core.css`,
     files: ['layers/**/*.vue', 'layers/**/app/**/*.ts'],
   }),
 
