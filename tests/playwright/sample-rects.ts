@@ -27,7 +27,7 @@ export function sampleRects(
           let still = 0
           const tick = () => {
             const now = read()
-            seen.add(now)
+            if (now) seen.add(now)
             still = now === last ? still + 1 : 0
             last = now
             if (seen.size > 1 && still >= 10) return finish()
