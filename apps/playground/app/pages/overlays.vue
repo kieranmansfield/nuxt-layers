@@ -46,7 +46,7 @@ toast.info('Update available', { duration: 8000 })
 toast.warning('Unsaved changes')`
 
   const createModalSnippet = `// 1. Write a modal component that extends BaseModal
-// components/ConfirmModal.vue
+// components/Demo/ConfirmModal.vue
 <BaseModal :open title="Are you sure?" size="sm" v-bind="$attrs">
   <template #footer="{ dismiss }">
     <UButton variant="ghost" @click="dismiss">Cancel</UButton>
@@ -56,7 +56,7 @@ toast.warning('Unsaved changes')`
 
 // 2. Register it with createModal — one line
 // composables/useConfirmModal.ts
-import ConfirmModal from '../components/ConfirmModal.vue'
+import ConfirmModal from '../components/Demo/ConfirmModal.vue'
 export const useConfirmModal = createModal(ConfirmModal)
 
 // 3. Use it anywhere
